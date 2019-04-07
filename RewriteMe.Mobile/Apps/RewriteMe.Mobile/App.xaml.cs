@@ -1,16 +1,28 @@
-﻿using Xamarin.Forms;
+﻿using Prism;
+using Prism.Ioc;
+using Prism.Unity;
+using RewriteMe.Mobile.Navigation;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace RewriteMe.Mobile
 {
-    public partial class App : Application
+    public partial class App : PrismApplication
     {
-        public App()
+        public App(IPlatformInitializer platformInitializer)
+        : base(platformInitializer)
+        {
+        }
+
+        protected override void OnInitialized()
         {
             InitializeComponent();
 
-            MainPage = new MainPage();
+            NavigationService.NavigateAsync($"/{Pages.Login}");
+        }
+
+        protected override void RegisterTypes(IContainerRegistry containerRegistry)
+        {
         }
 
         protected override void OnStart()

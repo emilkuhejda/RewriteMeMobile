@@ -1,4 +1,5 @@
 ﻿using Foundation;
+using RewriteMe.Mobile.iOS.Configuration;
 using UIKit;
 
 namespace RewriteMe.Mobile.iOS
@@ -19,7 +20,9 @@ namespace RewriteMe.Mobile.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
-            LoadApplication(new App());
+
+            var bootstrapper = new OSXBootstrapper();
+            LoadApplication(new App(bootstrapper));
 
             return base.FinishedLaunching(app, options);
         }
