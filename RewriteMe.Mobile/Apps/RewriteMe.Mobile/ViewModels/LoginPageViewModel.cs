@@ -1,4 +1,5 @@
 ﻿using Prism.Navigation;
+using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -8,7 +9,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(navigationService)
         {
             CanGoBack = true;
-            Title = "Login Page";
+            Title = Loc.Text(TranslationKeys.LoginPageTitle);
         }
     }
 }

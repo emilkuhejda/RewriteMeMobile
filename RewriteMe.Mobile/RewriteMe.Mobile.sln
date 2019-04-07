@@ -13,18 +13,20 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Mobile.iOS", "App
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{6943FBF5-45EE-47B0-B876-E9D6D1D396D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Business", "Components\RewriteMe.Business\RewriteMe.Business.csproj", "{0C0379FC-7A0D-481A-A99E-45B1F054017D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Business", "Components\RewriteMe.Business\RewriteMe.Business.csproj", "{0C0379FC-7A0D-481A-A99E-45B1F054017D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Common", "Components\RewriteMe.Common\RewriteMe.Common.csproj", "{80E67D24-8D03-4164-B39D-A7CE041D8A68}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Common", "Components\RewriteMe.Common\RewriteMe.Common.csproj", "{80E67D24-8D03-4164-B39D-A7CE041D8A68}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.DataAccess", "Components\RewriteMe.DataAccess\RewriteMe.DataAccess.csproj", "{81434F81-B2D0-405B-9DFB-5DD268E7A7CD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.DataAccess", "Components\RewriteMe.DataAccess\RewriteMe.DataAccess.csproj", "{81434F81-B2D0-405B-9DFB-5DD268E7A7CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Domain", "Components\RewriteMe.Domain\RewriteMe.Domain.csproj", "{348412EC-A4F4-4C5C-852A-FB0EEF53E867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Domain", "Components\RewriteMe.Domain\RewriteMe.Domain.csproj", "{348412EC-A4F4-4C5C-852A-FB0EEF53E867}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_global", "_global", "{A90414C9-A9E0-4498-A485-50ADE2AB779E}"
 	ProjectSection(SolutionItems) = preProject
 		Global\RewriteMe.CodeAnalysis.ruleset = Global\RewriteMe.CodeAnalysis.ruleset
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Resources", "Components\RewriteMe.Resources\RewriteMe.Resources.csproj", "{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -218,6 +220,30 @@ Global
 		{348412EC-A4F4-4C5C-852A-FB0EEF53E867}.Release|iPhone.Build.0 = Release|Any CPU
 		{348412EC-A4F4-4C5C-852A-FB0EEF53E867}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
 		{348412EC-A4F4-4C5C-852A-FB0EEF53E867}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Ad-Hoc|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Ad-Hoc|Any CPU.Build.0 = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Ad-Hoc|iPhone.ActiveCfg = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Ad-Hoc|iPhone.Build.0 = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Ad-Hoc|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Ad-Hoc|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.AppStore|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.AppStore|Any CPU.Build.0 = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.AppStore|iPhone.ActiveCfg = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.AppStore|iPhone.Build.0 = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.AppStore|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.AppStore|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Debug|iPhone.ActiveCfg = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Debug|iPhone.Build.0 = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Debug|iPhoneSimulator.ActiveCfg = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Debug|iPhoneSimulator.Build.0 = Debug|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Release|iPhone.ActiveCfg = Release|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Release|iPhone.Build.0 = Release|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Release|iPhoneSimulator.ActiveCfg = Release|Any CPU
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}.Release|iPhoneSimulator.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -230,6 +256,7 @@ Global
 		{80E67D24-8D03-4164-B39D-A7CE041D8A68} = {6943FBF5-45EE-47B0-B876-E9D6D1D396D6}
 		{81434F81-B2D0-405B-9DFB-5DD268E7A7CD} = {6943FBF5-45EE-47B0-B876-E9D6D1D396D6}
 		{348412EC-A4F4-4C5C-852A-FB0EEF53E867} = {6943FBF5-45EE-47B0-B876-E9D6D1D396D6}
+		{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A} = {6943FBF5-45EE-47B0-B876-E9D6D1D396D6}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {40B9037B-50FF-4535-BC34-A00CF268B2AB}
