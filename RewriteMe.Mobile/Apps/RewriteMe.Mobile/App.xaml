@@ -5,13 +5,16 @@
                         xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                         xmlns:converters="clr-namespace:RewriteMe.Mobile.Converters;assembly=RewriteMe.Mobile"
                         xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-                        xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Autofac.Forms">
+                        xmlns:localization="clr-namespace:RewriteMe.Mobile.Controls.Extensions;assembly=RewriteMe.Mobile"
+                        xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Autofac.Forms"
+                        xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources">
     <prism:PrismApplication.Resources>
         <ResourceDictionary>
             <!--  Colors  -->
+            <Color x:Key="ApplicationTitleTextColor">#ffffff</Color>
             <Color x:Key="PrimaryTextColor">#616161</Color>
-            <Color x:Key="ColorPrimary">#FF990000</Color>
-            <Color x:Key="StatusBarColor">#FF900000</Color>
+            <Color x:Key="ColorPrimary">#FF3CEAE1</Color>
+            <Color x:Key="StatusBarColor">#FF3CEAE1</Color>
             <Color x:Key="NavigationBarGray">#D8D8D8</Color>
 
             <!--  Font Sizes  -->
@@ -73,6 +76,13 @@
                 <Setter Property="Opacity" Value="1.0" />
                 <Setter Property="LineBreakMode" Value="TailTruncation" />
                 <Setter Property="HeightRequest" Value="32" />
+            </Style>
+
+            <Style x:Key="MainTitleLabelSyle"
+                   BasedOn="{StaticResource TitleLabelSyle}"
+                   TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource ApplicationTitleTextColor}" />
+                <Setter Property="FontSize" Value="{StaticResource LargerSize}" />
             </Style>
 
             <!--  Navigation Bar  -->
@@ -138,6 +148,13 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
+
+                        <Label HorizontalOptions="FillAndExpand"
+                               HorizontalTextAlignment="Center"
+                               Style="{StaticResource MainTitleLabelSyle}"
+                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ApplicationTitle}}"
+                               VerticalOptions="FillAndExpand"
+                               VerticalTextAlignment="Center" />
                     </Grid>
 
                     <!--  Header Row 2: gray subtitle bar  -->
