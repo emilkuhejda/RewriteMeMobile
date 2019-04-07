@@ -46,6 +46,7 @@
     <ProjectReference Include="..\..\Components\RewriteMe.Common\RewriteMe.Common.csproj" />
     <ProjectReference Include="..\..\Components\RewriteMe.DataAccess\RewriteMe.DataAccess.csproj" />
     <ProjectReference Include="..\..\Components\RewriteMe.Domain\RewriteMe.Domain.csproj" />
+    <ProjectReference Include="..\..\Components\RewriteMe.Resources\RewriteMe.Resources.csproj" />
   </ItemGroup>
   
   <ItemGroup>

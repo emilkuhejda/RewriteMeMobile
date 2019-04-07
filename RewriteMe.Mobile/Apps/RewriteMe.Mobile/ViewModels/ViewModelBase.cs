@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
 using RewriteMe.Mobile.Commands;
@@ -17,12 +18,12 @@ namespace RewriteMe.Mobile.ViewModels
             HasTitleBar = true;
             NavigationService = navigationService;
 
-            NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommand/*, () => CanGoBack*/);
+            NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommand, () => CanGoBack);
         }
 
         protected INavigationService NavigationService { get; }
 
-        public IAsyncCommand NavigateBackCommand { get; }
+        public ICommand NavigateBackCommand { get; }
 
         public string Title
         {
