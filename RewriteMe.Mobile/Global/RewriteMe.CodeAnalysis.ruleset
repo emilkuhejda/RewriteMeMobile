@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<RuleSet Name="Uster Rules" Description="Uster CodeAnalysis rule set V.1" ToolsVersion="15.0">
+<RuleSet Name="RewriteMe Rules" Description="RewriteMe CodeAnalysis rule set V.1" ToolsVersion="15.0">
   <IncludeAll Action="Warning" />
   <Rules AnalyzerId="Microsoft.Analyzers.ManagedCodeAnalysis" RuleNamespace="Microsoft.Rules.Managed">
     <Rule Id="CA1000" Action="Error" />

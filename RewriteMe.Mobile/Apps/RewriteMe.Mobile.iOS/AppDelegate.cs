@@ -1,6 +1,8 @@
-﻿using Foundation;
+﻿using FFImageLoading.Forms.Platform;
+using Foundation;
 using RewriteMe.Mobile.iOS.Configuration;
 using UIKit;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.iOS
 {
@@ -19,7 +21,8 @@ namespace RewriteMe.Mobile.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
-            global::Xamarin.Forms.Forms.Init();
+            Forms.Init();
+            CachedImageRenderer.Init();
 
             var bootstrapper = new OSXBootstrapper();
             LoadApplication(new App(bootstrapper));

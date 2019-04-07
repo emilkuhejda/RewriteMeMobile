@@ -23,10 +23,22 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
   </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Images\Add.svg" />
+    <None Remove="Resources\Images\Back.svg" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Images\Add.svg" />
+    <EmbeddedResource Include="Resources\Images\Back.svg" />
+  </ItemGroup>
   
   <ItemGroup>
     <PackageReference Include="Prism.Unity.Forms" Version="7.1.0.431" />
-    <PackageReference Include="Xamarin.Forms" Version="3.6.0.293080" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.4.859" />
+    <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.4.859" />
+    <PackageReference Include="Xamarin.Forms" Version="3.4.0.1029999" />
   </ItemGroup>
   
   <ItemGroup>
@@ -37,6 +49,15 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Reference Include="Xamarin.Forms.Core">
+      <HintPath>C:\Users\Miko\.nuget\packages\xamarin.forms\3.2.0.839982\lib\netstandard1.0\Xamarin.Forms.Core.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Update="Views\BaseNavigationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\LoginPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

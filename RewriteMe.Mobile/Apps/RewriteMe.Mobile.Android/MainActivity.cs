@@ -1,7 +1,9 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using FFImageLoading.Forms.Platform;
 using RewriteMe.Mobile.Droid.Configuration;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Droid
 {
@@ -14,7 +16,9 @@ namespace RewriteMe.Mobile.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+            Forms.Init(this, savedInstanceState);
+
+            CachedImageRenderer.Init(null);
 
             var bootstrapper = new AndroidBootstrapper();
             LoadApplication(new App(bootstrapper));
