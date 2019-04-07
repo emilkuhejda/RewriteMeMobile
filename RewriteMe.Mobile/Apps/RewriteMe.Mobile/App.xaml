@@ -2,6 +2,249 @@
 <prism:PrismApplication x:Class="RewriteMe.Mobile.App"
                         xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                        xmlns:converters="clr-namespace:RewriteMe.Mobile.Converters;assembly=RewriteMe.Mobile"
+                        xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                         xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Autofac.Forms">
-    <prism:PrismApplication.Resources />
+    <prism:PrismApplication.Resources>
+        <ResourceDictionary>
+            <!--  Colors  -->
+            <Color x:Key="PrimaryTextColor">#616161</Color>
+            <Color x:Key="ColorPrimary">#FF990000</Color>
+            <Color x:Key="StatusBarColor">#FF900000</Color>
+            <Color x:Key="NavigationBarGray">#D8D8D8</Color>
+
+            <!--  Font Sizes  -->
+            <OnPlatform x:Key="LittleSize"
+                        x:TypeArguments="x:Double"
+                        Android="12"
+                        WinPhone="12"
+                        iOS="11" />
+
+            <OnPlatform x:Key="MidMediumSize"
+                        x:TypeArguments="x:Double"
+                        Android="14"
+                        WinPhone="14"
+                        iOS="12" />
+
+            <OnPlatform x:Key="MediumSize"
+                        x:TypeArguments="x:Double"
+                        Android="16"
+                        WinPhone="16"
+                        iOS="14" />
+
+            <OnPlatform x:Key="LargeSize"
+                        x:TypeArguments="x:Double"
+                        Android="18"
+                        WinPhone="18"
+                        iOS="16" />
+
+            <OnPlatform x:Key="LargerSize"
+                        x:TypeArguments="x:Double"
+                        Android="20"
+                        WinPhone="20"
+                        iOS="18" />
+
+            <OnPlatform x:Key="BigSize"
+                        x:TypeArguments="x:Double"
+                        Android="24"
+                        WinPhone="24"
+                        iOS="20" />
+
+            <OnPlatform x:Key="ExtraBigSize"
+                        x:TypeArguments="x:Double"
+                        Android="32"
+                        WinPhone="32"
+                        iOS="24" />
+
+            <OnPlatform x:Key="HugeSize"
+                        x:TypeArguments="x:Double"
+                        Android="48"
+                        WinPhone="48"
+                        iOS="32" />
+
+            <Style x:Key="TitleLabelSyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Opacity" Value="1.0" />
+                <Setter Property="LineBreakMode" Value="TailTruncation" />
+                <Setter Property="HeightRequest" Value="32" />
+            </Style>
+
+            <!--  Navigation Bar  -->
+            <x:Double x:Key="HeaderImageHeight">60</x:Double>
+            <GridLength x:Key="NavigationBarRow1Height">52</GridLength>
+            <GridLength x:Key="NavigationBarRow2Height">52</GridLength>
+            <converters:BoolToGridLengthConverter x:Key="BoolToNavigationBarRow1HeightConverter"
+                                                  FalseValue="0"
+                                                  TrueValue="{StaticResource NavigationBarRow1Height}" />
+
+            <ControlTemplate x:Key="MainPageTemplate">
+                <Grid x:Name="MainHeaderGrid"
+                      Margin="0"
+                      Padding="0"
+                      BindingContext="{TemplateBinding BindingContext}"
+                      ColumnSpacing="0"
+                      HorizontalOptions="FillAndExpand"
+                      RowSpacing="0"
+                      VerticalOptions="FillAndExpand">
+                    <Grid.RowDefinitions>
+                        <RowDefinition>
+                            <RowDefinition.Height>
+                                <!--  Fix for iPhone to prevent overlapping with the action bar  -->
+                                <OnPlatform x:TypeArguments="GridLength">
+                                    <On Platform="iOS">20</On>
+                                    <On Platform="Android">0</On>
+                                    <On Platform="UWP">0</On>
+                                </OnPlatform>
+                            </RowDefinition.Height>
+                        </RowDefinition>
+                        <!--  Headline row  -->
+                        <RowDefinition Height="{Binding HasTitleBar, Mode=OneWay, Converter={StaticResource BoolToNavigationBarRow1HeightConverter}}" />
+                        <!--  Gray headline row  -->
+                        <RowDefinition Height="{StaticResource NavigationBarRow2Height}" />
+                        <!--  Content row  -->
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <!--  iPhone action bar fix  -->
+                    <BoxView Grid.Row="0"
+                             BackgroundColor="{StaticResource StatusBarColor}"
+                             HorizontalOptions="FillAndExpand"
+                             VerticalOptions="FillAndExpand" />
+
+                    <!--  Header Row 1  -->
+                    <Grid Grid.Row="1"
+                          Margin="0"
+                          Padding="0"
+                          BackgroundColor="{StaticResource ColorPrimary}"
+                          BindingContext="{TemplateBinding BindingContext}"
+                          ColumnSpacing="0"
+                          HorizontalOptions="FillAndExpand"
+                          IsVisible="{TemplateBinding BindingContext.HasTitleBar}"
+                          RowSpacing="0"
+                          VerticalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="{StaticResource NavigationBarRow1Height}" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                    </Grid>
+
+                    <!--  Header Row 2: gray subtitle bar  -->
+                    <Grid Grid.Row="2"
+                          Margin="0"
+                          Padding="0"
+                          BackgroundColor="{StaticResource NavigationBarGray}"
+                          BindingContext="{TemplateBinding Parent}"
+                          ColumnSpacing="0"
+                          IsVisible="{TemplateBinding HasNavigationBar}"
+                          RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="{StaticResource NavigationBarRow2Height}" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="90" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="90" />
+                        </Grid.ColumnDefinitions>
+
+                        <!--  Back navigation icon  -->
+                        <Grid Grid.Row="0"
+                              Grid.Column="0"
+                              Margin="0"
+                              Padding="0"
+                              BackgroundColor="Transparent"
+                              ColumnSpacing="0"
+                              HeightRequest="39"
+                              HorizontalOptions="StartAndExpand"
+                              IsVisible="{TemplateBinding BindingContext.CanGoBack}"
+                              RowSpacing="0"
+                              VerticalOptions="CenterAndExpand"
+                              WidthRequest="39">
+                            <forms:SvgCachedImage Margin="0"
+                                                  Aspect="AspectFit"
+                                                  BackgroundColor="Transparent"
+                                                  BindingContext="{TemplateBinding BindingContext}"
+                                                  HeightRequest="30"
+                                                  HorizontalOptions="CenterAndExpand"
+                                                  InputTransparent="True"
+                                                  Source="resource://RewriteMe.Mobile.Resources.Images.Back.svg"
+                                                  VerticalOptions="CenterAndExpand" />
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer BindingContext="{TemplateBinding BindingContext}" Command="{TemplateBinding BindingContext.NavigateBackCommand}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <!--  Title within in gray headline  -->
+                        <Label Grid.Row="0"
+                               Grid.Column="1"
+                               BindingContext="{TemplateBinding Parent}"
+                               HorizontalOptions="FillAndExpand"
+                               HorizontalTextAlignment="Center"
+                               Style="{StaticResource TitleLabelSyle}"
+                               Text="{TemplateBinding Title}"
+                               VerticalOptions="FillAndExpand"
+                               VerticalTextAlignment="Center" />
+
+                        <controls:StackedList Grid.Row="0"
+                                              Grid.Column="2"
+                                              Margin="0"
+                                              BackgroundColor="Transparent"
+                                              BindingContext="{TemplateBinding Parent}"
+                                              HorizontalOptions="EndAndExpand"
+                                              ItemsSource="{TemplateBinding RightNavigationToolbarItems,
+                                                                            Mode=OneWay}"
+                                              ListOrientation="Horizontal"
+                                              Spacing="0"
+                                              VerticalOptions="CenterAndExpand">
+                            <controls:StackedList.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid Margin="0"
+                                          Padding="0"
+                                          ColumnSpacing="0"
+                                          HeightRequest="39"
+                                          RowSpacing="0"
+                                          WidthRequest="39">
+                                        <StackLayout Padding="0" Orientation="Vertical">
+                                            <Grid BackgroundColor="{StaticResource NavigationBarGray}"
+                                                  HeightRequest="30"
+                                                  HorizontalOptions="CenterAndExpand"
+                                                  VerticalOptions="CenterAndExpand"
+                                                  WidthRequest="30">
+                                                <forms:SvgCachedImage Aspect="AspectFill"
+                                                                      HorizontalOptions="CenterAndExpand"
+                                                                      InputTransparent="True"
+                                                                      Source="{Binding Source, Mode=OneWay}"
+                                                                      VerticalOptions="CenterAndExpand" />
+                                                <Grid.GestureRecognizers>
+                                                    <TapGestureRecognizer Command="{Binding Command}" />
+                                                </Grid.GestureRecognizers>
+                                            </Grid>
+                                        </StackLayout>
+                                    </Grid>
+                                </DataTemplate>
+                            </controls:StackedList.ItemTemplate>
+                        </controls:StackedList>
+                    </Grid>
+
+                    <!--  Page Content  -->
+                    <ContentPresenter Grid.Row="3"
+                                      Grid.Column="0"
+                                      HorizontalOptions="FillAndExpand"
+                                      VerticalOptions="FillAndExpand" />
+                </Grid>
+            </ControlTemplate>
+        </ResourceDictionary>
+    </prism:PrismApplication.Resources>
 </prism:PrismApplication>

@@ -1,7 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<ContentPage x:Class="RewriteMe.Mobile.Views.LoginPage"
-             xmlns="http://xamarin.com/schemas/2014/forms"
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.LoginPage"
+                          xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <views:BaseNavigationPage.RightNavigationToolbarItems>
+        <controls:NavigationToolbarItem Command="{Binding NavigateBackCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg" />
+    </views:BaseNavigationPage.RightNavigationToolbarItems>
+
     <ContentPage.Content>
         <StackLayout>
             <Label HorizontalOptions="CenterAndExpand"
@@ -9,4 +15,4 @@
                    VerticalOptions="CenterAndExpand" />
         </StackLayout>
     </ContentPage.Content>
-</ContentPage>
+</views:BaseNavigationPage>
