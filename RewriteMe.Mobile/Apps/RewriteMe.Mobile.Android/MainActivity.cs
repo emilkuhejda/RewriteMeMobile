@@ -1,6 +1,7 @@
 ﻿using Android.App;
 using Android.Content.PM;
 using Android.OS;
+using RewriteMe.Mobile.Droid.Configuration;
 
 namespace RewriteMe.Mobile.Droid
 {
@@ -14,7 +15,9 @@ namespace RewriteMe.Mobile.Droid
 
             base.OnCreate(savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
-            LoadApplication(new App());
+
+            var bootstrapper = new AndroidBootstrapper();
+            LoadApplication(new App(bootstrapper));
         }
     }
 }
