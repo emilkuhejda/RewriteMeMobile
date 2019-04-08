@@ -5,7 +5,7 @@
                         xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                         xmlns:converters="clr-namespace:RewriteMe.Mobile.Converters;assembly=RewriteMe.Mobile"
                         xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-                        xmlns:localization="clr-namespace:RewriteMe.Mobile.Controls.Extensions;assembly=RewriteMe.Mobile"
+                        xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                         xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Autofac.Forms"
                         xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources">
     <prism:PrismApplication.Resources>
@@ -67,6 +67,10 @@
                         WinPhone="48"
                         iOS="32" />
 
+            <!--  Converters  -->
+            <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
+
+            <!--  Styles  -->
             <Style x:Key="TitleLabelSyle" TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
                 <Setter Property="BackgroundColor" Value="Transparent" />

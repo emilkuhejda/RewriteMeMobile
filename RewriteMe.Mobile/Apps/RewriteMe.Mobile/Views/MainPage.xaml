@@ -2,12 +2,24 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.MainPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+                          xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <views:BaseNavigationPage.RightNavigationToolbarItems>
+        <controls:NavigationToolbarItem Command="{Binding NavigateBackCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg" />
+    </views:BaseNavigationPage.RightNavigationToolbarItems>
+
     <ContentPage.Content>
-        <StackLayout>
-            <Label HorizontalOptions="CenterAndExpand"
+        <Grid>
+            <Label Grid.Row="0"
+                   HorizontalOptions="CenterAndExpand"
                    Text="Main page"
                    VerticalOptions="CenterAndExpand" />
-        </StackLayout>
+
+            <controls:PageActivityIndicator Grid.Row="0"
+                                            Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
+                                            IsVisible="{Binding OperationScope.IsBusy}" />
+        </Grid>
     </ContentPage.Content>
 </views:BaseNavigationPage>
