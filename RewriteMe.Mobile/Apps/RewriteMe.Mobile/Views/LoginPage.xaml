@@ -15,6 +15,7 @@
             <Label HorizontalOptions="CenterAndExpand"
                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.LoginPageContent}}"
                    VerticalOptions="CenterAndExpand" />
+            <controls:PageActivityIndicator Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}" IsVisible="{Binding OperationScope.IsBusy}" />
         </StackLayout>
     </ContentPage.Content>
 </views:BaseNavigationPage>

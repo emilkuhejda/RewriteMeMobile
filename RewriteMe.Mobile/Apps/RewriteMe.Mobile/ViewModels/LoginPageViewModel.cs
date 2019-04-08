@@ -1,4 +1,6 @@
-﻿using Prism.Navigation;
+﻿using System.Threading.Tasks;
+using Prism.Navigation;
+using RewriteMe.Common.Utils;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -10,6 +12,14 @@ namespace RewriteMe.Mobile.ViewModels
         {
             CanGoBack = true;
             Title = Loc.Text(TranslationKeys.LoginPageTitle);
+        }
+
+        protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
+        {
+            using (new OperationMonitor(OperationScope))
+            {
+                await Task.Delay(10000).ConfigureAwait(false);
+            }
         }
     }
 }
