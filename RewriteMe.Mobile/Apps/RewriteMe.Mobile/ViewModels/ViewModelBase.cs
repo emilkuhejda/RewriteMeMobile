@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
+using RewriteMe.Common.Utils;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 
@@ -15,13 +16,17 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ViewModelBase(INavigationService navigationService)
         {
-            HasTitleBar = true;
             NavigationService = navigationService;
+            OperationScope = new AsyncOperationScope();
+
+            HasTitleBar = true;
 
             NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommand, () => CanGoBack);
         }
 
         protected INavigationService NavigationService { get; }
+
+        public AsyncOperationScope OperationScope { get; }
 
         public ICommand NavigateBackCommand { get; }
 
@@ -47,8 +52,14 @@ namespace RewriteMe.Mobile.ViewModels
         {
         }
 
-        public void OnNavigatedTo(INavigationParameters parameters)
+        public async void OnNavigatedTo(INavigationParameters parameters)
         {
+            await LoadDataAsync(parameters).ConfigureAwait(false);
+        }
+
+        protected virtual async Task LoadDataAsync(INavigationParameters navigationParameters)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         private async Task ExecuteNavigateBackCommand()

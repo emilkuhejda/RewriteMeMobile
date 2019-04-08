@@ -102,6 +102,9 @@
   <data name="ApplicationTitle" xml:space="preserve">
     <value>Rewrite Me</value>
   </data>
+  <data name="ActivityIndicatorCaptionText" xml:space="preserve">
+    <value>Loading...</value>
+  </data>
   <data name="LoginPageTitle" xml:space="preserve">
     <value>Login page!</value>
   </data>

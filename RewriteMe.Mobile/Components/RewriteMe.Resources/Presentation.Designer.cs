@@ -62,6 +62,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading....
+        /// </summary>
+        internal static string ActivityIndicatorCaptionText {
+            get {
+                return ResourceManager.GetString("ActivityIndicatorCaptionText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Rewrite Me.
         /// </summary>
         internal static string ApplicationTitle {
