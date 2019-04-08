@@ -1,5 +1,7 @@
 ﻿using Prism.Ioc;
+using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Mobile.Configuration;
+using RewriteMe.Mobile.iOS.Localization;
 
 namespace RewriteMe.Mobile.iOS.Configuration
 {
@@ -7,6 +9,7 @@ namespace RewriteMe.Mobile.iOS.Configuration
     {
         protected override void RegisterPlatformServices(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<ILocalizer, Localizer>();
         }
     }
 }

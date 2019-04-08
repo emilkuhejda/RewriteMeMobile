@@ -78,23 +78,5 @@ namespace RewriteMe.Resources {
                 return ResourceManager.GetString("ApplicationTitle", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Login page content!.
-        /// </summary>
-        internal static string LoginPageContent {
-            get {
-                return ResourceManager.GetString("LoginPageContent", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Login page!.
-        /// </summary>
-        internal static string LoginPageTitle {
-            get {
-                return ResourceManager.GetString("LoginPageTitle", resourceCulture);
-            }
-        }
     }
 }

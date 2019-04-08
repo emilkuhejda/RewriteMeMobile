@@ -2,20 +2,13 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.LoginPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
-                          xmlns:localization="clr-namespace:RewriteMe.Mobile.Controls.Extensions;assembly=RewriteMe.Mobile"
-                          xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
-                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
-    <views:BaseNavigationPage.RightNavigationToolbarItems>
-        <controls:NavigationToolbarItem Command="{Binding NavigateBackCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg" />
-    </views:BaseNavigationPage.RightNavigationToolbarItems>
-
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
+                          HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout>
             <Label HorizontalOptions="CenterAndExpand"
-                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.LoginPageContent}}"
+                   Text="Login"
                    VerticalOptions="CenterAndExpand" />
-            <controls:PageActivityIndicator Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}" IsVisible="{Binding OperationScope.IsBusy}" />
         </StackLayout>
     </ContentPage.Content>
 </views:BaseNavigationPage>

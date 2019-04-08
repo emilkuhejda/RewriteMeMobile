@@ -72,6 +72,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Configuration\AndroidBootstrapper.cs" />
+    <Compile Include="Localization\Localizer.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Renderers\NoBarsScrollViewerRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
@@ -108,6 +109,10 @@
     <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Components\RewriteMe.Domain\RewriteMe.Domain.csproj">
+      <Project>{348412EC-A4F4-4C5C-852A-FB0EEF53E867}</Project>
+      <Name>RewriteMe.Domain</Name>
+    </ProjectReference>
     <ProjectReference Include="..\RewriteMe.Mobile\RewriteMe.Mobile.csproj">
       <Project>{33fc372f-b17a-4e0b-8176-867d01c399fb}</Project>
       <Name>RewriteMe.Mobile</Name>
