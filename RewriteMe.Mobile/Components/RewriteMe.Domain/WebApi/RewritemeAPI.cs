@@ -17,7 +17,7 @@ namespace RewriteMe.Domain.WebApi
     using System.Threading;
     using System.Threading.Tasks;
 
-    public partial class RewritemeAPI : ServiceClient<RewritemeAPI>, IRewritemeAPI
+    public partial class RewriteMeAPI : ServiceClient<RewriteMeAPI>, IRewriteMeAPI
     {
         /// <summary>
         /// The base URI of the service.
@@ -35,31 +35,31 @@ namespace RewriteMe.Domain.WebApi
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the RewritemeAPI class.
+        /// Initializes a new instance of the RewriteMeAPI class.
         /// </summary>
         /// <param name='httpClient'>
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling RewritemeAPI.Dispose(). False: will not dispose provided httpClient</param>
-        public RewritemeAPI(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        /// True: will dispose the provided httpClient on calling RewriteMeAPI.Dispose(). False: will not dispose provided httpClient</param>
+        public RewriteMeAPI(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewritemeAPI class.
+        /// Initializes a new instance of the RewriteMeAPI class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public RewritemeAPI(params DelegatingHandler[] handlers) : base(handlers)
+        public RewriteMeAPI(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewritemeAPI class.
+        /// Initializes a new instance of the RewriteMeAPI class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -67,13 +67,13 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public RewritemeAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        public RewriteMeAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewritemeAPI class.
+        /// Initializes a new instance of the RewriteMeAPI class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -84,7 +84,7 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public RewritemeAPI(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        public RewriteMeAPI(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -94,7 +94,7 @@ namespace RewriteMe.Domain.WebApi
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewritemeAPI class.
+        /// Initializes a new instance of the RewriteMeAPI class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -108,7 +108,7 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public RewritemeAPI(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public RewriteMeAPI(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
