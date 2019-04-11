@@ -11,7 +11,7 @@ namespace RewriteMe.Business.Services
         private readonly IRewriteMeApiClientFactory _rewriteMeApiClientFactory;
         private readonly IWebServiceErrorHandler _webServiceErrorHandler;
 
-        private IRewritemeAPI _client;
+        private IRewriteMeAPI _client;
 
         public RewriteMeWebService(
             IRewriteMeApiClientFactory rewriteMeApiClientFactory,
@@ -21,6 +21,6 @@ namespace RewriteMe.Business.Services
             _webServiceErrorHandler = webServiceErrorHandler;
         }
 
-        private IRewritemeAPI Client => _client ?? (_client = _rewriteMeApiClientFactory.CreateClient(new Uri(string.Empty)));
+        private IRewriteMeAPI Client => _client ?? (_client = _rewriteMeApiClientFactory.CreateClient(new Uri(string.Empty)));
     }
 }

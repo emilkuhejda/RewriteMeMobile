@@ -11,16 +11,16 @@ namespace RewriteMe.Domain.WebApi
     using System.Threading.Tasks;
 
     /// <summary>
-    /// Extension methods for RewritemeAPI.
+    /// Extension methods for RewriteMeAPI.
     /// </summary>
-    public static partial class RewritemeAPIExtensions
+    public static partial class RewriteMeAPIExtensions
     {
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='authenticationModel'>
             /// </param>
-            public static void Authenticate(this IRewritemeAPI operations, AuthenticationModel authenticationModel = default(AuthenticationModel))
+            public static void Authenticate(this IRewriteMeAPI operations, AuthenticationModel authenticationModel = default(AuthenticationModel))
             {
                 operations.AuthenticateAsync(authenticationModel).GetAwaiter().GetResult();
             }
@@ -33,7 +33,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task AuthenticateAsync(this IRewritemeAPI operations, AuthenticationModel authenticationModel = default(AuthenticationModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task AuthenticateAsync(this IRewriteMeAPI operations, AuthenticationModel authenticationModel = default(AuthenticationModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.AuthenticateWithHttpMessagesAsync(authenticationModel, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -41,7 +41,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void Get(this IRewritemeAPI operations)
+            public static void Get(this IRewriteMeAPI operations)
             {
                 operations.GetAsync().GetAwaiter().GetResult();
             }
@@ -52,7 +52,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetAsync(this IRewritemeAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task GetAsync(this IRewriteMeAPI operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.GetWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -62,7 +62,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='fileItemId'>
             /// </param>
-            public static void Get1(this IRewritemeAPI operations, System.Guid fileItemId)
+            public static void Get1(this IRewriteMeAPI operations, System.Guid fileItemId)
             {
                 operations.Get1Async(fileItemId).GetAwaiter().GetResult();
             }
@@ -75,7 +75,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task Get1Async(this IRewritemeAPI operations, System.Guid fileItemId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task Get1Async(this IRewriteMeAPI operations, System.Guid fileItemId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.Get1WithHttpMessagesAsync(fileItemId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -87,7 +87,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='language'>
             /// </param>
-            public static void Create(this IRewritemeAPI operations, string name = default(string), string language = default(string))
+            public static void Create(this IRewriteMeAPI operations, string name = default(string), string language = default(string))
             {
                 operations.CreateAsync(name, language).GetAwaiter().GetResult();
             }
@@ -102,7 +102,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task CreateAsync(this IRewritemeAPI operations, string name = default(string), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task CreateAsync(this IRewriteMeAPI operations, string name = default(string), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.CreateWithHttpMessagesAsync(name, language, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -116,7 +116,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='language'>
             /// </param>
-            public static void Update(this IRewritemeAPI operations, System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string))
+            public static void Update(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string))
             {
                 operations.UpdateAsync(fileItemId, name, language).GetAwaiter().GetResult();
             }
@@ -133,7 +133,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateAsync(this IRewritemeAPI operations, System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateAsync(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdateWithHttpMessagesAsync(fileItemId, name, language, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -143,7 +143,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='id'>
             /// </param>
-            public static void Remove(this IRewritemeAPI operations, string id)
+            public static void Remove(this IRewriteMeAPI operations, string id)
             {
                 operations.RemoveAsync(id).GetAwaiter().GetResult();
             }
@@ -156,7 +156,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RemoveAsync(this IRewritemeAPI operations, string id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RemoveAsync(this IRewriteMeAPI operations, string id, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RemoveWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -166,7 +166,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='transcribeFileItemModel'>
             /// </param>
-            public static void Transcribe(this IRewritemeAPI operations, TranscribeFileItemModel transcribeFileItemModel = default(TranscribeFileItemModel))
+            public static void Transcribe(this IRewriteMeAPI operations, TranscribeFileItemModel transcribeFileItemModel = default(TranscribeFileItemModel))
             {
                 operations.TranscribeAsync(transcribeFileItemModel).GetAwaiter().GetResult();
             }
@@ -179,7 +179,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task TranscribeAsync(this IRewritemeAPI operations, TranscribeFileItemModel transcribeFileItemModel = default(TranscribeFileItemModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task TranscribeAsync(this IRewriteMeAPI operations, TranscribeFileItemModel transcribeFileItemModel = default(TranscribeFileItemModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.TranscribeWithHttpMessagesAsync(transcribeFileItemModel, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -189,7 +189,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='fileItemId'>
             /// </param>
-            public static void GetAll(this IRewritemeAPI operations, System.Guid fileItemId)
+            public static void GetAll(this IRewriteMeAPI operations, System.Guid fileItemId)
             {
                 operations.GetAllAsync(fileItemId).GetAwaiter().GetResult();
             }
@@ -202,7 +202,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetAllAsync(this IRewritemeAPI operations, System.Guid fileItemId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task GetAllAsync(this IRewriteMeAPI operations, System.Guid fileItemId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.GetAllWithHttpMessagesAsync(fileItemId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -212,7 +212,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='transcribeItemId'>
             /// </param>
-            public static void GetAudioSource(this IRewritemeAPI operations, System.Guid transcribeItemId)
+            public static void GetAudioSource(this IRewriteMeAPI operations, System.Guid transcribeItemId)
             {
                 operations.GetAudioSourceAsync(transcribeItemId).GetAwaiter().GetResult();
             }
@@ -225,7 +225,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task GetAudioSourceAsync(this IRewritemeAPI operations, System.Guid transcribeItemId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task GetAudioSourceAsync(this IRewriteMeAPI operations, System.Guid transcribeItemId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.GetAudioSourceWithHttpMessagesAsync(transcribeItemId, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -237,7 +237,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='transcript'>
             /// </param>
-            public static void UpdateUserTranscript(this IRewritemeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string))
+            public static void UpdateUserTranscript(this IRewriteMeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string))
             {
                 operations.UpdateUserTranscriptAsync(transcribeItemId, transcript).GetAwaiter().GetResult();
             }
@@ -252,7 +252,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task UpdateUserTranscriptAsync(this IRewritemeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task UpdateUserTranscriptAsync(this IRewriteMeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.UpdateUserTranscriptWithHttpMessagesAsync(transcribeItemId, transcript, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
@@ -262,7 +262,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='registerUserModel'>
             /// </param>
-            public static void Register(this IRewritemeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel))
+            public static void Register(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel))
             {
                 operations.RegisterAsync(registerUserModel).GetAwaiter().GetResult();
             }
@@ -275,7 +275,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task RegisterAsync(this IRewritemeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task RegisterAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.RegisterWithHttpMessagesAsync(registerUserModel, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }

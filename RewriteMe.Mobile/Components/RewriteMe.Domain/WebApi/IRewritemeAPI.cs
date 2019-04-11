@@ -16,7 +16,7 @@ namespace RewriteMe.Domain.WebApi
 
     /// <summary>
     /// </summary>
-    public partial interface IRewritemeAPI : System.IDisposable
+    public partial interface IRewriteMeAPI : System.IDisposable
     {
         /// <summary>
         /// The base URI of the service.
