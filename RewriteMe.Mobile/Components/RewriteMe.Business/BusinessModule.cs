@@ -1,5 +1,6 @@
 ﻿using Prism.Ioc;
 using RewriteMe.Common;
+using RewriteMe.Domain.Interfaces.Services;
 
 namespace RewriteMe.Business
 {
@@ -7,6 +8,7 @@ namespace RewriteMe.Business
     {
         public void RegisterServices(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterSingleton<IInternalValueService, IInternalValueService>();
         }
     }
 }

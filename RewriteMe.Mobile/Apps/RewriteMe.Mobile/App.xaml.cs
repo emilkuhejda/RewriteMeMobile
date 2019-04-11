@@ -1,6 +1,9 @@
 ﻿using Prism;
 using Prism.Ioc;
 using Prism.Unity;
+using RewriteMe.Common.Utils;
+using RewriteMe.DataAccess;
+using RewriteMe.DataAccess.Providers;
 using RewriteMe.Mobile.Navigation;
 using Xamarin.Forms.Xaml;
 
@@ -18,26 +21,23 @@ namespace RewriteMe.Mobile
         {
             InitializeComponent();
 
+            InitializeStorage();
+
             NavigationService.NavigateAsync($"/{Pages.Login}");
+        }
+
+        private void InitializeStorage()
+        {
+            AsyncHelper.RunSync(() => Container.Resolve<IStorageInitializer>().InitializeAsync());
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
         }
 
-        protected override void OnStart()
+        protected override async void OnSleep()
         {
-            // Handle when your app starts
-        }
-
-        protected override void OnSleep()
-        {
-            // Handle when your app sleeps
-        }
-
-        protected override void OnResume()
-        {
-            // Handle when your app resumes
+            await Container.Resolve<IAppDbContextProvider>().CloseAsync().ConfigureAwait(false);
         }
     }
 }
