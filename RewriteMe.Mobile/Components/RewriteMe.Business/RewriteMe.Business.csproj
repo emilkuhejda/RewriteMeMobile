@@ -25,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\RewriteMe.Common\RewriteMe.Common.csproj" />
+    <ProjectReference Include="..\RewriteMe.Domain\RewriteMe.Domain.csproj" />
   </ItemGroup>
 
 </Project>

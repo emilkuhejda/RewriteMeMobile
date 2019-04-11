@@ -94,6 +94,7 @@
     <Compile Include="Localization\Localizer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Providers\DirectoryProvider.cs" />
     <Compile Include="Renderers\NoBarsScrollViewerRenderer.cs" />
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
