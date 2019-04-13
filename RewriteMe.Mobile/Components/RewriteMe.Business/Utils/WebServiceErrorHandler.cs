@@ -1,9 +1,11 @@
 ﻿using System;
+using System.Net;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Rest;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Utils;
+using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Business.Utils
 {
@@ -17,7 +19,10 @@ namespace RewriteMe.Business.Utils
             try
             {
                 var payload = await webServiceCall().ConfigureAwait(false);
-                return new HttpRequestResult<T>(HttpRequestState.Success, payload);
+                if (payload is ProblemDetails problemDetails)
+                    return new HttpRequestResult<T>(HttpRequestState.Success, problemDetails.Status);
+
+                return new HttpRequestResult<T>(HttpRequestState.Success, (int)HttpStatusCode.OK, payload);
             }
             catch (HttpRequestException)
             {
