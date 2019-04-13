@@ -5,7 +5,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
@@ -16,15 +18,18 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
+        private readonly IInternalValueService _internalValueService;
         private readonly ILocalizer _localizer;
 
         private LanguageInfo _selectedLanguage;
 
         public SettingsPageViewModel(
+            IInternalValueService internalValueService,
             ILocalizer localizer,
             INavigationService navigationService)
             : base(navigationService)
         {
+            _internalValueService = internalValueService;
             _localizer = localizer;
 
             CanGoBack = true;
@@ -47,16 +52,14 @@ namespace RewriteMe.Mobile.ViewModels
                 if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {
                     var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
-                    HandleSelection(dropDownListViewModel);
+                    await HandleSelectionAsync(dropDownListViewModel).ConfigureAwait(false);
                 }
 
-                InitializeLanguageSettings();
-
-                await Task.CompletedTask.ConfigureAwait(false);
+                await InitializeLanguageSettingAsync().ConfigureAwait(false);
             }
         }
 
-        private void HandleSelection(DropDownListViewModel dropDownListViewModel)
+        private async Task HandleSelectionAsync(DropDownListViewModel dropDownListViewModel)
         {
             if (dropDownListViewModel == null)
                 return;
@@ -64,19 +67,30 @@ namespace RewriteMe.Mobile.ViewModels
             switch (dropDownListViewModel.Type)
             {
                 case nameof(SelectedLanguage):
-                    _localizer.SetCultureInfo((CultureInfo)dropDownListViewModel.Value);
+                    var language = (CultureInfo)dropDownListViewModel.Value;
+                    await ChangeUserLanguageAsync(language).ConfigureAwait(false);
                     break;
                 default:
                     throw new NotSupportedException(nameof(SelectedLanguage));
             }
         }
 
-        private void InitializeLanguageSettings()
+        private async Task ChangeUserLanguageAsync(CultureInfo language)
         {
-            var currentCulture = _localizer.GetCurrentCulture();
-            var languageName = currentCulture.TwoLetterISOLanguageName;
-            var language = Languages.All.FirstOrDefault(x => x.Culture == languageName) ?? Languages.English;
+            await _internalValueService.UpdateValue(InternalValues.LanguageSetting, language.TwoLetterISOLanguageName).ConfigureAwait(false);
+            _localizer.SetCultureInfo(language);
+        }
 
+        private async Task InitializeLanguageSettingAsync()
+        {
+            var languageName = await _internalValueService.GetValue(InternalValues.LanguageSetting).ConfigureAwait(false);
+            if (languageName == null)
+            {
+                var currentCulture = _localizer.GetCurrentCulture();
+                languageName = currentCulture.TwoLetterISOLanguageName;
+            }
+
+            var language = Languages.All.FirstOrDefault(x => x.Culture == languageName) ?? Languages.English;
             SelectedLanguage = language;
         }
 
