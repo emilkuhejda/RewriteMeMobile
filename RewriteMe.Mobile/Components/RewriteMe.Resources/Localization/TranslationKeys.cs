@@ -4,5 +4,6 @@
     {
         public static string ApplicationTitle => "ApplicationTitle";
         public static string ActivityIndicatorCaptionText => "ActivityIndicatorCaptionText";
+        public static string Settings => "Settings";
     }
 }

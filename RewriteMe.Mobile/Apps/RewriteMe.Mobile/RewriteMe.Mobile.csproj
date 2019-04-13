@@ -25,13 +25,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Remove="Resources\Images\Add.svg" />
     <None Remove="Resources\Images\Back.svg" />
+    <None Remove="Resources\Images\Settings.svg" />
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Images\Add.svg" />
     <EmbeddedResource Include="Resources\Images\Back.svg" />
+    <EmbeddedResource Include="Resources\Images\Settings.svg" />
   </ItemGroup>
   
   <ItemGroup>
@@ -66,6 +66,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\MainPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\SettingsPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

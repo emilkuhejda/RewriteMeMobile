@@ -5,6 +5,7 @@ using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
+using RewriteMe.Mobile.Navigation;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -21,7 +22,8 @@ namespace RewriteMe.Mobile.ViewModels
 
             HasTitleBar = true;
 
-            NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommand, () => CanGoBack);
+            NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommandAsync, () => CanGoBack);
+            NavigateToSettingsCommand = new AsyncCommand(ExecuteNavigateToSettingsCommandAsync);
         }
 
         protected INavigationService NavigationService { get; }
@@ -29,6 +31,8 @@ namespace RewriteMe.Mobile.ViewModels
         public AsyncOperationScope OperationScope { get; }
 
         public ICommand NavigateBackCommand { get; }
+
+        public ICommand NavigateToSettingsCommand { get; }
 
         public string Title
         {
@@ -62,9 +66,14 @@ namespace RewriteMe.Mobile.ViewModels
             await Task.CompletedTask.ConfigureAwait(false);
         }
 
-        private async Task ExecuteNavigateBackCommand()
+        private async Task ExecuteNavigateBackCommandAsync()
         {
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+        }
+
+        private async Task ExecuteNavigateToSettingsCommandAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.Settings).ConfigureAwait(false);
         }
     }
 }
