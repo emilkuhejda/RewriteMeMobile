@@ -7,11 +7,17 @@
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
                           Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Settings}}">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label HorizontalOptions="CenterAndExpand"
-                   Text="Welcome to Xamarin.Forms!"
-                   VerticalOptions="CenterAndExpand" />
-        </StackLayout>
-    </ContentPage.Content>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <controls:DrillDownButton Grid.Row="0"
+                                  Command="{Binding NavigateToLanguageCommand}"
+                                  Style="{StaticResource DropDownButtonStyle}"
+                                  Text="Text">
+            <Label Text="Inner text" />
+        </controls:DrillDownButton>
+    </Grid>
 </views:BaseNavigationPage>

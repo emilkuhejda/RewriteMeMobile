@@ -9,5 +9,7 @@
         public static string Main { get; } = "Main";
 
         public static string Settings { get; } = "Settings";
+
+        public static string DropDownListPage { get; } = "DropDownList";
     }
 }
