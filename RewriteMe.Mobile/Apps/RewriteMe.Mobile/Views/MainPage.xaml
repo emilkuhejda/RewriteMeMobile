@@ -7,7 +7,7 @@
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.RightNavigationToolbarItems>
-        <controls:NavigationToolbarItem Command="{Binding NavigateBackCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg" />
+        <controls:NavigationToolbarItem Command="{Binding NavigateToSettingsCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Settings.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
 
     <ContentPage.Content>

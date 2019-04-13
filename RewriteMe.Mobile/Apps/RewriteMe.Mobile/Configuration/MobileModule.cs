@@ -18,6 +18,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterForNavigation<RewriteMeNavigationPage>(Pages.Navigation);
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>(Pages.Login);
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>(Pages.Main);
+            containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>(Pages.Settings);
         }
     }
 }

@@ -105,4 +105,7 @@
   <data name="ActivityIndicatorCaptionText" xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
 </root>
