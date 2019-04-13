@@ -58,6 +58,9 @@
   </ItemGroup>
   
   <ItemGroup>
+    <EmbeddedResource Update="Controls\AlwaysScrollView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Controls\Divider.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

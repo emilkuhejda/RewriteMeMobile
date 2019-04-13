@@ -13,12 +13,23 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <controls:DrillDownButton Grid.Row="0"
-                                  Command="{Binding NavigateToLanguageCommand}"
-                                  ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
-                                  Style="{StaticResource DropDownButtonStyle}"
-                                  Text="Text">
-            <Label Text="Inner text" />
-        </controls:DrillDownButton>
+        <!--  Language  -->
+        <controls:AlwaysScrollView>
+            <StackLayout Padding="0"
+                         IsVisible="{Binding OperationScope.IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                         Spacing="0">
+                <controls:DrillDownButton Grid.Row="0"
+                                          Command="{Binding NavigateToLanguageCommand}"
+                                          ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                          Style="{StaticResource DropDownButtonStyle}"
+                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
+                    <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedLanguage.Title}" />
+                </controls:DrillDownButton>
+            </StackLayout>
+        </controls:AlwaysScrollView>
+
+        <controls:PageActivityIndicator Grid.Row="0"
+                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
+                                        IsVisible="{Binding OperationScope.IsBusy}" />
     </Grid>
 </views:BaseNavigationPage>
