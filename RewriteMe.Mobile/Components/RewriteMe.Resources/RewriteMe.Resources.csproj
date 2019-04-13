@@ -17,6 +17,9 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Presentation.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Update="Presentation.sk.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 
 </Project>

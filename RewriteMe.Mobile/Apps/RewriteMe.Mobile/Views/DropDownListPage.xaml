@@ -45,7 +45,7 @@
                                        VerticalTextAlignment="Center" />
                             </Grid>
 
-                            <!--  SEPARATOR  -->
+                            <!--  Separator  -->
                             <Grid Grid.Row="1"
                                   BackgroundColor="{DynamicResource Divider}"
                                   HeightRequest="1" />
