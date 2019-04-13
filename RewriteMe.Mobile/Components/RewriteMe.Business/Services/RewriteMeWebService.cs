@@ -21,6 +21,6 @@ namespace RewriteMe.Business.Services
             _webServiceErrorHandler = webServiceErrorHandler;
         }
 
-        private IRewriteMeAPI Client => _client ?? (_client = _rewriteMeApiClientFactory.CreateClient(new Uri(string.Empty)));
+        private IRewriteMeAPI Client => _client ?? (_client = _rewriteMeApiClientFactory.CreateClient(new Uri("https://192.168.0.105:45456/")));
     }
 }
