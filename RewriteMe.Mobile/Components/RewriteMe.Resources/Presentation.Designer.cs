@@ -23,7 +23,7 @@ namespace RewriteMe.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Presentation {
+    public class Presentation {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -37,7 +37,7 @@ namespace RewriteMe.Resources {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RewriteMe.Resources.Presentation", typeof(Presentation).GetTypeInfo().Assembly);
@@ -52,7 +52,7 @@ namespace RewriteMe.Resources {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -64,7 +64,7 @@ namespace RewriteMe.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
-        internal static string ActivityIndicatorCaptionText {
+        public static string ActivityIndicatorCaptionText {
             get {
                 return ResourceManager.GetString("ActivityIndicatorCaptionText", resourceCulture);
             }
@@ -73,7 +73,7 @@ namespace RewriteMe.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Rewrite Me.
         /// </summary>
-        internal static string ApplicationTitle {
+        public static string ApplicationTitle {
             get {
                 return ResourceManager.GetString("ApplicationTitle", resourceCulture);
             }
@@ -82,7 +82,7 @@ namespace RewriteMe.Resources {
         /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
-        internal static string English {
+        public static string English {
             get {
                 return ResourceManager.GetString("English", resourceCulture);
             }
@@ -91,7 +91,7 @@ namespace RewriteMe.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Language.
         /// </summary>
-        internal static string Language {
+        public static string Language {
             get {
                 return ResourceManager.GetString("Language", resourceCulture);
             }
@@ -100,7 +100,7 @@ namespace RewriteMe.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Languages.
         /// </summary>
-        internal static string Languages {
+        public static string Languages {
             get {
                 return ResourceManager.GetString("Languages", resourceCulture);
             }
@@ -109,7 +109,7 @@ namespace RewriteMe.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Settings.
         /// </summary>
-        internal static string Settings {
+        public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
@@ -118,7 +118,7 @@ namespace RewriteMe.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Slovak.
         /// </summary>
-        internal static string Slovak {
+        public static string Slovak {
             get {
                 return ResourceManager.GetString("Slovak", resourceCulture);
             }
