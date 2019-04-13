@@ -34,6 +34,12 @@ namespace RewriteMe.Mobile.Controls
                 typeof(DrillDownButton),
                 true);
 
+        public static readonly BindableProperty ImageSourceProperty =
+            BindableProperty.Create(
+                nameof(ImageSource),
+                typeof(ImageSource),
+                typeof(DrillDownButton));
+
         public static readonly BindableProperty IsBusyProperty =
             BindableProperty.Create(
                 nameof(IsBusy),
@@ -94,6 +100,12 @@ namespace RewriteMe.Mobile.Controls
         {
             get => (bool)GetValue(IsEnabledProperty);
             set => SetValue(IsEnabledProperty, value);
+        }
+
+        public ImageSource ImageSource
+        {
+            get => (ImageSource)GetValue(ImageSourceProperty);
+            set => SetValue(ImageSourceProperty, value);
         }
 
         public bool IsBusy

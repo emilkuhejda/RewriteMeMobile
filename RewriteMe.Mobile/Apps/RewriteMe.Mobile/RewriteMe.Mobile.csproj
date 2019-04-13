@@ -26,11 +26,13 @@
 
   <ItemGroup>
     <None Remove="Resources\Images\Back.svg" />
+    <None Remove="Resources\Images\Forward.svg" />
     <None Remove="Resources\Images\Settings.svg" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Images\Back.svg" />
+    <EmbeddedResource Include="Resources\Images\Forward.svg" />
     <EmbeddedResource Include="Resources\Images\Settings.svg" />
   </ItemGroup>
   

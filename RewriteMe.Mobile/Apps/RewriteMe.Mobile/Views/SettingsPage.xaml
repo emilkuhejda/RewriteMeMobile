@@ -15,6 +15,7 @@
 
         <controls:DrillDownButton Grid.Row="0"
                                   Command="{Binding NavigateToLanguageCommand}"
+                                  ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
                                   Style="{StaticResource DropDownButtonStyle}"
                                   Text="Text">
             <Label Text="Inner text" />
