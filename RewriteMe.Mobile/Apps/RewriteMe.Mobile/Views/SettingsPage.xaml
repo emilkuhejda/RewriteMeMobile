@@ -20,15 +20,16 @@
                 <!--  Language  -->
                 <controls:DrillDownButton Command="{Binding NavigateToLanguageCommand}"
                                           ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
-                                          Style="{StaticResource DropDownButtonStyle}"
                                           Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
                     <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedLanguage.Title}" />
                 </controls:DrillDownButton>
+                <controls:Divider />
 
                 <!--  Application version  -->
-                <controls:DrillDownButton Style="{StaticResource DropDownButtonStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Version}}">
+                <controls:DrillDownButton Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Version}}">
                     <Label Style="{StaticResource LabelStyle}" Text="{Binding ApplicationVersion}" />
                 </controls:DrillDownButton>
+                <controls:Divider />
             </StackLayout>
         </controls:AlwaysScrollView>
 
