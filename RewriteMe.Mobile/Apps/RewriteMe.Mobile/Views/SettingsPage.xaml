@@ -14,9 +14,7 @@
         </Grid.RowDefinitions>
 
         <controls:AlwaysScrollView>
-            <StackLayout Padding="0"
-                         IsVisible="{Binding OperationScope.IsBusy, Converter={StaticResource InvertedBoolConverter}}"
-                         Spacing="0">
+            <StackLayout Padding="0" Spacing="0">
                 <!--  Language  -->
                 <controls:DrillDownButton Command="{Binding NavigateToLanguageCommand}"
                                           ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
@@ -35,6 +33,12 @@
                 <controls:DrillDownButton Command="{Binding NavigateToEmailCommand}"
                                           ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
                                           Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ContactUs}}" />
+                <controls:Divider />
+
+                <!--  Developer menu  -->
+                <controls:DrillDownButton Command="{Binding NavigateToDeveloperPageCommand}"
+                                          ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Developer}}" />
                 <controls:Divider />
             </StackLayout>
         </controls:AlwaysScrollView>

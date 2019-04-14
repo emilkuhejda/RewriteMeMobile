@@ -37,6 +37,7 @@
   </ItemGroup>
   
   <ItemGroup>
+    <PackageReference Include="Acr.DeviceInfo" Version="5.0.5" />
     <PackageReference Include="Acr.UserDialogs" Version="6.5.1" />
     <PackageReference Include="NLog" Version="4.6.2" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.1.0.431" />
@@ -76,6 +77,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\BaseNavigationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DeveloperPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\DropDownListPage.xaml">

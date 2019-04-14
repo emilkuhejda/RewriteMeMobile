@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation.Parameters;
@@ -17,8 +18,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         public DropDownListPageViewModel(
             IDialogService dialogService,
-            INavigationService navigationService)
-            : base(dialogService, navigationService)
+            INavigationService navigationService,
+            ILoggerFactory loggerFactory)
+            : base(dialogService, navigationService, loggerFactory)
         {
             CanGoBack = true;
 

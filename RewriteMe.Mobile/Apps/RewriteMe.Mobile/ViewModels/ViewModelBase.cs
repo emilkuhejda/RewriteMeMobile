@@ -4,6 +4,7 @@ using Prism.Mvvm;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
@@ -18,10 +19,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ViewModelBase(
             IDialogService dialogService,
-            INavigationService navigationService)
+            INavigationService navigationService,
+            ILoggerFactory loggerFactory)
         {
             DialogService = dialogService;
             NavigationService = navigationService;
+            Logger = loggerFactory.CreateLogger(GetType());
             OperationScope = new AsyncOperationScope();
 
             HasTitleBar = true;
@@ -33,6 +36,8 @@ namespace RewriteMe.Mobile.ViewModels
         protected IDialogService DialogService { get; }
 
         protected INavigationService NavigationService { get; }
+
+        protected ILogger Logger { get; }
 
         public AsyncOperationScope OperationScope { get; }
 

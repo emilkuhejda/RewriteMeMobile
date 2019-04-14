@@ -10,6 +10,8 @@
 
         public static string Settings { get; } = "Settings";
 
+        public static string Developer { get; } = "Developer";
+
         public static string DropDownListPage { get; } = "DropDownList";
     }
 }

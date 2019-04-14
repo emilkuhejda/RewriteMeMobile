@@ -11,8 +11,15 @@
         public static string Language => "Language";
         public static string Version => "Version";
         public static string ContactUs => "ContactUs";
+        public static string Developer => "Developer";
+        public static string Clear => "Clear";
+        public static string SendMail => "SendMail";
+        public static string Reload => "Reload";
         public static string EmailIsNotSupported => "EmailIsNotSupported";
         public static string ApplicationVersion => "ApplicationVersion";
         public static string TimeStamp => "TimeStamp";
+        public static string ApplicationTitleLog => "ApplicationTitleLog";
+        public static string DeviceHardwareLabel => "DeviceHardwareLabel";
+        public static string OperatingSystemLabel => "OperatingSystemLabel";
     }
 }

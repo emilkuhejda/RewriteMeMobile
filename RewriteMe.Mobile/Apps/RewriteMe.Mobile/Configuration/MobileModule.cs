@@ -1,4 +1,5 @@
-﻿using Plugin.LatestVersion;
+﻿using Plugin.DeviceInfo;
+using Plugin.LatestVersion;
 using Plugin.Messaging;
 using Prism.Ioc;
 using RewriteMe.Common;
@@ -14,6 +15,7 @@ namespace RewriteMe.Mobile.Configuration
     {
         public void RegisterServices(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterInstance(CrossDevice.Hardware);
             containerRegistry.RegisterInstance(CrossLatestVersion.Current);
             containerRegistry.RegisterInstance(CrossMessaging.Current.EmailMessenger);
             containerRegistry.RegisterSingleton<IDialogService, DialogService>();
@@ -27,6 +29,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>(Pages.Login);
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>(Pages.Main);
             containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>(Pages.Settings);
+            containerRegistry.RegisterForNavigation<DeveloperPage, DeveloperPageViewModel>(Pages.Developer);
             containerRegistry.RegisterForNavigation<DropDownListPage, DropDownListPageViewModel>(Pages.DropDownListPage);
         }
     }
