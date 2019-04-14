@@ -10,5 +10,9 @@
         public static string Languages => "Languages";
         public static string Language => "Language";
         public static string Version => "Version";
+        public static string ContactUs => "ContactUs";
+        public static string EmailIsNotSupported => "EmailIsNotSupported";
+        public static string ApplicationVersion => "ApplicationVersion";
+        public static string TimeStamp => "TimeStamp";
     }
 }

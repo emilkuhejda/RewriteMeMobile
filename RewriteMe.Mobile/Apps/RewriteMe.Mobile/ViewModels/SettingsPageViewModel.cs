@@ -1,26 +1,34 @@
 ﻿using System;
 using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.LatestVersion.Abstractions;
+using Plugin.Messaging;
+using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
+using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
         private readonly IInternalValueService _internalValueService;
+        private readonly IApplicationSettings _applicationSettings;
         private readonly ILatestVersion _latestVersion;
+        private readonly IEmailTask _emailTask;
         private readonly ILocalizer _localizer;
 
         private LanguageInfo _selectedLanguage;
@@ -28,18 +36,24 @@ namespace RewriteMe.Mobile.ViewModels
 
         public SettingsPageViewModel(
             IInternalValueService internalValueService,
+            IApplicationSettings applicationSettings,
             ILatestVersion latestVersion,
+            IEmailTask emailTask,
             ILocalizer localizer,
+            IDialogService dialogService,
             INavigationService navigationService)
-            : base(navigationService)
+            : base(dialogService, navigationService)
         {
             _internalValueService = internalValueService;
+            _applicationSettings = applicationSettings;
             _latestVersion = latestVersion;
+            _emailTask = emailTask;
             _localizer = localizer;
 
             CanGoBack = true;
 
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
+            NavigateToEmailCommand = new DelegateCommand(ExecuteNavigateToEmailCommand);
         }
 
         public LanguageInfo SelectedLanguage
@@ -55,6 +69,8 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         public ICommand NavigateToLanguageCommand { get; }
+
+        public ICommand NavigateToEmailCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
@@ -124,6 +140,41 @@ namespace RewriteMe.Mobile.ViewModels
             navigationParameters.Add<DropDownListNavigationParameters>(parameters);
 
             await NavigationService.NavigateWithoutAnimationAsync(Pages.DropDownListPage, navigationParameters).ConfigureAwait(false);
+        }
+
+        private void ExecuteNavigateToEmailCommand()
+        {
+            ThreadHelper.InvokeOnUiThread(CreateContactUsMailAsync);
+        }
+
+        private async Task CreateContactUsMailAsync()
+        {
+            if (string.IsNullOrWhiteSpace(_applicationSettings.SupportMailAddress))
+                return;
+
+            if (_emailTask.CanSendEmail)
+            {
+                var subject = $"{Loc.Text(TranslationKeys.ApplicationTitle)}";
+                var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz", CultureInfo.InvariantCulture);
+                var message = new StringBuilder()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine("_______________________________________")
+                    .AppendLine($"{Loc.Text(TranslationKeys.ApplicationVersion)} {_latestVersion.InstalledVersionNumber} ({Device.RuntimePlatform})")
+                    .AppendLine($"{Loc.Text(TranslationKeys.TimeStamp)} {timestamp}")
+                    .ToString();
+
+                _emailTask.SendEmail(_applicationSettings.SupportMailAddress, subject, message);
+            }
+            else
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.EmailIsNotSupported)).ConfigureAwait(false);
+            }
         }
     }
 }

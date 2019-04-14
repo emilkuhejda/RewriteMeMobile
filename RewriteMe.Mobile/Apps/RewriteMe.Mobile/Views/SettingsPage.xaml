@@ -30,6 +30,12 @@
                     <Label Style="{StaticResource LabelStyle}" Text="{Binding ApplicationVersion}" />
                 </controls:DrillDownButton>
                 <controls:Divider />
+
+                <!--  Contact us  -->
+                <controls:DrillDownButton Command="{Binding NavigateToEmailCommand}"
+                                          ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ContactUs}}" />
+                <controls:Divider />
             </StackLayout>
         </controls:AlwaysScrollView>
 

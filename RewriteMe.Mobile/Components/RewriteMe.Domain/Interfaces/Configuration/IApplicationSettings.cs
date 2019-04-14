@@ -2,5 +2,6 @@
 {
     public interface IApplicationSettings
     {
+        string SupportMailAddress { get; }
     }
 }

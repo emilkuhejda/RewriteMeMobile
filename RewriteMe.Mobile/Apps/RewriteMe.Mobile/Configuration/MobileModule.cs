@@ -1,7 +1,10 @@
 ﻿using Plugin.LatestVersion;
+using Plugin.Messaging;
 using Prism.Ioc;
 using RewriteMe.Common;
+using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Services;
 using RewriteMe.Mobile.ViewModels;
 using RewriteMe.Mobile.Views;
 
@@ -12,6 +15,8 @@ namespace RewriteMe.Mobile.Configuration
         public void RegisterServices(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterInstance(CrossLatestVersion.Current);
+            containerRegistry.RegisterInstance(CrossMessaging.Current.EmailMessenger);
+            containerRegistry.RegisterSingleton<IDialogService, DialogService>();
 
             RegisterPages(containerRegistry);
         }

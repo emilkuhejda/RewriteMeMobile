@@ -3,6 +3,7 @@ using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
@@ -15,8 +16,11 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _hasTitleBar;
         private bool _canGoBack;
 
-        public ViewModelBase(INavigationService navigationService)
+        public ViewModelBase(
+            IDialogService dialogService,
+            INavigationService navigationService)
         {
+            DialogService = dialogService;
             NavigationService = navigationService;
             OperationScope = new AsyncOperationScope();
 
@@ -25,6 +29,8 @@ namespace RewriteMe.Mobile.ViewModels
             NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommandAsync, () => CanGoBack);
             NavigateToSettingsCommand = new AsyncCommand(ExecuteNavigateToSettingsCommandAsync);
         }
+
+        protected IDialogService DialogService { get; }
 
         protected INavigationService NavigationService { get; }
 
