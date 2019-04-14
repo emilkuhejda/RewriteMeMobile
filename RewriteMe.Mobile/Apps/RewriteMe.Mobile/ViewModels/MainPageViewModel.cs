@@ -2,6 +2,7 @@
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Logging.Interfaces;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -9,8 +10,9 @@ namespace RewriteMe.Mobile.ViewModels
     {
         public MainPageViewModel(
             IDialogService dialogService,
-            INavigationService navigationService)
-            : base(dialogService, navigationService)
+            INavigationService navigationService,
+                ILoggerFactory loggerFactory)
+            : base(dialogService, navigationService, loggerFactory)
         {
             CanGoBack = true;
         }

@@ -13,6 +13,7 @@ using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
@@ -41,8 +42,9 @@ namespace RewriteMe.Mobile.ViewModels
             IEmailTask emailTask,
             ILocalizer localizer,
             IDialogService dialogService,
-            INavigationService navigationService)
-            : base(dialogService, navigationService)
+            INavigationService navigationService,
+            ILoggerFactory loggerFactory)
+            : base(dialogService, navigationService, loggerFactory)
         {
             _internalValueService = internalValueService;
             _applicationSettings = applicationSettings;
@@ -54,6 +56,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
             NavigateToEmailCommand = new DelegateCommand(ExecuteNavigateToEmailCommand);
+            NavigateToDeveloperPageCommand = new AsyncCommand(ExecuteNavigateToDeveloperPageCommandAsync);
         }
 
         public LanguageInfo SelectedLanguage
@@ -71,6 +74,8 @@ namespace RewriteMe.Mobile.ViewModels
         public ICommand NavigateToLanguageCommand { get; }
 
         public ICommand NavigateToEmailCommand { get; }
+
+        public ICommand NavigateToDeveloperPageCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
@@ -175,6 +180,11 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.EmailIsNotSupported)).ConfigureAwait(false);
             }
+        }
+
+        private async Task ExecuteNavigateToDeveloperPageCommandAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.Developer).ConfigureAwait(false);
         }
     }
 }

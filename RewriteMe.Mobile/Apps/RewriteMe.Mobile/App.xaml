@@ -24,11 +24,26 @@
                        Top="{StaticResource StandardSpacing}" />
 
             <!--  Colors  -->
+            <!--  Source: https://material.io/guidelines/style/color.html#color-color-palette  -->
+            <Color x:Key="ColorGrey50">#FAFAFA</Color>
+            <Color x:Key="ColorGrey100">#F5F5F5</Color>
+            <Color x:Key="ColorGrey200">#EEEEEE</Color>
+            <Color x:Key="ColorGrey300">#E0E0E0</Color>
+            <Color x:Key="ColorGrey400">#BDBDBD</Color>
+            <Color x:Key="ColorGrey500">#9E9E9E</Color>
+            <Color x:Key="ColorGrey600">#757575</Color>
+            <Color x:Key="ColorGrey700">#616161</Color>
+            <Color x:Key="ColorGrey800">#424242</Color>
+            <Color x:Key="ColorGrey900">#212121</Color>
+            <Color x:Key="ColorBlack">#000000</Color>
+            <Color x:Key="ColorWhite">#FFFFFF</Color>
+
             <Color x:Key="ApplicationTitleTextColor">#FFFFFF</Color>
             <Color x:Key="WindowBackground">#FFFFFF</Color>
             <Color x:Key="PrimaryTextColor">#616161</Color>
             <Color x:Key="ColorPrimary">#FF3CEAE1</Color>
             <Color x:Key="ColorPrimaryBright">#FFAD3333</Color>
+            <Color x:Key="ColorPrimaryDark">#FF7A0000</Color>
             <Color x:Key="StatusBarColor">#FF3CEAE1</Color>
             <Color x:Key="NavigationBarGray">#D8D8D8</Color>
             <Color x:Key="Divider">#C8C7CC</Color>
@@ -150,6 +165,53 @@
                 <Setter Property="RowHeight" Value="42" />
                 <Setter Property="BackgroundColor" Value="#F0F0F0" />
                 <Setter Property="OutlineColor" Value="#DEDEDE" />
+            </Style>
+
+            <Style x:Key="CustomButtonStyle" TargetType="controls:CustomButton">
+                <Setter Property="BorderWidth" Value="2" />
+                <Setter Property="BorderRadius" Value="6" />
+                <Setter Property="TextColor" Value="{StaticResource ColorPrimary}" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="FontAttributes" Value="None" />
+            </Style>
+
+            <Style x:Key="CustomButtonPrimaryStyle"
+                   BasedOn="{StaticResource CustomButtonStyle}"
+                   TargetType="controls:CustomButton">
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
+                <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
+                <Setter Property="BackgroundColorPressed" Value="{StaticResource ColorPrimaryDark}" />
+                <Setter Property="BorderColorPressed" Value="{StaticResource ColorPrimaryDark}" />
+                <Setter Property="TextColor" Value="{StaticResource ColorGrey300}" />
+                <Style.Triggers>
+                    <Trigger TargetType="Button" Property="IsEnabled" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
+                        <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
+                    </Trigger>
+                    <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                        <Setter Property="BackgroundColor" Value="{StaticResource ColorGrey300}" />
+                        <Setter Property="BorderColor" Value="{StaticResource ColorGrey300}" />
+                    </Trigger>
+                </Style.Triggers>
+            </Style>
+
+            <Style x:Key="CustomButtonSecondaryStyle"
+                   BasedOn="{StaticResource CustomButtonStyle}"
+                   TargetType="controls:CustomButton">
+                <Setter Property="BackgroundColor" Value="{StaticResource WindowBackground}" />
+                <Setter Property="BackgroundColorPressed" Value="{StaticResource WindowBackground}" />
+                <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
+                <Setter Property="BorderColorPressed" Value="{StaticResource ColorPrimary}" />
+                <Style.Triggers>
+                    <Trigger TargetType="Button" Property="IsEnabled" Value="True">
+                        <Setter Property="BackgroundColor" Value="{StaticResource ColorWhite}" />
+                        <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
+                    </Trigger>
+                    <Trigger TargetType="Button" Property="IsEnabled" Value="False">
+                        <Setter Property="BackgroundColor" Value="{StaticResource WindowBackground}" />
+                        <Setter Property="BorderColor" Value="{StaticResource ColorGrey300}" />
+                    </Trigger>
+                </Style.Triggers>
             </Style>
 
             <!--  Navigation Bar  -->

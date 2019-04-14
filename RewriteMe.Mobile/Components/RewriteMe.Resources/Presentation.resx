@@ -126,6 +126,18 @@
   <data name="ContactUs" xml:space="preserve">
     <value>Contact us</value>
   </data>
+  <data name="Developer" xml:space="preserve">
+    <value>Developer</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="SendMail" xml:space="preserve">
+    <value>Send Mail</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Reload</value>
+  </data>
   <data name="EmailIsNotSupported" xml:space="preserve">
     <value>E-mail is not supported on this device</value>
   </data>
@@ -134,5 +146,14 @@
   </data>
   <data name="TimeStamp" xml:space="preserve">
     <value>Time stamp</value>
+  </data>
+  <data name="ApplicationTitleLog" xml:space="preserve">
+    <value>Rewrite Me - Log</value>
+  </data>
+  <data name="DeviceHardwareLabel" xml:space="preserve">
+    <value>Device hardware:</value>
+  </data>
+  <data name="OperatingSystemLabel" xml:space="preserve">
+    <value>Operating system:</value>
   </data>
 </root>

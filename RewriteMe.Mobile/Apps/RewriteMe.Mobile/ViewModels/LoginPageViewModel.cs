@@ -2,6 +2,7 @@
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 
@@ -11,8 +12,9 @@ namespace RewriteMe.Mobile.ViewModels
     {
         public LoginPageViewModel(
             IDialogService dialogService,
-            INavigationService navigationService)
-            : base(dialogService, navigationService)
+            INavigationService navigationService,
+            ILoggerFactory loggerFactory)
+            : base(dialogService, navigationService, loggerFactory)
         {
             HasTitleBar = false;
         }
