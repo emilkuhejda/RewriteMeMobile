@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.DeviceInfo;
@@ -59,10 +60,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
-            using (new OperationMonitor(OperationScope))
-            {
-                await LoadLogFileAsync().ConfigureAwait(false);
-            }
+            await RunInOperationScope(LoadLogFileAsync).ConfigureAwait(false);
         }
 
         private async Task LoadLogFileAsync()
@@ -73,11 +71,11 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteClearLogFileCommandAsync()
         {
-            using (new OperationMonitor(OperationScope))
+            await RunInOperationScope(async () =>
             {
                 await _logFileReader.ClearLogFileAsync().ConfigureAwait(false);
                 await LoadLogFileAsync().ConfigureAwait(false);
-            }
+            }).ConfigureAwait(false);
         }
 
         private async Task ExecuteSendLogMailCommandAsync()
@@ -107,9 +105,14 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteReloadLogCommandAsync()
         {
+            await RunInOperationScope(LoadLogFileAsync).ConfigureAwait(false);
+        }
+
+        private Task RunInOperationScope(Func<Task> action)
+        {
             using (new OperationMonitor(OperationScope))
             {
-                await LoadLogFileAsync().ConfigureAwait(false);
+                return action.Invoke();
             }
         }
     }

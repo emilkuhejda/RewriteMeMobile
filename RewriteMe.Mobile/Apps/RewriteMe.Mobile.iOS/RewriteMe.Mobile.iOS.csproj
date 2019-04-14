@@ -97,6 +97,8 @@
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Configuration\OSXBootstrapper.cs" />
+    <Compile Include="ExceptionHandling\ExceptionHandler.cs" />
+    <Compile Include="ExceptionHandling\NativeMethods.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Localization\Localizer.cs" />
     <Compile Include="Localization\NLogFileReader.cs" />
@@ -187,6 +189,10 @@
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup />
   <ItemGroup>
+    <ProjectReference Include="..\..\Components\RewriteMe.Business\RewriteMe.Business.csproj">
+      <Project>{0C0379FC-7A0D-481A-A99E-45B1F054017D}</Project>
+      <Name>RewriteMe.Business</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Components\RewriteMe.Domain\RewriteMe.Domain.csproj">
       <Project>{348412EC-A4F4-4C5C-852A-FB0EEF53E867}</Project>
       <Name>RewriteMe.Domain</Name>
