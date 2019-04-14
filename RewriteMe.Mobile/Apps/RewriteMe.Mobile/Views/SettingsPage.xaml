@@ -24,7 +24,7 @@
                 <controls:Divider />
 
                 <!--  Application version  -->
-                <controls:DrillDownButton Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Version}}">
+                <controls:DrillDownButton Command="{Binding DeveloperMode.UnlockCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Version}}">
                     <Label Style="{StaticResource LabelStyle}" Text="{Binding ApplicationVersion}" />
                 </controls:DrillDownButton>
                 <controls:Divider />
@@ -38,8 +38,9 @@
                 <!--  Developer menu  -->
                 <controls:DrillDownButton Command="{Binding NavigateToDeveloperPageCommand}"
                                           ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                          IsVisible="{Binding DeveloperMode.Unlocked}"
                                           Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Developer}}" />
-                <controls:Divider />
+                <controls:Divider IsVisible="{Binding DeveloperMode.Unlocked}" />
             </StackLayout>
         </controls:AlwaysScrollView>
 

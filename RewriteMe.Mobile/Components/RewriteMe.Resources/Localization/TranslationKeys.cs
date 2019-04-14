@@ -15,6 +15,7 @@
         public static string Clear => "Clear";
         public static string SendMail => "SendMail";
         public static string Reload => "Reload";
+        public static string DeveloperModeIsActivated => "DeveloperModeIsActivated";
         public static string EmailIsNotSupported => "EmailIsNotSupported";
         public static string ApplicationVersion => "ApplicationVersion";
         public static string TimeStamp => "TimeStamp";

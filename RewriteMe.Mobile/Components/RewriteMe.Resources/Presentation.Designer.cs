@@ -125,6 +125,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Developer mode is activated.
+        /// </summary>
+        public static string DeveloperModeIsActivated {
+            get {
+                return ResourceManager.GetString("DeveloperModeIsActivated", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Device hardware:.
         /// </summary>
         public static string DeviceHardwareLabel {
