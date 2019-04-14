@@ -28,6 +28,7 @@ namespace RewriteMe.Mobile
 
         private void InitializeStorage()
         {
+            // Move to OnStart method
             AsyncHelper.RunSync(() => Container.Resolve<IStorageInitializer>().InitializeAsync());
         }
 
