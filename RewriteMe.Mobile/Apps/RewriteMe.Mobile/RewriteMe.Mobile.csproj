@@ -38,6 +38,7 @@
   
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="6.5.1" />
+    <PackageReference Include="NLog" Version="4.6.2" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.1.0.431" />
     <PackageReference Include="Xam.Plugin.LatestVersion" Version="1.1.2" />
     <PackageReference Include="Xam.Plugins.Messaging" Version="5.2.0" />
@@ -51,6 +52,7 @@
     <ProjectReference Include="..\..\Components\RewriteMe.Common\RewriteMe.Common.csproj" />
     <ProjectReference Include="..\..\Components\RewriteMe.DataAccess\RewriteMe.DataAccess.csproj" />
     <ProjectReference Include="..\..\Components\RewriteMe.Domain\RewriteMe.Domain.csproj" />
+    <ProjectReference Include="..\..\Components\RewriteMe.Logging\RewriteMe.Logging.csproj" />
     <ProjectReference Include="..\..\Components\RewriteMe.Resources\RewriteMe.Resources.csproj" />
   </ItemGroup>
   
