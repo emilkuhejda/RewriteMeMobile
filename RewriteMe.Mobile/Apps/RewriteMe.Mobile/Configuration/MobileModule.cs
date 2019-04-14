@@ -3,7 +3,9 @@ using Plugin.LatestVersion;
 using Plugin.Messaging;
 using Prism.Ioc;
 using RewriteMe.Common;
+using RewriteMe.Domain.Interfaces.ExceptionHandling;
 using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Mobile.ExceptionHandling;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Services;
 using RewriteMe.Mobile.ViewModels;
@@ -19,6 +21,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterInstance(CrossLatestVersion.Current);
             containerRegistry.RegisterInstance(CrossMessaging.Current.EmailMessenger);
             containerRegistry.RegisterSingleton<IDialogService, DialogService>();
+            containerRegistry.RegisterSingleton<IExceptionHandlingStrategy, ExceptionHandlingStrategy>();
 
             RegisterPages(containerRegistry);
         }

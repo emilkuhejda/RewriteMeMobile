@@ -12,7 +12,7 @@ namespace RewriteMe.Mobile.iOS.Renderers
         {
             base.OnElementChanged(e);
 
-            if (e.OldElement != null || this.Element == null)
+            if (e.OldElement != null || Element == null)
                 return;
 
             ShowsHorizontalScrollIndicator = false;

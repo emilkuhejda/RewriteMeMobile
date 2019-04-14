@@ -3,6 +3,7 @@ using Prism.Ioc;
 using Prism.Unity;
 using RewriteMe.Business;
 using RewriteMe.DataAccess;
+using RewriteMe.Domain.Interfaces.ExceptionHandling;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Logging;
 using RewriteMe.Mobile.Localization;
@@ -35,6 +36,8 @@ namespace RewriteMe.Mobile.Configuration
         private void InitializeServices(IContainerRegistry containerRegistry)
         {
             LocalizationExtension.Init(() => containerRegistry.GetContainer().Resolve<ILocalizer>());
+
+            containerRegistry.GetContainer().Resolve<IExceptionHandler>().RegisterForExceptions();
         }
     }
 }
