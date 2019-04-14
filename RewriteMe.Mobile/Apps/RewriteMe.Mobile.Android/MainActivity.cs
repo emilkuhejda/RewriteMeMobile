@@ -1,4 +1,5 @@
-﻿using Android.App;
+﻿using Acr.UserDialogs;
+using Android.App;
 using Android.Content.PM;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
@@ -19,6 +20,7 @@ namespace RewriteMe.Mobile.Droid
             Forms.Init(this, savedInstanceState);
 
             CachedImageRenderer.Init(null);
+            UserDialogs.Init(this);
 
             var bootstrapper = new AndroidBootstrapper();
             LoadApplication(new App(bootstrapper));

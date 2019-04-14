@@ -123,4 +123,16 @@
   <data name="Version" xml:space="preserve">
     <value>Version</value>
   </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Contact us</value>
+  </data>
+  <data name="EmailIsNotSupported" xml:space="preserve">
+    <value>E-mail is not supported on this device</value>
+  </data>
+  <data name="ApplicationVersion" xml:space="preserve">
+    <value>Application version</value>
+  </data>
+  <data name="TimeStamp" xml:space="preserve">
+    <value>Time stamp</value>
+  </data>
 </root>

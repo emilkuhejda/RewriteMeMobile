@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation.Parameters;
@@ -14,8 +15,10 @@ namespace RewriteMe.Mobile.ViewModels
         private IEnumerable<DropDownListViewModel> _items;
         private DropDownListViewModel _selectedItem;
 
-        public DropDownListPageViewModel(INavigationService navigationService)
-            : base(navigationService)
+        public DropDownListPageViewModel(
+            IDialogService dialogService,
+            INavigationService navigationService)
+            : base(dialogService, navigationService)
         {
             CanGoBack = true;
 
