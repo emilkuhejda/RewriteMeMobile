@@ -24,7 +24,7 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class SettingsPageViewModel : ViewModelBase
+    public class SettingsPageViewModel : ViewModelBase, IDisposable
     {
         private readonly IInternalValueService _internalValueService;
         private readonly IApplicationSettings _applicationSettings;
@@ -34,6 +34,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private LanguageInfo _selectedLanguage;
         private string _applicationVersion;
+        private bool _disposed;
 
         public SettingsPageViewModel(
             IInternalValueService internalValueService,
@@ -54,6 +55,9 @@ namespace RewriteMe.Mobile.ViewModels
 
             CanGoBack = true;
 
+            DeveloperMode = new DeveloperMode();
+            DeveloperMode.UnlockedEvent += OnUnlockedEvent;
+
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
             NavigateToEmailCommand = new DelegateCommand(ExecuteNavigateToEmailCommand);
             NavigateToDeveloperPageCommand = new AsyncCommand(ExecuteNavigateToDeveloperPageCommandAsync);
@@ -70,6 +74,8 @@ namespace RewriteMe.Mobile.ViewModels
             get => _applicationVersion;
             set => SetProperty(ref _applicationVersion, value);
         }
+
+        public DeveloperMode DeveloperMode { get; }
 
         public ICommand NavigateToLanguageCommand { get; }
 
@@ -185,6 +191,30 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteNavigateToDeveloperPageCommandAsync()
         {
             await NavigationService.NavigateWithoutAnimationAsync(Pages.Developer).ConfigureAwait(false);
+        }
+
+        private void OnUnlockedEvent(object sender, EventArgs e)
+        {
+            DialogService.AlertAsync(Loc.Text(TranslationKeys.DeveloperModeIsActivated));
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                DeveloperMode.UnlockedEvent -= OnUnlockedEvent;
+            }
+
+            _disposed = true;
         }
     }
 }

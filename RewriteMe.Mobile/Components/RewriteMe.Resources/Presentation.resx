@@ -138,6 +138,9 @@
   <data name="Reload" xml:space="preserve">
     <value>Reload</value>
   </data>
+  <data name="DeveloperModeIsActivated" xml:space="preserve">
+    <value>Developer mode is activated</value>
+  </data>
   <data name="EmailIsNotSupported" xml:space="preserve">
     <value>E-mail is not supported on this device</value>
   </data>
