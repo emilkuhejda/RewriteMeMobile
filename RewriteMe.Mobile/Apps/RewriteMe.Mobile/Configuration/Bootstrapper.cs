@@ -3,8 +3,8 @@ using Prism.Ioc;
 using Prism.Unity;
 using RewriteMe.Business;
 using RewriteMe.DataAccess;
-using RewriteMe.Domain;
 using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Logging;
 using RewriteMe.Mobile.Localization;
 using Unity;
 
@@ -23,8 +23,8 @@ namespace RewriteMe.Mobile.Configuration
             var dataAccessMobule = new DataAccessMobule();
             dataAccessMobule.RegisterServices(containerRegistry);
 
-            var domainModule = new DomainModule();
-            domainModule.RegisterServices(containerRegistry);
+            var loggingModule = new LoggingModule();
+            loggingModule.RegisterServices(containerRegistry);
 
             RegisterPlatformServices(containerRegistry);
             InitializeServices(containerRegistry);

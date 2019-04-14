@@ -99,6 +99,12 @@
     <Compile Include="Configuration\OSXBootstrapper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Localization\Localizer.cs" />
+    <Compile Include="Localization\NLogFileReader.cs" />
+    <Compile Include="Localization\NLogLoggerConfiguration.cs" />
+    <Compile Include="Localization\NLogLoggerFactory.cs" />
+    <Compile Include="Localization\NLogTargets.ConsoleTarget.cs" />
+    <Compile Include="Localization\NLogTargets.DebugTarget.cs" />
+    <Compile Include="Localization\NLogTargets.FileTarget.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <Compile Include="Providers\DirectoryProvider.cs" />
@@ -184,6 +190,10 @@
     <ProjectReference Include="..\..\Components\RewriteMe.Domain\RewriteMe.Domain.csproj">
       <Project>{348412EC-A4F4-4C5C-852A-FB0EEF53E867}</Project>
       <Name>RewriteMe.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Components\RewriteMe.Logging\RewriteMe.Logging.csproj">
+      <Project>{C14D362E-F2D5-48C2-8FDC-061DDA47C17E}</Project>
+      <Name>RewriteMe.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\RewriteMe.Mobile\RewriteMe.Mobile.csproj">
       <Project>{33fc372f-b17a-4e0b-8176-867d01c399fb}</Project>

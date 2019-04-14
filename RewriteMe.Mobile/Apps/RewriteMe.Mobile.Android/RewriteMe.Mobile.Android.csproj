@@ -79,6 +79,12 @@
     </Compile>
     <Compile Include="Configuration\AndroidBootstrapper.cs" />
     <Compile Include="Localization\Localizer.cs" />
+    <Compile Include="Logging\NLogFileReader.cs" />
+    <Compile Include="Logging\NLogLoggerConfiguration.cs" />
+    <Compile Include="Logging\NLogLoggerFactory.cs" />
+    <Compile Include="Logging\NLogTargets.ConsoleTarget.cs" />
+    <Compile Include="Logging\NLogTargets.DebugTarget.cs" />
+    <Compile Include="Logging\NLogTargets.FileTarget.cs" />
     <Compile Include="MainActivity.cs" />
     <Compile Include="Providers\DirectoryProvider.cs" />
     <Compile Include="Renderers\NoBarsScrollViewerRenderer.cs" />
@@ -121,6 +127,10 @@
     <ProjectReference Include="..\..\Components\RewriteMe.Domain\RewriteMe.Domain.csproj">
       <Project>{348412EC-A4F4-4C5C-852A-FB0EEF53E867}</Project>
       <Name>RewriteMe.Domain</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Components\RewriteMe.Logging\RewriteMe.Logging.csproj">
+      <Project>{C14D362E-F2D5-48C2-8FDC-061DDA47C17E}</Project>
+      <Name>RewriteMe.Logging</Name>
     </ProjectReference>
     <ProjectReference Include="..\RewriteMe.Mobile\RewriteMe.Mobile.csproj">
       <Project>{33fc372f-b17a-4e0b-8176-867d01c399fb}</Project>
