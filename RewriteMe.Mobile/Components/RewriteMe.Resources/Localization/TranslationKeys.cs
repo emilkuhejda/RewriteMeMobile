@@ -9,5 +9,6 @@
         public static string Settings => "Settings";
         public static string Languages => "Languages";
         public static string Language => "Language";
+        public static string Version => "Version";
     }
 }

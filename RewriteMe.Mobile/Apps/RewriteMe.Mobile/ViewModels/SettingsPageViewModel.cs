@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Plugin.LatestVersion.Abstractions;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
@@ -19,17 +20,21 @@ namespace RewriteMe.Mobile.ViewModels
     public class SettingsPageViewModel : ViewModelBase
     {
         private readonly IInternalValueService _internalValueService;
+        private readonly ILatestVersion _latestVersion;
         private readonly ILocalizer _localizer;
 
         private LanguageInfo _selectedLanguage;
+        private string _applicationVersion;
 
         public SettingsPageViewModel(
             IInternalValueService internalValueService,
+            ILatestVersion latestVersion,
             ILocalizer localizer,
             INavigationService navigationService)
             : base(navigationService)
         {
             _internalValueService = internalValueService;
+            _latestVersion = latestVersion;
             _localizer = localizer;
 
             CanGoBack = true;
@@ -43,13 +48,23 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _selectedLanguage, value);
         }
 
+        public string ApplicationVersion
+        {
+            get => _applicationVersion;
+            set => SetProperty(ref _applicationVersion, value);
+        }
+
         public ICommand NavigateToLanguageCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
             using (new OperationMonitor(OperationScope))
             {
-                if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
+                if (navigationParameters.GetNavigationMode() == NavigationMode.New)
+                {
+                    ApplicationVersion = _latestVersion.InstalledVersionNumber;
+                }
+                else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {
                     var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
                     await HandleSelectionAsync(dropDownListViewModel).ConfigureAwait(false);
