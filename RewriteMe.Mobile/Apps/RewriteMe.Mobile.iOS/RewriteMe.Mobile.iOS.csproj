@@ -93,6 +93,9 @@
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\..\Global\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
     <Compile Include="Configuration\OSXBootstrapper.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Localization\Localizer.cs" />
@@ -106,7 +109,6 @@
     </None>
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

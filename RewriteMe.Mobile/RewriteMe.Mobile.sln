@@ -23,10 +23,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Domain", "Compone
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_global", "_global", "{A90414C9-A9E0-4498-A485-50ADE2AB779E}"
 	ProjectSection(SolutionItems) = preProject
+		Global\AssemblyInfo.cs = Global\AssemblyInfo.cs
 		Global\RewriteMe.CodeAnalysis.ruleset = Global\RewriteMe.CodeAnalysis.ruleset
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Resources", "Components\RewriteMe.Resources\RewriteMe.Resources.csproj", "{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Resources", "Components\RewriteMe.Resources\RewriteMe.Resources.csproj", "{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
