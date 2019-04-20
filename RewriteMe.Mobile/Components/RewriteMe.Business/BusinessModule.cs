@@ -20,6 +20,7 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<IRewriteMeApiClientFactory, RewriteMeApiClientFactory>();
             containerRegistry.RegisterSingleton<IWebServiceErrorHandler, WebServiceErrorHandler>();
             containerRegistry.RegisterSingleton<IApplicationSettings, ApplicationSettings>();
+            containerRegistry.RegisterSingleton<IUserSessionService, UserSessionService>();
         }
     }
 }

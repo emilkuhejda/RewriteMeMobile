@@ -105,6 +105,18 @@
   <data name="ActivityIndicatorCaptionText" xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="RegisterOrSignIn" xml:space="preserve">
+    <value>Register or sign in</value>
+  </data>
+  <data name="SignInSuccessful" xml:space="preserve">
+    <value>Sign in successful</value>
+  </data>
+  <data name="SignInFailed" xml:space="preserve">
+    <value>Sign in failed</value>
+  </data>
+  <data name="RegisterToUseApplication" xml:space="preserve">
+    <value>Please register to use Rewrite Me</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
