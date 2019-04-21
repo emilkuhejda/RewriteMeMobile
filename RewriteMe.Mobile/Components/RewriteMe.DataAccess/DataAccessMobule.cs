@@ -14,6 +14,7 @@ namespace RewriteMe.DataAccess
             containerRegistry.RegisterSingleton<IAppDbContextProvider, AppDbContextProvider>();
             containerRegistry.RegisterSingleton<IStorageInitializer, StorageInitializer>();
             containerRegistry.RegisterSingleton<IInternalValueRepository, InternalValueRepository>();
+            containerRegistry.RegisterSingleton<IUserSessionRepository, UserSessionRepository>();
         }
     }
 }

@@ -9,6 +9,8 @@ namespace RewriteMe.DataAccess
     {
         AsyncTableQuery<InternalValueEntity> InternalValues { get; }
 
+        AsyncTableQuery<UserSessionEntity> UserSessions { get; }
+
         Task RunInTransactionAsync(Action<SQLiteConnection> action);
 
         Task CreateTablesAsync(params Type[] types);

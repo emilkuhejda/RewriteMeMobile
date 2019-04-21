@@ -13,13 +13,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Mobile.iOS", "App
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{6943FBF5-45EE-47B0-B876-E9D6D1D396D6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Business", "Components\RewriteMe.Business\RewriteMe.Business.csproj", "{0C0379FC-7A0D-481A-A99E-45B1F054017D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Business", "Components\RewriteMe.Business\RewriteMe.Business.csproj", "{0C0379FC-7A0D-481A-A99E-45B1F054017D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Common", "Components\RewriteMe.Common\RewriteMe.Common.csproj", "{80E67D24-8D03-4164-B39D-A7CE041D8A68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.DataAccess", "Components\RewriteMe.DataAccess\RewriteMe.DataAccess.csproj", "{81434F81-B2D0-405B-9DFB-5DD268E7A7CD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Domain", "Components\RewriteMe.Domain\RewriteMe.Domain.csproj", "{348412EC-A4F4-4C5C-852A-FB0EEF53E867}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Domain", "Components\RewriteMe.Domain\RewriteMe.Domain.csproj", "{348412EC-A4F4-4C5C-852A-FB0EEF53E867}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_global", "_global", "{A90414C9-A9E0-4498-A485-50ADE2AB779E}"
 	ProjectSection(SolutionItems) = preProject

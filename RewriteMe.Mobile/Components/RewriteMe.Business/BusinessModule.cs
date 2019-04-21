@@ -18,6 +18,7 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<IInternalValueService, InternalValueService>();
             containerRegistry.RegisterSingleton<IRewriteMeWebService, RewriteMeWebService>();
             containerRegistry.RegisterSingleton<IRewriteMeApiClientFactory, RewriteMeApiClientFactory>();
+            containerRegistry.RegisterSingleton<IPublicClientApplicationFactory, PublicClientApplicationFactory>();
             containerRegistry.RegisterSingleton<IWebServiceErrorHandler, WebServiceErrorHandler>();
             containerRegistry.RegisterSingleton<IApplicationSettings, ApplicationSettings>();
             containerRegistry.RegisterSingleton<IUserSessionService, UserSessionService>();
