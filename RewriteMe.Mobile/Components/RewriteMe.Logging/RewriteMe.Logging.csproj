@@ -18,7 +18,4 @@
     </Reference>
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Debug\" />
-  </ItemGroup>
 </Project>
