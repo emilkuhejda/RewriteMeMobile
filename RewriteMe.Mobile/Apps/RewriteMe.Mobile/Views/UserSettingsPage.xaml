@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<views:BaseNavigationPage xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          x:Class="RewriteMe.Mobile.Views.UserSettingsPage"
+                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+                          xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <Grid>
+        <controls:AlwaysScrollView>
+            <StackLayout Padding="0" Spacing="0">
+                <!--  Edit user profile  -->
+                <controls:DrillDownButton Command="{Binding EditProfileCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EditProfile}}" />
+                <controls:Divider />
+                
+                <!--  Log out  -->
+                <controls:DrillDownButton Command="{Binding LogoutCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SignOut}}" />
+                <controls:Divider />
+            </StackLayout>
+        </controls:AlwaysScrollView>
+        
+        <controls:PageActivityIndicator Grid.Row="0"
+                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
+                                        IsVisible="{Binding OperationScope.IsBusy}" />
+    </Grid>
+</views:BaseNavigationPage>

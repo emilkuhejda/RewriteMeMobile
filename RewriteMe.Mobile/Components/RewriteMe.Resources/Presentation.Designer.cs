@@ -113,6 +113,24 @@ namespace RewriteMe.Resources {
             }
         }
         
+        public static string UserProfile {
+            get {
+                return ResourceManager.GetString("UserProfile", resourceCulture);
+            }
+        }
+        
+        public static string EditProfile {
+            get {
+                return ResourceManager.GetString("EditProfile", resourceCulture);
+            }
+        }
+        
+        public static string SignOut {
+            get {
+                return ResourceManager.GetString("SignOut", resourceCulture);
+            }
+        }
+        
         public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);

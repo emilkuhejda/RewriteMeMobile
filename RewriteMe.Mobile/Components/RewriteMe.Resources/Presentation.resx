@@ -132,6 +132,15 @@
   <data name="Language" xml:space="preserve">
     <value>Language</value>
   </data>
+  <data name="UserProfile" xml:space="preserve">
+    <value>User profile</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Edit profile</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Sign out</value>
+  </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>
   </data>

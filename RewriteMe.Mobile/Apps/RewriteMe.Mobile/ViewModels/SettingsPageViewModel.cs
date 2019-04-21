@@ -27,17 +27,20 @@ namespace RewriteMe.Mobile.ViewModels
     public class SettingsPageViewModel : ViewModelBase, IDisposable
     {
         private readonly IInternalValueService _internalValueService;
+        private readonly IUserSessionService _userSessionService;
         private readonly IApplicationSettings _applicationSettings;
         private readonly ILatestVersion _latestVersion;
         private readonly IEmailTask _emailTask;
         private readonly ILocalizer _localizer;
 
         private LanguageInfo _selectedLanguage;
+        private string _userName;
         private string _applicationVersion;
         private bool _disposed;
 
         public SettingsPageViewModel(
             IInternalValueService internalValueService,
+            IUserSessionService userSessionService,
             IApplicationSettings applicationSettings,
             ILatestVersion latestVersion,
             IEmailTask emailTask,
@@ -48,6 +51,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(dialogService, navigationService, loggerFactory)
         {
             _internalValueService = internalValueService;
+            _userSessionService = userSessionService;
             _applicationSettings = applicationSettings;
             _latestVersion = latestVersion;
             _emailTask = emailTask;
@@ -59,6 +63,7 @@ namespace RewriteMe.Mobile.ViewModels
             DeveloperMode.UnlockedEvent += OnUnlockedEvent;
 
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
+            NavigateToUserSettingsCommand = new AsyncCommand(ExecuteNavigateToUserSettingsCommandAsync);
             NavigateToEmailCommand = new DelegateCommand(ExecuteNavigateToEmailCommand);
             NavigateToDeveloperPageCommand = new AsyncCommand(ExecuteNavigateToDeveloperPageCommandAsync);
         }
@@ -67,6 +72,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get => _selectedLanguage;
             set => SetProperty(ref _selectedLanguage, value);
+        }
+
+        public string UserName
+        {
+            get => _userName;
+            set => SetProperty(ref _userName, value);
         }
 
         public string ApplicationVersion
@@ -79,6 +90,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand NavigateToLanguageCommand { get; }
 
+        public ICommand NavigateToUserSettingsCommand { get; }
+
         public ICommand NavigateToEmailCommand { get; }
 
         public ICommand NavigateToDeveloperPageCommand { get; }
@@ -89,6 +102,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
+                    UserName = await _userSessionService.GetUserNameAsync().ConfigureAwait(false);
                     ApplicationVersion = _latestVersion.InstalledVersionNumber;
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
@@ -151,6 +165,11 @@ namespace RewriteMe.Mobile.ViewModels
             navigationParameters.Add<DropDownListNavigationParameters>(parameters);
 
             await NavigationService.NavigateWithoutAnimationAsync(Pages.DropDownListPage, navigationParameters).ConfigureAwait(false);
+        }
+
+        private async Task ExecuteNavigateToUserSettingsCommandAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.UserSettings).ConfigureAwait(false);
         }
 
         private void ExecuteNavigateToEmailCommand()

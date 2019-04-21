@@ -18,11 +18,11 @@ namespace RewriteMe.Business.Configuration
 
         public string PolicySignUpSignIn => "B2C_1_Demo_sign_up";
 
-        public string PolicySignIn => "";
+        public string PolicySignIn => "B2C_1_Demo_signup";
 
-        public string PolicyEditProfile => "";
+        public string PolicyEditProfile => "B2C_1_Demo_edit_profile";
 
-        public string PolicyResetPassword => "";
+        public string PolicyResetPassword => "B2C_1_Demo_reset_password";
 
         public string AuthoritySignUpSignIn => $"{AuthorityBase}{PolicySignUpSignIn}";
 

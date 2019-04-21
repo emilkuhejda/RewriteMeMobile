@@ -6,6 +6,8 @@ namespace RewriteMe.Domain.Interfaces.Services
     {
         Task<string> GetUserIdAsync();
 
+        Task<string> GetUserNameAsync();
+
         Task<string> GetAccessTokenSilentAsync();
 
         Task<bool> IsSignedInAsync();
