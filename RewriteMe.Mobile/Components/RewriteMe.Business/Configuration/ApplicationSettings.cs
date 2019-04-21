@@ -12,7 +12,7 @@ namespace RewriteMe.Business.Configuration
 
         public string ClientId => "cbd1aee8-27d8-49f4-9f73-02337c15c7a3";
 
-        public string RedirectUri => "urn:ietf:wg:oauth:2.0:oob";
+        public string RedirectUri => "msalcbd1aee8-27d8-49f4-9f73-02337c15c7a3://auth";
 
         public string[] Scopes => new[] { "" };
 

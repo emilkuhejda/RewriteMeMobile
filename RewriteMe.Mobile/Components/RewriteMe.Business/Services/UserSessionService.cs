@@ -123,10 +123,8 @@ namespace RewriteMe.Business.Services
             }
 
             var userExists = account.Any();
-            //var userSessionExists = await _userSessionRepository.UserSessionExistsAsync().ConfigureAwait(false);
-            var userSessionExists = true;
+            var userSessionExists = await _userSessionRepository.UserSessionExistsAsync().ConfigureAwait(false);
             var isSignedIn = (userExists || offline) && userSessionExists;
-            _logger.Info($"IsSignedIn = {isSignedIn}");
             return isSignedIn;
         }
 
@@ -209,6 +207,7 @@ namespace RewriteMe.Business.Services
         public async Task<bool> EditProfileAsync()
         {
             _logger.Info("Edit profile");
+
             var uiParent = _identityUiParentProvider.GetUiParent();
             var accounts = await GetAccountsLocalAsync().ConfigureAwait(false);
 
@@ -224,6 +223,7 @@ namespace RewriteMe.Business.Services
                         _applicationSettings.AuthorityEditProfile,
                         uiParent)
                     .ConfigureAwait(false);
+
                 await UpdateUserSessionAndPatchUserNameAsync(result.IdToken).ConfigureAwait(false);
                 return result.IdToken != null;
             }
@@ -236,6 +236,7 @@ namespace RewriteMe.Business.Services
         public async Task<bool> ResetPasswordAsync()
         {
             _logger.Info("Reset password");
+
             var uiParent = _identityUiParentProvider.GetUiParent();
             var accounts = await GetAccountsLocalAsync().ConfigureAwait(false);
 
@@ -252,6 +253,7 @@ namespace RewriteMe.Business.Services
                         _applicationSettings.AuthorityPasswordReset,
                         uiParent)
                     .ConfigureAwait(false);
+
                 await UpdateUserSessionAndPatchUserNameAsync(result.IdToken).ConfigureAwait(false);
                 return result.IdToken != null;
             }
@@ -334,6 +336,7 @@ namespace RewriteMe.Business.Services
         private async Task UpdateUserSession(AccessToken accessToken)
         {
             _logger.Debug($"Update user session for '{accessToken.GivenName} {accessToken.FamilyName}' with id '{accessToken.ObjectId}'.");
+
             var userSession = await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
             userSession.ObjectId = accessToken.ObjectId;
             userSession.GivenName = accessToken.GivenName;
