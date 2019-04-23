@@ -1,8 +1,10 @@
 ﻿using Acr.UserDialogs;
 using Android.App;
+using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
+using Microsoft.Identity.Client;
 using RewriteMe.Mobile.Droid.Configuration;
 using Xamarin.Forms;
 
@@ -28,6 +30,12 @@ namespace RewriteMe.Mobile.Droid
 
             var bootstrapper = new AndroidBootstrapper();
             LoadApplication(new App(bootstrapper));
+        }
+
+        protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
+        {
+            base.OnActivityResult(requestCode, resultCode, data);
+            AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
         }
     }
 }
