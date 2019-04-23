@@ -179,6 +179,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to You&apos;re not connected to the internet. Please try again..
+        /// </summary>
+        public static string OfflineMessageText {
+            get {
+                return ResourceManager.GetString("OfflineMessageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operating system:.
         /// </summary>
         public static string OperatingSystemLabel {

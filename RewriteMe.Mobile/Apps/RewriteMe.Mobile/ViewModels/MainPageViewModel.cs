@@ -11,10 +11,9 @@ namespace RewriteMe.Mobile.ViewModels
         public MainPageViewModel(
             IDialogService dialogService,
             INavigationService navigationService,
-                ILoggerFactory loggerFactory)
+            ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
-            CanGoBack = true;
         }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)

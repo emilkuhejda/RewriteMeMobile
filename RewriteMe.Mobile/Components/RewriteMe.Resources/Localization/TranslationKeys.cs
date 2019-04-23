@@ -4,6 +4,7 @@
     {
         public static string ApplicationTitle => "ApplicationTitle";
         public static string ActivityIndicatorCaptionText => "ActivityIndicatorCaptionText";
+        public static string OfflineMessageText => "OfflineMessageText";
         public static string English => "English";
         public static string Slovak => "Slovak";
         public static string Settings => "Settings";

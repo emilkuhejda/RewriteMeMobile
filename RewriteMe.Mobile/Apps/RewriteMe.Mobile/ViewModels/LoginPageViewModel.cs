@@ -23,7 +23,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                await NavigationService.NavigateWithoutAnimationAsync(Pages.Main).ConfigureAwait(false);
+                await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading).ConfigureAwait(false);
             }
         }
     }
