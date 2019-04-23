@@ -174,7 +174,7 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
-      <Version>2.9.1</Version>
+      <Version>2.9.2</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity.Forms">
       <Version>7.1.0.431</Version>
@@ -183,6 +183,9 @@
       <Version>1.0.2</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Xamarin.FFImageLoading.Forms">
+      <Version>2.4.4.859</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms">
       <Version>2.4.4.859</Version>

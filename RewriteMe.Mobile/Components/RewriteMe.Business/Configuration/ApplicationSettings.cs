@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using RewriteMe.Domain.Interfaces.Configuration;
+﻿using RewriteMe.Domain.Interfaces.Configuration;
 
 namespace RewriteMe.Business.Configuration
 {

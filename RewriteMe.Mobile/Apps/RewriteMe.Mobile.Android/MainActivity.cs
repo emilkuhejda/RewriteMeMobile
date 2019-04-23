@@ -8,7 +8,11 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Droid
 {
-    [Activity(Label = "RewriteMe.Mobile", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(
+        Label = "@string/ApplicationName",
+        Icon = "@mipmap/icon",
+        MainLauncher = false,
+        ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
