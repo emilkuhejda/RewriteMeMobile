@@ -75,6 +75,23 @@ namespace RewriteMe.Mobile.ViewModels
             IsLoading = false;
         }
 
+        protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
+        {
+            using (new OperationMonitor(OperationScope))
+            {
+                var alreadySignedIn = await _userSessionService.IsSignedInAsync().ConfigureAwait(false);
+                if (alreadySignedIn)
+                {
+                    Logger.Info("User is already signed in. Navigate to loading page.");
+                    await NavigationService.NavigateWithoutAnimationAsync(Pages.Main).ConfigureAwait(false);
+                }
+                else
+                {
+                    Logger.Info("No user is currently signed in. Sign in is required.");
+                }
+            }
+        }
+
         private bool CanExecuteLoginCommand()
         {
             return !_isLoading;
