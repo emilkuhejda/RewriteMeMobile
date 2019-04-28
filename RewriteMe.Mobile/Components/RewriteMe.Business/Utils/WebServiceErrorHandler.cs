@@ -4,9 +4,9 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Rest;
 using RewriteMe.Business.Extensions;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Utils;
-using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
 
@@ -31,14 +31,13 @@ namespace RewriteMe.Business.Utils
             {
                 _logger.Info($"Web service request for type '{targetTypeName}' started.");
                 var payload = await webServiceCall().ConfigureAwait(false);
-                if (payload is ProblemDetails problemDetails)
-                {
-                    _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '{problemDetails.Status}'.");
-                    return new HttpRequestResult<T>(HttpRequestState.Error, problemDetails.Status);
-                }
-
                 _logger.Info($"Web service request for type '{targetTypeName}' finished.");
                 return new HttpRequestResult<T>(HttpRequestState.Success, (int)HttpStatusCode.OK, payload);
+            }
+            catch (ProblemDetailsException exception)
+            {
+                _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '{exception.StatusCode}'.");
+                return new HttpRequestResult<T>(HttpRequestState.Error, exception.StatusCode);
             }
             catch (HttpRequestException exception)
             {

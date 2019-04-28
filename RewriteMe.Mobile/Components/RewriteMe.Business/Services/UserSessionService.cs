@@ -20,7 +20,7 @@ namespace RewriteMe.Business.Services
 {
     public class UserSessionService : IUserSessionService
     {
-        private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly IRegistrationUserWebService _registrationUserWebService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
         private readonly IApplicationSettings _applicationSettings;
@@ -31,14 +31,14 @@ namespace RewriteMe.Business.Services
         private string _accessToken;
 
         public UserSessionService(
-            IRewriteMeWebService rewriteMeWebService,
+            IRegistrationUserWebService registrationUserWebService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
             IApplicationSettings applicationSettings,
             IUserSessionRepository userSessionRepository,
             ILoggerFactory loggerFactory)
         {
-            _rewriteMeWebService = rewriteMeWebService;
+            _registrationUserWebService = registrationUserWebService;
             _identityUiParentProvider = identityUiParentProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
@@ -343,7 +343,7 @@ namespace RewriteMe.Business.Services
                     FamilyName = accessTokenObject.FamilyName
                 };
 
-                await _rewriteMeWebService.RegisterUserAsync(registerUserModel).ConfigureAwait(false);
+                await _registrationUserWebService.RegisterUserAsync(registerUserModel).ConfigureAwait(false);
             }
         }
 

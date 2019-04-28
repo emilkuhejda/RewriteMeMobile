@@ -146,7 +146,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='id'>
             /// </param>
-            public static object RemoveFileItem(this IRewriteMeAPI operations, string id)
+            public static Ok RemoveFileItem(this IRewriteMeAPI operations, string id)
             {
                 return operations.RemoveFileItemAsync(id).GetAwaiter().GetResult();
             }
@@ -159,7 +159,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> RemoveFileItemAsync(this IRewriteMeAPI operations, string id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Ok> RemoveFileItemAsync(this IRewriteMeAPI operations, string id, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RemoveFileItemWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -280,7 +280,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='version'>
             /// </param>
-            public static object UpdateUserTranscript(this IRewriteMeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), int? version = default(int?))
+            public static Ok UpdateUserTranscript(this IRewriteMeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), int? version = default(int?))
             {
                 return operations.UpdateUserTranscriptAsync(transcribeItemId, transcript, version).GetAwaiter().GetResult();
             }
@@ -297,7 +297,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> UpdateUserTranscriptAsync(this IRewriteMeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), int? version = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Ok> UpdateUserTranscriptAsync(this IRewriteMeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), int? version = default(int?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(transcribeItemId, transcript, version, null, cancellationToken).ConfigureAwait(false))
                 {

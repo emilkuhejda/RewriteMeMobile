@@ -1,4 +1,5 @@
-﻿using RewriteMe.Domain.Interfaces.Configuration;
+﻿using System;
+using RewriteMe.Domain.Interfaces.Configuration;
 
 namespace RewriteMe.Business.Configuration
 {
@@ -6,6 +7,8 @@ namespace RewriteMe.Business.Configuration
     {
         private const string Tenant = "rewritemedemo.onmicrosoft.com";
         private static readonly string AuthorityBase = $"https://login.microsoftonline.com/tfp/{Tenant}/";
+
+        public Uri WebApiUri { get; } = new Uri("https://192.168.0.105:45456/");
 
         public string SupportMailAddress => "emil.kuhejda@gmail.com";
 
