@@ -12,6 +12,8 @@
 
         public static string Settings { get; } = "Settings";
 
+        public static string UserSettings { get; } = "UserSettings";
+
         public static string Developer { get; } = "Developer";
 
         public static string DropDownListPage { get; } = "DropDownList";

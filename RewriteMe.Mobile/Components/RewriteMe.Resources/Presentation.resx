@@ -108,6 +108,33 @@
   <data name="OfflineMessageText" xml:space="preserve">
     <value>You're not connected to the internet. Please try again.</value>
   </data>
+  <data name="RegisterOrSignIn" xml:space="preserve">
+    <value>Register or sign in</value>
+  </data>
+  <data name="SignInSuccessful" xml:space="preserve">
+    <value>Sign in successful</value>
+  </data>
+  <data name="SignInFailed" xml:space="preserve">
+    <value>Sign in failed</value>
+  </data>
+  <data name="RegisterToUseApplication" xml:space="preserve">
+    <value>Please register to use Rewrite Me</value>
+  </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>Send email</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="RegistrationErrorTitle" xml:space="preserve">
+    <value>Registration error</value>
+  </data>
+  <data name="RegistrationErrorMessage" xml:space="preserve">
+    <value>User was not successfully registered. Please, contact us.</value>
+  </data>
+  <data name="UserIdentificationLabel" xml:space="preserve">
+    <value>User identification:</value>
+  </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
@@ -122,6 +149,15 @@
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="UserProfile" xml:space="preserve">
+    <value>User profile</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Edit profile</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Sign out</value>
   </data>
   <data name="Version" xml:space="preserve">
     <value>Version</value>

@@ -29,4 +29,7 @@
     <ProjectReference Include="..\RewriteMe.Domain\RewriteMe.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataAdapters\" />
+  </ItemGroup>
 </Project>

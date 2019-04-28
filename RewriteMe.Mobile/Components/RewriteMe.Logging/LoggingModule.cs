@@ -1,6 +1,5 @@
 ﻿using Prism.Ioc;
 using RewriteMe.Common;
-using RewriteMe.Logging.Debug;
 using RewriteMe.Logging.Interfaces;
 
 namespace RewriteMe.Logging

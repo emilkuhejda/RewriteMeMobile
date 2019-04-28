@@ -9,23 +9,22 @@ namespace RewriteMe.Domain.WebApi.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class AuthenticationModel
+    public partial class Ok
     {
         /// <summary>
-        /// Initializes a new instance of the AuthenticationModel class.
+        /// Initializes a new instance of the Ok class.
         /// </summary>
-        public AuthenticationModel()
+        public Ok()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the AuthenticationModel class.
+        /// Initializes a new instance of the Ok class.
         /// </summary>
-        public AuthenticationModel(string username = default(string), string password = default(string))
+        public Ok(bool? isSuccess = default(bool?))
         {
-            Username = username;
-            Password = password;
+            IsSuccess = isSuccess;
             CustomInit();
         }
 
@@ -36,13 +35,8 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "username")]
-        public string Username { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "password")]
-        public string Password { get; set; }
+        [JsonProperty(PropertyName = "isSuccess")]
+        public bool? IsSuccess { get; set; }
 
     }
 }

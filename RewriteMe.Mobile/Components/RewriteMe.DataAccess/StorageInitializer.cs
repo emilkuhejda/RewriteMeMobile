@@ -17,7 +17,8 @@ namespace RewriteMe.DataAccess
         {
             var tables = new[]
             {
-                typeof(InternalValueEntity)
+                typeof(InternalValueEntity),
+                typeof(UserSessionEntity)
             };
 
             await _contextProvider.Context.CreateTablesAsync(tables).ConfigureAwait(false);
