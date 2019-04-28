@@ -3,6 +3,7 @@
     public enum HttpRequestState
     {
         Success,
+        Error,
         Offline
     }
 }

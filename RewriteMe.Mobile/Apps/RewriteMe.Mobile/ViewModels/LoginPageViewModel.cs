@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
@@ -9,6 +8,7 @@ using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -43,13 +43,21 @@ namespace RewriteMe.Mobile.ViewModels
         public bool IsLoading
         {
             get => _isLoading;
-            set => SetProperty(ref _isLoading, value);
+            set
+            {
+                if (SetProperty(ref _isLoading, value))
+                {
+                    ThreadHelper.InvokeOnUiThread(() => LoginCommand.ChangeCanExecute());
+                }
+            }
         }
 
-        public ICommand LoginCommand { get; }
+        public IAsyncCommand LoginCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
+            IsLoading = true;
+
             using (new OperationMonitor(OperationScope))
             {
                 var alreadySignedIn = await _userSessionService.IsSignedInAsync().ConfigureAwait(false);
@@ -63,11 +71,13 @@ namespace RewriteMe.Mobile.ViewModels
                     Logger.Info("No user is currently signed in. Sign in is required.");
                 }
             }
+
+            IsLoading = false;
         }
 
         private bool CanExecuteLoginCommand()
         {
-            return true;
+            return !_isLoading;
         }
 
         private async Task ExecuteLoginCommandAsync()
