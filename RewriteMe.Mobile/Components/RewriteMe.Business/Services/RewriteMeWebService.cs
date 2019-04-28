@@ -26,7 +26,7 @@ namespace RewriteMe.Business.Services
 
         private IRewriteMeAPI Client => _client ?? (_client = _rewriteMeApiClientFactory.CreateClient(new Uri("https://192.168.0.105:45456/")));
 
-        public async Task<HttpRequestResult<ProblemDetails>> RegisterUserAsync(RegisterUserModel registerUserModel)
+        public async Task<HttpRequestResult<object>> RegisterUserAsync(RegisterUserModel registerUserModel)
         {
             return await _webServiceErrorHandler.HandleResponseAsync(() => Client.RegisterUserAsync(registerUserModel));
         }

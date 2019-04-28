@@ -333,7 +333,7 @@ namespace RewriteMe.Business.Services
             var accessTokenObject = new AccessToken(accessToken);
             await UpdateUserSession(accessTokenObject).ConfigureAwait(false);
 
-            if (!accessTokenObject.NewUser)
+            if (accessTokenObject.NewUser)
             {
                 var registerUserModel = new RegisterUserModel
                 {

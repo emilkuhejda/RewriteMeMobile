@@ -6,6 +6,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IRewriteMeWebService
     {
-        Task<HttpRequestResult<ProblemDetails>> RegisterUserAsync(RegisterUserModel registerUserModel);
+        Task<HttpRequestResult<object>> RegisterUserAsync(RegisterUserModel registerUserModel);
     }
 }

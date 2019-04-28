@@ -77,7 +77,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteLoginCommand()
         {
-            return _isLoading;
+            return !_isLoading;
         }
 
         private async Task ExecuteLoginCommandAsync()
