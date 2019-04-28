@@ -1,7 +1,11 @@
-﻿namespace RewriteMe.Domain.Interfaces.Configuration
+﻿using System;
+
+namespace RewriteMe.Domain.Interfaces.Configuration
 {
     public interface IApplicationSettings
     {
+        Uri WebApiUri { get; }
+
         string SupportMailAddress { get; }
 
         string ClientId { get; }

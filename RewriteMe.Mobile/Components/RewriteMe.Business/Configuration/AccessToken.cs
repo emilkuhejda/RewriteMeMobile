@@ -1,4 +1,5 @@
 ﻿using System;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using RewriteMe.Business.Extensions;
 
@@ -19,9 +20,17 @@ namespace RewriteMe.Business.Configuration
             GivenName = accessTokenObject["given_name"]?.ToString();
             FamilyName = accessTokenObject["family_name"]?.ToString();
             NewUser = accessTokenObject["newUser"] != null && (bool)accessTokenObject["newUser"];
+
+            var serializedEmails = accessTokenObject["emails"];
+            if (serializedEmails != null)
+            {
+                Email = JsonConvert.DeserializeObject<string[]>(serializedEmails.ToString())[0];
+            }
         }
 
         public string ObjectId { get; }
+
+        public string Email { get; }
 
         public string GivenName { get; }
 
