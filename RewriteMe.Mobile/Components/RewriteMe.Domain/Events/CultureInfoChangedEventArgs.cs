@@ -1,8 +1,9 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Globalization;
 
 namespace RewriteMe.Domain.Events
 {
-    public class CultureInfoChangedEventArgs : System.EventArgs
+    public class CultureInfoChangedEventArgs : EventArgs
     {
         public CultureInfoChangedEventArgs(CultureInfo cultureInfo)
         {

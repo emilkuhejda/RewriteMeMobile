@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.SettingsPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -26,6 +26,12 @@
                 <!--  Application version  -->
                 <controls:DrillDownButton Command="{Binding DeveloperMode.UnlockCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Version}}">
                     <Label Style="{StaticResource LabelStyle}" Text="{Binding ApplicationVersion}" />
+                </controls:DrillDownButton>
+                <controls:Divider />
+                
+                <!--  User profile  -->
+                <controls:DrillDownButton Command="{Binding NavigateToUserSettingsCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UserProfile}}">
+                    <Label Style="{StaticResource LabelStyle}" Text="{Binding UserName}" />
                 </controls:DrillDownButton>
                 <controls:Divider />
 

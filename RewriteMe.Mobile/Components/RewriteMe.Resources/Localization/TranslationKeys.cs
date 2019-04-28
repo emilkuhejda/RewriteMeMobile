@@ -13,6 +13,9 @@
         public static string Settings => "Settings";
         public static string Languages => "Languages";
         public static string Language => "Language";
+        public static string UserProfile => "UserProfile";
+        public static string EditProfile => "EditProfile";
+        public static string SignOut => "SignOut";
         public static string Version => "Version";
         public static string ContactUs => "ContactUs";
         public static string Developer => "Developer";

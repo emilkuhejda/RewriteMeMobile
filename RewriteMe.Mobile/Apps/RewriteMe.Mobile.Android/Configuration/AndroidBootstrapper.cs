@@ -16,6 +16,7 @@ namespace RewriteMe.Mobile.Droid.Configuration
         {
             containerRegistry.RegisterSingleton<ILocalizer, Localizer>();
             containerRegistry.RegisterSingleton<IDirectoryProvider, DirectoryProvider>();
+            containerRegistry.RegisterSingleton<IIdentityUiParentProvider, IdentityUiParentProvider>();
             containerRegistry.RegisterSingleton<ILoggerConfiguration, NLogLoggerConfiguration>();
             containerRegistry.RegisterSingleton<ILogFileReader, NLogFileReader>();
             containerRegistry.RegisterSingleton<ILoggerFactory, NLogLoggerFactory>();
