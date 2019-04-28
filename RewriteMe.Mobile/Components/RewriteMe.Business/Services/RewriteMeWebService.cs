@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Threading.Tasks;
+using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Factories;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
 using RewriteMe.Domain.WebApi;
+using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Business.Services
 {
@@ -22,5 +25,10 @@ namespace RewriteMe.Business.Services
         }
 
         private IRewriteMeAPI Client => _client ?? (_client = _rewriteMeApiClientFactory.CreateClient(new Uri("https://192.168.0.105:45456/")));
+
+        public async Task<HttpRequestResult<ProblemDetails>> RegisterUserAsync(RegisterUserModel registerUserModel)
+        {
+            return await _webServiceErrorHandler.HandleResponseAsync(() => Client.RegisterUserAsync(registerUserModel));
+        }
     }
 }

@@ -20,32 +20,6 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='authenticationModel'>
-            /// </param>
-            public static object AuthenticateUser(this IRewriteMeAPI operations, AuthenticationModel authenticationModel = default(AuthenticationModel))
-            {
-                return operations.AuthenticateUserAsync(authenticationModel).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='authenticationModel'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> AuthenticateUserAsync(this IRewriteMeAPI operations, AuthenticationModel authenticationModel = default(AuthenticationModel), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.AuthenticateUserWithHttpMessagesAsync(authenticationModel, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='minimumVersion'>
             /// </param>
             public static IList<FileItem> GetFileItems(this IRewriteMeAPI operations, int? minimumVersion = 0)

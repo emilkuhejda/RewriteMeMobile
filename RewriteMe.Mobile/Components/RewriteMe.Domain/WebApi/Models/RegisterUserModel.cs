@@ -22,12 +22,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the RegisterUserModel class.
         /// </summary>
-        public RegisterUserModel(string username = default(string), string password = default(string), string firstName = default(string), string lastName = default(string))
+        public RegisterUserModel(System.Guid? id = default(System.Guid?), string email = default(string), string givenName = default(string), string familyName = default(string))
         {
-            Username = username;
-            Password = password;
-            FirstName = firstName;
-            LastName = lastName;
+            Id = id;
+            Email = email;
+            GivenName = givenName;
+            FamilyName = familyName;
             CustomInit();
         }
 
@@ -38,23 +38,23 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "username")]
-        public string Username { get; set; }
+        [JsonProperty(PropertyName = "id")]
+        public System.Guid? Id { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "password")]
-        public string Password { get; set; }
+        [JsonProperty(PropertyName = "email")]
+        public string Email { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "firstName")]
-        public string FirstName { get; set; }
+        [JsonProperty(PropertyName = "givenName")]
+        public string GivenName { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "lastName")]
-        public string LastName { get; set; }
+        [JsonProperty(PropertyName = "familyName")]
+        public string FamilyName { get; set; }
 
     }
 }

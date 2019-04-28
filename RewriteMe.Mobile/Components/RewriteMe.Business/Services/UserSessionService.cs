@@ -12,6 +12,7 @@ using RewriteMe.Domain.Interfaces.Factories;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
 
@@ -19,6 +20,7 @@ namespace RewriteMe.Business.Services
 {
     public class UserSessionService : IUserSessionService
     {
+        private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
         private readonly IApplicationSettings _applicationSettings;
@@ -29,12 +31,14 @@ namespace RewriteMe.Business.Services
         private string _accessToken;
 
         public UserSessionService(
+            IRewriteMeWebService rewriteMeWebService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
             IApplicationSettings applicationSettings,
             IUserSessionRepository userSessionRepository,
             ILoggerFactory loggerFactory)
         {
+            _rewriteMeWebService = rewriteMeWebService;
             _identityUiParentProvider = identityUiParentProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
@@ -75,7 +79,7 @@ namespace RewriteMe.Business.Services
                 accessToken = await GetAccessTokenSilentAsync(_applicationSettings.PolicySignIn, _applicationSettings.AuthoritySignIn).ConfigureAwait(false);
             }
 
-            await UpdateUserSessionAndPatchUserNameAsync(accessToken).ConfigureAwait(false);
+            await UpdateUserSessionAndRegisterUserAsync(accessToken).ConfigureAwait(false);
             return accessToken;
         }
 
@@ -155,7 +159,7 @@ namespace RewriteMe.Business.Services
                     uiParent)
                     .ConfigureAwait(false);
 
-                await UpdateUserSessionAndPatchUserNameAsync(signUpOrInResult.IdToken).ConfigureAwait(false);
+                await UpdateUserSessionAndRegisterUserAsync(signUpOrInResult.IdToken).ConfigureAwait(false);
                 return signUpOrInResult.IdToken != null;
             }
             catch (HttpRequestException)
@@ -224,7 +228,7 @@ namespace RewriteMe.Business.Services
                         uiParent)
                     .ConfigureAwait(false);
 
-                await UpdateUserSessionAndPatchUserNameAsync(result.IdToken).ConfigureAwait(false);
+                await UpdateUserSessionAndRegisterUserAsync(result.IdToken).ConfigureAwait(false);
                 return result.IdToken != null;
             }
             catch (Exception)
@@ -254,7 +258,7 @@ namespace RewriteMe.Business.Services
                         uiParent)
                     .ConfigureAwait(false);
 
-                await UpdateUserSessionAndPatchUserNameAsync(result.IdToken).ConfigureAwait(false);
+                await UpdateUserSessionAndRegisterUserAsync(result.IdToken).ConfigureAwait(false);
                 return result.IdToken != null;
             }
             catch (Exception)
@@ -321,7 +325,7 @@ namespace RewriteMe.Business.Services
             return null;
         }
 
-        private async Task UpdateUserSessionAndPatchUserNameAsync(string accessToken)
+        private async Task UpdateUserSessionAndRegisterUserAsync(string accessToken)
         {
             if (accessToken == null)
                 return;
@@ -329,8 +333,18 @@ namespace RewriteMe.Business.Services
             var accessTokenObject = new AccessToken(accessToken);
             await UpdateUserSession(accessTokenObject).ConfigureAwait(false);
 
-            if (accessTokenObject.NewUser)
-            { }
+            if (!accessTokenObject.NewUser)
+            {
+                var registerUserModel = new RegisterUserModel
+                {
+                    Id = Guid.Parse(accessTokenObject.ObjectId),
+                    Email = accessTokenObject.Email,
+                    GivenName = accessTokenObject.GivenName,
+                    FamilyName = accessTokenObject.FamilyName
+                };
+
+                await _rewriteMeWebService.RegisterUserAsync(registerUserModel).ConfigureAwait(false);
+            }
         }
 
         private async Task UpdateUserSession(AccessToken accessToken)
