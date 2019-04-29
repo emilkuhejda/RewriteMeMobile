@@ -6,11 +6,26 @@
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
-    <ContentPage.Content>
-        <StackLayout>
-            <Label HorizontalOptions="CenterAndExpand"
-                   Text="Create file item page"
-                   VerticalOptions="CenterAndExpand" />
+    <Grid>
+        <StackLayout Grid.Row="0" Padding="10,10,10,10">
+            <Label Style="{StaticResource LabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.FileName}}" />
+            <Editor FontSize="{StaticResource LittleSize}"
+                    Keyboard="Text"
+                    Text="{Binding FileName}"
+                    VerticalOptions="Fill" />
+
+            <controls:DrillDownButton Command="{Binding NavigateToLanguageCommand}"
+                                      ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                      Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
+                <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedLanguage.Title}" />
+            </controls:DrillDownButton>
+            <controls:Divider />
+
+            <Button Command="{Binding SaveCommand}" Text="Save" />
         </StackLayout>
-    </ContentPage.Content>
+
+        <controls:PageActivityIndicator Grid.Row="0"
+                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
+                                        IsVisible="{Binding OperationScope.IsBusy}" />
+    </Grid>
 </views:BaseNavigationPage>

@@ -13,5 +13,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(DateTime updatedAfter);
 
         Task<HttpRequestResult<IEnumerable<TranscribeItem>>> GetTranscribeItemsAllAsync(DateTime updatedAfter);
+
+        Task<HttpRequestResult<FileItem>> CreateFileItemAsync(string name, string language);
     }
 }

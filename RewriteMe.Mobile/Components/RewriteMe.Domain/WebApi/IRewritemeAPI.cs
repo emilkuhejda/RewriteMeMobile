@@ -11,6 +11,7 @@ namespace RewriteMe.Domain.WebApi
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -58,13 +59,15 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         /// <param name='language'>
         /// </param>
+        /// <param name='file'>
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> CreateFileItemWithHttpMessagesAsync(string name = default(string), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> CreateFileItemWithHttpMessagesAsync(string name = default(string), string language = default(string), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='fileItemId'>
         /// </param>

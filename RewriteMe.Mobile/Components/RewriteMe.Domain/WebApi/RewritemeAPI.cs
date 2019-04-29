@@ -12,8 +12,10 @@ namespace RewriteMe.Domain.WebApi
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Net;
     using System.Net.Http;
+    using System.Net.Http.Headers;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -408,6 +410,8 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         /// <param name='language'>
         /// </param>
+        /// <param name='file'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -423,7 +427,7 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> CreateFileItemWithHttpMessagesAsync(string name = default(string), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> CreateFileItemWithHttpMessagesAsync(string name = default(string), string language = default(string), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -434,12 +438,26 @@ namespace RewriteMe.Domain.WebApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("language", language);
+                tracingParameters.Add("file", file);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateFileItem", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files/create").ToString();
+            List<string> _queryParameters = new List<string>();
+            if (name != null)
+            {
+                _queryParameters.Add(string.Format("name={0}", System.Uri.EscapeDataString(name)));
+            }
+            if (language != null)
+            {
+                _queryParameters.Add(string.Format("language={0}", System.Uri.EscapeDataString(language)));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -463,15 +481,27 @@ namespace RewriteMe.Domain.WebApi
             // Serialize Request
             string _requestContent = null;
             MultipartFormDataContent _multiPartContent = new MultipartFormDataContent();
-            if (name != null)
+            if (file != null)
             {
-                StringContent _name = new StringContent(name, System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_name, "Name");
-            }
-            if (language != null)
-            {
-                StringContent _language = new StringContent(language, System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_language, "Language");
+                StreamContent _file = new StreamContent(file);
+                _file.Headers.ContentType = new MediaTypeHeaderValue("application/octet-stream");
+                ContentDispositionHeaderValue _contentDispositionHeaderValue = new ContentDispositionHeaderValue("form-data");
+                _contentDispositionHeaderValue.Name = "file";
+                // get filename from stream if it's a file otherwise, just use  'unknown'
+                var _fileStream = file as FileStream;
+                var _fileName = (_fileStream != null ? _fileStream.Name : null) ?? "unknown";
+                if(System.Linq.Enumerable.Any(_fileName, c => c > 127) )
+                {
+                    // non ASCII chars detected, need UTF encoding:
+                    _contentDispositionHeaderValue.FileNameStar = _fileName;
+                }
+                else
+                {
+                    // ASCII only
+                    _contentDispositionHeaderValue.FileName = _fileName;
+                }
+                _file.Headers.ContentDisposition = _contentDispositionHeaderValue;
+                _multiPartContent.Add(_file, "file");
             }
             _httpRequest.Content = _multiPartContent;
             // Send Request
@@ -980,7 +1010,7 @@ namespace RewriteMe.Domain.WebApi
             {
                 _requestContent = SafeJsonConvert.SerializeObject(transcribeFileItemModel, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
+                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
             }
             // Send Request
             if (_shouldTrace)
@@ -1644,7 +1674,7 @@ namespace RewriteMe.Domain.WebApi
             {
                 _requestContent = SafeJsonConvert.SerializeObject(registerUserModel, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
+                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
             }
             // Send Request
             if (_shouldTrace)

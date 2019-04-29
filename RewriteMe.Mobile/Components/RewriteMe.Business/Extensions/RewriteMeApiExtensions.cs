@@ -33,6 +33,14 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<FileItem> CreateFileItemAsync(this IRewriteMeAPI operations, string name, string language, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.CreateFileItemWithHttpMessagesAsync(name, language, null, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<FileItem>(result.Body);
+            }
+        }
+
         public static async Task<Ok> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel)
         {
             using (var result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel).ConfigureAwait(false))

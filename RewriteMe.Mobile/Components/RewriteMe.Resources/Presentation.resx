@@ -105,6 +105,9 @@
   <data name="ActivityIndicatorCaptionText" xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="LoadingData" xml:space="preserve">
+    <value>Loading data....</value>
+  </data>
   <data name="OfflineMessageText" xml:space="preserve">
     <value>You're not connected to the internet. Please try again.</value>
   </data>
@@ -119,6 +122,9 @@
   </data>
   <data name="RegisterToUseApplication" xml:space="preserve">
     <value>Please register to use Rewrite Me</value>
+  </data>
+  <data name="UserRegistration" xml:space="preserve">
+    <value>User registration</value>
   </data>
   <data name="RegistrationErrorTitle" xml:space="preserve">
     <value>Registration error</value>
@@ -198,10 +204,7 @@
   <data name="OperatingSystemLabel" xml:space="preserve">
     <value>Operating system:</value>
   </data>
-  <data name="UserRegistration" xml:space="preserve">
-    <value>User registration</value>
-  </data>
-  <data name="LoadingData" xml:space="preserve">
-    <value>Loading data....</value>
+  <data name="FileName" xml:space="preserve">
+    <value>File name</value>
   </data>
 </root>

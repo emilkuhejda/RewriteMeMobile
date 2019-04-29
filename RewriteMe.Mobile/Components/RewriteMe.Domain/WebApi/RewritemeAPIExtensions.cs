@@ -9,6 +9,7 @@ namespace RewriteMe.Domain.WebApi
     using Models;
     using System.Collections;
     using System.Collections.Generic;
+    using System.IO;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -76,9 +77,11 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='language'>
             /// </param>
-            public static object CreateFileItem(this IRewriteMeAPI operations, string name = default(string), string language = default(string))
+            /// <param name='file'>
+            /// </param>
+            public static object CreateFileItem(this IRewriteMeAPI operations, string name = default(string), string language = default(string), Stream file = default(Stream))
             {
-                return operations.CreateFileItemAsync(name, language).GetAwaiter().GetResult();
+                return operations.CreateFileItemAsync(name, language, file).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -88,12 +91,14 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='language'>
             /// </param>
+            /// <param name='file'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> CreateFileItemAsync(this IRewriteMeAPI operations, string name = default(string), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> CreateFileItemAsync(this IRewriteMeAPI operations, string name = default(string), string language = default(string), Stream file = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateFileItemWithHttpMessagesAsync(name, language, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateFileItemWithHttpMessagesAsync(name, language, file, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
