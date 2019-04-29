@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Http;
@@ -30,10 +31,10 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetLastUpdates(customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(int? minimumVersion = 0)
+        public async Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(DateTime updatedAfter)
         {
             var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetFileItemsAsync(0, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetFileItemsAsync(updatedAfter, customHeaders)).ConfigureAwait(false);
         }
 
         private async Task<CustomHeadersDictionary> GetAuthHeaders()

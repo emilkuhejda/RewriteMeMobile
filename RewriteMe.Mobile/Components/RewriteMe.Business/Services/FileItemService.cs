@@ -1,4 +1,4 @@
-﻿using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
@@ -23,20 +23,16 @@ namespace RewriteMe.Business.Services
             _rewriteMeWebService = rewriteMeWebService;
         }
 
-        public async Task SynchronizationAsync(int? applicationFileItemVersion)
+        public async Task SynchronizationAsync(DateTime applicationUpdateDate)
         {
-            var fileItemVersion = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
-            if (applicationFileItemVersion.HasValue && applicationFileItemVersion.Value > fileItemVersion)
+            var lastFileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
+            if (applicationUpdateDate >= lastFileItemSynchronization)
             {
-                var httpRequestResult = await _rewriteMeWebService.GetFileItemsAsync(fileItemVersion).ConfigureAwait(false);
+                var httpRequestResult = await _rewriteMeWebService.GetFileItemsAsync(lastFileItemSynchronization).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    var fileItems = httpRequestResult.Payload.ToList();
-                    var fileItem = fileItems.OrderByDescending(x => x.Version).FirstOrDefault();
-                    var lastVersion = fileItem == null ? 0 : fileItem.Version;
-
-                    await _fileItemRepository.UpdateAsync(fileItems).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, lastVersion);
+                    await _fileItemRepository.UpdateAsync(httpRequestResult.Payload).ConfigureAwait(false);
+                    await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow);
                 }
             }
         }

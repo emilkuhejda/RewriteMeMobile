@@ -36,7 +36,6 @@ namespace RewriteMe.Business.Services
             var updateMethods = new List<Func<Task>>
             {
                 UpdateFileItemsAsync,
-                UpdateAudioSourcesAsync,
                 UpdateTranscribeItemAsync
             };
 
@@ -49,14 +48,10 @@ namespace RewriteMe.Business.Services
 
         public async Task<bool> IsFirstTimeDataSyncAsync()
         {
-            var fileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
-            var audioSourceSynchronization = await _internalValueService.GetValueAsync(InternalValues.AudioSourceSynchronization).ConfigureAwait(false);
-            var transcribeItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.TranscribeItemSynchronization).ConfigureAwait(false);
+            var lastFileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
+            var lastTranscribeItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.TranscribeItemSynchronization).ConfigureAwait(false);
 
-            var atLeastOneHasNoData = !fileItemSynchronization.HasValue ||
-                                      !audioSourceSynchronization.HasValue ||
-                                      !transcribeItemSynchronization.HasValue;
-
+            var atLeastOneHasNoData = lastFileItemSynchronization == default || lastTranscribeItemSynchronization == default;
             return atLeastOneHasNoData;
         }
 
@@ -71,13 +66,6 @@ namespace RewriteMe.Business.Services
             var applicationFileItemVersion = _lastUpdatesService.GetFileItemVersion();
 
             await _fileItemService.SynchronizationAsync(applicationFileItemVersion);
-        }
-
-        private async Task UpdateAudioSourcesAsync()
-        {
-            var applicationAudioSourceVersion = _lastUpdatesService.GetAudioSourceVersion();
-
-            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         private async Task UpdateTranscribeItemAsync()

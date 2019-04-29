@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.WebApi.Models;
@@ -9,6 +10,6 @@ namespace RewriteMe.Domain.Interfaces.Services
     {
         Task<HttpRequestResult<LastUpdates>> GetLastUpdates();
 
-        Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(int? minimumVersion = 0);
+        Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(DateTime updatedAfter);
     }
 }

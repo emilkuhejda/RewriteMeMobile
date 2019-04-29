@@ -24,7 +24,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the TranscribeItem class.
         /// </summary>
-        public TranscribeItem(System.Guid? id = default(System.Guid?), System.Guid? fileItemId = default(System.Guid?), IList<RecognitionAlternative> alternatives = default(IList<RecognitionAlternative>), string userTranscript = default(string), byte[] source = default(byte[]), string startTime = default(string), string endTime = default(string), string totalTime = default(string), System.DateTime? dateCreated = default(System.DateTime?), int? version = default(int?))
+        public TranscribeItem(System.Guid? id = default(System.Guid?), System.Guid? fileItemId = default(System.Guid?), IList<RecognitionAlternative> alternatives = default(IList<RecognitionAlternative>), string userTranscript = default(string), byte[] source = default(byte[]), string startTime = default(string), string endTime = default(string), string totalTime = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.DateTime? dateUpdated = default(System.DateTime?))
         {
             Id = id;
             FileItemId = fileItemId;
@@ -35,7 +35,7 @@ namespace RewriteMe.Domain.WebApi.Models
             EndTime = endTime;
             TotalTime = totalTime;
             DateCreated = dateCreated;
-            Version = version;
+            DateUpdated = dateUpdated;
             CustomInit();
         }
 
@@ -91,8 +91,8 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "version")]
-        public int? Version { get; set; }
+        [JsonProperty(PropertyName = "dateUpdated")]
+        public System.DateTime? DateUpdated { get; set; }
 
     }
 }

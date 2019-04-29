@@ -1,9 +1,10 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IFileItemService
     {
-        Task SynchronizationAsync(int? applicationFileItemVersion);
+        Task SynchronizationAsync(DateTime applicationUpdateDate);
     }
 }

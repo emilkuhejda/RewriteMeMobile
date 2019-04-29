@@ -16,7 +16,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 RecognitionState = entity.RecognitionState,
                 DateCreated = entity.DateCreated,
                 DateProcessed = entity.DateProcessed,
-                Version = entity.Version
+                DateUpdated = entity.DateUpdated,
+                AudioSourceVersion = entity.AudioSourceVersion
             };
         }
 
@@ -31,7 +32,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 RecognitionState = fileItem.RecognitionState,
                 DateCreated = fileItem.DateCreated.GetValueOrDefault(),
                 DateProcessed = fileItem.DateProcessed.GetValueOrDefault(),
-                Version = fileItem.Version.GetValueOrDefault()
+                DateUpdated = fileItem.DateUpdated.GetValueOrDefault(),
+                AudioSourceVersion = fileItem.AudioSourceVersion.GetValueOrDefault()
             };
         }
     }

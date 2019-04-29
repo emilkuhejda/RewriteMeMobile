@@ -154,7 +154,7 @@ namespace RewriteMe.Domain.WebApi
             };
             CustomInitialize();
         }
-        /// <param name='minimumVersion'>
+        /// <param name='updatedAfter'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -171,7 +171,7 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<FileItem>>> GetFileItemsWithHttpMessagesAsync(int? minimumVersion = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<FileItem>>> GetFileItemsWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -180,7 +180,7 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("minimumVersion", minimumVersion);
+                tracingParameters.Add("updatedAfter", updatedAfter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetFileItems", tracingParameters);
             }
@@ -188,9 +188,9 @@ namespace RewriteMe.Domain.WebApi
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files").ToString();
             List<string> _queryParameters = new List<string>();
-            if (minimumVersion != null)
+            if (updatedAfter != null)
             {
-                _queryParameters.Add(string.Format("minimumVersion={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(minimumVersion, SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("updatedAfter={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(updatedAfter, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -520,7 +520,7 @@ namespace RewriteMe.Domain.WebApi
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Ok>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<FileItem>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -617,10 +617,6 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         /// <param name='language'>
         /// </param>
-        /// <param name='fileItemVersion'>
-        /// </param>
-        /// <param name='sourceVersion'>
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -636,7 +632,7 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), int? fileItemVersion = default(int?), int? sourceVersion = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -648,8 +644,6 @@ namespace RewriteMe.Domain.WebApi
                 tracingParameters.Add("fileItemId", fileItemId);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("language", language);
-                tracingParameters.Add("fileItemVersion", fileItemVersion);
-                tracingParameters.Add("sourceVersion", sourceVersion);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateFileItem", tracingParameters);
             }
@@ -693,16 +687,6 @@ namespace RewriteMe.Domain.WebApi
             {
                 StringContent _language = new StringContent(language, System.Text.Encoding.UTF8);
                 _multiPartContent.Add(_language, "Language");
-            }
-            if (fileItemVersion != null)
-            {
-                StringContent _fileItemVersion = new StringContent(SafeJsonConvert.SerializeObject(fileItemVersion, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_fileItemVersion, "FileItemVersion");
-            }
-            if (sourceVersion != null)
-            {
-                StringContent _sourceVersion = new StringContent(SafeJsonConvert.SerializeObject(sourceVersion, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_sourceVersion, "SourceVersion");
             }
             _httpRequest.Content = _multiPartContent;
             // Send Request
@@ -751,7 +735,7 @@ namespace RewriteMe.Domain.WebApi
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Ok>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<FileItem>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -1218,7 +1202,7 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='fileItemId'>
         /// </param>
-        /// <param name='minimumVersion'>
+        /// <param name='updatedAfter'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1235,7 +1219,7 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<TranscribeItem>>> GetTranscribeItemsWithHttpMessagesAsync(System.Guid fileItemId, int? minimumVersion = 0, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<TranscribeItem>>> GetTranscribeItemsWithHttpMessagesAsync(System.Guid fileItemId, System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1245,7 +1229,7 @@ namespace RewriteMe.Domain.WebApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fileItemId", fileItemId);
-                tracingParameters.Add("minimumVersion", minimumVersion);
+                tracingParameters.Add("updatedAfter", updatedAfter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetTranscribeItems", tracingParameters);
             }
@@ -1254,9 +1238,9 @@ namespace RewriteMe.Domain.WebApi
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/transcribe-items/{fileItemId}").ToString();
             _url = _url.Replace("{fileItemId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(fileItemId, SerializationSettings).Trim('"')));
             List<string> _queryParameters = new List<string>();
-            if (minimumVersion != null)
+            if (updatedAfter != null)
             {
-                _queryParameters.Add(string.Format("minimumVersion={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(minimumVersion, SerializationSettings).Trim('"'))));
+                _queryParameters.Add(string.Format("updatedAfter={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(updatedAfter, SerializationSettings).Trim('"'))));
             }
             if (_queryParameters.Count > 0)
             {
@@ -1474,8 +1458,6 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         /// <param name='transcript'>
         /// </param>
-        /// <param name='version'>
-        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -1491,7 +1473,7 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<Ok>> UpdateUserTranscriptWithHttpMessagesAsync(System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), int? version = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<Ok>> UpdateUserTranscriptWithHttpMessagesAsync(System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1502,7 +1484,6 @@ namespace RewriteMe.Domain.WebApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("transcribeItemId", transcribeItemId);
                 tracingParameters.Add("transcript", transcript);
-                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateUserTranscript", tracingParameters);
             }
@@ -1541,11 +1522,6 @@ namespace RewriteMe.Domain.WebApi
             {
                 StringContent _transcript = new StringContent(transcript, System.Text.Encoding.UTF8);
                 _multiPartContent.Add(_transcript, "Transcript");
-            }
-            if (version != null)
-            {
-                StringContent _version = new StringContent(SafeJsonConvert.SerializeObject(version, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
-                _multiPartContent.Add(_version, "Version");
             }
             _httpRequest.Content = _multiPartContent;
             // Send Request

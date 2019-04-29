@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.WebApi;
@@ -8,7 +9,7 @@ namespace RewriteMe.Business.Extensions
 {
     public static class RewriteMeApiExtensions
     {
-        public static async Task<LastUpdates> GetLastUpdates(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders = null)
+        public static async Task<LastUpdates> GetLastUpdates(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.GetLastUpdatesWithHttpMessagesAsync(customHeaders))
             {
@@ -16,9 +17,9 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<IEnumerable<FileItem>> GetFileItemsAsync(this IRewriteMeAPI operations, int? minimumVersion = 0, Dictionary<string, List<string>> customHeaders = null)
+        public static async Task<IEnumerable<FileItem>> GetFileItemsAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetFileItemsWithHttpMessagesAsync(minimumVersion, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetFileItemsWithHttpMessagesAsync(updatedAfter, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<FileItem>>(result.Body);
             }

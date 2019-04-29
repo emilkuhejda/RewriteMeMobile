@@ -22,10 +22,9 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the LastUpdates class.
         /// </summary>
-        public LastUpdates(int? fileItem = default(int?), int? audioSource = default(int?), int? transcribeItem = default(int?))
+        public LastUpdates(System.DateTime? fileItem = default(System.DateTime?), System.DateTime? transcribeItem = default(System.DateTime?))
         {
             FileItem = fileItem;
-            AudioSource = audioSource;
             TranscribeItem = transcribeItem;
             CustomInit();
         }
@@ -38,17 +37,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "fileItem")]
-        public int? FileItem { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "audioSource")]
-        public int? AudioSource { get; set; }
+        public System.DateTime? FileItem { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "transcribeItem")]
-        public int? TranscribeItem { get; set; }
+        public System.DateTime? TranscribeItem { get; set; }
 
     }
 }

@@ -29,28 +29,20 @@ namespace RewriteMe.Business.Services
             _isInitialized = true;
         }
 
-        public int? GetFileItemVersion()
+        public DateTime GetFileItemVersion()
         {
             if (!_isInitialized)
                 throw new InvalidOperationException("Service is not initialized");
 
-            return _lastUpdates?.FileItem;
+            return _lastUpdates?.FileItem ?? DateTime.MinValue;
         }
 
-        public int? GetAudioSourceVersion()
+        public DateTime GetTranscribeItemVersion()
         {
             if (!_isInitialized)
                 throw new InvalidOperationException("Service is not initialized");
 
-            return _lastUpdates?.AudioSource;
-        }
-
-        public int? GetTranscribeItemVersion()
-        {
-            if (!_isInitialized)
-                throw new InvalidOperationException("Service is not initialized");
-
-            return _lastUpdates?.TranscribeItem;
+            return _lastUpdates?.TranscribeItem ?? DateTime.MinValue;
         }
     }
 }

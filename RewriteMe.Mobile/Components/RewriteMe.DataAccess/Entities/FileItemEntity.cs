@@ -24,6 +24,8 @@ namespace RewriteMe.DataAccess.Entities
 
         public DateTime DateProcessed { get; set; }
 
-        public int Version { get; set; }
+        public DateTime DateUpdated { get; set; }
+
+        public int? AudioSourceVersion { get; set; }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
@@ -6,10 +7,8 @@ namespace RewriteMe.Domain.Interfaces.Services
     {
         Task InitializeAsync();
 
-        int? GetFileItemVersion();
+        DateTime GetFileItemVersion();
 
-        int? GetAudioSourceVersion();
-
-        int? GetTranscribeItemVersion();
+        DateTime GetTranscribeItemVersion();
     }
 }
