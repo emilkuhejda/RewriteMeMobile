@@ -233,7 +233,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User was not successfully registered. Please, contact us..
+        ///   Looks up a localized string similar to Registration was not successful. Application might not work correctly. Please, contact us..
         /// </summary>
         public static string RegistrationErrorMessage {
             get {

@@ -1,8 +1,9 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.LoginPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
@@ -12,6 +13,15 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
+        <forms:CachedImage Grid.Row="0"
+                           Margin="0,0,0,20"
+                           Aspect="AspectFit"
+                           HeightRequest="400"
+                           HorizontalOptions="Center"
+                           Source="resource://RewriteMe.Mobile.Resources.Images.RewriteMeLogo.png"
+                           VerticalOptions="End"
+                           WidthRequest="400" />
+
         <StackLayout Grid.Row="1"
                      HorizontalOptions="Center"
                      VerticalOptions="Center">
@@ -20,16 +30,14 @@
                    HorizontalTextAlignment="Center"
                    LineBreakMode="WordWrap"
                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterToUseApplication}}"
-                   WidthRequest="180">
-            </Label>
-            <Button Command="{Binding LoginCommand}"
-                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterOrSignIn}}" />
-            
+                   WidthRequest="180" />
+            <Button Command="{Binding LoginCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterOrSignIn}}" />
+
             <Label HorizontalOptions="Center"
                    HorizontalTextAlignment="Center"
                    Text="{Binding LoginFeedback}" />
         </StackLayout>
-        
+
         <controls:PageActivityIndicator Grid.Row="0"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
                                         IsVisible="{Binding OperationScope.IsBusy}" />

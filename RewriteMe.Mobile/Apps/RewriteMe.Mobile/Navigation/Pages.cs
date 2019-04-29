@@ -8,7 +8,7 @@
 
         public static string Loading { get; } = "Loading";
 
-        public static string Main { get; } = "Main";
+        public static string Overview { get; } = "Overview";
 
         public static string Settings { get; } = "Settings";
 

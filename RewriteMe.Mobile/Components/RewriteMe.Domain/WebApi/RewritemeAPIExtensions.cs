@@ -310,7 +310,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='registerUserModel'>
             /// </param>
-            public static object RegisterUser(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel))
+            public static Ok RegisterUser(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel))
             {
                 return operations.RegisterUserAsync(registerUserModel).GetAwaiter().GetResult();
             }
@@ -323,7 +323,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Ok> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel, null, cancellationToken).ConfigureAwait(false))
                 {

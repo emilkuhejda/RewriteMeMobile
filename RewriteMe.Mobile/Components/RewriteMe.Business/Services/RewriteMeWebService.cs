@@ -1,9 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Factories;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
+using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Business.Services
 {
@@ -19,6 +22,14 @@ namespace RewriteMe.Business.Services
             : base(rewriteMeApiClientFactory, webServiceErrorHandler, applicationSettings)
         {
             _userSessionService = userSessionService;
+        }
+
+        public async Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(int? minimumVersion = 0)
+        {
+            var accessToken = await _userSessionService.GetAccessTokenSilentAsync().ConfigureAwait(false);
+            var customHeaders = new CustomHeadersDictionary().AddBearerToken(accessToken);
+
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetFileItemsAsync(0, customHeaders)).ConfigureAwait(false);
         }
 
         private async Task<CustomHeadersDictionary> GetAuthHeaders()

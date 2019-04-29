@@ -156,7 +156,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> RegisterUserWithHttpMessagesAsync(RegisterUserModel registerUserModel = default(RegisterUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Ok>> RegisterUserWithHttpMessagesAsync(RegisterUserModel registerUserModel = default(RegisterUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

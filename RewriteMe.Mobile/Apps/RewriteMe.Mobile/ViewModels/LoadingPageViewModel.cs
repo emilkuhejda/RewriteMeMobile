@@ -2,25 +2,34 @@
 using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
-using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class LoadingPageViewModel : ViewModelBase
     {
+        private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly IInternalValueService _internalValueService;
+
         private string _progressText;
 
         public LoadingPageViewModel(
+            IRewriteMeWebService rewriteMeWebService,
+            IInternalValueService internalValueService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
+            _rewriteMeWebService = rewriteMeWebService;
+            _internalValueService = internalValueService;
+
             HasTitleBar = false;
 
             ReloadCommand = new AsyncCommand(ExecuteReloadCommandAsync);
@@ -30,8 +39,9 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
-                await Task.Delay(5000).ConfigureAwait(false);
+                var isUserRegistrationSuccess = await _internalValueService.GetValue(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
+
+                //await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}").ConfigureAwait(false);
             }
         }
 
@@ -45,7 +55,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteReloadCommandAsync()
         {
-            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Main}").ConfigureAwait(false);
+            await LoadDataAsync(null).ConfigureAwait(false);
         }
     }
 }

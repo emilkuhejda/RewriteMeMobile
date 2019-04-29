@@ -7,21 +7,21 @@
         {
         }
 
-        public HttpRequestResult(HttpRequestState state, int? status)
-            : this(state, status, null)
+        public HttpRequestResult(HttpRequestState state, int? statusCode)
+            : this(state, statusCode, null)
         {
         }
 
-        public HttpRequestResult(HttpRequestState state, int? status, T payload)
+        public HttpRequestResult(HttpRequestState state, int? statusCode, T payload)
         {
             State = state;
-            Status = status;
+            StatusCode = statusCode;
             Payload = payload;
         }
 
         public HttpRequestState State { get; }
 
-        public int? Status { get; }
+        public int? StatusCode { get; }
 
         public T Payload { get; }
     }

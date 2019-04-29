@@ -120,17 +120,11 @@
   <data name="RegisterToUseApplication" xml:space="preserve">
     <value>Please register to use Rewrite Me</value>
   </data>
-  <data name="SendEmail" xml:space="preserve">
-    <value>Send email</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
   <data name="RegistrationErrorTitle" xml:space="preserve">
     <value>Registration error</value>
   </data>
   <data name="RegistrationErrorMessage" xml:space="preserve">
-    <value>User was not successfully registered. Please, contact us.</value>
+    <value>Registration was not successful. Application might not work correctly. Please, contact us.</value>
   </data>
   <data name="UserIdentificationLabel" xml:space="preserve">
     <value>User identification:</value>
@@ -176,6 +170,12 @@
   </data>
   <data name="Reload" xml:space="preserve">
     <value>Reload</value>
+  </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>Send email</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
   </data>
   <data name="DeveloperModeIsActivated" xml:space="preserve">
     <value>Developer mode is activated</value>

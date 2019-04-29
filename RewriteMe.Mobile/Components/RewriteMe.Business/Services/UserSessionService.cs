@@ -7,6 +7,7 @@ using Microsoft.Identity.Client;
 using RewriteMe.Business.Configuration;
 using RewriteMe.Business.Wrappers;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Factories;
 using RewriteMe.Domain.Interfaces.Repositories;
@@ -21,6 +22,7 @@ namespace RewriteMe.Business.Services
     public class UserSessionService : IUserSessionService
     {
         private readonly IRegistrationUserWebService _registrationUserWebService;
+        private readonly IInternalValueService _internalValueService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
         private readonly IApplicationSettings _applicationSettings;
@@ -32,6 +34,7 @@ namespace RewriteMe.Business.Services
 
         public UserSessionService(
             IRegistrationUserWebService registrationUserWebService,
+            IInternalValueService internalValueService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
             IApplicationSettings applicationSettings,
@@ -39,6 +42,7 @@ namespace RewriteMe.Business.Services
             ILoggerFactory loggerFactory)
         {
             _registrationUserWebService = registrationUserWebService;
+            _internalValueService = internalValueService;
             _identityUiParentProvider = identityUiParentProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
@@ -343,7 +347,11 @@ namespace RewriteMe.Business.Services
                     FamilyName = accessTokenObject.FamilyName
                 };
 
-                await _registrationUserWebService.RegisterUserAsync(registerUserModel).ConfigureAwait(false);
+                var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel).ConfigureAwait(false);
+                if (httpRequestResult.State == HttpRequestState.Success)
+                {
+                    await _internalValueService.UpdateValue(InternalValues.IsUserRegistrationSuccess, true).ConfigureAwait(false);
+                }
             }
         }
 
