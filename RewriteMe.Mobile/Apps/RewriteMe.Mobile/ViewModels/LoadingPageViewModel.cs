@@ -4,11 +4,14 @@ using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
+using RewriteMe.Mobile.Extensions;
+using RewriteMe.Mobile.Navigation;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -17,7 +20,8 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IUserSessionService _userSessionService;
         private readonly IInternalValueService _internalValueService;
-        private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly ILastUpdatesService _lastUpdatesService;
+        private readonly ISynchronizationService _synchronizationService;
         private readonly IRegistrationUserWebService _registrationUserWebService;
 
         private string _progressText;
@@ -25,7 +29,8 @@ namespace RewriteMe.Mobile.ViewModels
         public LoadingPageViewModel(
             IInternalValueService internalValueService,
             IUserSessionService userSessionService,
-            IRewriteMeWebService rewriteMeWebService,
+            ILastUpdatesService lastUpdatesService,
+            ISynchronizationService synchronizationService,
             IRegistrationUserWebService registrationUserWebService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -34,7 +39,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _userSessionService = userSessionService;
             _internalValueService = internalValueService;
-            _rewriteMeWebService = rewriteMeWebService;
+            _lastUpdatesService = lastUpdatesService;
+            _synchronizationService = synchronizationService;
             _registrationUserWebService = registrationUserWebService;
 
             HasTitleBar = false;
@@ -59,7 +65,20 @@ namespace RewriteMe.Mobile.ViewModels
                     await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true);
                 }
 
-                //await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}").ConfigureAwait(false);
+                ProgressText = Loc.Text(TranslationKeys.LoadingData);
+
+                _synchronizationService.InitializationProgress += OnInitializationProgress;
+
+                await _lastUpdatesService.InitializeAsync().ConfigureAwait(false);
+                await _synchronizationService.InitializeAsync().ConfigureAwait(false);
+
+                _synchronizationService.InitializationProgress -= OnInitializationProgress;
+
+                var isFirstTimeDataSync = await _synchronizationService.IsFirstTimeDataSyncAsync().ConfigureAwait(false);
+                if (!isFirstTimeDataSync)
+                {
+                    await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}").ConfigureAwait(false);
+                }
             }
         }
 
@@ -74,6 +93,11 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteReloadCommandAsync()
         {
             await LoadDataAsync(null).ConfigureAwait(false);
+        }
+
+        private void OnInitializationProgress(object sender, ProgressEventArgs e)
+        {
+            ProgressText = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
         }
     }
 }

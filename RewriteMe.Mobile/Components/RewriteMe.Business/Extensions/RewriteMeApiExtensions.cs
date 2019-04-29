@@ -8,6 +8,14 @@ namespace RewriteMe.Business.Extensions
 {
     public static class RewriteMeApiExtensions
     {
+        public static async Task<LastUpdates> GetLastUpdates(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders = null)
+        {
+            using (var result = await operations.GetLastUpdatesWithHttpMessagesAsync(customHeaders))
+            {
+                return ParseBody<LastUpdates>(result.Body);
+            }
+        }
+
         public static async Task<IEnumerable<FileItem>> GetFileItemsAsync(this IRewriteMeAPI operations, int? minimumVersion = 0, Dictionary<string, List<string>> customHeaders = null)
         {
             using (var result = await operations.GetFileItemsWithHttpMessagesAsync(minimumVersion, customHeaders).ConfigureAwait(false))

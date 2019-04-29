@@ -24,11 +24,15 @@ namespace RewriteMe.Business.Services
             _userSessionService = userSessionService;
         }
 
+        public async Task<HttpRequestResult<LastUpdates>> GetLastUpdates()
+        {
+            var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetLastUpdates(customHeaders)).ConfigureAwait(false);
+        }
+
         public async Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(int? minimumVersion = 0)
         {
-            var accessToken = await _userSessionService.GetAccessTokenSilentAsync().ConfigureAwait(false);
-            var customHeaders = new CustomHeadersDictionary().AddBearerToken(accessToken);
-
+            var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetFileItemsAsync(0, customHeaders)).ConfigureAwait(false);
         }
 

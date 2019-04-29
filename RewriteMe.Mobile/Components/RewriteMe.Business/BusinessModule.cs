@@ -23,6 +23,8 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<IWebServiceErrorHandler, WebServiceErrorHandler>();
             containerRegistry.RegisterSingleton<IApplicationSettings, ApplicationSettings>();
             containerRegistry.RegisterSingleton<IUserSessionService, UserSessionService>();
+            containerRegistry.RegisterSingleton<ILastUpdatesService, LastUpdatesService>();
+            containerRegistry.RegisterSingleton<ISynchronizationService, SynchronizationService>();
         }
     }
 }

@@ -7,6 +7,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IRewriteMeWebService
     {
+        Task<HttpRequestResult<LastUpdates>> GetLastUpdates();
+
         Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(int? minimumVersion = 0);
     }
 }
