@@ -16,9 +16,9 @@ namespace RewriteMe.DataAccess
 
         public AsyncTableQuery<InternalValueEntity> InternalValues => Database.Table<InternalValueEntity>();
 
-        public AsyncTableQuery<FileItemEntity> FileItems => Database.Table<FileItemEntity>();
-
         public AsyncTableQuery<UserSessionEntity> UserSessions => Database.Table<UserSessionEntity>();
+
+        public AsyncTableQuery<FileItemEntity> FileItems => Database.Table<FileItemEntity>();
 
         public AsyncTableQuery<TranscribeItemEntity> TranscribeItems => Database.Table<TranscribeItemEntity>();
 

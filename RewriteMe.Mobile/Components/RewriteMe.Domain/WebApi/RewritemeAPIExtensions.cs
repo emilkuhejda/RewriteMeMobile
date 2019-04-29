@@ -210,28 +210,24 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
             /// <param name='updatedAfter'>
             /// </param>
-            public static IList<TranscribeItem> GetTranscribeItems(this IRewriteMeAPI operations, System.Guid fileItemId, System.DateTime? updatedAfter = default(System.DateTime?))
+            public static IList<TranscribeItem> GetTranscribeItemsAll(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?))
             {
-                return operations.GetTranscribeItemsAsync(fileItemId, updatedAfter).GetAwaiter().GetResult();
+                return operations.GetTranscribeItemsAllAsync(updatedAfter).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fileItemId'>
             /// </param>
             /// <param name='updatedAfter'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<TranscribeItem>> GetTranscribeItemsAsync(this IRewriteMeAPI operations, System.Guid fileItemId, System.DateTime? updatedAfter = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<TranscribeItem>> GetTranscribeItemsAllAsync(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTranscribeItemsWithHttpMessagesAsync(fileItemId, updatedAfter, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(updatedAfter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

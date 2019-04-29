@@ -14,6 +14,7 @@ namespace RewriteMe.Business.Services
     {
         private readonly ILastUpdatesService _lastUpdatesService;
         private readonly IFileItemService _fileItemService;
+        private readonly ITranscribeItemService _transcribeItemService;
         private readonly IInternalValueService _internalValueService;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
@@ -24,10 +25,12 @@ namespace RewriteMe.Business.Services
         public SynchronizationService(
             ILastUpdatesService lastUpdatesService,
             IFileItemService fileItemService,
+            ITranscribeItemService transcribeItemService,
             IInternalValueService internalValueService)
         {
             _lastUpdatesService = lastUpdatesService;
             _fileItemService = fileItemService;
+            _transcribeItemService = transcribeItemService;
             _internalValueService = internalValueService;
         }
 
@@ -63,16 +66,16 @@ namespace RewriteMe.Business.Services
 
         private async Task UpdateFileItemsAsync()
         {
-            var applicationFileItemVersion = _lastUpdatesService.GetFileItemVersion();
+            var applicationFileItemUpdateDate = _lastUpdatesService.GetFileItemVersion();
 
-            await _fileItemService.SynchronizationAsync(applicationFileItemVersion);
+            await _fileItemService.SynchronizationAsync(applicationFileItemUpdateDate);
         }
 
         private async Task UpdateTranscribeItemAsync()
         {
-            var applicationTranscribeItemVersion = _lastUpdatesService.GetTranscribeItemVersion();
+            var applicationTranscribeItemUpdateDate = _lastUpdatesService.GetTranscribeItemVersion();
 
-            await Task.CompletedTask.ConfigureAwait(false);
+            await _transcribeItemService.SynchronizationAsync(applicationTranscribeItemUpdateDate).ConfigureAwait(false);
         }
     }
 }

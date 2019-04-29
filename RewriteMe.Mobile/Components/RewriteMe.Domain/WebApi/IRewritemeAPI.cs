@@ -108,8 +108,6 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         Task<HttpOperationResponse<LastUpdates>> GetLastUpdatesWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='fileItemId'>
-        /// </param>
         /// <param name='updatedAfter'>
         /// </param>
         /// <param name='customHeaders'>
@@ -118,7 +116,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<TranscribeItem>>> GetTranscribeItemsWithHttpMessagesAsync(System.Guid fileItemId, System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<TranscribeItem>>> GetTranscribeItemsAllWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='transcribeItemId'>
         /// </param>

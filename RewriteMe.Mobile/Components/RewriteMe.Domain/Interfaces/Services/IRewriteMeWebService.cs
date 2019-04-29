@@ -11,5 +11,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<HttpRequestResult<LastUpdates>> GetLastUpdates();
 
         Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(DateTime updatedAfter);
+
+        Task<HttpRequestResult<IEnumerable<TranscribeItem>>> GetTranscribeItemsAllAsync(DateTime updatedAfter);
     }
 }

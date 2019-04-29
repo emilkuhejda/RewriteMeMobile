@@ -9,9 +9,9 @@ namespace RewriteMe.DataAccess
     {
         AsyncTableQuery<InternalValueEntity> InternalValues { get; }
 
-        AsyncTableQuery<FileItemEntity> FileItems { get; }
-
         AsyncTableQuery<UserSessionEntity> UserSessions { get; }
+
+        AsyncTableQuery<FileItemEntity> FileItems { get; }
 
         AsyncTableQuery<TranscribeItemEntity> TranscribeItems { get; }
 

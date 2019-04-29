@@ -37,6 +37,12 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetFileItemsAsync(updatedAfter, customHeaders)).ConfigureAwait(false);
         }
 
+        public async Task<HttpRequestResult<IEnumerable<TranscribeItem>>> GetTranscribeItemsAllAsync(DateTime updatedAfter)
+        {
+            var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetTranscribeItemsAllAsync(updatedAfter, customHeaders)).ConfigureAwait(false);
+        }
+
         private async Task<CustomHeadersDictionary> GetAuthHeaders()
         {
             var accessToken = await _userSessionService.GetAccessTokenSilentAsync().ConfigureAwait(false);

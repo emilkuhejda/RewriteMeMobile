@@ -1200,8 +1200,6 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
-        /// <param name='fileItemId'>
-        /// </param>
         /// <param name='updatedAfter'>
         /// </param>
         /// <param name='customHeaders'>
@@ -1219,7 +1217,7 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<IList<TranscribeItem>>> GetTranscribeItemsWithHttpMessagesAsync(System.Guid fileItemId, System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<IList<TranscribeItem>>> GetTranscribeItemsAllWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1228,15 +1226,13 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("fileItemId", fileItemId);
                 tracingParameters.Add("updatedAfter", updatedAfter);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetTranscribeItems", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "GetTranscribeItemsAll", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/transcribe-items/{fileItemId}").ToString();
-            _url = _url.Replace("{fileItemId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(fileItemId, SerializationSettings).Trim('"')));
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/transcribe-items-all").ToString();
             List<string> _queryParameters = new List<string>();
             if (updatedAfter != null)
             {

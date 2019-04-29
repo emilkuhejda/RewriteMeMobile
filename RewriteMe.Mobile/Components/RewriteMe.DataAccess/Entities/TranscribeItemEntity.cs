@@ -1,9 +1,11 @@
 ﻿using System;
+using SQLite;
 
 namespace RewriteMe.DataAccess.Entities
 {
     public class TranscribeItemEntity
     {
+        [PrimaryKey]
         public Guid Id { get; set; }
 
         public Guid FileItemId { get; set; }
@@ -14,10 +16,13 @@ namespace RewriteMe.DataAccess.Entities
 
         public byte[] Source { get; set; }
 
+        [MaxLength(100)]
         public string StartTime { get; set; }
 
+        [MaxLength(100)]
         public string EndTime { get; set; }
 
+        [MaxLength(100)]
         public string TotalTime { get; set; }
 
         public DateTime DateCreated { get; set; }
