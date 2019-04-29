@@ -70,7 +70,10 @@ namespace RewriteMe.Mobile.ViewModels
                 _synchronizationService.InitializationProgress += OnInitializationProgress;
 
                 await _lastUpdatesService.InitializeAsync().ConfigureAwait(false);
-                await _synchronizationService.InitializeAsync().ConfigureAwait(false);
+                if (_lastUpdatesService.IsConnectionSuccessful)
+                {
+                    await _synchronizationService.InitializeAsync().ConfigureAwait(false);
+                }
 
                 _synchronizationService.InitializationProgress -= OnInitializationProgress;
 

@@ -18,12 +18,16 @@ namespace RewriteMe.Business.Services
             _rewriteMeWebService = rewriteMeWebService;
         }
 
+        public bool IsConnectionSuccessful { get; private set; }
+
         public async Task InitializeAsync()
         {
             var httpRequestResult = await _rewriteMeWebService.GetLastUpdates().ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 _lastUpdates = httpRequestResult.Payload;
+
+                IsConnectionSuccessful = true;
             }
 
             _isInitialized = true;
