@@ -30,7 +30,8 @@ namespace RewriteMe.Mobile.Configuration
         {
             containerRegistry.RegisterForNavigation<RewriteMeNavigationPage>(Pages.Navigation);
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>(Pages.Login);
-            containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>(Pages.Main);
+            containerRegistry.RegisterForNavigation<LoadingPage, LoadingPageViewModel>(Pages.Loading);
+            containerRegistry.RegisterForNavigation<OverviewPage, OverviewPageViewModel>(Pages.Overview);
             containerRegistry.RegisterForNavigation<SettingsPage, SettingsPageViewModel>(Pages.Settings);
             containerRegistry.RegisterForNavigation<UserSettingsPage, UserSettingsPageViewModel>(Pages.UserSettings);
             containerRegistry.RegisterForNavigation<DeveloperPage, DeveloperPageViewModel>(Pages.Developer);

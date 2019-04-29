@@ -17,7 +17,10 @@ namespace RewriteMe.DataAccess
         {
             var tables = new[]
             {
+                typeof(AudioSourceEntity),
+                typeof(FileItemEntity),
                 typeof(InternalValueEntity),
+                typeof(TranscribeItemEntity),
                 typeof(UserSessionEntity)
             };
 

@@ -15,7 +15,7 @@ namespace RewriteMe.Business.Services
             _internalValueRepository = internalValueRepository;
         }
 
-        public async Task<T> GetValue<T>(InternalValue<T> internalValue)
+        public async Task<T> GetValueAsync<T>(InternalValue<T> internalValue)
         {
             var key = internalValue.Key;
             var result = await _internalValueRepository.GetValue(key).ConfigureAwait(false);
@@ -38,7 +38,7 @@ namespace RewriteMe.Business.Services
             }
         }
 
-        public async Task UpdateValue<T>(InternalValue<T> internalValue, T value)
+        public async Task UpdateValueAsync<T>(InternalValue<T> internalValue, T value)
         {
             var key = internalValue.Key;
             var entityValue = Convert.ToString(value);

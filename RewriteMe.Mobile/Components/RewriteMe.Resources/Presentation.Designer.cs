@@ -197,6 +197,24 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Loading data.....
+        /// </summary>
+        public static string LoadingData {
+            get {
+                return ResourceManager.GetString("LoadingData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to You&apos;re not connected to the internet. Please try again..
+        /// </summary>
+        public static string OfflineMessageText {
+            get {
+                return ResourceManager.GetString("OfflineMessageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operating system:.
         /// </summary>
         public static string OperatingSystemLabel {
@@ -224,7 +242,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to User was not successfully registered. Please, contact us..
+        ///   Looks up a localized string similar to Registration was not successful. Application might not work correctly. Please, contact us..
         /// </summary>
         public static string RegistrationErrorMessage {
             get {
@@ -337,6 +355,15 @@ namespace RewriteMe.Resources {
         public static string UserProfile {
             get {
                 return ResourceManager.GetString("UserProfile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User registration.
+        /// </summary>
+        public static string UserRegistration {
+            get {
+                return ResourceManager.GetString("UserRegistration", resourceCulture);
             }
         }
         

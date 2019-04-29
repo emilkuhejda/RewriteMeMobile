@@ -133,13 +133,13 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ChangeUserLanguageAsync(CultureInfo language)
         {
-            await _internalValueService.UpdateValue(InternalValues.LanguageSetting, language.TwoLetterISOLanguageName).ConfigureAwait(false);
+            await _internalValueService.UpdateValueAsync(InternalValues.LanguageSetting, language.TwoLetterISOLanguageName).ConfigureAwait(false);
             _localizer.SetCultureInfo(language);
         }
 
         private async Task InitializeLanguageSettingAsync()
         {
-            var languageName = await _internalValueService.GetValue(InternalValues.LanguageSetting).ConfigureAwait(false);
+            var languageName = await _internalValueService.GetValueAsync(InternalValues.LanguageSetting).ConfigureAwait(false);
             if (languageName == null)
             {
                 var currentCulture = _localizer.GetCurrentCulture();

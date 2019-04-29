@@ -21,7 +21,7 @@ namespace RewriteMe.Business.Services
 
         public async Task<HttpRequestResult<Ok>> RegisterUserAsync(RegisterUserModel registerUserModel)
         {
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.RegisterUserAsync(registerUserModel));
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.RegisterUserAsync(registerUserModel)).ConfigureAwait(false);
         }
     }
 }

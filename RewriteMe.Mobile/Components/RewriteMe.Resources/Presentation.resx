@@ -105,6 +105,9 @@
   <data name="ActivityIndicatorCaptionText" xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="OfflineMessageText" xml:space="preserve">
+    <value>You're not connected to the internet. Please try again.</value>
+  </data>
   <data name="RegisterOrSignIn" xml:space="preserve">
     <value>Register or sign in</value>
   </data>
@@ -117,17 +120,11 @@
   <data name="RegisterToUseApplication" xml:space="preserve">
     <value>Please register to use Rewrite Me</value>
   </data>
-  <data name="SendEmail" xml:space="preserve">
-    <value>Send email</value>
-  </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
   <data name="RegistrationErrorTitle" xml:space="preserve">
     <value>Registration error</value>
   </data>
   <data name="RegistrationErrorMessage" xml:space="preserve">
-    <value>User was not successfully registered. Please, contact us.</value>
+    <value>Registration was not successful. Application might not work correctly. Please, contact us.</value>
   </data>
   <data name="UserIdentificationLabel" xml:space="preserve">
     <value>User identification:</value>
@@ -174,6 +171,12 @@
   <data name="Reload" xml:space="preserve">
     <value>Reload</value>
   </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>Send email</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="DeveloperModeIsActivated" xml:space="preserve">
     <value>Developer mode is activated</value>
   </data>
@@ -194,5 +197,11 @@
   </data>
   <data name="OperatingSystemLabel" xml:space="preserve">
     <value>Operating system:</value>
+  </data>
+  <data name="UserRegistration" xml:space="preserve">
+    <value>User registration</value>
+  </data>
+  <data name="LoadingData" xml:space="preserve">
+    <value>Loading data....</value>
   </data>
 </root>

@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<StackLayout x:Class="RewriteMe.Mobile.Controls.OfflineIndicator"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             x:Name="OfflineIndicatorControl"
+             Padding="16"
+             HorizontalOptions="CenterAndExpand"
+             Orientation="Vertical"
+             Spacing="16"
+             VerticalOptions="CenterAndExpand">
+    <forms:SvgCachedImage Aspect="AspectFit"
+                          HeightRequest="50"
+                          HorizontalOptions="Center"
+                          Source="resource://RewriteMe.Mobile.Resources.Images.Refresh.svg"
+                          VerticalOptions="Center"
+                          WidthRequest="50">
+        <forms:SvgCachedImage.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Command, Source={x:Reference OfflineIndicatorControl}}" />
+        </forms:SvgCachedImage.GestureRecognizers>
+    </forms:SvgCachedImage>
+
+    <Label HorizontalOptions="CenterAndExpand"
+           HorizontalTextAlignment="Center"
+           LineBreakMode="WordWrap"
+           Style="{StaticResource LabelStyle}"
+           Text="{Binding Caption, Source={x:Reference OfflineIndicatorControl}}"
+           VerticalOptions="CenterAndExpand"
+           VerticalTextAlignment="Center">
+        <Label.GestureRecognizers>
+            <TapGestureRecognizer Command="{Binding Command, Source={x:Reference OfflineIndicatorControl}}" />
+        </Label.GestureRecognizers>
+    </Label>
+
+    <StackLayout.GestureRecognizers>
+        <TapGestureRecognizer Command="{Binding Command, Source={x:Reference OfflineIndicatorControl}}" />
+    </StackLayout.GestureRecognizers>
+</StackLayout>
