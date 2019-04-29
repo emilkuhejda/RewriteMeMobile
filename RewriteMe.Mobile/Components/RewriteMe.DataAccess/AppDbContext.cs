@@ -20,6 +20,8 @@ namespace RewriteMe.DataAccess
 
         public AsyncTableQuery<UserSessionEntity> UserSessions => Database.Table<UserSessionEntity>();
 
+        public AsyncTableQuery<TranscribeItemEntity> TranscribeItems => Database.Table<TranscribeItemEntity>();
+
         public async Task RunInTransactionAsync(Action<SQLiteConnection> action)
         {
             await Database.RunInTransactionAsync(action).ConfigureAwait(false);

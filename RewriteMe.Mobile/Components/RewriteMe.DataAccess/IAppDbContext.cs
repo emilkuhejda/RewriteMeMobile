@@ -13,6 +13,8 @@ namespace RewriteMe.DataAccess
 
         AsyncTableQuery<UserSessionEntity> UserSessions { get; }
 
+        AsyncTableQuery<TranscribeItemEntity> TranscribeItems { get; }
+
         Task RunInTransactionAsync(Action<SQLiteConnection> action);
 
         Task CreateTablesAsync(params Type[] types);
