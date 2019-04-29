@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using RewriteMe.DataAccess.Entities;
 using SQLite;
+using SQLiteNetExtensionsAsync.Extensions;
 
 namespace RewriteMe.DataAccess
 {
@@ -42,9 +43,15 @@ namespace RewriteMe.DataAccess
             await Database.UpdateAsync(item).ConfigureAwait(false);
         }
 
-        public async Task DeleteAllAsync<T>()
+        public async Task DeleteAllAsync<T>() where T : new()
         {
-            await Database.DeleteAllAsync<T>().ConfigureAwait(false);
+            var items = await Database.GetAllWithChildrenAsync<T>(recursive: true).ConfigureAwait(false);
+            await Database.DeleteAllAsync(items, true).ConfigureAwait(false);
+        }
+
+        public async Task<T> GetWithChildrenAsync<T>(object primaryKey) where T : new()
+        {
+            return await Database.GetWithChildrenAsync<T>(primaryKey).ConfigureAwait(false);
         }
 
         public async Task CloseAsync()

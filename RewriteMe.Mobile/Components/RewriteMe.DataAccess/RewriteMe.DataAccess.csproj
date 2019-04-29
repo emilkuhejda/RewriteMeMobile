@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.4</TargetFramework>
+    <PackageTargetFallback>portable-net45+win8+wpa81+wp8</PackageTargetFallback>
   </PropertyGroup>
 
   <PropertyGroup>
@@ -22,6 +23,7 @@
   <ItemGroup>
     <PackageReference Include="Prism.Unity.Forms" Version="7.1.0.431" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
+    <PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
   </ItemGroup>
 
   <ItemGroup>

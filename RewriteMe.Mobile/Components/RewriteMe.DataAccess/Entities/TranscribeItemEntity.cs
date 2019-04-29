@@ -1,13 +1,16 @@
 ﻿using System;
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace RewriteMe.DataAccess.Entities
 {
+    [Table("TranscribeItem")]
     public class TranscribeItemEntity
     {
         [PrimaryKey]
         public Guid Id { get; set; }
 
+        [ForeignKey(typeof(FileItemEntity))]
         public Guid FileItemId { get; set; }
 
         public string Alternatives { get; set; }

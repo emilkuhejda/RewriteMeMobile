@@ -2,6 +2,7 @@
 
 namespace RewriteMe.DataAccess.Entities
 {
+    [Table("UserSession")]
     public class UserSessionEntity
     {
         [PrimaryKey]

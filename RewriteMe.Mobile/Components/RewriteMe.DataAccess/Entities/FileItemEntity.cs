@@ -1,8 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace RewriteMe.DataAccess.Entities
 {
+    [Table("FileItem")]
     public class FileItemEntity
     {
         [PrimaryKey]
@@ -27,5 +30,11 @@ namespace RewriteMe.DataAccess.Entities
         public DateTime DateUpdated { get; set; }
 
         public int? AudioSourceVersion { get; set; }
+
+        [OneToOne(CascadeOperations = CascadeOperation.All)]
+        public AudioSourceEntity AudioSource { get; set; }
+
+        [OneToMany(CascadeOperations = CascadeOperation.All)]
+        public IEnumerable<TranscribeItemEntity> TranscribeItems { get; set; }
     }
 }
