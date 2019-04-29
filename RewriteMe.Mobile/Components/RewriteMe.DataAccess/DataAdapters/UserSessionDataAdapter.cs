@@ -10,6 +10,7 @@ namespace RewriteMe.DataAccess.DataAdapters
             return new UserSession
             {
                 ObjectId = entity.ObjectId,
+                Email = entity.Email,
                 GivenName = entity.GivenName,
                 FamilyName = entity.FamilyName
             };
@@ -20,6 +21,7 @@ namespace RewriteMe.DataAccess.DataAdapters
             return new UserSessionEntity
             {
                 ObjectId = userSession.ObjectId,
+                Email = userSession.Email,
                 GivenName = userSession.GivenName,
                 FamilyName = userSession.FamilyName
             };

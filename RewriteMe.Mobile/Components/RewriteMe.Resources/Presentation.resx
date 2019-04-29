@@ -198,4 +198,10 @@
   <data name="OperatingSystemLabel" xml:space="preserve">
     <value>Operating system:</value>
   </data>
+  <data name="UserRegistration" xml:space="preserve">
+    <value>User registration</value>
+  </data>
+  <data name="LoadingData" xml:space="preserve">
+    <value>Loading data....</value>
+  </data>
 </root>

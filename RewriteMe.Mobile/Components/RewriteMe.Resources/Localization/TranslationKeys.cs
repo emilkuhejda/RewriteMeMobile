@@ -34,5 +34,7 @@
         public static string ApplicationTitleLog => "ApplicationTitleLog";
         public static string DeviceHardwareLabel => "DeviceHardwareLabel";
         public static string OperatingSystemLabel => "OperatingSystemLabel";
+        public static string UserRegistration => "UserRegistration";
+        public static string LoadingData => "LoadingData";
     }
 }

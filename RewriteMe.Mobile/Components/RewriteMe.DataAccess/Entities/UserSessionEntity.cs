@@ -8,6 +8,9 @@ namespace RewriteMe.DataAccess.Entities
         public string ObjectId { get; set; }
 
         [MaxLength(100)]
+        public string Email { get; set; }
+
+        [MaxLength(100)]
         public string GivenName { get; set; }
 
         [MaxLength(100)]

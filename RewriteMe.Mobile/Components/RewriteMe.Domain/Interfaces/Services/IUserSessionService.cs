@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using RewriteMe.Domain.Configuration;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
@@ -7,6 +8,8 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<string> GetUserIdAsync();
 
         Task<string> GetUserNameAsync();
+
+        Task<UserSession> GetUserSessionAsync();
 
         Task<string> GetAccessTokenSilentAsync();
 

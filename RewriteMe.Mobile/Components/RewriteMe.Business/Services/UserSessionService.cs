@@ -72,6 +72,11 @@ namespace RewriteMe.Business.Services
             return $"{userSession.GivenName} {userSession.FamilyName}";
         }
 
+        public async Task<UserSession> GetUserSessionAsync()
+        {
+            return await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
+        }
+
         public async Task<string> GetAccessTokenSilentAsync()
         {
             if (!string.IsNullOrEmpty(_accessToken))
@@ -361,6 +366,7 @@ namespace RewriteMe.Business.Services
 
             var userSession = await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
             userSession.ObjectId = accessToken.ObjectId;
+            userSession.Email = accessToken.Email;
             userSession.GivenName = accessToken.GivenName;
             userSession.FamilyName = accessToken.FamilyName;
 
