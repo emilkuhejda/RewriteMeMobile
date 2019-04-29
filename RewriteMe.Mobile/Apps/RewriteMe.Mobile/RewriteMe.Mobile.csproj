@@ -26,6 +26,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\Add.svg" />
     <None Remove="Resources\Images\Back.svg" />
     <None Remove="Resources\Images\Forward.svg" />
     <None Remove="Resources\Images\Refresh.svg" />
@@ -34,6 +35,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Images\Add.svg" />
     <EmbeddedResource Include="Resources\Images\Back.svg" />
     <EmbeddedResource Include="Resources\Images\Forward.svg" />
     <EmbeddedResource Include="Resources\Images\Refresh.svg" />
@@ -85,6 +87,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\BaseNavigationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\CreatePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\DeveloperPage.xaml">

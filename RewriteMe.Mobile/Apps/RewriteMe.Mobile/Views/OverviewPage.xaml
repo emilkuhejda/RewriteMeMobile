@@ -3,6 +3,7 @@
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
@@ -16,7 +17,6 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <!--  Message row  -->
             <Grid Grid.Row="0"
                   Grid.Column="0"
                   Padding="5,8,5,8"
@@ -37,6 +37,29 @@
                    HorizontalOptions="CenterAndExpand"
                    Text="Main page"
                    VerticalOptions="CenterAndExpand" />
+
+            <Grid Grid.Row="1"
+                  Margin="0,0,10,10"
+                  Padding="0"
+                  BackgroundColor="Transparent"
+                  ColumnSpacing="0"
+                  HeightRequest="69"
+                  HorizontalOptions="End"
+                  RowSpacing="0"
+                  VerticalOptions="End"
+                  WidthRequest="69">
+                <forms:SvgCachedImage Margin="0"
+                                      Aspect="AspectFit"
+                                      BackgroundColor="Transparent"
+                                      HeightRequest="60"
+                                      HorizontalOptions="CenterAndExpand"
+                                      InputTransparent="True"
+                                      Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg"
+                                      VerticalOptions="CenterAndExpand" />
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToCreatePageCommand}" />
+                </Grid.GestureRecognizers>
+            </Grid>
         </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"

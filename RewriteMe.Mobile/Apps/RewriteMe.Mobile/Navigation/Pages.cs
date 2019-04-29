@@ -10,6 +10,8 @@
 
         public static string Overview { get; } = "Overview";
 
+        public static string Create { get; } = "Create";
+
         public static string Settings { get; } = "Settings";
 
         public static string UserSettings { get; } = "UserSettings";

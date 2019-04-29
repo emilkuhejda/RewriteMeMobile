@@ -13,6 +13,9 @@ using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Commands;
+using RewriteMe.Mobile.Extensions;
+using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 using Xamarin.Forms;
@@ -47,9 +50,12 @@ namespace RewriteMe.Mobile.ViewModels
             _applicationSettings = applicationSettings;
 
             SendEmailCommand = new DelegateCommand(ExecuteSendEmailCommand);
+            NavigateToCreatePageCommand = new AsyncCommand(ExecuteNavigateToCreatePageCommandAsync);
         }
 
         public ICommand SendEmailCommand { get; }
+
+        public ICommand NavigateToCreatePageCommand { get; }
 
         public bool IsUserRegistrationSuccess
         {
@@ -100,6 +106,11 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.EmailIsNotSupported)).ConfigureAwait(false);
             }
+        }
+
+        private async Task ExecuteNavigateToCreatePageCommandAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.Create).ConfigureAwait(false);
         }
     }
 }
