@@ -4,12 +4,11 @@
     {
         public static string ApplicationTitle => "ApplicationTitle";
         public static string ActivityIndicatorCaptionText => "ActivityIndicatorCaptionText";
+        public static string OfflineMessageText => "OfflineMessageText";
         public static string RegisterOrSignIn => "RegisterOrSignIn";
         public static string SignInSuccessful => "SignInSuccessful";
         public static string SignInFailed => "SignInFailed";
         public static string RegisterToUseApplication => "RegisterToUseApplication";
-        public static string SendEmail => "SendEmail";
-        public static string Cancel => "Cancel";
         public static string RegistrationErrorTitle => "RegistrationErrorTitle";
         public static string RegistrationErrorMessage => "RegistrationErrorMessage";
         public static string UserIdentificationLabel => "UserIdentificationLabel";
@@ -25,8 +24,9 @@
         public static string ContactUs => "ContactUs";
         public static string Developer => "Developer";
         public static string Clear => "Clear";
-        public static string SendMail => "SendMail";
         public static string Reload => "Reload";
+        public static string SendEmail => "SendEmail";
+        public static string Cancel => "Cancel";
         public static string DeveloperModeIsActivated => "DeveloperModeIsActivated";
         public static string EmailIsNotSupported => "EmailIsNotSupported";
         public static string ApplicationVersion => "ApplicationVersion";
@@ -34,5 +34,7 @@
         public static string ApplicationTitleLog => "ApplicationTitleLog";
         public static string DeviceHardwareLabel => "DeviceHardwareLabel";
         public static string OperatingSystemLabel => "OperatingSystemLabel";
+        public static string UserRegistration => "UserRegistration";
+        public static string LoadingData => "LoadingData";
     }
 }

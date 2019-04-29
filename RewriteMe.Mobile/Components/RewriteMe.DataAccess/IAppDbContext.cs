@@ -11,6 +11,10 @@ namespace RewriteMe.DataAccess
 
         AsyncTableQuery<UserSessionEntity> UserSessions { get; }
 
+        AsyncTableQuery<FileItemEntity> FileItems { get; }
+
+        AsyncTableQuery<TranscribeItemEntity> TranscribeItems { get; }
+
         Task RunInTransactionAsync(Action<SQLiteConnection> action);
 
         Task CreateTablesAsync(params Type[] types);
@@ -19,7 +23,9 @@ namespace RewriteMe.DataAccess
 
         Task UpdateAsync<T>(T item);
 
-        Task DeleteAllAsync<T>();
+        Task DeleteAllAsync<T>() where T : new();
+
+        Task<T> GetWithChildrenAsync<T>(object primaryKey) where T : new();
 
         Task CloseAsync();
     }

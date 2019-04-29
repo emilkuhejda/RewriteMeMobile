@@ -64,7 +64,7 @@ namespace RewriteMe.Mobile.ViewModels
                 if (alreadySignedIn)
                 {
                     Logger.Info("User is already signed in. Navigate to loading page.");
-                    await NavigationService.NavigateWithoutAnimationAsync(Pages.Main).ConfigureAwait(false);
+                    await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading).ConfigureAwait(false);
                 }
                 else
                 {
@@ -86,7 +86,7 @@ namespace RewriteMe.Mobile.ViewModels
             if (signinSuccessful)
             {
                 LoginFeedback = Loc.Text(TranslationKeys.SignInSuccessful);
-                await NavigationService.NavigateWithoutAnimationAsync(Pages.Main).ConfigureAwait(false);
+                await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading).ConfigureAwait(false);
             }
             else
             {

@@ -5,8 +5,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IInternalValueService
     {
-        Task<T> GetValue<T>(InternalValue<T> internalValue);
+        Task<T> GetValueAsync<T>(InternalValue<T> internalValue);
 
-        Task UpdateValue<T>(InternalValue<T> internalValue, T value);
+        Task UpdateValueAsync<T>(InternalValue<T> internalValue, T value);
     }
 }

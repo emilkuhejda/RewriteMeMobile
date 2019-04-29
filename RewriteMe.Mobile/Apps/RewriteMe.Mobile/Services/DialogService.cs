@@ -1,9 +1,7 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Acr.UserDialogs;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Mobile.Utils;
-using PromptResult = RewriteMe.Domain.Dialog.PromptResult;
 
 namespace RewriteMe.Mobile.Services
 {
@@ -18,6 +16,7 @@ namespace RewriteMe.Mobile.Services
         {
             return ThreadHelper.InvokeOnUiThread(() => UserDialogs.Instance.ConfirmAsync(new ConfirmConfig
             {
+                Message = message,
                 Title = title,
                 OkText = okText,
                 CancelText = cancelText

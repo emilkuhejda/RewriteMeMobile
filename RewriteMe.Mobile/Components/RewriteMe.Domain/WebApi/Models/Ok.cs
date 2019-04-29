@@ -22,9 +22,9 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the Ok class.
         /// </summary>
-        public Ok(bool? isSuccess = default(bool?))
+        public Ok(System.DateTime? dateTime = default(System.DateTime?))
         {
-            IsSuccess = isSuccess;
+            DateTime = dateTime;
             CustomInit();
         }
 
@@ -35,8 +35,8 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "isSuccess")]
-        public bool? IsSuccess { get; set; }
+        [JsonProperty(PropertyName = "dateTime")]
+        public System.DateTime? DateTime { get; private set; }
 
     }
 }

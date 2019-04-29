@@ -43,10 +43,11 @@
             <Color x:Key="PrimaryTextColor">#616161</Color>
             <Color x:Key="ColorPrimary">#FF3CEAE1</Color>
             <Color x:Key="ColorPrimaryBright">#FFAD3333</Color>
-            <Color x:Key="ColorPrimaryDark">#FF7A0000</Color>
+            <Color x:Key="ColorPrimaryDark">#FFFFFF</Color>
             <Color x:Key="StatusBarColor">#FF3CEAE1</Color>
             <Color x:Key="NavigationBarGray">#D8D8D8</Color>
             <Color x:Key="Divider">#C8C7CC</Color>
+            <Color x:Key="WarningMessageBackground">#E65100</Color>
 
             <!--  Font Sizes  -->
             <OnPlatform x:Key="LittleSize"

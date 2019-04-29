@@ -20,24 +20,24 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='minimumVersion'>
+            /// <param name='updatedAfter'>
             /// </param>
-            public static IList<FileItem> GetFileItems(this IRewriteMeAPI operations, int? minimumVersion = 0)
+            public static IList<FileItem> GetFileItems(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?))
             {
-                return operations.GetFileItemsAsync(minimumVersion).GetAwaiter().GetResult();
+                return operations.GetFileItemsAsync(updatedAfter).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='minimumVersion'>
+            /// <param name='updatedAfter'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<FileItem>> GetFileItemsAsync(this IRewriteMeAPI operations, int? minimumVersion = 0, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<FileItem>> GetFileItemsAsync(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetFileItemsWithHttpMessagesAsync(minimumVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetFileItemsWithHttpMessagesAsync(updatedAfter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -108,13 +108,9 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='language'>
             /// </param>
-            /// <param name='fileItemVersion'>
-            /// </param>
-            /// <param name='sourceVersion'>
-            /// </param>
-            public static object UpdateFileItem(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), int? fileItemVersion = default(int?), int? sourceVersion = default(int?))
+            public static object UpdateFileItem(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string))
             {
-                return operations.UpdateFileItemAsync(fileItemId, name, language, fileItemVersion, sourceVersion).GetAwaiter().GetResult();
+                return operations.UpdateFileItemAsync(fileItemId, name, language).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -126,16 +122,12 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='language'>
             /// </param>
-            /// <param name='fileItemVersion'>
-            /// </param>
-            /// <param name='sourceVersion'>
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> UpdateFileItemAsync(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), int? fileItemVersion = default(int?), int? sourceVersion = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> UpdateFileItemAsync(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateFileItemWithHttpMessagesAsync(fileItemId, name, language, fileItemVersion, sourceVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateFileItemWithHttpMessagesAsync(fileItemId, name, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -218,28 +210,24 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='fileItemId'>
+            /// <param name='updatedAfter'>
             /// </param>
-            /// <param name='minimumVersion'>
-            /// </param>
-            public static IList<TranscribeItem> GetTranscribeItems(this IRewriteMeAPI operations, System.Guid fileItemId, int? minimumVersion = 0)
+            public static IList<TranscribeItem> GetTranscribeItemsAll(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?))
             {
-                return operations.GetTranscribeItemsAsync(fileItemId, minimumVersion).GetAwaiter().GetResult();
+                return operations.GetTranscribeItemsAllAsync(updatedAfter).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='minimumVersion'>
+            /// <param name='updatedAfter'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IList<TranscribeItem>> GetTranscribeItemsAsync(this IRewriteMeAPI operations, System.Guid fileItemId, int? minimumVersion = 0, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IList<TranscribeItem>> GetTranscribeItemsAllAsync(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.GetTranscribeItemsWithHttpMessagesAsync(fileItemId, minimumVersion, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(updatedAfter, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -278,11 +266,9 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='transcript'>
             /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static Ok UpdateUserTranscript(this IRewriteMeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), int? version = default(int?))
+            public static Ok UpdateUserTranscript(this IRewriteMeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string))
             {
-                return operations.UpdateUserTranscriptAsync(transcribeItemId, transcript, version).GetAwaiter().GetResult();
+                return operations.UpdateUserTranscriptAsync(transcribeItemId, transcript).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -292,14 +278,12 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='transcript'>
             /// </param>
-            /// <param name='version'>
-            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Ok> UpdateUserTranscriptAsync(this IRewriteMeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), int? version = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Ok> UpdateUserTranscriptAsync(this IRewriteMeAPI operations, System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(transcribeItemId, transcript, version, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(transcribeItemId, transcript, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -310,7 +294,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='registerUserModel'>
             /// </param>
-            public static object RegisterUser(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel))
+            public static Ok RegisterUser(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel))
             {
                 return operations.RegisterUserAsync(registerUserModel).GetAwaiter().GetResult();
             }
@@ -323,7 +307,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Ok> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel, null, cancellationToken).ConfigureAwait(false))
                 {

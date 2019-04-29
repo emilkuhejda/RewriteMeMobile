@@ -42,7 +42,7 @@
                                        Grid.Column="0"
                                        Command="{Binding SendLogMailCommand}"
                                        Style="{StaticResource CustomButtonSecondaryStyle}"
-                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SendMail}}" />
+                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SendEmail}}" />
 
                 <controls:CustomButton Grid.Row="0"
                                        Grid.RowSpan="2"
