@@ -350,7 +350,7 @@ namespace RewriteMe.Business.Services
                 var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    await _internalValueService.UpdateValue(InternalValues.IsUserRegistrationSuccess, true).ConfigureAwait(false);
+                    await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true).ConfigureAwait(false);
                 }
             }
         }

@@ -39,7 +39,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                var isUserRegistrationSuccess = await _internalValueService.GetValue(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
+                var isUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
 
                 //await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}").ConfigureAwait(false);
             }

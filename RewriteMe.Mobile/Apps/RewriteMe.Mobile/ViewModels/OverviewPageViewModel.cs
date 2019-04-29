@@ -61,7 +61,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                IsUserRegistrationSuccess = await _internalValueService.GetValue(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
+                IsUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
             }
         }
 
