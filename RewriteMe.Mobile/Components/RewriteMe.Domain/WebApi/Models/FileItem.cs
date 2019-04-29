@@ -22,7 +22,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the FileItem class.
         /// </summary>
-        public FileItem(System.Guid? id = default(System.Guid?), string name = default(string), string fileName = default(string), string language = default(string), int? recognitionState = default(int?), System.DateTime? dateCreated = default(System.DateTime?), System.DateTime? dateProcessed = default(System.DateTime?), int? version = default(int?))
+        public FileItem(System.Guid? id = default(System.Guid?), string name = default(string), string fileName = default(string), string language = default(string), string recognitionState = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.DateTime? dateProcessed = default(System.DateTime?), int? version = default(int?))
         {
             Id = id;
             Name = name;
@@ -63,7 +63,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "recognitionState")]
-        public int? RecognitionState { get; set; }
+        public string RecognitionState { get; set; }
 
         /// <summary>
         /// </summary>

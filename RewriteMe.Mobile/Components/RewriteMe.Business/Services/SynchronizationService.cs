@@ -13,6 +13,7 @@ namespace RewriteMe.Business.Services
     public class SynchronizationService : ISynchronizationService
     {
         private readonly ILastUpdatesService _lastUpdatesService;
+        private readonly IFileItemService _fileItemService;
         private readonly IInternalValueService _internalValueService;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
@@ -22,9 +23,11 @@ namespace RewriteMe.Business.Services
 
         public SynchronizationService(
             ILastUpdatesService lastUpdatesService,
+            IFileItemService fileItemService,
             IInternalValueService internalValueService)
         {
             _lastUpdatesService = lastUpdatesService;
+            _fileItemService = fileItemService;
             _internalValueService = internalValueService;
         }
 
@@ -67,7 +70,7 @@ namespace RewriteMe.Business.Services
         {
             var applicationFileItemVersion = _lastUpdatesService.GetFileItemVersion();
 
-            await Task.CompletedTask.ConfigureAwait(false);
+            await _fileItemService.SynchronizationAsync(applicationFileItemVersion);
         }
 
         private async Task UpdateAudioSourcesAsync()

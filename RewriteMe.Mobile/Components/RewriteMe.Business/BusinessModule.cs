@@ -25,6 +25,7 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<IUserSessionService, UserSessionService>();
             containerRegistry.RegisterSingleton<ILastUpdatesService, LastUpdatesService>();
             containerRegistry.RegisterSingleton<ISynchronizationService, SynchronizationService>();
+            containerRegistry.RegisterSingleton<IFileItemService, FileItemService>();
         }
     }
 }
