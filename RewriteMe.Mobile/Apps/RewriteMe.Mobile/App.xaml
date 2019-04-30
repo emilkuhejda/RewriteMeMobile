@@ -221,6 +221,16 @@
                 </Style.Triggers>
             </Style>
 
+            <Style x:Key="ActionButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource ApplicationDefaultColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource ApplicationDefaultColor}" />
+                <Setter Property="CornerRadius" Value="30" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource ColorWhite}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
+            </Style>
+
             <!--  Navigation Bar  -->
             <x:Double x:Key="HeaderImageHeight">60</x:Double>
             <GridLength x:Key="NavigationBarRow1Height">52</GridLength>

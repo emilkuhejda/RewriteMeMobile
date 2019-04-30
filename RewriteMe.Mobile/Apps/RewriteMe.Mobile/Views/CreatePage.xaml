@@ -28,16 +28,18 @@
                         <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedLanguage.Title}" />
                     </controls:DrillDownButton>
                     <controls:Divider />
+
+                    <StackLayout IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}">
+                        <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedFile.FileName}" />
+                        <controls:Divider />
+                    </StackLayout>
                 </StackLayout>
 
                 <Button Grid.Row="1"
                         Margin="20,0,20,20"
-                        BackgroundColor="{StaticResource ApplicationDefaultColor}"
-                        BorderColor="{StaticResource ApplicationDefaultColor}"
                         Command="{Binding UploadFileCommand}"
-                        CornerRadius="30"
-                        Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}"
-                        TextColor="{StaticResource ColorWhite}" />
+                        Style="{StaticResource ActionButtonStyle}"
+                        Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}" />
 
                 <controls:ContextActionBar Grid.Row="2" ItemsSource="{Binding NavigationItems}" />
             </Grid>

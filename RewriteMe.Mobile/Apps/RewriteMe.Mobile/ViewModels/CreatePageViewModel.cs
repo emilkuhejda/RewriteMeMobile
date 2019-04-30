@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess.Transcription;
@@ -24,7 +26,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private string _fileName;
         private SupportedLanguage _selectedLanguage;
-        private string _selectedFileName;
+        private FileData _selectedFile;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
 
         public CreatePageViewModel(
@@ -60,12 +62,12 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        public string SelectedFileName
+        public FileData SelectedFile
         {
-            get => _selectedFileName;
+            get => _selectedFile;
             set
             {
-                if (SetProperty(ref _selectedFileName, value))
+                if (SetProperty(ref _selectedFile, value))
                 {
                     ReevaluateNavigationItemIconKeys();
                 }
@@ -165,12 +167,18 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteUploadFileCommandAsync()
         {
-            await Task.CompletedTask.ConfigureAwait(false);
+            var pickedFile = await CrossFilePicker.Current.PickFile();
+
+            SelectedFile = pickedFile;
+            if (string.IsNullOrWhiteSpace(FileName))
+            {
+                FileName = pickedFile.FileName;
+            }
         }
 
         private bool CanExecuteSaveCommand()
         {
-            return SelectedFileName != null;
+            return SelectedFile != null;
         }
 
         private async Task ExecuteSaveCommand()
@@ -180,7 +188,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveAndTranscribeCommand()
         {
-            return SelectedFileName != null && SelectedLanguage != null;
+            return SelectedFile != null && SelectedLanguage != null;
         }
 
         private async Task ExecuteSaveAndTranscribeCommandAsync()
