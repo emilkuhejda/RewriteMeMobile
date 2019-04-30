@@ -27,6 +27,7 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<ISynchronizationService, SynchronizationService>();
             containerRegistry.RegisterSingleton<IFileItemService, FileItemService>();
             containerRegistry.RegisterSingleton<ITranscribeItemService, TranscribeItemService>();
+            containerRegistry.RegisterSingleton<ICleanUpService, CleanUpService>();
         }
     }
 }

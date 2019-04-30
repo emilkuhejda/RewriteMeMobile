@@ -14,6 +14,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<FileItem> UploadAsync(MediaFile mediaFile);
 
-        Task<bool> TranscribeAsync(Guid fileItemId);
+        Task<bool> TranscribeAsync(Guid fileItemId, string language);
     }
 }

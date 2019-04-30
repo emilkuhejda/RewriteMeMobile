@@ -11,5 +11,7 @@ namespace RewriteMe.Domain.Interfaces.Repositories
         Task InsertOrReplaceAsync(FileItem fileItem);
 
         Task UpdateAllAsync(IEnumerable<FileItem> fileItems);
+
+        Task ClearAsync();
     }
 }

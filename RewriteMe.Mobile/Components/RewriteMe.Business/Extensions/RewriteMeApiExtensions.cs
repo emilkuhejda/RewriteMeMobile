@@ -43,9 +43,9 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<Ok> TranscribeFileItemAsync(this IRewriteMeAPI operations, Guid fileItemId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> TranscribeFileItemAsync(this IRewriteMeAPI operations, Guid fileItemId, string language, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.TranscribeFileItemWithHttpMessagesAsync(fileItemId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.TranscribeFileItemWithHttpMessagesAsync(fileItemId, language, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result.Body);
             }

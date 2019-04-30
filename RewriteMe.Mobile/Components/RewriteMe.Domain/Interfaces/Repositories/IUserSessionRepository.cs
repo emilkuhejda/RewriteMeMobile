@@ -9,7 +9,7 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task UpdateUserSessionAsync(UserSession userSession);
 
-        Task ClearUserSessionAsync();
+        Task ClearAsync();
 
         Task<bool> UserSessionExistsAsync();
     }

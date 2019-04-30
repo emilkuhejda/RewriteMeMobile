@@ -64,9 +64,9 @@ namespace RewriteMe.Business.Services
             throw new OfflineRequestException();
         }
 
-        public async Task<bool> TranscribeAsync(Guid fileItemId)
+        public async Task<bool> TranscribeAsync(Guid fileItemId, string language)
         {
-            var httpRequestResult = await _rewriteMeWebService.TranscribeFileItemAsync(fileItemId).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.TranscribeFileItemAsync(fileItemId, language).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 return true;

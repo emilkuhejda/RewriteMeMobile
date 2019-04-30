@@ -45,5 +45,10 @@ namespace RewriteMe.DataAccess.Repositories
                 database.InsertAll(mergedFileItems);
             }).ConfigureAwait(false);
         }
+
+        public async Task ClearAsync()
+        {
+            await _contextProvider.Context.DeleteAllAsync<FileItemEntity>().ConfigureAwait(false);
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace RewriteMe.DataAccess.Repositories
             }).ConfigureAwait(false);
         }
 
-        public async Task ClearUserSessionAsync()
+        public async Task ClearAsync()
         {
             await _contextProvider.Context.DeleteAllAsync<UserSessionEntity>().ConfigureAwait(false);
         }
