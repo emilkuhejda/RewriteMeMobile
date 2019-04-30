@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,6 +15,18 @@ namespace RewriteMe.Business.Extensions
                 await x().ConfigureAwait(false);
                 action();
             });
+        }
+
+        public static int GetCount(this IEnumerable enumerable)
+        {
+            var enumerator = enumerable.GetEnumerator();
+            var num = 0;
+            while (enumerator.MoveNext())
+            {
+                ++num;
+            }
+
+            return num;
         }
     }
 }

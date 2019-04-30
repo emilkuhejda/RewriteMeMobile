@@ -278,6 +278,24 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save and transcribe.
+        /// </summary>
+        public static string SaveAndTranscribe {
+            get {
+                return ResourceManager.GetString("SaveAndTranscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Send email.
         /// </summary>
         public static string SendEmail {
@@ -346,6 +364,15 @@ namespace RewriteMe.Resources {
         public static string TimeStamp {
             get {
                 return ResourceManager.GetString("TimeStamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload file.
+        /// </summary>
+        public static string UploadFile {
+            get {
+                return ResourceManager.GetString("UploadFile", resourceCulture);
             }
         }
         

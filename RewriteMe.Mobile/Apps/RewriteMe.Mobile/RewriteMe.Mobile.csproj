@@ -31,6 +31,10 @@
     <None Remove="Resources\Images\Forward.svg" />
     <None Remove="Resources\Images\Refresh.svg" />
     <None Remove="Resources\Images\RewriteMeLogo.png" />
+    <None Remove="Resources\Images\Save-Disabled.svg" />
+    <None Remove="Resources\Images\Save-Enabled.svg" />
+    <None Remove="Resources\Images\SaveAndTranscribe-Disabled.svg" />
+    <None Remove="Resources\Images\SaveAndTranscribe-Enabled.svg" />
     <None Remove="Resources\Images\Settings.svg" />
   </ItemGroup>
 
@@ -40,6 +44,10 @@
     <EmbeddedResource Include="Resources\Images\Forward.svg" />
     <EmbeddedResource Include="Resources\Images\Refresh.svg" />
     <EmbeddedResource Include="Resources\Images\RewriteMeLogo.png" />
+    <EmbeddedResource Include="Resources\Images\Save-Disabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Save-Enabled.svg" />
+    <EmbeddedResource Include="Resources\Images\SaveAndTranscribe-Disabled.svg" />
+    <EmbeddedResource Include="Resources\Images\SaveAndTranscribe-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Settings.svg" />
   </ItemGroup>
   
@@ -74,6 +82,12 @@
     <EmbeddedResource Update="Controls\AlwaysScrollView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Controls\Cells\ContextActionBarTileCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\ContextActionBar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Controls\Divider.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -84,6 +98,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Controls\PageActivityIndicator.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\TileCellGrid.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\BaseNavigationPage.xaml">

@@ -37,5 +37,8 @@
         public static string DeviceHardwareLabel => "DeviceHardwareLabel";
         public static string OperatingSystemLabel => "OperatingSystemLabel";
         public static string FileName => "FileName";
+        public static string UploadFile => "UploadFile";
+        public static string Save => "Save";
+        public static string SaveAndTranscribe => "SaveAndTranscribe";
     }
 }

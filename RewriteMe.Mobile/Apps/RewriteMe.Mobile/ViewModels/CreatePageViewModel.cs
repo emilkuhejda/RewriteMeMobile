@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -23,6 +24,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private string _fileName;
         private SupportedLanguage _selectedLanguage;
+        private string _selectedFileName;
+        private IEnumerable<ActionBarTileViewModel> _navigationItems;
 
         public CreatePageViewModel(
             IRewriteMeWebService rewriteMeWebService,
@@ -36,7 +39,7 @@ namespace RewriteMe.Mobile.ViewModels
             CanGoBack = true;
 
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
-            SaveCommand = new AsyncCommand(ExecuteSaveCommandAsync);
+            UploadFileCommand = new AsyncCommand(ExecuteUploadFileCommandAsync);
         }
 
         public string FileName
@@ -48,12 +51,40 @@ namespace RewriteMe.Mobile.ViewModels
         public SupportedLanguage SelectedLanguage
         {
             get => _selectedLanguage;
-            set => SetProperty(ref _selectedLanguage, value);
+            set
+            {
+                if (SetProperty(ref _selectedLanguage, value))
+                {
+                    ReevaluateNavigationItemIconKeys();
+                }
+            }
         }
+
+        public string SelectedFileName
+        {
+            get => _selectedFileName;
+            set
+            {
+                if (SetProperty(ref _selectedFileName, value))
+                {
+                    ReevaluateNavigationItemIconKeys();
+                }
+            }
+        }
+
+        public IEnumerable<ActionBarTileViewModel> NavigationItems
+        {
+            get => _navigationItems;
+            set => SetProperty(ref _navigationItems, value);
+        }
+
+        private ActionBarTileViewModel SaveTileItem { get; set; }
+
+        private ActionBarTileViewModel SaveAndTranscribeTileItem { get; set; }
 
         public ICommand NavigateToLanguageCommand { get; }
 
-        public ICommand SaveCommand { get; }
+        public ICommand UploadFileCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
@@ -64,6 +95,8 @@ namespace RewriteMe.Mobile.ViewModels
                     var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
                     HandleSelectionAsync(dropDownListViewModel);
                 }
+
+                NavigationItems = CreateNavigation();
 
                 await Task.CompletedTask.ConfigureAwait(false);
             }
@@ -84,6 +117,35 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        private IEnumerable<ActionBarTileViewModel> CreateNavigation()
+        {
+            SaveTileItem = new ActionBarTileViewModel
+            {
+                Text = Loc.Text(TranslationKeys.Save),
+                IsEnabled = CanExecuteSaveCommand(),
+                IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Save-Enabled.svg",
+                IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Save-Disabled.svg",
+                SelectedCommand = new AsyncCommand(ExecuteSaveCommand, CanExecuteSaveCommand)
+            };
+
+            SaveAndTranscribeTileItem = new ActionBarTileViewModel
+            {
+                Text = Loc.Text(TranslationKeys.SaveAndTranscribe),
+                IsEnabled = CanExecuteSaveAndTranscribeCommand(),
+                IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.SaveAndTranscribe-Enabled.svg",
+                IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.SaveAndTranscribe-Disabled.svg",
+                SelectedCommand = new AsyncCommand(ExecuteSaveAndTranscribeCommandAsync, CanExecuteSaveAndTranscribeCommand)
+            };
+
+            return new[] { SaveTileItem, SaveAndTranscribeTileItem };
+        }
+
+        private void ReevaluateNavigationItemIconKeys()
+        {
+            SaveTileItem.IsEnabled = CanExecuteSaveCommand();
+            SaveAndTranscribeTileItem.IsEnabled = CanExecuteSaveAndTranscribeCommand();
+        }
+
         private async Task ExecuteNavigateToLanguageCommandAsync()
         {
             var languages = SupportedLanguages.All.Select(x => new DropDownListViewModel
@@ -101,8 +163,29 @@ namespace RewriteMe.Mobile.ViewModels
             await NavigationService.NavigateWithoutAnimationAsync(Pages.DropDownListPage, navigationParameters).ConfigureAwait(false);
         }
 
-        private async Task ExecuteSaveCommandAsync()
+        private async Task ExecuteUploadFileCommandAsync()
         {
+            await Task.CompletedTask.ConfigureAwait(false);
+        }
+
+        private bool CanExecuteSaveCommand()
+        {
+            return SelectedFileName != null;
+        }
+
+        private async Task ExecuteSaveCommand()
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+        }
+
+        private bool CanExecuteSaveAndTranscribeCommand()
+        {
+            return SelectedFileName != null && SelectedLanguage != null;
+        }
+
+        private async Task ExecuteSaveAndTranscribeCommandAsync()
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
         }
     }
 }
