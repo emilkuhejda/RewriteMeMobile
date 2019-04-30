@@ -26,18 +26,28 @@
   </ItemGroup>
 
   <ItemGroup>
+    <None Remove="Resources\Images\Add.svg" />
     <None Remove="Resources\Images\Back.svg" />
     <None Remove="Resources\Images\Forward.svg" />
     <None Remove="Resources\Images\Refresh.svg" />
     <None Remove="Resources\Images\RewriteMeLogo.png" />
+    <None Remove="Resources\Images\Save-Disabled.svg" />
+    <None Remove="Resources\Images\Save-Enabled.svg" />
+    <None Remove="Resources\Images\SaveAndTranscribe-Disabled.svg" />
+    <None Remove="Resources\Images\SaveAndTranscribe-Enabled.svg" />
     <None Remove="Resources\Images\Settings.svg" />
   </ItemGroup>
 
   <ItemGroup>
+    <EmbeddedResource Include="Resources\Images\Add.svg" />
     <EmbeddedResource Include="Resources\Images\Back.svg" />
     <EmbeddedResource Include="Resources\Images\Forward.svg" />
     <EmbeddedResource Include="Resources\Images\Refresh.svg" />
     <EmbeddedResource Include="Resources\Images\RewriteMeLogo.png" />
+    <EmbeddedResource Include="Resources\Images\Save-Disabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Save-Enabled.svg" />
+    <EmbeddedResource Include="Resources\Images\SaveAndTranscribe-Disabled.svg" />
+    <EmbeddedResource Include="Resources\Images\SaveAndTranscribe-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Settings.svg" />
   </ItemGroup>
   
@@ -51,6 +61,7 @@
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.4.859" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.4.859" />
     <PackageReference Include="Xamarin.Forms" Version="3.4.0.1029999" />
+    <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.0.135" />
   </ItemGroup>
   
   <ItemGroup>
@@ -72,6 +83,12 @@
     <EmbeddedResource Update="Controls\AlwaysScrollView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Controls\Cells\ContextActionBarTileCell.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Controls\ContextActionBar.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Controls\Divider.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -84,7 +101,13 @@
     <EmbeddedResource Update="Controls\PageActivityIndicator.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Controls\TileCellGrid.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\BaseNavigationPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\CreatePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\DeveloperPage.xaml">

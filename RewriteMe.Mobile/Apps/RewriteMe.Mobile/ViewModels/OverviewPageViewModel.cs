@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,7 +14,11 @@ using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Commands;
+using RewriteMe.Mobile.Extensions;
+using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 using Xamarin.Forms;
@@ -21,6 +27,7 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class OverviewPageViewModel : ViewModelBase
     {
+        private readonly IFileItemService _fileItemService;
         private readonly IUserSessionService _userSessionService;
         private readonly IInternalValueService _internalValueService;
         private readonly ILatestVersion _latestVersion;
@@ -28,8 +35,10 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IApplicationSettings _applicationSettings;
 
         private bool _isUserRegistrationSuccess;
+        private IList<FileItem> _fileItems;
 
         public OverviewPageViewModel(
+            IFileItemService fileItemService,
             IUserSessionService userSessionService,
             IInternalValueService internalValueService,
             ILatestVersion latestVersion,
@@ -40,6 +49,7 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
+            _fileItemService = fileItemService;
             _userSessionService = userSessionService;
             _internalValueService = internalValueService;
             _latestVersion = latestVersion;
@@ -47,9 +57,12 @@ namespace RewriteMe.Mobile.ViewModels
             _applicationSettings = applicationSettings;
 
             SendEmailCommand = new DelegateCommand(ExecuteSendEmailCommand);
+            NavigateToCreatePageCommand = new AsyncCommand(ExecuteNavigateToCreatePageCommandAsync);
         }
 
         public ICommand SendEmailCommand { get; }
+
+        public ICommand NavigateToCreatePageCommand { get; }
 
         public bool IsUserRegistrationSuccess
         {
@@ -57,11 +70,20 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _isUserRegistrationSuccess, value);
         }
 
+        public IList<FileItem> FileItems
+        {
+            get => _fileItems;
+            set => SetProperty(ref _fileItems, value);
+        }
+
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
             using (new OperationMonitor(OperationScope))
             {
                 IsUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
+
+                var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
+                FileItems = fileItems.ToList();
             }
         }
 
@@ -100,6 +122,11 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.EmailIsNotSupported)).ConfigureAwait(false);
             }
+        }
+
+        private async Task ExecuteNavigateToCreatePageCommandAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.Create).ConfigureAwait(false);
         }
     }
 }

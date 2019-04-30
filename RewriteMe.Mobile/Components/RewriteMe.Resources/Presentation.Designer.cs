@@ -188,6 +188,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language is not supported..
+        /// </summary>
+        public static string LanguageNotSupportedErrorMessage {
+            get {
+                return ResourceManager.GetString("LanguageNotSupportedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Languages.
         /// </summary>
         public static string Languages {
@@ -206,11 +215,47 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        public static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your subscription does not have enough free minutes..
+        /// </summary>
+        public static string NotEnoughFreeMinutesInSubscriptionErrorMessage {
+            get {
+                return ResourceManager.GetString("NotEnoughFreeMinutesInSubscriptionErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It seems you are offline. Please check your internet connection..
+        /// </summary>
+        public static string OfflineErrorMessage {
+            get {
+                return ResourceManager.GetString("OfflineErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to You&apos;re not connected to the internet. Please try again..
         /// </summary>
         public static string OfflineMessageText {
             get {
                 return ResourceManager.GetString("OfflineMessageText", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
             }
         }
         
@@ -265,6 +310,24 @@ namespace RewriteMe.Resources {
         public static string Reload {
             get {
                 return ResourceManager.GetString("Reload", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save and transcribe.
+        /// </summary>
+        public static string SaveAndTranscribe {
+            get {
+                return ResourceManager.GetString("SaveAndTranscribe", resourceCulture);
             }
         }
         
@@ -337,6 +400,51 @@ namespace RewriteMe.Resources {
         public static string TimeStamp {
             get {
                 return ResourceManager.GetString("TimeStamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server is unreachable. Please try it later..
+        /// </summary>
+        public static string UnreachableServerErrorMessage {
+            get {
+                return ResourceManager.GetString("UnreachableServerErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploaded file is not found. Please try it later..
+        /// </summary>
+        public static string UploadedFileNotFoundErrorMessage {
+            get {
+                return ResourceManager.GetString("UploadedFileNotFoundErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploaded file is not supported..
+        /// </summary>
+        public static string UploadedFileNotSupportedErrorMessage {
+            get {
+                return ResourceManager.GetString("UploadedFileNotSupportedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload file.
+        /// </summary>
+        public static string UploadFile {
+            get {
+                return ResourceManager.GetString("UploadFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload might take some time. Please do not turn off application. File might not be uploaded..
+        /// </summary>
+        public static string UploadFileItemInfoMessage {
+            get {
+                return ResourceManager.GetString("UploadFileItemInfoMessage", resourceCulture);
             }
         }
         

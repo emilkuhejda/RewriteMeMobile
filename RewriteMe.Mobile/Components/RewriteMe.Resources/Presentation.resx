@@ -105,6 +105,9 @@
   <data name="ActivityIndicatorCaptionText" xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="LoadingData" xml:space="preserve">
+    <value>Loading data....</value>
+  </data>
   <data name="OfflineMessageText" xml:space="preserve">
     <value>You're not connected to the internet. Please try again.</value>
   </data>
@@ -119,6 +122,9 @@
   </data>
   <data name="RegisterToUseApplication" xml:space="preserve">
     <value>Please register to use Rewrite Me</value>
+  </data>
+  <data name="UserRegistration" xml:space="preserve">
+    <value>User registration</value>
   </data>
   <data name="RegistrationErrorTitle" xml:space="preserve">
     <value>Registration error</value>
@@ -177,6 +183,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="DeveloperModeIsActivated" xml:space="preserve">
     <value>Developer mode is activated</value>
   </data>
@@ -198,10 +207,38 @@
   <data name="OperatingSystemLabel" xml:space="preserve">
     <value>Operating system:</value>
   </data>
-  <data name="UserRegistration" xml:space="preserve">
-    <value>User registration</value>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
   </data>
-  <data name="LoadingData" xml:space="preserve">
-    <value>Loading data....</value>
+  <data name="UploadFile" xml:space="preserve">
+    <value>Upload file</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="SaveAndTranscribe" xml:space="preserve">
+    <value>Save and transcribe</value>
+  </data>
+
+  <data name="UploadFileItemInfoMessage" xml:space="preserve">
+    <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>
+  </data>
+  <data name="OfflineErrorMessage" xml:space="preserve">
+    <value>It seems you are offline. Please check your internet connection.</value>
+  </data>
+  <data name="UnreachableServerErrorMessage" xml:space="preserve">
+    <value>Server is unreachable. Please try it later.</value>
+  </data>
+  <data name="UploadedFileNotFoundErrorMessage" xml:space="preserve">
+    <value>Uploaded file is not found. Please try it later.</value>
+  </data>
+  <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
+    <value>Uploaded file is not supported.</value>
+  </data>
+  <data name="LanguageNotSupportedErrorMessage" xml:space="preserve">
+    <value>Language is not supported.</value>
+  </data>
+  <data name="NotEnoughFreeMinutesInSubscriptionErrorMessage" xml:space="preserve">
+    <value>Your subscription does not have enough free minutes.</value>
   </data>
 </root>

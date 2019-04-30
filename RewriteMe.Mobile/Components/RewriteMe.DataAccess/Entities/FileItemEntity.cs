@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 
@@ -35,6 +34,6 @@ namespace RewriteMe.DataAccess.Entities
         public AudioSourceEntity AudioSource { get; set; }
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
-        public IEnumerable<TranscribeItemEntity> TranscribeItems { get; set; }
+        public TranscribeItemEntity[] TranscribeItems { get; set; }
     }
 }

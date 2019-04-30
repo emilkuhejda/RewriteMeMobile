@@ -7,6 +7,7 @@ using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Factories;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Business.Services
@@ -41,6 +42,18 @@ namespace RewriteMe.Business.Services
         {
             var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetTranscribeItemsAllAsync(updatedAfter, customHeaders)).ConfigureAwait(false);
+        }
+
+        public async Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile)
+        {
+            var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UploadFileItemAsync(mediaFile, customHeaders)).ConfigureAwait(false);
+        }
+
+        public async Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language)
+        {
+            var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.TranscribeFileItemAsync(fileItemId, language, customHeaders)).ConfigureAwait(false);
         }
 
         private async Task<CustomHeadersDictionary> GetAuthHeaders()

@@ -1,9 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Transcription;
+using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Business.Services
 {
@@ -31,10 +35,49 @@ namespace RewriteMe.Business.Services
                 var httpRequestResult = await _rewriteMeWebService.GetFileItemsAsync(lastFileItemSynchronization).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    await _fileItemRepository.UpdateAsync(httpRequestResult.Payload).ConfigureAwait(false);
+                    await _fileItemRepository.UpdateAllAsync(httpRequestResult.Payload).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow);
                 }
             }
+        }
+
+        public async Task<IEnumerable<FileItem>> GetAllAsync()
+        {
+            return await _fileItemRepository.GetAllAsync().ConfigureAwait(false);
+        }
+
+        public async Task<FileItem> UploadAsync(MediaFile mediaFile)
+        {
+            var httpRequestResult = await _rewriteMeWebService.UploadFileItemAsync(mediaFile).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            {
+                var fileItem = httpRequestResult.Payload;
+                await _fileItemRepository.InsertOrReplaceAsync(fileItem).ConfigureAwait(false);
+                return fileItem;
+            }
+
+            if (httpRequestResult.State == HttpRequestState.Error)
+            {
+                throw new ErrorRequestException(httpRequestResult.StatusCode);
+            }
+
+            throw new OfflineRequestException();
+        }
+
+        public async Task<bool> TranscribeAsync(Guid fileItemId, string language)
+        {
+            var httpRequestResult = await _rewriteMeWebService.TranscribeFileItemAsync(fileItemId, language).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            {
+                return true;
+            }
+
+            if (httpRequestResult.State == HttpRequestState.Error)
+            {
+                throw new ErrorRequestException(httpRequestResult.StatusCode);
+            }
+
+            throw new OfflineRequestException();
         }
     }
 }

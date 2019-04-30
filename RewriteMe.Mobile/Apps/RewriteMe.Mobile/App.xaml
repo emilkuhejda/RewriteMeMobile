@@ -2,6 +2,7 @@
 <prism:PrismApplication x:Class="RewriteMe.Mobile.App"
                         xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:cells="clr-namespace:RewriteMe.Mobile.Controls.Cells;assembly=RewriteMe.Mobile"
                         xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                         xmlns:converters="clr-namespace:RewriteMe.Mobile.Converters;assembly=RewriteMe.Mobile"
                         xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
@@ -38,6 +39,7 @@
             <Color x:Key="ColorBlack">#000000</Color>
             <Color x:Key="ColorWhite">#FFFFFF</Color>
 
+            <Color x:Key="ApplicationDefaultColor">#FF1ABC9C</Color>
             <Color x:Key="ApplicationTitleTextColor">#FFFFFF</Color>
             <Color x:Key="WindowBackground">#FFFFFF</Color>
             <Color x:Key="PrimaryTextColor">#616161</Color>
@@ -47,6 +49,10 @@
             <Color x:Key="StatusBarColor">#FF3CEAE1</Color>
             <Color x:Key="NavigationBarGray">#D8D8D8</Color>
             <Color x:Key="Divider">#C8C7CC</Color>
+            <Color x:Key="ActionBarBorderColor">#BDBDBD</Color>
+            <Color x:Key="ActionBarTileBackgroundColor">#FFFFFF</Color>
+            <Color x:Key="ActionBarTileBackgroundColorHover">#E0E0E0</Color>
+            <Color x:Key="ActionBarTileBackgroundColorTouch">#BDBDBD</Color>
             <Color x:Key="WarningMessageBackground">#E65100</Color>
 
             <!--  Font Sizes  -->
@@ -213,6 +219,16 @@
                         <Setter Property="BorderColor" Value="{StaticResource ColorGrey300}" />
                     </Trigger>
                 </Style.Triggers>
+            </Style>
+
+            <Style x:Key="ActionButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource ApplicationDefaultColor}" />
+                <Setter Property="BorderColor" Value="{StaticResource ApplicationDefaultColor}" />
+                <Setter Property="CornerRadius" Value="30" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="TextColor" Value="{StaticResource ColorWhite}" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="FillAndExpand" />
             </Style>
 
             <!--  Navigation Bar  -->
@@ -392,6 +408,11 @@
                                       VerticalOptions="FillAndExpand" />
                 </Grid>
             </ControlTemplate>
+
+            <!--  Data Templates  -->
+            <DataTemplate x:Key="ContextActionBarTileCellTemplate">
+                <cells:ContextActionBarTileCell />
+            </DataTemplate>
         </ResourceDictionary>
     </prism:PrismApplication.Resources>
 </prism:PrismApplication>

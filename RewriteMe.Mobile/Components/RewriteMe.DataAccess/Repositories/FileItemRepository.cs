@@ -24,7 +24,12 @@ namespace RewriteMe.DataAccess.Repositories
             return entities.Select(x => x.ToFileItem());
         }
 
-        public async Task UpdateAsync(IEnumerable<FileItem> fileItems)
+        public async Task InsertOrReplaceAsync(FileItem fileItem)
+        {
+            await _contextProvider.Context.InsertOrReplaceAsync(fileItem.ToFileItemEntity()).ConfigureAwait(false);
+        }
+
+        public async Task UpdateAllAsync(IEnumerable<FileItem> fileItems)
         {
             var fileItemEntities = fileItems.Select(x => x.ToFileItemEntity()).ToList();
             if (!fileItemEntities.Any())
@@ -39,6 +44,11 @@ namespace RewriteMe.DataAccess.Repositories
                 database.DeleteAll<FileItemEntity>();
                 database.InsertAll(mergedFileItems);
             }).ConfigureAwait(false);
+        }
+
+        public async Task ClearAsync()
+        {
+            await _contextProvider.Context.DeleteAllAsync<FileItemEntity>().ConfigureAwait(false);
         }
     }
 }
