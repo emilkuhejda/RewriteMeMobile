@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using RewriteMe.DataAccess.Entities;
 using SQLite;
@@ -18,6 +19,8 @@ namespace RewriteMe.DataAccess
         Task RunInTransactionAsync(Action<SQLiteConnection> action);
 
         Task CreateTablesAsync(params Type[] types);
+
+        Task<T> GetAsync<T>(Expression<Func<T, bool>> predicate) where T : new();
 
         Task InsertAsync<T>(T item);
 

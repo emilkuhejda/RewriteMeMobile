@@ -14,7 +14,6 @@ using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
@@ -83,7 +82,7 @@ namespace RewriteMe.Mobile.ViewModels
                 IsUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
 
                 var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
-                FileItems = fileItems.Select(x => new FileItemViewModel(x, NavigationService)).ToList();
+                FileItems = fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)).ToList();
             }
         }
 

@@ -41,6 +41,7 @@
         public static string UploadFile => "UploadFile";
         public static string Save => "Save";
         public static string SaveAndTranscribe => "SaveAndTranscribe";
+        public static string Transcribe => "Transcribe";
         public static string InProgressLabel => "InProgressLabel";
 
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";

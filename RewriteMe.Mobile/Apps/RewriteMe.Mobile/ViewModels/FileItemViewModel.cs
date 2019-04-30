@@ -40,7 +40,7 @@ namespace RewriteMe.Mobile.ViewModels
             var navigationParameters = new NavigationParameters();
             navigationParameters.Add<FileItem>(FileItem);
 
-            if (recognitionState == RecognitionState.Converting || recognitionState == RecognitionState.Prepared)
+            if (recognitionState == RecognitionState.None || recognitionState == RecognitionState.Converting || recognitionState == RecognitionState.Prepared)
             {
                 await _navigationService.NavigateWithoutAnimationAsync(Pages.Transcribe, navigationParameters).ConfigureAwait(false);
             }
