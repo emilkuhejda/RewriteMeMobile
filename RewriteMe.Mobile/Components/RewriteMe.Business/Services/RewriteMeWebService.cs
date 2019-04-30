@@ -44,10 +44,16 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetTranscribeItemsAllAsync(updatedAfter, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<FileItem>> CreateFileItemAsync(MediaFile mediaFile)
+        public async Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile)
         {
             var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UploadFileItemAsync(mediaFile, customHeaders)).ConfigureAwait(false);
+        }
+
+        public async Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId)
+        {
+            var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.TranscribeFileItemAsync(fileItemId, customHeaders)).ConfigureAwait(false);
         }
 
         private async Task<CustomHeadersDictionary> GetAuthHeaders()

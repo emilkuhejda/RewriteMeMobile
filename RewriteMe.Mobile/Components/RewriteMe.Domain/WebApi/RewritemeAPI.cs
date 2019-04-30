@@ -956,7 +956,7 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
-        /// <param name='transcribeFileItemModel'>
+        /// <param name='fileItemId'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -973,7 +973,7 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> TranscribeFileItemWithHttpMessagesAsync(TranscribeFileItemModel transcribeFileItemModel = default(TranscribeFileItemModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> TranscribeFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -982,13 +982,22 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("transcribeFileItemModel", transcribeFileItemModel);
+                tracingParameters.Add("fileItemId", fileItemId);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "TranscribeFileItem", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
             var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files/transcribe").ToString();
+            List<string> _queryParameters = new List<string>();
+            if (fileItemId != null)
+            {
+                _queryParameters.Add(string.Format("fileItemId={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(fileItemId, SerializationSettings).Trim('"'))));
+            }
+            if (_queryParameters.Count > 0)
+            {
+                _url += "?" + string.Join("&", _queryParameters);
+            }
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1011,12 +1020,6 @@ namespace RewriteMe.Domain.WebApi
 
             // Serialize Request
             string _requestContent = null;
-            if(transcribeFileItemModel != null)
-            {
-                _requestContent = SafeJsonConvert.SerializeObject(transcribeFileItemModel, SerializationSettings);
-                _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
-            }
             // Send Request
             if (_shouldTrace)
             {

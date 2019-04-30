@@ -12,8 +12,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<IEnumerable<FileItem>> GetAllAsync();
 
-        Task UploadAsync(MediaFile mediaFile);
+        Task<FileItem> UploadAsync(MediaFile mediaFile);
 
-        Task TranscribeAsync(MediaFile mediaFile);
+        Task<bool> TranscribeAsync(Guid fileItemId);
     }
 }

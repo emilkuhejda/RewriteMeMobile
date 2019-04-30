@@ -99,7 +99,7 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         Task<HttpOperationResponse<Ok>> RemoveFileItemWithHttpMessagesAsync(string id, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='transcribeFileItemModel'>
+        /// <param name='fileItemId'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -107,7 +107,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> TranscribeFileItemWithHttpMessagesAsync(TranscribeFileItemModel transcribeFileItemModel = default(TranscribeFileItemModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> TranscribeFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='customHeaders'>
         /// The headers that will be added to request.

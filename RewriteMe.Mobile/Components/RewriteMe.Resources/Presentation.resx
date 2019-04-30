@@ -231,10 +231,7 @@
   <data name="LanguageNotSupportedErrorMessage" xml:space="preserve">
     <value>Language is not supported.</value>
   </data>
-  <data name="" xml:space="preserve">
-    <value></value>
-  </data>
-  <data name="" xml:space="preserve">
-    <value></value>
+  <data name="NotEnoughFreeMinutesInSubscriptionErrorMessage" xml:space="preserve">
+    <value>Your subscription does not have enough free minutes.</value>
   </data>
 </root>

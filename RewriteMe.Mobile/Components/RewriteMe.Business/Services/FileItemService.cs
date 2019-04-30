@@ -46,26 +46,38 @@ namespace RewriteMe.Business.Services
             return await _fileItemRepository.GetAllAsync().ConfigureAwait(false);
         }
 
-        public async Task UploadAsync(MediaFile mediaFile)
+        public async Task<FileItem> UploadAsync(MediaFile mediaFile)
         {
-            var httpRequestResult = await _rewriteMeWebService.CreateFileItemAsync(mediaFile).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.UploadFileItemAsync(mediaFile).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
-                await _fileItemRepository.InsertOrReplaceAsync(httpRequestResult.Payload).ConfigureAwait(false);
+                var fileItem = httpRequestResult.Payload;
+                await _fileItemRepository.InsertOrReplaceAsync(fileItem).ConfigureAwait(false);
+                return fileItem;
             }
-            else if (httpRequestResult.State == HttpRequestState.Error)
+
+            if (httpRequestResult.State == HttpRequestState.Error)
             {
                 throw new ErrorRequestException(httpRequestResult.StatusCode);
             }
-            else
-            {
-                throw new OfflineRequestException();
-            }
+
+            throw new OfflineRequestException();
         }
 
-        public async Task TranscribeAsync(MediaFile mediaFile)
+        public async Task<bool> TranscribeAsync(Guid fileItemId)
         {
-            await Task.CompletedTask.ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.TranscribeFileItemAsync(fileItemId).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            {
+                return true;
+            }
+
+            if (httpRequestResult.State == HttpRequestState.Error)
+            {
+                throw new ErrorRequestException(httpRequestResult.StatusCode);
+            }
+
+            throw new OfflineRequestException();
         }
     }
 }

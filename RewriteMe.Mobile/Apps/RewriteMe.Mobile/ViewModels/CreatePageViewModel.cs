@@ -216,8 +216,8 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     var mediaFile = CreateMediaFile();
 
-                    await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
-                    await _fileItemService.TranscribeAsync(mediaFile).ConfigureAwait(false);
+                    var fileItem = await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
+                    await _fileItemService.TranscribeAsync(fileItem.Id ?? Guid.Empty).ConfigureAwait(false);
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
                 catch (ErrorRequestException ex)
@@ -238,6 +238,9 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 case 400:
                     message = Loc.Text(TranslationKeys.UploadedFileNotFoundErrorMessage);
+                    break;
+                case 403:
+                    message = Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
                     break;
                 case 406:
                     message = Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);

@@ -179,24 +179,24 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='transcribeFileItemModel'>
+            /// <param name='fileItemId'>
             /// </param>
-            public static object TranscribeFileItem(this IRewriteMeAPI operations, TranscribeFileItemModel transcribeFileItemModel = default(TranscribeFileItemModel))
+            public static object TranscribeFileItem(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?))
             {
-                return operations.TranscribeFileItemAsync(transcribeFileItemModel).GetAwaiter().GetResult();
+                return operations.TranscribeFileItemAsync(fileItemId).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='transcribeFileItemModel'>
+            /// <param name='fileItemId'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> TranscribeFileItemAsync(this IRewriteMeAPI operations, TranscribeFileItemModel transcribeFileItemModel = default(TranscribeFileItemModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> TranscribeFileItemAsync(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TranscribeFileItemWithHttpMessagesAsync(transcribeFileItemModel, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TranscribeFileItemWithHttpMessagesAsync(fileItemId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

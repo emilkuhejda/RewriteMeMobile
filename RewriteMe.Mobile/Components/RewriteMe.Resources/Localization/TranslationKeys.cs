@@ -46,5 +46,6 @@
         public static string UploadedFileNotFoundErrorMessage => "UploadedFileNotFoundErrorMessage";
         public static string UploadedFileNotSupportedErrorMessage => "UploadedFileNotSupportedErrorMessage";
         public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
+        public static string NotEnoughFreeMinutesInSubscriptionErrorMessage => "NotEnoughFreeMinutesInSubscriptionErrorMessage";
     }
 }
