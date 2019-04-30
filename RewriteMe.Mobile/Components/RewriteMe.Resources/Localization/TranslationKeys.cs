@@ -4,11 +4,13 @@
     {
         public static string ApplicationTitle => "ApplicationTitle";
         public static string ActivityIndicatorCaptionText => "ActivityIndicatorCaptionText";
+        public static string LoadingData => "LoadingData";
         public static string OfflineMessageText => "OfflineMessageText";
         public static string RegisterOrSignIn => "RegisterOrSignIn";
         public static string SignInSuccessful => "SignInSuccessful";
         public static string SignInFailed => "SignInFailed";
         public static string RegisterToUseApplication => "RegisterToUseApplication";
+        public static string UserRegistration => "UserRegistration";
         public static string RegistrationErrorTitle => "RegistrationErrorTitle";
         public static string RegistrationErrorMessage => "RegistrationErrorMessage";
         public static string UserIdentificationLabel => "UserIdentificationLabel";
@@ -27,6 +29,7 @@
         public static string Reload => "Reload";
         public static string SendEmail => "SendEmail";
         public static string Cancel => "Cancel";
+        public static string Ok => "Ok";
         public static string DeveloperModeIsActivated => "DeveloperModeIsActivated";
         public static string EmailIsNotSupported => "EmailIsNotSupported";
         public static string ApplicationVersion => "ApplicationVersion";
@@ -34,7 +37,17 @@
         public static string ApplicationTitleLog => "ApplicationTitleLog";
         public static string DeviceHardwareLabel => "DeviceHardwareLabel";
         public static string OperatingSystemLabel => "OperatingSystemLabel";
-        public static string UserRegistration => "UserRegistration";
-        public static string LoadingData => "LoadingData";
+        public static string Name => "Name";
+        public static string UploadFile => "UploadFile";
+        public static string Save => "Save";
+        public static string SaveAndTranscribe => "SaveAndTranscribe";
+
+        public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
+        public static string OfflineErrorMessage => "OfflineErrorMessage";
+        public static string UnreachableServerErrorMessage => "UnreachableServerErrorMessage";
+        public static string UploadedFileNotFoundErrorMessage => "UploadedFileNotFoundErrorMessage";
+        public static string UploadedFileNotSupportedErrorMessage => "UploadedFileNotSupportedErrorMessage";
+        public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
+        public static string NotEnoughFreeMinutesInSubscriptionErrorMessage => "NotEnoughFreeMinutesInSubscriptionErrorMessage";
     }
 }

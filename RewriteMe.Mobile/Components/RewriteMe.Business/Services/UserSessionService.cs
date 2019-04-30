@@ -23,6 +23,7 @@ namespace RewriteMe.Business.Services
     {
         private readonly IRegistrationUserWebService _registrationUserWebService;
         private readonly IInternalValueService _internalValueService;
+        private readonly ICleanUpService _cleanUpService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
         private readonly IApplicationSettings _applicationSettings;
@@ -35,6 +36,7 @@ namespace RewriteMe.Business.Services
         public UserSessionService(
             IRegistrationUserWebService registrationUserWebService,
             IInternalValueService internalValueService,
+            ICleanUpService cleanUpService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
             IApplicationSettings applicationSettings,
@@ -43,6 +45,7 @@ namespace RewriteMe.Business.Services
         {
             _registrationUserWebService = registrationUserWebService;
             _internalValueService = internalValueService;
+            _cleanUpService = cleanUpService;
             _identityUiParentProvider = identityUiParentProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
@@ -284,6 +287,7 @@ namespace RewriteMe.Business.Services
             _accessToken = null;
 
             await RemoveLocalAccountsAsync().ConfigureAwait(false);
+            await _cleanUpService.CleanUp().ConfigureAwait(false);
         }
 
         private async Task RemoveLocalAccountsAsync()

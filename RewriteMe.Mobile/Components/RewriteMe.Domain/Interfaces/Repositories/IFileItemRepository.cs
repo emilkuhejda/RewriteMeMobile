@@ -8,6 +8,10 @@ namespace RewriteMe.Domain.Interfaces.Repositories
     {
         Task<IEnumerable<FileItem>> GetAllAsync();
 
-        Task UpdateAsync(IEnumerable<FileItem> fileItems);
+        Task InsertOrReplaceAsync(FileItem fileItem);
+
+        Task UpdateAllAsync(IEnumerable<FileItem> fileItems);
+
+        Task ClearAsync();
     }
 }

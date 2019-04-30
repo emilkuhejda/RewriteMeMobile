@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<controls:TileCellGrid x:Class="RewriteMe.Mobile.Controls.Cells.ContextActionBarTileCell"
+                       xmlns="http://xamarin.com/schemas/2014/forms"
+                       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                       xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                       xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                       Margin="0"
+                       BackgroundColor="{StaticResource ActionBarTileBackgroundColor}"
+                       HorizontalOptions="FillAndExpand"
+                       HoverBackgroundColor="{StaticResource ActionBarTileBackgroundColorHover}"
+                       IsEnabled="{Binding IsEnabled}"
+                       TouchBackgroundColor="{StaticResource ActionBarTileBackgroundColorTouch}">
+    <StackLayout Padding="5"
+                 InputTransparent="True"
+                 IsEnabled="{Binding IsEnabled}"
+                 Orientation="Vertical">
+        <forms:SvgCachedImage HeightRequest="36"
+                              HorizontalOptions="Center"
+                              InputTransparent="True"
+                              IsEnabled="{Binding IsEnabled}"
+                              Source="{Binding FullyQualifiedIconKey}" />
+        <Label Margin="0,-5,0,0"
+               FontSize="{StaticResource LittleSize}"
+               HorizontalOptions="Center"
+               InputTransparent="True"
+               IsEnabled="{Binding IsEnabled}"
+               Text="{Binding Text}">
+            <Label.Triggers>
+                <DataTrigger Binding="{Binding IsEnabled}"
+                             TargetType="Label"
+                             Value="False">
+                    <Setter Property="TextColor" Value="{StaticResource ColorGrey400}" />
+                </DataTrigger>
+            </Label.Triggers>
+        </Label>
+    </StackLayout>
+
+    <controls:TileCellGrid.GestureRecognizers>
+        <TapGestureRecognizer Command="{Binding SelectedCommand}" />
+    </controls:TileCellGrid.GestureRecognizers>
+</controls:TileCellGrid>
