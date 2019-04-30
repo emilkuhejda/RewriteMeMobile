@@ -21,7 +21,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <StackLayout Grid.Column="0" HeightRequest="50">
+                        <StackLayout Grid.Column="0" Padding="0,10,0,10">
                             <Label HeightRequest="30"
                                    Style="{StaticResource LabelStyle}"
                                    Text="{Binding FileItem.Name}" />
@@ -83,7 +83,7 @@
                       ItemsSource="{Binding FileItems}" />
 
             <Grid Grid.Row="1"
-                  Margin="0,0,10,10"
+                  Margin="0,0,0,10"
                   Padding="0"
                   BackgroundColor="Transparent"
                   ColumnSpacing="0"

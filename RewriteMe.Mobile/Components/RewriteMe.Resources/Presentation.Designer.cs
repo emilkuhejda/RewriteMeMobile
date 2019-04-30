@@ -413,6 +413,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transcribe.
+        /// </summary>
+        public static string Transcribe {
+            get {
+                return ResourceManager.GetString("Transcribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server is unreachable. Please try it later..
         /// </summary>
         public static string UnreachableServerErrorMessage {

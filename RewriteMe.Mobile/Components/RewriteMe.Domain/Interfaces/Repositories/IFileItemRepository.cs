@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Domain.Interfaces.Repositories
@@ -11,6 +13,8 @@ namespace RewriteMe.Domain.Interfaces.Repositories
         Task InsertOrReplaceAsync(FileItem fileItem);
 
         Task UpdateAllAsync(IEnumerable<FileItem> fileItems);
+
+        Task UpdateRecognitionStateAsync(Guid fileItemId, RecognitionState recognitionState);
 
         Task ClearAsync();
     }
