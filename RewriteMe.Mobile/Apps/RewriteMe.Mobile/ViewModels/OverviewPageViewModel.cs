@@ -83,7 +83,7 @@ namespace RewriteMe.Mobile.ViewModels
                 IsUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
 
                 var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
-                FileItems = fileItems.Select(x => new FileItemViewModel(x)).ToList();
+                FileItems = fileItems.Select(x => new FileItemViewModel(x, NavigationService)).ToList();
             }
         }
 
