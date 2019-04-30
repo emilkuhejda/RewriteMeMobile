@@ -178,29 +178,18 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveCommand()
         {
-            return SelectedFile != null && SelectedLanguage != null;
+            return SelectedFile != null;
         }
 
         private async Task ExecuteSaveCommand()
         {
-            using (new OperationMonitor(OperationScope))
+            var func = new Func<MediaFile, Task>(async mediaFile =>
             {
-                try
-                {
-                    var mediaFile = CreateMediaFile();
+                await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
+                await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+            });
 
-                    await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
-                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
-                }
-                catch (ErrorRequestException ex)
-                {
-                    await HandleErrorMessage(ex.StatusCode).ConfigureAwait(false);
-                }
-                catch (OfflineRequestException)
-                {
-                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.OfflineErrorMessage)).ConfigureAwait(false);
-                }
-            }
+            await ExecuteSendToServer(func).ConfigureAwait(false);
         }
 
         private bool CanExecuteSaveAndTranscribeCommand()
@@ -210,15 +199,34 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteSaveAndTranscribeCommandAsync()
         {
+            var func = new Func<MediaFile, Task>(async mediaFile =>
+            {
+                var fileItem = await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
+                await _fileItemService.TranscribeAsync(fileItem.Id ?? Guid.Empty).ConfigureAwait(false);
+                await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+            });
+
+            await ExecuteSendToServer(func).ConfigureAwait(false);
+        }
+
+        private async Task ExecuteSendToServer(Func<MediaFile, Task> func)
+        {
             using (new OperationMonitor(OperationScope))
             {
+                CanGoBack = false;
+
                 try
                 {
-                    var mediaFile = CreateMediaFile();
+                    var result = await DialogService.ConfirmAsync(
+                        Loc.Text(TranslationKeys.UploadFileItemInfoMessage),
+                        okText: Loc.Text(TranslationKeys.Ok),
+                        cancelText: Loc.Text(TranslationKeys.Cancel));
 
-                    var fileItem = await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
-                    await _fileItemService.TranscribeAsync(fileItem.Id ?? Guid.Empty).ConfigureAwait(false);
-                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+                    if (result)
+                    {
+                        var mediaFile = CreateMediaFile();
+                        await func(mediaFile).ConfigureAwait(false);
+                    }
                 }
                 catch (ErrorRequestException ex)
                 {
@@ -228,6 +236,8 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     await DialogService.AlertAsync(Loc.Text(TranslationKeys.OfflineErrorMessage)).ConfigureAwait(false);
                 }
+
+                CanGoBack = true;
             }
         }
 

@@ -29,6 +29,7 @@
         public static string Reload => "Reload";
         public static string SendEmail => "SendEmail";
         public static string Cancel => "Cancel";
+        public static string Ok => "Ok";
         public static string DeveloperModeIsActivated => "DeveloperModeIsActivated";
         public static string EmailIsNotSupported => "EmailIsNotSupported";
         public static string ApplicationVersion => "ApplicationVersion";
@@ -41,6 +42,7 @@
         public static string Save => "Save";
         public static string SaveAndTranscribe => "SaveAndTranscribe";
 
+        public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
         public static string OfflineErrorMessage => "OfflineErrorMessage";
         public static string UnreachableServerErrorMessage => "UnreachableServerErrorMessage";
         public static string UploadedFileNotFoundErrorMessage => "UploadedFileNotFoundErrorMessage";

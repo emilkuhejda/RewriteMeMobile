@@ -251,6 +251,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Ok.
+        /// </summary>
+        public static string Ok {
+            get {
+                return ResourceManager.GetString("Ok", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operating system:.
         /// </summary>
         public static string OperatingSystemLabel {
@@ -427,6 +436,15 @@ namespace RewriteMe.Resources {
         public static string UploadFile {
             get {
                 return ResourceManager.GetString("UploadFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Upload might take some time. Please do not turn off application. File might not be uploaded..
+        /// </summary>
+        public static string UploadFileItemInfoMessage {
+            get {
+                return ResourceManager.GetString("UploadFileItemInfoMessage", resourceCulture);
             }
         }
         

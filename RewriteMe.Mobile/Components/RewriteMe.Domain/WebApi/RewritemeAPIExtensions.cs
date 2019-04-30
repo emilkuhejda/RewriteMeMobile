@@ -181,9 +181,11 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='fileItemId'>
             /// </param>
-            public static object TranscribeFileItem(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?))
+            /// <param name='language'>
+            /// </param>
+            public static object TranscribeFileItem(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), string language = default(string))
             {
-                return operations.TranscribeFileItemAsync(fileItemId).GetAwaiter().GetResult();
+                return operations.TranscribeFileItemAsync(fileItemId, language).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -191,12 +193,14 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='fileItemId'>
             /// </param>
+            /// <param name='language'>
+            /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> TranscribeFileItemAsync(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> TranscribeFileItemAsync(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), string language = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.TranscribeFileItemWithHttpMessagesAsync(fileItemId, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.TranscribeFileItemWithHttpMessagesAsync(fileItemId, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

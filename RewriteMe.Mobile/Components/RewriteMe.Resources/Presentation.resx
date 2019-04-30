@@ -183,6 +183,9 @@
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
   <data name="DeveloperModeIsActivated" xml:space="preserve">
     <value>Developer mode is activated</value>
   </data>
@@ -215,6 +218,10 @@
   </data>
   <data name="SaveAndTranscribe" xml:space="preserve">
     <value>Save and transcribe</value>
+  </data>
+
+  <data name="UploadFileItemInfoMessage" xml:space="preserve">
+    <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>
   </data>
   <data name="OfflineErrorMessage" xml:space="preserve">
     <value>It seems you are offline. Please check your internet connection.</value>
