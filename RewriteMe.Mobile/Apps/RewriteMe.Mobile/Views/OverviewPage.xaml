@@ -11,9 +11,40 @@
         <DataTemplate x:Key="FileItemsTemplate">
             <ViewCell>
                 <ViewCell.View>
-                    <StackLayout>
-                        <Label Text="{Binding Name}" />
-                    </StackLayout>
+                    <Grid BackgroundColor="White">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
+                        </Grid.GestureRecognizers>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackLayout Grid.Column="0">
+                            <Label HeightRequest="30"
+                                   Style="{StaticResource LabelStyle}"
+                                   Text="{Binding FileItem.Name}" />
+                            <Frame IsVisible="{Binding IsInProgress}" Style="{StaticResource InProgressBackground}">
+                                <Label FontAttributes="Italic"
+                                       FontSize="{StaticResource MidMediumSize}"
+                                       Style="{StaticResource LabelStyle}"
+                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.InProgressLabel}}"
+                                       TextColor="{StaticResource ColorWhite}" />
+                            </Frame>
+                        </StackLayout>
+
+                        <forms:SvgCachedImage Grid.Column="1"
+                                              Margin="0"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="40"
+                                              HorizontalOptions="End"
+                                              InputTransparent="True"
+                                              IsVisible="{Binding IsCompleted}"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.Ok.svg"
+                                              VerticalOptions="CenterAndExpand" />
+                    </Grid>
                 </ViewCell.View>
             </ViewCell>
         </DataTemplate>
@@ -24,7 +55,7 @@
     </views:BaseNavigationPage.RightNavigationToolbarItems>
 
     <Grid>
-        <Grid>
+        <Grid Padding="{StaticResource StandardPadding}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
@@ -47,6 +78,7 @@
             </Grid>
 
             <ListView Grid.Row="1"
+                      HasUnevenRows="True"
                       ItemTemplate="{StaticResource FileItemsTemplate}"
                       ItemsSource="{Binding FileItems}" />
 
