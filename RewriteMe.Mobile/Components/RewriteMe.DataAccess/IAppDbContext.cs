@@ -23,6 +23,8 @@ namespace RewriteMe.DataAccess
 
         Task UpdateAsync<T>(T item);
 
+        Task DeleteAsync(object primaryKey);
+
         Task DeleteAllAsync<T>() where T : new();
 
         Task<T> GetWithChildrenAsync<T>(object primaryKey) where T : new();

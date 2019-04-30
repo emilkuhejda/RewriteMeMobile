@@ -24,6 +24,7 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class OverviewPageViewModel : ViewModelBase
     {
+        private readonly IFileItemService _fileItemService;
         private readonly IUserSessionService _userSessionService;
         private readonly IInternalValueService _internalValueService;
         private readonly ILatestVersion _latestVersion;
@@ -33,6 +34,7 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isUserRegistrationSuccess;
 
         public OverviewPageViewModel(
+            IFileItemService fileItemService,
             IUserSessionService userSessionService,
             IInternalValueService internalValueService,
             ILatestVersion latestVersion,
@@ -43,6 +45,7 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
+            _fileItemService = fileItemService;
             _userSessionService = userSessionService;
             _internalValueService = internalValueService;
             _latestVersion = latestVersion;
@@ -68,6 +71,8 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 IsUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
+
+                var items = await _fileItemService.GetAllAsync().ConfigureAwait(false);
             }
         }
 

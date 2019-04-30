@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Http;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Domain.Interfaces.Services
@@ -14,6 +15,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<IEnumerable<TranscribeItem>>> GetTranscribeItemsAllAsync(DateTime updatedAfter);
 
-        Task<HttpRequestResult<FileItem>> CreateFileItemAsync(string name, string language);
+        Task<HttpRequestResult<FileItem>> CreateFileItemAsync(MediaFile mediaFile);
     }
 }

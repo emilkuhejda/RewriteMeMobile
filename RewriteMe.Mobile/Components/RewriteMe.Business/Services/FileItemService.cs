@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Transcription;
+using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Business.Services
 {
@@ -35,6 +38,23 @@ namespace RewriteMe.Business.Services
                     await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow);
                 }
             }
+        }
+
+        public async Task<IEnumerable<FileItem>> GetAllAsync()
+        {
+            return await _fileItemRepository.GetAllAsync().ConfigureAwait(false);
+        }
+
+        public async Task UploadAsync(MediaFile mediaFile)
+        {
+            var httpRequestResult = await _rewriteMeWebService.CreateFileItemAsync(mediaFile).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            { }
+        }
+
+        public async Task TranscribeAsync(MediaFile mediaFile)
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
         }
     }
 }

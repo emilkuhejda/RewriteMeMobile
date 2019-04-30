@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Exceptions;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Domain.WebApi.Models;
 
@@ -33,9 +35,9 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<FileItem> CreateFileItemAsync(this IRewriteMeAPI operations, string name, string language, Dictionary<string, List<string>> customHeaders)
+        public static async Task<FileItem> CreateFileItemAsync(this IRewriteMeAPI operations, MediaFile mediaFile, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.CreateFileItemWithHttpMessagesAsync(name, language, null, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.CreateFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.Stream, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<FileItem>(result.Body);
             }

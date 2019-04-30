@@ -1,10 +1,19 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using RewriteMe.Domain.Transcription;
+using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IFileItemService
     {
         Task SynchronizationAsync(DateTime applicationUpdateDate);
+
+        Task<IEnumerable<FileItem>> GetAllAsync();
+
+        Task UploadAsync(MediaFile mediaFile);
+
+        Task TranscribeAsync(MediaFile mediaFile);
     }
 }

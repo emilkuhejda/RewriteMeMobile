@@ -10,6 +10,7 @@ using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess.Transcription;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
@@ -22,21 +23,21 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class CreatePageViewModel : ViewModelBase
     {
-        private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly IFileItemService _fileItemService;
 
-        private string _fileName;
+        private string _name;
         private SupportedLanguage _selectedLanguage;
         private FileData _selectedFile;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
 
         public CreatePageViewModel(
-            IRewriteMeWebService rewriteMeWebService,
+            IFileItemService fileItemService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
-            _rewriteMeWebService = rewriteMeWebService;
+            _fileItemService = fileItemService;
 
             CanGoBack = true;
 
@@ -44,10 +45,10 @@ namespace RewriteMe.Mobile.ViewModels
             UploadFileCommand = new AsyncCommand(ExecuteUploadFileCommandAsync);
         }
 
-        public string FileName
+        public string Name
         {
-            get => _fileName;
-            set => SetProperty(ref _fileName, value);
+            get => _name;
+            set => SetProperty(ref _name, value);
         }
 
         public SupportedLanguage SelectedLanguage
@@ -170,20 +171,33 @@ namespace RewriteMe.Mobile.ViewModels
             var pickedFile = await CrossFilePicker.Current.PickFile();
 
             SelectedFile = pickedFile;
-            if (string.IsNullOrWhiteSpace(FileName))
+            if (string.IsNullOrWhiteSpace(Name))
             {
-                FileName = pickedFile.FileName;
+                Name = pickedFile.FileName;
             }
         }
 
         private bool CanExecuteSaveCommand()
         {
-            return SelectedFile != null;
+            return SelectedFile != null && SelectedLanguage != null;
         }
 
         private async Task ExecuteSaveCommand()
         {
-            await Task.CompletedTask.ConfigureAwait(false);
+            using (new OperationMonitor(OperationScope))
+            {
+                try
+                {
+                    var mediaFile = CreateMediaFile();
+
+                    await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
+                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+            }
         }
 
         private bool CanExecuteSaveAndTranscribeCommand()
@@ -193,7 +207,32 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteSaveAndTranscribeCommandAsync()
         {
-            await Task.CompletedTask.ConfigureAwait(false);
+            using (new OperationMonitor(OperationScope))
+            {
+                try
+                {
+                    var mediaFile = CreateMediaFile();
+
+                    await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
+                    await _fileItemService.TranscribeAsync(mediaFile).ConfigureAwait(false);
+                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+                }
+                catch (Exception e)
+                {
+                    throw;
+                }
+            }
+        }
+
+        private MediaFile CreateMediaFile()
+        {
+            var name = string.IsNullOrWhiteSpace(Name) ? SelectedFile.FileName : Name;
+            return new MediaFile
+            {
+                Name = name,
+                Language = SelectedLanguage?.Culture,
+                Stream = SelectedFile.GetStream()
+            };
         }
     }
 }

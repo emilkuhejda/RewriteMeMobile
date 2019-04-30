@@ -204,8 +204,8 @@
   <data name="OperatingSystemLabel" xml:space="preserve">
     <value>Operating system:</value>
   </data>
-  <data name="FileName" xml:space="preserve">
-    <value>File name</value>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
   </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Upload file</value>
