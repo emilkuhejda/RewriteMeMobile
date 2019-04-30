@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.DetailPage"
+                          xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <Grid>
+        <controls:AlwaysScrollView />
+
+        <controls:PageActivityIndicator Grid.Row="0"
+                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
+                                        IsVisible="{Binding OperationScope.IsBusy}" />
+    </Grid>
+</views:BaseNavigationPage>

@@ -21,7 +21,7 @@
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <StackLayout Grid.Column="0">
+                        <StackLayout Grid.Column="0" HeightRequest="50">
                             <Label HeightRequest="30"
                                    Style="{StaticResource LabelStyle}"
                                    Text="{Binding FileItem.Name}" />
