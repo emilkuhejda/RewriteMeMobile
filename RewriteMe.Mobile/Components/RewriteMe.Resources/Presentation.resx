@@ -216,4 +216,25 @@
   <data name="SaveAndTranscribe" xml:space="preserve">
     <value>Save and transcribe</value>
   </data>
+  <data name="OfflineErrorMessage" xml:space="preserve">
+    <value>It seems you are offline. Please check your internet connection.</value>
+  </data>
+  <data name="UnreachableServerErrorMessage" xml:space="preserve">
+    <value>Server is unreachable. Please try it later.</value>
+  </data>
+  <data name="UploadedFileNotFoundErrorMessage" xml:space="preserve">
+    <value>Uploaded file is not found. Please try it later.</value>
+  </data>
+  <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
+    <value>Uploaded file is not supported.</value>
+  </data>
+  <data name="LanguageNotSupportedErrorMessage" xml:space="preserve">
+    <value>Language is not supported.</value>
+  </data>
+  <data name="" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="" xml:space="preserve">
+    <value></value>
+  </data>
 </root>

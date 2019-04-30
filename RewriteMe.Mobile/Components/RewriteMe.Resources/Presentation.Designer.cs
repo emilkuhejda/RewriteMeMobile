@@ -62,6 +62,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string _ {
+            get {
+                return ResourceManager.GetString("", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string ActivityIndicatorCaptionText {
@@ -188,6 +197,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Language is not supported..
+        /// </summary>
+        public static string LanguageNotSupportedErrorMessage {
+            get {
+                return ResourceManager.GetString("LanguageNotSupportedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Languages.
         /// </summary>
         public static string Languages {
@@ -211,6 +229,15 @@ namespace RewriteMe.Resources {
         public static string Name {
             get {
                 return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to It seems you are offline. Please check your internet connection..
+        /// </summary>
+        public static string OfflineErrorMessage {
+            get {
+                return ResourceManager.GetString("OfflineErrorMessage", resourceCulture);
             }
         }
         
@@ -364,6 +391,33 @@ namespace RewriteMe.Resources {
         public static string TimeStamp {
             get {
                 return ResourceManager.GetString("TimeStamp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Server is unreachable. Please try it later..
+        /// </summary>
+        public static string UnreachableServerErrorMessage {
+            get {
+                return ResourceManager.GetString("UnreachableServerErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploaded file is not found. Please try it later..
+        /// </summary>
+        public static string UploadedFileNotFoundErrorMessage {
+            get {
+                return ResourceManager.GetString("UploadedFileNotFoundErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Uploaded file is not supported..
+        /// </summary>
+        public static string UploadedFileNotSupportedErrorMessage {
+            get {
+                return ResourceManager.GetString("UploadedFileNotSupportedErrorMessage", resourceCulture);
             }
         }
         

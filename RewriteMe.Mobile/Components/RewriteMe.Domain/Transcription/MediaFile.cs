@@ -8,6 +8,8 @@ namespace RewriteMe.Domain.Transcription
 
         public string Language { get; set; }
 
+        public string FileName { get; set; }
+
         public Stream Stream { get; set; }
     }
 }

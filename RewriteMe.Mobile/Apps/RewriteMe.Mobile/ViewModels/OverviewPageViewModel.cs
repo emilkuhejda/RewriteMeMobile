@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -12,6 +14,7 @@ using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
@@ -32,6 +35,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IApplicationSettings _applicationSettings;
 
         private bool _isUserRegistrationSuccess;
+        private IList<FileItem> _fileItems;
 
         public OverviewPageViewModel(
             IFileItemService fileItemService,
@@ -66,13 +70,20 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _isUserRegistrationSuccess, value);
         }
 
+        public IList<FileItem> FileItems
+        {
+            get => _fileItems;
+            set => SetProperty(ref _fileItems, value);
+        }
+
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
             using (new OperationMonitor(OperationScope))
             {
                 IsUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
 
-                var items = await _fileItemService.GetAllAsync().ConfigureAwait(false);
+                var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
+                FileItems = fileItems.ToList();
             }
         }
 

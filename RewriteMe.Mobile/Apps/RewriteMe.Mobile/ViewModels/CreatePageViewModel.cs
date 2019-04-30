@@ -8,6 +8,7 @@ using Plugin.FilePicker.Abstractions;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess.Transcription;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
@@ -168,12 +169,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteUploadFileCommandAsync()
         {
-            var pickedFile = await CrossFilePicker.Current.PickFile();
-
-            SelectedFile = pickedFile;
+            SelectedFile = await CrossFilePicker.Current.PickFile();
             if (string.IsNullOrWhiteSpace(Name))
             {
-                Name = pickedFile.FileName;
+                Name = SelectedFile.FileName;
             }
         }
 
@@ -193,9 +192,13 @@ namespace RewriteMe.Mobile.ViewModels
                     await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
-                catch (Exception e)
+                catch (ErrorRequestException ex)
                 {
-                    throw;
+                    await HandleErrorMessage(ex.StatusCode).ConfigureAwait(false);
+                }
+                catch (OfflineRequestException)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.OfflineErrorMessage)).ConfigureAwait(false);
                 }
             }
         }
@@ -217,11 +220,37 @@ namespace RewriteMe.Mobile.ViewModels
                     await _fileItemService.TranscribeAsync(mediaFile).ConfigureAwait(false);
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
-                catch (Exception e)
+                catch (ErrorRequestException ex)
                 {
-                    throw;
+                    await HandleErrorMessage(ex.StatusCode).ConfigureAwait(false);
+                }
+                catch (OfflineRequestException)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.OfflineErrorMessage)).ConfigureAwait(false);
                 }
             }
+        }
+
+        private async Task HandleErrorMessage(int? statusCode)
+        {
+            string message;
+            switch (statusCode)
+            {
+                case 400:
+                    message = Loc.Text(TranslationKeys.UploadedFileNotFoundErrorMessage);
+                    break;
+                case 406:
+                    message = Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
+                    break;
+                case 415:
+                    message = Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
+                    break;
+                default:
+                    message = Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
+                    break;
+            }
+
+            await DialogService.AlertAsync(message).ConfigureAwait(false);
         }
 
         private MediaFile CreateMediaFile()
@@ -231,6 +260,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 Name = name,
                 Language = SelectedLanguage?.Culture,
+                FileName = SelectedFile.FileName,
                 Stream = SelectedFile.GetStream()
             };
         }

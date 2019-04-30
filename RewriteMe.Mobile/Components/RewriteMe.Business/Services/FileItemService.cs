@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
@@ -34,7 +35,7 @@ namespace RewriteMe.Business.Services
                 var httpRequestResult = await _rewriteMeWebService.GetFileItemsAsync(lastFileItemSynchronization).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    await _fileItemRepository.UpdateAsync(httpRequestResult.Payload).ConfigureAwait(false);
+                    await _fileItemRepository.UpdateAllAsync(httpRequestResult.Payload).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow);
                 }
             }
@@ -49,7 +50,17 @@ namespace RewriteMe.Business.Services
         {
             var httpRequestResult = await _rewriteMeWebService.CreateFileItemAsync(mediaFile).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
-            { }
+            {
+                await _fileItemRepository.InsertOrReplaceAsync(httpRequestResult.Payload).ConfigureAwait(false);
+            }
+            else if (httpRequestResult.State == HttpRequestState.Error)
+            {
+                throw new ErrorRequestException(httpRequestResult.StatusCode);
+            }
+            else
+            {
+                throw new OfflineRequestException();
+            }
         }
 
         public async Task TranscribeAsync(MediaFile mediaFile)

@@ -47,7 +47,7 @@ namespace RewriteMe.Business.Services
         public async Task<HttpRequestResult<FileItem>> CreateFileItemAsync(MediaFile mediaFile)
         {
             var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateFileItemAsync(mediaFile, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UploadFileItemAsync(mediaFile, customHeaders)).ConfigureAwait(false);
         }
 
         private async Task<CustomHeadersDictionary> GetAuthHeaders()

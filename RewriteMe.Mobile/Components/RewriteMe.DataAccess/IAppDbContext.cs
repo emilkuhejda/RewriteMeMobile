@@ -29,6 +29,8 @@ namespace RewriteMe.DataAccess
 
         Task<T> GetWithChildrenAsync<T>(object primaryKey) where T : new();
 
+        Task InsertOrReplaceAsync(object obj);
+
         Task CloseAsync();
     }
 }

@@ -40,5 +40,11 @@
         public static string UploadFile => "UploadFile";
         public static string Save => "Save";
         public static string SaveAndTranscribe => "SaveAndTranscribe";
+
+        public static string OfflineErrorMessage => "OfflineErrorMessage";
+        public static string UnreachableServerErrorMessage => "UnreachableServerErrorMessage";
+        public static string UploadedFileNotFoundErrorMessage => "UploadedFileNotFoundErrorMessage";
+        public static string UploadedFileNotSupportedErrorMessage => "UploadedFileNotSupportedErrorMessage";
+        public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
     }
 }

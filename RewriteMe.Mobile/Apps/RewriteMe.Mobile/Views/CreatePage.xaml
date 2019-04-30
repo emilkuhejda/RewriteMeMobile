@@ -17,7 +17,7 @@
 
                 <StackLayout Grid.Row="0" Padding="10,10,10,10">
                     <Label Style="{StaticResource LabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}" />
-                    <Editor FontSize="{StaticResource LittleSize}"
+                    <Editor FontSize="{StaticResource MediumSize}"
                             Keyboard="Text"
                             Text="{Binding Name}"
                             VerticalOptions="Fill" />

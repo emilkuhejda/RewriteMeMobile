@@ -7,9 +7,22 @@
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <views:BaseNavigationPage.Resources>
+        <DataTemplate x:Key="FileItemsTemplate">
+            <ViewCell>
+                <ViewCell.View>
+                    <StackLayout>
+                        <Label Text="{Binding Name}" />
+                    </StackLayout>
+                </ViewCell.View>
+            </ViewCell>
+        </DataTemplate>
+    </views:BaseNavigationPage.Resources>
+
     <views:BaseNavigationPage.RightNavigationToolbarItems>
         <controls:NavigationToolbarItem Command="{Binding NavigateToSettingsCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Settings.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
+
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -33,10 +46,9 @@
                 </Label>
             </Grid>
 
-            <Label Grid.Row="1"
-                   HorizontalOptions="CenterAndExpand"
-                   Text="Main page"
-                   VerticalOptions="CenterAndExpand" />
+            <ListView Grid.Row="1"
+                      ItemTemplate="{StaticResource FileItemsTemplate}"
+                      ItemsSource="{Binding FileItems}" />
 
             <Grid Grid.Row="1"
                   Margin="0,0,10,10"

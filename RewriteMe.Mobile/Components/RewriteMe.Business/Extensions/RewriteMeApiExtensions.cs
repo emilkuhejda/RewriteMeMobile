@@ -35,9 +35,9 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<FileItem> CreateFileItemAsync(this IRewriteMeAPI operations, MediaFile mediaFile, Dictionary<string, List<string>> customHeaders)
+        public static async Task<FileItem> UploadFileItemAsync(this IRewriteMeAPI operations, MediaFile mediaFile, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.CreateFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.Stream, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, mediaFile.Stream, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<FileItem>(result.Body);
             }

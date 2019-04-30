@@ -59,6 +59,11 @@ namespace RewriteMe.DataAccess
             return await Database.GetWithChildrenAsync<T>(primaryKey).ConfigureAwait(false);
         }
 
+        public async Task InsertOrReplaceAsync(object obj)
+        {
+            await Database.InsertOrReplaceAsync(obj).ConfigureAwait(false);
+        }
+
         public async Task CloseAsync()
         {
             await Database.CloseAsync().ConfigureAwait(false);
