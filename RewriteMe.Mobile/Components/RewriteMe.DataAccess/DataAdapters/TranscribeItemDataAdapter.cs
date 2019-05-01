@@ -20,7 +20,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 EndTime = entity.EndTime,
                 TotalTime = entity.TotalTime,
                 DateCreated = entity.DateCreated,
-                DateUpdated = entity.DateUpdated
+                DateUpdated = entity.DateUpdated,
+                IsPendingSynchronization = entity.IsPendingSynchronization
             };
         }
 
@@ -37,7 +38,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 EndTime = transcribeItem.EndTime,
                 TotalTime = transcribeItem.TotalTime,
                 DateCreated = transcribeItem.DateCreated.GetValueOrDefault(),
-                DateUpdated = transcribeItem.DateCreated.GetValueOrDefault()
+                DateUpdated = transcribeItem.DateCreated.GetValueOrDefault(),
+                IsPendingSynchronization = transcribeItem.IsPendingSynchronization
             };
         }
     }

@@ -31,7 +31,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.InsertOrReplaceAsync(fileItem.ToFileItemEntity()).ConfigureAwait(false);
         }
 
-        public async Task UpdateAllAsync(IEnumerable<FileItem> fileItems)
+        public async Task InsertOrReplaceAllAsync(IEnumerable<FileItem> fileItems)
         {
             var fileItemEntities = fileItems.Select(x => x.ToFileItemEntity()).ToList();
             if (!fileItemEntities.Any())

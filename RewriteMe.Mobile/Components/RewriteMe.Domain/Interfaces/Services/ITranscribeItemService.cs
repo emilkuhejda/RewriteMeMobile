@@ -10,5 +10,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task SynchronizationAsync(DateTime applicationUpdateDate);
 
         Task<IEnumerable<TranscribeItem>> GetAllAsync(Guid fileItemId);
+
+        Task SaveAndSendAsync(IEnumerable<TranscribeItem> transcribeItems);
     }
 }

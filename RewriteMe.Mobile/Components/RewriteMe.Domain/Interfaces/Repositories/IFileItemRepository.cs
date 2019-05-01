@@ -12,7 +12,7 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task InsertOrReplaceAsync(FileItem fileItem);
 
-        Task UpdateAllAsync(IEnumerable<FileItem> fileItems);
+        Task InsertOrReplaceAllAsync(IEnumerable<FileItem> fileItems);
 
         Task UpdateRecognitionStateAsync(Guid fileItemId, RecognitionState recognitionState);
 

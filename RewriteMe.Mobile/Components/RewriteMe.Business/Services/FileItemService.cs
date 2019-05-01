@@ -35,7 +35,7 @@ namespace RewriteMe.Business.Services
                 var httpRequestResult = await _rewriteMeWebService.GetFileItemsAsync(lastFileItemSynchronization).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    await _fileItemRepository.UpdateAllAsync(httpRequestResult.Payload).ConfigureAwait(false);
+                    await _fileItemRepository.InsertOrReplaceAllAsync(httpRequestResult.Payload).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow);
                 }
             }
