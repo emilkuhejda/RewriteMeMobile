@@ -231,6 +231,15 @@
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />
             </Style>
 
+            <Style x:Key="InProgressBackground" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="{StaticResource ApplicationDefaultColor}" />
+                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="Padding" Value="10,2,10,2" />
+                <Setter Property="HeightRequest" Value="20" />
+                <Setter Property="HorizontalOptions" Value="Start" />
+                <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
             <!--  Navigation Bar  -->
             <x:Double x:Key="HeaderImageHeight">60</x:Double>
             <GridLength x:Key="NavigationBarRow1Height">52</GridLength>

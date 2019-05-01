@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RewriteMe.DataAccess.DataAdapters;
 using RewriteMe.DataAccess.Entities;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Interfaces.Repositories;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.DataAccess.Repositories
@@ -29,7 +31,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.InsertOrReplaceAsync(fileItem.ToFileItemEntity()).ConfigureAwait(false);
         }
 
-        public async Task UpdateAllAsync(IEnumerable<FileItem> fileItems)
+        public async Task InsertOrReplaceAllAsync(IEnumerable<FileItem> fileItems)
         {
             var fileItemEntities = fileItems.Select(x => x.ToFileItemEntity()).ToList();
             if (!fileItemEntities.Any())
@@ -44,6 +46,16 @@ namespace RewriteMe.DataAccess.Repositories
                 database.DeleteAll<FileItemEntity>();
                 database.InsertAll(mergedFileItems);
             }).ConfigureAwait(false);
+        }
+
+        public async Task UpdateRecognitionStateAsync(Guid fileItemId, RecognitionState recognitionState)
+        {
+            var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
+            if (entity == null)
+                return;
+
+            entity.RecognitionState = recognitionState.ToString();
+            await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
         public async Task ClearAsync()

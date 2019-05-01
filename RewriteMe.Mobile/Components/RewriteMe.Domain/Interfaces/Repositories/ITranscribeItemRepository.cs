@@ -9,6 +9,12 @@ namespace RewriteMe.Domain.Interfaces.Repositories
     {
         Task<IEnumerable<TranscribeItem>> GetAllAsync(Guid fileItemId);
 
-        Task UpdateAsync(IEnumerable<TranscribeItem> transcribeItems);
+        Task InsertOrReplaceAllAsync(IEnumerable<TranscribeItem> transcribeItems);
+
+        Task UpdateAsync(TranscribeItem transcribeItem);
+
+        Task UpdateAllAsync(IEnumerable<TranscribeItem> transcribeItems);
+
+        Task<IEnumerable<TranscribeItem>> GetPendingAsync();
     }
 }

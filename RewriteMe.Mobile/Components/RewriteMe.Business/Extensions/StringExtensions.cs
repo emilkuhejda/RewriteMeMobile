@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using RewriteMe.Domain.Transcription;
 
 namespace RewriteMe.Business.Extensions
 {
@@ -13,23 +14,36 @@ namespace RewriteMe.Business.Extensions
         /// zero-padded on its least significant bits, at most two pad characters may occur at the end of the encoded stream).
         /// https://stackoverflow.com/questions/4492426/remove-trailing-when-base64-encoding
         /// </summary>
-        public static string Base64UrlDecode(this string s)
+        public static string Base64UrlDecode(this string value)
         {
-            s = s.Replace('-', '+').Replace('_', '/');
-            s = s.PadRight(s.Length + ((4 - (s.Length % 4)) % 4), '=');
-            var byteArray = Convert.FromBase64String(s);
+            value = value.Replace('-', '+').Replace('_', '/');
+            value = value.PadRight(value.Length + ((4 - (value.Length % 4)) % 4), '=');
+            var byteArray = Convert.FromBase64String(value);
             var decoded = Encoding.UTF8.GetString(byteArray, 0, byteArray.Length);
             return decoded;
         }
 
-        public static string Base64UrlEncode(this string s)
+        public static string Base64UrlEncode(this string value)
         {
             char[] padding = { '=' };
-            var bytes = Encoding.UTF8.GetBytes(s);
+            var bytes = Encoding.UTF8.GetBytes(value);
             return Convert.ToBase64String(bytes)
                 .TrimEnd(padding)
                 .Replace('+', '-')
                 .Replace('/', '_');
+        }
+
+        public static RecognitionState ToRecognitionState(this string value)
+        {
+            return ToEnum(value, RecognitionState.None);
+        }
+
+        private static T ToEnum<T>(this string value, T defaultValue) where T : struct
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                return defaultValue;
+
+            return Enum.TryParse(value, true, out T result) ? result : defaultValue;
         }
     }
 }

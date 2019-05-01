@@ -12,6 +12,10 @@
 
         public static string Create { get; } = "Create";
 
+        public static string Transcribe { get; } = "Transcribe";
+
+        public static string Detail { get; } = "Detail";
+
         public static string Settings { get; } = "Settings";
 
         public static string UserSettings { get; } = "UserSettings";

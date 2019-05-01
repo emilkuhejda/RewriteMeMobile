@@ -51,6 +51,14 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<Ok> UpdateUserTranscriptAsync(this IRewriteMeAPI operations, Guid transcribeItemId, string transcript, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(transcribeItemId, transcript, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<Ok>(result.Body);
+            }
+        }
+
         public static async Task<Ok> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel)
         {
             using (var result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel).ConfigureAwait(false))
