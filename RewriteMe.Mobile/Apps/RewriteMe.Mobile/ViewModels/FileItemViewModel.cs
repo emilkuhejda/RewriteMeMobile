@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
+using Prism.Mvvm;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Transcription;
@@ -10,29 +11,45 @@ using RewriteMe.Mobile.Navigation;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class FileItemViewModel
+    public class FileItemViewModel : BindableBase
     {
         private readonly INavigationService _navigationService;
+
+        private bool _isInProgress;
+        private bool _isCompleted;
 
         public FileItemViewModel(FileItem fileItem, INavigationService navigationService)
         {
             _navigationService = navigationService;
 
-            FileItem = fileItem;
-
-            IsInProgress = fileItem.RecognitionState.ToRecognitionState() == RecognitionState.InProgress;
-            IsCompleted = fileItem.RecognitionState.ToRecognitionState() == RecognitionState.Completed;
+            Update(fileItem);
 
             NavigateToDetailPageCommand = new AsyncCommand(ExecuteNavigateToDetailPageCommandAsync);
         }
 
-        public FileItem FileItem { get; }
+        public FileItem FileItem { get; private set; }
 
-        public bool IsInProgress { get; }
+        public bool IsInProgress
+        {
+            get => _isInProgress;
+            set => SetProperty(ref _isInProgress, value);
+        }
 
-        public bool IsCompleted { get; }
+        public bool IsCompleted
+        {
+            get => _isCompleted;
+            set => SetProperty(ref _isCompleted, value);
+        }
 
         public ICommand NavigateToDetailPageCommand { get; }
+
+        public void Update(FileItem fileItem)
+        {
+            FileItem = fileItem;
+
+            IsInProgress = fileItem.RecognitionState.ToRecognitionState() == RecognitionState.InProgress;
+            IsCompleted = fileItem.RecognitionState.ToRecognitionState() == RecognitionState.Completed;
+        }
 
         private async Task ExecuteNavigateToDetailPageCommandAsync()
         {

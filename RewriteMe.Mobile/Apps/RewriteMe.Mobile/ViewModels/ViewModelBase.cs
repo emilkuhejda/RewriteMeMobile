@@ -8,6 +8,8 @@ using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Views;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -62,6 +64,8 @@ namespace RewriteMe.Mobile.ViewModels
             get => _canGoBack;
             protected set => SetProperty(ref _canGoBack, value);
         }
+
+        protected bool IsCurrent => ((RewriteMeNavigationPage)Application.Current.MainPage).CurrentPage.BindingContext.GetType() == GetType();
 
         public void OnNavigatedFrom(INavigationParameters parameters)
         {

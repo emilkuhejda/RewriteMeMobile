@@ -78,7 +78,11 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteReloadCommand()
         {
-            return !string.IsNullOrWhiteSpace(TranscribeItem.UserTranscript);
+            if (TranscribeItem.Alternatives == null || !TranscribeItem.Alternatives.Any())
+                return false;
+
+            var alternative = TranscribeItem.Alternatives.First();
+            return !alternative.Transcript.Equals(TranscribeItem.UserTranscript);
         }
 
         private void ExecuteReloadCommand()
