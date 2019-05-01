@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Plugin.Messaging;
 using Prism.Commands;
 using Prism.Navigation;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
@@ -18,13 +19,15 @@ using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class DetailPageViewModel : ViewModelBase
+    public class DetailPageViewModel : ViewModelBase, IDisposable
     {
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly IEmailTask _emailTask;
 
         private IList<TranscribeItemViewModel> _transcribeItems;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
+
+        private bool _disposed;
 
         public DetailPageViewModel(
             ITranscribeItemService transcribeItemService,
@@ -69,11 +72,26 @@ namespace RewriteMe.Mobile.ViewModels
 
                     var fileItemId = FileItem.Id ?? Guid.Empty;
                     var transcribeItems = await _transcribeItemService.GetAllAsync(fileItemId).ConfigureAwait(false);
-                    TranscribeItems = transcribeItems.OrderBy(x => x.StartTime).Select(x => new TranscribeItemViewModel(x)).ToList();
+
+                    TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
+                    TranscribeItems = transcribeItems.OrderBy(x => x.StartTime).Select(CreateTranscribeItemViewModel).ToList();
                 }
 
                 NavigationItems = CreateNavigation();
             }
+        }
+
+        private TranscribeItemViewModel CreateTranscribeItemViewModel(TranscribeItem transcribeItem)
+        {
+            var viewModel = new TranscribeItemViewModel(transcribeItem);
+            viewModel.IsDirtyChanged += HandleIsDirtyChanged;
+
+            return viewModel;
+        }
+
+        private void HandleIsDirtyChanged(object sender, EventArgs e)
+        {
+            SaveTileItem.IsEnabled = CanExecuteSaveCommand();
         }
 
         private IEnumerable<ActionBarTileViewModel> CreateNavigation()
@@ -126,12 +144,31 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveCommand()
         {
-            return false;
+            return TranscribeItems.Any(x => x.IsDirty);
         }
 
         private async Task ExecuteSaveCommandAsync()
         {
             await Task.CompletedTask.ConfigureAwait(false);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
+            }
+
+            _disposed = true;
         }
     }
 }
