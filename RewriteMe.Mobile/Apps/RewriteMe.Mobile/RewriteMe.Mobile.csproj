@@ -36,6 +36,8 @@
     <None Remove="Resources\Images\Save-Enabled.svg" />
     <None Remove="Resources\Images\SaveAndTranscribe-Disabled.svg" />
     <None Remove="Resources\Images\SaveAndTranscribe-Enabled.svg" />
+    <None Remove="Resources\Images\Send-Disabled.svg" />
+    <None Remove="Resources\Images\Send-Enabled.svg" />
     <None Remove="Resources\Images\Settings.svg" />
   </ItemGroup>
 
@@ -50,6 +52,8 @@
     <EmbeddedResource Include="Resources\Images\Save-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\SaveAndTranscribe-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\SaveAndTranscribe-Enabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Send-Disabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Send-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Settings.svg" />
   </ItemGroup>
   

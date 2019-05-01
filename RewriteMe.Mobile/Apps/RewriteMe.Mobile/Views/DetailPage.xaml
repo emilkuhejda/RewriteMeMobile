@@ -6,8 +6,42 @@
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <views:BaseNavigationPage.Resources>
+        <DataTemplate x:Key="TranscribeItemsTemplate">
+            <ViewCell>
+                <ViewCell.View>
+                    <StackLayout>
+                        <Editor AutoSize="TextChanges"
+                                FontSize="{StaticResource MediumSize}"
+                                Keyboard="Text"
+                                Text="{Binding UserTranscript}"
+                                VerticalOptions="Fill" />
+
+                        <Label HorizontalOptions="End"
+                               Style="{StaticResource LabelStyle}"
+                               Text="{Binding Time}" />
+                    </StackLayout>
+                </ViewCell.View>
+            </ViewCell>
+        </DataTemplate>
+    </views:BaseNavigationPage.Resources>
+
     <Grid>
-        <controls:AlwaysScrollView />
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Padding="{StaticResource StandardPadding}">
+                <ListView HasUnevenRows="True"
+                          ItemTemplate="{StaticResource TranscribeItemsTemplate}"
+                          ItemsSource="{Binding TranscribeItems}"
+                          SeparatorVisibility="None" />
+            </Grid>
+
+            <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
+        </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
