@@ -129,7 +129,7 @@ namespace RewriteMe.Mobile.ViewModels
                 IsEnabled = CanExecuteSaveCommand(),
                 IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Save-Enabled.svg",
                 IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Save-Disabled.svg",
-                SelectedCommand = new AsyncCommand(ExecuteSaveCommand, CanExecuteSaveCommand)
+                SelectedCommand = new AsyncCommand(ExecuteSaveCommandAsync, CanExecuteSaveCommand)
             };
 
             SaveAndTranscribeTileItem = new ActionBarTileViewModel
@@ -181,7 +181,7 @@ namespace RewriteMe.Mobile.ViewModels
             return SelectedFile != null;
         }
 
-        private async Task ExecuteSaveCommand()
+        private async Task ExecuteSaveCommandAsync()
         {
             var func = new Func<MediaFile, Task>(async mediaFile =>
             {
