@@ -22,6 +22,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IInternalValueService _internalValueService;
         private readonly ILastUpdatesService _lastUpdatesService;
         private readonly ISynchronizationService _synchronizationService;
+        private readonly ISchedulerService _schedulerService;
         private readonly IRegistrationUserWebService _registrationUserWebService;
 
         private string _progressText;
@@ -31,6 +32,7 @@ namespace RewriteMe.Mobile.ViewModels
             IUserSessionService userSessionService,
             ILastUpdatesService lastUpdatesService,
             ISynchronizationService synchronizationService,
+            ISchedulerService schedulerService,
             IRegistrationUserWebService registrationUserWebService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -41,6 +43,7 @@ namespace RewriteMe.Mobile.ViewModels
             _internalValueService = internalValueService;
             _lastUpdatesService = lastUpdatesService;
             _synchronizationService = synchronizationService;
+            _schedulerService = schedulerService;
             _registrationUserWebService = registrationUserWebService;
 
             HasTitleBar = false;
@@ -80,6 +83,8 @@ namespace RewriteMe.Mobile.ViewModels
                 var isFirstTimeDataSync = await _synchronizationService.IsFirstTimeDataSyncAsync().ConfigureAwait(false);
                 if (!isFirstTimeDataSync)
                 {
+                    _schedulerService.StartAsync();
+
                     await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}").ConfigureAwait(false);
                 }
             }

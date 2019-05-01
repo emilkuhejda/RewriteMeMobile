@@ -24,22 +24,25 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class OverviewPageViewModel : ViewModelBase
+    public class OverviewPageViewModel : ViewModelBase, IDisposable
     {
         private readonly IFileItemService _fileItemService;
         private readonly IUserSessionService _userSessionService;
         private readonly IInternalValueService _internalValueService;
+        private readonly ISchedulerService _schedulerService;
         private readonly ILatestVersion _latestVersion;
         private readonly IEmailTask _emailTask;
         private readonly IApplicationSettings _applicationSettings;
 
         private bool _isUserRegistrationSuccess;
         private IList<FileItemViewModel> _fileItems;
+        private bool _disposed;
 
         public OverviewPageViewModel(
             IFileItemService fileItemService,
             IUserSessionService userSessionService,
             IInternalValueService internalValueService,
+            ISchedulerService schedulerService,
             ILatestVersion latestVersion,
             IEmailTask emailTask,
             IApplicationSettings applicationSettings,
@@ -51,9 +54,12 @@ namespace RewriteMe.Mobile.ViewModels
             _fileItemService = fileItemService;
             _userSessionService = userSessionService;
             _internalValueService = internalValueService;
+            _schedulerService = schedulerService;
             _latestVersion = latestVersion;
             _emailTask = emailTask;
             _applicationSettings = applicationSettings;
+
+            _schedulerService.SynchronizationCompleted += HandleSynchronizationCompleted;
 
             SendEmailCommand = new DelegateCommand(ExecuteSendEmailCommand);
             NavigateToCreatePageCommand = new AsyncCommand(ExecuteNavigateToCreatePageCommandAsync);
@@ -81,9 +87,14 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 IsUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
 
-                var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
-                FileItems = fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)).ToList();
+                await InitializeFileItems().ConfigureAwait(false);
             }
+        }
+
+        private async Task InitializeFileItems()
+        {
+            var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
+            FileItems = fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)).ToList();
         }
 
         private void ExecuteSendEmailCommand()
@@ -126,6 +137,45 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteNavigateToCreatePageCommandAsync()
         {
             await NavigationService.NavigateWithoutAnimationAsync(Pages.Create).ConfigureAwait(false);
+        }
+
+        private async void HandleSynchronizationCompleted(object sender, EventArgs e)
+        {
+            if (!FileItems.Any())
+                return;
+
+            if (IsCurrent)
+            {
+                var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
+                foreach (var fileItem in fileItems)
+                {
+                    var viewModel = FileItems.SingleOrDefault(x => x.FileItem.Id == fileItem.Id && x.FileItem.RecognitionState != fileItem.RecognitionState);
+                    viewModel?.Update(fileItem);
+                }
+            }
+            else
+            {
+                await InitializeFileItems().ConfigureAwait(false);
+            }
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                _schedulerService.SynchronizationCompleted -= HandleSynchronizationCompleted;
+            }
+
+            _disposed = true;
         }
     }
 }
