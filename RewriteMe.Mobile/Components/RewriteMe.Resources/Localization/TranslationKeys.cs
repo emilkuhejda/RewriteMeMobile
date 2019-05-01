@@ -39,6 +39,7 @@
         public static string OperatingSystemLabel => "OperatingSystemLabel";
         public static string Name => "Name";
         public static string UploadFile => "UploadFile";
+        public static string Send => "Send";
         public static string Save => "Save";
         public static string SaveAndTranscribe => "SaveAndTranscribe";
         public static string Transcribe => "Transcribe";

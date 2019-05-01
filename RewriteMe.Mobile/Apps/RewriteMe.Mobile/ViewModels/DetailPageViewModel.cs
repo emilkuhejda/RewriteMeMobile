@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using Plugin.Messaging;
+using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
@@ -10,6 +13,7 @@ using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
+using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -17,21 +21,26 @@ namespace RewriteMe.Mobile.ViewModels
     public class DetailPageViewModel : ViewModelBase
     {
         private readonly ITranscribeItemService _transcribeItemService;
+        private readonly IEmailTask _emailTask;
 
         private IList<TranscribeItemViewModel> _transcribeItems;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
 
         public DetailPageViewModel(
             ITranscribeItemService transcribeItemService,
+            IEmailTask emailTask,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
             _transcribeItemService = transcribeItemService;
+            _emailTask = emailTask;
 
             CanGoBack = true;
         }
+
+        private FileItem FileItem { get; set; }
 
         public IList<TranscribeItemViewModel> TranscribeItems
         {
@@ -45,7 +54,7 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _navigationItems, value);
         }
 
-        private ActionBarTileViewModel SendEmailTileItem { get; set; }
+        private ActionBarTileViewModel SendTileItem { get; set; }
 
         private ActionBarTileViewModel SaveTileItem { get; set; }
 
@@ -55,10 +64,10 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
-                    var fileItem = navigationParameters.GetValue<FileItem>();
-                    Title = fileItem.Name;
+                    FileItem = navigationParameters.GetValue<FileItem>();
+                    Title = FileItem.Name;
 
-                    var fileItemId = fileItem.Id ?? Guid.Empty;
+                    var fileItemId = FileItem.Id ?? Guid.Empty;
                     var transcribeItems = await _transcribeItemService.GetAllAsync(fileItemId).ConfigureAwait(false);
                     TranscribeItems = transcribeItems.OrderBy(x => x.StartTime).Select(x => new TranscribeItemViewModel(x)).ToList();
                 }
@@ -69,13 +78,13 @@ namespace RewriteMe.Mobile.ViewModels
 
         private IEnumerable<ActionBarTileViewModel> CreateNavigation()
         {
-            SendEmailTileItem = new ActionBarTileViewModel
+            SendTileItem = new ActionBarTileViewModel
             {
-                Text = Loc.Text(TranslationKeys.SendEmail),
-                IsEnabled = CanExecuteSendEmailCommand(),
+                Text = Loc.Text(TranslationKeys.Send),
+                IsEnabled = CanExecuteSendCommand(),
                 IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Send-Enabled.svg",
                 IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Send-Disabled.svg",
-                SelectedCommand = new AsyncCommand(ExecuteSendEmailCommandAsync, CanExecuteSendEmailCommand)
+                SelectedCommand = new DelegateCommand(ExecuteSendCommand, CanExecuteSendCommand)
             };
 
             SaveTileItem = new ActionBarTileViewModel
@@ -87,17 +96,32 @@ namespace RewriteMe.Mobile.ViewModels
                 SelectedCommand = new AsyncCommand(ExecuteSaveCommandAsync, CanExecuteSaveCommand)
             };
 
-            return new[] { SendEmailTileItem, SaveTileItem };
+            return new[] { SendTileItem, SaveTileItem };
         }
 
-        private bool CanExecuteSendEmailCommand()
+        private bool CanExecuteSendCommand()
         {
-            return false;
+            return _emailTask.CanSendEmail;
         }
 
-        private async Task ExecuteSendEmailCommandAsync()
+        private void ExecuteSendCommand()
         {
-            await Task.CompletedTask.ConfigureAwait(false);
+            ThreadHelper.InvokeOnUiThread(SendEmailInternal);
+        }
+
+        private void SendEmailInternal()
+        {
+            var message = new StringBuilder();
+            foreach (var transcribeItem in TranscribeItems)
+            {
+                message.AppendLine(transcribeItem.UserTranscript);
+                message.AppendLine(transcribeItem.Time);
+                message.AppendLine().AppendLine();
+            }
+
+            _emailTask.SendEmail(
+                subject: FileItem.Name,
+                message: message.ToString());
         }
 
         private bool CanExecuteSaveCommand()
