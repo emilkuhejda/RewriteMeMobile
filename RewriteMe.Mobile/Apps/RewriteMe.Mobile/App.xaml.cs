@@ -4,6 +4,7 @@ using Prism.Unity;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Navigation;
 using Xamarin.Forms.Xaml;
 
@@ -35,8 +36,14 @@ namespace RewriteMe.Mobile
         {
         }
 
+        protected override void OnResume()
+        {
+            Container.Resolve<ISchedulerService>().StartAsync();
+        }
+
         protected override async void OnSleep()
         {
+            Container.Resolve<ISchedulerService>().Stop();
             await Container.Resolve<IAppDbContextProvider>().CloseAsync().ConfigureAwait(false);
         }
     }

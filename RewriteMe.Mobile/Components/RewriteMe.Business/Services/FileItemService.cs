@@ -17,6 +17,8 @@ namespace RewriteMe.Business.Services
         private readonly IFileItemRepository _fileItemRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
 
+        public event EventHandler TranscriptionStarted;
+
         public FileItemService(
             IInternalValueService internalValueService,
             IFileItemRepository fileItemRepository,
@@ -39,6 +41,11 @@ namespace RewriteMe.Business.Services
                     await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow);
                 }
             }
+        }
+
+        public async Task<bool> AnyWaitingForSynchronizationAsync()
+        {
+            return await _fileItemRepository.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<FileItem>> GetAllAsync()
@@ -70,6 +77,8 @@ namespace RewriteMe.Business.Services
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 await _fileItemRepository.UpdateRecognitionStateAsync(fileItemId, RecognitionState.InProgress).ConfigureAwait(false);
+
+                OnTranscriptionStarted();
             }
             else if (httpRequestResult.State == HttpRequestState.Error)
             {
@@ -79,6 +88,11 @@ namespace RewriteMe.Business.Services
             {
                 throw new OfflineRequestException();
             }
+        }
+
+        private void OnTranscriptionStarted()
+        {
+            TranscriptionStarted?.Invoke(this, EventArgs.Empty);
         }
     }
 }

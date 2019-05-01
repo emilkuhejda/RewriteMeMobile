@@ -8,7 +8,11 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IFileItemService
     {
+        event EventHandler TranscriptionStarted;
+
         Task SynchronizationAsync(DateTime applicationUpdateDate);
+
+        Task<bool> AnyWaitingForSynchronizationAsync();
 
         Task<IEnumerable<FileItem>> GetAllAsync();
 
