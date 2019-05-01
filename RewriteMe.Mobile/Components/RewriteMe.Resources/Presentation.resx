@@ -213,6 +213,9 @@
   <data name="UploadFile" xml:space="preserve">
     <value>Upload file</value>
   </data>
+  <data name="Send" xml:space="preserve">
+    <value>Send</value>
+  </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
   </data>
@@ -225,7 +228,7 @@
   <data name="InProgressLabel" xml:space="preserve">
     <value>In progress</value>
   </data>
-  
+
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>
   </data>
