@@ -7,8 +7,10 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class TranscribeItemViewModel : BindableBase
     {
-        private string _time;
         private string _userTranscript;
+        private bool _isDirty;
+
+        public event EventHandler IsDirtyChanged;
 
         public TranscribeItemViewModel(TranscribeItem transcribeItem)
         {
@@ -31,11 +33,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public TranscribeItem TranscribeItem { get; }
 
-        public string Time
-        {
-            get => _time;
-            set => SetProperty(ref _time, value);
-        }
+        public string Time { get; }
 
         public string UserTranscript
         {
@@ -45,8 +43,26 @@ namespace RewriteMe.Mobile.ViewModels
                 if (SetProperty(ref _userTranscript, value))
                 {
                     TranscribeItem.UserTranscript = _userTranscript;
+                    IsDirty = true;
                 }
             }
+        }
+
+        public bool IsDirty
+        {
+            get => _isDirty;
+            private set
+            {
+                if (SetProperty(ref _isDirty, value))
+                {
+                    OnIsDirtyChanged();
+                }
+            }
+        }
+
+        private void OnIsDirtyChanged()
+        {
+            IsDirtyChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
