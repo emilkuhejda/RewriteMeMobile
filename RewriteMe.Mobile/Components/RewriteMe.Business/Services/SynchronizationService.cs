@@ -15,6 +15,7 @@ namespace RewriteMe.Business.Services
         private readonly ILastUpdatesService _lastUpdatesService;
         private readonly IFileItemService _fileItemService;
         private readonly ITranscribeItemService _transcribeItemService;
+        private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
@@ -26,11 +27,13 @@ namespace RewriteMe.Business.Services
             ILastUpdatesService lastUpdatesService,
             IFileItemService fileItemService,
             ITranscribeItemService transcribeItemService,
+            IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService)
         {
             _lastUpdatesService = lastUpdatesService;
             _fileItemService = fileItemService;
             _transcribeItemService = transcribeItemService;
+            _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
         }
 
@@ -39,7 +42,8 @@ namespace RewriteMe.Business.Services
             var updateMethods = new List<Func<Task>>
             {
                 UpdateFileItemsAsync,
-                UpdateTranscribeItemAsync
+                UpdateTranscribeItemsAsync,
+                UpdateUserSubscriptionAsync
             };
 
             _totalResourceInitializationTasks = updateMethods.Count;
@@ -71,11 +75,18 @@ namespace RewriteMe.Business.Services
             await _fileItemService.SynchronizationAsync(applicationFileItemUpdateDate);
         }
 
-        private async Task UpdateTranscribeItemAsync()
+        private async Task UpdateTranscribeItemsAsync()
         {
             var applicationTranscribeItemUpdateDate = _lastUpdatesService.GetTranscribeItemLastUpdate();
 
             await _transcribeItemService.SynchronizationAsync(applicationTranscribeItemUpdateDate).ConfigureAwait(false);
+        }
+
+        private async Task UpdateUserSubscriptionAsync()
+        {
+            var applicationUserSubscriptionUpdateDate = _lastUpdatesService.GetUserSubscriptionLastUpdate();
+
+            await _userSubscriptionService.SynchronizationAsync(applicationUserSubscriptionUpdateDate).ConfigureAwait(false);
         }
     }
 }

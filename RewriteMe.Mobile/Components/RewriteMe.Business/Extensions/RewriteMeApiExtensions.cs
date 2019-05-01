@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Transcription;
@@ -32,6 +31,14 @@ namespace RewriteMe.Business.Extensions
             using (var result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(updatedAfter, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<TranscribeItem>>(result.Body);
+            }
+        }
+
+        public static async Task<IEnumerable<UserSubscription>> GetUserSubscriptionsAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(updatedAfter, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<IEnumerable<UserSubscription>>(result.Body);
             }
         }
 
