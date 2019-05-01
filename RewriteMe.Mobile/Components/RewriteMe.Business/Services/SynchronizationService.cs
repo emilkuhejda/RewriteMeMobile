@@ -66,14 +66,14 @@ namespace RewriteMe.Business.Services
 
         private async Task UpdateFileItemsAsync()
         {
-            var applicationFileItemUpdateDate = _lastUpdatesService.GetFileItemVersion();
+            var applicationFileItemUpdateDate = _lastUpdatesService.GetFileItemLastUpdate();
 
             await _fileItemService.SynchronizationAsync(applicationFileItemUpdateDate);
         }
 
         private async Task UpdateTranscribeItemAsync()
         {
-            var applicationTranscribeItemUpdateDate = _lastUpdatesService.GetTranscribeItemVersion();
+            var applicationTranscribeItemUpdateDate = _lastUpdatesService.GetTranscribeItemLastUpdate();
 
             await _transcribeItemService.SynchronizationAsync(applicationTranscribeItemUpdateDate).ConfigureAwait(false);
         }

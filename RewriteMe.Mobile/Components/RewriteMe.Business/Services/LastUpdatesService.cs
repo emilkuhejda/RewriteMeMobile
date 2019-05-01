@@ -33,7 +33,7 @@ namespace RewriteMe.Business.Services
             _isInitialized = true;
         }
 
-        public DateTime GetFileItemVersion()
+        public DateTime GetFileItemLastUpdate()
         {
             if (!_isInitialized)
                 throw new InvalidOperationException("Service is not initialized");
@@ -41,12 +41,20 @@ namespace RewriteMe.Business.Services
             return _lastUpdates?.FileItem ?? DateTime.MinValue;
         }
 
-        public DateTime GetTranscribeItemVersion()
+        public DateTime GetTranscribeItemLastUpdate()
         {
             if (!_isInitialized)
                 throw new InvalidOperationException("Service is not initialized");
 
             return _lastUpdates?.TranscribeItem ?? DateTime.MinValue;
+        }
+
+        public DateTime GetUserSubscriptionLastUpdate()
+        {
+            if (!_isInitialized)
+                throw new InvalidOperationException("Service is not initialized");
+
+            return _lastUpdates?.UserSubscription ?? DateTime.MinValue;
         }
     }
 }
