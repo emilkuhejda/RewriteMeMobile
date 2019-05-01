@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 using RewriteMe.DataAccess.Entities;
 using SQLite;
@@ -33,6 +36,21 @@ namespace RewriteMe.DataAccess
             await Database.CreateTablesAsync(CreateFlags.None, types).ConfigureAwait(false);
         }
 
+        public async Task<T> GetAsync<T>(Expression<Func<T, bool>> predicate) where T : new()
+        {
+            return await Database.GetAsync(predicate).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<T>> GetAllWithChildrenAsync<T>(Expression<Func<T, bool>> predicate) where T : new()
+        {
+            return await Database.GetAllWithChildrenAsync(predicate).ConfigureAwait(false);
+        }
+
+        public async Task<T> GetWithChildrenAsync<T>(object primaryKey) where T : new()
+        {
+            return await Database.GetWithChildrenAsync<T>(primaryKey).ConfigureAwait(false);
+        }
+
         public async Task InsertAsync<T>(T item)
         {
             await Database.InsertAsync(item).ConfigureAwait(false);
@@ -41,6 +59,11 @@ namespace RewriteMe.DataAccess
         public async Task UpdateAsync<T>(T item)
         {
             await Database.UpdateAsync(item).ConfigureAwait(false);
+        }
+
+        public async Task UpdateAllAsync(IEnumerable items)
+        {
+            await Database.UpdateAllAsync(items).ConfigureAwait(false);
         }
 
         public async Task DeleteAsync(object primaryKey)
@@ -52,11 +75,6 @@ namespace RewriteMe.DataAccess
         {
             var items = await Database.GetAllWithChildrenAsync<T>(recursive: true).ConfigureAwait(false);
             await Database.DeleteAllAsync(items, true).ConfigureAwait(false);
-        }
-
-        public async Task<T> GetWithChildrenAsync<T>(object primaryKey) where T : new()
-        {
-            return await Database.GetWithChildrenAsync<T>(primaryKey).ConfigureAwait(false);
         }
 
         public async Task InsertOrReplaceAsync(object obj)

@@ -29,12 +29,16 @@
     <None Remove="Resources\Images\Add.svg" />
     <None Remove="Resources\Images\Back.svg" />
     <None Remove="Resources\Images\Forward.svg" />
+    <None Remove="Resources\Images\Ok.svg" />
     <None Remove="Resources\Images\Refresh.svg" />
+    <None Remove="Resources\Images\Reload.svg" />
     <None Remove="Resources\Images\RewriteMeLogo.png" />
     <None Remove="Resources\Images\Save-Disabled.svg" />
     <None Remove="Resources\Images\Save-Enabled.svg" />
     <None Remove="Resources\Images\SaveAndTranscribe-Disabled.svg" />
     <None Remove="Resources\Images\SaveAndTranscribe-Enabled.svg" />
+    <None Remove="Resources\Images\Send-Disabled.svg" />
+    <None Remove="Resources\Images\Send-Enabled.svg" />
     <None Remove="Resources\Images\Settings.svg" />
   </ItemGroup>
 
@@ -42,12 +46,16 @@
     <EmbeddedResource Include="Resources\Images\Add.svg" />
     <EmbeddedResource Include="Resources\Images\Back.svg" />
     <EmbeddedResource Include="Resources\Images\Forward.svg" />
+    <EmbeddedResource Include="Resources\Images\Ok.svg" />
     <EmbeddedResource Include="Resources\Images\Refresh.svg" />
+    <EmbeddedResource Include="Resources\Images\Reload.svg" />
     <EmbeddedResource Include="Resources\Images\RewriteMeLogo.png" />
     <EmbeddedResource Include="Resources\Images\Save-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Save-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\SaveAndTranscribe-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\SaveAndTranscribe-Enabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Send-Disabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Send-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Settings.svg" />
   </ItemGroup>
   
@@ -110,6 +118,9 @@
     <EmbeddedResource Update="Views\CreatePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+    <EmbeddedResource Update="Views\DetailPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\DeveloperPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
@@ -126,6 +137,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SettingsPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TranscribePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
   </ItemGroup>

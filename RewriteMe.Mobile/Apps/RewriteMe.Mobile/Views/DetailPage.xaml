@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.DetailPage"
+                          xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                          xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+                          xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <views:BaseNavigationPage.Resources>
+        <DataTemplate x:Key="TranscribeItemsTemplate">
+            <ViewCell>
+                <ViewCell.View>
+                    <StackLayout>
+                        <Editor AutoSize="TextChanges"
+                                FontSize="{StaticResource MediumSize}"
+                                Keyboard="Text"
+                                Text="{Binding UserTranscript}"
+                                VerticalOptions="Fill" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.Column="0"
+                                  BackgroundColor="Transparent"
+                                  HeightRequest="39"
+                                  HorizontalOptions="Start"
+                                  IsVisible="{Binding IsReloadCommandVisible}"
+                                  WidthRequest="39">
+                                <forms:SvgCachedImage Margin="0"
+                                                      Aspect="AspectFit"
+                                                      BackgroundColor="Transparent"
+                                                      HeightRequest="30"
+                                                      InputTransparent="True"
+                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Reload.svg"
+                                                      VerticalOptions="CenterAndExpand" />
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ReloadCommand}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
+                            <Label Grid.Column="1"
+                                   HorizontalOptions="End"
+                                   Style="{StaticResource LabelStyle}"
+                                   Text="{Binding Time}" />
+                        </Grid>
+                    </StackLayout>
+                </ViewCell.View>
+            </ViewCell>
+        </DataTemplate>
+    </views:BaseNavigationPage.Resources>
+
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Padding="{StaticResource StandardPadding}">
+                <ListView HasUnevenRows="True"
+                          ItemTemplate="{StaticResource TranscribeItemsTemplate}"
+                          ItemsSource="{Binding TranscribeItems}"
+                          SeparatorVisibility="None" />
+            </Grid>
+
+            <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
+        </Grid>
+
+        <controls:PageActivityIndicator Grid.Row="0"
+                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
+                                        IsVisible="{Binding OperationScope.IsBusy}" />
+    </Grid>
+</views:BaseNavigationPage>

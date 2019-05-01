@@ -35,7 +35,7 @@ namespace RewriteMe.Business.Services
                 var httpRequestResult = await _rewriteMeWebService.GetFileItemsAsync(lastFileItemSynchronization).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    await _fileItemRepository.UpdateAllAsync(httpRequestResult.Payload).ConfigureAwait(false);
+                    await _fileItemRepository.InsertOrReplaceAllAsync(httpRequestResult.Payload).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow);
                 }
             }
@@ -64,20 +64,21 @@ namespace RewriteMe.Business.Services
             throw new OfflineRequestException();
         }
 
-        public async Task<bool> TranscribeAsync(Guid fileItemId, string language)
+        public async Task TranscribeAsync(Guid fileItemId, string language)
         {
             var httpRequestResult = await _rewriteMeWebService.TranscribeFileItemAsync(fileItemId, language).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
-                return true;
+                await _fileItemRepository.UpdateRecognitionStateAsync(fileItemId, RecognitionState.InProgress).ConfigureAwait(false);
             }
-
-            if (httpRequestResult.State == HttpRequestState.Error)
+            else if (httpRequestResult.State == HttpRequestState.Error)
             {
                 throw new ErrorRequestException(httpRequestResult.StatusCode);
             }
-
-            throw new OfflineRequestException();
+            else
+            {
+                throw new OfflineRequestException();
+            }
         }
     }
 }

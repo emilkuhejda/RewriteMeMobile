@@ -31,5 +31,7 @@ namespace RewriteMe.DataAccess.Entities
         public DateTime DateCreated { get; set; }
 
         public DateTime DateUpdated { get; set; }
+
+        public bool IsPendingSynchronization { get; set; }
     }
 }
