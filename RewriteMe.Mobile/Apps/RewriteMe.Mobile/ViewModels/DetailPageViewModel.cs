@@ -149,7 +149,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteSaveCommandAsync()
         {
-            await Task.CompletedTask.ConfigureAwait(false);
+            var transcribeItemsToSave = TranscribeItems.Where(x => x.IsDirty).Select(x => x.TranscribeItem);
+
+            await _transcribeItemService.SaveAndSendAsync(transcribeItemsToSave).ConfigureAwait(false);
+            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
         }
 
         public void Dispose()

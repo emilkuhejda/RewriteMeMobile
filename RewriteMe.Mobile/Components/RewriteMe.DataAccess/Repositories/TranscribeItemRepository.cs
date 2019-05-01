@@ -29,7 +29,7 @@ namespace RewriteMe.DataAccess.Repositories
             return entities.Select(x => x.ToTranscribeItem());
         }
 
-        public async Task UpdateAsync(IEnumerable<TranscribeItem> transcribeItems)
+        public async Task InsertOrReplaceAllAsync(IEnumerable<TranscribeItem> transcribeItems)
         {
             var transcribeItemsEntities = transcribeItems.Select(x => x.ToTranscribeItemEntity()).ToList();
             if (!transcribeItemsEntities.Any())
@@ -44,6 +44,24 @@ namespace RewriteMe.DataAccess.Repositories
                 database.DeleteAll<TranscribeItemEntity>();
                 database.InsertAll(mergedTranscribeItems);
             }).ConfigureAwait(false);
+        }
+
+        public async Task UpdateAsync(TranscribeItem transcribeItem)
+        {
+            await _contextProvider.Context.UpdateAsync(transcribeItem.ToTranscribeItemEntity()).ConfigureAwait(false);
+        }
+
+        public async Task UpdateAllAsync(IEnumerable<TranscribeItem> transcribeItems)
+        {
+            var entities = transcribeItems.Select(x => x.ToTranscribeItemEntity());
+            await _contextProvider.Context.UpdateAllAsync(entities).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<TranscribeItem>> GetPendingAsync()
+        {
+            var entities = await _contextProvider.Context.GetAllWithChildrenAsync<TranscribeItemEntity>(x => x.IsPendingSynchronization).ConfigureAwait(false);
+
+            return entities.Select(x => x.ToTranscribeItem());
         }
     }
 }

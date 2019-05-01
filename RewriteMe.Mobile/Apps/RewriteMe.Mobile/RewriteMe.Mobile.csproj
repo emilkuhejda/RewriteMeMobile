@@ -31,6 +31,7 @@
     <None Remove="Resources\Images\Forward.svg" />
     <None Remove="Resources\Images\Ok.svg" />
     <None Remove="Resources\Images\Refresh.svg" />
+    <None Remove="Resources\Images\Reload.svg" />
     <None Remove="Resources\Images\RewriteMeLogo.png" />
     <None Remove="Resources\Images\Save-Disabled.svg" />
     <None Remove="Resources\Images\Save-Enabled.svg" />
@@ -47,6 +48,7 @@
     <EmbeddedResource Include="Resources\Images\Forward.svg" />
     <EmbeddedResource Include="Resources\Images\Ok.svg" />
     <EmbeddedResource Include="Resources\Images\Refresh.svg" />
+    <EmbeddedResource Include="Resources\Images\Reload.svg" />
     <EmbeddedResource Include="Resources\Images\RewriteMeLogo.png" />
     <EmbeddedResource Include="Resources\Images\Save-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Save-Enabled.svg" />
