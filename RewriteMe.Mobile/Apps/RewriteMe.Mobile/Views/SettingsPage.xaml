@@ -28,10 +28,16 @@
                     <Label Style="{StaticResource LabelStyle}" Text="{Binding ApplicationVersion}" />
                 </controls:DrillDownButton>
                 <controls:Divider />
-                
+
                 <!--  User profile  -->
                 <controls:DrillDownButton Command="{Binding NavigateToUserSettingsCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UserProfile}}">
                     <Label Style="{StaticResource LabelStyle}" Text="{Binding UserName}" />
+                </controls:DrillDownButton>
+                <controls:Divider />
+
+                <!--  Remaining time  -->
+                <controls:DrillDownButton Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RemainingTime}}">
+                    <Label Style="{StaticResource LabelStyle}" Text="{Binding RemainingTime, StringFormat=\{0:mm\\:ss\}}" />
                 </controls:DrillDownButton>
                 <controls:Divider />
 

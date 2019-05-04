@@ -32,7 +32,9 @@
                    LineBreakMode="WordWrap"
                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterToUseApplication}}"
                    WidthRequest="180" />
-            <Button Command="{Binding LoginCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterOrSignIn}}" />
+            <Button Command="{Binding LoginCommand}"
+                    Style="{StaticResource ActionButtonStyle}"
+                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterOrSignIn}}" />
 
             <Label HorizontalOptions="Center"
                    HorizontalTextAlignment="Center"

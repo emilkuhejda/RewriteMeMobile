@@ -11,7 +11,7 @@ namespace RewriteMe.DataAccess.DataAdapters
             {
                 Id = entity.Id,
                 UserId = entity.UserId,
-                Time = entity.Time,
+                Time = entity.Time.ToString(),
                 DateCreated = entity.DateCreated
             };
         }
@@ -22,7 +22,7 @@ namespace RewriteMe.DataAccess.DataAdapters
             {
                 Id = userSubscription.Id.GetValueOrDefault(),
                 UserId = userSubscription.UserId.GetValueOrDefault(),
-                Time = userSubscription.Time,
+                Time = userSubscription.SubscriptionTime,
                 DateCreated = userSubscription.DateCreated.GetValueOrDefault()
             };
         }

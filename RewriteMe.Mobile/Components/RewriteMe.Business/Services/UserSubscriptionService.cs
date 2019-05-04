@@ -36,5 +36,12 @@ namespace RewriteMe.Business.Services
                 }
             }
         }
+
+        public async Task<TimeSpan> GetRemainingTimeAsync()
+        {
+            var userSubscriptionsTime = await _userSubscriptionRepository.GetTotalTimeAsync().ConfigureAwait(false);
+
+            return userSubscriptionsTime;
+        }
     }
 }

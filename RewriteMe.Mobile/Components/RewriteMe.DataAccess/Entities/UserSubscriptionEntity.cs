@@ -11,8 +11,7 @@ namespace RewriteMe.DataAccess.Entities
 
         public Guid UserId { get; set; }
 
-        [MaxLength(100)]
-        public string Time { get; set; }
+        public TimeSpan Time { get; set; }
 
         public DateTime DateCreated { get; set; }
     }

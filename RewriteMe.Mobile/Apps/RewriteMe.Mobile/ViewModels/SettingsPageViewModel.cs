@@ -28,6 +28,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IInternalValueService _internalValueService;
         private readonly IUserSessionService _userSessionService;
+        private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IApplicationSettings _applicationSettings;
         private readonly ILatestVersion _latestVersion;
         private readonly IEmailTask _emailTask;
@@ -35,12 +36,14 @@ namespace RewriteMe.Mobile.ViewModels
 
         private LanguageInfo _selectedLanguage;
         private string _userName;
+        private TimeSpan _remainingTime;
         private string _applicationVersion;
         private bool _disposed;
 
         public SettingsPageViewModel(
             IInternalValueService internalValueService,
             IUserSessionService userSessionService,
+            IUserSubscriptionService userSubscriptionService,
             IApplicationSettings applicationSettings,
             ILatestVersion latestVersion,
             IEmailTask emailTask,
@@ -52,6 +55,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _internalValueService = internalValueService;
             _userSessionService = userSessionService;
+            _userSubscriptionService = userSubscriptionService;
             _applicationSettings = applicationSettings;
             _latestVersion = latestVersion;
             _emailTask = emailTask;
@@ -80,6 +84,12 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _userName, value);
         }
 
+        public TimeSpan RemainingTime
+        {
+            get => _remainingTime;
+            set => SetProperty(ref _remainingTime, value);
+        }
+
         public string ApplicationVersion
         {
             get => _applicationVersion;
@@ -103,6 +113,7 @@ namespace RewriteMe.Mobile.ViewModels
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     UserName = await _userSessionService.GetUserNameAsync().ConfigureAwait(false);
+                    RemainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
                     ApplicationVersion = _latestVersion.InstalledVersionNumber;
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)

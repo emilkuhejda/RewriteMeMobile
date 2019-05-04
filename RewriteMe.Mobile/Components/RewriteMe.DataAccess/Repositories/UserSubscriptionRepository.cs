@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RewriteMe.DataAccess.DataAdapters;
@@ -33,6 +34,18 @@ namespace RewriteMe.DataAccess.Repositories
                 database.DeleteAll<UserSubscriptionEntity>();
                 database.InsertAll(mergedFileItems);
             }).ConfigureAwait(false);
+        }
+
+        public async Task<TimeSpan> GetTotalTimeAsync()
+        {
+            var userSubscriptions = await _contextProvider.Context.UserSubscriptions.ToListAsync();
+            var ticks = userSubscriptions.Select(x => x.Time.Ticks).Sum();
+            return TimeSpan.FromTicks(ticks);
+        }
+
+        public async Task ClearAsync()
+        {
+            await _contextProvider.Context.DeleteAllAsync<UserSubscriptionEntity>().ConfigureAwait(false);
         }
     }
 }
