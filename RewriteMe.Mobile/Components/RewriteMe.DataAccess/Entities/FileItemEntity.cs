@@ -22,6 +22,8 @@ namespace RewriteMe.DataAccess.Entities
         [MaxLength(50)]
         public string RecognitionState { get; set; }
 
+        public TimeSpan TotalTime { get; set; }
+
         public DateTime DateCreated { get; set; }
 
         public DateTime DateProcessed { get; set; }

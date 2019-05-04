@@ -22,13 +22,14 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the FileItem class.
         /// </summary>
-        public FileItem(System.Guid? id = default(System.Guid?), string name = default(string), string fileName = default(string), string language = default(string), string recognitionState = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.DateTime? dateProcessed = default(System.DateTime?), System.DateTime? dateUpdated = default(System.DateTime?), int? audioSourceVersion = default(int?), AudioSource audioSource = default(AudioSource))
+        public FileItem(System.Guid? id = default(System.Guid?), string name = default(string), string fileName = default(string), string language = default(string), string recognitionState = default(string), string totalTimeString = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.DateTime? dateProcessed = default(System.DateTime?), System.DateTime? dateUpdated = default(System.DateTime?), int? audioSourceVersion = default(int?), AudioSource audioSource = default(AudioSource))
         {
             Id = id;
             Name = name;
             FileName = fileName;
             Language = language;
             RecognitionState = recognitionState;
+            TotalTimeString = totalTimeString;
             DateCreated = dateCreated;
             DateProcessed = dateProcessed;
             DateUpdated = dateUpdated;
@@ -66,6 +67,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "recognitionState")]
         public string RecognitionState { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "totalTimeString")]
+        public string TotalTimeString { get; set; }
 
         /// <summary>
         /// </summary>
