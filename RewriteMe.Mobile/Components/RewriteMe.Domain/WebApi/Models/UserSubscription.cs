@@ -22,11 +22,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the UserSubscription class.
         /// </summary>
-        public UserSubscription(System.Guid? id = default(System.Guid?), System.Guid? userId = default(System.Guid?), string time = default(string), System.DateTime? dateCreated = default(System.DateTime?))
+        public UserSubscription(System.Guid? id = default(System.Guid?), System.Guid? userId = default(System.Guid?), string timeString = default(string), System.DateTime? dateCreated = default(System.DateTime?))
         {
             Id = id;
             UserId = userId;
-            Time = time;
+            TimeString = timeString;
             DateCreated = dateCreated;
             CustomInit();
         }
@@ -48,8 +48,8 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "time")]
-        public string Time { get; set; }
+        [JsonProperty(PropertyName = "timeString")]
+        public string TimeString { get; set; }
 
         /// <summary>
         /// </summary>

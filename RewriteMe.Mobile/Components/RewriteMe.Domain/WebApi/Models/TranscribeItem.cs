@@ -24,16 +24,16 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the TranscribeItem class.
         /// </summary>
-        public TranscribeItem(System.Guid? id = default(System.Guid?), System.Guid? fileItemId = default(System.Guid?), IList<RecognitionAlternative> alternatives = default(IList<RecognitionAlternative>), string userTranscript = default(string), byte[] source = default(byte[]), string startTime = default(string), string endTime = default(string), string totalTime = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.DateTime? dateUpdated = default(System.DateTime?))
+        public TranscribeItem(System.Guid? id = default(System.Guid?), System.Guid? fileItemId = default(System.Guid?), IList<RecognitionAlternative> alternatives = default(IList<RecognitionAlternative>), string userTranscript = default(string), byte[] source = default(byte[]), string startTimeString = default(string), string endTimeString = default(string), string totalTimeString = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.DateTime? dateUpdated = default(System.DateTime?))
         {
             Id = id;
             FileItemId = fileItemId;
             Alternatives = alternatives;
             UserTranscript = userTranscript;
             Source = source;
-            StartTime = startTime;
-            EndTime = endTime;
-            TotalTime = totalTime;
+            StartTimeString = startTimeString;
+            EndTimeString = endTimeString;
+            TotalTimeString = totalTimeString;
             DateCreated = dateCreated;
             DateUpdated = dateUpdated;
             CustomInit();
@@ -71,18 +71,18 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "startTime")]
-        public string StartTime { get; set; }
+        [JsonProperty(PropertyName = "startTimeString")]
+        public string StartTimeString { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "endTime")]
-        public string EndTime { get; set; }
+        [JsonProperty(PropertyName = "endTimeString")]
+        public string EndTimeString { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "totalTime")]
-        public string TotalTime { get; set; }
+        [JsonProperty(PropertyName = "totalTimeString")]
+        public string TotalTimeString { get; set; }
 
         /// <summary>
         /// </summary>

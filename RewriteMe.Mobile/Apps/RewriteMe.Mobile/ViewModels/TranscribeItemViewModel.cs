@@ -31,9 +31,7 @@ namespace RewriteMe.Mobile.ViewModels
                 _userTranscript = alternative.Transcript;
             }
 
-            TimeSpan.TryParse(transcribeItem.StartTime, out var startTime);
-            TimeSpan.TryParse(transcribeItem.EndTime, out var endTime);
-            Time = $"{startTime:mm\\:ss} - {endTime:mm\\:ss}";
+            Time = $"{transcribeItem.StartTime:mm\\:ss} - {transcribeItem.EndTime:mm\\:ss}";
 
             ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
         }
