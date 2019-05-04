@@ -36,7 +36,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private LanguageInfo _selectedLanguage;
         private string _userName;
-        private TimeSpan _remainingTime;
+        private string _remainingTime;
         private string _applicationVersion;
         private bool _disposed;
 
@@ -84,7 +84,7 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _userName, value);
         }
 
-        public TimeSpan RemainingTime
+        public string RemainingTime
         {
             get => _remainingTime;
             set => SetProperty(ref _remainingTime, value);
@@ -113,8 +113,11 @@ namespace RewriteMe.Mobile.ViewModels
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     UserName = await _userSessionService.GetUserNameAsync().ConfigureAwait(false);
-                    RemainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
                     ApplicationVersion = _latestVersion.InstalledVersionNumber;
+
+                    var remainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
+                    var sign = remainingTime.Ticks < 0 ? "-" : string.Empty;
+                    RemainingTime = $"{sign}{remainingTime:mm\\:ss}";
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {

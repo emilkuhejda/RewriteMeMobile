@@ -37,7 +37,7 @@
 
                 <!--  Remaining time  -->
                 <controls:DrillDownButton Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RemainingTime}}">
-                    <Label Style="{StaticResource LabelStyle}" Text="{Binding RemainingTime, StringFormat=\{0:mm\\:ss\}}" />
+                    <Label Style="{StaticResource LabelStyle}" Text="{Binding RemainingTime}" />
                 </controls:DrillDownButton>
                 <controls:Divider />
 

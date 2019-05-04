@@ -18,6 +18,8 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task UpdateRecognitionStateAsync(Guid fileItemId, RecognitionState recognitionState);
 
+        Task<TimeSpan> GetProcessedFilesTotalTimeAsync();
+
         Task ClearAsync();
     }
 }

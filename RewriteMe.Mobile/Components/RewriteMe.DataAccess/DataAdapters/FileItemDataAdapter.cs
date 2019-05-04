@@ -13,7 +13,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Name = entity.Name,
                 FileName = entity.FileName,
                 Language = entity.Language,
-                RecognitionState = entity.RecognitionState,
+                RecognitionStateString = entity.RecognitionState.ToString(),
                 TotalTimeString = entity.TotalTime.ToString(),
                 DateCreated = entity.DateCreated,
                 DateProcessed = entity.DateProcessed,

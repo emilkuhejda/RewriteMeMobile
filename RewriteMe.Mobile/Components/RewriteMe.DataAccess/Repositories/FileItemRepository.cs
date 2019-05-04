@@ -28,7 +28,7 @@ namespace RewriteMe.DataAccess.Repositories
 
         public async Task<bool> AnyWaitingForSynchronizationAsync()
         {
-            var recognitionState = RecognitionState.InProgress.ToString();
+            var recognitionState = RecognitionState.InProgress;
             var count = await _contextProvider.Context.FileItems
                 .Where(x => x.RecognitionState == recognitionState)
                 .CountAsync();
@@ -64,8 +64,16 @@ namespace RewriteMe.DataAccess.Repositories
             if (entity == null)
                 return;
 
-            entity.RecognitionState = recognitionState.ToString();
+            entity.RecognitionState = recognitionState;
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
+        }
+
+        public async Task<TimeSpan> GetProcessedFilesTotalTimeAsync()
+        {
+            var files = await _contextProvider.Context.FileItems.Where(x => x.RecognitionState > RecognitionState.Prepared).ToListAsync();
+            var ticks = files.Select(x => x.TotalTime.Ticks).Sum();
+
+            return TimeSpan.FromTicks(ticks);
         }
 
         public async Task ClearAsync()

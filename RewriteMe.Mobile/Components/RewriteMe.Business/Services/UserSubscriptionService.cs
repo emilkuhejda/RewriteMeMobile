@@ -11,15 +11,18 @@ namespace RewriteMe.Business.Services
     {
         private readonly IInternalValueService _internalValueService;
         private readonly IUserSubscriptionRepository _userSubscriptionRepository;
+        private readonly IFileItemRepository _fileItemRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
 
         public UserSubscriptionService(
             IInternalValueService internalValueService,
             IUserSubscriptionRepository userSubscriptionRepository,
+            IFileItemRepository fileItemRepository,
             IRewriteMeWebService rewriteMeWebService)
         {
             _internalValueService = internalValueService;
             _userSubscriptionRepository = userSubscriptionRepository;
+            _fileItemRepository = fileItemRepository;
             _rewriteMeWebService = rewriteMeWebService;
         }
 
@@ -40,8 +43,9 @@ namespace RewriteMe.Business.Services
         public async Task<TimeSpan> GetRemainingTimeAsync()
         {
             var userSubscriptionsTime = await _userSubscriptionRepository.GetTotalTimeAsync().ConfigureAwait(false);
+            var processedFilesTotalTime = await _fileItemRepository.GetProcessedFilesTotalTimeAsync().ConfigureAwait(false);
 
-            return userSubscriptionsTime;
+            return userSubscriptionsTime.Subtract(processedFilesTotalTime);
         }
     }
 }

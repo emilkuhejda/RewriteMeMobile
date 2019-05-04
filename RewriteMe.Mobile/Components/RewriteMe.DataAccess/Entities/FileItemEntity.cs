@@ -1,4 +1,5 @@
 ﻿using System;
+using RewriteMe.Domain.Transcription;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 
@@ -20,7 +21,7 @@ namespace RewriteMe.DataAccess.Entities
         public string Language { get; set; }
 
         [MaxLength(50)]
-        public string RecognitionState { get; set; }
+        public RecognitionState RecognitionState { get; set; }
 
         public TimeSpan TotalTime { get; set; }
 
