@@ -6,6 +6,7 @@ using RewriteMe.Mobile.Configuration;
 using RewriteMe.Mobile.iOS.ExceptionHandling;
 using RewriteMe.Mobile.iOS.Localization;
 using RewriteMe.Mobile.iOS.Providers;
+using RewriteMe.Mobile.iOS.Services;
 
 namespace RewriteMe.Mobile.iOS.Configuration
 {
@@ -20,6 +21,7 @@ namespace RewriteMe.Mobile.iOS.Configuration
             containerRegistry.RegisterSingleton<ILogFileReader, NLogFileReader>();
             containerRegistry.RegisterSingleton<ILoggerFactory, NLogLoggerFactory>();
             containerRegistry.RegisterSingleton<IExceptionHandler, ExceptionHandler>();
+            containerRegistry.RegisterSingleton<IMediaService, MediaService>();
         }
     }
 }

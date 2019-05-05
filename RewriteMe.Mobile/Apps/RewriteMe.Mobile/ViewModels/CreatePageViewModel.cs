@@ -25,6 +25,8 @@ namespace RewriteMe.Mobile.ViewModels
     public class CreatePageViewModel : ViewModelBase
     {
         private readonly IFileItemService _fileItemService;
+        private readonly IUserSubscriptionService _userSubscriptionService;
+        private readonly IMediaService _mediaService;
 
         private string _name;
         private SupportedLanguage _selectedLanguage;
@@ -33,12 +35,16 @@ namespace RewriteMe.Mobile.ViewModels
 
         public CreatePageViewModel(
             IFileItemService fileItemService,
+            IUserSubscriptionService userSubscriptionService,
+            IMediaService mediaService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
+            _userSubscriptionService = userSubscriptionService;
+            _mediaService = mediaService;
 
             CanGoBack = true;
 
@@ -174,6 +180,8 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 Name = SelectedFile.FileName;
             }
+
+            var duration = _mediaService.GetDuration(SelectedFile.FilePath);
         }
 
         private bool CanExecuteSaveCommand()
