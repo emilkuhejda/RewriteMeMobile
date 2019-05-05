@@ -53,5 +53,6 @@
         public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
         public static string NotEnoughFreeMinutesInSubscriptionErrorMessage => "NotEnoughFreeMinutesInSubscriptionErrorMessage";
         public static string RemainingTime => "RemainingTime";
+        public static string NoAvailableData => "NoAvailableData";
     }
 }

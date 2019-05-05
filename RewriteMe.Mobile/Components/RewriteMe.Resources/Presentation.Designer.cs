@@ -233,6 +233,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No available data.
+        /// </summary>
+        public static string NoAvailableData {
+            get {
+                return ResourceManager.GetString("NoAvailableData", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Your subscription does not have enough free minutes..
         /// </summary>
         public static string NotEnoughFreeMinutesInSubscriptionErrorMessage {

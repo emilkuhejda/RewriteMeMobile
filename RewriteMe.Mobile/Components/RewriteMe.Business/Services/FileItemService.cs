@@ -79,7 +79,7 @@ namespace RewriteMe.Business.Services
             var remainingSubscriptionTime = await _userSubscriptionService.GetRemainingTimeAsync();
             var remainingTime = remainingSubscriptionTime.Subtract(fileTime);
 
-            return remainingTime.Ticks > 0;
+            return remainingTime.Ticks >= 0;
         }
 
         public async Task TranscribeAsync(Guid fileItemId, string language)

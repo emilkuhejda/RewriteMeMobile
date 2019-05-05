@@ -61,6 +61,14 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
+            <Label Grid.Row="0"
+                   FontAttributes="Italic"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding NotAvailableData}"
+                   Style="{StaticResource LabelStyle}"
+                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
+                   VerticalOptions="Start" />
+
             <Grid Grid.Row="0" Padding="{StaticResource StandardPadding}">
                 <ListView HasUnevenRows="True"
                           ItemTemplate="{StaticResource TranscribeItemsTemplate}"

@@ -253,4 +253,7 @@
   <data name="RemainingTime" xml:space="preserve">
     <value>Remaining time</value>
   </data>
+  <data name="NoAvailableData" xml:space="preserve">
+    <value>No available data</value>
+  </data>
 </root>
