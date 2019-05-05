@@ -6,6 +6,7 @@ using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Http;
+using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
@@ -24,6 +25,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ISynchronizationService _synchronizationService;
         private readonly ISchedulerService _schedulerService;
         private readonly IRegistrationUserWebService _registrationUserWebService;
+        private readonly IApplicationSettings _applicationSettings;
 
         private string _progressText;
 
@@ -34,6 +36,7 @@ namespace RewriteMe.Mobile.ViewModels
             ISynchronizationService synchronizationService,
             ISchedulerService schedulerService,
             IRegistrationUserWebService registrationUserWebService,
+            IApplicationSettings applicationSettings,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
@@ -45,6 +48,7 @@ namespace RewriteMe.Mobile.ViewModels
             _synchronizationService = synchronizationService;
             _schedulerService = schedulerService;
             _registrationUserWebService = registrationUserWebService;
+            _applicationSettings = applicationSettings;
 
             HasTitleBar = false;
 
@@ -55,6 +59,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                await _applicationSettings.InitializeAsync().ConfigureAwait(false);
+
                 var isUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
                 if (!isUserRegistrationSuccess)
                 {
