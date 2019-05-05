@@ -6,7 +6,6 @@ using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Http;
-using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
@@ -20,35 +19,35 @@ namespace RewriteMe.Mobile.ViewModels
     public class LoadingPageViewModel : ViewModelBase
     {
         private readonly IUserSessionService _userSessionService;
+        private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
         private readonly ILastUpdatesService _lastUpdatesService;
         private readonly ISynchronizationService _synchronizationService;
         private readonly ISchedulerService _schedulerService;
         private readonly IRegistrationUserWebService _registrationUserWebService;
-        private readonly IApplicationSettings _applicationSettings;
 
         private string _progressText;
 
         public LoadingPageViewModel(
-            IInternalValueService internalValueService,
             IUserSessionService userSessionService,
+            IUserSubscriptionService userSubscriptionService,
+            IInternalValueService internalValueService,
             ILastUpdatesService lastUpdatesService,
             ISynchronizationService synchronizationService,
             ISchedulerService schedulerService,
             IRegistrationUserWebService registrationUserWebService,
-            IApplicationSettings applicationSettings,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
             _userSessionService = userSessionService;
+            _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
             _lastUpdatesService = lastUpdatesService;
             _synchronizationService = synchronizationService;
             _schedulerService = schedulerService;
             _registrationUserWebService = registrationUserWebService;
-            _applicationSettings = applicationSettings;
 
             HasTitleBar = false;
 
@@ -59,8 +58,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                await _applicationSettings.InitializeAsync().ConfigureAwait(false);
-
                 var isUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
                 if (!isUserRegistrationSuccess)
                 {
@@ -71,6 +68,7 @@ namespace RewriteMe.Mobile.ViewModels
                     if (httpRequestResult.State != HttpRequestState.Success)
                         return;
 
+                    await _userSubscriptionService.AddAsync(httpRequestResult.Payload).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true);
                 }
 

@@ -4,6 +4,7 @@ using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Business.Services
 {
@@ -38,6 +39,11 @@ namespace RewriteMe.Business.Services
                     await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronization, DateTime.UtcNow).ConfigureAwait(false);
                 }
             }
+        }
+
+        public async Task AddAsync(UserSubscription userSubscription)
+        {
+            await _userSubscriptionRepository.AddAsync(userSubscription).ConfigureAwait(false);
         }
 
         public async Task<TimeSpan> GetRemainingTimeAsync()

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Extensions;
@@ -16,18 +17,21 @@ namespace RewriteMe.Mobile.ViewModels
     public class LoginPageViewModel : ViewModelBase
     {
         private readonly IUserSessionService _userSessionService;
+        private readonly IApplicationSettings _applicationSettings;
 
         private string _loginFeedback;
         private bool _isLoading;
 
         public LoginPageViewModel(
             IUserSessionService userSessionService,
+            IApplicationSettings applicationSettings,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
             _userSessionService = userSessionService;
+            _applicationSettings = applicationSettings;
 
             HasTitleBar = false;
 
@@ -60,6 +64,8 @@ namespace RewriteMe.Mobile.ViewModels
 
             using (new OperationMonitor(OperationScope))
             {
+                await _applicationSettings.InitializeAsync().ConfigureAwait(false);
+
                 var alreadySignedIn = await _userSessionService.IsSignedInAsync().ConfigureAwait(false);
                 if (alreadySignedIn)
                 {
