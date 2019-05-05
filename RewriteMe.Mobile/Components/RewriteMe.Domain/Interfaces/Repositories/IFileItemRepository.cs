@@ -10,6 +10,8 @@ namespace RewriteMe.Domain.Interfaces.Repositories
     {
         Task<IEnumerable<FileItem>> GetAllAsync();
 
+        Task<FileItem> GetAsync(Guid fileItemId);
+
         Task<bool> AnyWaitingForSynchronizationAsync();
 
         Task InsertOrReplaceAsync(FileItem fileItem);

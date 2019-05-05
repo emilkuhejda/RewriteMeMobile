@@ -14,8 +14,8 @@ namespace RewriteMe.Mobile.Transcription
 
         public string FileName => FileData.FileName;
 
-        public TimeSpan Duration { get; set; }
+        public TimeSpan TotalTime { get; set; }
 
-        public bool CanUpload { get; set; }
+        public bool CanTranscribe { get; set; }
     }
 }

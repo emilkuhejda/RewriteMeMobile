@@ -8,7 +8,7 @@ namespace RewriteMe.Mobile.Droid.Services
 {
     public class MediaService : IMediaService
     {
-        public TimeSpan GetDuration(string fileName)
+        public TimeSpan GetTotalTime(string fileName)
         {
             using (var mediaPlayer = MediaPlayer.Create(CrossCurrentActivity.Current.AppContext, Uri.Parse(fileName)))
             {

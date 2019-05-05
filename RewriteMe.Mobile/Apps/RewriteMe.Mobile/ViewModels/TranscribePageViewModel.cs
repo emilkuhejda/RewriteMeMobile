@@ -25,6 +25,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private string _name;
         private SupportedLanguage _selectedLanguage;
+        private bool _canTranscribe;
 
         public TranscribePageViewModel(
             IFileItemService fileItemService,
@@ -75,6 +76,8 @@ namespace RewriteMe.Mobile.ViewModels
                     Title = FileItem.Name;
                     Name = FileItem.Name;
                     SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
+
+                    _canTranscribe = await _fileItemService.CanTranscribeAsync(FileItem.TotalTime).ConfigureAwait(false);
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {
@@ -120,7 +123,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteTranscribeCommand()
         {
-            return _selectedLanguage != null;
+            return _canTranscribe && _selectedLanguage != null;
         }
 
         private async Task ExecuteTranscribeCommandAsync()
@@ -134,12 +137,17 @@ namespace RewriteMe.Mobile.ViewModels
 
                 try
                 {
-                    await _fileItemService.TranscribeAsync(FileItem.Id.Value, SelectedLanguage.Culture).ConfigureAwait(false);
+                    await _fileItemService.TranscribeAsync(FileItem.Id.Value, SelectedLanguage.Culture)
+                        .ConfigureAwait(false);
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
                 catch (ErrorRequestException ex)
                 {
                     await HandleErrorMessage(ex.StatusCode).ConfigureAwait(false);
+                }
+                catch (NoSubscritionFreeTimeException)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
                 }
                 catch (OfflineRequestException)
                 {

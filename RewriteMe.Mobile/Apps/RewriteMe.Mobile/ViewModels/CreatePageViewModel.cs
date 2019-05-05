@@ -24,7 +24,6 @@ namespace RewriteMe.Mobile.ViewModels
     public class CreatePageViewModel : ViewModelBase
     {
         private readonly IFileItemService _fileItemService;
-        private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IMediaService _mediaService;
 
         private string _name;
@@ -34,7 +33,6 @@ namespace RewriteMe.Mobile.ViewModels
 
         public CreatePageViewModel(
             IFileItemService fileItemService,
-            IUserSubscriptionService userSubscriptionService,
             IMediaService mediaService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -42,7 +40,6 @@ namespace RewriteMe.Mobile.ViewModels
             : base(dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
-            _userSubscriptionService = userSubscriptionService;
             _mediaService = mediaService;
 
             CanGoBack = true;
@@ -175,29 +172,23 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteUploadFileCommandAsync()
         {
             var selectedFile = await CrossFilePicker.Current.PickFile();
-            var duration = _mediaService.GetDuration(selectedFile.FilePath);
-            var remainingSubscriptionTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
-            var canUpload = remainingSubscriptionTime.Subtract(duration).Ticks > 0;
+            var totalTime = _mediaService.GetTotalTime(selectedFile.FilePath);
+            var canTranscribe = await _fileItemService.CanTranscribeAsync(totalTime).ConfigureAwait(false);
             SelectedFile = new FileDataWrapper(selectedFile)
             {
-                Duration = duration,
-                CanUpload = canUpload
+                TotalTime = totalTime,
+                CanTranscribe = canTranscribe
             };
 
             if (string.IsNullOrWhiteSpace(Name))
             {
                 Name = SelectedFile.FileName;
             }
-
-            if (!canUpload)
-            {
-                await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
-            }
         }
 
         private bool CanExecuteSaveCommand()
         {
-            return SelectedFile != null && SelectedFile.CanUpload;
+            return SelectedFile != null;
         }
 
         private async Task ExecuteSaveCommandAsync()
@@ -213,7 +204,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveAndTranscribeCommand()
         {
-            return SelectedFile != null && SelectedFile.CanUpload && SelectedLanguage != null;
+            return SelectedFile != null && SelectedFile.CanTranscribe && SelectedLanguage != null;
         }
 
         private async Task ExecuteSaveAndTranscribeCommandAsync()
@@ -250,6 +241,10 @@ namespace RewriteMe.Mobile.ViewModels
                 catch (ErrorRequestException ex)
                 {
                     await HandleErrorMessage(ex.StatusCode).ConfigureAwait(false);
+                }
+                catch (NoSubscritionFreeTimeException)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
                 }
                 catch (OfflineRequestException)
                 {
@@ -293,6 +288,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = name,
                 Language = SelectedLanguage?.Culture,
                 FileName = SelectedFile.FileName,
+                TotalTime = SelectedFile.TotalTime,
                 Stream = SelectedFile.FileData.GetStream()
             };
         }

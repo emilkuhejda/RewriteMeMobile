@@ -7,7 +7,7 @@ namespace RewriteMe.Mobile.iOS.Services
 {
     public class MediaService : IMediaService
     {
-        public TimeSpan GetDuration(string fileName)
+        public TimeSpan GetTotalTime(string fileName)
         {
             var filePath = NSBundle.MainBundle.PathForResource(fileName, null);
             using (var url = new NSUrl(filePath))

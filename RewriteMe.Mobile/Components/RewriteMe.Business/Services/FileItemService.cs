@@ -13,6 +13,7 @@ namespace RewriteMe.Business.Services
 {
     public class FileItemService : IFileItemService
     {
+        private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
         private readonly IFileItemRepository _fileItemRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
@@ -20,10 +21,12 @@ namespace RewriteMe.Business.Services
         public event EventHandler TranscriptionStarted;
 
         public FileItemService(
+            IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService,
             IFileItemRepository fileItemRepository,
             IRewriteMeWebService rewriteMeWebService)
         {
+            _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
             _fileItemRepository = fileItemRepository;
             _rewriteMeWebService = rewriteMeWebService;
@@ -71,8 +74,21 @@ namespace RewriteMe.Business.Services
             throw new OfflineRequestException();
         }
 
+        public async Task<bool> CanTranscribeAsync(TimeSpan fileTime)
+        {
+            var remainingSubscriptionTime = await _userSubscriptionService.GetRemainingTimeAsync();
+            var remainingTime = remainingSubscriptionTime.Subtract(fileTime);
+
+            return remainingTime.Ticks > 0;
+        }
+
         public async Task TranscribeAsync(Guid fileItemId, string language)
         {
+            var fileItem = await _fileItemRepository.GetAsync(fileItemId).ConfigureAwait(false);
+            var canTranscribeFileItem = await CanTranscribeAsync(fileItem.TotalTime).ConfigureAwait(false);
+            if (!canTranscribeFileItem)
+                throw new NoSubscritionFreeTimeException();
+
             var httpRequestResult = await _rewriteMeWebService.TranscribeFileItemAsync(fileItemId, language).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
