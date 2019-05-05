@@ -250,4 +250,7 @@
   <data name="NotEnoughFreeMinutesInSubscriptionErrorMessage" xml:space="preserve">
     <value>Your subscription does not have enough free minutes.</value>
   </data>
+  <data name="RemainingTime" xml:space="preserve">
+    <value>Remaining time</value>
+  </data>
 </root>

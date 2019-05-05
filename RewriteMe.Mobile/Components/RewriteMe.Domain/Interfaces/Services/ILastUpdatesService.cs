@@ -9,8 +9,10 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task InitializeAsync();
 
-        DateTime GetFileItemVersion();
+        DateTime GetFileItemLastUpdate();
 
-        DateTime GetTranscribeItemVersion();
+        DateTime GetTranscribeItemLastUpdate();
+
+        DateTime GetUserSubscriptionLastUpdate();
     }
 }

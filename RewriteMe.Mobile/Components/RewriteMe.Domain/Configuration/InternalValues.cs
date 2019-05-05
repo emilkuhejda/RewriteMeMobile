@@ -8,6 +8,8 @@ namespace RewriteMe.Domain.Configuration
 
         public static InternalValue<DateTime> TranscribeItemSynchronization { get; } = new InternalValue<DateTime>("TranscribeItemSynchronization", default(DateTime));
 
+        public static InternalValue<DateTime> UserSubscriptionSynchronization { get; } = new InternalValue<DateTime>("UserSubscriptionSynchronization", default(DateTime));
+
         public static InternalValue<string> LanguageSetting { get; } = new InternalValue<string>("LanguageSetting", null);
 
         public static InternalValue<bool> IsUserRegistrationSuccess { get; } = new InternalValue<bool>("IsUserRegistrationSuccess", false);

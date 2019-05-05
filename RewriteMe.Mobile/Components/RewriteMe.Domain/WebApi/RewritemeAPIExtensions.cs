@@ -336,5 +336,31 @@ namespace RewriteMe.Domain.WebApi
                 }
             }
 
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='updatedAfter'>
+            /// </param>
+            public static IList<UserSubscription> GetUserSubscriptions(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?))
+            {
+                return operations.GetUserSubscriptionsAsync(updatedAfter).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='updatedAfter'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<UserSubscription>> GetUserSubscriptionsAsync(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(updatedAfter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

@@ -21,7 +21,8 @@ namespace RewriteMe.DataAccess
                 typeof(FileItemEntity),
                 typeof(InternalValueEntity),
                 typeof(TranscribeItemEntity),
-                typeof(UserSessionEntity)
+                typeof(UserSessionEntity),
+                typeof(UserSubscriptionEntity)
             };
 
             await _contextProvider.Context.CreateTablesAsync(tables).ConfigureAwait(false);

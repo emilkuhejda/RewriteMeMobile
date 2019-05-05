@@ -114,6 +114,7 @@
     <Compile Include="Providers\DirectoryProvider.cs" />
     <Compile Include="Renderers\AlwaysScrollViewRenderer.cs" />
     <Compile Include="Renderers\NoBarsScrollViewerRenderer.cs" />
+    <Compile Include="Services\MediaService.cs" />
     <None Include="..\..\Global\RewriteMe.CodeAnalysis.ruleset">
       <Link>Properties\RewriteMe.CodeAnalysis.ruleset</Link>
     </None>
