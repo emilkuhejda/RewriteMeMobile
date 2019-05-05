@@ -1,10 +1,14 @@
 ﻿using System;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Logging.Extensions;
+using RewriteMe.Logging.Interfaces;
 
 namespace RewriteMe.Business.Services
 {
@@ -14,28 +18,36 @@ namespace RewriteMe.Business.Services
         private readonly IUserSubscriptionRepository _userSubscriptionRepository;
         private readonly IFileItemRepository _fileItemRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly ILogger _logger;
 
         public UserSubscriptionService(
             IInternalValueService internalValueService,
             IUserSubscriptionRepository userSubscriptionRepository,
             IFileItemRepository fileItemRepository,
-            IRewriteMeWebService rewriteMeWebService)
+            IRewriteMeWebService rewriteMeWebService,
+            ILoggerFactory loggerFactory)
         {
             _internalValueService = internalValueService;
             _userSubscriptionRepository = userSubscriptionRepository;
             _fileItemRepository = fileItemRepository;
             _rewriteMeWebService = rewriteMeWebService;
+            _logger = loggerFactory.CreateLogger(typeof(UserSubscriptionService));
         }
 
         public async Task SynchronizationAsync(DateTime applicationUpdateDate)
         {
             var lastUserSubscriptionSynchronization = await _internalValueService.GetValueAsync(InternalValues.UserSubscriptionSynchronization).ConfigureAwait(false);
+            _logger.Debug($"Update user subscription with timestamp '{lastUserSubscriptionSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
+
             if (applicationUpdateDate >= lastUserSubscriptionSynchronization)
             {
                 var httpRequestResult = await _rewriteMeWebService.GetUserSubscriptionsAsync(lastUserSubscriptionSynchronization).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    await _userSubscriptionRepository.InsertOrReplaceAllAsync(httpRequestResult.Payload).ConfigureAwait(false);
+                    var userSubscriptions = httpRequestResult.Payload.ToList();
+                    _logger.Info($"Web server returned {userSubscriptions.Count} items for synchronization.");
+
+                    await _userSubscriptionRepository.InsertOrReplaceAllAsync(userSubscriptions).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronization, DateTime.UtcNow).ConfigureAwait(false);
                 }
             }
