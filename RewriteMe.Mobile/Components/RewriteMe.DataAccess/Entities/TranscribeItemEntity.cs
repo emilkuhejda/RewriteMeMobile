@@ -19,14 +19,11 @@ namespace RewriteMe.DataAccess.Entities
 
         public byte[] Source { get; set; }
 
-        [MaxLength(100)]
-        public string StartTime { get; set; }
+        public TimeSpan StartTime { get; set; }
 
-        [MaxLength(100)]
-        public string EndTime { get; set; }
+        public TimeSpan EndTime { get; set; }
 
-        [MaxLength(100)]
-        public string TotalTime { get; set; }
+        public TimeSpan TotalTime { get; set; }
 
         public DateTime DateCreated { get; set; }
 

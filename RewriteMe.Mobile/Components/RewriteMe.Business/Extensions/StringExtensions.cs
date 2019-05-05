@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Text;
-using RewriteMe.Domain.Transcription;
 
 namespace RewriteMe.Business.Extensions
 {
@@ -31,19 +30,6 @@ namespace RewriteMe.Business.Extensions
                 .TrimEnd(padding)
                 .Replace('+', '-')
                 .Replace('/', '_');
-        }
-
-        public static RecognitionState ToRecognitionState(this string value)
-        {
-            return ToEnum(value, RecognitionState.None);
-        }
-
-        private static T ToEnum<T>(this string value, T defaultValue) where T : struct
-        {
-            if (string.IsNullOrWhiteSpace(value))
-                return defaultValue;
-
-            return Enum.TryParse(value, true, out T result) ? result : defaultValue;
         }
     }
 }

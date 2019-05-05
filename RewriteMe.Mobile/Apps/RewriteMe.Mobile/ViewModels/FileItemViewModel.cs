@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
-using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Mobile.Commands;
@@ -47,13 +46,13 @@ namespace RewriteMe.Mobile.ViewModels
         {
             FileItem = fileItem;
 
-            IsInProgress = fileItem.RecognitionState.ToRecognitionState() == RecognitionState.InProgress;
-            IsCompleted = fileItem.RecognitionState.ToRecognitionState() == RecognitionState.Completed;
+            IsInProgress = fileItem.RecognitionState == RecognitionState.InProgress;
+            IsCompleted = fileItem.RecognitionState == RecognitionState.Completed;
         }
 
         private async Task ExecuteNavigateToDetailPageCommandAsync()
         {
-            var recognitionState = FileItem.RecognitionState.ToRecognitionState();
+            var recognitionState = FileItem.RecognitionState;
             var navigationParameters = new NavigationParameters();
             navigationParameters.Add<FileItem>(FileItem);
 

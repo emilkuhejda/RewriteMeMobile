@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess.Transcription;
@@ -25,20 +24,23 @@ namespace RewriteMe.Mobile.ViewModels
     public class CreatePageViewModel : ViewModelBase
     {
         private readonly IFileItemService _fileItemService;
+        private readonly IMediaService _mediaService;
 
         private string _name;
         private SupportedLanguage _selectedLanguage;
-        private FileData _selectedFile;
+        private FileDataWrapper _selectedFile;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
 
         public CreatePageViewModel(
             IFileItemService fileItemService,
+            IMediaService mediaService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
+            _mediaService = mediaService;
 
             CanGoBack = true;
 
@@ -64,7 +66,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        public FileData SelectedFile
+        public FileDataWrapper SelectedFile
         {
             get => _selectedFile;
             set
@@ -169,7 +171,15 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteUploadFileCommandAsync()
         {
-            SelectedFile = await CrossFilePicker.Current.PickFile();
+            var selectedFile = await CrossFilePicker.Current.PickFile();
+            var totalTime = _mediaService.GetTotalTime(selectedFile.FilePath);
+            var canTranscribe = await _fileItemService.CanTranscribeAsync(totalTime).ConfigureAwait(false);
+            SelectedFile = new FileDataWrapper(selectedFile)
+            {
+                TotalTime = totalTime,
+                CanTranscribe = canTranscribe
+            };
+
             if (string.IsNullOrWhiteSpace(Name))
             {
                 Name = SelectedFile.FileName;
@@ -194,7 +204,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveAndTranscribeCommand()
         {
-            return SelectedFile != null && SelectedLanguage != null;
+            return SelectedFile != null && SelectedFile.CanTranscribe && SelectedLanguage != null;
         }
 
         private async Task ExecuteSaveAndTranscribeCommandAsync()
@@ -231,6 +241,10 @@ namespace RewriteMe.Mobile.ViewModels
                 catch (ErrorRequestException ex)
                 {
                     await HandleErrorMessage(ex.StatusCode).ConfigureAwait(false);
+                }
+                catch (NoSubscritionFreeTimeException)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
                 }
                 catch (OfflineRequestException)
                 {
@@ -274,7 +288,8 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = name,
                 Language = SelectedLanguage?.Culture,
                 FileName = SelectedFile.FileName,
-                Stream = SelectedFile.GetStream()
+                TotalTime = SelectedFile.TotalTime,
+                Stream = SelectedFile.FileData.GetStream()
             };
         }
     }

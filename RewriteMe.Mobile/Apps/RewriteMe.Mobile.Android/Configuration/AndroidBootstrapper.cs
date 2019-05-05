@@ -7,6 +7,7 @@ using RewriteMe.Mobile.Droid.ExceptionHandling;
 using RewriteMe.Mobile.Droid.Localization;
 using RewriteMe.Mobile.Droid.Logging;
 using RewriteMe.Mobile.Droid.Providers;
+using RewriteMe.Mobile.Droid.Services;
 
 namespace RewriteMe.Mobile.Droid.Configuration
 {
@@ -21,6 +22,7 @@ namespace RewriteMe.Mobile.Droid.Configuration
             containerRegistry.RegisterSingleton<ILogFileReader, NLogFileReader>();
             containerRegistry.RegisterSingleton<ILoggerFactory, NLogLoggerFactory>();
             containerRegistry.RegisterSingleton<IExceptionHandler, ExceptionHandler>();
+            containerRegistry.RegisterSingleton<IMediaService, MediaService>();
         }
     }
 }

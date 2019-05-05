@@ -11,24 +11,29 @@ namespace RewriteMe.Business.Services
         private readonly IInternalValueService _internalValueService;
         private readonly IUserSessionRepository _userSessionRepository;
         private readonly IFileItemRepository _fileItemRepository;
+        private readonly IUserSubscriptionRepository _userSubscriptionRepository;
 
         public CleanUpService(
             IInternalValueService internalValueService,
             IUserSessionRepository userSessionRepository,
-            IFileItemRepository fileItemRepository)
+            IFileItemRepository fileItemRepository,
+            IUserSubscriptionRepository userSubscriptionRepository)
         {
             _internalValueService = internalValueService;
             _userSessionRepository = userSessionRepository;
             _fileItemRepository = fileItemRepository;
+            _userSubscriptionRepository = userSubscriptionRepository;
         }
 
         public async Task CleanUp()
         {
             await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.MinValue);
             await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronization, DateTime.MinValue);
+            await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronization, DateTime.MinValue);
 
             await _fileItemRepository.ClearAsync().ConfigureAwait(false);
             await _userSessionRepository.ClearAsync().ConfigureAwait(false);
+            await _userSubscriptionRepository.ClearAsync().ConfigureAwait(false);
         }
     }
 }

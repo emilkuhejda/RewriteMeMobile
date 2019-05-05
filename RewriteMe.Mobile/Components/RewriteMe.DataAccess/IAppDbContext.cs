@@ -14,6 +14,8 @@ namespace RewriteMe.DataAccess
 
         AsyncTableQuery<UserSessionEntity> UserSessions { get; }
 
+        AsyncTableQuery<UserSubscriptionEntity> UserSubscriptions { get; }
+
         AsyncTableQuery<FileItemEntity> FileItems { get; }
 
         AsyncTableQuery<TranscribeItemEntity> TranscribeItems { get; }

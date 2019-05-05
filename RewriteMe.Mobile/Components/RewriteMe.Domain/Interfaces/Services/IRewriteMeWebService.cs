@@ -15,6 +15,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<IEnumerable<TranscribeItem>>> GetTranscribeItemsAllAsync(DateTime updatedAfter);
 
+        Task<HttpRequestResult<IEnumerable<UserSubscription>>> GetUserSubscriptionsAsync(DateTime updatedAfter);
+
         Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile);
 
         Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language);
