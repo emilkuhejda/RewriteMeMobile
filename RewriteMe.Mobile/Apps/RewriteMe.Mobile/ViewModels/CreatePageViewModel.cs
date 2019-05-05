@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess.Transcription;
@@ -30,7 +29,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private string _name;
         private SupportedLanguage _selectedLanguage;
-        private FileData _selectedFile;
+        private FileDataWrapper _selectedFile;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
 
         public CreatePageViewModel(
@@ -70,7 +69,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        public FileData SelectedFile
+        public FileDataWrapper SelectedFile
         {
             get => _selectedFile;
             set
@@ -175,18 +174,30 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteUploadFileCommandAsync()
         {
-            SelectedFile = await CrossFilePicker.Current.PickFile();
+            var selectedFile = await CrossFilePicker.Current.PickFile();
+            var duration = _mediaService.GetDuration(selectedFile.FilePath);
+            var remainingSubscriptionTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
+            var canUpload = remainingSubscriptionTime.Subtract(duration).Ticks > 0;
+            SelectedFile = new FileDataWrapper(selectedFile)
+            {
+                Duration = duration,
+                CanUpload = canUpload
+            };
+
             if (string.IsNullOrWhiteSpace(Name))
             {
                 Name = SelectedFile.FileName;
             }
 
-            var duration = _mediaService.GetDuration(SelectedFile.FilePath);
+            if (!canUpload)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
+            }
         }
 
         private bool CanExecuteSaveCommand()
         {
-            return SelectedFile != null;
+            return SelectedFile != null && SelectedFile.CanUpload;
         }
 
         private async Task ExecuteSaveCommandAsync()
@@ -202,7 +213,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveAndTranscribeCommand()
         {
-            return SelectedFile != null && SelectedLanguage != null;
+            return SelectedFile != null && SelectedFile.CanUpload && SelectedLanguage != null;
         }
 
         private async Task ExecuteSaveAndTranscribeCommandAsync()
@@ -282,7 +293,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = name,
                 Language = SelectedLanguage?.Culture,
                 FileName = SelectedFile.FileName,
-                Stream = SelectedFile.GetStream()
+                Stream = SelectedFile.FileData.GetStream()
             };
         }
     }
