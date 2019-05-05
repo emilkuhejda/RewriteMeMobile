@@ -128,7 +128,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSendCommand()
         {
-            return _emailTask.CanSendEmail;
+            return _emailTask.CanSendEmail && TranscribeItems.Any();
         }
 
         private void ExecuteSendCommand()
