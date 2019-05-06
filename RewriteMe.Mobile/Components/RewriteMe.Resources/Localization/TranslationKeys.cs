@@ -2,6 +2,10 @@
 {
     public static class TranslationKeys
     {
+        public static string LanguageEnGb => "Language_EN_GB";
+        public static string LanguageEnUs => "Language_EN_US";
+        public static string LanguageSkSk => "Language_SK_SK";
+
         public static string ApplicationTitle => "ApplicationTitle";
         public static string ActivityIndicatorCaptionText => "ActivityIndicatorCaptionText";
         public static string LoadingData => "LoadingData";
@@ -53,5 +57,6 @@
         public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
         public static string NotEnoughFreeMinutesInSubscriptionErrorMessage => "NotEnoughFreeMinutesInSubscriptionErrorMessage";
         public static string RemainingTime => "RemainingTime";
+        public static string NoAvailableData => "NoAvailableData";
     }
 }

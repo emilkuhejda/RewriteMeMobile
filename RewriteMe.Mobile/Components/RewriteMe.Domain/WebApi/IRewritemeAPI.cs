@@ -37,13 +37,15 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='updatedAfter'>
         /// </param>
+        /// <param name='applicationId'>
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<FileItem>>> GetFileItemsWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<FileItem>>> GetFileItemsWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='fileItemId'>
         /// </param>
@@ -61,6 +63,8 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         /// <param name='fileName'>
         /// </param>
+        /// <param name='applicationId'>
+        /// </param>
         /// <param name='file'>
         /// </param>
         /// <param name='customHeaders'>
@@ -69,7 +73,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> UploadFileItemWithHttpMessagesAsync(string name = default(string), string language = default(string), string fileName = default(string), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> UploadFileItemWithHttpMessagesAsync(string name = default(string), string language = default(string), string fileName = default(string), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='fileItemId'>
         /// </param>
@@ -79,6 +83,8 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         /// <param name='fileName'>
         /// </param>
+        /// <param name='applicationId'>
+        /// </param>
         /// <param name='file'>
         /// </param>
         /// <param name='customHeaders'>
@@ -87,7 +93,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), string fileName = default(string), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), string fileName = default(string), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='id'>
         /// </param>
@@ -103,13 +109,15 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         /// <param name='language'>
         /// </param>
+        /// <param name='applicationId'>
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> TranscribeFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), string language = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> TranscribeFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), string language = default(string), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -121,13 +129,15 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='updatedAfter'>
         /// </param>
+        /// <param name='applicationId'>
+        /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<TranscribeItem>>> GetTranscribeItemsAllWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<TranscribeItem>>> GetTranscribeItemsAllWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='transcribeItemId'>
         /// </param>
@@ -141,6 +151,8 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='transcribeItemId'>
         /// </param>
+        /// <param name='applicationId'>
+        /// </param>
         /// <param name='transcript'>
         /// </param>
         /// <param name='customHeaders'>
@@ -149,7 +161,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Ok>> UpdateUserTranscriptWithHttpMessagesAsync(System.Guid? transcribeItemId = default(System.Guid?), string transcript = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Ok>> UpdateUserTranscriptWithHttpMessagesAsync(System.Guid? transcribeItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?), string transcript = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='registerUserModel'>
         /// </param>
@@ -159,9 +171,11 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Ok>> RegisterUserWithHttpMessagesAsync(RegisterUserModel registerUserModel = default(RegisterUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<UserSubscription>> RegisterUserWithHttpMessagesAsync(RegisterUserModel registerUserModel = default(RegisterUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='updatedAfter'>
+        /// </param>
+        /// <param name='applicationId'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -169,7 +183,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<IList<UserSubscription>>> GetUserSubscriptionsWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<IList<UserSubscription>>> GetUserSubscriptionsWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }

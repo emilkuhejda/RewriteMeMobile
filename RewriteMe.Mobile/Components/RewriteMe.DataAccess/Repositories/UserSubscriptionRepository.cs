@@ -19,6 +19,14 @@ namespace RewriteMe.DataAccess.Repositories
             _contextProvider = contextProvider;
         }
 
+        public async Task AddAsync(UserSubscription userSubscription)
+        {
+            if (userSubscription.IsEmpty)
+                return;
+
+            await _contextProvider.Context.InsertAsync(userSubscription.ToUserSubscriptionEntity()).ConfigureAwait(false);
+        }
+
         public async Task InsertOrReplaceAllAsync(IEnumerable<UserSubscription> userSubscriptions)
         {
             var userSubscriptionEntities = userSubscriptions.Select(x => x.ToUserSubscriptionEntity()).ToList();

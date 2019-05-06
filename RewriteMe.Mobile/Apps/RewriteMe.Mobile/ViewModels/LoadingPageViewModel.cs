@@ -19,6 +19,7 @@ namespace RewriteMe.Mobile.ViewModels
     public class LoadingPageViewModel : ViewModelBase
     {
         private readonly IUserSessionService _userSessionService;
+        private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
         private readonly ILastUpdatesService _lastUpdatesService;
         private readonly ISynchronizationService _synchronizationService;
@@ -28,8 +29,9 @@ namespace RewriteMe.Mobile.ViewModels
         private string _progressText;
 
         public LoadingPageViewModel(
-            IInternalValueService internalValueService,
             IUserSessionService userSessionService,
+            IUserSubscriptionService userSubscriptionService,
+            IInternalValueService internalValueService,
             ILastUpdatesService lastUpdatesService,
             ISynchronizationService synchronizationService,
             ISchedulerService schedulerService,
@@ -40,6 +42,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(dialogService, navigationService, loggerFactory)
         {
             _userSessionService = userSessionService;
+            _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
             _lastUpdatesService = lastUpdatesService;
             _synchronizationService = synchronizationService;
@@ -65,6 +68,7 @@ namespace RewriteMe.Mobile.ViewModels
                     if (httpRequestResult.State != HttpRequestState.Success)
                         return;
 
+                    await _userSubscriptionService.AddAsync(httpRequestResult.Payload).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true);
                 }
 

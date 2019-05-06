@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Exceptions;
@@ -8,6 +10,8 @@ using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Logging.Extensions;
+using RewriteMe.Logging.Interfaces;
 
 namespace RewriteMe.Business.Services
 {
@@ -17,6 +21,7 @@ namespace RewriteMe.Business.Services
         private readonly IInternalValueService _internalValueService;
         private readonly IFileItemRepository _fileItemRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly ILogger _logger;
 
         public event EventHandler TranscriptionStarted;
 
@@ -24,23 +29,30 @@ namespace RewriteMe.Business.Services
             IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService,
             IFileItemRepository fileItemRepository,
-            IRewriteMeWebService rewriteMeWebService)
+            IRewriteMeWebService rewriteMeWebService,
+            ILoggerFactory loggerFactory)
         {
             _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
             _fileItemRepository = fileItemRepository;
             _rewriteMeWebService = rewriteMeWebService;
+            _logger = loggerFactory.CreateLogger(typeof(FileItemService));
         }
 
         public async Task SynchronizationAsync(DateTime applicationUpdateDate)
         {
             var lastFileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
+            _logger.Debug($"Update file items with timestamp '{lastFileItemSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
+
             if (applicationUpdateDate >= lastFileItemSynchronization)
             {
                 var httpRequestResult = await _rewriteMeWebService.GetFileItemsAsync(lastFileItemSynchronization).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    await _fileItemRepository.InsertOrReplaceAllAsync(httpRequestResult.Payload).ConfigureAwait(false);
+                    var fileItems = httpRequestResult.Payload.ToList();
+                    _logger.Info($"Web server returned {fileItems.Count} items for synchronization.");
+
+                    await _fileItemRepository.InsertOrReplaceAllAsync(fileItems).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow);
                 }
             }
@@ -79,7 +91,7 @@ namespace RewriteMe.Business.Services
             var remainingSubscriptionTime = await _userSubscriptionService.GetRemainingTimeAsync();
             var remainingTime = remainingSubscriptionTime.Subtract(fileTime);
 
-            return remainingTime.Ticks > 0;
+            return remainingTime.Ticks >= 0;
         }
 
         public async Task TranscribeAsync(Guid fileItemId, string language)
