@@ -197,6 +197,33 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English (United Kingdom).
+        /// </summary>
+        public static string Language_EN_GB {
+            get {
+                return ResourceManager.GetString("Language_EN_GB", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English (United States).
+        /// </summary>
+        public static string Language_EN_US {
+            get {
+                return ResourceManager.GetString("Language_EN_US", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Slovak (Slovakia).
+        /// </summary>
+        public static string Language_SK_SK {
+            get {
+                return ResourceManager.GetString("Language_SK_SK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Language is not supported..
         /// </summary>
         public static string LanguageNotSupportedErrorMessage {
