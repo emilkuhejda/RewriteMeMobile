@@ -98,7 +98,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-
+  
+  <data name="Language_EN_GB" xml:space="preserve">
+    <value>English (United Kingdom)</value>
+  </data>
+  <data name="Language_EN_US" xml:space="preserve">
+    <value>English (United States)</value>
+  </data>
+  <data name="Language_SK_SK" xml:space="preserve">
+    <value>Slovak (Slovakia)</value>
+  </data>
+  
   <data name="ApplicationTitle" xml:space="preserve">
     <value>Rewrite Me</value>
   </data>
@@ -252,5 +262,8 @@
   </data>
   <data name="RemainingTime" xml:space="preserve">
     <value>Remaining time</value>
+  </data>
+  <data name="NoAvailableData" xml:space="preserve">
+    <value>No available data</value>
   </data>
 </root>

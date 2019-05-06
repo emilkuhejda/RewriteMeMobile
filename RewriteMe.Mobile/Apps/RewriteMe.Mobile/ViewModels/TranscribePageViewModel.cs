@@ -15,6 +15,7 @@ using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Mobile.Transcription;
+using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -78,14 +79,13 @@ namespace RewriteMe.Mobile.ViewModels
                     SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
 
                     _canTranscribe = await _fileItemService.CanTranscribeAsync(FileItem.TotalTime).ConfigureAwait(false);
+                    ThreadHelper.InvokeOnUiThread(() => TranscribeCommand.ChangeCanExecute());
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {
                     var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
                     HandleSelectionAsync(dropDownListViewModel);
                 }
-
-                await Task.CompletedTask.ConfigureAwait(false);
             }
         }
 

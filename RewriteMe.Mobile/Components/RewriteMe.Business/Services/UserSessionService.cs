@@ -28,6 +28,7 @@ namespace RewriteMe.Business.Services
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IUserSessionRepository _userSessionRepository;
+        private readonly IUserSubscriptionRepository _userSubscriptionRepository;
         private readonly ILogger _logger;
 
         private string _userId;
@@ -41,6 +42,7 @@ namespace RewriteMe.Business.Services
             IIdentityUiParentProvider identityUiParentProvider,
             IApplicationSettings applicationSettings,
             IUserSessionRepository userSessionRepository,
+            IUserSubscriptionRepository userSubscriptionRepository,
             ILoggerFactory loggerFactory)
         {
             _registrationUserWebService = registrationUserWebService;
@@ -49,6 +51,7 @@ namespace RewriteMe.Business.Services
             _identityUiParentProvider = identityUiParentProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
+            _userSubscriptionRepository = userSubscriptionRepository;
             _logger = loggerFactory.CreateLogger(typeof(UserSessionService));
 
             _publicClientApplication = publicClientApplicationFactory.CreatePublicClientApplication(
@@ -346,7 +349,8 @@ namespace RewriteMe.Business.Services
             var accessTokenObject = new AccessToken(accessToken);
             await UpdateUserSession(accessTokenObject).ConfigureAwait(false);
 
-            if (accessTokenObject.NewUser)
+            var isUserRegistered = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
+            if (accessTokenObject.NewUser && !isUserRegistered)
             {
                 var registerUserModel = new RegisterUserModel
                 {
@@ -359,6 +363,7 @@ namespace RewriteMe.Business.Services
                 var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
+                    await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true).ConfigureAwait(false);
                 }
             }

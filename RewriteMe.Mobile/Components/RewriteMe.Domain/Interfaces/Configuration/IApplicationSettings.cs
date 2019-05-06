@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Threading.Tasks;
 
 namespace RewriteMe.Domain.Interfaces.Configuration
 {
     public interface IApplicationSettings
     {
         Uri WebApiUri { get; }
+
+        Guid ApplicationId { get; }
 
         string SupportMailAddress { get; }
 
@@ -29,5 +32,7 @@ namespace RewriteMe.Domain.Interfaces.Configuration
         string AuthorityEditProfile { get; }
 
         string AuthorityPasswordReset { get; }
+
+        Task InitializeAsync();
     }
 }

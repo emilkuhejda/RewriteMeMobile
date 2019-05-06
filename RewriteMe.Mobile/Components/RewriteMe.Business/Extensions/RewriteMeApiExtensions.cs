@@ -18,59 +18,59 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<IEnumerable<FileItem>> GetFileItemsAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Dictionary<string, List<string>> customHeaders)
+        public static async Task<IEnumerable<FileItem>> GetFileItemsAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetFileItemsWithHttpMessagesAsync(updatedAfter, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetFileItemsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<FileItem>>(result.Body);
             }
         }
 
-        public static async Task<IEnumerable<TranscribeItem>> GetTranscribeItemsAllAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Dictionary<string, List<string>> customHeaders)
+        public static async Task<IEnumerable<TranscribeItem>> GetTranscribeItemsAllAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(updatedAfter, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<TranscribeItem>>(result.Body);
             }
         }
 
-        public static async Task<IEnumerable<UserSubscription>> GetUserSubscriptionsAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Dictionary<string, List<string>> customHeaders)
+        public static async Task<IEnumerable<UserSubscription>> GetUserSubscriptionsAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(updatedAfter, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<UserSubscription>>(result.Body);
             }
         }
 
-        public static async Task<FileItem> UploadFileItemAsync(this IRewriteMeAPI operations, MediaFile mediaFile, Dictionary<string, List<string>> customHeaders)
+        public static async Task<FileItem> UploadFileItemAsync(this IRewriteMeAPI operations, MediaFile mediaFile, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, mediaFile.Stream, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, applicationId, mediaFile.Stream, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<FileItem>(result.Body);
             }
         }
 
-        public static async Task<Ok> TranscribeFileItemAsync(this IRewriteMeAPI operations, Guid fileItemId, string language, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> TranscribeFileItemAsync(this IRewriteMeAPI operations, Guid fileItemId, string language, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.TranscribeFileItemWithHttpMessagesAsync(fileItemId, language, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.TranscribeFileItemWithHttpMessagesAsync(fileItemId, language, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result.Body);
             }
         }
 
-        public static async Task<Ok> UpdateUserTranscriptAsync(this IRewriteMeAPI operations, Guid transcribeItemId, string transcript, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> UpdateUserTranscriptAsync(this IRewriteMeAPI operations, Guid transcribeItemId, string transcript, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(transcribeItemId, transcript, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(transcribeItemId, applicationId, transcript, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result.Body);
             }
         }
 
-        public static async Task<Ok> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel)
+        public static async Task<UserSubscription> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel)
         {
             using (var result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel).ConfigureAwait(false))
             {
-                return ParseBody<Ok>(result.Body);
+                return ParseBody<UserSubscription>(result.Body);
             }
         }
 

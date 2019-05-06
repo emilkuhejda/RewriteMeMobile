@@ -26,6 +26,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private IList<TranscribeItemViewModel> _transcribeItems;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
+        private bool _notAvailableData;
 
         private bool _disposed;
 
@@ -57,6 +58,12 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _navigationItems, value);
         }
 
+        public bool NotAvailableData
+        {
+            get => _notAvailableData;
+            set => SetProperty(ref _notAvailableData, value);
+        }
+
         private ActionBarTileViewModel SendTileItem { get; set; }
 
         private ActionBarTileViewModel SaveTileItem { get; set; }
@@ -75,6 +82,8 @@ namespace RewriteMe.Mobile.ViewModels
 
                     TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
                     TranscribeItems = transcribeItems.OrderBy(x => x.StartTime).Select(CreateTranscribeItemViewModel).ToList();
+
+                    NotAvailableData = !TranscribeItems.Any();
                 }
 
                 NavigationItems = CreateNavigation();
@@ -119,7 +128,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSendCommand()
         {
-            return _emailTask.CanSendEmail;
+            return _emailTask.CanSendEmail && TranscribeItems.Any();
         }
 
         private void ExecuteSendCommand()

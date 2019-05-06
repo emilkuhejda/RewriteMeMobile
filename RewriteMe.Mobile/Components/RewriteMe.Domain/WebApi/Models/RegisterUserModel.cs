@@ -22,9 +22,10 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the RegisterUserModel class.
         /// </summary>
-        public RegisterUserModel(System.Guid? id = default(System.Guid?), string email = default(string), string givenName = default(string), string familyName = default(string))
+        public RegisterUserModel(System.Guid? id = default(System.Guid?), System.Guid? applicationId = default(System.Guid?), string email = default(string), string givenName = default(string), string familyName = default(string))
         {
             Id = id;
+            ApplicationId = applicationId;
             Email = email;
             GivenName = givenName;
             FamilyName = familyName;
@@ -40,6 +41,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "id")]
         public System.Guid? Id { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "applicationId")]
+        public System.Guid? ApplicationId { get; set; }
 
         /// <summary>
         /// </summary>

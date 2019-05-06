@@ -4,6 +4,8 @@ namespace RewriteMe.Domain.Configuration
 {
     public static class InternalValues
     {
+        public static InternalValue<string> ApplicationId { get; } = new InternalValue<string>("ApplicationId", null);
+
         public static InternalValue<DateTime> FileItemSynchronization { get; } = new InternalValue<DateTime>("FileItemSynchronization", default(DateTime));
 
         public static InternalValue<DateTime> TranscribeItemSynchronization { get; } = new InternalValue<DateTime>("TranscribeItemSynchronization", default(DateTime));

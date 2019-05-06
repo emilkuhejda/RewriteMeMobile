@@ -7,6 +7,8 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 {
     public interface IUserSubscriptionRepository
     {
+        Task AddAsync(UserSubscription userSubscription);
+
         Task InsertOrReplaceAllAsync(IEnumerable<UserSubscription> userSubscriptions);
 
         Task<TimeSpan> GetTotalTimeAsync();
