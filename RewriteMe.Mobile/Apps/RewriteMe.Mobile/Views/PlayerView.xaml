@@ -14,13 +14,10 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="0"
-              Grid.RowSpan="3"
-              Grid.Column="0">
+        <Grid Grid.Row="0" Grid.Column="0">
             <forms:SvgCachedImage Aspect="AspectFit"
                                   BackgroundColor="Transparent"
                                   HeightRequest="50"
@@ -46,18 +43,18 @@
             </Grid.GestureRecognizers>
         </Grid>
 
-        <Slider Grid.Row="1"
+        <Slider Grid.Row="0"
                 Grid.Column="1"
                 Maximum="{Binding Duration}"
                 Minimum="0"
                 VerticalOptions="Center"
                 Value="{Binding AudioCurrentProgress}" />
 
-        <Label Grid.Row="2"
+        <Label Grid.Row="1"
                Grid.Column="1"
                HorizontalOptions="End"
                Style="{StaticResource LabelStyle}"
                Text="{Binding Position}"
-               VerticalOptions="Center" />
+               VerticalOptions="Start" />
     </Grid>
 </ContentView>
