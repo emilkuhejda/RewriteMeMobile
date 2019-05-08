@@ -3,7 +3,7 @@
 	<uses-sdk android:minSdkVersion="19" android:targetSdkVersion="27" />
 	<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 	<uses-permission android:name="android.permission.INTERNET" />
-	<application android:label="@string/ApplicationName" android:theme="@style/RewriteMeTheme">
+	<application android:label="@string/ApplicationName" android:theme="@style/RewriteMeTheme" android:icon="@mipmap/ic_launcher">
 		<activity android:name="microsoft.identity.client.BrowserTabActivity">
 			<intent-filter>
 				<action android:name="android.intent.action.VIEW" />
