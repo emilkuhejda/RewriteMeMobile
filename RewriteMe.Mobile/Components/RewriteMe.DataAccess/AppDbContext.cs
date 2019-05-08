@@ -28,6 +28,8 @@ namespace RewriteMe.DataAccess
 
         public AsyncTableQuery<TranscribeItemEntity> TranscribeItems => Database.Table<TranscribeItemEntity>();
 
+        public AsyncTableQuery<TranscriptAudioSourceEntity> TranscriptAudioSources => Database.Table<TranscriptAudioSourceEntity>();
+
         public async Task RunInTransactionAsync(Action<SQLiteConnection> action)
         {
             await Database.RunInTransactionAsync(action).ConfigureAwait(false);
@@ -41,6 +43,11 @@ namespace RewriteMe.DataAccess
         public async Task<T> GetAsync<T>(Expression<Func<T, bool>> predicate) where T : new()
         {
             return await Database.GetAsync(predicate).ConfigureAwait(false);
+        }
+
+        public async Task<T> FindAsync<T>(Expression<Func<T, bool>> predicate) where T : new()
+        {
+            return await Database.FindAsync(predicate).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<T>> GetAllWithChildrenAsync<T>(Expression<Func<T, bool>> predicate) where T : new()

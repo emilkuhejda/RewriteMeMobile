@@ -22,6 +22,8 @@ namespace RewriteMe.Mobile.ViewModels
     public class DetailPageViewModel : ViewModelBase, IDisposable
     {
         private readonly ITranscribeItemService _transcribeItemService;
+        private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
+        private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IEmailTask _emailTask;
 
         private IList<TranscribeItemViewModel> _transcribeItems;
@@ -32,6 +34,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         public DetailPageViewModel(
             ITranscribeItemService transcribeItemService,
+            ITranscriptAudioSourceService transcriptAudioSourceService,
+            IRewriteMeWebService rewriteMeWebService,
             IEmailTask emailTask,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -39,9 +43,13 @@ namespace RewriteMe.Mobile.ViewModels
             : base(dialogService, navigationService, loggerFactory)
         {
             _transcribeItemService = transcribeItemService;
+            _transcriptAudioSourceService = transcriptAudioSourceService;
+            _rewriteMeWebService = rewriteMeWebService;
             _emailTask = emailTask;
 
             CanGoBack = true;
+
+            PlayerViewModel = new PlayerViewModel();
         }
 
         private FileItem FileItem { get; set; }
@@ -63,6 +71,8 @@ namespace RewriteMe.Mobile.ViewModels
             get => _notAvailableData;
             set => SetProperty(ref _notAvailableData, value);
         }
+
+        public PlayerViewModel PlayerViewModel { get; }
 
         private ActionBarTileViewModel SendTileItem { get; set; }
 
@@ -92,7 +102,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private TranscribeItemViewModel CreateTranscribeItemViewModel(TranscribeItem transcribeItem)
         {
-            var viewModel = new TranscribeItemViewModel(transcribeItem);
+            var viewModel = new TranscribeItemViewModel(_transcriptAudioSourceService, _rewriteMeWebService, DialogService, PlayerViewModel, transcribeItem);
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
             return viewModel;
@@ -178,6 +188,7 @@ namespace RewriteMe.Mobile.ViewModels
             if (disposing)
             {
                 TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
+                PlayerViewModel?.Dispose();
             }
 
             _disposed = true;

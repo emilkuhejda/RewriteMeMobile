@@ -260,6 +260,9 @@
   <data name="NotEnoughFreeMinutesInSubscriptionErrorMessage" xml:space="preserve">
     <value>Your subscription does not have enough free minutes.</value>
   </data>
+  <data name="TranscribeAudioSourceNotFoundErrorMessage" xml:space="preserve">
+    <value>Transcribe audio source not found. Please, check your internet connection.</value>
+  </data>
   <data name="RemainingTime" xml:space="preserve">
     <value>Remaining time</value>
   </data>
