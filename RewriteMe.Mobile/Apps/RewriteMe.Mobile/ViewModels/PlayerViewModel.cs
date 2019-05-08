@@ -83,7 +83,10 @@ namespace RewriteMe.Mobile.ViewModels
             if (_player.IsPlaying)
                 _player.Stop();
 
-            _player.Load(new MemoryStream(data));
+            using (var memoryStream = new MemoryStream(data))
+            {
+                _player.Load(memoryStream);
+            }
 
             Duration = _player.Duration;
             TotalTime = TimeSpan.FromSeconds(Duration);

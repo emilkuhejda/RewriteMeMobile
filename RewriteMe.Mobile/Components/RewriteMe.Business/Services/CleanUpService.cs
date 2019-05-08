@@ -27,9 +27,9 @@ namespace RewriteMe.Business.Services
 
         public async Task CleanUp()
         {
-            await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.MinValue);
-            await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronization, DateTime.MinValue);
-            await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronization, DateTime.MinValue);
+            await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.MinValue).ConfigureAwait(false);
+            await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronization, DateTime.MinValue).ConfigureAwait(false);
+            await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronization, DateTime.MinValue).ConfigureAwait(false);
             await _internalValueService.UpdateValueAsync(InternalValues.ApplicationId, null);
 
             await _fileItemRepository.ClearAsync().ConfigureAwait(false);

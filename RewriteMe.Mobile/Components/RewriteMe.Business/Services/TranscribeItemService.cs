@@ -46,7 +46,7 @@ namespace RewriteMe.Business.Services
                     _logger.Info($"Web server returned {transcribeItems.Count} items for synchronization.");
 
                     await _transcribeItemRepository.InsertOrReplaceAllAsync(transcribeItems).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronization, DateTime.UtcNow);
+                    await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronization, DateTime.UtcNow).ConfigureAwait(false);
                 }
             }
 

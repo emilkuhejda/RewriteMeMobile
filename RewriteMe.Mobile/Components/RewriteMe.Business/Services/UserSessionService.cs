@@ -67,7 +67,7 @@ namespace RewriteMe.Business.Services
             var userSession = await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
             ValidateUserSession(userSession);
 
-            return (_userId = userSession.ObjectId);
+            return _userId = userSession.ObjectId;
         }
 
         public async Task<string> GetUserNameAsync()

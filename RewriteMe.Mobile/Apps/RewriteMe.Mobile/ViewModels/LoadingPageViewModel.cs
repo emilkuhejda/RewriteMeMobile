@@ -69,7 +69,7 @@ namespace RewriteMe.Mobile.ViewModels
                         return;
 
                     await _userSubscriptionService.AddAsync(httpRequestResult.Payload).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true);
+                    await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true).ConfigureAwait(false);
                 }
 
                 ProgressText = Loc.Text(TranslationKeys.LoadingData);

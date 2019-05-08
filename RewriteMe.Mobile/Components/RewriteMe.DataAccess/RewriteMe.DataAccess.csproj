@@ -9,7 +9,7 @@
     <CodeAnalysisRuleSet>..\..\Global\RewriteMe.CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(Configuration)'=='Release'">
+  <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -18,14 +18,11 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
     <PackageReference Include="Prism.Unity.Forms" Version="7.1.0.431" />
     <PackageReference Include="sqlite-net-pcl" Version="1.5.231" />
     <PackageReference Include="SQLiteNetExtensions.Async" Version="2.1.0" />
   </ItemGroup>
-
+  
   <ItemGroup>
     <ProjectReference Include="..\RewriteMe.Common\RewriteMe.Common.csproj" />
     <ProjectReference Include="..\RewriteMe.Domain\RewriteMe.Domain.csproj" />
