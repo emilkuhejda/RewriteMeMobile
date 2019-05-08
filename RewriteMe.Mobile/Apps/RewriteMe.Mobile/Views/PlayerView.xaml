@@ -1,0 +1,60 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="RewriteMe.Mobile.Views.PlayerView"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+             xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+             BackgroundColor="{StaticResource PlayerBackground}"
+             IsVisible="{Binding IsVisible}">
+    <Grid Padding="10,0,10,0">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Grid.Column="0">
+            <forms:SvgCachedImage Aspect="AspectFit"
+                                  BackgroundColor="Transparent"
+                                  HeightRequest="50"
+                                  HorizontalOptions="Center"
+                                  InputTransparent="True"
+                                  IsVisible="{Binding IsPlaying, Converter={StaticResource InvertedBoolConverter}}"
+                                  Source="resource://RewriteMe.Mobile.Resources.Images.Start-Enabled.svg"
+                                  VerticalOptions="Center"
+                                  WidthRequest="50" />
+
+            <forms:SvgCachedImage Aspect="AspectFit"
+                                  BackgroundColor="Transparent"
+                                  HeightRequest="50"
+                                  HorizontalOptions="Center"
+                                  InputTransparent="True"
+                                  IsVisible="{Binding IsPlaying}"
+                                  Source="resource://RewriteMe.Mobile.Resources.Images.Pause-Enabled.svg"
+                                  VerticalOptions="Center"
+                                  WidthRequest="50" />
+
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding StartPauseCommand}" />
+            </Grid.GestureRecognizers>
+        </Grid>
+
+        <Slider Grid.Row="0"
+                Grid.Column="1"
+                Maximum="{Binding Duration}"
+                Minimum="0"
+                VerticalOptions="Center"
+                Value="{Binding AudioCurrentProgress}" />
+
+        <Label Grid.Row="1"
+               Grid.Column="1"
+               HorizontalOptions="End"
+               Style="{StaticResource LabelStyle}"
+               Text="{Binding Position}"
+               VerticalOptions="Start" />
+    </Grid>
+</ContentView>

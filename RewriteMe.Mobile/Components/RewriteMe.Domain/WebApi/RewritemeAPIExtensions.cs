@@ -279,7 +279,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='transcribeItemId'>
             /// </param>
-            public static FileContentResult GetTranscribeAudioSource(this IRewriteMeAPI operations, System.Guid transcribeItemId)
+            public static byte[] GetTranscribeAudioSource(this IRewriteMeAPI operations, System.Guid transcribeItemId)
             {
                 return operations.GetTranscribeAudioSourceAsync(transcribeItemId).GetAwaiter().GetResult();
             }
@@ -292,7 +292,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<FileContentResult> GetTranscribeAudioSourceAsync(this IRewriteMeAPI operations, System.Guid transcribeItemId, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<byte[]> GetTranscribeAudioSourceAsync(this IRewriteMeAPI operations, System.Guid transcribeItemId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetTranscribeAudioSourceWithHttpMessagesAsync(transcribeItemId, null, cancellationToken).ConfigureAwait(false))
                 {

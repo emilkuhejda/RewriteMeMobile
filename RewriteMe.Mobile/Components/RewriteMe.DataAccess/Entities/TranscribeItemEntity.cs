@@ -17,8 +17,6 @@ namespace RewriteMe.DataAccess.Entities
 
         public string UserTranscript { get; set; }
 
-        public byte[] Source { get; set; }
-
         public TimeSpan StartTime { get; set; }
 
         public TimeSpan EndTime { get; set; }
@@ -30,5 +28,8 @@ namespace RewriteMe.DataAccess.Entities
         public DateTime DateUpdated { get; set; }
 
         public bool IsPendingSynchronization { get; set; }
+
+        [OneToOne(CascadeOperations = CascadeOperation.All)]
+        public TranscriptAudioSourceEntity TranscriptAudioSource { get; set; }
     }
 }

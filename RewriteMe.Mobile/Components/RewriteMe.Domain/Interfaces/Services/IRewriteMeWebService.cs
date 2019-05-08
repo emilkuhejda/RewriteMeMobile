@@ -21,6 +21,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language);
 
+        Task<HttpRequestResult<byte[]>> GetTranscribeAudioSourceAsync(Guid transcribeItemId);
+
         Task<HttpRequestResult<Ok>> UpdateUserTranscriptAsync(Guid transcribeItemId, string transcript);
     }
 }

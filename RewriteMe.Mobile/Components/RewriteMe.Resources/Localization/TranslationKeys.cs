@@ -56,6 +56,7 @@
         public static string UploadedFileNotSupportedErrorMessage => "UploadedFileNotSupportedErrorMessage";
         public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
         public static string NotEnoughFreeMinutesInSubscriptionErrorMessage => "NotEnoughFreeMinutesInSubscriptionErrorMessage";
+        public static string TranscribeAudioSourceNotFoundErrorMessage => "TranscribeAudioSourceNotFoundErrorMessage";
         public static string RemainingTime => "RemainingTime";
         public static string NoAvailableData => "NoAvailableData";
     }

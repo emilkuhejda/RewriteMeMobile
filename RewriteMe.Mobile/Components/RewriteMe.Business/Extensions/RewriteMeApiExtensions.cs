@@ -58,6 +58,14 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<byte[]> GetTranscribeAudioSourceAsync(this IRewriteMeAPI operations, Guid transcribeItemId, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.GetTranscribeAudioSourceWithHttpMessagesAsync(transcribeItemId, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<byte[]>(result.Body);
+            }
+        }
+
         public static async Task<Ok> UpdateUserTranscriptAsync(this IRewriteMeAPI operations, Guid transcribeItemId, string transcript, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(transcribeItemId, applicationId, transcript, customHeaders).ConfigureAwait(false))
