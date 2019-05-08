@@ -1,23 +1,47 @@
 ﻿using System;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Commands;
 using Prism.Mvvm;
+using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Http;
+using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Mobile.Commands;
+using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class TranscribeItemViewModel : BindableBase
     {
+        private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
+        private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly IDialogService _dialogService;
+        private readonly PlayerViewModel _playerViewModel;
+
         private bool _isReloadCommandVisible;
         private string _userTranscript;
         private bool _isDirty;
 
         public event EventHandler IsDirtyChanged;
 
-        public TranscribeItemViewModel(TranscribeItem transcribeItem)
+        public TranscribeItemViewModel(
+            ITranscriptAudioSourceService transcriptAudioSourceService,
+            IRewriteMeWebService rewriteMeWebService,
+            IDialogService dialogService,
+            PlayerViewModel playerViewModel,
+            TranscribeItem transcribeItem)
         {
+            _transcriptAudioSourceService = transcriptAudioSourceService;
+            _rewriteMeWebService = rewriteMeWebService;
+            _dialogService = dialogService;
+            _playerViewModel = playerViewModel;
+
             TranscribeItem = transcribeItem;
+            OperationScope = new AsyncOperationScope();
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
@@ -33,8 +57,13 @@ namespace RewriteMe.Mobile.ViewModels
 
             Time = $"{transcribeItem.StartTime:mm\\:ss} - {transcribeItem.EndTime:mm\\:ss}";
 
+            PlayCommand = new AsyncCommand(ExecutePlayCommandAsync);
             ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
         }
+
+        public AsyncOperationScope OperationScope { get; }
+
+        public ICommand PlayCommand { get; }
 
         public ICommand ReloadCommand { get; }
 
@@ -81,6 +110,42 @@ namespace RewriteMe.Mobile.ViewModels
 
             var alternative = TranscribeItem.Alternatives.First();
             return !alternative.Transcript.Equals(TranscribeItem.UserTranscript);
+        }
+
+        private async Task ExecutePlayCommandAsync()
+        {
+            using (new OperationMonitor(OperationScope))
+            {
+                var transcribeItemId = TranscribeItem.Id ?? Guid.Empty;
+                var transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(transcribeItemId).ConfigureAwait(false);
+                var source = transcriptAudioSource?.Source;
+
+                if (transcriptAudioSource == null)
+                {
+                    var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(transcribeItemId).ConfigureAwait(false);
+                    if (httpRequestResult.State == HttpRequestState.Success)
+                    {
+                        source = httpRequestResult.Payload;
+
+                        var audioSource = new TranscriptAudioSource
+                        {
+                            Id = Guid.NewGuid(),
+                            TranscribeItemId = transcribeItemId,
+                            Source = source
+                        };
+
+                        await _transcriptAudioSourceService.InsertAsync(audioSource).ConfigureAwait(false);
+                    }
+                }
+
+                if (source == null)
+                {
+                    await _dialogService.AlertAsync(Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage)).ConfigureAwait(false);
+                    return;
+                }
+
+                _playerViewModel.Load(source);
+            }
         }
 
         private void ExecuteReloadCommand()

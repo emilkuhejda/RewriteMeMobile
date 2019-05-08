@@ -24,24 +24,48 @@
                                 <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <Grid Grid.Column="0"
-                                  BackgroundColor="Transparent"
-                                  HeightRequest="39"
-                                  HorizontalOptions="Start"
-                                  IsVisible="{Binding IsReloadCommandVisible}"
-                                  WidthRequest="39">
-                                <forms:SvgCachedImage Margin="0"
-                                                      Aspect="AspectFit"
-                                                      BackgroundColor="Transparent"
-                                                      HeightRequest="30"
-                                                      InputTransparent="True"
-                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Reload.svg"
-                                                      VerticalOptions="CenterAndExpand" />
+                            <StackLayout Grid.Column="0" Orientation="Horizontal">
+                                <controls:PageActivityIndicator HeightRequest="30"
+                                                                IsVisible="{Binding OperationScope.IsBusy}"
+                                                                WidthRequest="30" />
 
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding ReloadCommand}" />
-                                </Grid.GestureRecognizers>
-                            </Grid>
+                                <Grid BackgroundColor="Transparent"
+                                      HeightRequest="39"
+                                      HorizontalOptions="Start"
+                                      IsVisible="{Binding OperationScope.IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                                      WidthRequest="39">
+                                    <forms:SvgCachedImage Margin="0"
+                                                          Aspect="AspectFit"
+                                                          BackgroundColor="Transparent"
+                                                          HeightRequest="30"
+                                                          InputTransparent="True"
+                                                          Source="resource://RewriteMe.Mobile.Resources.Images.Play-Enabled.svg"
+                                                          VerticalOptions="CenterAndExpand" />
+
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding PlayCommand}" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+
+                                <Grid Margin="0,0,0,0"
+                                      BackgroundColor="Transparent"
+                                      HeightRequest="39"
+                                      HorizontalOptions="Start"
+                                      IsVisible="{Binding IsReloadCommandVisible}"
+                                      WidthRequest="39">
+                                    <forms:SvgCachedImage Margin="0"
+                                                          Aspect="AspectFit"
+                                                          BackgroundColor="Transparent"
+                                                          HeightRequest="30"
+                                                          InputTransparent="True"
+                                                          Source="resource://RewriteMe.Mobile.Resources.Images.Reload.svg"
+                                                          VerticalOptions="CenterAndExpand" />
+
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ReloadCommand}" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </StackLayout>
 
                             <Label Grid.Column="1"
                                    HorizontalOptions="End"
@@ -57,11 +81,14 @@
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Label Grid.Row="0"
+            <views:PlayerView Grid.Row="0" BindingContext="{Binding PlayerViewModel}" />
+
+            <Label Grid.Row="1"
                    FontAttributes="Italic"
                    HorizontalOptions="Center"
                    IsVisible="{Binding NotAvailableData}"
@@ -69,14 +96,14 @@
                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
                    VerticalOptions="Start" />
 
-            <Grid Grid.Row="0" Padding="{StaticResource StandardPadding}">
+            <Grid Grid.Row="1" Padding="{StaticResource StandardPadding}">
                 <ListView HasUnevenRows="True"
                           ItemTemplate="{StaticResource TranscribeItemsTemplate}"
                           ItemsSource="{Binding TranscribeItems}"
                           SeparatorVisibility="None" />
             </Grid>
 
-            <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
+            <controls:ContextActionBar Grid.Row="2" ItemsSource="{Binding NavigationItems}" />
         </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"

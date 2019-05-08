@@ -476,6 +476,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Transcribe audio source not found. Please, check your internet connection..
+        /// </summary>
+        public static string TranscribeAudioSourceNotFoundErrorMessage {
+            get {
+                return ResourceManager.GetString("TranscribeAudioSourceNotFoundErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server is unreachable. Please try it later..
         /// </summary>
         public static string UnreachableServerErrorMessage {

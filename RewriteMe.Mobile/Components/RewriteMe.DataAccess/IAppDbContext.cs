@@ -20,11 +20,15 @@ namespace RewriteMe.DataAccess
 
         AsyncTableQuery<TranscribeItemEntity> TranscribeItems { get; }
 
+        AsyncTableQuery<TranscriptAudioSourceEntity> TranscriptAudioSources { get; }
+
         Task RunInTransactionAsync(Action<SQLiteConnection> action);
 
         Task CreateTablesAsync(params Type[] types);
 
         Task<T> GetAsync<T>(Expression<Func<T, bool>> predicate) where T : new();
+
+        Task<T> FindAsync<T>(Expression<Func<T, bool>> predicate) where T : new();
 
         Task<IEnumerable<T>> GetAllWithChildrenAsync<T>(Expression<Func<T, bool>> predicate) where T : new();
 
