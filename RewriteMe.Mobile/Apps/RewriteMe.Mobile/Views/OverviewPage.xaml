@@ -66,11 +66,7 @@
                   Padding="5,8,5,8"
                   BackgroundColor="{StaticResource WarningMessageBackground}"
                   IsVisible="{Binding IsUserRegistrationSuccess, Converter={StaticResource InvertedBoolConverter}}">
-                <Label LineBreakMode="WordWrap"
-                       Style="{StaticResource LabelStyle}"
-                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegistrationErrorMessage}}"
-                       TextColor="{StaticResource ColorWhite}"
-                       TextDecorations="Underline">
+                <Label Style="{StaticResource RegistrationErrorLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegistrationErrorMessage}}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding SendEmailCommand}" />
                     </Label.GestureRecognizers>
