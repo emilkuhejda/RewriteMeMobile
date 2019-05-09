@@ -144,6 +144,24 @@
                 <Setter Property="HeightRequest" Value="48" />
             </Style>
 
+            <Style x:Key="RegistrationErrorLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="{StaticResource ColorWhite}" />
+                <Setter Property="BackgroundColor" Value="Transparent" />
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="Opacity" Value="1.0" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+                <Setter Property="TextDecorations" Value="Underline" />
+                <Setter Property="Margin">
+                    <OnPlatform x:TypeArguments="Thickness"
+                                Android="4, 0, 0, 0"
+                                WinPhone="0, 0, 0, 0"
+                                iOS="0, 0, 0, 0" />
+                </Setter>
+            </Style>
+
             <Style x:Key="LabelBoldStyle"
                    BasedOn="{StaticResource LabelStyle}"
                    TargetType="Label">
