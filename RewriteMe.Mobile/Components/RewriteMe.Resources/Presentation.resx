@@ -110,7 +110,7 @@
   </data>
   
   <data name="ApplicationTitle" xml:space="preserve">
-    <value>Rewrite Me</value>
+    <value>RewriteMe</value>
   </data>
   <data name="ActivityIndicatorCaptionText" xml:space="preserve">
     <value>Loading...</value>
@@ -131,7 +131,7 @@
     <value>Sign in failed</value>
   </data>
   <data name="RegisterToUseApplication" xml:space="preserve">
-    <value>Please register to use Rewrite Me</value>
+    <value>Please register to use RewriteMe</value>
   </data>
   <data name="UserRegistration" xml:space="preserve">
     <value>User registration</value>
@@ -209,7 +209,7 @@
     <value>Time stamp</value>
   </data>
   <data name="ApplicationTitleLog" xml:space="preserve">
-    <value>Rewrite Me - Log</value>
+    <value>RewriteMe - Log</value>
   </data>
   <data name="DeviceHardwareLabel" xml:space="preserve">
     <value>Device hardware:</value>

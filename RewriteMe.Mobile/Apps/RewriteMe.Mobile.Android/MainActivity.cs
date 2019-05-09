@@ -12,7 +12,7 @@ namespace RewriteMe.Mobile.Droid
 {
     [Activity(
         Label = "@string/ApplicationName",
-        Icon = "@mipmap/icon",
+        Icon = "@mipmap/ic_launcher",
         MainLauncher = false,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity

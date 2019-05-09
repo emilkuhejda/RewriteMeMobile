@@ -7,7 +7,7 @@ namespace RewriteMe.Mobile.Droid
 {
     [Activity(
         Label = "@string/ApplicationName",
-        Icon = "@mipmap/icon",
+        Icon = "@mipmap/ic_launcher",
         Theme = "@style/SplashTheme",
         MainLauncher = true,
         NoHistory = true)]

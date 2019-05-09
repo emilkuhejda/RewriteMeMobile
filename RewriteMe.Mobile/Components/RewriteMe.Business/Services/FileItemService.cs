@@ -53,7 +53,7 @@ namespace RewriteMe.Business.Services
                     _logger.Info($"Web server returned {fileItems.Count} items for synchronization.");
 
                     await _fileItemRepository.InsertOrReplaceAllAsync(fileItems).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow);
+                    await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow).ConfigureAwait(false);
                 }
             }
         }
@@ -88,7 +88,7 @@ namespace RewriteMe.Business.Services
 
         public async Task<bool> CanTranscribeAsync(TimeSpan fileTime)
         {
-            var remainingSubscriptionTime = await _userSubscriptionService.GetRemainingTimeAsync();
+            var remainingSubscriptionTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
             var remainingTime = remainingSubscriptionTime.Subtract(fileTime);
 
             return remainingTime.Ticks >= 0;

@@ -2,7 +2,7 @@
 
 namespace RewriteMe.Logging.Layouts
 {
-    public class NLogLayouts
+    public static class NLogLayouts
     {
         public static Layout GetDefaultLayout()
         {

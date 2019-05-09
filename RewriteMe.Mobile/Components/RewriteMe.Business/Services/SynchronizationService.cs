@@ -58,7 +58,7 @@ namespace RewriteMe.Business.Services
             var lastFileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
             var lastTranscribeItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.TranscribeItemSynchronization).ConfigureAwait(false);
 
-            var atLeastOneHasNoData = lastFileItemSynchronization == default || lastTranscribeItemSynchronization == default;
+            var atLeastOneHasNoData = lastFileItemSynchronization == default(DateTime) || lastTranscribeItemSynchronization == default(DateTime);
             return atLeastOneHasNoData;
         }
 
@@ -72,7 +72,7 @@ namespace RewriteMe.Business.Services
         {
             var applicationFileItemUpdateDate = _lastUpdatesService.GetFileItemLastUpdate();
 
-            await _fileItemService.SynchronizationAsync(applicationFileItemUpdateDate);
+            await _fileItemService.SynchronizationAsync(applicationFileItemUpdateDate).ConfigureAwait(false);
         }
 
         private async Task UpdateTranscribeItemsAsync()

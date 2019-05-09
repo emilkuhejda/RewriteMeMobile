@@ -71,7 +71,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rewrite Me.
+        ///   Looks up a localized string similar to RewriteMe.
         /// </summary>
         public static string ApplicationTitle {
             get {
@@ -80,7 +80,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Rewrite Me - Log.
+        ///   Looks up a localized string similar to RewriteMe - Log.
         /// </summary>
         public static string ApplicationTitleLog {
             get {
@@ -323,7 +323,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please register to use Rewrite Me.
+        ///   Looks up a localized string similar to Please register to use RewriteMe.
         /// </summary>
         public static string RegisterToUseApplication {
             get {

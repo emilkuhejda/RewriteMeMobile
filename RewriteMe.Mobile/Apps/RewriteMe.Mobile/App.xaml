@@ -395,7 +395,10 @@
                                                   HorizontalOptions="CenterAndExpand"
                                                   VerticalOptions="CenterAndExpand"
                                                   WidthRequest="30">
-                                                <forms:SvgCachedImage Aspect="AspectFill"
+                                                <forms:SvgCachedImage Margin="0"
+                                                                      Aspect="AspectFit"
+                                                                      BackgroundColor="Transparent"
+                                                                      HeightRequest="30"
                                                                       HorizontalOptions="CenterAndExpand"
                                                                       InputTransparent="True"
                                                                       Source="{Binding Source, Mode=OneWay}"
