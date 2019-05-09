@@ -46,7 +46,7 @@ namespace RewriteMe.DataAccess.Repositories
 
         public async Task<TimeSpan> GetTotalTimeAsync()
         {
-            var userSubscriptions = await _contextProvider.Context.UserSubscriptions.ToListAsync();
+            var userSubscriptions = await _contextProvider.Context.UserSubscriptions.ToListAsync().ConfigureAwait(false);
             var ticks = userSubscriptions.Select(x => x.Time.Ticks).Sum();
             return TimeSpan.FromTicks(ticks);
         }

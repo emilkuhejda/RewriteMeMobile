@@ -109,7 +109,7 @@ namespace RewriteMe.Mobile.ViewModels
                 return false;
 
             var alternative = TranscribeItem.Alternatives.First();
-            return !alternative.Transcript.Equals(TranscribeItem.UserTranscript);
+            return !alternative.Transcript.Equals(TranscribeItem.UserTranscript, StringComparison.Ordinal);
         }
 
         private async Task ExecutePlayCommandAsync()

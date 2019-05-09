@@ -38,7 +38,8 @@ namespace RewriteMe.DataAccess.Repositories
             var recognitionState = RecognitionState.InProgress;
             var count = await _contextProvider.Context.FileItems
                 .Where(x => x.RecognitionState == recognitionState)
-                .CountAsync();
+                .CountAsync()
+                .ConfigureAwait(false);
 
             return count > 0;
         }
@@ -77,7 +78,7 @@ namespace RewriteMe.DataAccess.Repositories
 
         public async Task<TimeSpan> GetProcessedFilesTotalTimeAsync()
         {
-            var files = await _contextProvider.Context.FileItems.Where(x => x.RecognitionState > RecognitionState.Prepared).ToListAsync();
+            var files = await _contextProvider.Context.FileItems.Where(x => x.RecognitionState > RecognitionState.Prepared).ToListAsync().ConfigureAwait(false);
             var ticks = files.Select(x => x.TotalTime.Ticks).Sum();
 
             return TimeSpan.FromTicks(ticks);

@@ -171,7 +171,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteUploadFileCommandAsync()
         {
-            var selectedFile = await CrossFilePicker.Current.PickFile();
+            var selectedFile = await CrossFilePicker.Current.PickFile().ConfigureAwait(false);
             var totalTime = _mediaService.GetTotalTime(selectedFile.FilePath);
             var canTranscribe = await _fileItemService.CanTranscribeAsync(totalTime).ConfigureAwait(false);
             SelectedFile = new FileDataWrapper(selectedFile)
@@ -230,7 +230,7 @@ namespace RewriteMe.Mobile.ViewModels
                     var result = await DialogService.ConfirmAsync(
                         Loc.Text(TranslationKeys.UploadFileItemInfoMessage),
                         okText: Loc.Text(TranslationKeys.Ok),
-                        cancelText: Loc.Text(TranslationKeys.Cancel));
+                        cancelText: Loc.Text(TranslationKeys.Cancel)).ConfigureAwait(false);
 
                     if (result)
                     {
