@@ -25,14 +25,18 @@
 	<key>CFBundleDisplayName</key>
 	<string>RewriteMe.Mobile</string>
 	<key>CFBundleIdentifier</key>
-	<string>demo.RewriteMe</string>
-	<key>CFBundleVersion</key>
-	<string>1.0</string>
+	<string>com.RewriteMe.Mobile</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
 	<string>RewriteMe</string>
 	<key>XSAppIconAssets</key>
 	<string>Assets.xcassets/AppIcon.appiconset</string>
+	<key>CFBundleShortVersionString</key>
+	<string>0.9</string>
+	<key>CFBundleVersion</key>
+	<string>0.9</string>
+	<key>XSLaunchImageAssets</key>
+	<string>Assets.xcassets/LaunchImage-1.launchimage</string>
 </dict>
 </plist>
