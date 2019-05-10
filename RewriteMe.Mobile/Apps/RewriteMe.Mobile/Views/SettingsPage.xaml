@@ -36,7 +36,7 @@
                 <controls:Divider />
 
                 <!--  Remaining time  -->
-                <controls:DrillDownButton Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RemainingTime}}">
+                <controls:DrillDownButton Command="{Binding BuySubscriptionCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RemainingTime}}">
                     <Label Style="{StaticResource LabelStyle}" Text="{Binding RemainingTime}" />
                 </controls:DrillDownButton>
                 <controls:Divider />
