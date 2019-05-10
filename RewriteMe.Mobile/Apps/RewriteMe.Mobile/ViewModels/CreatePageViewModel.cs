@@ -17,6 +17,7 @@ using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Mobile.Transcription;
+using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -171,7 +172,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteUploadFileCommandAsync()
         {
-            var selectedFile = await CrossFilePicker.Current.PickFile().ConfigureAwait(false);
+            var selectedFile = await ThreadHelper
+                    .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
+                    .ConfigureAwait(false);
+
             var totalTime = _mediaService.GetTotalTime(selectedFile.FilePath);
             var canTranscribe = await _fileItemService.CanTranscribeAsync(totalTime).ConfigureAwait(false);
             SelectedFile = new FileDataWrapper(selectedFile)

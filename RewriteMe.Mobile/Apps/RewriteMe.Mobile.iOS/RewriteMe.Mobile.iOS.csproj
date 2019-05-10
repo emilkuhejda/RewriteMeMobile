@@ -31,7 +31,7 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>None</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignKey>iPhone Developer: Emil Kuhejda (P63MQT9X69)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Emil Kuhejda (SCV68T2D3A)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
@@ -43,6 +43,9 @@
     <MtouchLink>None</MtouchLink>
     <MtouchArch>x86_64</MtouchArch>
     <ConsolePause>false</ConsolePause>
+    <CodesignKey>iPhone Distribution: Emil Kuhejda (SCV68T2D3A)</CodesignKey>
+    <CodesignProvision>RewriteMe Distribution Profile</CodesignProvision>
+    <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
     <DebugSymbols>true</DebugSymbols>
@@ -66,8 +69,9 @@
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
     <ConsolePause>false</ConsolePause>
-    <CodesignKey>iPhone Developer</CodesignKey>
+    <CodesignKey>iPhone Distribution: Emil Kuhejda (SCV68T2D3A)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
+    <CodesignProvision>RewriteMe Distribution Profile</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
@@ -127,45 +131,24 @@
     <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Contents.json">
       <Visible>false</Visible>
     </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon1024.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon180.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon167.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon152.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon120.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon87.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon80.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon76.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon60.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon58.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon40.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon29.png">
-      <Visible>false</Visible>
-    </ImageAsset>
-    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\Icon20.png">
-      <Visible>false</Visible>
-    </ImageAsset>
+    <ImageAsset Include="Assets.xcassets\LaunchImage-1.launchimage\Contents.json" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40x40.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58x58.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\87x87.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80x80.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120x120.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\120x120-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\180x180.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\20x20.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40x40-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\29x29.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\58x58-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\40x40-2.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\80x80-1.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\76x76.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\152x152.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\167x167.png" />
+    <ImageAsset Include="Assets.xcassets\AppIcon.appiconset\1024x1024.png" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -176,6 +159,9 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
       <Version>2.9.2</Version>
+    </PackageReference>
+    <PackageReference Include="Plugin.InAppBilling">
+      <Version>2.0.0</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity.Forms">
       <Version>7.1.0.431</Version>
@@ -215,5 +201,9 @@
       <Project>{33fc372f-b17a-4e0b-8176-867d01c399fb}</Project>
       <Name>RewriteMe.Mobile</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ITunesArtwork Include="iTunesArtwork" />
+    <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
 </Project>

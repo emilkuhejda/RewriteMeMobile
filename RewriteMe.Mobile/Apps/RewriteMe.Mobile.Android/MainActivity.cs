@@ -5,6 +5,7 @@ using Android.Content.PM;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
 using Microsoft.Identity.Client;
+using Plugin.InAppBilling;
 using RewriteMe.Mobile.Droid.Configuration;
 using Xamarin.Forms;
 
@@ -36,6 +37,7 @@ namespace RewriteMe.Mobile.Droid
         {
             base.OnActivityResult(requestCode, resultCode, data);
             AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
+            InAppBillingImplementation.HandleActivityResult(requestCode, resultCode, data);
         }
     }
 }
