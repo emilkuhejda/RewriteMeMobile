@@ -22,11 +22,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the LastUpdates class.
         /// </summary>
-        public LastUpdates(System.DateTime? fileItem = default(System.DateTime?), System.DateTime? transcribeItem = default(System.DateTime?), System.DateTime? userSubscription = default(System.DateTime?))
+        public LastUpdates(System.DateTime? fileItem = default(System.DateTime?), System.DateTime? transcribeItem = default(System.DateTime?), System.DateTime? userSubscription = default(System.DateTime?), System.DateTime? subscriptionProduct = default(System.DateTime?))
         {
             FileItem = fileItem;
             TranscribeItem = transcribeItem;
             UserSubscription = userSubscription;
+            SubscriptionProduct = subscriptionProduct;
             CustomInit();
         }
 
@@ -49,6 +50,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "userSubscription")]
         public System.DateTime? UserSubscription { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "subscriptionProduct")]
+        public System.DateTime? SubscriptionProduct { get; set; }
 
     }
 }
