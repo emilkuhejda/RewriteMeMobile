@@ -22,10 +22,10 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the SubscriptionProduct class.
         /// </summary>
-        public SubscriptionProduct(string id = default(string), string time = default(string))
+        public SubscriptionProduct(string id = default(string), string timeString = default(string))
         {
             Id = id;
-            Time = time;
+            TimeString = timeString;
             CustomInit();
         }
 
@@ -37,12 +37,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public string Id { get; private set; }
+        public string Id { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "time")]
-        public string Time { get; private set; }
+        [JsonProperty(PropertyName = "timeString")]
+        public string TimeString { get; set; }
 
     }
 }

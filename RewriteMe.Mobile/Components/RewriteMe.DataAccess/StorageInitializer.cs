@@ -20,6 +20,7 @@ namespace RewriteMe.DataAccess
                 typeof(AudioSourceEntity),
                 typeof(FileItemEntity),
                 typeof(InternalValueEntity),
+                typeof(SubscriptionProductEntity),
                 typeof(TranscribeItemEntity),
                 typeof(TranscriptAudioSourceEntity),
                 typeof(UserSessionEntity),

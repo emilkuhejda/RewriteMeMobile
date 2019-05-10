@@ -16,6 +16,7 @@ namespace RewriteMe.Business.Services
         private readonly IFileItemService _fileItemService;
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly IUserSubscriptionService _userSubscriptionService;
+        private readonly ISubscriptionProductService _subscriptionProductService;
         private readonly IInternalValueService _internalValueService;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
@@ -28,12 +29,14 @@ namespace RewriteMe.Business.Services
             IFileItemService fileItemService,
             ITranscribeItemService transcribeItemService,
             IUserSubscriptionService userSubscriptionService,
+            ISubscriptionProductService subscriptionProductService,
             IInternalValueService internalValueService)
         {
             _lastUpdatesService = lastUpdatesService;
             _fileItemService = fileItemService;
             _transcribeItemService = transcribeItemService;
             _userSubscriptionService = userSubscriptionService;
+            _subscriptionProductService = subscriptionProductService;
             _internalValueService = internalValueService;
         }
 
@@ -43,7 +46,8 @@ namespace RewriteMe.Business.Services
             {
                 UpdateFileItemsAsync,
                 UpdateTranscribeItemsAsync,
-                UpdateUserSubscriptionAsync
+                UpdateUserSubscriptionAsync,
+                UpdateSubscriptionProductAsync
             };
 
             _totalResourceInitializationTasks = updateMethods.Count;
@@ -87,6 +91,13 @@ namespace RewriteMe.Business.Services
             var applicationUserSubscriptionUpdateDate = _lastUpdatesService.GetUserSubscriptionLastUpdate();
 
             await _userSubscriptionService.SynchronizationAsync(applicationUserSubscriptionUpdateDate).ConfigureAwait(false);
+        }
+
+        private async Task UpdateSubscriptionProductAsync()
+        {
+            var applicationSubscriptionProductUpdateDate = _lastUpdatesService.GetSubscriptionProductLastUpdate();
+
+            await _subscriptionProductService.SynchronizationAsync(applicationSubscriptionProductUpdateDate).ConfigureAwait(false);
         }
     }
 }
