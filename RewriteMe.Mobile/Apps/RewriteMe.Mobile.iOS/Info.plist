@@ -38,5 +38,10 @@
 	<string>0.9</string>
 	<key>XSLaunchImageAssets</key>
 	<string>Assets.xcassets/LaunchImage-1.launchimage</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>location</string>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>
