@@ -18,6 +18,7 @@ namespace RewriteMe.DataAccess
             var tables = new[]
             {
                 typeof(AudioSourceEntity),
+                typeof(BillingPurchaseEntity),
                 typeof(FileItemEntity),
                 typeof(InternalValueEntity),
                 typeof(SubscriptionProductEntity),

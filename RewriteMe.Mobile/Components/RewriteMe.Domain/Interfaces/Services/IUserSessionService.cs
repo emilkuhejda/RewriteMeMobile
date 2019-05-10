@@ -1,11 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IUserSessionService
     {
-        Task<string> GetUserIdAsync();
+        Task<Guid> GetUserIdAsync();
 
         Task<string> GetUserNameAsync();
 

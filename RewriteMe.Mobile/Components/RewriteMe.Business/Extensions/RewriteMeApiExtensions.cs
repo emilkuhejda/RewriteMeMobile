@@ -50,6 +50,14 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<UserSubscription> CreateUserSubscriptionAsync(this IRewriteMeAPI operations, BillingPurchase billingPurchase, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(billingPurchase, applicationId, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<UserSubscription>(result.Body);
+            }
+        }
+
         public static async Task<FileItem> UploadFileItemAsync(this IRewriteMeAPI operations, MediaFile mediaFile, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, applicationId, mediaFile.Stream, customHeaders).ConfigureAwait(false))

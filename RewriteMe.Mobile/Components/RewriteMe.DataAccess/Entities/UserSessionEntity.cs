@@ -1,4 +1,5 @@
-﻿using SQLite;
+﻿using System;
+using SQLite;
 
 namespace RewriteMe.DataAccess.Entities
 {
@@ -6,7 +7,7 @@ namespace RewriteMe.DataAccess.Entities
     public class UserSessionEntity
     {
         [PrimaryKey]
-        public string ObjectId { get; set; }
+        public Guid ObjectId { get; set; }
 
         [MaxLength(100)]
         public string Email { get; set; }
