@@ -28,6 +28,7 @@
         public static string SignOut => "SignOut";
         public static string Version => "Version";
         public static string ContactUs => "ContactUs";
+        public static string Subscriptions => "Subscriptions";
         public static string Developer => "Developer";
         public static string Clear => "Clear";
         public static string Reload => "Reload";

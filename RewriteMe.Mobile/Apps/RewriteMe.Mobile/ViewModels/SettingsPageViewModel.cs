@@ -4,8 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Plugin.InAppBilling;
-using Plugin.InAppBilling.Abstractions;
 using Plugin.LatestVersion.Abstractions;
 using Plugin.Messaging;
 using Prism.Commands;
@@ -70,7 +68,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
             NavigateToUserSettingsCommand = new AsyncCommand(ExecuteNavigateToUserSettingsCommandAsync);
-            BuySubscriptionCommand = new AsyncCommand(ExecuteBuySubscriptionCommandAsync);
+            NavigateToUserSubscriptions = new AsyncCommand(ExecuteNavigateToUserSubscriptionsCommandAsync);
             NavigateToEmailCommand = new DelegateCommand(ExecuteNavigateToEmailCommand);
             NavigateToDeveloperPageCommand = new AsyncCommand(ExecuteNavigateToDeveloperPageCommandAsync);
         }
@@ -105,7 +103,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand NavigateToUserSettingsCommand { get; }
 
-        public ICommand BuySubscriptionCommand { get; }
+        public ICommand NavigateToUserSubscriptions { get; }
 
         public ICommand NavigateToEmailCommand { get; }
 
@@ -191,16 +189,17 @@ namespace RewriteMe.Mobile.ViewModels
             await NavigationService.NavigateWithoutAnimationAsync(Pages.UserSettings).ConfigureAwait(false);
         }
 
-        private async Task ExecuteBuySubscriptionCommandAsync()
+        private async Task ExecuteNavigateToUserSubscriptionsCommandAsync()
         {
-            var productId = "product.subscription.1hour";
-            var connected = await CrossInAppBilling.Current.ConnectAsync().ConfigureAwait(false);
-            if (!connected)
-                return;
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.UserSubscriptions).ConfigureAwait(false);
+            //var productId = "product.subscription.1hour";
+            //var connected = await CrossInAppBilling.Current.ConnectAsync().ConfigureAwait(false);
+            //if (!connected)
+            //    return;
 
-            var purchase = await CrossInAppBilling.Current.PurchaseAsync(productId, ItemType.InAppPurchase, "apppayload").ConfigureAwait(false);
-            if (purchase == null)
-            { }
+            //var purchase = await CrossInAppBilling.Current.PurchaseAsync(productId, ItemType.InAppPurchase, "apppayload").ConfigureAwait(false);
+            //if (purchase == null)
+            //{ }
         }
 
         private void ExecuteNavigateToEmailCommand()

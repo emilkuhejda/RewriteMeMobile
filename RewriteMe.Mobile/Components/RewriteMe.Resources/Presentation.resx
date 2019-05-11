@@ -175,6 +175,9 @@
   <data name="ContactUs" xml:space="preserve">
     <value>Contact us</value>
   </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
   <data name="Developer" xml:space="preserve">
     <value>Developer</value>
   </data>
