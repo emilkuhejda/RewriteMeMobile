@@ -8,7 +8,7 @@
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
                           Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}">
     <views:BaseNavigationPage.Resources>
-        <DataTemplate x:Key="SubscriptionProductsTemplate">
+        <DataTemplate x:Key="ProductsTemplate">
             <ViewCell>
                 <ViewCell.View>
                     <Button Margin="20,0,20,20"
@@ -26,8 +26,8 @@
               Padding="{StaticResource StandardPadding}">
             <ListView Grid.Row="1"
                       HasUnevenRows="True"
-                      ItemTemplate="{StaticResource SubscriptionProductsTemplate}"
-                      ItemsSource="{Binding SubscriptionProducts}"
+                      ItemTemplate="{StaticResource ProductsTemplate}"
+                      ItemsSource="{Binding Products}"
                       SeparatorVisibility="None" />
         </Grid>
 

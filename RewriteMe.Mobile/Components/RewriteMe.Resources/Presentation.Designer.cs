@@ -305,6 +305,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 1 Hour.
+        /// </summary>
+        public static string OneHour {
+            get {
+                return ResourceManager.GetString("OneHour", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Operating system:.
         /// </summary>
         public static string OperatingSystemLabel {
@@ -463,6 +472,15 @@ namespace RewriteMe.Resources {
         public static string Subscriptions {
             get {
                 return ResourceManager.GetString("Subscriptions", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 10 Hours.
+        /// </summary>
+        public static string TenHours {
+            get {
+                return ResourceManager.GetString("TenHours", resourceCulture);
             }
         }
         

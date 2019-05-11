@@ -50,12 +50,6 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetUserSubscriptionsAsync(updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<IEnumerable<SubscriptionProduct>>> GetSubscriptionProductsAsync()
-        {
-            var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetSubscriptionProductsAsync(customHeaders)).ConfigureAwait(false);
-        }
-
         public async Task<HttpRequestResult<UserSubscription>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase)
         {
             var customHeaders = await GetAuthHeaders().ConfigureAwait(false);

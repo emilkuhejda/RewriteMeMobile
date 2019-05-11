@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Mobile.Commands;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -16,7 +16,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private SubscriptionProduct SubscriptionProduct { get; }
 
-        public string Text => SubscriptionProduct.Id;
+        public string Text => SubscriptionProduct.Text;
 
         public ICommand BuyCommand { get; }
 

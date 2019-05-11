@@ -56,13 +56,5 @@ namespace RewriteMe.Business.Services
 
             return _lastUpdates?.UserSubscription ?? DateTime.MinValue;
         }
-
-        public DateTime GetSubscriptionProductLastUpdate()
-        {
-            if (!_isInitialized)
-                throw new InvalidOperationException("Service is not initialized");
-
-            return _lastUpdates?.SubscriptionProduct ?? DateTime.MinValue;
-        }
     }
 }

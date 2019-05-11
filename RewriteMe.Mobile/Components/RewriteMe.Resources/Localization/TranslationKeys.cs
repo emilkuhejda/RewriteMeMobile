@@ -49,6 +49,8 @@
         public static string SaveAndTranscribe => "SaveAndTranscribe";
         public static string Transcribe => "Transcribe";
         public static string InProgressLabel => "InProgressLabel";
+        public static string OneHour => "OneHour";
+        public static string TenHours => "TenHours";
 
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
         public static string OfflineErrorMessage => "OfflineErrorMessage";

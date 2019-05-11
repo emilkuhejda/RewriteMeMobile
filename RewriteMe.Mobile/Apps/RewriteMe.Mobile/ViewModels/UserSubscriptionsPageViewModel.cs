@@ -4,41 +4,37 @@ using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
-using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Transcription;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class UserSubscriptionsPageViewModel : ViewModelBase
     {
-        private readonly ISubscriptionProductService _subscriptionProductService;
-
-        private IList<SubscriptionProductViewModel> _subscriptionProducts;
+        private IList<SubscriptionProductViewModel> _products;
 
         public UserSubscriptionsPageViewModel(
-            ISubscriptionProductService subscriptionProductService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
-            _subscriptionProductService = subscriptionProductService;
-
             CanGoBack = true;
         }
 
-        public IList<SubscriptionProductViewModel> SubscriptionProducts
+        public IList<SubscriptionProductViewModel> Products
         {
-            get => _subscriptionProducts;
-            private set => SetProperty(ref _subscriptionProducts, value);
+            get => _products;
+            private set => SetProperty(ref _products, value);
         }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
             using (new OperationMonitor(OperationScope))
             {
-                var subscriptionProducts = await _subscriptionProductService.GetAsync().ConfigureAwait(false);
-                SubscriptionProducts = subscriptionProducts.Select(x => new SubscriptionProductViewModel(x)).ToList();
+                Products = SubscriptionProducts.All.Select(x => new SubscriptionProductViewModel(x)).ToList();
+
+                await Task.CompletedTask.ConfigureAwait(false);
             }
         }
     }

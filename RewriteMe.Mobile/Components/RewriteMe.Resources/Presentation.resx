@@ -241,7 +241,13 @@
   <data name="InProgressLabel" xml:space="preserve">
     <value>In progress</value>
   </data>
-
+  <data name="OneHour" xml:space="preserve">
+    <value>1 Hour</value>
+  </data>
+  <data name="TenHours" xml:space="preserve">
+    <value>10 Hours</value>
+  </data>
+  
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>
   </data>

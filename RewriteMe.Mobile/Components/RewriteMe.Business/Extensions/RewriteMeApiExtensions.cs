@@ -42,14 +42,6 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<IEnumerable<SubscriptionProduct>> GetSubscriptionProductsAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
-        {
-            using (var result = await operations.GetAvailableProductsWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
-            {
-                return ParseBody<IEnumerable<SubscriptionProduct>>(result.Body);
-            }
-        }
-
         public static async Task<UserSubscription> CreateUserSubscriptionAsync(this IRewriteMeAPI operations, BillingPurchase billingPurchase, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(billingPurchase, applicationId, customHeaders).ConfigureAwait(false))

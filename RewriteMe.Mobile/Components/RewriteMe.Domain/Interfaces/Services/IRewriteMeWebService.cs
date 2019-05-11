@@ -17,8 +17,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<IEnumerable<UserSubscription>>> GetUserSubscriptionsAsync(DateTime updatedAfter);
 
-        Task<HttpRequestResult<IEnumerable<SubscriptionProduct>>> GetSubscriptionProductsAsync();
-
         Task<HttpRequestResult<UserSubscription>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase);
 
         Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile);
