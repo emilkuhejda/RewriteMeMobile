@@ -17,7 +17,6 @@ namespace RewriteMe.Business.Services
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly ISubscriptionProductService _subscriptionProductService;
-        private readonly IBillingPurchaseService _billingPurchaseService;
         private readonly IInternalValueService _internalValueService;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
@@ -31,7 +30,6 @@ namespace RewriteMe.Business.Services
             ITranscribeItemService transcribeItemService,
             IUserSubscriptionService userSubscriptionService,
             ISubscriptionProductService subscriptionProductService,
-            IBillingPurchaseService billingPurchaseService,
             IInternalValueService internalValueService)
         {
             _lastUpdatesService = lastUpdatesService;
@@ -39,7 +37,6 @@ namespace RewriteMe.Business.Services
             _transcribeItemService = transcribeItemService;
             _userSubscriptionService = userSubscriptionService;
             _subscriptionProductService = subscriptionProductService;
-            _billingPurchaseService = billingPurchaseService;
             _internalValueService = internalValueService;
         }
 
@@ -50,8 +47,7 @@ namespace RewriteMe.Business.Services
                 UpdateFileItemsAsync,
                 UpdateTranscribeItemsAsync,
                 UpdateUserSubscriptionAsync,
-                UpdateSubscriptionProductAsync,
-                SendPendingBillingPurchaseAsync
+                UpdateSubscriptionProductAsync
             };
 
             _totalResourceInitializationTasks = updateMethods.Count;
@@ -102,11 +98,6 @@ namespace RewriteMe.Business.Services
             var applicationSubscriptionProductUpdateDate = _lastUpdatesService.GetSubscriptionProductLastUpdate();
 
             await _subscriptionProductService.SynchronizationAsync(applicationSubscriptionProductUpdateDate).ConfigureAwait(false);
-        }
-
-        private async Task SendPendingBillingPurchaseAsync()
-        {
-            await _billingPurchaseService.SendPendingBillingPurchasesAsync().ConfigureAwait(false);
         }
     }
 }

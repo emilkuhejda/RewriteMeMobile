@@ -18,8 +18,6 @@ namespace RewriteMe.DataAccess
 
         AsyncTableQuery<SubscriptionProductEntity> SubscriptionProducts { get; }
 
-        AsyncTableQuery<BillingPurchaseEntity> BillingPurchases { get; }
-
         AsyncTableQuery<FileItemEntity> FileItems { get; }
 
         AsyncTableQuery<TranscribeItemEntity> TranscribeItems { get; }

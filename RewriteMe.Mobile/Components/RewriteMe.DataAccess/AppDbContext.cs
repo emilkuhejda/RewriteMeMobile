@@ -26,8 +26,6 @@ namespace RewriteMe.DataAccess
 
         public AsyncTableQuery<SubscriptionProductEntity> SubscriptionProducts => Database.Table<SubscriptionProductEntity>();
 
-        public AsyncTableQuery<BillingPurchaseEntity> BillingPurchases => Database.Table<BillingPurchaseEntity>();
-
         public AsyncTableQuery<FileItemEntity> FileItems => Database.Table<FileItemEntity>();
 
         public AsyncTableQuery<TranscribeItemEntity> TranscribeItems => Database.Table<TranscribeItemEntity>();
