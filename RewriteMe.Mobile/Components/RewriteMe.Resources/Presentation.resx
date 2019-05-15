@@ -142,9 +142,6 @@
   <data name="RegistrationErrorMessage" xml:space="preserve">
     <value>Registration was not successful. Application might not work correctly. Please, contact us.</value>
   </data>
-  <data name="UserIdentificationLabel" xml:space="preserve">
-    <value>User identification:</value>
-  </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
@@ -205,20 +202,8 @@
   <data name="EmailIsNotSupported" xml:space="preserve">
     <value>E-mail is not supported on this device</value>
   </data>
-  <data name="ApplicationVersion" xml:space="preserve">
-    <value>Application version</value>
-  </data>
-  <data name="TimeStamp" xml:space="preserve">
-    <value>Time stamp</value>
-  </data>
   <data name="ApplicationTitleLog" xml:space="preserve">
     <value>RewriteMe - Log</value>
-  </data>
-  <data name="DeviceHardwareLabel" xml:space="preserve">
-    <value>Device hardware:</value>
-  </data>
-  <data name="OperatingSystemLabel" xml:space="preserve">
-    <value>Operating system:</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>

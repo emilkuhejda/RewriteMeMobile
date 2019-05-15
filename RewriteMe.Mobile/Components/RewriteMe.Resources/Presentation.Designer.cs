@@ -89,15 +89,6 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Application version.
-        /// </summary>
-        public static string ApplicationVersion {
-            get {
-                return ResourceManager.GetString("ApplicationVersion", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Currently the app store seems to be unavailble. Try again later..
         /// </summary>
         public static string AppStoreUnavailableErrorMessage {
@@ -157,15 +148,6 @@ namespace RewriteMe.Resources {
         public static string DeveloperModeIsActivated {
             get {
                 return ResourceManager.GetString("DeveloperModeIsActivated", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Device hardware:.
-        /// </summary>
-        public static string DeviceHardwareLabel {
-            get {
-                return ResourceManager.GetString("DeviceHardwareLabel", resourceCulture);
             }
         }
         
@@ -337,15 +319,6 @@ namespace RewriteMe.Resources {
         public static string OneHour {
             get {
                 return ResourceManager.GetString("OneHour", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Operating system:.
-        /// </summary>
-        public static string OperatingSystemLabel {
-            get {
-                return ResourceManager.GetString("OperatingSystemLabel", resourceCulture);
             }
         }
         
@@ -557,15 +530,6 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Time stamp.
-        /// </summary>
-        public static string TimeStamp {
-            get {
-                return ResourceManager.GetString("TimeStamp", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Transcribe.
         /// </summary>
         public static string Transcribe {
@@ -625,15 +589,6 @@ namespace RewriteMe.Resources {
         public static string UploadFileItemInfoMessage {
             get {
                 return ResourceManager.GetString("UploadFileItemInfoMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User identification:.
-        /// </summary>
-        public static string UserIdentificationLabel {
-            get {
-                return ResourceManager.GetString("UserIdentificationLabel", resourceCulture);
             }
         }
         

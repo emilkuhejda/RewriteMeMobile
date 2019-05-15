@@ -121,9 +121,9 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine()
                     .AppendLine()
                     .AppendLine("_______________________________________")
-                    .AppendLine($"{Loc.Text(TranslationKeys.UserIdentificationLabel)} {userId}")
-                    .AppendLine($"{Loc.Text(TranslationKeys.ApplicationVersion)} {_latestVersion.InstalledVersionNumber} ({Device.RuntimePlatform})")
-                    .AppendLine($"{Loc.Text(TranslationKeys.TimeStamp)} {timestamp}")
+                    .AppendLine($"User identification: {userId}")
+                    .AppendLine($"Application version: {_latestVersion.InstalledVersionNumber} ({Device.RuntimePlatform})")
+                    .AppendLine($"Time stamp: {timestamp}")
                     .ToString();
 
                 _emailTask.SendEmail(_applicationSettings.SupportMailAddress, subject, message);

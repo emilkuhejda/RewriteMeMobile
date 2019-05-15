@@ -17,7 +17,6 @@
         public static string UserRegistration => "UserRegistration";
         public static string RegistrationErrorTitle => "RegistrationErrorTitle";
         public static string RegistrationErrorMessage => "RegistrationErrorMessage";
-        public static string UserIdentificationLabel => "UserIdentificationLabel";
         public static string English => "English";
         public static string Slovak => "Slovak";
         public static string Settings => "Settings";
@@ -37,11 +36,7 @@
         public static string Ok => "Ok";
         public static string DeveloperModeIsActivated => "DeveloperModeIsActivated";
         public static string EmailIsNotSupported => "EmailIsNotSupported";
-        public static string ApplicationVersion => "ApplicationVersion";
-        public static string TimeStamp => "TimeStamp";
         public static string ApplicationTitleLog => "ApplicationTitleLog";
-        public static string DeviceHardwareLabel => "DeviceHardwareLabel";
-        public static string OperatingSystemLabel => "OperatingSystemLabel";
         public static string Name => "Name";
         public static string UploadFile => "UploadFile";
         public static string Send => "Send";

@@ -253,8 +253,8 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine($"Order Id: {purchase.Id}")
                     .AppendLine($"User subscription: {purchase.ProductId}")
                     .AppendLine($"User identification: {userId}")
-                    .AppendLine($"{Loc.Text(TranslationKeys.ApplicationVersion)} {_latestVersion.InstalledVersionNumber} ({Device.RuntimePlatform})")
-                    .AppendLine($"{Loc.Text(TranslationKeys.TimeStamp)} {timestamp}")
+                    .AppendLine($"Application version: {_latestVersion.InstalledVersionNumber} ({Device.RuntimePlatform})")
+                    .AppendLine($"Time stamp: {timestamp}")
                     .ToString();
 
                 _emailTask.SendEmail(_applicationSettings.SupportMailAddress, subject, message);
