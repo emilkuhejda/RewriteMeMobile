@@ -1,12 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using Plugin.InAppBilling;
 using Plugin.InAppBilling.Abstractions;
+using Plugin.LatestVersion.Abstractions;
+using Plugin.Messaging;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
+using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Extensions;
@@ -23,6 +28,9 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IBillingPurchaseService _billingPurchaseService;
+        private readonly IApplicationSettings _applicationSettings;
+        private readonly ILatestVersion _latestVersion;
+        private readonly IEmailTask _emailTask;
 
         private IList<SubscriptionProductViewModel> _products;
 
@@ -30,6 +38,9 @@ namespace RewriteMe.Mobile.ViewModels
             IUserSessionService userSessionService,
             IUserSubscriptionService userSubscriptionService,
             IBillingPurchaseService billingPurchaseService,
+            IApplicationSettings applicationSettings,
+            ILatestVersion latestVersion,
+            IEmailTask emailTask,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
@@ -38,6 +49,9 @@ namespace RewriteMe.Mobile.ViewModels
             _userSessionService = userSessionService;
             _userSubscriptionService = userSubscriptionService;
             _billingPurchaseService = billingPurchaseService;
+            _applicationSettings = applicationSettings;
+            _latestVersion = latestVersion;
+            _emailTask = emailTask;
 
             CanGoBack = true;
         }
@@ -82,7 +96,7 @@ namespace RewriteMe.Mobile.ViewModels
                 if (purchase != null && purchase.State == PurchaseState.Purchased)
                 {
                     if (purchase.Payload == payload.ToString())
-                        throw new PurchasePayloadNotValidException(nameof(payload));
+                        throw new PurchasePayloadNotValidException(purchase);
 
                     InAppBillingPurchase billingPurchase = null;
                     if (Device.RuntimePlatform == Device.iOS)
@@ -138,7 +152,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 if (result)
                 {
-                    // TODO
+                    await CreateContactUsMailAsync(ex.BillingPurchase).ConfigureAwait(false);
                 }
             }
             catch (PurchaseWasNotProcessedException ex)
@@ -147,7 +161,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.PurchaseWasNotProcessedErrorMessage)).ConfigureAwait(false);
             }
-            catch (ErrorRequestException ex)
+            catch (RegistrationPurchaseBillingException ex)
             {
                 Logger.Error($"Exception during registration of purchase billing. {ex}");
 
@@ -158,7 +172,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 if (result)
                 {
-                    // TODO
+                    await CreateContactUsMailAsync(ex.BillingPurchase).ConfigureAwait(false);
                 }
             }
             catch (InAppBillingPurchaseException ex)
@@ -198,12 +212,57 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task SendBillingPurchaseAsync(string productId, InAppBillingPurchase purchase)
         {
-            var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
-            var userSubscription = await _billingPurchaseService.SendBillingPurchaseAsync(purchase.ToBillingPurchase(userId)).ConfigureAwait(false);
+            try
+            {
+                var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
+                var userSubscription = await _billingPurchaseService
+                    .SendBillingPurchaseAsync(purchase.ToBillingPurchase(userId)).ConfigureAwait(false);
 
-            await _userSubscriptionService.AddAsync(userSubscription).ConfigureAwait(false);
+                await _userSubscriptionService.AddAsync(userSubscription).ConfigureAwait(false);
 
-            Logger.Info($"Purchase billing for product '{productId}' was registered.");
+                Logger.Info($"Purchase billing for product '{productId}' was registered.");
+            }
+            catch (ErrorRequestException ex)
+            {
+                throw new RegistrationPurchaseBillingException(purchase, nameof(purchase), ex);
+            }
+        }
+
+        private async Task CreateContactUsMailAsync(InAppBillingPurchase purchase)
+        {
+            if (purchase == null)
+                return;
+
+            if (string.IsNullOrWhiteSpace(_applicationSettings.SupportMailAddress))
+                return;
+
+            if (_emailTask.CanSendEmail)
+            {
+                var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
+                var subject = $"{Loc.Text(TranslationKeys.ApplicationTitle)} - Purchase problem";
+                var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz", CultureInfo.InvariantCulture);
+                var message = new StringBuilder()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine()
+                    .AppendLine("_______________________________________")
+                    .AppendLine($"Order Id: {purchase.Id}")
+                    .AppendLine($"User subscription: {purchase.ProductId}")
+                    .AppendLine($"User identification: {userId}")
+                    .AppendLine($"{Loc.Text(TranslationKeys.ApplicationVersion)} {_latestVersion.InstalledVersionNumber} ({Device.RuntimePlatform})")
+                    .AppendLine($"{Loc.Text(TranslationKeys.TimeStamp)} {timestamp}")
+                    .ToString();
+
+                _emailTask.SendEmail(_applicationSettings.SupportMailAddress, subject, message);
+            }
+            else
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.EmailIsNotSupported)).ConfigureAwait(false);
+            }
         }
     }
 }
