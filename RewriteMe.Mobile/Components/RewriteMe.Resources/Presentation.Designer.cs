@@ -62,6 +62,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to .
+        /// </summary>
+        public static string _ {
+            get {
+                return ResourceManager.GetString("", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Loading....
         /// </summary>
         public static string ActivityIndicatorCaptionText {
@@ -94,6 +103,24 @@ namespace RewriteMe.Resources {
         public static string ApplicationVersion {
             get {
                 return ResourceManager.GetString("ApplicationVersion", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Currently the app store seems to be unavailble. Try again later..
+        /// </summary>
+        public static string AppStoreUnavailableErrorMessage {
+            get {
+                return ResourceManager.GetString("AppStoreUnavailableErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Billing seems to be unavailable, please try again later..
+        /// </summary>
+        public static string BillingUnavailableErrorMessage {
+            get {
+                return ResourceManager.GetString("BillingUnavailableErrorMessage", resourceCulture);
             }
         }
         
@@ -175,6 +202,15 @@ namespace RewriteMe.Resources {
         public static string English {
             get {
                 return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment method is not supported. Please, configure it first..
+        /// </summary>
+        public static string InAppBillingIsNotSupportedErrorMessage {
+            get {
+                return ResourceManager.GetString("InAppBillingIsNotSupportedErrorMessage", resourceCulture);
             }
         }
         
@@ -323,6 +359,42 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Payment seems to be invalid, please try again..
+        /// </summary>
+        public static string PaymentInvalidErrorMessage {
+            get {
+                return ResourceManager.GetString("PaymentInvalidErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Payment does not seem to be enabled/allowed, please try again..
+        /// </summary>
+        public static string PaymentNotAllowedErrorMessage {
+            get {
+                return ResourceManager.GetString("PaymentNotAllowedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase was processed incorrectly. Please, contact us..
+        /// </summary>
+        public static string PurchaseProcessedIncorrectlyErrorMessage {
+            get {
+                return ResourceManager.GetString("PurchaseProcessedIncorrectlyErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Purchase was not processed. Please try again..
+        /// </summary>
+        public static string PurchaseWasNotProcessedErrorMessage {
+            get {
+                return ResourceManager.GetString("PurchaseWasNotProcessedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register or sign in.
         /// </summary>
         public static string RegisterOrSignIn {
@@ -355,6 +427,15 @@ namespace RewriteMe.Resources {
         public static string RegistrationErrorTitle {
             get {
                 return ResourceManager.GetString("RegistrationErrorTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Subscription was purchased but it was not successfully registered. Please, contact us..
+        /// </summary>
+        public static string RegistrationPurchaseBillingErrorMessage {
+            get {
+                return ResourceManager.GetString("RegistrationPurchaseBillingErrorMessage", resourceCulture);
             }
         }
         

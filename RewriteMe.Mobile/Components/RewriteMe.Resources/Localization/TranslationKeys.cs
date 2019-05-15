@@ -62,5 +62,13 @@
         public static string TranscribeAudioSourceNotFoundErrorMessage => "TranscribeAudioSourceNotFoundErrorMessage";
         public static string RemainingTime => "RemainingTime";
         public static string NoAvailableData => "NoAvailableData";
+        public static string AppStoreUnavailableErrorMessage => "AppStoreUnavailableErrorMessage";
+        public static string BillingUnavailableErrorMessage => "BillingUnavailableErrorMessage";
+        public static string PaymentInvalidErrorMessage => "PaymentInvalidErrorMessage";
+        public static string PaymentNotAllowedErrorMessage => "PaymentNotAllowed";
+        public static string RegistrationPurchaseBillingErrorMessage => "RegistrationPurchaseBillingErrorMessage";
+        public static string InAppBillingIsNotSupportedErrorMessage => "InAppBillingIsNotSupportedErrorMessage";
+        public static string PurchaseProcessedIncorrectlyErrorMessage => "PurchaseProcessedIncorrectlyErrorMessage";
+        public static string PurchaseWasNotProcessedErrorMessage => "PurchaseWasNotProcessedErrorMessage";
     }
 }

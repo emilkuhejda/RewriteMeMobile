@@ -192,14 +192,6 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteNavigateToUserSubscriptionsCommandAsync()
         {
             await NavigationService.NavigateWithoutAnimationAsync(Pages.UserSubscriptions).ConfigureAwait(false);
-            //var productId = "product.subscription.1hour";
-            //var connected = await CrossInAppBilling.Current.ConnectAsync().ConfigureAwait(false);
-            //if (!connected)
-            //    return;
-
-            //var purchase = await CrossInAppBilling.Current.PurchaseAsync(productId, ItemType.InAppPurchase, "apppayload").ConfigureAwait(false);
-            //if (purchase == null)
-            //{ }
         }
 
         private void ExecuteNavigateToEmailCommand()
