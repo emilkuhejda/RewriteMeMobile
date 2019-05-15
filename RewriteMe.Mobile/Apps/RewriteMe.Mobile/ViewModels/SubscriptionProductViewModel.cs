@@ -51,15 +51,11 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteBuyCommandAsync()
         {
-            if (!CrossInAppBilling.IsSupported)
-            {
-                _logger.Warning("In-App Purchases is not supported in the device.");
-                await _dialogService.AlertAsync(Loc.Text(TranslationKeys.InAppBillingIsNotSupportedErrorMessage)).ConfigureAwait(false);
-                return;
-            }
-
             try
             {
+                if (!CrossInAppBilling.IsSupported)
+                    throw new InAppBillingNotSupportedException();
+
                 _logger.Info($"Start purchasing product '{SubscriptionProduct.Id}'.");
 
                 var payload = Guid.NewGuid();
@@ -86,7 +82,8 @@ namespace RewriteMe.Mobile.ViewModels
                     }
                     else
                     {
-                        var consumedItem = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
+                        var consumedItem = await billing
+                            .ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
                         if (consumedItem != null)
                         {
                             _logger.Info($"Product '{SubscriptionProduct.Id}' was purchased.");
@@ -108,13 +105,16 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     throw new PurchaseWasNotProcessedException();
                 }
-
+            }
+            catch (InAppBillingNotSupportedException ex)
+            {
+                _logger.Warning($"In-App Purchases is not supported in the device. {ex}");
+                await _dialogService.AlertAsync(Loc.Text(TranslationKeys.InAppBillingIsNotSupportedErrorMessage)).ConfigureAwait(false);
             }
             catch (AppStoreNotConnectedException ex)
             {
                 _logger.Error($"App store is not connected. {ex}");
-                await _dialogService.AlertAsync(Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage))
-                    .ConfigureAwait(false);
+                await _dialogService.AlertAsync(Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage)).ConfigureAwait(false);
             }
             catch (PurchasePayloadNotValidException ex)
             {
