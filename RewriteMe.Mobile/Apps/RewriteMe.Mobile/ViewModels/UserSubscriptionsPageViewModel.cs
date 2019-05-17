@@ -93,19 +93,19 @@ namespace RewriteMe.Mobile.ViewModels
 
                 Logger.Info($"Start purchasing product '{productId}'.");
 
-                var payload = Guid.NewGuid();
+                var payload = Guid.NewGuid().ToString();
                 var billing = CrossInAppBilling.Current;
                 var connected = await billing.ConnectAsync().ConfigureAwait(false);
                 if (!connected)
                     throw new AppStoreNotConnectedException();
 
                 var purchase = await billing
-                    .PurchaseAsync(productId, ItemType.InAppPurchase, payload.ToString())
+                    .PurchaseAsync(productId, ItemType.InAppPurchase, payload)
                     .ConfigureAwait(false);
 
                 if (purchase != null && purchase.State == PurchaseState.Purchased)
                 {
-                    if (purchase.Payload == payload.ToString())
+                    if (purchase.Payload != payload)
                         throw new PurchasePayloadNotValidException(purchase);
 
                     InAppBillingPurchase billingPurchase = null;
@@ -120,7 +120,7 @@ namespace RewriteMe.Mobile.ViewModels
                         var consumedItem = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
                         if (consumedItem != null)
                         {
-                            if (consumedItem.Payload == payload.ToString())
+                            if (consumedItem.Payload != payload)
                                 throw new PurchasePayloadNotValidException(purchase);
 
                             Logger.Info($"Product '{productId}' was purchased.");
