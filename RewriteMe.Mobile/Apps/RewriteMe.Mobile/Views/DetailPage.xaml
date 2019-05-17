@@ -78,6 +78,10 @@
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
+    <views:BaseNavigationPage.RightNavigationToolbarItems>
+        <controls:NavigationToolbarItem Command="{Binding DeleteCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg" />
+    </views:BaseNavigationPage.RightNavigationToolbarItems>
+
     <Grid>
         <Grid>
             <Grid.RowDefinitions>

@@ -18,6 +18,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<IEnumerable<FileItem>> GetAllAsync();
 
+        Task DeleteAsync(Guid fileItemId);
+
         Task<FileItem> UploadAsync(MediaFile mediaFile);
 
         Task<bool> CanTranscribeAsync(TimeSpan fileTime);

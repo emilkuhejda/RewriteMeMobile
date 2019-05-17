@@ -195,24 +195,28 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='id'>
+            /// <param name='fileItemId'>
             /// </param>
-            public static Ok DeleteFileItem(this IRewriteMeAPI operations, string id)
+            /// <param name='applicationId'>
+            /// </param>
+            public static Ok DeleteFileItem(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?))
             {
-                return operations.DeleteFileItemAsync(id).GetAwaiter().GetResult();
+                return operations.DeleteFileItemAsync(fileItemId, applicationId).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='id'>
+            /// <param name='fileItemId'>
+            /// </param>
+            /// <param name='applicationId'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Ok> DeleteFileItemAsync(this IRewriteMeAPI operations, string id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Ok> DeleteFileItemAsync(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.DeleteFileItemWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteFileItemWithHttpMessagesAsync(fileItemId, applicationId, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

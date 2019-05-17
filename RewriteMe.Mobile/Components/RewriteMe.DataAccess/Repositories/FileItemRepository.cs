@@ -70,13 +70,13 @@ namespace RewriteMe.DataAccess.Repositories
         {
             foreach (var fileItemId in fileItemIds)
             {
-                await _contextProvider.Context.DeleteAsync(fileItemId).ConfigureAwait(false);
+                await _contextProvider.Context.DeleteAsync<FileItemEntity>(fileItemId).ConfigureAwait(false);
             }
         }
 
         public async Task DeleteAsync(Guid fileItemId)
         {
-            await _contextProvider.Context.DeleteAsync(fileItemId).ConfigureAwait(false);
+            await _contextProvider.Context.DeleteAsync<FileItemEntity>(fileItemId).ConfigureAwait(false);
         }
 
         public async Task UpdateRecognitionStateAsync(Guid fileItemId, RecognitionState recognitionState)

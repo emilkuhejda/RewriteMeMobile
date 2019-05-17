@@ -93,6 +93,11 @@ namespace RewriteMe.Business.Services
             return await _fileItemRepository.GetAllAsync().ConfigureAwait(false);
         }
 
+        public async Task DeleteAsync(Guid fileItemId)
+        {
+            await _fileItemRepository.DeleteAsync(fileItemId).ConfigureAwait(false);
+        }
+
         public async Task<FileItem> UploadAsync(MediaFile mediaFile)
         {
             var httpRequestResult = await _rewriteMeWebService.UploadFileItemAsync(mediaFile).ConfigureAwait(false);

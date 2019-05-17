@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Transcription;
@@ -30,7 +31,15 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.GetDeletedFileItemIdsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<IEnumerable<Guid>>(result.Body);
+                return ParseBody<IEnumerable<Guid?>>(result.Body).Where(x => x.HasValue).Select(x => x.Value);
+            }
+        }
+
+        public static async Task<Ok> DeleteFileItemAsync(this IRewriteMeAPI operations, Guid fileItemId, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.DeleteFileItemWithHttpMessagesAsync(fileItemId, applicationId, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<Ok>(result.Body);
             }
         }
 

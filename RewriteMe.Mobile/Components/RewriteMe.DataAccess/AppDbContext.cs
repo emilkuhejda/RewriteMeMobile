@@ -75,9 +75,9 @@ namespace RewriteMe.DataAccess
             await Database.UpdateAllAsync(items).ConfigureAwait(false);
         }
 
-        public async Task DeleteAsync(object primaryKey)
+        public async Task DeleteAsync<T>(object primaryKey) where T : new()
         {
-            await Database.DeleteAsync(primaryKey).ConfigureAwait(false);
+            await Database.DeleteAsync<T>(primaryKey).ConfigureAwait(false);
         }
 
         public async Task DeleteAllAsync<T>() where T : new()
