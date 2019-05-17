@@ -1,6 +1,7 @@
 ﻿using System;
 using Plugin.InAppBilling.Abstractions;
 using RewriteMe.Domain.WebApi.Models;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Extensions
 {
@@ -17,6 +18,7 @@ namespace RewriteMe.Mobile.Extensions
                 AutoRenewing = inAppBillingPurchase.AutoRenewing,
                 PurchaseState = inAppBillingPurchase.State.ToString(),
                 ConsumptionState = inAppBillingPurchase.ConsumptionState.ToString(),
+                Platform = Device.RuntimePlatform,
                 TransactionDateUtc = inAppBillingPurchase.TransactionDateUtc
             };
         }
