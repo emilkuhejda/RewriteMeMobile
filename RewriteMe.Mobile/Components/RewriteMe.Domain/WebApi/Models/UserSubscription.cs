@@ -6,6 +6,7 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -22,7 +23,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the UserSubscription class.
         /// </summary>
-        public UserSubscription(System.Guid? id = default(System.Guid?), System.Guid? userId = default(System.Guid?), string timeString = default(string), System.DateTime? dateCreated = default(System.DateTime?))
+        public UserSubscription(System.Guid id, System.Guid userId, string timeString, System.DateTime dateCreated)
         {
             Id = id;
             UserId = userId;
@@ -39,12 +40,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public System.Guid? Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "userId")]
-        public System.Guid? UserId { get; set; }
+        public System.Guid UserId { get; set; }
 
         /// <summary>
         /// </summary>
@@ -54,7 +55,27 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "dateCreated")]
-        public System.DateTime? DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (TimeString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TimeString");
+            }
+            if (TimeString != null)
+            {
+                if (TimeString.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "TimeString", 50);
+                }
+            }
+        }
     }
 }

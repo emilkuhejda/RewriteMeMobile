@@ -15,8 +15,7 @@ namespace RewriteMe.DataAccess.DataAdapters
             };
         }
 
-        public static TranscriptAudioSourceEntity ToTranscriptAudioSourceEntity(
-            this TranscriptAudioSource transcriptAudioSource)
+        public static TranscriptAudioSourceEntity ToTranscriptAudioSourceEntity(this TranscriptAudioSource transcriptAudioSource)
         {
             return new TranscriptAudioSourceEntity
             {

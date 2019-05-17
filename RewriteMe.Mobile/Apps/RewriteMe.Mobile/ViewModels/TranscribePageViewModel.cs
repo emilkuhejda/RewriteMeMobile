@@ -128,17 +128,13 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteTranscribeCommandAsync()
         {
-            if (!FileItem.Id.HasValue)
-                return;
-
             using (new OperationMonitor(OperationScope))
             {
                 CanGoBack = false;
 
                 try
                 {
-                    await _fileItemService.TranscribeAsync(FileItem.Id.Value, SelectedLanguage.Culture)
-                        .ConfigureAwait(false);
+                    await _fileItemService.TranscribeAsync(FileItem.Id, SelectedLanguage.Culture).ConfigureAwait(false);
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
                 catch (ErrorRequestException ex)

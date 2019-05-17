@@ -116,13 +116,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                var transcribeItemId = TranscribeItem.Id ?? Guid.Empty;
-                var transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(transcribeItemId).ConfigureAwait(false);
+                var transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(TranscribeItem.Id).ConfigureAwait(false);
                 var source = transcriptAudioSource?.Source;
 
                 if (transcriptAudioSource == null)
                 {
-                    var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(transcribeItemId).ConfigureAwait(false);
+                    var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(TranscribeItem.Id).ConfigureAwait(false);
                     if (httpRequestResult.State == HttpRequestState.Success)
                     {
                         source = httpRequestResult.Payload;
@@ -130,7 +129,7 @@ namespace RewriteMe.Mobile.ViewModels
                         var audioSource = new TranscriptAudioSource
                         {
                             Id = Guid.NewGuid(),
-                            TranscribeItemId = transcribeItemId,
+                            TranscribeItemId = TranscribeItem.Id,
                             Source = source
                         };
 

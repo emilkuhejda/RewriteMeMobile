@@ -6,6 +6,7 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -22,7 +23,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the AudioSource class.
         /// </summary>
-        public AudioSource(System.Guid? id = default(System.Guid?), System.Guid? fileItemId = default(System.Guid?), string contentType = default(string), int? version = default(int?))
+        public AudioSource(System.Guid id, System.Guid fileItemId, string contentType, int version)
         {
             Id = id;
             FileItemId = fileItemId;
@@ -39,12 +40,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public System.Guid? Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "fileItemId")]
-        public System.Guid? FileItemId { get; set; }
+        public System.Guid FileItemId { get; set; }
 
         /// <summary>
         /// </summary>
@@ -54,7 +55,27 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "version")]
-        public int? Version { get; set; }
+        public int Version { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (ContentType == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ContentType");
+            }
+            if (ContentType != null)
+            {
+                if (ContentType.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "ContentType", 50);
+                }
+            }
+        }
     }
 }
