@@ -66,6 +66,19 @@ namespace RewriteMe.DataAccess.Repositories
             }).ConfigureAwait(false);
         }
 
+        public async Task DeleteAsync(IEnumerable<Guid> fileItemIds)
+        {
+            foreach (var fileItemId in fileItemIds)
+            {
+                await _contextProvider.Context.DeleteAsync(fileItemId).ConfigureAwait(false);
+            }
+        }
+
+        public async Task DeleteAsync(Guid fileItemId)
+        {
+            await _contextProvider.Context.DeleteAsync(fileItemId).ConfigureAwait(false);
+        }
+
         public async Task UpdateRecognitionStateAsync(Guid fileItemId, RecognitionState recognitionState)
         {
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);

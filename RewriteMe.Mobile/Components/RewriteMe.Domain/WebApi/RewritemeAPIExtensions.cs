@@ -51,6 +51,36 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='updatedAfter'>
+            /// </param>
+            /// <param name='applicationId'>
+            /// </param>
+            public static IList<System.Guid?> GetDeletedFileItemIds(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?))
+            {
+                return operations.GetDeletedFileItemIdsAsync(updatedAfter, applicationId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='updatedAfter'>
+            /// </param>
+            /// <param name='applicationId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IList<System.Guid?>> GetDeletedFileItemIdsAsync(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetDeletedFileItemIdsWithHttpMessagesAsync(updatedAfter, applicationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='fileItemId'>
             /// </param>
             public static FileItem GetFileItem(this IRewriteMeAPI operations, System.Guid fileItemId)
@@ -167,9 +197,9 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='id'>
             /// </param>
-            public static Ok RemoveFileItem(this IRewriteMeAPI operations, string id)
+            public static Ok DeleteFileItem(this IRewriteMeAPI operations, string id)
             {
-                return operations.RemoveFileItemAsync(id).GetAwaiter().GetResult();
+                return operations.DeleteFileItemAsync(id).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -180,9 +210,9 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Ok> RemoveFileItemAsync(this IRewriteMeAPI operations, string id, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Ok> DeleteFileItemAsync(this IRewriteMeAPI operations, string id, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RemoveFileItemWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.DeleteFileItemWithHttpMessagesAsync(id, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

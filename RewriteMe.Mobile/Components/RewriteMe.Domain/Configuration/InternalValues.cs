@@ -8,6 +8,8 @@ namespace RewriteMe.Domain.Configuration
 
         public static InternalValue<DateTime> FileItemSynchronization { get; } = new InternalValue<DateTime>("FileItemSynchronization", default(DateTime));
 
+        public static InternalValue<DateTime> DeletedFileItemSynchronization { get; } = new InternalValue<DateTime>("DeletedFileItemSynchronization", default(DateTime));
+
         public static InternalValue<DateTime> TranscribeItemSynchronization { get; } = new InternalValue<DateTime>("TranscribeItemSynchronization", default(DateTime));
 
         public static InternalValue<DateTime> UserSubscriptionSynchronization { get; } = new InternalValue<DateTime>("UserSubscriptionSynchronization", default(DateTime));

@@ -42,6 +42,7 @@ namespace RewriteMe.Business.Services
             var updateMethods = new List<Func<Task>>
             {
                 UpdateFileItemsAsync,
+                DeletedFileItemsSynchronizationAsync,
                 UpdateTranscribeItemsAsync,
                 UpdateUserSubscriptionAsync
             };
@@ -73,6 +74,14 @@ namespace RewriteMe.Business.Services
             var applicationFileItemUpdateDate = _lastUpdatesService.GetFileItemLastUpdate();
 
             await _fileItemService.SynchronizationAsync(applicationFileItemUpdateDate).ConfigureAwait(false);
+        }
+
+        private async Task DeletedFileItemsSynchronizationAsync()
+        {
+            var lastFileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
+            var applicationDeletedFileItemUpdateDate = _lastUpdatesService.GetDeletedFileItemLastUpdate();
+
+            await _fileItemService.DeletedFileItemsSynchronizationAsync(applicationDeletedFileItemUpdateDate, lastFileItemSynchronization).ConfigureAwait(false);
         }
 
         private async Task UpdateTranscribeItemsAsync()

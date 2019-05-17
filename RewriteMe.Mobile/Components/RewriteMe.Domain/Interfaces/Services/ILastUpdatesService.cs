@@ -11,6 +11,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         DateTime GetFileItemLastUpdate();
 
+        DateTime GetDeletedFileItemLastUpdate();
+
         DateTime GetTranscribeItemLastUpdate();
 
         DateTime GetUserSubscriptionLastUpdate();
