@@ -18,6 +18,8 @@
 
         public static string Settings { get; } = "Settings";
 
+        public static string UserSubscriptions { get; } = "UserSubscriptions";
+
         public static string UserSettings { get; } = "UserSettings";
 
         public static string Developer { get; } = "Developer";

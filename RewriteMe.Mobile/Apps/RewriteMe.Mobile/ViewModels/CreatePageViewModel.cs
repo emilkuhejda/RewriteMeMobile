@@ -173,8 +173,8 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteUploadFileCommandAsync()
         {
             var selectedFile = await ThreadHelper
-                    .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
-                    .ConfigureAwait(false);
+                .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
+                .ConfigureAwait(false);
 
             var totalTime = _mediaService.GetTotalTime(selectedFile.FilePath);
             var canTranscribe = await _fileItemService.CanTranscribeAsync(totalTime).ConfigureAwait(false);

@@ -91,8 +91,8 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine()
                     .AppendLine()
                     .AppendLine("_______________________________________")
-                    .AppendLine($"{Loc.Text(TranslationKeys.DeviceHardwareLabel)} {_hardwareInfo.Manufacturer} {_hardwareInfo.Model}")
-                    .AppendLine($"{Loc.Text(TranslationKeys.OperatingSystemLabel)} {Device.RuntimePlatform} {_hardwareInfo.OperatingSystem}")
+                    .AppendLine($"Device hardware: {_hardwareInfo.Manufacturer} {_hardwareInfo.Model}")
+                    .AppendLine($"Operating system: {Device.RuntimePlatform} {_hardwareInfo.OperatingSystem}")
                     .ToString();
 
                 _emailTask.SendEmail(_applicationSettings.SupportMailAddress, subject, message);

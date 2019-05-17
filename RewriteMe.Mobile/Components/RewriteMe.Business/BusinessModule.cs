@@ -24,6 +24,7 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<IApplicationSettings, ApplicationSettings>();
             containerRegistry.RegisterSingleton<IUserSessionService, UserSessionService>();
             containerRegistry.RegisterSingleton<IUserSubscriptionService, UserSubscriptionService>();
+            containerRegistry.RegisterSingleton<IBillingPurchaseService, BillingPurchaseService>();
             containerRegistry.RegisterSingleton<ILastUpdatesService, LastUpdatesService>();
             containerRegistry.RegisterSingleton<ISynchronizationService, SynchronizationService>();
             containerRegistry.RegisterSingleton<IFileItemService, FileItemService>();

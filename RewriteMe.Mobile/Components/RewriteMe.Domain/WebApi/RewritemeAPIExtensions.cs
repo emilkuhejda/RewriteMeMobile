@@ -390,5 +390,35 @@ namespace RewriteMe.Domain.WebApi
                 }
             }
 
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingPurchase'>
+            /// </param>
+            /// <param name='applicationId'>
+            /// </param>
+            public static object CreateUserSubscription(this IRewriteMeAPI operations, BillingPurchase billingPurchase = default(BillingPurchase), System.Guid? applicationId = default(System.Guid?))
+            {
+                return operations.CreateUserSubscriptionAsync(billingPurchase, applicationId).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='billingPurchase'>
+            /// </param>
+            /// <param name='applicationId'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> CreateUserSubscriptionAsync(this IRewriteMeAPI operations, BillingPurchase billingPurchase = default(BillingPurchase), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(billingPurchase, applicationId, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

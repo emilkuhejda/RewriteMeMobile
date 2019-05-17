@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.UserSubscriptionsPage"
+                          xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+                          xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
+                          Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}">
+    <views:BaseNavigationPage.Resources>
+        <DataTemplate x:Key="ProductsTemplate">
+            <ViewCell>
+                <ViewCell.View>
+                    <Button Margin="20,0,20,20"
+                            Command="{Binding BuyCommand}"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Text="{Binding Text}" />
+                </ViewCell.View>
+            </ViewCell>
+        </DataTemplate>
+    </views:BaseNavigationPage.Resources>
+
+    <Grid>
+        <Grid Grid.Row="0"
+              Grid.Column="0"
+              Padding="{StaticResource StandardPadding}">
+            <ListView HasUnevenRows="True"
+                      ItemTemplate="{StaticResource ProductsTemplate}"
+                      ItemsSource="{Binding Products}"
+                      SeparatorVisibility="None"
+                      VerticalOptions="Start" />
+        </Grid>
+
+        <controls:PageActivityIndicator Grid.Row="0"
+                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
+                                        IsVisible="{Binding OperationScope.IsBusy}" />
+    </Grid>
+</views:BaseNavigationPage>

@@ -15,29 +15,29 @@ namespace RewriteMe.Business.Services
     public class UserSubscriptionService : IUserSubscriptionService
     {
         private readonly IInternalValueService _internalValueService;
+        private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IUserSubscriptionRepository _userSubscriptionRepository;
         private readonly IFileItemRepository _fileItemRepository;
-        private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly ILogger _logger;
 
         public UserSubscriptionService(
             IInternalValueService internalValueService,
+            IRewriteMeWebService rewriteMeWebService,
             IUserSubscriptionRepository userSubscriptionRepository,
             IFileItemRepository fileItemRepository,
-            IRewriteMeWebService rewriteMeWebService,
             ILoggerFactory loggerFactory)
         {
             _internalValueService = internalValueService;
+            _rewriteMeWebService = rewriteMeWebService;
             _userSubscriptionRepository = userSubscriptionRepository;
             _fileItemRepository = fileItemRepository;
-            _rewriteMeWebService = rewriteMeWebService;
             _logger = loggerFactory.CreateLogger(typeof(UserSubscriptionService));
         }
 
         public async Task SynchronizationAsync(DateTime applicationUpdateDate)
         {
             var lastUserSubscriptionSynchronization = await _internalValueService.GetValueAsync(InternalValues.UserSubscriptionSynchronization).ConfigureAwait(false);
-            _logger.Debug($"Update user subscription with timestamp '{lastUserSubscriptionSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
+            _logger.Debug($"Update user subscriptions with timestamp '{lastUserSubscriptionSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
             if (applicationUpdateDate >= lastUserSubscriptionSynchronization)
             {

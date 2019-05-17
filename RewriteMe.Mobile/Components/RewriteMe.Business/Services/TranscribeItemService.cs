@@ -35,7 +35,7 @@ namespace RewriteMe.Business.Services
         public async Task SynchronizationAsync(DateTime applicationUpdateDate)
         {
             var lastTranscribeItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.TranscribeItemSynchronization).ConfigureAwait(false);
-            _logger.Debug($"Update transcribe item with timestamp '{lastTranscribeItemSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
+            _logger.Debug($"Update transcribe items with timestamp '{lastTranscribeItemSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
             if (applicationUpdateDate >= lastTranscribeItemSynchronization)
             {
