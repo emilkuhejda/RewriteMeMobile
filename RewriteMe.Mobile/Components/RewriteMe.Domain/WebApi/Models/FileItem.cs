@@ -6,6 +6,7 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -22,7 +23,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the FileItem class.
         /// </summary>
-        public FileItem(System.Guid? id = default(System.Guid?), string name = default(string), string fileName = default(string), string language = default(string), string recognitionStateString = default(string), string totalTimeString = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.DateTime? dateProcessed = default(System.DateTime?), System.DateTime? dateUpdated = default(System.DateTime?), int? audioSourceVersion = default(int?), AudioSource audioSource = default(AudioSource))
+        public FileItem(System.Guid id, string name, string fileName, string language, string recognitionStateString, string totalTimeString, System.DateTime dateCreated, System.DateTime dateUpdated, int audioSourceVersion, System.DateTime? dateProcessed = default(System.DateTime?), AudioSource audioSource = default(AudioSource))
         {
             Id = id;
             Name = name;
@@ -46,7 +47,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public System.Guid? Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// </summary>
@@ -76,7 +77,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "dateCreated")]
-        public System.DateTime? DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
 
         /// <summary>
         /// </summary>
@@ -86,17 +87,85 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "dateUpdated")]
-        public System.DateTime? DateUpdated { get; set; }
+        public System.DateTime DateUpdated { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "audioSourceVersion")]
-        public int? AudioSourceVersion { get; set; }
+        public int AudioSourceVersion { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "audioSource")]
         public AudioSource AudioSource { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Name == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
+            }
+            if (FileName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FileName");
+            }
+            if (Language == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Language");
+            }
+            if (RecognitionStateString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "RecognitionStateString");
+            }
+            if (TotalTimeString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TotalTimeString");
+            }
+            if (Name != null)
+            {
+                if (Name.Length > 150)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Name", 150);
+                }
+            }
+            if (FileName != null)
+            {
+                if (FileName.Length > 150)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "FileName", 150);
+                }
+            }
+            if (Language != null)
+            {
+                if (Language.Length > 20)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "Language", 20);
+                }
+            }
+            if (RecognitionStateString != null)
+            {
+                if (RecognitionStateString.Length > 20)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "RecognitionStateString", 20);
+                }
+            }
+            if (TotalTimeString != null)
+            {
+                if (TotalTimeString.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "TotalTimeString", 50);
+                }
+            }
+            if (AudioSource != null)
+            {
+                AudioSource.Validate();
+            }
+        }
     }
 }

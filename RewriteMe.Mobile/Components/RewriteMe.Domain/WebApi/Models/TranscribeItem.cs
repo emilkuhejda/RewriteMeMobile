@@ -6,6 +6,7 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Collections;
     using System.Collections.Generic;
@@ -24,7 +25,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the TranscribeItem class.
         /// </summary>
-        public TranscribeItem(System.Guid? id = default(System.Guid?), System.Guid? fileItemId = default(System.Guid?), IList<RecognitionAlternative> alternatives = default(IList<RecognitionAlternative>), string userTranscript = default(string), string startTimeString = default(string), string endTimeString = default(string), string totalTimeString = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.DateTime? dateUpdated = default(System.DateTime?))
+        public TranscribeItem(System.Guid id, System.Guid fileItemId, IList<RecognitionAlternative> alternatives, string userTranscript, string startTimeString, string endTimeString, string totalTimeString, System.DateTime dateCreated, System.DateTime dateUpdated)
         {
             Id = id;
             FileItemId = fileItemId;
@@ -46,12 +47,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public System.Guid? Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "fileItemId")]
-        public System.Guid? FileItemId { get; set; }
+        public System.Guid FileItemId { get; set; }
 
         /// <summary>
         /// </summary>
@@ -81,12 +82,62 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "dateCreated")]
-        public System.DateTime? DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "dateUpdated")]
-        public System.DateTime? DateUpdated { get; set; }
+        public System.DateTime DateUpdated { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Alternatives == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Alternatives");
+            }
+            if (UserTranscript == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "UserTranscript");
+            }
+            if (StartTimeString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "StartTimeString");
+            }
+            if (EndTimeString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "EndTimeString");
+            }
+            if (TotalTimeString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TotalTimeString");
+            }
+            if (StartTimeString != null)
+            {
+                if (StartTimeString.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "StartTimeString", 50);
+                }
+            }
+            if (EndTimeString != null)
+            {
+                if (EndTimeString.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "EndTimeString", 50);
+                }
+            }
+            if (TotalTimeString != null)
+            {
+                if (TotalTimeString.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "TotalTimeString", 50);
+                }
+            }
+        }
     }
 }

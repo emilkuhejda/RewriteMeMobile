@@ -22,7 +22,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the LastUpdates class.
         /// </summary>
-        public LastUpdates(System.DateTime? fileItem = default(System.DateTime?), System.DateTime? transcribeItem = default(System.DateTime?), System.DateTime? userSubscription = default(System.DateTime?))
+        public LastUpdates(System.DateTime fileItem, System.DateTime transcribeItem, System.DateTime userSubscription)
         {
             FileItem = fileItem;
             TranscribeItem = transcribeItem;
@@ -38,17 +38,27 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "fileItem")]
-        public System.DateTime? FileItem { get; set; }
+        public System.DateTime FileItem { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "transcribeItem")]
-        public System.DateTime? TranscribeItem { get; set; }
+        public System.DateTime TranscribeItem { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "userSubscription")]
-        public System.DateTime? UserSubscription { get; set; }
+        public System.DateTime UserSubscription { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

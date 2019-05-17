@@ -28,15 +28,15 @@ namespace RewriteMe.DataAccess.DataAdapters
         {
             return new TranscribeItemEntity
             {
-                Id = transcribeItem.Id.GetValueOrDefault(),
-                FileItemId = transcribeItem.FileItemId.GetValueOrDefault(),
+                Id = transcribeItem.Id,
+                FileItemId = transcribeItem.FileItemId,
                 Alternatives = JsonConvert.SerializeObject(transcribeItem.Alternatives),
                 UserTranscript = transcribeItem.UserTranscript,
                 StartTime = transcribeItem.StartTime,
                 EndTime = transcribeItem.EndTime,
                 TotalTime = transcribeItem.TotalTime,
-                DateCreated = transcribeItem.DateCreated.GetValueOrDefault(),
-                DateUpdated = transcribeItem.DateCreated.GetValueOrDefault(),
+                DateCreated = transcribeItem.DateCreated,
+                DateUpdated = transcribeItem.DateCreated,
                 IsPendingSynchronization = transcribeItem.IsPendingSynchronization
             };
         }

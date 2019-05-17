@@ -22,7 +22,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the Ok class.
         /// </summary>
-        public Ok(System.DateTime? dateTime = default(System.DateTime?))
+        public Ok(System.DateTime dateTime)
         {
             DateTime = dateTime;
             CustomInit();
@@ -36,7 +36,17 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "dateTime")]
-        public System.DateTime? DateTime { get; private set; }
+        public System.DateTime DateTime { get; private set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

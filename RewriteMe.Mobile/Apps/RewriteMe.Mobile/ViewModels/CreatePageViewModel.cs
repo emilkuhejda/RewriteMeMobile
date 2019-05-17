@@ -216,7 +216,7 @@ namespace RewriteMe.Mobile.ViewModels
             var func = new Func<MediaFile, Task>(async mediaFile =>
             {
                 var fileItem = await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
-                await _fileItemService.TranscribeAsync(fileItem.Id ?? Guid.Empty, fileItem.Language).ConfigureAwait(false);
+                await _fileItemService.TranscribeAsync(fileItem.Id, fileItem.Language).ConfigureAwait(false);
                 await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
             });
 

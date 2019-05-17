@@ -86,8 +86,7 @@ namespace RewriteMe.Business.Services
 
         private async void Send(TranscribeItem transcribeItem)
         {
-            var transcribeItemId = transcribeItem.Id ?? Guid.Empty;
-            var httpRequestResult = await _rewriteMeWebService.UpdateUserTranscriptAsync(transcribeItemId, transcribeItem.UserTranscript).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.UpdateUserTranscriptAsync(transcribeItem.Id, transcribeItem.UserTranscript).ConfigureAwait(false);
             if (httpRequestResult.State != HttpRequestState.Success)
             {
                 transcribeItem.IsPendingSynchronization = true;
