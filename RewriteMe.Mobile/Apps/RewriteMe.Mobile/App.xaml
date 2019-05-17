@@ -39,14 +39,12 @@
             <Color x:Key="ColorBlack">#000000</Color>
             <Color x:Key="ColorWhite">#FFFFFF</Color>
 
-            <Color x:Key="ApplicationDefaultColor">#FF1ABC9C</Color>
-            <Color x:Key="ApplicationTitleTextColor">#FFFFFF</Color>
             <Color x:Key="WindowBackground">#FFFFFF</Color>
             <Color x:Key="PrimaryTextColor">#616161</Color>
-            <Color x:Key="ColorPrimary">#FF3CEAE1</Color>
-            <Color x:Key="ColorPrimaryBright">#FFAD3333</Color>
-            <Color x:Key="ColorPrimaryDark">#FFFFFF</Color>
-            <Color x:Key="StatusBarColor">#FF3CEAE1</Color>
+            <Color x:Key="ColorPrimary">#FF1ABC9C</Color>
+            <Color x:Key="ColorPrimaryBright">#FF28E2BC</Color>
+            <Color x:Key="ColorPrimaryDark">#FF1DB496</Color>
+            <Color x:Key="ApplicationTitleTextColor">#FFFFFF</Color>
             <Color x:Key="NavigationBarGray">#D8D8D8</Color>
             <Color x:Key="Divider">#C8C7CC</Color>
             <Color x:Key="ActionBarBorderColor">#BDBDBD</Color>
@@ -241,8 +239,8 @@
             </Style>
 
             <Style x:Key="ActionButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource ApplicationDefaultColor}" />
-                <Setter Property="BorderColor" Value="{StaticResource ApplicationDefaultColor}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
+                <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="CornerRadius" Value="30" />
                 <Setter Property="FontAttributes" Value="Bold" />
                 <Setter Property="TextColor" Value="{StaticResource ColorWhite}" />
@@ -251,7 +249,7 @@
             </Style>
 
             <Style x:Key="InProgressBackground" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="{StaticResource ApplicationDefaultColor}" />
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="CornerRadius" Value="25" />
                 <Setter Property="Padding" Value="10,2,10,2" />
                 <Setter Property="HeightRequest" Value="20" />
@@ -301,7 +299,7 @@
 
                     <!--  iPhone action bar fix  -->
                     <BoxView Grid.Row="0"
-                             BackgroundColor="{StaticResource StatusBarColor}"
+                             BackgroundColor="{StaticResource ColorPrimary}"
                              HorizontalOptions="FillAndExpand"
                              VerticalOptions="FillAndExpand" />
 
