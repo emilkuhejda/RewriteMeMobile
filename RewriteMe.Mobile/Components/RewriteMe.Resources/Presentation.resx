@@ -98,7 +98,7 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  
+
   <data name="Language_EN_GB" xml:space="preserve">
     <value>English (United Kingdom)</value>
   </data>
@@ -108,7 +108,7 @@
   <data name="Language_SK_SK" xml:space="preserve">
     <value>Slovak (Slovakia)</value>
   </data>
-  
+
   <data name="ApplicationTitle" xml:space="preserve">
     <value>RewriteMe</value>
   </data>
@@ -142,9 +142,6 @@
   <data name="RegistrationErrorMessage" xml:space="preserve">
     <value>Registration was not successful. Application might not work correctly. Please, contact us.</value>
   </data>
-  <data name="UserIdentificationLabel" xml:space="preserve">
-    <value>User identification:</value>
-  </data>
   <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
@@ -175,6 +172,9 @@
   <data name="ContactUs" xml:space="preserve">
     <value>Contact us</value>
   </data>
+  <data name="Subscriptions" xml:space="preserve">
+    <value>Subscriptions</value>
+  </data>
   <data name="Developer" xml:space="preserve">
     <value>Developer</value>
   </data>
@@ -202,20 +202,8 @@
   <data name="EmailIsNotSupported" xml:space="preserve">
     <value>E-mail is not supported on this device</value>
   </data>
-  <data name="ApplicationVersion" xml:space="preserve">
-    <value>Application version</value>
-  </data>
-  <data name="TimeStamp" xml:space="preserve">
-    <value>Time stamp</value>
-  </data>
   <data name="ApplicationTitleLog" xml:space="preserve">
     <value>RewriteMe - Log</value>
-  </data>
-  <data name="DeviceHardwareLabel" xml:space="preserve">
-    <value>Device hardware:</value>
-  </data>
-  <data name="OperatingSystemLabel" xml:space="preserve">
-    <value>Operating system:</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
@@ -238,7 +226,13 @@
   <data name="InProgressLabel" xml:space="preserve">
     <value>In progress</value>
   </data>
-
+  <data name="OneHour" xml:space="preserve">
+    <value>1 Hour</value>
+  </data>
+  <data name="TenHours" xml:space="preserve">
+    <value>10 Hours</value>
+  </data>
+  
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>
   </data>
@@ -268,5 +262,32 @@
   </data>
   <data name="NoAvailableData" xml:space="preserve">
     <value>No available data</value>
+  </data>
+  <data name="SubscriptionWasSuccessfullyPurchased" xml:space="preserve">
+    <value>Subscription was successfully purchased.</value>
+  </data>
+  <data name="AppStoreUnavailableErrorMessage" xml:space="preserve">
+    <value>Currently the app store seems to be unavailble. Try again later.</value>
+  </data>
+  <data name="BillingUnavailableErrorMessage" xml:space="preserve">
+    <value>Billing seems to be unavailable, please try again later.</value>
+  </data>
+  <data name="PaymentInvalidErrorMessage" xml:space="preserve">
+    <value>Payment seems to be invalid, please try again.</value>
+  </data>
+  <data name="PaymentNotAllowedErrorMessage" xml:space="preserve">
+    <value>Payment does not seem to be enabled/allowed, please try again.</value>
+  </data>
+  <data name="RegistrationPurchaseBillingErrorMessage" xml:space="preserve">
+    <value>Subscription was purchased but it was not successfully registered. Please, contact us.</value>
+  </data>
+  <data name="InAppBillingIsNotSupportedErrorMessage" xml:space="preserve">
+    <value>Payment method is not supported. Please, configure it first.</value>
+  </data>
+  <data name="PurchaseProcessedIncorrectlyErrorMessage" xml:space="preserve">
+    <value>Purchase was processed incorrectly. Please, contact us.</value>
+  </data>
+  <data name="PurchaseWasNotProcessedErrorMessage" xml:space="preserve">
+    <value>Purchase was not processed. Please try again.</value>
   </data>
 </root>

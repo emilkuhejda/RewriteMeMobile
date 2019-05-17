@@ -1,5 +1,4 @@
-﻿using System;
-using RewriteMe.Domain.Configuration;
+﻿using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Business.Extensions
@@ -10,7 +9,7 @@ namespace RewriteMe.Business.Extensions
         {
             return new RegisterUserModel
             {
-                Id = Guid.Parse(userSession.ObjectId),
+                Id = userSession.ObjectId,
                 Email = userSession.Email,
                 GivenName = userSession.GivenName,
                 FamilyName = userSession.FamilyName

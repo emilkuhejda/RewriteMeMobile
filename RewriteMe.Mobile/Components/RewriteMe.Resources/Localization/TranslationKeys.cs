@@ -17,7 +17,6 @@
         public static string UserRegistration => "UserRegistration";
         public static string RegistrationErrorTitle => "RegistrationErrorTitle";
         public static string RegistrationErrorMessage => "RegistrationErrorMessage";
-        public static string UserIdentificationLabel => "UserIdentificationLabel";
         public static string English => "English";
         public static string Slovak => "Slovak";
         public static string Settings => "Settings";
@@ -28,6 +27,7 @@
         public static string SignOut => "SignOut";
         public static string Version => "Version";
         public static string ContactUs => "ContactUs";
+        public static string Subscriptions => "Subscriptions";
         public static string Developer => "Developer";
         public static string Clear => "Clear";
         public static string Reload => "Reload";
@@ -36,11 +36,7 @@
         public static string Ok => "Ok";
         public static string DeveloperModeIsActivated => "DeveloperModeIsActivated";
         public static string EmailIsNotSupported => "EmailIsNotSupported";
-        public static string ApplicationVersion => "ApplicationVersion";
-        public static string TimeStamp => "TimeStamp";
         public static string ApplicationTitleLog => "ApplicationTitleLog";
-        public static string DeviceHardwareLabel => "DeviceHardwareLabel";
-        public static string OperatingSystemLabel => "OperatingSystemLabel";
         public static string Name => "Name";
         public static string UploadFile => "UploadFile";
         public static string Send => "Send";
@@ -48,6 +44,8 @@
         public static string SaveAndTranscribe => "SaveAndTranscribe";
         public static string Transcribe => "Transcribe";
         public static string InProgressLabel => "InProgressLabel";
+        public static string OneHour => "OneHour";
+        public static string TenHours => "TenHours";
 
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
         public static string OfflineErrorMessage => "OfflineErrorMessage";
@@ -59,5 +57,14 @@
         public static string TranscribeAudioSourceNotFoundErrorMessage => "TranscribeAudioSourceNotFoundErrorMessage";
         public static string RemainingTime => "RemainingTime";
         public static string NoAvailableData => "NoAvailableData";
+        public static string SubscriptionWasSuccessfullyPurchased => "SubscriptionWasSuccessfullyPurchased";
+        public static string AppStoreUnavailableErrorMessage => "AppStoreUnavailableErrorMessage";
+        public static string BillingUnavailableErrorMessage => "BillingUnavailableErrorMessage";
+        public static string PaymentInvalidErrorMessage => "PaymentInvalidErrorMessage";
+        public static string PaymentNotAllowedErrorMessage => "PaymentNotAllowed";
+        public static string RegistrationPurchaseBillingErrorMessage => "RegistrationPurchaseBillingErrorMessage";
+        public static string InAppBillingIsNotSupportedErrorMessage => "InAppBillingIsNotSupportedErrorMessage";
+        public static string PurchaseProcessedIncorrectlyErrorMessage => "PurchaseProcessedIncorrectlyErrorMessage";
+        public static string PurchaseWasNotProcessedErrorMessage => "PurchaseWasNotProcessedErrorMessage";
     }
 }

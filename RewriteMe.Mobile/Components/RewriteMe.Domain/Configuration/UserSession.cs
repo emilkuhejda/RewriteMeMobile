@@ -1,8 +1,10 @@
-﻿namespace RewriteMe.Domain.Configuration
+﻿using System;
+
+namespace RewriteMe.Domain.Configuration
 {
     public class UserSession
     {
-        public string ObjectId { get; set; }
+        public Guid ObjectId { get; set; }
 
         public string Email { get; set; }
 

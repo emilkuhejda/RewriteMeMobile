@@ -31,7 +31,7 @@ namespace RewriteMe.Business.Services
         private readonly IUserSubscriptionRepository _userSubscriptionRepository;
         private readonly ILogger _logger;
 
-        private string _userId;
+        private Guid _userId = Guid.Empty;
         private string _accessToken;
 
         public UserSessionService(
@@ -59,9 +59,9 @@ namespace RewriteMe.Business.Services
                 applicationSettings.RedirectUri);
         }
 
-        public async Task<string> GetUserIdAsync()
+        public async Task<Guid> GetUserIdAsync()
         {
-            if (_userId != null)
+            if (_userId != Guid.Empty)
                 return _userId;
 
             var userSession = await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
@@ -286,7 +286,7 @@ namespace RewriteMe.Business.Services
         {
             _logger.Info("Sign out");
 
-            _userId = null;
+            _userId = Guid.Empty;
             _accessToken = null;
 
             await RemoveLocalAccountsAsync().ConfigureAwait(false);
@@ -374,7 +374,7 @@ namespace RewriteMe.Business.Services
             _logger.Debug($"Update user session for '{accessToken.GivenName} {accessToken.FamilyName}' with id '{accessToken.ObjectId}'.");
 
             var userSession = await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
-            userSession.ObjectId = accessToken.ObjectId;
+            userSession.ObjectId = Guid.Parse(accessToken.ObjectId);
             userSession.Email = accessToken.Email;
             userSession.GivenName = accessToken.GivenName;
             userSession.FamilyName = accessToken.FamilyName;
@@ -386,7 +386,7 @@ namespace RewriteMe.Business.Services
 
         private void ValidateUserSession(UserSession userSession)
         {
-            if (string.IsNullOrEmpty(userSession.ObjectId))
+            if (userSession.ObjectId == Guid.Empty)
             {
                 throw new InvalidOperationException("The current user session is not valid.");
             }
