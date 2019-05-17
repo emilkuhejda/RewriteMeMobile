@@ -37,7 +37,7 @@
     <EnableLLVM>false</EnableLLVM>
     <BundleAssemblies>false</BundleAssemblies>
     <AndroidKeyStore>True</AndroidKeyStore>
-    <AndroidSigningKeyStore>D:\Projects\RewriteMeMobile\Keystore\RewriteMe.keystore</AndroidSigningKeyStore>
+    <AndroidSigningKeyStore>D:\Projects\RewriteMeMobile\Certificates\Android\RewriteMe.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>4DGntEAqtW3C</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>RewriteMe</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>4DGntEAqtW3C</AndroidSigningKeyPass>

@@ -24,11 +24,11 @@
         <Grid Grid.Row="0"
               Grid.Column="0"
               Padding="{StaticResource StandardPadding}">
-            <ListView Grid.Row="1"
-                      HasUnevenRows="True"
+            <ListView HasUnevenRows="True"
                       ItemTemplate="{StaticResource ProductsTemplate}"
                       ItemsSource="{Binding Products}"
-                      SeparatorVisibility="None" />
+                      SeparatorVisibility="None"
+                      VerticalOptions="Start" />
         </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"
