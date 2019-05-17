@@ -20,18 +20,18 @@ namespace RewriteMe.DataAccess.Entities
         [MaxLength(20)]
         public string Language { get; set; }
 
-        [MaxLength(50)]
+        [MaxLength(20)]
         public RecognitionState RecognitionState { get; set; }
 
         public TimeSpan TotalTime { get; set; }
 
         public DateTime DateCreated { get; set; }
 
-        public DateTime DateProcessed { get; set; }
+        public DateTime? DateProcessed { get; set; }
 
         public DateTime DateUpdated { get; set; }
 
-        public int? AudioSourceVersion { get; set; }
+        public int AudioSourceVersion { get; set; }
 
         [OneToOne(CascadeOperations = CascadeOperation.All)]
         public AudioSourceEntity AudioSource { get; set; }

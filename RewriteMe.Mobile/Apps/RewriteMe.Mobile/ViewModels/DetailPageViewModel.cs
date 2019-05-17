@@ -87,8 +87,7 @@ namespace RewriteMe.Mobile.ViewModels
                     FileItem = navigationParameters.GetValue<FileItem>();
                     Title = FileItem.Name;
 
-                    var fileItemId = FileItem.Id ?? Guid.Empty;
-                    var transcribeItems = await _transcribeItemService.GetAllAsync(fileItemId).ConfigureAwait(false);
+                    var transcribeItems = await _transcribeItemService.GetAllAsync(FileItem.Id).ConfigureAwait(false);
 
                     TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
                     TranscribeItems = transcribeItems.OrderBy(x => x.StartTime).Select(CreateTranscribeItemViewModel).ToList();

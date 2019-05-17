@@ -13,6 +13,7 @@ namespace RewriteMe.DataAccess.Entities
         [ForeignKey(typeof(FileItemEntity))]
         public Guid FileItemId { get; set; }
 
+        [MaxLength(20)]
         public string ContentType { get; set; }
 
         public int Version { get; set; }

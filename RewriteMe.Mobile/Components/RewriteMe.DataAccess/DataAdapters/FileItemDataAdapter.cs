@@ -26,16 +26,16 @@ namespace RewriteMe.DataAccess.DataAdapters
         {
             return new FileItemEntity
             {
-                Id = fileItem.Id.GetValueOrDefault(),
+                Id = fileItem.Id,
                 Name = fileItem.Name,
                 FileName = fileItem.FileName,
                 Language = fileItem.Language,
                 RecognitionState = fileItem.RecognitionState,
                 TotalTime = fileItem.TotalTime,
-                DateCreated = fileItem.DateCreated.GetValueOrDefault(),
-                DateProcessed = fileItem.DateProcessed.GetValueOrDefault(),
-                DateUpdated = fileItem.DateUpdated.GetValueOrDefault(),
-                AudioSourceVersion = fileItem.AudioSourceVersion.GetValueOrDefault()
+                DateCreated = fileItem.DateCreated,
+                DateProcessed = fileItem.DateProcessed,
+                DateUpdated = fileItem.DateUpdated,
+                AudioSourceVersion = fileItem.AudioSourceVersion
             };
         }
     }

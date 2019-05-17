@@ -20,10 +20,10 @@ namespace RewriteMe.DataAccess.DataAdapters
         {
             return new UserSubscriptionEntity
             {
-                Id = userSubscription.Id.GetValueOrDefault(),
-                UserId = userSubscription.UserId.GetValueOrDefault(),
+                Id = userSubscription.Id,
+                UserId = userSubscription.UserId,
                 Time = userSubscription.Time,
-                DateCreated = userSubscription.DateCreated.GetValueOrDefault()
+                DateCreated = userSubscription.DateCreated
             };
         }
     }

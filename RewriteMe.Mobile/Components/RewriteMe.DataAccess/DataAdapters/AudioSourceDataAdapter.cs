@@ -20,10 +20,10 @@ namespace RewriteMe.DataAccess.DataAdapters
         {
             return new AudioSourceEntity
             {
-                Id = audioSource.Id.GetValueOrDefault(),
-                FileItemId = audioSource.FileItemId.GetValueOrDefault(),
+                Id = audioSource.Id,
+                FileItemId = audioSource.FileItemId,
                 ContentType = audioSource.ContentType,
-                Version = audioSource.Version.GetValueOrDefault()
+                Version = audioSource.Version
             };
         }
     }
