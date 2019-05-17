@@ -76,6 +76,16 @@ namespace RewriteMe.Mobile.ViewModels
 
         public async Task OnBuyAction(string productId)
         {
+            var result = await MakePurchaseAsync(productId).ConfigureAwait(false);
+            if (!result)
+                return;
+
+            Logger.Info("Subscription was successfully purchased and registered.");
+            await DialogService.AlertAsync(Loc.Text(TranslationKeys.SubscriptionWasSuccessfullyPurchased)).ConfigureAwait(false);
+        }
+
+        public async Task<bool> MakePurchaseAsync(string productId)
+        {
             try
             {
                 if (!CrossInAppBilling.IsSupported)
@@ -107,29 +117,31 @@ namespace RewriteMe.Mobile.ViewModels
                     }
                     else
                     {
-                        var consumedItem = await billing
-                            .ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
+                        var consumedItem = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
                         if (consumedItem != null)
                         {
+                            if (consumedItem.Payload == payload.ToString())
+                                throw new PurchasePayloadNotValidException(purchase);
+
                             Logger.Info($"Product '{productId}' was purchased.");
 
                             billingPurchase = consumedItem;
                         }
                     }
 
-                    if (billingPurchase != null)
-                    {
-                        await SendBillingPurchaseAsync(productId, billingPurchase).ConfigureAwait(false);
-                    }
-                    else
-                    {
+                    if (billingPurchase == null)
                         throw new PurchaseWasNotProcessedException();
-                    }
+
+                    await SendBillingPurchaseAsync(productId, billingPurchase).ConfigureAwait(false);
                 }
-                else
-                {
-                    throw new PurchaseWasNotProcessedException();
-                }
+
+                throw new PurchaseWasNotProcessedException();
+            }
+            catch (PurchaseWasNotProcessedException ex)
+            {
+                Logger.Warning($"Product '{productId}' was not purchased. {ex}");
+
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.PurchaseWasNotProcessedErrorMessage)).ConfigureAwait(false);
             }
             catch (InAppBillingNotSupportedException ex)
             {
@@ -155,12 +167,6 @@ namespace RewriteMe.Mobile.ViewModels
                     await CreateContactUsMailAsync(ex.BillingPurchase).ConfigureAwait(false);
                 }
             }
-            catch (PurchaseWasNotProcessedException ex)
-            {
-                Logger.Warning($"Product '{productId}' was not purchased. {ex}");
-
-                await DialogService.AlertAsync(Loc.Text(TranslationKeys.PurchaseWasNotProcessedErrorMessage)).ConfigureAwait(false);
-            }
             catch (RegistrationPurchaseBillingException ex)
             {
                 Logger.Error($"Exception during registration of purchase billing. {ex}");
@@ -177,6 +183,9 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (InAppBillingPurchaseException ex)
             {
+                if (ex.PurchaseError == PurchaseError.UserCancelled)
+                    return false;
+
                 Logger.Error($"Exception during purchasing process. {ex}");
 
                 var message = Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage);
@@ -208,6 +217,8 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 await CrossInAppBilling.Current.DisconnectAsync().ConfigureAwait(false);
             }
+
+            return false;
         }
 
         private async Task SendBillingPurchaseAsync(string productId, InAppBillingPurchase purchase)

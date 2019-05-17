@@ -57,6 +57,7 @@
         public static string TranscribeAudioSourceNotFoundErrorMessage => "TranscribeAudioSourceNotFoundErrorMessage";
         public static string RemainingTime => "RemainingTime";
         public static string NoAvailableData => "NoAvailableData";
+        public static string SubscriptionWasSuccessfullyPurchased => "SubscriptionWasSuccessfullyPurchased";
         public static string AppStoreUnavailableErrorMessage => "AppStoreUnavailableErrorMessage";
         public static string BillingUnavailableErrorMessage => "BillingUnavailableErrorMessage";
         public static string PaymentInvalidErrorMessage => "PaymentInvalidErrorMessage";

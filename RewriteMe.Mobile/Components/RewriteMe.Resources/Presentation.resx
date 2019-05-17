@@ -263,6 +263,9 @@
   <data name="NoAvailableData" xml:space="preserve">
     <value>No available data</value>
   </data>
+  <data name="SubscriptionWasSuccessfullyPurchased" xml:space="preserve">
+    <value>Subscription was successfully purchased.</value>
+  </data>
   <data name="AppStoreUnavailableErrorMessage" xml:space="preserve">
     <value>Currently the app store seems to be unavailble. Try again later.</value>
   </data>

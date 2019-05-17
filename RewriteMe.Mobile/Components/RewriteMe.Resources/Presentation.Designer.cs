@@ -521,6 +521,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Subscription was successfully purchased..
+        /// </summary>
+        public static string SubscriptionWasSuccessfullyPurchased {
+            get {
+                return ResourceManager.GetString("SubscriptionWasSuccessfullyPurchased", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 10 Hours.
         /// </summary>
         public static string TenHours {
