@@ -9,20 +9,20 @@ namespace RewriteMe.Domain.WebApi.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class DeletedFileItem
+    public partial class DeletedFileItemModel
     {
         /// <summary>
-        /// Initializes a new instance of the DeletedFileItem class.
+        /// Initializes a new instance of the DeletedFileItemModel class.
         /// </summary>
-        public DeletedFileItem()
+        public DeletedFileItemModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the DeletedFileItem class.
+        /// Initializes a new instance of the DeletedFileItemModel class.
         /// </summary>
-        public DeletedFileItem(System.Guid? id = default(System.Guid?), System.DateTime? deletedDate = default(System.DateTime?))
+        public DeletedFileItemModel(System.Guid id, System.DateTime deletedDate)
         {
             Id = id;
             DeletedDate = deletedDate;
@@ -37,12 +37,22 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public System.Guid? Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "deletedDate")]
-        public System.DateTime? DeletedDate { get; set; }
+        public System.DateTime DeletedDate { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            //Nothing to validate
+        }
     }
 }

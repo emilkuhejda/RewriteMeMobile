@@ -5,9 +5,9 @@ using System.Threading.Tasks;
 using RewriteMe.DataAccess.DataAdapters;
 using RewriteMe.DataAccess.Entities;
 using RewriteMe.DataAccess.Providers;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Transcription;
-using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.DataAccess.Repositories
 {

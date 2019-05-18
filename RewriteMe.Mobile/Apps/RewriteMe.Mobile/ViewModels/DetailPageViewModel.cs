@@ -204,8 +204,10 @@ namespace RewriteMe.Mobile.ViewModels
                 }
                 else
                 {
-                    var deletedFileItem = new DeletedFileItem(FileItem.Id, DateTime.UtcNow)
+                    var deletedFileItem = new DeletedFileItem
                     {
+                        Id = FileItem.Id,
+                        DeletedDate = DateTime.UtcNow,
                         RecognitionState = FileItem.RecognitionState,
                         TotalTime = FileItem.TotalTime
                     };

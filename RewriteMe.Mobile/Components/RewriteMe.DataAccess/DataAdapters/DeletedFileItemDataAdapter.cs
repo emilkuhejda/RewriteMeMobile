@@ -1,5 +1,5 @@
 ﻿using RewriteMe.DataAccess.Entities;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.Configuration;
 
 namespace RewriteMe.DataAccess.DataAdapters
 {
@@ -20,8 +20,8 @@ namespace RewriteMe.DataAccess.DataAdapters
         {
             return new DeletedFileItemEntity
             {
-                Id = deletedFileItem.Id.GetValueOrDefault(),
-                DeletedDate = deletedFileItem.DeletedDate.GetValueOrDefault(),
+                Id = deletedFileItem.Id,
+                DeletedDate = deletedFileItem.DeletedDate,
                 RecognitionState = deletedFileItem.RecognitionState,
                 TotalTime = deletedFileItem.TotalTime
             };

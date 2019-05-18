@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Exceptions;
+using RewriteMe.Domain.Extensions;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Domain.WebApi.Models;
@@ -53,7 +55,8 @@ namespace RewriteMe.Business.Extensions
 
         public static async Task<Ok> DeleteAllFileItemAsync(this IRewriteMeAPI operations, IList<DeletedFileItem> fileItems, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.DeleteAllFileItemWithHttpMessagesAsync(fileItems, applicationId, customHeaders).ConfigureAwait(false))
+            var deletedFileItemModels = fileItems.Select(x => x.ToDeletedFileItemModel()).ToList();
+            using (var result = await operations.DeleteAllFileItemWithHttpMessagesAsync(deletedFileItemModels, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result.Body);
             }

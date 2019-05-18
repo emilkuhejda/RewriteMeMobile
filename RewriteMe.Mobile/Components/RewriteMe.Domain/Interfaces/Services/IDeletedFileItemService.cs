@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.Configuration;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {

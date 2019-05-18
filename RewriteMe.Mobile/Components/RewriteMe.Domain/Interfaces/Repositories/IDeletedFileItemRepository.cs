@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.Configuration;
 
 namespace RewriteMe.Domain.Interfaces.Repositories
 {
