@@ -27,10 +27,4 @@
     <ProjectReference Include="..\RewriteMe.Common\RewriteMe.Common.csproj" />
   </ItemGroup>
   
-  <ItemGroup>
-    <Reference Include="Plugin.InAppBilling.Abstractions">
-      <HintPath>C:\Users\Miko\.nuget\packages\plugin.inappbilling\2.0.0\lib\netstandard1.0\Plugin.InAppBilling.Abstractions.dll</HintPath>
-    </Reference>
-  </ItemGroup>
-
 </Project>
