@@ -6,6 +6,10 @@
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <views:BaseNavigationPage.RightNavigationToolbarItems>
+        <controls:NavigationToolbarItem Command="{Binding DeleteCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg" />
+    </views:BaseNavigationPage.RightNavigationToolbarItems>
+
     <Grid>
         <controls:AlwaysScrollView>
             <Grid Padding="{StaticResource StandardPadding}">

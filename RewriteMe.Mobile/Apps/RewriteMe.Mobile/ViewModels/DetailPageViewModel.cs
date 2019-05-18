@@ -8,8 +8,6 @@ using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Configuration;
-using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi.Models;
@@ -26,8 +24,6 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly IFileItemService _fileItemService;
-        private readonly IDeletedFileItemService _deletedFileItemService;
-        private readonly IInternalValueService _internalValueService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IEmailTask _emailTask;
 
@@ -41,8 +37,6 @@ namespace RewriteMe.Mobile.ViewModels
             ITranscribeItemService transcribeItemService,
             ITranscriptAudioSourceService transcriptAudioSourceService,
             IFileItemService fileItemService,
-            IDeletedFileItemService deletedFileItemService,
-            IInternalValueService internalValueService,
             IRewriteMeWebService rewriteMeWebService,
             IEmailTask emailTask,
             IDialogService dialogService,
@@ -53,8 +47,6 @@ namespace RewriteMe.Mobile.ViewModels
             _transcribeItemService = transcribeItemService;
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _fileItemService = fileItemService;
-            _deletedFileItemService = deletedFileItemService;
-            _internalValueService = internalValueService;
             _rewriteMeWebService = rewriteMeWebService;
             _emailTask = emailTask;
 
@@ -199,25 +191,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 using (new OperationMonitor(OperationScope))
                 {
-                    var httpRequestResult = await _rewriteMeWebService.DeleteFileItemAsync(FileItem.Id).ConfigureAwait(false);
-                    if (httpRequestResult.State == HttpRequestState.Success)
-                    {
-                        await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload).ConfigureAwait(false);
-                    }
-                    else
-                    {
-                        var deletedFileItem = new DeletedFileItem
-                        {
-                            Id = FileItem.Id,
-                            DeletedDate = DateTime.UtcNow,
-                            RecognitionState = FileItem.RecognitionState,
-                            TotalTime = FileItem.TotalTime
-                        };
-
-                        await _deletedFileItemService.InsertAsync(deletedFileItem).ConfigureAwait(false);
-                    }
-
-                    await _fileItemService.DeleteAsync(FileItem.Id).ConfigureAwait(false);
+                    await _fileItemService.DeleteAsync(FileItem).ConfigureAwait(false);
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
             }

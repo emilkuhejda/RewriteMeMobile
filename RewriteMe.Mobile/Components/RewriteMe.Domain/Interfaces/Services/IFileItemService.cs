@@ -16,7 +16,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<IEnumerable<FileItem>> GetAllAsync();
 
-        Task DeleteAsync(Guid fileItemId);
+        Task DeleteAsync(FileItem fileItem);
 
         Task<FileItem> UploadAsync(MediaFile mediaFile);
 

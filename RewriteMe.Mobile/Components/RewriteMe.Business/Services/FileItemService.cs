@@ -17,6 +17,7 @@ namespace RewriteMe.Business.Services
 {
     public class FileItemService : IFileItemService
     {
+        private readonly IDeletedFileItemService _deletedFileItemService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
         private readonly IFileItemRepository _fileItemRepository;
@@ -26,12 +27,14 @@ namespace RewriteMe.Business.Services
         public event EventHandler TranscriptionStarted;
 
         public FileItemService(
+            IDeletedFileItemService deletedFileItemService,
             IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService,
             IFileItemRepository fileItemRepository,
             IRewriteMeWebService rewriteMeWebService,
             ILoggerFactory loggerFactory)
         {
+            _deletedFileItemService = deletedFileItemService;
             _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
             _fileItemRepository = fileItemRepository;
@@ -68,9 +71,27 @@ namespace RewriteMe.Business.Services
             return await _fileItemRepository.GetAllAsync().ConfigureAwait(false);
         }
 
-        public async Task DeleteAsync(Guid fileItemId)
+        public async Task DeleteAsync(FileItem fileItem)
         {
-            await _fileItemRepository.DeleteAsync(fileItemId).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.DeleteFileItemAsync(fileItem.Id).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            {
+                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload).ConfigureAwait(false);
+            }
+            else
+            {
+                var deletedFileItem = new DeletedFileItem
+                {
+                    Id = fileItem.Id,
+                    DeletedDate = DateTime.UtcNow,
+                    RecognitionState = fileItem.RecognitionState,
+                    TotalTime = fileItem.TotalTime
+                };
+
+                await _deletedFileItemService.InsertAsync(deletedFileItem).ConfigureAwait(false);
+            }
+
+            await _fileItemRepository.DeleteAsync(fileItem.Id).ConfigureAwait(false);
         }
 
         public async Task<FileItem> UploadAsync(MediaFile mediaFile)
