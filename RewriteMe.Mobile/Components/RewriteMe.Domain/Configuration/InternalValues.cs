@@ -17,5 +17,7 @@ namespace RewriteMe.Domain.Configuration
         public static InternalValue<string> LanguageSetting { get; } = new InternalValue<string>("LanguageSetting", null);
 
         public static InternalValue<bool> IsUserRegistrationSuccess { get; } = new InternalValue<bool>("IsUserRegistrationSuccess", false);
+
+        public static InternalValue<string> DeletedFileItemsTotalTime { get; } = new InternalValue<string>("DeletedFileItemsTotalTime", null);
     }
 }

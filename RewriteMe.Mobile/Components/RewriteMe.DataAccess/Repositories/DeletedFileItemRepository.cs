@@ -1,10 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RewriteMe.DataAccess.DataAdapters;
 using RewriteMe.DataAccess.Entities;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Interfaces.Repositories;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.DataAccess.Repositories
@@ -28,6 +30,14 @@ namespace RewriteMe.DataAccess.Repositories
             var entities = await _contextProvider.Context.DeletedFileItems.ToListAsync().ConfigureAwait(false);
 
             return entities.Select(x => x.ToDeletedFileItem());
+        }
+
+        public async Task<TimeSpan> GetProcessedFilesTotalTimeAsync()
+        {
+            var deletedFileItem = await _contextProvider.Context.DeletedFileItems.Where(x => x.RecognitionState > RecognitionState.Prepared).ToListAsync().ConfigureAwait(false);
+            var ticks = deletedFileItem.Select(x => x.TotalTime.Ticks).Sum();
+
+            return TimeSpan.FromTicks(ticks);
         }
 
         public async Task ClearAsync()

@@ -59,6 +59,15 @@ namespace RewriteMe.Business.Services
             }
         }
 
+        public async Task TotalTimeSynchronizationAsync()
+        {
+            var httpRequestResult = await _rewriteMeWebService.GetDeletedFileItemsTotalTimeAsync().ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            {
+                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload).ConfigureAwait(false);
+            }
+        }
+
         public async Task InsertAsync(DeletedFileItem deletedFileItem)
         {
             await _deletedFileItemRepository.InsertAsync(deletedFileItem).ConfigureAwait(false);

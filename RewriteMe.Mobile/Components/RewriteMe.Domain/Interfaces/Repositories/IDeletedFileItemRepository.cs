@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using RewriteMe.Domain.WebApi.Models;
 
@@ -9,6 +10,8 @@ namespace RewriteMe.Domain.Interfaces.Repositories
         Task InsertAsync(DeletedFileItem deletedFileItem);
 
         Task<IEnumerable<DeletedFileItem>> GetAllAsync();
+
+        Task<TimeSpan> GetProcessedFilesTotalTimeAsync();
 
         Task ClearAsync();
     }

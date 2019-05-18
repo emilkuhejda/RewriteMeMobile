@@ -1,4 +1,5 @@
 ﻿using System;
+using RewriteMe.Domain.Transcription;
 using SQLite;
 
 namespace RewriteMe.DataAccess.Entities
@@ -10,5 +11,9 @@ namespace RewriteMe.DataAccess.Entities
         public Guid Id { get; set; }
 
         public DateTime DeletedDate { get; set; }
+
+        public RecognitionState RecognitionState { get; set; }
+
+        public TimeSpan TotalTime { get; set; }
     }
 }

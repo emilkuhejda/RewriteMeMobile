@@ -8,6 +8,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
@@ -26,6 +27,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly IFileItemService _fileItemService;
         private readonly IDeletedFileItemService _deletedFileItemService;
+        private readonly IInternalValueService _internalValueService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IEmailTask _emailTask;
 
@@ -40,6 +42,7 @@ namespace RewriteMe.Mobile.ViewModels
             ITranscriptAudioSourceService transcriptAudioSourceService,
             IFileItemService fileItemService,
             IDeletedFileItemService deletedFileItemService,
+            IInternalValueService internalValueService,
             IRewriteMeWebService rewriteMeWebService,
             IEmailTask emailTask,
             IDialogService dialogService,
@@ -51,6 +54,7 @@ namespace RewriteMe.Mobile.ViewModels
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _fileItemService = fileItemService;
             _deletedFileItemService = deletedFileItemService;
+            _internalValueService = internalValueService;
             _rewriteMeWebService = rewriteMeWebService;
             _emailTask = emailTask;
 
@@ -194,9 +198,18 @@ namespace RewriteMe.Mobile.ViewModels
             if (result)
             {
                 var httpRequestResult = await _rewriteMeWebService.DeleteFileItemAsync(FileItem.Id).ConfigureAwait(false);
-                if (httpRequestResult.State != HttpRequestState.Success)
+                if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    var deletedFileItem = new DeletedFileItem(FileItem.Id, DateTime.UtcNow);
+                    await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload).ConfigureAwait(false);
+                }
+                else
+                {
+                    var deletedFileItem = new DeletedFileItem(FileItem.Id, DateTime.UtcNow)
+                    {
+                        RecognitionState = FileItem.RecognitionState,
+                        TotalTime = FileItem.TotalTime
+                    };
+
                     await _deletedFileItemService.InsertAsync(deletedFileItem).ConfigureAwait(false);
                 }
 

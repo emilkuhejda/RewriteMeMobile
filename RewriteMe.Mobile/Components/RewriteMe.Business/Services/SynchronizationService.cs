@@ -42,11 +42,13 @@ namespace RewriteMe.Business.Services
 
         public async Task InitializeAsync()
         {
+            await SendPendingDeletedFileItems().ConfigureAwait(false);
+
             var updateMethods = new List<Func<Task>>
             {
-                SendPendingDeletedFileItems,
                 UpdateFileItemsAsync,
                 DeletedFileItemsSynchronizationAsync,
+                DeletedFileItemsTotalTimeSynchronizationAsync,
                 UpdateTranscribeItemsAsync,
                 UpdateUserSubscriptionAsync
             };
@@ -91,6 +93,11 @@ namespace RewriteMe.Business.Services
             var applicationDeletedFileItemUpdateDate = _lastUpdatesService.GetDeletedFileItemLastUpdate();
 
             await _deletedFileItemService.SynchronizationAsync(applicationDeletedFileItemUpdateDate, lastFileItemSynchronization).ConfigureAwait(false);
+        }
+
+        private async Task DeletedFileItemsTotalTimeSynchronizationAsync()
+        {
+            await _deletedFileItemService.TotalTimeSynchronizationAsync().ConfigureAwait(false);
         }
 
         private async Task UpdateTranscribeItemsAsync()

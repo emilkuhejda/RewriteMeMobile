@@ -10,7 +10,9 @@ namespace RewriteMe.DataAccess.DataAdapters
             return new DeletedFileItem
             {
                 Id = entity.Id,
-                DeletedDate = entity.DeletedDate
+                DeletedDate = entity.DeletedDate,
+                RecognitionState = entity.RecognitionState,
+                TotalTime = entity.TotalTime
             };
         }
 
@@ -19,7 +21,9 @@ namespace RewriteMe.DataAccess.DataAdapters
             return new DeletedFileItemEntity
             {
                 Id = deletedFileItem.Id.GetValueOrDefault(),
-                DeletedDate = deletedFileItem.DeletedDate.GetValueOrDefault()
+                DeletedDate = deletedFileItem.DeletedDate.GetValueOrDefault(),
+                RecognitionState = deletedFileItem.RecognitionState,
+                TotalTime = deletedFileItem.TotalTime
             };
         }
     }

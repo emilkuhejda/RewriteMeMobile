@@ -8,6 +8,8 @@ namespace RewriteMe.Domain.Interfaces.Services
     {
         Task SynchronizationAsync(DateTime applicationUpdateDate, DateTime lastFileItemSynchronization);
 
+        Task TotalTimeSynchronizationAsync();
+
         Task InsertAsync(DeletedFileItem deletedFileItem);
 
         Task SendPendingAsync();
