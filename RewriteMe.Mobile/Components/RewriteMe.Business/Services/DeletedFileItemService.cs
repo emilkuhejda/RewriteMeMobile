@@ -29,7 +29,7 @@ namespace RewriteMe.Business.Services
         {
             var pendingDeletedFileItems = await _deletedFileItemRepository.GetAllAsync().ConfigureAwait(false);
             var pendingFileItems = pendingDeletedFileItems.ToList();
-            if (pendingFileItems.Any())
+            if (!pendingFileItems.Any())
                 return;
 
             var httpRequestResult = await _rewriteMeWebService.DeleteAllFileItemAsync(pendingFileItems).ConfigureAwait(false);
