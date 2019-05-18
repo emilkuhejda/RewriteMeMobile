@@ -103,39 +103,41 @@ namespace RewriteMe.Mobile.ViewModels
                     .PurchaseAsync(productId, ItemType.InAppPurchase, payload)
                     .ConfigureAwait(false);
 
-                if (purchase != null && purchase.State == PurchaseState.Purchased)
+                using (new OperationMonitor(OperationScope))
                 {
-                    if (purchase.Payload != payload)
-                        throw new PurchasePayloadNotValidException(purchase);
-
-                    InAppBillingPurchase billingPurchase = null;
-                    if (Device.RuntimePlatform == Device.iOS)
+                    if (purchase != null && purchase.State == PurchaseState.Purchased)
                     {
-                        Logger.Info($"Product '{productId}' was purchased.");
+                        if (purchase.Payload != payload)
+                            throw new PurchasePayloadNotValidException(purchase);
 
-                        billingPurchase = purchase;
-                    }
-                    else
-                    {
-                        var consumedItem = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
-                        if (consumedItem != null)
+                        InAppBillingPurchase billingPurchase = null;
+                        if (Device.RuntimePlatform == Device.iOS)
                         {
-                            if (consumedItem.Payload != payload)
-                                throw new PurchasePayloadNotValidException(purchase);
-
                             Logger.Info($"Product '{productId}' was purchased.");
 
-                            billingPurchase = consumedItem;
+                            billingPurchase = purchase;
                         }
+                        else
+                        {
+                            var consumedItem = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
+                            if (consumedItem != null)
+                            {
+                                Logger.Info($"Product '{productId}' was purchased.");
+
+                                billingPurchase = consumedItem;
+                            }
+                        }
+
+                        if (billingPurchase == null)
+                            throw new PurchaseWasNotProcessedException();
+
+                        await SendBillingPurchaseAsync(productId, billingPurchase).ConfigureAwait(false);
+
+                        return true;
                     }
 
-                    if (billingPurchase == null)
-                        throw new PurchaseWasNotProcessedException();
-
-                    await SendBillingPurchaseAsync(productId, billingPurchase).ConfigureAwait(false);
+                    throw new PurchaseWasNotProcessedException();
                 }
-
-                throw new PurchaseWasNotProcessedException();
             }
             catch (PurchaseWasNotProcessedException ex)
             {
@@ -226,12 +228,15 @@ namespace RewriteMe.Mobile.ViewModels
             try
             {
                 var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
-                var userSubscription = await _billingPurchaseService
-                    .SendBillingPurchaseAsync(purchase.ToBillingPurchase(userId)).ConfigureAwait(false);
+                var userSubscription = await _billingPurchaseService.SendBillingPurchaseAsync(purchase.ToBillingPurchase(userId)).ConfigureAwait(false);
 
                 await _userSubscriptionService.AddAsync(userSubscription).ConfigureAwait(false);
 
                 Logger.Info($"Purchase billing for product '{productId}' was registered.");
+            }
+            catch (OfflineRequestException ex)
+            {
+                throw new RegistrationPurchaseBillingException(purchase, nameof(purchase), ex);
             }
             catch (ErrorRequestException ex)
             {

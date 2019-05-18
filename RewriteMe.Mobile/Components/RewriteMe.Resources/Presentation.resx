@@ -232,6 +232,9 @@
   <data name="TenHours" xml:space="preserve">
     <value>10 Hours</value>
   </data>
+  <data name="PromptDeleteFileItemMessage" xml:space="preserve">
+    <value>Do you really want to delete file '{0}'?</value>
+  </data>
   
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>

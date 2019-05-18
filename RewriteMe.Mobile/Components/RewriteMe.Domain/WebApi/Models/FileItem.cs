@@ -23,7 +23,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the FileItem class.
         /// </summary>
-        public FileItem(System.Guid id, string name, string fileName, string language, string recognitionStateString, string totalTimeString, System.DateTime dateCreated, System.DateTime dateUpdated, int audioSourceVersion, System.DateTime? dateProcessed = default(System.DateTime?), AudioSource audioSource = default(AudioSource))
+        public FileItem(System.Guid id, string name, string fileName, string language, string recognitionStateString, string totalTimeString, System.DateTime dateCreated, System.DateTime dateUpdated, int audioSourceVersion, bool isDeleted, System.DateTime? dateProcessed = default(System.DateTime?), AudioSource audioSource = default(AudioSource))
         {
             Id = id;
             Name = name;
@@ -35,6 +35,7 @@ namespace RewriteMe.Domain.WebApi.Models
             DateProcessed = dateProcessed;
             DateUpdated = dateUpdated;
             AudioSourceVersion = audioSourceVersion;
+            IsDeleted = isDeleted;
             AudioSource = audioSource;
             CustomInit();
         }
@@ -93,6 +94,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "audioSourceVersion")]
         public int AudioSourceVersion { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "isDeleted")]
+        public bool IsDeleted { get; set; }
 
         /// <summary>
         /// </summary>

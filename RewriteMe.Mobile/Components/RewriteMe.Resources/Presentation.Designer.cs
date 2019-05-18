@@ -341,6 +341,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Do you really want to delete file &apos;{0}&apos;?.
+        /// </summary>
+        public static string PromptDeleteFileItemMessage {
+            get {
+                return ResourceManager.GetString("PromptDeleteFileItemMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Purchase was processed incorrectly. Please, contact us..
         /// </summary>
         public static string PurchaseProcessedIncorrectlyErrorMessage {

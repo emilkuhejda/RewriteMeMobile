@@ -18,6 +18,10 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task InsertOrReplaceAllAsync(IEnumerable<FileItem> fileItems);
 
+        Task DeleteAsync(IEnumerable<Guid> fileItemIds);
+
+        Task DeleteAsync(Guid fileItemId);
+
         Task UpdateRecognitionStateAsync(Guid fileItemId, RecognitionState recognitionState);
 
         Task<TimeSpan> GetProcessedFilesTotalTimeAsync();

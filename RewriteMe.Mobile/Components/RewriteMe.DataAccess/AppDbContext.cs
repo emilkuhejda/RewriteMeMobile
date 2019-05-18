@@ -26,6 +26,8 @@ namespace RewriteMe.DataAccess
 
         public AsyncTableQuery<FileItemEntity> FileItems => Database.Table<FileItemEntity>();
 
+        public AsyncTableQuery<DeletedFileItemEntity> DeletedFileItems => Database.Table<DeletedFileItemEntity>();
+
         public AsyncTableQuery<TranscribeItemEntity> TranscribeItems => Database.Table<TranscribeItemEntity>();
 
         public AsyncTableQuery<TranscriptAudioSourceEntity> TranscriptAudioSources => Database.Table<TranscriptAudioSourceEntity>();
@@ -75,9 +77,9 @@ namespace RewriteMe.DataAccess
             await Database.UpdateAllAsync(items).ConfigureAwait(false);
         }
 
-        public async Task DeleteAsync(object primaryKey)
+        public async Task DeleteAsync<T>(object primaryKey) where T : new()
         {
-            await Database.DeleteAsync(primaryKey).ConfigureAwait(false);
+            await Database.DeleteAsync<T>(primaryKey).ConfigureAwait(false);
         }
 
         public async Task DeleteAllAsync<T>() where T : new()

@@ -13,6 +13,7 @@ namespace RewriteMe.Business.Services
     public class SynchronizationService : ISynchronizationService
     {
         private readonly ILastUpdatesService _lastUpdatesService;
+        private readonly IDeletedFileItemService _deletedFileItemService;
         private readonly IFileItemService _fileItemService;
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly IUserSubscriptionService _userSubscriptionService;
@@ -25,12 +26,14 @@ namespace RewriteMe.Business.Services
 
         public SynchronizationService(
             ILastUpdatesService lastUpdatesService,
+            IDeletedFileItemService deletedFileItemService,
             IFileItemService fileItemService,
             ITranscribeItemService transcribeItemService,
             IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService)
         {
             _lastUpdatesService = lastUpdatesService;
+            _deletedFileItemService = deletedFileItemService;
             _fileItemService = fileItemService;
             _transcribeItemService = transcribeItemService;
             _userSubscriptionService = userSubscriptionService;
@@ -39,9 +42,13 @@ namespace RewriteMe.Business.Services
 
         public async Task InitializeAsync()
         {
+            await SendPendingDeletedFileItems().ConfigureAwait(false);
+
             var updateMethods = new List<Func<Task>>
             {
                 UpdateFileItemsAsync,
+                DeletedFileItemsSynchronizationAsync,
+                DeletedFileItemsTotalTimeSynchronizationAsync,
                 UpdateTranscribeItemsAsync,
                 UpdateUserSubscriptionAsync
             };
@@ -68,11 +75,29 @@ namespace RewriteMe.Business.Services
             InitializationProgress?.Invoke(this, new ProgressEventArgs(_totalResourceInitializationTasks, currentTask));
         }
 
+        private async Task SendPendingDeletedFileItems()
+        {
+            await _deletedFileItemService.SendPendingAsync().ConfigureAwait(false);
+        }
+
         private async Task UpdateFileItemsAsync()
         {
             var applicationFileItemUpdateDate = _lastUpdatesService.GetFileItemLastUpdate();
 
             await _fileItemService.SynchronizationAsync(applicationFileItemUpdateDate).ConfigureAwait(false);
+        }
+
+        private async Task DeletedFileItemsSynchronizationAsync()
+        {
+            var lastFileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
+            var applicationDeletedFileItemUpdateDate = _lastUpdatesService.GetDeletedFileItemLastUpdate();
+
+            await _deletedFileItemService.SynchronizationAsync(applicationDeletedFileItemUpdateDate, lastFileItemSynchronization).ConfigureAwait(false);
+        }
+
+        private async Task DeletedFileItemsTotalTimeSynchronizationAsync()
+        {
+            await _deletedFileItemService.TotalTimeSynchronizationAsync().ConfigureAwait(false);
         }
 
         private async Task UpdateTranscribeItemsAsync()

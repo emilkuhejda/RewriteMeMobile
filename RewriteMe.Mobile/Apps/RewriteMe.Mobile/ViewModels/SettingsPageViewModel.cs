@@ -117,16 +117,16 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     UserName = await _userSessionService.GetUserNameAsync().ConfigureAwait(false);
                     ApplicationVersion = _latestVersion.InstalledVersionNumber;
-
-                    var remainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
-                    var sign = remainingTime.Ticks < 0 ? "-" : string.Empty;
-                    RemainingTime = $"{sign}{remainingTime:mm\\:ss}";
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {
                     var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
                     await HandleSelectionAsync(dropDownListViewModel).ConfigureAwait(false);
                 }
+
+                var remainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
+                var sign = remainingTime.Ticks < 0 ? "-" : string.Empty;
+                RemainingTime = $"{sign}{remainingTime:hh\\:mm\\:ss}";
 
                 await InitializeLanguageSettingAsync().ConfigureAwait(false);
             }

@@ -23,6 +23,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
+        private readonly IFileItemService _fileItemService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IEmailTask _emailTask;
 
@@ -35,6 +36,7 @@ namespace RewriteMe.Mobile.ViewModels
         public DetailPageViewModel(
             ITranscribeItemService transcribeItemService,
             ITranscriptAudioSourceService transcriptAudioSourceService,
+            IFileItemService fileItemService,
             IRewriteMeWebService rewriteMeWebService,
             IEmailTask emailTask,
             IDialogService dialogService,
@@ -44,15 +46,20 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _transcribeItemService = transcribeItemService;
             _transcriptAudioSourceService = transcriptAudioSourceService;
+            _fileItemService = fileItemService;
             _rewriteMeWebService = rewriteMeWebService;
             _emailTask = emailTask;
 
             CanGoBack = true;
 
+            DeleteCommand = new AsyncCommand(ExecuteDeleteCommandAsync);
+
             PlayerViewModel = new PlayerViewModel();
         }
 
         private FileItem FileItem { get; set; }
+
+        public IAsyncCommand DeleteCommand { get; }
 
         public IList<TranscribeItemViewModel> TranscribeItems
         {
@@ -171,6 +178,23 @@ namespace RewriteMe.Mobile.ViewModels
 
             await _transcribeItemService.SaveAndSendAsync(transcribeItemsToSave).ConfigureAwait(false);
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+        }
+
+        private async Task ExecuteDeleteCommandAsync()
+        {
+            var result = await DialogService.ConfirmAsync(
+                Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, FileItem.Name),
+                okText: Loc.Text(TranslationKeys.Ok),
+                cancelText: Loc.Text(TranslationKeys.Cancel)).ConfigureAwait(false);
+
+            if (result)
+            {
+                using (new OperationMonitor(OperationScope))
+                {
+                    await _fileItemService.DeleteAsync(FileItem).ConfigureAwait(false);
+                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+                }
+            }
         }
 
         public void Dispose()
