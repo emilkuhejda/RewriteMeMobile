@@ -132,6 +132,8 @@ namespace RewriteMe.Mobile.ViewModels
                             throw new PurchaseWasNotProcessedException();
 
                         await SendBillingPurchaseAsync(productId, billingPurchase).ConfigureAwait(false);
+
+                        return true;
                     }
 
                     throw new PurchaseWasNotProcessedException();
@@ -226,12 +228,15 @@ namespace RewriteMe.Mobile.ViewModels
             try
             {
                 var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
-                var userSubscription = await _billingPurchaseService
-                    .SendBillingPurchaseAsync(purchase.ToBillingPurchase(userId)).ConfigureAwait(false);
+                var userSubscription = await _billingPurchaseService.SendBillingPurchaseAsync(purchase.ToBillingPurchase(userId)).ConfigureAwait(false);
 
                 await _userSubscriptionService.AddAsync(userSubscription).ConfigureAwait(false);
 
                 Logger.Info($"Purchase billing for product '{productId}' was registered.");
+            }
+            catch (OfflineRequestException ex)
+            {
+                throw new RegistrationPurchaseBillingException(purchase, nameof(purchase), ex);
             }
             catch (ErrorRequestException ex)
             {

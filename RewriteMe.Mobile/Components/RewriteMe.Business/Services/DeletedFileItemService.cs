@@ -6,7 +6,6 @@ using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
 
@@ -79,6 +78,8 @@ namespace RewriteMe.Business.Services
             var pendingFileItems = pendingDeletedFileItems.ToList();
             if (!pendingFileItems.Any())
                 return;
+
+            _logger.Info($"Send pending deleted file items {pendingFileItems.Count} to server.");
 
             var httpRequestResult = await _rewriteMeWebService.DeleteAllFileItemAsync(pendingFileItems).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
