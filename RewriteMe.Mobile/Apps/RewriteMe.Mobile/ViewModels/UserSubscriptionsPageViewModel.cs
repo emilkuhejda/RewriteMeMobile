@@ -122,9 +122,6 @@ namespace RewriteMe.Mobile.ViewModels
                             var consumedItem = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
                             if (consumedItem != null)
                             {
-                                if (consumedItem.Payload != payload)
-                                    throw new PurchasePayloadNotValidException(purchase);
-
                                 Logger.Info($"Product '{productId}' was purchased.");
 
                                 billingPurchase = consumedItem;
