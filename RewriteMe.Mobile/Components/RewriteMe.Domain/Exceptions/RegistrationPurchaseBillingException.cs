@@ -1,18 +1,11 @@
 ﻿using System;
-using Plugin.InAppBilling.Abstractions;
 
 namespace RewriteMe.Domain.Exceptions
 {
-    public class RegistrationPurchaseBillingException : Exception
+    public class RegistrationPurchaseBillingException : PurchaseBaseException
     {
         public RegistrationPurchaseBillingException()
         {
-        }
-
-        public RegistrationPurchaseBillingException(InAppBillingPurchase billingPurchase, string message, Exception innerException)
-            : base(message, innerException)
-        {
-            BillingPurchase = billingPurchase;
         }
 
         public RegistrationPurchaseBillingException(string message)
@@ -25,6 +18,9 @@ namespace RewriteMe.Domain.Exceptions
         {
         }
 
-        public InAppBillingPurchase BillingPurchase { get; }
+        public RegistrationPurchaseBillingException(string purchaseId, string productId, string message, Exception innerException)
+            : base(purchaseId, productId, message, innerException)
+        {
+        }
     }
 }

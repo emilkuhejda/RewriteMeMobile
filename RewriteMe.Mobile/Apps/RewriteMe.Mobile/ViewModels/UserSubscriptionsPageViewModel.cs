@@ -108,7 +108,7 @@ namespace RewriteMe.Mobile.ViewModels
                     if (purchase != null && purchase.State == PurchaseState.Purchased)
                     {
                         if (purchase.Payload != payload)
-                            throw new PurchasePayloadNotValidException(purchase);
+                            throw new PurchasePayloadNotValidException(purchase.Id, purchase.ProductId);
 
                         InAppBillingPurchase billingPurchase = null;
                         if (Device.RuntimePlatform == Device.iOS)
@@ -166,7 +166,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 if (result)
                 {
-                    await CreateContactUsMailAsync(ex.BillingPurchase).ConfigureAwait(false);
+                    await CreateContactUsMailAsync(ex.PurchaseId, ex.ProductId).ConfigureAwait(false);
                 }
             }
             catch (RegistrationPurchaseBillingException ex)
@@ -180,7 +180,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 if (result)
                 {
-                    await CreateContactUsMailAsync(ex.BillingPurchase).ConfigureAwait(false);
+                    await CreateContactUsMailAsync(ex.PurchaseId, ex.ProductId).ConfigureAwait(false);
                 }
             }
             catch (InAppBillingPurchaseException ex)
@@ -236,19 +236,16 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (OfflineRequestException ex)
             {
-                throw new RegistrationPurchaseBillingException(purchase, nameof(purchase), ex);
+                throw new RegistrationPurchaseBillingException(purchase.Id, purchase.ProductId, nameof(purchase), ex);
             }
             catch (ErrorRequestException ex)
             {
-                throw new RegistrationPurchaseBillingException(purchase, nameof(purchase), ex);
+                throw new RegistrationPurchaseBillingException(purchase.Id, purchase.ProductId, nameof(purchase), ex);
             }
         }
 
-        private async Task CreateContactUsMailAsync(InAppBillingPurchase purchase)
+        private async Task CreateContactUsMailAsync(string purchaseId, string productId)
         {
-            if (purchase == null)
-                return;
-
             if (string.IsNullOrWhiteSpace(_applicationSettings.SupportMailAddress))
                 return;
 
@@ -266,8 +263,8 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine()
                     .AppendLine()
                     .AppendLine("_______________________________________")
-                    .AppendLine($"Order Id: {purchase.Id}")
-                    .AppendLine($"User subscription: {purchase.ProductId}")
+                    .AppendLine($"Order Id: {purchaseId}")
+                    .AppendLine($"User subscription: {productId}")
                     .AppendLine($"User identification: {userId}")
                     .AppendLine($"Application version: {_latestVersion.InstalledVersionNumber} ({Device.RuntimePlatform})")
                     .AppendLine($"Time stamp: {timestamp}")

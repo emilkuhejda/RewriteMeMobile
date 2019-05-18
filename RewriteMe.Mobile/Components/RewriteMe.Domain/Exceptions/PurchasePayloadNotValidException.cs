@@ -1,17 +1,11 @@
 ﻿using System;
-using Plugin.InAppBilling.Abstractions;
 
 namespace RewriteMe.Domain.Exceptions
 {
-    public class PurchasePayloadNotValidException : Exception
+    public class PurchasePayloadNotValidException : PurchaseBaseException
     {
         public PurchasePayloadNotValidException()
         {
-        }
-
-        public PurchasePayloadNotValidException(InAppBillingPurchase billingPurchase)
-        {
-            BillingPurchase = billingPurchase;
         }
 
         public PurchasePayloadNotValidException(string message)
@@ -24,6 +18,9 @@ namespace RewriteMe.Domain.Exceptions
         {
         }
 
-        public InAppBillingPurchase BillingPurchase { get; }
+        public PurchasePayloadNotValidException(string purchaseId, string productId)
+            : base(purchaseId, productId)
+        {
+        }
     }
 }
