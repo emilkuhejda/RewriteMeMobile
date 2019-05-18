@@ -43,6 +43,14 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<Ok> DeleteAllFileItemAsync(this IRewriteMeAPI operations, IList<DeletedFileItem> fileItems, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.DeleteAllFileItemWithHttpMessagesAsync(fileItems, applicationId, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<Ok>(result.Body);
+            }
+        }
+
         public static async Task<IEnumerable<TranscribeItem>> GetTranscribeItemsAllAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))

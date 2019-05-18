@@ -50,6 +50,12 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.DeleteFileItemAsync(fileItemId, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
+        public async Task<HttpRequestResult<Ok>> DeleteAllFileItemAsync(IList<DeletedFileItem> fileItems)
+        {
+            var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.DeleteAllFileItemAsync(fileItems, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+        }
+
         public async Task<HttpRequestResult<IEnumerable<TranscribeItem>>> GetTranscribeItemsAllAsync(DateTime updatedAfter)
         {
             var customHeaders = await GetAuthHeaders().ConfigureAwait(false);

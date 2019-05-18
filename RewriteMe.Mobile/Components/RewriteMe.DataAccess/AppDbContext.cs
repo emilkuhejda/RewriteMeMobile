@@ -26,6 +26,8 @@ namespace RewriteMe.DataAccess
 
         public AsyncTableQuery<FileItemEntity> FileItems => Database.Table<FileItemEntity>();
 
+        public AsyncTableQuery<DeletedFileItemEntity> DeletedFileItems => Database.Table<DeletedFileItemEntity>();
+
         public AsyncTableQuery<TranscribeItemEntity> TranscribeItems => Database.Table<TranscribeItemEntity>();
 
         public AsyncTableQuery<TranscriptAudioSourceEntity> TranscriptAudioSources => Database.Table<TranscriptAudioSourceEntity>();

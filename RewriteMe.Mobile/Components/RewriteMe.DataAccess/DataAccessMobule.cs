@@ -17,6 +17,7 @@ namespace RewriteMe.DataAccess
             containerRegistry.RegisterSingleton<IUserSessionRepository, UserSessionRepository>();
             containerRegistry.RegisterSingleton<IUserSubscriptionRepository, UserSubscriptionRepository>();
             containerRegistry.RegisterSingleton<IFileItemRepository, FileItemRepository>();
+            containerRegistry.RegisterSingleton<IDeletedFileItemRepository, DeletedFileItemRepository>();
             containerRegistry.RegisterSingleton<ITranscribeItemRepository, TranscribeItemRepository>();
             containerRegistry.RegisterSingleton<ITranscriptAudioSourceRepository, TranscriptAudioSourceRepository>();
         }

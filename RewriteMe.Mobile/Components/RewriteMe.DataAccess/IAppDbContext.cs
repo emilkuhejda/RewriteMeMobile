@@ -18,6 +18,8 @@ namespace RewriteMe.DataAccess
 
         AsyncTableQuery<FileItemEntity> FileItems { get; }
 
+        AsyncTableQuery<DeletedFileItemEntity> DeletedFileItems { get; }
+
         AsyncTableQuery<TranscribeItemEntity> TranscribeItems { get; }
 
         AsyncTableQuery<TranscriptAudioSourceEntity> TranscriptAudioSources { get; }

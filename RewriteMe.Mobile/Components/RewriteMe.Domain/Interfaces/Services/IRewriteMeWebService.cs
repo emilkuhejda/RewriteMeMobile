@@ -17,6 +17,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<Ok>> DeleteFileItemAsync(Guid fileItemId);
 
+        Task<HttpRequestResult<Ok>> DeleteAllFileItemAsync(IList<DeletedFileItem> fileItems);
+
         Task<HttpRequestResult<IEnumerable<TranscribeItem>>> GetTranscribeItemsAllAsync(DateTime updatedAfter);
 
         Task<HttpRequestResult<IEnumerable<UserSubscription>>> GetUserSubscriptionsAsync(DateTime updatedAfter);
