@@ -41,6 +41,14 @@ namespace RewriteMe.Business.Services
             return _lastUpdates?.FileItem ?? DateTime.MinValue;
         }
 
+        public DateTime GetDeletedFileItemLastUpdate()
+        {
+            if (!_isInitialized)
+                throw new InvalidOperationException("Service is not initialized");
+
+            return _lastUpdates?.DeletedFileItem ?? DateTime.MinValue;
+        }
+
         public DateTime GetTranscribeItemLastUpdate()
         {
             if (!_isInitialized)

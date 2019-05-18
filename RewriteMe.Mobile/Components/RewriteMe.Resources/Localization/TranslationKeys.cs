@@ -46,6 +46,7 @@
         public static string InProgressLabel => "InProgressLabel";
         public static string OneHour => "OneHour";
         public static string TenHours => "TenHours";
+        public static string PromptDeleteFileItemMessage => "PromptDeleteFileItemMessage";
 
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
         public static string OfflineErrorMessage => "OfflineErrorMessage";

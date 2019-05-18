@@ -40,6 +40,7 @@ namespace RewriteMe.Mobile.ViewModels
             CanGoBack = true;
 
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
+            DeleteCommand = new AsyncCommand(ExecuteDeleteCommandAsync);
             TranscribeCommand = new AsyncCommand(ExecuteTranscribeCommandAsync, CanExecuteTranscribeCommand);
         }
 
@@ -64,6 +65,8 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         public ICommand NavigateToLanguageCommand { get; }
+
+        public IAsyncCommand DeleteCommand { get; }
 
         public IAsyncCommand TranscribeCommand { get; }
 
@@ -119,6 +122,23 @@ namespace RewriteMe.Mobile.ViewModels
             navigationParameters.Add<DropDownListNavigationParameters>(parameters);
 
             await NavigationService.NavigateWithoutAnimationAsync(Pages.DropDownListPage, navigationParameters).ConfigureAwait(false);
+        }
+
+        private async Task ExecuteDeleteCommandAsync()
+        {
+            var result = await DialogService.ConfirmAsync(
+                Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, FileItem.Name),
+                okText: Loc.Text(TranslationKeys.Ok),
+                cancelText: Loc.Text(TranslationKeys.Cancel)).ConfigureAwait(false);
+
+            if (result)
+            {
+                using (new OperationMonitor(OperationScope))
+                {
+                    await _fileItemService.DeleteAsync(FileItem).ConfigureAwait(false);
+                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+                }
+            }
         }
 
         private bool CanExecuteTranscribeCommand()

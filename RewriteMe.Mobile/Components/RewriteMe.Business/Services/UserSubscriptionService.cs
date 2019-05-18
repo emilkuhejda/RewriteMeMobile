@@ -2,6 +2,7 @@
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
@@ -18,6 +19,7 @@ namespace RewriteMe.Business.Services
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IUserSubscriptionRepository _userSubscriptionRepository;
         private readonly IFileItemRepository _fileItemRepository;
+        private readonly IDeletedFileItemRepository _deletedFileItemRepository;
         private readonly ILogger _logger;
 
         public UserSubscriptionService(
@@ -25,12 +27,14 @@ namespace RewriteMe.Business.Services
             IRewriteMeWebService rewriteMeWebService,
             IUserSubscriptionRepository userSubscriptionRepository,
             IFileItemRepository fileItemRepository,
+            IDeletedFileItemRepository deletedFileItemRepository,
             ILoggerFactory loggerFactory)
         {
             _internalValueService = internalValueService;
             _rewriteMeWebService = rewriteMeWebService;
             _userSubscriptionRepository = userSubscriptionRepository;
             _fileItemRepository = fileItemRepository;
+            _deletedFileItemRepository = deletedFileItemRepository;
             _logger = loggerFactory.CreateLogger(typeof(UserSubscriptionService));
         }
 
@@ -60,9 +64,15 @@ namespace RewriteMe.Business.Services
 
         public async Task<TimeSpan> GetRemainingTimeAsync()
         {
+            var deletedFilesTotalTime = await _internalValueService.GetValueAsync(InternalValues.DeletedFileItemsTotalTime).ConfigureAwait(false);
+
             var userSubscriptionsTime = await _userSubscriptionRepository.GetTotalTimeAsync().ConfigureAwait(false);
             var processedFilesTotalTime = await _fileItemRepository.GetProcessedFilesTotalTimeAsync().ConfigureAwait(false);
+            var processedDeletedFilesTotalTime = await _deletedFileItemRepository.GetProcessedFilesTotalTimeAsync().ConfigureAwait(false);
 
+            processedFilesTotalTime = processedFilesTotalTime
+                .Add(processedDeletedFilesTotalTime)
+                .Add(TimeSpanHelper.Parse(deletedFilesTotalTime));
             return userSubscriptionsTime.Subtract(processedFilesTotalTime);
         }
     }

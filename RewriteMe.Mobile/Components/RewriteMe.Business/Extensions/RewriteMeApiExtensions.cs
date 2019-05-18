@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Exceptions;
+using RewriteMe.Domain.Extensions;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Domain.WebApi.Models;
@@ -23,6 +26,39 @@ namespace RewriteMe.Business.Extensions
             using (var result = await operations.GetFileItemsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<FileItem>>(result.Body);
+            }
+        }
+
+        public static async Task<IEnumerable<Guid>> GetDeletedFileItemIdsAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.GetDeletedFileItemIdsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<IEnumerable<Guid?>>(result.Body).Where(x => x.HasValue).Select(x => x.Value);
+            }
+        }
+
+        public static async Task<string> GetDeletedFileItemsTotalTimeAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<string>(result.Body);
+            }
+        }
+
+        public static async Task<string> DeleteFileItemAsync(this IRewriteMeAPI operations, Guid fileItemId, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.DeleteFileItemWithHttpMessagesAsync(fileItemId, applicationId, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<string>(result.Body);
+            }
+        }
+
+        public static async Task<Ok> DeleteAllFileItemAsync(this IRewriteMeAPI operations, IList<DeletedFileItem> fileItems, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        {
+            var deletedFileItemModels = fileItems.Select(x => x.ToDeletedFileItemModel()).ToList();
+            using (var result = await operations.DeleteAllFileItemWithHttpMessagesAsync(deletedFileItemModels, applicationId, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<Ok>(result.Body);
             }
         }
 

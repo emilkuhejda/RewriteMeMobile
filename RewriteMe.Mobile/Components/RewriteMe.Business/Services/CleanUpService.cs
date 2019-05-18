@@ -11,17 +11,20 @@ namespace RewriteMe.Business.Services
         private readonly IInternalValueService _internalValueService;
         private readonly IUserSessionRepository _userSessionRepository;
         private readonly IFileItemRepository _fileItemRepository;
+        private readonly IDeletedFileItemRepository _deletedFileItemRepository;
         private readonly IUserSubscriptionRepository _userSubscriptionRepository;
 
         public CleanUpService(
             IInternalValueService internalValueService,
             IUserSessionRepository userSessionRepository,
             IFileItemRepository fileItemRepository,
+            IDeletedFileItemRepository deletedFileItemRepository,
             IUserSubscriptionRepository userSubscriptionRepository)
         {
             _internalValueService = internalValueService;
             _userSessionRepository = userSessionRepository;
             _fileItemRepository = fileItemRepository;
+            _deletedFileItemRepository = deletedFileItemRepository;
             _userSubscriptionRepository = userSubscriptionRepository;
         }
 
@@ -33,6 +36,7 @@ namespace RewriteMe.Business.Services
             await _internalValueService.UpdateValueAsync(InternalValues.ApplicationId, null).ConfigureAwait(false);
 
             await _fileItemRepository.ClearAsync().ConfigureAwait(false);
+            await _deletedFileItemRepository.ClearAsync().ConfigureAwait(false);
             await _userSessionRepository.ClearAsync().ConfigureAwait(false);
             await _userSubscriptionRepository.ClearAsync().ConfigureAwait(false);
         }

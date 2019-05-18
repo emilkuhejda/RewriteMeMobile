@@ -8,8 +8,6 @@ namespace RewriteMe.Mobile.Transcription
     {
         public static SubscriptionProduct ProductOneHour { get; } = new SubscriptionProduct("product.subscription.1hour", Loc.Text(TranslationKeys.OneHour), TimeSpan.FromHours(1));
 
-        public static SubscriptionProduct ProductTenHours { get; } = new SubscriptionProduct("product.subscription.10hours", Loc.Text(TranslationKeys.TenHours), TimeSpan.FromHours(1));
-
-        public static SubscriptionProduct[] All { get; } = { ProductOneHour, ProductTenHours };
+        public static SubscriptionProduct[] All { get; } = { ProductOneHour };
     }
 }

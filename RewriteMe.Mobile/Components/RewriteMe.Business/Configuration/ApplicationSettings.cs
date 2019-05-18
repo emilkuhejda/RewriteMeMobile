@@ -18,7 +18,7 @@ namespace RewriteMe.Business.Configuration
             _internalValueService = internalValueService;
         }
 
-        public Uri WebApiUri { get; } = new Uri("https://192.168.0.105:45456/");
+        public Uri WebApiUri { get; } = new Uri("https://rewriteme.azurewebsites.net/");
 
         public Guid ApplicationId { get; private set; }
 

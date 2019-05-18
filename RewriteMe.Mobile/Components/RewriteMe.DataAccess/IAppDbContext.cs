@@ -18,6 +18,8 @@ namespace RewriteMe.DataAccess
 
         AsyncTableQuery<FileItemEntity> FileItems { get; }
 
+        AsyncTableQuery<DeletedFileItemEntity> DeletedFileItems { get; }
+
         AsyncTableQuery<TranscribeItemEntity> TranscribeItems { get; }
 
         AsyncTableQuery<TranscriptAudioSourceEntity> TranscriptAudioSources { get; }
@@ -40,7 +42,7 @@ namespace RewriteMe.DataAccess
 
         Task UpdateAllAsync(IEnumerable items);
 
-        Task DeleteAsync(object primaryKey);
+        Task DeleteAsync<T>(object primaryKey) where T : new();
 
         Task DeleteAllAsync<T>() where T : new();
 
