@@ -197,26 +197,29 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (result)
             {
-                var httpRequestResult = await _rewriteMeWebService.DeleteFileItemAsync(FileItem.Id).ConfigureAwait(false);
-                if (httpRequestResult.State == HttpRequestState.Success)
+                using (new OperationMonitor(OperationScope))
                 {
-                    await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload).ConfigureAwait(false);
-                }
-                else
-                {
-                    var deletedFileItem = new DeletedFileItem
+                    var httpRequestResult = await _rewriteMeWebService.DeleteFileItemAsync(FileItem.Id).ConfigureAwait(false);
+                    if (httpRequestResult.State == HttpRequestState.Success)
                     {
-                        Id = FileItem.Id,
-                        DeletedDate = DateTime.UtcNow,
-                        RecognitionState = FileItem.RecognitionState,
-                        TotalTime = FileItem.TotalTime
-                    };
+                        await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        var deletedFileItem = new DeletedFileItem
+                        {
+                            Id = FileItem.Id,
+                            DeletedDate = DateTime.UtcNow,
+                            RecognitionState = FileItem.RecognitionState,
+                            TotalTime = FileItem.TotalTime
+                        };
 
-                    await _deletedFileItemService.InsertAsync(deletedFileItem).ConfigureAwait(false);
+                        await _deletedFileItemService.InsertAsync(deletedFileItem).ConfigureAwait(false);
+                    }
+
+                    await _fileItemService.DeleteAsync(FileItem.Id).ConfigureAwait(false);
+                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
-
-                await _fileItemService.DeleteAsync(FileItem.Id).ConfigureAwait(false);
-                await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
             }
         }
 
