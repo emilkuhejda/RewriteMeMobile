@@ -88,23 +88,23 @@ namespace RewriteMe.Mobile.ViewModels
         {
             try
             {
+                if (!CrossInAppBilling.IsSupported)
+                    throw new InAppBillingNotSupportedException();
+
+                Logger.Info($"Start purchasing product '{productId}'.");
+
+                var payload = Guid.NewGuid().ToString();
+                var billing = CrossInAppBilling.Current;
+                var connected = await billing.ConnectAsync().ConfigureAwait(false);
+                if (!connected)
+                    throw new AppStoreNotConnectedException();
+
+                var purchase = await billing
+                    .PurchaseAsync(productId, ItemType.InAppPurchase, payload)
+                    .ConfigureAwait(false);
+
                 using (new OperationMonitor(OperationScope))
                 {
-                    if (!CrossInAppBilling.IsSupported)
-                        throw new InAppBillingNotSupportedException();
-
-                    Logger.Info($"Start purchasing product '{productId}'.");
-
-                    var payload = Guid.NewGuid().ToString();
-                    var billing = CrossInAppBilling.Current;
-                    var connected = await billing.ConnectAsync().ConfigureAwait(false);
-                    if (!connected)
-                        throw new AppStoreNotConnectedException();
-
-                    var purchase = await billing
-                        .PurchaseAsync(productId, ItemType.InAppPurchase, payload)
-                        .ConfigureAwait(false);
-
                     if (purchase != null && purchase.State == PurchaseState.Purchased)
                     {
                         if (purchase.Payload != payload)
