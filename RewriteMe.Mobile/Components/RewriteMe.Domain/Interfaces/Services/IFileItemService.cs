@@ -12,8 +12,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task SynchronizationAsync(DateTime applicationUpdateDate);
 
-        Task DeletedFileItemsSynchronizationAsync(DateTime applicationUpdateDate, DateTime lastFileItemSynchronization);
-
         Task<bool> AnyWaitingForSynchronizationAsync();
 
         Task<IEnumerable<FileItem>> GetAllAsync();
