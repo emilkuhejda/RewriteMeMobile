@@ -8,7 +8,7 @@ namespace RewriteMe.Business.Configuration
 {
     public class ApplicationSettings : IApplicationSettings
     {
-        private const string Tenant = "rewritemedemo.onmicrosoft.com";
+        private const string Tenant = "rewriteme.onmicrosoft.com";
         private static readonly string AuthorityBase = $"https://login.microsoftonline.com/tfp/{Tenant}/";
 
         private readonly IInternalValueService _internalValueService;
@@ -24,19 +24,19 @@ namespace RewriteMe.Business.Configuration
 
         public string SupportMailAddress => "emil.kuhejda@gmail.com";
 
-        public string ClientId => "cbd1aee8-27d8-49f4-9f73-02337c15c7a3";
+        public string ClientId => "94983a85-6f54-4940-849e-55eaeb1d89dd";
 
-        public string RedirectUri => "msalcbd1aee8-27d8-49f4-9f73-02337c15c7a3://auth";
+        public string RedirectUri => "msal94983a85-6f54-4940-849e-55eaeb1d89dd://auth";
 
         public string[] Scopes => new[] { "" };
 
-        public string PolicySignUpSignIn => "B2C_1_Demo_sign_up";
+        public string PolicySignUpSignIn => "B2C_1_RewriteMe_SignUp_SignIn";
 
-        public string PolicySignIn => "B2C_1_Demo_signup";
+        public string PolicySignIn => "B2C_1_RewriteMe_SignIn";
 
-        public string PolicyEditProfile => "B2C_1_Demo_edit_profile";
+        public string PolicyEditProfile => "B2C_1_RewriteMe_Edit";
 
-        public string PolicyResetPassword => "B2C_1_Demo_reset_password";
+        public string PolicyResetPassword => "B2C_1_RewriteMe_Password_Reset";
 
         public string AuthoritySignUpSignIn => $"{AuthorityBase}{PolicySignUpSignIn}";
 
