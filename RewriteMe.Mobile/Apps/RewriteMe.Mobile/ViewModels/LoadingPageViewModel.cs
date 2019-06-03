@@ -50,6 +50,7 @@ namespace RewriteMe.Mobile.ViewModels
             _registrationUserWebService = registrationUserWebService;
 
             HasTitleBar = false;
+            CanGoBack = false;
 
             ReloadCommand = new AsyncCommand(ExecuteReloadCommandAsync);
         }
