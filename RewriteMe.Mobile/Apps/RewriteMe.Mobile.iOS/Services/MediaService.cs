@@ -10,7 +10,7 @@ namespace RewriteMe.Mobile.iOS.Services
         public TimeSpan GetTotalTime(string fileName)
         {
             var filePath = NSBundle.MainBundle.PathForResource(fileName, null);
-            using (var url = new NSUrl(filePath))
+            using (var url = new NSUrl(filePath ?? fileName))
             {
                 var audioPlayer = AVAudioPlayer.FromUrl(url);
                 return TimeSpan.FromSeconds(audioPlayer.Duration);

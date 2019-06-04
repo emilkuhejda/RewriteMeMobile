@@ -90,7 +90,7 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     _schedulerService.StartAsync();
 
-                    await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}").ConfigureAwait(false);
+                    await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
                 }
             }
         }
