@@ -107,7 +107,8 @@ namespace RewriteMe.Mobile.ViewModels
                     if (importedFile != null)
                     {
                         var path = importedFile.Path;
-                        var fileData = new FileData(path, Path.GetFileName(path), () => File.OpenRead(path));
+                        var fileName = Path.GetFileName(Uri.UnescapeDataString(path));
+                        var fileData = new FileData(path, fileName, () => File.OpenRead(path));
 
                         await InitializeFile(fileData).ConfigureAwait(false);
                     }

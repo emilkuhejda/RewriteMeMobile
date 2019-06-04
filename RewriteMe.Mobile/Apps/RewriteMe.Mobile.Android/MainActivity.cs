@@ -16,6 +16,10 @@ namespace RewriteMe.Mobile.Droid
         Icon = "@mipmap/ic_launcher",
         MainLauncher = false,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [IntentFilter(
+        new[] { Intent.ActionSend },
+        Categories = new[] { Intent.CategoryDefault },
+        DataMimeType = @"audio/*")]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -30,7 +34,14 @@ namespace RewriteMe.Mobile.Droid
             UserDialogs.Init(this);
 
             var bootstrapper = new AndroidBootstrapper();
-            LoadApplication(new App(bootstrapper));
+            var application = new App(bootstrapper);
+            LoadApplication(application);
+
+            if (Intent.Action == Intent.ActionSend)
+            {
+                var path = Intent.ClipData.GetItemAt(0);
+                application.CreateFileItem(path.Uri.ToString());
+            }
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
