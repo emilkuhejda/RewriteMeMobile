@@ -7,6 +7,7 @@ using FFImageLoading.Forms.Platform;
 using Microsoft.Identity.Client;
 using Plugin.InAppBilling;
 using RewriteMe.Mobile.Droid.Configuration;
+using RewriteMe.Mobile.Droid.Utils;
 using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Droid
@@ -16,10 +17,6 @@ namespace RewriteMe.Mobile.Droid
         Icon = "@mipmap/ic_launcher",
         MainLauncher = false,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
-    [IntentFilter(
-        new[] { Intent.ActionSend },
-        Categories = new[] { Intent.CategoryDefault },
-        DataMimeType = @"audio/*")]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -37,10 +34,10 @@ namespace RewriteMe.Mobile.Droid
             var application = new App(bootstrapper);
             LoadApplication(application);
 
-            if (Intent.Action == Intent.ActionSend)
+            var filePath = Intent.GetStringExtra(ExtraConstants.FilePath);
+            if (filePath != null)
             {
-                var path = Intent.ClipData.GetItemAt(0);
-                application.CreateFileItem(path.Uri.ToString());
+                application.CreateFileItem(filePath);
             }
         }
 

@@ -33,7 +33,6 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <AndroidLinkMode>None</AndroidLinkMode>
-    <AndroidKeyStore>True</AndroidKeyStore>
     <AndroidSigningKeyStore>D:\Projects\RewriteMeMobile\Certificates\Android\RewriteMe.keystore</AndroidSigningKeyStore>
     <AndroidSigningStorePass>4DGntEAqtW3C</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>RewriteMe</AndroidSigningKeyAlias>
@@ -113,6 +112,8 @@
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Services\MediaService.cs" />
     <Compile Include="SplashActivity.cs" />
+    <Compile Include="Utils\ExtraConstants.cs" />
+    <Compile Include="Extensions\UriExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Global\RewriteMe.CodeAnalysis.ruleset">
@@ -132,6 +133,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\mipmap-anydpi-v26\" />
+    <Folder Include="Utils\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Components\RewriteMe.Business\RewriteMe.Business.csproj">
