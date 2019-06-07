@@ -2,6 +2,7 @@
 using Prism.Ioc;
 using Prism.Navigation;
 using Prism.Unity;
+using RewriteMe.Business.Configuration;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
@@ -17,14 +18,13 @@ namespace RewriteMe.Mobile
     public partial class App : PrismApplication
     {
         public App(IPlatformInitializer platformInitializer)
-        : base(platformInitializer)
+            : base(platformInitializer)
         {
         }
 
-        public void CreateFileItem(string path)
+        public void ImportFile(string path)
         {
-            var navigationParameters = new NavigationParameters();
-            navigationParameters.Add<ImportedFileNavigationParameters>(new ImportedFileNavigationParameters(path));
+            var navigationParameters = CreateNavigationParameters(path);
             NavigationService.NavigateAsync($"{Pages.Login}", navigationParameters);
         }
 
@@ -34,7 +34,19 @@ namespace RewriteMe.Mobile
 
             InitializeStorage();
 
-            NavigationService.NavigateAsync($"/{Pages.Login}");
+            var navigationParameters = CreateNavigationParameters(InitializationParameters.Current.ImportedFilePath);
+            NavigationService.NavigateAsync($"/{Pages.Login}", navigationParameters);
+        }
+
+        private NavigationParameters CreateNavigationParameters(string filePath)
+        {
+            var navigationParameters = new NavigationParameters();
+            if (!string.IsNullOrWhiteSpace(filePath))
+            {
+                navigationParameters.Add<ImportedFileNavigationParameters>(new ImportedFileNavigationParameters(filePath));
+            }
+
+            return navigationParameters;
         }
 
         private void InitializeStorage()
