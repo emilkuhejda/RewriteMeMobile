@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.FilePicker;
+using Plugin.FilePicker.Abstractions;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess.Transcription;
@@ -97,15 +99,26 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                NavigationItems = CreateNavigation();
+
+                if (navigationParameters.GetNavigationMode() == NavigationMode.New)
+                {
+                    var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
+                    if (importedFile != null)
+                    {
+                        var path = importedFile.Path;
+                        var fileName = Path.GetFileName(Uri.UnescapeDataString(path));
+                        var fileData = new FileData(path, fileName, () => File.OpenRead(path));
+
+                        await InitializeFile(fileData).ConfigureAwait(false);
+                    }
+                }
+
                 if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {
                     var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
                     HandleSelectionAsync(dropDownListViewModel);
                 }
-
-                NavigationItems = CreateNavigation();
-
-                await Task.CompletedTask.ConfigureAwait(false);
             }
         }
 
@@ -173,12 +186,17 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteUploadFileCommandAsync()
         {
             var selectedFile = await ThreadHelper
-                .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
-                .ConfigureAwait(false);
+                            .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
+                            .ConfigureAwait(false);
 
-            var totalTime = _mediaService.GetTotalTime(selectedFile.FilePath);
+            await InitializeFile(selectedFile).ConfigureAwait(false);
+        }
+
+        private async Task InitializeFile(FileData fileData)
+        {
+            var totalTime = _mediaService.GetTotalTime(fileData.FilePath);
             var canTranscribe = await _fileItemService.CanTranscribeAsync(totalTime).ConfigureAwait(false);
-            SelectedFile = new FileDataWrapper(selectedFile)
+            SelectedFile = new FileDataWrapper(fileData)
             {
                 TotalTime = totalTime,
                 CanTranscribe = canTranscribe

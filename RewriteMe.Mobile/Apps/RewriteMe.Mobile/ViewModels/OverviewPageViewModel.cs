@@ -18,6 +18,7 @@ using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 using Xamarin.Forms;
@@ -85,6 +86,15 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                if (navigationParameters.GetNavigationMode() == NavigationMode.New)
+                {
+                    var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
+                    if (importedFile != null)
+                    {
+                        await NavigationService.NavigateWithoutAnimationAsync(Pages.Create, navigationParameters).ConfigureAwait(false);
+                    }
+                }
+
                 IsUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
 
                 await InitializeFileItems().ConfigureAwait(false);

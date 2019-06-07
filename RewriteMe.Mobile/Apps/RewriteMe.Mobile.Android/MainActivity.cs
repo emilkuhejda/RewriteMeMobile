@@ -6,7 +6,9 @@ using Android.OS;
 using FFImageLoading.Forms.Platform;
 using Microsoft.Identity.Client;
 using Plugin.InAppBilling;
+using RewriteMe.Business.Configuration;
 using RewriteMe.Mobile.Droid.Configuration;
+using RewriteMe.Mobile.Droid.Utils;
 using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Droid
@@ -29,8 +31,11 @@ namespace RewriteMe.Mobile.Droid
             CachedImageRenderer.Init(null);
             UserDialogs.Init(this);
 
+            InitializationParameters.Current.ImportedFilePath = Intent.GetStringExtra(ExtraConstants.FilePath);
+
             var bootstrapper = new AndroidBootstrapper();
-            LoadApplication(new App(bootstrapper));
+            var application = new App(bootstrapper);
+            LoadApplication(application);
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)

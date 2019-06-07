@@ -2,7 +2,10 @@
 using System.Collections.Specialized;
 using RewriteMe.Mobile.Controls;
 using Xamarin.Forms;
+using Xamarin.Forms.PlatformConfiguration;
+using Xamarin.Forms.PlatformConfiguration.iOSSpecific;
 using Xamarin.Forms.Xaml;
+using NavigationPage = Xamarin.Forms.NavigationPage;
 
 namespace RewriteMe.Mobile.Views
 {
@@ -55,6 +58,17 @@ namespace RewriteMe.Mobile.Views
             foreach (var toolbarItem in RightNavigationToolbarItems)
             {
                 SetInheritedBindingContext(toolbarItem, BindingContext);
+            }
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                var safeInsets = On<iOS>().SafeAreaInsets();
+                Padding = safeInsets;
             }
         }
     }
