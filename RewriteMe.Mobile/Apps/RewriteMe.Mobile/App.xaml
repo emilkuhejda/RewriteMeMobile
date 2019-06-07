@@ -275,16 +275,6 @@
                       RowSpacing="0"
                       VerticalOptions="FillAndExpand">
                     <Grid.RowDefinitions>
-                        <RowDefinition>
-                            <RowDefinition.Height>
-                                <!--  Fix for iPhone to prevent overlapping with the action bar  -->
-                                <OnPlatform x:TypeArguments="GridLength">
-                                    <On Platform="iOS">0</On>
-                                    <On Platform="Android">0</On>
-                                    <On Platform="UWP">0</On>
-                                </OnPlatform>
-                            </RowDefinition.Height>
-                        </RowDefinition>
                         <!--  Headline row  -->
                         <RowDefinition Height="{Binding HasTitleBar, Mode=OneWay, Converter={StaticResource BoolToNavigationBarRow1HeightConverter}}" />
                         <!--  Gray headline row  -->
@@ -296,15 +286,9 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-
-                    <!--  iPhone action bar fix  -->
-                    <BoxView Grid.Row="0"
-                             BackgroundColor="{StaticResource ColorPrimary}"
-                             HorizontalOptions="FillAndExpand"
-                             VerticalOptions="FillAndExpand" />
-
+                    
                     <!--  Header Row 1  -->
-                    <Grid Grid.Row="1"
+                    <Grid Grid.Row="0"
                           Margin="0"
                           Padding="0"
                           BackgroundColor="{StaticResource ColorPrimary}"
@@ -330,7 +314,7 @@
                     </Grid>
 
                     <!--  Header Row 2: gray subtitle bar  -->
-                    <Grid Grid.Row="2"
+                    <Grid Grid.Row="1"
                           Margin="0"
                           Padding="0"
                           BackgroundColor="{StaticResource NavigationBarGray}"
@@ -431,7 +415,7 @@
                     </Grid>
 
                     <!--  Page Content  -->
-                    <ContentPresenter Grid.Row="3"
+                    <ContentPresenter Grid.Row="2"
                                       Grid.Column="0"
                                       HorizontalOptions="FillAndExpand"
                                       VerticalOptions="FillAndExpand" />
