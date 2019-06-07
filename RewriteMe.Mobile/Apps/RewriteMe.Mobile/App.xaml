@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
+<?xml version="1.0" encoding="utf-8" ?>
 <prism:PrismApplication x:Class="RewriteMe.Mobile.App"
                         xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
@@ -279,7 +279,7 @@
                             <RowDefinition.Height>
                                 <!--  Fix for iPhone to prevent overlapping with the action bar  -->
                                 <OnPlatform x:TypeArguments="GridLength">
-                                    <On Platform="iOS">20</On>
+                                    <On Platform="iOS">0</On>
                                     <On Platform="Android">0</On>
                                     <On Platform="UWP">0</On>
                                 </OnPlatform>
