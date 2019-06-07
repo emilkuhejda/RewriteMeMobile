@@ -1,6 +1,7 @@
 ﻿using FFImageLoading.Forms.Platform;
 using Foundation;
 using RewriteMe.Mobile.iOS.Configuration;
+using RewriteMe.Mobile.iOS.Utils;
 using UIKit;
 using Xamarin.Forms;
 
@@ -28,6 +29,8 @@ namespace RewriteMe.Mobile.iOS
             _application = new App(bootstrapper);
             LoadApplication(_application);
 
+            InitializeStatusBarColor();
+
             return base.FinishedLaunching(uiApplication, launchOptions);
         }
 
@@ -36,6 +39,15 @@ namespace RewriteMe.Mobile.iOS
             _application.CreateFileItem(url.Path);
 
             return true;
+        }
+
+        private void InitializeStatusBarColor()
+        {
+            var statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView;
+            if (statusBar != null && statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
+            {
+                statusBar.BackgroundColor = Colors.Primary;
+            }
         }
     }
 }
