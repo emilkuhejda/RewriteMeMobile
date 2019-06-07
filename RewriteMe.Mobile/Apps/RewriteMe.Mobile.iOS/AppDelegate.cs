@@ -1,6 +1,7 @@
 ﻿using FFImageLoading.Forms.Platform;
 using Foundation;
 using RewriteMe.Mobile.iOS.Configuration;
+using RewriteMe.Mobile.iOS.Utils;
 using UIKit;
 using Xamarin.Forms;
 
@@ -12,6 +13,8 @@ namespace RewriteMe.Mobile.iOS
     [Register("AppDelegate")]
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
+        private App _application;
+
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
         // visible.
@@ -23,9 +26,28 @@ namespace RewriteMe.Mobile.iOS
             CachedImageRenderer.Init();
 
             var bootstrapper = new OSXBootstrapper();
-            LoadApplication(new App(bootstrapper));
+            _application = new App(bootstrapper);
+            LoadApplication(_application);
+
+            InitializeStatusBarColor();
 
             return base.FinishedLaunching(uiApplication, launchOptions);
+        }
+
+        public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
+        {
+            _application.ImportFile(url.Path);
+
+            return true;
+        }
+
+        private void InitializeStatusBarColor()
+        {
+            var statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView;
+            if (statusBar != null && statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
+            {
+                statusBar.BackgroundColor = Colors.Primary;
+            }
         }
     }
 }

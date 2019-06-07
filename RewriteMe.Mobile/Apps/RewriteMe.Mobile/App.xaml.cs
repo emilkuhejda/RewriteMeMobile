@@ -1,11 +1,15 @@
 ﻿using Prism;
 using Prism.Ioc;
+using Prism.Navigation;
 using Prism.Unity;
+using RewriteMe.Business.Configuration;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Navigation.Parameters;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -14,8 +18,14 @@ namespace RewriteMe.Mobile
     public partial class App : PrismApplication
     {
         public App(IPlatformInitializer platformInitializer)
-        : base(platformInitializer)
+            : base(platformInitializer)
         {
+        }
+
+        public void ImportFile(string path)
+        {
+            var navigationParameters = CreateNavigationParameters(path);
+            NavigationService.NavigateAsync($"{Pages.Login}", navigationParameters);
         }
 
         protected override void OnInitialized()
@@ -24,7 +34,19 @@ namespace RewriteMe.Mobile
 
             InitializeStorage();
 
-            NavigationService.NavigateAsync($"/{Pages.Login}");
+            var navigationParameters = CreateNavigationParameters(InitializationParameters.Current.ImportedFilePath);
+            NavigationService.NavigateAsync($"/{Pages.Login}", navigationParameters);
+        }
+
+        private NavigationParameters CreateNavigationParameters(string filePath)
+        {
+            var navigationParameters = new NavigationParameters();
+            if (!string.IsNullOrWhiteSpace(filePath))
+            {
+                navigationParameters.Add<ImportedFileNavigationParameters>(new ImportedFileNavigationParameters(filePath));
+            }
+
+            return navigationParameters;
         }
 
         private void InitializeStorage()
