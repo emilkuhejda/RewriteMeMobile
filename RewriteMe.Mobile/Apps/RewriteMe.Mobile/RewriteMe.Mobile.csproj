@@ -22,6 +22,7 @@
     <None Remove="Resources\Images\Ok.svg" />
     <None Remove="Resources\Images\Pause-Enabled.svg" />
     <None Remove="Resources\Images\Play-Enabled.svg" />
+    <None Remove="Resources\Images\Record.svg" />
     <None Remove="Resources\Images\Refresh.svg" />
     <None Remove="Resources\Images\Reload.svg" />
     <None Remove="Resources\Images\RewriteMeLogo.png" />
@@ -44,6 +45,7 @@
     <EmbeddedResource Include="Resources\Images\Ok.svg" />
     <EmbeddedResource Include="Resources\Images\Pause-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Play-Enabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Record.svg" />
     <EmbeddedResource Include="Resources\Images\Refresh.svg" />
     <EmbeddedResource Include="Resources\Images\Reload.svg" />
     <EmbeddedResource Include="Resources\Images\RewriteMeLogo.png" />
@@ -145,6 +147,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\PlayerView.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\RecorderPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\SettingsPage.xaml">
