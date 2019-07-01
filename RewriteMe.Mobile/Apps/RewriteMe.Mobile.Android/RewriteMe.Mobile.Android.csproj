@@ -133,8 +133,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\mipmap-anydpi-v26\" />
-    <Folder Include="Utils\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Components\RewriteMe.Business\RewriteMe.Business.csproj">
