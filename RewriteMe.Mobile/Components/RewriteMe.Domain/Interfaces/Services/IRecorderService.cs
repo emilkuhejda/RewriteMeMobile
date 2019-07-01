@@ -1,6 +1,6 @@
 ﻿namespace RewriteMe.Domain.Interfaces.Services
 {
-    public interface IAudioRecordedService
+    public interface IRecorderService
     {
         void Run();
     }

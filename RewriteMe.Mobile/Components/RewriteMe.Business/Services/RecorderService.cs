@@ -2,7 +2,7 @@
 
 namespace RewriteMe.Business.Services
 {
-    public class AudioRecordedService : IAudioRecordedService
+    public class RecorderService : IRecorderService
     {
         public void Run()
         {
