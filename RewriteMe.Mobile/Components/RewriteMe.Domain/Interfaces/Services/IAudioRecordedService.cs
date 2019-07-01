@@ -2,5 +2,6 @@
 {
     public interface IAudioRecordedService
     {
+        void Run();
     }
 }
