@@ -24,6 +24,10 @@ namespace RewriteMe.DataAccess
 
         AsyncTableQuery<TranscriptAudioSourceEntity> TranscriptAudioSources { get; }
 
+        AsyncTableQuery<RecordedItemEntity> RecordedItems { get; }
+
+        AsyncTableQuery<RecordedAudioFileEntity> RecordedAudioFiles { get; }
+
         Task RunInTransactionAsync(Action<SQLiteConnection> action);
 
         Task CreateTablesAsync(params Type[] types);
