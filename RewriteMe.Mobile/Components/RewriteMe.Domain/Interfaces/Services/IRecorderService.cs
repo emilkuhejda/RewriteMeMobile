@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Timers;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Transcription;
 
@@ -12,9 +11,9 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         event EventHandler StatusChanged;
 
-        Timer Timer { get; }
-
         TimeSpan Time { get; }
+
+        bool IsRecording { get; }
 
         Task<RecordedItem> CreateFileAsync();
 

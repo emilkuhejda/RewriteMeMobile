@@ -2,7 +2,6 @@
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using System.Timers;
 using Plugin.AudioRecorder;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Repositories;
@@ -13,9 +12,7 @@ using Xamarin.Cognitive.Speech;
 
 namespace RewriteMe.Business.Services
 {
-#pragma warning disable CA1001 // Types that own disposable fields should be disposable
     public class RecorderService : IRecorderService
-#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private readonly IRecordedItemRepository _recordedItemRepository;
         private readonly IRecordedAudioFileRepository _recordedAudioFileRepository;
@@ -38,13 +35,11 @@ namespace RewriteMe.Business.Services
             _directoryProvider = directoryProvider;
 
             _stopwatch = new Stopwatch();
-
-            Timer = new Timer(500) { AutoReset = true };
         }
 
-        public Timer Timer { get; set; }
-
         public TimeSpan Time => _stopwatch.Elapsed;
+
+        public bool IsRecording => _recorder != null && !_isStopped;
 
         private RecordedItem RecordedItem { get; set; }
 
@@ -86,18 +81,16 @@ namespace RewriteMe.Business.Services
             RecordedItem = recordedItem;
             SpeechApiClient = new SpeechApiClient(subscriptionKey, SpeechRegion.WestEurope);
 
-            Timer.Enabled = true;
-            _stopwatch.Start();
-
             await StartRecordingInternal(recordedItem).ConfigureAwait(false);
+
+            _stopwatch.Start();
         }
 
         public async void ResumeRecording()
         {
-            _stopwatch.Start();
-            Timer.Start();
-
             await StartRecordingInternal(RecordedItem).ConfigureAwait(false);
+
+            _stopwatch.Start();
         }
 
         private async Task StartRecordingInternal(RecordedItem recordedItem)
@@ -137,7 +130,7 @@ namespace RewriteMe.Business.Services
             await _recorder.StopRecording().ConfigureAwait(false);
 
             _stopwatch.Stop();
-            Timer.Stop();
+
             OnStatusChanged();
         }
 
@@ -145,9 +138,11 @@ namespace RewriteMe.Business.Services
         {
             using (var stream = _recorder.GetAudioFileStream())
             {
-                var simleResult = await SpeechApiClient
-                    .SpeechToTextSimple(stream, _recorder.AudioStreamDetails.SampleRate, audioRecordTask)
-                    .ConfigureAwait(false);
+                //var simleResult = await SpeechApiClient
+                //    .SpeechToTextSimple(stream, _recorder.AudioStreamDetails.SampleRate, audioRecordTask)
+                //    .ConfigureAwait(false);
+                var simleResult = new RecognitionSpeechResult { DisplayText = "Text " };
+                var a = audioRecordTask.IsCanceled;
 
                 var recordedAudioFile = new RecordedAudioFile
                 {

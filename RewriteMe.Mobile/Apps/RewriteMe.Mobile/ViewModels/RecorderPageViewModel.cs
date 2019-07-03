@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows.Input;
 using Prism.Commands;
 using Prism.Navigation;
@@ -9,6 +8,7 @@ using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -36,7 +36,6 @@ namespace RewriteMe.Mobile.ViewModels
 
             recorderService.AudioTranscribed += OnAudioTranscribed;
             recorderService.StatusChanged += OnStatusChanged;
-            recorderService.Timer.Elapsed += OnElapsed;
 
             RecordCommand = new DelegateCommand(ExecuteRecordCommand);
             StopRecordingCommand = new DelegateCommand(ExecuteStopRecordingCommand);
@@ -75,6 +74,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async void ExecuteRecordCommand()
         {
+            Device.StartTimer(TimeSpan.FromSeconds(0.5), UpdateTimer);
+
             if (_recorderService.CanStartRecording())
             {
                 var recordedItem = await _recorderService.CreateFileAsync().ConfigureAwait(false);
@@ -97,6 +98,14 @@ namespace RewriteMe.Mobile.ViewModels
         private void ExecuteStopRecordingCommand()
         {
             _recorderService.StopRecording();
+        }
+
+        private bool UpdateTimer()
+        {
+            var ts = _recorderService.Time;
+            Time = $"{ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds / 10:00}";
+
+            return _recorderService.IsRecording;
         }
 
         private void UpdateUi()
@@ -126,12 +135,6 @@ namespace RewriteMe.Mobile.ViewModels
         private void OnStatusChanged(object sender, EventArgs e)
         {
             UpdateUi();
-        }
-
-        private void OnElapsed(object sender, ElapsedEventArgs e)
-        {
-            var ts = _recorderService.Time;
-            Time = $"{ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds / 10:00}";
         }
     }
 }
