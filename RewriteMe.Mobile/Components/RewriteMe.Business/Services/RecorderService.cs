@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
+using System.Timers;
 using Plugin.AudioRecorder;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Repositories;
@@ -11,14 +13,16 @@ using Xamarin.Cognitive.Speech;
 
 namespace RewriteMe.Business.Services
 {
+#pragma warning disable CA1001 // Types that own disposable fields should be disposable
     public class RecorderService : IRecorderService
+#pragma warning restore CA1001 // Types that own disposable fields should be disposable
     {
         private readonly IRecordedItemRepository _recordedItemRepository;
         private readonly IRecordedAudioFileRepository _recordedAudioFileRepository;
         private readonly IDirectoryProvider _directoryProvider;
+        private readonly Stopwatch _stopwatch;
 
         private AudioRecorderService _recorder;
-
         private bool _isStopped;
 
         public event EventHandler<AudioTranscribedEventArgs> AudioTranscribed;
@@ -32,7 +36,15 @@ namespace RewriteMe.Business.Services
             _recordedItemRepository = recordedItemRepository;
             _recordedAudioFileRepository = recordedAudioFileRepository;
             _directoryProvider = directoryProvider;
+
+            _stopwatch = new Stopwatch();
+
+            Timer = new Timer(500) { AutoReset = true };
         }
+
+        public Timer Timer { get; set; }
+
+        public TimeSpan Time => _stopwatch.Elapsed;
 
         private RecordedItem RecordedItem { get; set; }
 
@@ -74,11 +86,17 @@ namespace RewriteMe.Business.Services
             RecordedItem = recordedItem;
             SpeechApiClient = new SpeechApiClient(subscriptionKey, SpeechRegion.WestEurope);
 
+            Timer.Enabled = true;
+            _stopwatch.Start();
+
             await StartRecordingInternal(recordedItem).ConfigureAwait(false);
         }
 
         public async void ResumeRecording()
         {
+            _stopwatch.Start();
+            Timer.Start();
+
             await StartRecordingInternal(RecordedItem).ConfigureAwait(false);
         }
 
@@ -118,6 +136,8 @@ namespace RewriteMe.Business.Services
 
             await _recorder.StopRecording().ConfigureAwait(false);
 
+            _stopwatch.Stop();
+            Timer.Stop();
             OnStatusChanged();
         }
 

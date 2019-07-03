@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Timers;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Transcription;
 
@@ -10,6 +11,10 @@ namespace RewriteMe.Domain.Interfaces.Services
         event EventHandler<AudioTranscribedEventArgs> AudioTranscribed;
 
         event EventHandler StatusChanged;
+
+        Timer Timer { get; }
+
+        TimeSpan Time { get; }
 
         Task<RecordedItem> CreateFileAsync();
 

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using System.Timers;
 using System.Windows.Input;
 using Prism.Commands;
 using Prism.Navigation;
@@ -17,6 +18,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IRecordedItemService _recordedItemService;
 
         private string _text;
+        private string _time;
         private string _buttonText;
 
         public RecorderPageViewModel(
@@ -34,6 +36,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             recorderService.AudioTranscribed += OnAudioTranscribed;
             recorderService.StatusChanged += OnStatusChanged;
+            recorderService.Timer.Elapsed += OnElapsed;
 
             RecordCommand = new DelegateCommand(ExecuteRecordCommand);
             StopRecordingCommand = new DelegateCommand(ExecuteStopRecordingCommand);
@@ -43,6 +46,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get => _text;
             set => SetProperty(ref _text, value);
+        }
+
+        public string Time
+        {
+            get => _time;
+            set => SetProperty(ref _time, value);
         }
 
         public string ButtonText
@@ -117,6 +126,12 @@ namespace RewriteMe.Mobile.ViewModels
         private void OnStatusChanged(object sender, EventArgs e)
         {
             UpdateUi();
+        }
+
+        private void OnElapsed(object sender, ElapsedEventArgs e)
+        {
+            var ts = _recorderService.Time;
+            Time = $"{ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds / 10:00}";
         }
     }
 }
