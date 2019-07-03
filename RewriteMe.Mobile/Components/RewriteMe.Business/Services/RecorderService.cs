@@ -2,6 +2,7 @@
 using System.IO;
 using System.Threading.Tasks;
 using Plugin.AudioRecorder;
+using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
@@ -19,6 +20,9 @@ namespace RewriteMe.Business.Services
         private AudioRecorderService _recorder;
 
         private bool _isStopped;
+
+        public event EventHandler<AudioTranscribedEventArgs> AudioTranscribed;
+        public event EventHandler StatusChanged;
 
         public RecorderService(
             IRecordedItemRepository recordedItemRepository,
@@ -93,7 +97,7 @@ namespace RewriteMe.Business.Services
             {
                 StopRecordingAfterTimeout = true,
                 StopRecordingOnSilence = true,
-                TotalAudioTimeout = TimeSpan.FromSeconds(15),
+                TotalAudioTimeout = TimeSpan.FromSeconds(5),
                 FilePath = filePath
             };
 
@@ -101,6 +105,8 @@ namespace RewriteMe.Business.Services
 
             var audioRecordTask = await _recorder.StartRecording().ConfigureAwait(false);
             RecognizeAsync(audioRecordTask);
+
+            OnStatusChanged();
         }
 
         public async void StopRecording()
@@ -111,6 +117,8 @@ namespace RewriteMe.Business.Services
             _isStopped = true;
 
             await _recorder.StopRecording().ConfigureAwait(false);
+
+            OnStatusChanged();
         }
 
         private async void RecognizeAsync(Task audioRecordTask)
@@ -131,6 +139,8 @@ namespace RewriteMe.Business.Services
                     DateCreated = DateTime.UtcNow
                 };
 
+                OnAudioTranscribed(simleResult.DisplayText);
+
                 await _recordedAudioFileRepository.InsertAsync(recordedAudioFile).ConfigureAwait(false);
             }
         }
@@ -141,6 +151,16 @@ namespace RewriteMe.Business.Services
                 return;
 
             StartRecordingInternal(RecordedItem).ConfigureAwait(false);
+        }
+
+        private void OnAudioTranscribed(string transcript)
+        {
+            AudioTranscribed?.Invoke(this, new AudioTranscribedEventArgs(transcript));
+        }
+
+        private void OnStatusChanged()
+        {
+            StatusChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

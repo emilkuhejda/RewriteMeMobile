@@ -1,9 +1,10 @@
-﻿using System.Linq;
+﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
@@ -16,6 +17,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IRecordedItemService _recordedItemService;
 
         private string _text;
+        private string _buttonText;
 
         public RecorderPageViewModel(
             IRecorderService recorderService,
@@ -30,6 +32,9 @@ namespace RewriteMe.Mobile.ViewModels
 
             CanGoBack = true;
 
+            recorderService.AudioTranscribed += OnAudioTranscribed;
+            recorderService.StatusChanged += OnStatusChanged;
+
             RecordCommand = new DelegateCommand(ExecuteRecordCommand);
             StopRecordingCommand = new DelegateCommand(ExecuteStopRecordingCommand);
         }
@@ -40,6 +45,12 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _text, value);
         }
 
+        public string ButtonText
+        {
+            get => _buttonText;
+            set => SetProperty(ref _buttonText, value);
+        }
+
         public ICommand RecordCommand { get; }
 
         public ICommand StopRecordingCommand { get; }
@@ -48,20 +59,64 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                UpdateUi();
                 var items = await _recordedItemService.GetAllAsync().ConfigureAwait(false);
             }
         }
 
         private async void ExecuteRecordCommand()
         {
-            var recordedItem = await _recorderService.CreateFileAsync().ConfigureAwait(false);
+            if (_recorderService.CanStartRecording())
+            {
+                var recordedItem = await _recorderService.CreateFileAsync().ConfigureAwait(false);
 
-            _recorderService.StartRecording(recordedItem, "471ab4db87064a9db2ad428c64d82b0d");
+                _recorderService.StartRecording(recordedItem, "471ab4db87064a9db2ad428c64d82b0d");
+            }
+            else
+            {
+                if (_recorderService.CanResumeRecording())
+                {
+                    _recorderService.ResumeRecording();
+                }
+                else
+                {
+                    _recorderService.StopRecording();
+                }
+            }
         }
 
         private void ExecuteStopRecordingCommand()
         {
             _recorderService.StopRecording();
+        }
+
+        private void UpdateUi()
+        {
+            if (_recorderService.CanStartRecording())
+            {
+                ButtonText = "Start";
+            }
+            else
+            {
+                if (_recorderService.CanResumeRecording())
+                {
+                    ButtonText = "Resume";
+                }
+                else
+                {
+                    ButtonText = "Stop";
+                }
+            }
+        }
+
+        private void OnAudioTranscribed(object sender, AudioTranscribedEventArgs e)
+        {
+            Text += e.Transcript;
+        }
+
+        private void OnStatusChanged(object sender, EventArgs e)
+        {
+            UpdateUi();
         }
     }
 }

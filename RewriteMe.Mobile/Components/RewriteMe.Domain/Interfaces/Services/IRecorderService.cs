@@ -1,10 +1,16 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Transcription;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IRecorderService
     {
+        event EventHandler<AudioTranscribedEventArgs> AudioTranscribed;
+
+        event EventHandler StatusChanged;
+
         Task<RecordedItem> CreateFileAsync();
 
         bool CanStartRecording();
