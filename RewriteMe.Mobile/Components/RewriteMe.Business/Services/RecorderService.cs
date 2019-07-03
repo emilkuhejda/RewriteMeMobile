@@ -103,6 +103,9 @@ namespace RewriteMe.Business.Services
                 _recorder = null;
             }
 
+            if (recordedItem == null)
+                return;
+
             var filePath = Path.Combine(recordedItem.Path, $"{Guid.NewGuid()}.wav");
             _recorder = new AudioRecorderService
             {
@@ -125,24 +128,41 @@ namespace RewriteMe.Business.Services
             if (_recorder == null)
                 return;
 
+            await StopRecordingInternal().ConfigureAwait(false);
+
+            OnStatusChanged();
+        }
+
+        public async Task StopRecordingInternal()
+        {
             _isStopped = true;
 
             await _recorder.StopRecording().ConfigureAwait(false);
 
             _stopwatch.Stop();
+        }
 
-            OnStatusChanged();
+        public async void Reset()
+        {
+            if (_recorder != null)
+            {
+                await StopRecordingInternal().ConfigureAwait(false);
+                _recorder = null;
+            }
+
+            _stopwatch.Stop();
+            _stopwatch.Reset();
+
+            RecordedItem = null;
         }
 
         private async void RecognizeAsync(Task audioRecordTask)
         {
             using (var stream = _recorder.GetAudioFileStream())
             {
-                //var simleResult = await SpeechApiClient
-                //    .SpeechToTextSimple(stream, _recorder.AudioStreamDetails.SampleRate, audioRecordTask)
-                //    .ConfigureAwait(false);
-                var simleResult = new RecognitionSpeechResult { DisplayText = "Text " };
-                var a = audioRecordTask.IsCanceled;
+                var simleResult = await SpeechApiClient
+                    .SpeechToTextSimple(stream, _recorder.AudioStreamDetails.SampleRate, audioRecordTask)
+                    .ConfigureAwait(false);
 
                 var recordedAudioFile = new RecordedAudioFile
                 {

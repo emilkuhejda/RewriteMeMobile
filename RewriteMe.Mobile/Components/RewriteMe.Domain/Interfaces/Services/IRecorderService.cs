@@ -26,5 +26,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         void ResumeRecording();
 
         void StopRecording();
+
+        void Reset();
     }
 }

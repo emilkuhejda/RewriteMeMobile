@@ -136,5 +136,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             UpdateUi();
         }
+
+        protected override void DisposeInternal()
+        {
+            _recorderService.AudioTranscribed -= OnAudioTranscribed;
+            _recorderService.StatusChanged -= OnStatusChanged;
+            _recorderService.Reset();
+        }
     }
 }
