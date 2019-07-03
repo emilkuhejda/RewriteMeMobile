@@ -1,5 +1,7 @@
-﻿using RewriteMe.DataAccess.Entities;
+﻿using Newtonsoft.Json;
+using RewriteMe.DataAccess.Entities;
 using RewriteMe.Domain.Transcription;
+using Xamarin.Cognitive.Speech;
 
 namespace RewriteMe.DataAccess.DataAdapters
 {
@@ -13,6 +15,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 RecordedItemId = entity.RecordedItemId,
                 Path = entity.Path,
                 Transcript = entity.Transcript,
+                RecognitionSpeechResult = JsonConvert.DeserializeObject<RecognitionSpeechResult>(entity.RecognitionSpeechResult),
                 DateCreated = entity.DateCreated
             };
         }
@@ -24,7 +27,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = recordedAudioFile.Id,
                 RecordedItemId = recordedAudioFile.RecordedItemId,
                 Path = recordedAudioFile.Path,
-                Transcript = recordedAudioFile.Path,
+                Transcript = recordedAudioFile.Transcript,
+                RecognitionSpeechResult = JsonConvert.SerializeObject(recordedAudioFile.RecognitionSpeechResult),
                 DateCreated = recordedAudioFile.DateCreated
             };
         }

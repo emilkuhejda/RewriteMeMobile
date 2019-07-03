@@ -17,6 +17,8 @@ namespace RewriteMe.DataAccess.Entities
 
         public string Transcript { get; set; }
 
+        public string RecognitionSpeechResult { get; set; }
+
         public DateTime DateCreated { get; set; }
     }
 }

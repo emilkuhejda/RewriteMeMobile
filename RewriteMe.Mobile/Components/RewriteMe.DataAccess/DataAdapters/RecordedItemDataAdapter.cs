@@ -14,7 +14,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 FileName = entity.FileName,
                 Path = entity.Path,
                 DateCreated = entity.DateCreated,
-                AudioFiles = entity.AudioFiles.Select(x => x.ToRecordedAudioFile())
+                AudioFiles = entity.AudioFiles?.Select(x => x.ToRecordedAudioFile())
             };
         }
 
@@ -26,7 +26,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 FileName = recordedItem.FileName,
                 Path = recordedItem.Path,
                 DateCreated = recordedItem.DateCreated,
-                AudioFiles = recordedItem.AudioFiles.Select(x => x.ToRecordedAudioFileEntity()).ToArray()
+                AudioFiles = recordedItem.AudioFiles?.Select(x => x.ToRecordedAudioFileEntity()).ToArray()
             };
         }
     }

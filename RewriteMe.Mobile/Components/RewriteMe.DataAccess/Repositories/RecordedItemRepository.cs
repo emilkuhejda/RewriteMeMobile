@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using RewriteMe.DataAccess.DataAdapters;
 using RewriteMe.DataAccess.Entities;
@@ -20,6 +22,12 @@ namespace RewriteMe.DataAccess.Repositories
         public async Task InsertAsync(RecordedItem recordedItem)
         {
             await _contextProvider.Context.InsertAsync(recordedItem.ToRecordedItemEntity()).ConfigureAwait(false);
+        }
+
+        public async Task<IEnumerable<RecordedItem>> GetAllAsync()
+        {
+            var entities = await _contextProvider.Context.GetAllWithChildrenAsync<RecordedItemEntity>(x => true).ConfigureAwait(false);
+            return entities.Select(x => x.ToRecordedItem());
         }
 
         public async Task<RecordedItem> GetAsync(Guid recordedItemId)
