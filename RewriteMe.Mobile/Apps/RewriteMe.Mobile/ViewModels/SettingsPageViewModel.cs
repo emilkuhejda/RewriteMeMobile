@@ -24,7 +24,7 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class SettingsPageViewModel : ViewModelBase, IDisposable
+    public class SettingsPageViewModel : ViewModelBase
     {
         private readonly IInternalValueService _internalValueService;
         private readonly IUserSessionService _userSessionService;
@@ -38,7 +38,6 @@ namespace RewriteMe.Mobile.ViewModels
         private string _userName;
         private string _remainingTime;
         private string _applicationVersion;
-        private bool _disposed;
 
         public SettingsPageViewModel(
             IInternalValueService internalValueService,
@@ -239,23 +238,9 @@ namespace RewriteMe.Mobile.ViewModels
             DialogService.AlertAsync(Loc.Text(TranslationKeys.DeveloperModeIsActivated));
         }
 
-        public void Dispose()
+        protected override void DisposeInternal()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
-
-            if (disposing)
-            {
-                DeveloperMode.UnlockedEvent -= OnUnlockedEvent;
-            }
-
-            _disposed = true;
+            DeveloperMode.UnlockedEvent -= OnUnlockedEvent;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
@@ -13,11 +14,13 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class ViewModelBase : BindableBase, INavigatedAware
+    public class ViewModelBase : BindableBase, INavigatedAware, IDisposable
     {
         private string _title;
         private bool _hasTitleBar;
         private bool _canGoBack;
+
+        private bool _disposed;
 
         public ViewModelBase(
             IDialogService dialogService,
@@ -90,5 +93,26 @@ namespace RewriteMe.Mobile.ViewModels
         {
             await NavigationService.NavigateWithoutAnimationAsync(Pages.Settings).ConfigureAwait(false);
         }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                DisposeInternal();
+            }
+
+            _disposed = true;
+        }
+
+        protected virtual void DisposeInternal() { }
     }
 }
