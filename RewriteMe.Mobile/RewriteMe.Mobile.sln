@@ -7,7 +7,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{E7E57EF0-B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Mobile.Android", "Apps\RewriteMe.Mobile.Android\RewriteMe.Mobile.Android.csproj", "{3EF795BA-CD86-4E97-8C74-1A23DA526256}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Mobile", "Apps\RewriteMe.Mobile\RewriteMe.Mobile.csproj", "{33FC372F-B17A-4E0B-8176-867D01C399FB}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Mobile", "Apps\RewriteMe.Mobile\RewriteMe.Mobile.csproj", "{33FC372F-B17A-4E0B-8176-867D01C399FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Mobile.iOS", "Apps\RewriteMe.Mobile.iOS\RewriteMe.Mobile.iOS.csproj", "{94875BDE-83DA-4D22-8D11-3774B892AAAD}"
 EndProject
