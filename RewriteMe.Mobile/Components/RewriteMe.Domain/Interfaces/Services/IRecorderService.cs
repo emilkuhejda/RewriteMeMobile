@@ -21,12 +21,12 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         bool CanResumeRecording();
 
-        void StartRecording(RecordedItem recordedItem, string subscriptionKey);
+        Task StartRecording(RecordedItem recordedItem, string subscriptionKey);
 
-        void ResumeRecording();
+        Task ResumeRecording();
 
-        void StopRecording();
+        Task StopRecording();
 
-        void Reset();
+        Task Reset();
     }
 }

@@ -48,9 +48,8 @@ namespace RewriteMe.Business.Services
         public async Task<RecordedItem> CreateFileAsync()
         {
             var fileId = Guid.NewGuid();
-            //var directory = _directoryProvider.GetPath();
-            //var path = Path.Combine(directory, fileId.ToString());
-            var path = $"/storage/emulated/0/Download/{fileId}";
+            var directory = _directoryProvider.GetPath();
+            var path = Path.Combine(directory, fileId.ToString());
 
             Directory.CreateDirectory(path);
 
@@ -76,7 +75,7 @@ namespace RewriteMe.Business.Services
             return _recorder != null && !_recorder.IsRecording;
         }
 
-        public async void StartRecording(RecordedItem recordedItem, string subscriptionKey)
+        public async Task StartRecording(RecordedItem recordedItem, string subscriptionKey)
         {
             RecordedItem = recordedItem;
             SpeechApiClient = new SpeechApiClient(subscriptionKey, SpeechRegion.WestEurope);
@@ -86,7 +85,7 @@ namespace RewriteMe.Business.Services
             _stopwatch.Start();
         }
 
-        public async void ResumeRecording()
+        public async Task ResumeRecording()
         {
             await StartRecordingInternal(RecordedItem).ConfigureAwait(false);
 
@@ -123,7 +122,7 @@ namespace RewriteMe.Business.Services
             OnStatusChanged();
         }
 
-        public async void StopRecording()
+        public async Task StopRecording()
         {
             if (_recorder == null)
                 return;
@@ -142,7 +141,7 @@ namespace RewriteMe.Business.Services
             _stopwatch.Stop();
         }
 
-        public async void Reset()
+        public async Task Reset()
         {
             if (_recorder != null)
             {
@@ -163,6 +162,7 @@ namespace RewriteMe.Business.Services
                 var simleResult = await SpeechApiClient
                     .SpeechToTextSimple(stream, _recorder.AudioStreamDetails.SampleRate, audioRecordTask)
                     .ConfigureAwait(false);
+                //var simleResult = new RecognitionSpeechResult { DisplayText = "Text" };
 
                 var recordedAudioFile = new RecordedAudioFile
                 {

@@ -80,17 +80,17 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 var recordedItem = await _recorderService.CreateFileAsync().ConfigureAwait(false);
 
-                _recorderService.StartRecording(recordedItem, "471ab4db87064a9db2ad428c64d82b0d");
+                await _recorderService.StartRecording(recordedItem, "471ab4db87064a9db2ad428c64d82b0d").ConfigureAwait(false);
             }
             else
             {
                 if (_recorderService.CanResumeRecording())
                 {
-                    _recorderService.ResumeRecording();
+                    await _recorderService.ResumeRecording().ConfigureAwait(false);
                 }
                 else
                 {
-                    _recorderService.StopRecording();
+                    await _recorderService.StopRecording().ConfigureAwait(false);
                 }
             }
         }
