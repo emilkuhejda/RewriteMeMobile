@@ -47,7 +47,7 @@ namespace RewriteMe.Mobile.ViewModels
                 var items = await _recordedItemService.GetAllAsync().ConfigureAwait(false);
                 RecordedItems = items
                     .OrderByDescending(x => x.DateCreated)
-                    .Select(x => new RecordedItemViewModel(x))
+                    .Select(x => new RecordedItemViewModel(x, NavigationService))
                     .ToList();
 
                 IsUserRegistrationSuccess = await InternalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);

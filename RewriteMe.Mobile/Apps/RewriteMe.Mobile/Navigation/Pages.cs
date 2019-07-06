@@ -20,6 +20,8 @@
 
         public static string Detail { get; } = "Detail";
 
+        public static string RecordedDetail { get; } = "RecordedDetail";
+
         public static string Settings { get; } = "Settings";
 
         public static string UserSubscriptions { get; } = "UserSubscriptions";
