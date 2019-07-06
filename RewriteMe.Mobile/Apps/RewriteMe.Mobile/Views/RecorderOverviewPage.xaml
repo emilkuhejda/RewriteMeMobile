@@ -6,6 +6,24 @@
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <views:BaseNavigationPage.Resources>
+        <DataTemplate x:Key="RecordedItemsTemplate">
+            <ViewCell>
+                <ViewCell.View>
+                    <Grid BackgroundColor="White">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
+                        </Grid.GestureRecognizers>
+                        
+                        <Label HeightRequest="30"
+                               Style="{StaticResource LabelStyle}"
+                               Text="{Binding Title}" />
+                    </Grid>
+                </ViewCell.View>
+            </ViewCell>
+        </DataTemplate>
+    </views:BaseNavigationPage.Resources>
+    
     <views:BaseNavigationPage.RightNavigationToolbarItems>
         <controls:NavigationToolbarItem Command="{Binding NavigateToRecorderCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg" />
         <controls:NavigationToolbarItem Command="{Binding NavigateToSettingsCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Settings.svg" />
@@ -34,6 +52,11 @@
                     </Label.GestureRecognizers>
                 </Label>
             </Grid>
+            
+            <ListView Grid.Row="1"
+                      HasUnevenRows="True"
+                      ItemTemplate="{StaticResource RecordedItemsTemplate}"
+                      ItemsSource="{Binding RecordedItems}" />
         </Grid>
         
         <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />

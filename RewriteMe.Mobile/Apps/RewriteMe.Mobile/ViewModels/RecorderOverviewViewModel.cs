@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Plugin.LatestVersion.Abstractions;
 using Plugin.Messaging;
 using Prism.Navigation;
@@ -15,6 +17,8 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IRecordedItemService _recordedItemService;
 
+        private IEnumerable<RecordedItemViewModel> _recordedItems;
+
         public RecorderOverviewViewModel(
             IRecordedItemService recordedItemService,
             IUserSessionService userSessionService,
@@ -30,11 +34,21 @@ namespace RewriteMe.Mobile.ViewModels
             _recordedItemService = recordedItemService;
         }
 
+        public IEnumerable<RecordedItemViewModel> RecordedItems
+        {
+            get => _recordedItems;
+            set => SetProperty(ref _recordedItems, value);
+        }
+
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
             using (new OperationMonitor(OperationScope))
             {
                 var items = await _recordedItemService.GetAllAsync().ConfigureAwait(false);
+                RecordedItems = items
+                    .OrderByDescending(x => x.DateCreated)
+                    .Select(x => new RecordedItemViewModel(x))
+                    .ToList();
 
                 IsUserRegistrationSuccess = await InternalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
 
