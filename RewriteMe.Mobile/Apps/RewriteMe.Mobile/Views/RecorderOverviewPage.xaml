@@ -3,6 +3,7 @@
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           x:Class="RewriteMe.Mobile.Views.RecorderOverviewPage"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
@@ -15,9 +16,20 @@
                             <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
                         </Grid.GestureRecognizers>
                         
-                        <Label HeightRequest="30"
-                               Style="{StaticResource LabelStyle}"
-                               Text="{Binding Title}" />
+                        <StackLayout Orientation="Horizontal">
+                            <forms:SvgCachedImage Margin="0,5,10,5"
+                                                  Aspect="AspectFit"
+                                                  BackgroundColor="Transparent"
+                                                  HeightRequest="50"
+                                                  InputTransparent="True"
+                                                  Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
+                                                  VerticalOptions="CenterAndExpand" />
+                            
+                            <Label HeightRequest="30"
+                                   Style="{StaticResource LabelStyle}"
+                                   Text="{Binding Title}"
+                                   VerticalOptions="Center" />
+                        </StackLayout>
                     </Grid>
                 </ViewCell.View>
             </ViewCell>
