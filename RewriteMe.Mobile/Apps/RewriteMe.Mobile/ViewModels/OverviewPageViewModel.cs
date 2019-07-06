@@ -25,7 +25,7 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class OverviewPageViewModel : ViewModelBase, IDisposable
+    public class OverviewPageViewModel : ViewModelBase
     {
         private readonly IFileItemService _fileItemService;
         private readonly IUserSessionService _userSessionService;
@@ -37,7 +37,6 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool _isUserRegistrationSuccess;
         private IList<FileItemViewModel> _fileItems;
-        private bool _disposed;
 
         public OverviewPageViewModel(
             IFileItemService fileItemService,
@@ -62,9 +61,12 @@ namespace RewriteMe.Mobile.ViewModels
 
             _schedulerService.SynchronizationCompleted += HandleSynchronizationCompleted;
 
+            NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
             SendEmailCommand = new DelegateCommand(ExecuteSendEmailCommand);
             NavigateToCreatePageCommand = new AsyncCommand(ExecuteNavigateToCreatePageCommandAsync);
         }
+
+        public ICommand NavigateToRecorderCommand { get; }
 
         public ICommand SendEmailCommand { get; }
 
@@ -105,6 +107,11 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
             FileItems = fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)).ToList();
+        }
+
+        private async Task ExecuteNavigateToRecorderCommandAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.Recorder).ConfigureAwait(false);
         }
 
         private void ExecuteSendEmailCommand()
@@ -169,23 +176,9 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        public void Dispose()
+        protected override void DisposeInternal()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
-
-            if (disposing)
-            {
-                _schedulerService.SynchronizationCompleted -= HandleSynchronizationCompleted;
-            }
-
-            _disposed = true;
+            _schedulerService.SynchronizationCompleted -= HandleSynchronizationCompleted;
         }
     }
 }

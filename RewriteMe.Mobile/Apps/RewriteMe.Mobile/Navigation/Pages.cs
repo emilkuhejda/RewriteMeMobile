@@ -10,6 +10,8 @@
 
         public static string Overview { get; } = "Overview";
 
+        public static string Recorder { get; } = "Recorder";
+
         public static string Create { get; } = "Create";
 
         public static string Transcribe { get; } = "Transcribe";

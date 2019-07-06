@@ -20,6 +20,8 @@ namespace RewriteMe.DataAccess
             containerRegistry.RegisterSingleton<IDeletedFileItemRepository, DeletedFileItemRepository>();
             containerRegistry.RegisterSingleton<ITranscribeItemRepository, TranscribeItemRepository>();
             containerRegistry.RegisterSingleton<ITranscriptAudioSourceRepository, TranscriptAudioSourceRepository>();
+            containerRegistry.RegisterSingleton<IRecordedItemRepository, RecordedItemRepository>();
+            containerRegistry.RegisterSingleton<IRecordedAudioFileRepository, RecordedAudioFileRepository>();
         }
     }
 }

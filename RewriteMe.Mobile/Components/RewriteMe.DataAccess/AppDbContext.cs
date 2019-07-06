@@ -32,6 +32,10 @@ namespace RewriteMe.DataAccess
 
         public AsyncTableQuery<TranscriptAudioSourceEntity> TranscriptAudioSources => Database.Table<TranscriptAudioSourceEntity>();
 
+        public AsyncTableQuery<RecordedItemEntity> RecordedItems => Database.Table<RecordedItemEntity>();
+
+        public AsyncTableQuery<RecordedAudioFileEntity> RecordedAudioFiles => Database.Table<RecordedAudioFileEntity>();
+
         public async Task RunInTransactionAsync(Action<SQLiteConnection> action)
         {
             await Database.RunInTransactionAsync(action).ConfigureAwait(false);
