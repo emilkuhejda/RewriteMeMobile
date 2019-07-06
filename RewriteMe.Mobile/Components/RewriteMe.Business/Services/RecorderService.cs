@@ -162,7 +162,6 @@ namespace RewriteMe.Business.Services
                 var simleResult = await SpeechApiClient
                     .SpeechToTextSimple(stream, _recorder.AudioStreamDetails.SampleRate, audioRecordTask)
                     .ConfigureAwait(false);
-                //var simleResult = new RecognitionSpeechResult { DisplayText = "Text" };
 
                 var recordedAudioFile = new RecordedAudioFile
                 {

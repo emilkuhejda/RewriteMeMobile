@@ -34,6 +34,8 @@
     <None Remove="Resources\Images\Settings.svg" />
     <None Remove="Resources\Images\Start-Enabled.svg" />
     <None Remove="Resources\Images\Stop-Enabled.svg" />
+    <None Remove="Resources\Images\PauseRecording.svg" />
+    <None Remove="Resources\Images\PlayRecording.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -56,6 +58,8 @@
     <EmbeddedResource Include="Resources\Images\Send-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Settings.svg" />
     <EmbeddedResource Include="Resources\Images\Start-Enabled.svg" />
+    <EmbeddedResource Include="Resources\Images\PauseRecording.svg" />
+    <EmbeddedResource Include="Resources\Images\PlayRecording.svg" />
   </ItemGroup>
   
   <ItemGroup>

@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Commands;
 using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -18,8 +18,9 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IRecordedItemService _recordedItemService;
 
         private string _text;
-        private string _time;
-        private string _buttonText;
+        private string _recordingTime;
+        private bool _isRecording;
+        private bool _isExecuting;
 
         public RecorderPageViewModel(
             IRecorderService recorderService,
@@ -37,8 +38,8 @@ namespace RewriteMe.Mobile.ViewModels
             recorderService.AudioTranscribed += OnAudioTranscribed;
             recorderService.StatusChanged += OnStatusChanged;
 
-            RecordCommand = new DelegateCommand(ExecuteRecordCommand);
-            StopRecordingCommand = new DelegateCommand(ExecuteStopRecordingCommand);
+            RecordCommand = new AsyncCommand(ExecuteRecordCommand, CanExecute);
+            StopRecordingCommand = new AsyncCommand(ExecuteStopRecordingCommand, CanExecute);
         }
 
         public string Text
@@ -47,16 +48,16 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _text, value);
         }
 
-        public string Time
+        public string RecordingTime
         {
-            get => _time;
-            set => SetProperty(ref _time, value);
+            get => _recordingTime;
+            set => SetProperty(ref _recordingTime, value);
         }
 
-        public string ButtonText
+        public bool IsRecording
         {
-            get => _buttonText;
-            set => SetProperty(ref _buttonText, value);
+            get => _isRecording;
+            set => SetProperty(ref _isRecording, value);
         }
 
         public ICommand RecordCommand { get; }
@@ -72,8 +73,15 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        private async void ExecuteRecordCommand()
+        private bool CanExecute()
         {
+            return !_isExecuting;
+        }
+
+        private async Task ExecuteRecordCommand()
+        {
+            _isExecuting = true;
+
             Device.StartTimer(TimeSpan.FromSeconds(0.5), UpdateTimer);
 
             if (_recorderService.CanStartRecording())
@@ -93,38 +101,30 @@ namespace RewriteMe.Mobile.ViewModels
                     await _recorderService.StopRecording().ConfigureAwait(false);
                 }
             }
+
+            _isExecuting = false;
         }
 
-        private void ExecuteStopRecordingCommand()
+        private async Task ExecuteStopRecordingCommand()
         {
-            _recorderService.StopRecording();
+            _isExecuting = true;
+
+            await _recorderService.StopRecording().ConfigureAwait(false);
+
+            _isExecuting = false;
         }
 
         private bool UpdateTimer()
         {
             var ts = _recorderService.Time;
-            Time = $"{ts.Minutes:00}:{ts.Seconds:00}.{ts.Milliseconds / 10:00}";
+            RecordingTime = $"{ts.Minutes:00}:{ts.Seconds:00}";
 
             return _recorderService.IsRecording;
         }
 
         private void UpdateUi()
         {
-            if (_recorderService.CanStartRecording())
-            {
-                ButtonText = "Start";
-            }
-            else
-            {
-                if (_recorderService.CanResumeRecording())
-                {
-                    ButtonText = "Resume";
-                }
-                else
-                {
-                    ButtonText = "Stop";
-                }
-            }
+            IsRecording = _recorderService.IsRecording;
         }
 
         private void OnAudioTranscribed(object sender, AudioTranscribedEventArgs e)

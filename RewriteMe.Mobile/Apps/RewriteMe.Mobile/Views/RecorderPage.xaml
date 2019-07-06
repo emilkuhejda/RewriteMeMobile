@@ -3,6 +3,7 @@
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
@@ -10,24 +11,49 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0"
+        <Label Margin="20,20,20,20"
+               Grid.Row="0"
                HorizontalOptions="CenterAndExpand"
                LineBreakMode="WordWrap"
                Text="{Binding Text}"
                VerticalOptions="Start" />
-        <Label Grid.Row="1"
-               HorizontalOptions="CenterAndExpand"
-               LineBreakMode="WordWrap"
-               Text="{Binding Time}"
-               VerticalOptions="Start" />
-        <Button Grid.Row="2"
-                Margin="20,20,20,20"
-                Command="{Binding RecordCommand}"
-                Style="{StaticResource ActionButtonStyle}"
-                Text="{Binding ButtonText}"
-                VerticalOptions="Center" />
+        
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            
+            <Label Grid.Column="0"
+                   HorizontalOptions="CenterAndExpand"
+                   Text="{Binding RecordingTime}"
+                   VerticalOptions="Center" />
+            
+            <Grid Grid.Column="1">
+                <forms:SvgCachedImage Margin="0"
+                                      Aspect="AspectFit"
+                                      BackgroundColor="Transparent"
+                                      HeightRequest="80"
+                                      InputTransparent="True"
+                                      IsVisible="{Binding IsRecording, Converter={StaticResource InvertedBoolConverter}}"
+                                      Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
+                                      VerticalOptions="CenterAndExpand" />
+                <forms:SvgCachedImage Margin="0"
+                                      Aspect="AspectFit"
+                                      BackgroundColor="Transparent"
+                                      HeightRequest="80"
+                                      InputTransparent="True"
+                                      IsVisible="{Binding IsRecording}"
+                                      Source="resource://RewriteMe.Mobile.Resources.Images.PauseRecording.svg"
+                                      VerticalOptions="CenterAndExpand" />
+                
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RecordCommand}" />
+                </Grid.GestureRecognizers>
+            </Grid>
+        </Grid>
     </Grid>
 </views:BaseNavigationPage>
