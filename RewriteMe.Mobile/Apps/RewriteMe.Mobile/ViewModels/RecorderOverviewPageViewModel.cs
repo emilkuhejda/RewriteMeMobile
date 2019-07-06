@@ -13,13 +13,13 @@ using RewriteMe.Logging.Interfaces;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class RecorderOverviewViewModel : OverviewBaseViewModel
+    public class RecorderOverviewPageViewModel : OverviewBaseViewModel
     {
         private readonly IRecordedItemService _recordedItemService;
 
         private IEnumerable<RecordedItemViewModel> _recordedItems;
 
-        public RecorderOverviewViewModel(
+        public RecorderOverviewPageViewModel(
             IRecordedItemService recordedItemService,
             IUserSessionService userSessionService,
             IInternalValueService internalValueService,
