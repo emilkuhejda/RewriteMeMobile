@@ -244,4 +244,7 @@
     <ITunesArtwork Include="iTunesArtwork%402x" />
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <BundleResource Include="Resources\1024x1024.png" />
+  </ItemGroup>
 </Project>
