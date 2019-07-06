@@ -25,7 +25,7 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class OverviewPageViewModel : ViewModelBase
+    public class OverviewPageViewModel : OverviewBaseViewModel
     {
         private readonly IFileItemService _fileItemService;
         private readonly IUserSessionService _userSessionService;
@@ -61,12 +61,9 @@ namespace RewriteMe.Mobile.ViewModels
 
             _schedulerService.SynchronizationCompleted += HandleSynchronizationCompleted;
 
-            NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
             SendEmailCommand = new DelegateCommand(ExecuteSendEmailCommand);
             NavigateToCreatePageCommand = new AsyncCommand(ExecuteNavigateToCreatePageCommandAsync);
         }
-
-        public ICommand NavigateToRecorderCommand { get; }
 
         public ICommand SendEmailCommand { get; }
 
@@ -100,6 +97,8 @@ namespace RewriteMe.Mobile.ViewModels
                 IsUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
 
                 await InitializeFileItems().ConfigureAwait(false);
+
+                InitializeNavigation(true);
             }
         }
 
@@ -107,11 +106,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
             FileItems = fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)).ToList();
-        }
-
-        private async Task ExecuteNavigateToRecorderCommandAsync()
-        {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.Recorder).ConfigureAwait(false);
         }
 
         private void ExecuteSendEmailCommand()
