@@ -17,6 +17,8 @@ namespace RewriteMe.DataAccess.Entities
 
         public DateTime DateCreated { get; set; }
 
+        public TimeSpan DateCreatedOffset { get; set; }
+
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public RecordedAudioFileEntity[] AudioFiles { get; set; }
     }

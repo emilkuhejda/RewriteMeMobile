@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using RewriteMe.DataAccess.Entities;
 using RewriteMe.Domain.Transcription;
 
@@ -13,7 +14,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = entity.Id,
                 FileName = entity.FileName,
                 Path = entity.Path,
-                DateCreated = entity.DateCreated,
+                DateCreated = new DateTimeOffset(entity.DateCreated, entity.DateCreatedOffset),
                 AudioFiles = entity.AudioFiles?.Select(x => x.ToRecordedAudioFile())
             };
         }
@@ -25,7 +26,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = recordedItem.Id,
                 FileName = recordedItem.FileName,
                 Path = recordedItem.Path,
-                DateCreated = recordedItem.DateCreated,
+                DateCreated = recordedItem.DateCreated.DateTime,
+                DateCreatedOffset = recordedItem.DateCreated.Offset,
                 AudioFiles = recordedItem.AudioFiles?.Select(x => x.ToRecordedAudioFileEntity()).ToArray()
             };
         }
