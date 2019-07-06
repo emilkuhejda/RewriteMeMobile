@@ -12,7 +12,22 @@
     </views:BaseNavigationPage.RightNavigationToolbarItems>
     
     <Grid>
-        <Grid></Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            
+            <Editor Grid.Row="0"
+                    Margin="10,10,10,10"
+                    FontSize="{StaticResource MediumSize}"
+                    HorizontalOptions="Fill"
+                    Keyboard="Text"
+                    Text="{Binding Text}"
+                    VerticalOptions="Fill" />
+            
+            <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
+        </Grid>
         
         <controls:PageActivityIndicator Grid.Row="0"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
