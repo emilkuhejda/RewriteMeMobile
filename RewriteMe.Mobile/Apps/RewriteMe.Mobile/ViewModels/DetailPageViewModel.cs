@@ -19,7 +19,7 @@ using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class DetailPageViewModel : ViewModelBase, IDisposable
+    public class DetailPageViewModel : ViewModelBase
     {
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
@@ -30,8 +30,6 @@ namespace RewriteMe.Mobile.ViewModels
         private IList<TranscribeItemViewModel> _transcribeItems;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _notAvailableData;
-
-        private bool _disposed;
 
         public DetailPageViewModel(
             ITranscribeItemService transcribeItemService,
@@ -197,24 +195,10 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        public void Dispose()
+        protected override void DisposeInternal()
         {
-            Dispose(true);
-            GC.SuppressFinalize(this);
-        }
-
-        protected virtual void Dispose(bool disposing)
-        {
-            if (_disposed)
-                return;
-
-            if (disposing)
-            {
-                TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
-                PlayerViewModel?.Dispose();
-            }
-
-            _disposed = true;
+            TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
+            PlayerViewModel?.Dispose();
         }
     }
 }

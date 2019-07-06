@@ -1,8 +1,11 @@
 ﻿using Acr.UserDialogs;
+using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
+using Android.Support.V4.App;
+using Android.Support.V4.Content;
 using FFImageLoading.Forms.Platform;
 using Microsoft.Identity.Client;
 using Plugin.InAppBilling;
@@ -20,7 +23,7 @@ namespace RewriteMe.Mobile.Droid
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
-        protected override void OnCreate(Bundle savedInstanceState)
+        protected override async void OnCreate(Bundle savedInstanceState)
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
@@ -36,6 +39,11 @@ namespace RewriteMe.Mobile.Droid
             var bootstrapper = new AndroidBootstrapper();
             var application = new App(bootstrapper);
             LoadApplication(application);
+
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.RecordAudio) != Permission.Granted)
+            {
+                ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.RecordAudio }, 1);
+            }
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
