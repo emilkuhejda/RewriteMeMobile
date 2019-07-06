@@ -54,5 +54,7 @@
 			</array>
 		</dict>
 	</array>
+	<key>Custom ProperNSMicrophoneUsageDescriptionty</key>
+	<string>The RewriteMe wants to use your microphone to record audio.</string>
 </dict>
 </plist>
