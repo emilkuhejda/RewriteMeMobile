@@ -51,7 +51,7 @@ namespace RewriteMe.Mobile.ViewModels
             PropertyChanged += HandlePropertyChanged;
 
             DeleteCommand = new AsyncCommand(ExecuteDeleteCommandAsync);
-            StopPlayCommand = new AsyncCommand(ExecuteStopPlayCommandAsync);
+            StopPlayCommand = new DelegateCommand(ExecuteStopPlayCommand);
         }
 
         private RecordedItem RecordedItem { get; set; }
@@ -152,7 +152,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSendCommand()
         {
-            return _emailTask.CanSendEmail && !string.IsNullOrWhiteSpace(Text);
+            return !IsPlaying && _emailTask.CanSendEmail && !string.IsNullOrWhiteSpace(Text);
         }
 
         private void ExecuteSendCommand()
@@ -169,7 +169,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveCommand()
         {
-            return IsDirty;
+            return !IsPlaying && IsDirty;
         }
 
         private async Task ExecuteSaveCommandAsync()
@@ -198,7 +198,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        private async Task ExecuteStopPlayCommandAsync()
+        private void ExecuteStopPlayCommand()
         {
             if (!_audioFiles.Any())
                 return;
@@ -214,16 +214,24 @@ namespace RewriteMe.Mobile.ViewModels
             }
 
             IsPlaying = !IsPlaying;
-
-            await Task.CompletedTask.ConfigureAwait(false);
+            RefreshButtons();
         }
 
         private void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IsDirty))
             {
-                SaveTileItem.IsEnabled = CanExecuteSaveCommand();
+                RefreshButtons();
             }
+        }
+
+        private void RefreshButtons()
+        {
+            ThreadHelper.InvokeOnUiThread(() =>
+            {
+                SendTileItem.IsEnabled = CanExecuteSendCommand();
+                SaveTileItem.IsEnabled = CanExecuteSaveCommand();
+            });
         }
 
         private void HandlePlaybackEnded(object sender, EventArgs e)
