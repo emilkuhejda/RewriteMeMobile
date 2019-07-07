@@ -14,5 +14,7 @@ namespace RewriteMe.Domain.Interfaces.Repositories
         Task<IEnumerable<RecordedItem>> GetAllAsync();
 
         Task<RecordedItem> GetAsync(Guid recordedItemId);
+
+        Task UpdateAsync(RecordedItem recordedItem);
     }
 }

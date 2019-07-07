@@ -15,6 +15,8 @@ namespace RewriteMe.DataAccess.Entities
         [MaxLength(250)]
         public string Path { get; set; }
 
+        public string UserTranscript { get; set; }
+
         public DateTime DateCreated { get; set; }
 
         public TimeSpan DateCreatedOffset { get; set; }

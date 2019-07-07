@@ -40,5 +40,10 @@ namespace RewriteMe.DataAccess.Repositories
             var entity = await _contextProvider.Context.GetWithChildrenAsync<RecordedItemEntity>(recordedItemId).ConfigureAwait(false);
             return entity.ToRecordedItem();
         }
+
+        public async Task UpdateAsync(RecordedItem recordedItem)
+        {
+            await _contextProvider.Context.UpdateAsync(recordedItem.ToRecordedItemEntity()).ConfigureAwait(false);
+        }
     }
 }

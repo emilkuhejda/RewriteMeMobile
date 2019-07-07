@@ -14,5 +14,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<IEnumerable<RecordedItem>> GetAllAsync();
 
         Task InsertAudioFileAsync(RecordedAudioFile recordedAudioFile);
+
+        Task UpdateAsync(RecordedItem recordedItem);
     }
 }

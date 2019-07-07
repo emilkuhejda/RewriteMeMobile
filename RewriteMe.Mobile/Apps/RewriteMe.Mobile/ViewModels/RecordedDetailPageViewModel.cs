@@ -86,11 +86,19 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 RecordedItem = navigationParameters.GetValue<RecordedItem>();
-                var transcriptions = RecordedItem.AudioFiles
-                    .OrderBy(x => x.DateCreated)
-                    .Where(x => !string.IsNullOrWhiteSpace(x.Transcript))
-                    .Select(x => x.Transcript);
-                Text = string.Join(" ", transcriptions);
+
+                if (string.IsNullOrWhiteSpace(RecordedItem.UserTranscript))
+                {
+                    var transcriptions = RecordedItem.AudioFiles
+                        .OrderBy(x => x.DateCreated)
+                        .Where(x => !string.IsNullOrWhiteSpace(x.Transcript))
+                        .Select(x => x.Transcript);
+                    Text = string.Join(" ", transcriptions);
+                }
+                else
+                {
+                    Text = RecordedItem.UserTranscript;
+                }
 
                 InitializeNavigation();
 
@@ -145,7 +153,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteSaveCommandAsync()
         {
-            await Task.CompletedTask.ConfigureAwait(false);
+            RecordedItem.UserTranscript = Text;
+            await _recordedItemService.UpdateAsync(RecordedItem).ConfigureAwait(false);
+
+            IsDirty = false;
         }
 
         private async Task ExecuteDeleteCommandAsync()

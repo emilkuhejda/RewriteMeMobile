@@ -65,5 +65,10 @@ namespace RewriteMe.Business.Services
         {
             await _recordedAudioFileRepository.InsertAsync(recordedAudioFile).ConfigureAwait(false);
         }
+
+        public async Task UpdateAsync(RecordedItem recordedItem)
+        {
+            await _recordedItemRepository.UpdateAsync(recordedItem).ConfigureAwait(false);
+        }
     }
 }
