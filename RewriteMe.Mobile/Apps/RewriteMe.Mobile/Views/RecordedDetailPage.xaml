@@ -16,6 +16,7 @@
             <Grid.RowDefinitions>
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             
             <Editor Grid.Row="0"
@@ -26,7 +27,32 @@
                     Text="{Binding Text}"
                     VerticalOptions="Fill" />
             
-            <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
+            <Grid Grid.Row="1" Margin="0,0,0,20">
+                <forms:SvgCachedImage Margin="0"
+                                      Aspect="AspectFit"
+                                      BackgroundColor="Transparent"
+                                      HeightRequest="80"
+                                      HorizontalOptions="Center"
+                                      InputTransparent="True"
+                                      IsVisible="{Binding IsPlaying, Converter={StaticResource InvertedBoolConverter}}"
+                                      Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
+                                      VerticalOptions="CenterAndExpand" />
+                <forms:SvgCachedImage Margin="0"
+                                      Aspect="AspectFit"
+                                      BackgroundColor="Transparent"
+                                      HeightRequest="80"
+                                      HorizontalOptions="Center"
+                                      InputTransparent="True"
+                                      IsVisible="{Binding IsPlaying}"
+                                      Source="resource://RewriteMe.Mobile.Resources.Images.PauseRecording.svg"
+                                      VerticalOptions="CenterAndExpand" />
+                
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding StopPlayCommand}" />
+                </Grid.GestureRecognizers>
+            </Grid>
+            
+            <controls:ContextActionBar Grid.Row="2" ItemsSource="{Binding NavigationItems}" />
         </Grid>
         
         <controls:PageActivityIndicator Grid.Row="0"

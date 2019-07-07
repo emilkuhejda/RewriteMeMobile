@@ -26,6 +26,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private string _text;
+        private bool _isPlaying;
         private bool _isDirty;
 
         public RecordedDetailPageViewModel(
@@ -44,6 +45,7 @@ namespace RewriteMe.Mobile.ViewModels
             PropertyChanged += HandlePropertyChanged;
 
             DeleteCommand = new AsyncCommand(ExecuteDeleteCommandAsync);
+            StopPlayCommand = new AsyncCommand(ExecuteStopPlayCommandAsync);
         }
 
         private RecordedItem RecordedItem { get; set; }
@@ -69,6 +71,12 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        public bool IsPlaying
+        {
+            get => _isPlaying;
+            set => SetProperty(ref _isPlaying, value);
+        }
+
         public bool IsDirty
         {
             get => _isDirty;
@@ -80,6 +88,8 @@ namespace RewriteMe.Mobile.ViewModels
         private ActionBarTileViewModel SaveTileItem { get; set; }
 
         public ICommand DeleteCommand { get; }
+
+        public ICommand StopPlayCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
@@ -175,6 +185,13 @@ namespace RewriteMe.Mobile.ViewModels
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
             }
+        }
+
+        private async Task ExecuteStopPlayCommandAsync()
+        {
+            IsPlaying = !IsPlaying;
+
+            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         private void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
