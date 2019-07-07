@@ -50,12 +50,6 @@ namespace RewriteMe.Business.Services
             Directory.Delete(path, true);
         }
 
-        private string GetAudioFilePath(string directoryName)
-        {
-            var directory = _directoryProvider.GetPath();
-            return Path.Combine(directory, directoryName);
-        }
-
         public async Task<IEnumerable<RecordedItem>> GetAllAsync()
         {
             return await _recordedItemRepository.GetAllAsync().ConfigureAwait(false);
@@ -69,6 +63,12 @@ namespace RewriteMe.Business.Services
         public async Task UpdateAsync(RecordedItem recordedItem)
         {
             await _recordedItemRepository.UpdateAsync(recordedItem).ConfigureAwait(false);
+        }
+
+        public string GetAudioFilePath(string directoryName)
+        {
+            var directory = _directoryProvider.GetPath();
+            return Path.Combine(directory, directoryName);
         }
     }
 }

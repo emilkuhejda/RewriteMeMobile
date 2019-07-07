@@ -16,5 +16,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task InsertAudioFileAsync(RecordedAudioFile recordedAudioFile);
 
         Task UpdateAsync(RecordedItem recordedItem);
+
+        string GetAudioFilePath(string directoryName);
     }
 }

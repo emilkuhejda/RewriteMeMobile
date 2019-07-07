@@ -1,11 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.Messaging;
+using Plugin.SimpleAudioPlayer;
 using Prism.Commands;
 using Prism.Navigation;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
@@ -25,6 +29,8 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IEmailTask _emailTask;
 
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
+        private ISimpleAudioPlayer _audioPlayer;
+        private Queue<string> _audioFiles;
         private string _text;
         private bool _isPlaying;
         private bool _isDirty;
@@ -97,22 +103,27 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 RecordedItem = navigationParameters.GetValue<RecordedItem>();
 
-                if (string.IsNullOrWhiteSpace(RecordedItem.UserTranscript))
-                {
-                    var transcriptions = RecordedItem.AudioFiles
-                        .OrderBy(x => x.DateCreated)
-                        .Where(x => !string.IsNullOrWhiteSpace(x.Transcript))
-                        .Select(x => x.Transcript);
-                    Text = string.Join(" ", transcriptions);
-                }
-                else
-                {
-                    Text = RecordedItem.UserTranscript;
-                }
-
+                ReloadPlaylist();
+                InitializeTranscriptions();
                 InitializeNavigation();
 
                 await Task.CompletedTask.ConfigureAwait(false);
+            }
+        }
+
+        private void InitializeTranscriptions()
+        {
+            if (string.IsNullOrWhiteSpace(RecordedItem.UserTranscript))
+            {
+                var transcriptions = RecordedItem.AudioFiles
+                    .OrderBy(x => x.DateCreated)
+                    .Where(x => !string.IsNullOrWhiteSpace(x.Transcript))
+                    .Select(x => x.Transcript);
+                Text = string.Join(" ", transcriptions);
+            }
+            else
+            {
+                Text = RecordedItem.UserTranscript;
             }
         }
 
@@ -189,6 +200,19 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteStopPlayCommandAsync()
         {
+            if (!_audioFiles.Any())
+                return;
+
+            if (IsPlaying)
+            {
+                _audioPlayer.Stop();
+            }
+            else
+            {
+                var path = _audioFiles.Dequeue();
+                PlayAudioFile(path);
+            }
+
             IsPlaying = !IsPlaying;
 
             await Task.CompletedTask.ConfigureAwait(false);
@@ -200,6 +224,59 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 SaveTileItem.IsEnabled = CanExecuteSaveCommand();
             }
+        }
+
+        private void HandlePlaybackEnded(object sender, EventArgs e)
+        {
+            if (!_audioFiles.Any())
+            {
+                IsPlaying = false;
+                ReloadPlaylist();
+                return;
+            }
+
+            var path = _audioFiles.Dequeue();
+            PlayAudioFile(path);
+        }
+
+        private void ReloadPlaylist()
+        {
+            _audioFiles = new Queue<string>();
+
+            var directoryPath = _recordedItemService.GetAudioFilePath(RecordedItem.Id.ToString());
+            var directoryInfo = new DirectoryInfo(directoryPath);
+            var files = directoryInfo.GetFiles().OrderBy(x => x.CreationTimeUtc);
+            if (files.Any())
+            {
+                files.ForEach(x => _audioFiles.Enqueue(x.FullName));
+            }
+        }
+
+        private void PlayAudioFile(string path)
+        {
+            if (_audioPlayer != null)
+            {
+                _audioPlayer.PlaybackEnded -= HandlePlaybackEnded;
+                _audioPlayer = null;
+            }
+
+            _audioPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
+            _audioPlayer.PlaybackEnded += HandlePlaybackEnded;
+            _audioPlayer.Load(path);
+            _audioPlayer.Play();
+        }
+
+        protected override void DisposeInternal()
+        {
+            if (_audioPlayer != null)
+            {
+                _audioPlayer.Stop();
+                _audioPlayer.PlaybackEnded -= HandlePlaybackEnded;
+                _audioPlayer.Dispose();
+                _audioPlayer = null;
+            }
+
+            PropertyChanged -= HandlePropertyChanged;
         }
     }
 }

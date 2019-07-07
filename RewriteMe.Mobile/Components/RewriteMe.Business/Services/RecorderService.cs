@@ -144,7 +144,7 @@ namespace RewriteMe.Business.Services
                 {
                     Id = Guid.NewGuid(),
                     RecordedItemId = RecordedItem.Id,
-                    Path = _recorder.GetAudioFilePath(),
+                    Path = _recorder.FilePath,
                     Transcript = simleResult.DisplayText,
                     RecognitionSpeechResult = simleResult,
                     DateCreated = DateTime.UtcNow
