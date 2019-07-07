@@ -214,18 +214,18 @@ namespace RewriteMe.Mobile.ViewModels
             }
 
             IsPlaying = !IsPlaying;
-            RefreshButtons();
+            RefreshNavigationButtons();
         }
 
         private void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(IsDirty))
             {
-                RefreshButtons();
+                RefreshNavigationButtons();
             }
         }
 
-        private void RefreshButtons()
+        private void RefreshNavigationButtons()
         {
             ThreadHelper.InvokeOnUiThread(() =>
             {
