@@ -8,6 +8,7 @@ using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
@@ -20,6 +21,7 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class RecordedDetailPageViewModel : ViewModelBase
     {
+        private readonly IRecordedItemService _recordedItemService;
         private readonly IEmailTask _emailTask;
 
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
@@ -27,12 +29,14 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isDirty;
 
         public RecordedDetailPageViewModel(
+            IRecordedItemService recordedItemService,
             IEmailTask emailTask,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
+            _recordedItemService = recordedItemService;
             _emailTask = emailTask;
 
             CanGoBack = true;
@@ -156,6 +160,8 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 using (new OperationMonitor(OperationScope))
                 {
+                    await _recordedItemService.DeleteRecordedItemAsync(RecordedItem.Id).ConfigureAwait(false);
+                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
             }
         }

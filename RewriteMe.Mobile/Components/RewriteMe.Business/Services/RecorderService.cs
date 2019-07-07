@@ -4,8 +4,6 @@ using System.IO;
 using System.Threading.Tasks;
 using Plugin.AudioRecorder;
 using RewriteMe.Domain.Events;
-using RewriteMe.Domain.Interfaces.Repositories;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using Xamarin.Cognitive.Speech;
@@ -14,9 +12,7 @@ namespace RewriteMe.Business.Services
 {
     public class RecorderService : IRecorderService
     {
-        private readonly IRecordedItemRepository _recordedItemRepository;
-        private readonly IRecordedAudioFileRepository _recordedAudioFileRepository;
-        private readonly IDirectoryProvider _directoryProvider;
+        private readonly IRecordedItemService _recordedItemService;
         private readonly Stopwatch _stopwatch;
 
         private AudioRecorderService _recorder;
@@ -25,14 +21,9 @@ namespace RewriteMe.Business.Services
         public event EventHandler<AudioTranscribedEventArgs> AudioTranscribed;
         public event EventHandler StatusChanged;
 
-        public RecorderService(
-            IRecordedItemRepository recordedItemRepository,
-            IRecordedAudioFileRepository recordedAudioFileRepository,
-            IDirectoryProvider directoryProvider)
+        public RecorderService(IRecordedItemService recordedItemService)
         {
-            _recordedItemRepository = recordedItemRepository;
-            _recordedAudioFileRepository = recordedAudioFileRepository;
-            _directoryProvider = directoryProvider;
+            _recordedItemService = recordedItemService;
 
             _stopwatch = new Stopwatch();
         }
@@ -48,21 +39,7 @@ namespace RewriteMe.Business.Services
         public async Task<RecordedItem> CreateFileAsync()
         {
             var fileId = Guid.NewGuid();
-            var directory = _directoryProvider.GetPath();
-            var path = Path.Combine(directory, fileId.ToString());
-
-            Directory.CreateDirectory(path);
-
-            var recordedItem = new RecordedItem
-            {
-                Id = fileId,
-                FileName = fileId.ToString(),
-                Path = path,
-                DateCreated = DateTime.UtcNow
-            };
-
-            await _recordedItemRepository.InsertAsync(recordedItem).ConfigureAwait(false);
-            return recordedItem;
+            return await _recordedItemService.CreateRecordedItemAsync(fileId).ConfigureAwait(false);
         }
 
         public bool CanStartRecording()
@@ -175,7 +152,7 @@ namespace RewriteMe.Business.Services
 
                 OnAudioTranscribed(simleResult.DisplayText);
 
-                await _recordedAudioFileRepository.InsertAsync(recordedAudioFile).ConfigureAwait(false);
+                await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
             }
         }
 
