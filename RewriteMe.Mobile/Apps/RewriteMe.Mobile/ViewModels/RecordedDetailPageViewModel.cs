@@ -103,9 +103,18 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _audioCurrentProgress, value))
                 {
-                    if (_audioPlayer != null && _audioPlayer.IsPlaying)
+                    if (_audioPlayer != null)
                     {
-                        _audioPlayer.Seek(value);
+                        _currentAudioFile = _audioFiles.First(x => x.Offset.Seconds + x.TotalTime.Seconds > value);
+                        var seconds = value - _currentAudioFile.Offset.Seconds;
+
+                        _audioPlayer.Load(_currentAudioFile.FilePath);
+                        _audioPlayer.Seek(seconds);
+
+                        if (IsPlaying)
+                            _audioPlayer.Play();
+
+                        UpdatePosition();
                     }
                 }
             }
