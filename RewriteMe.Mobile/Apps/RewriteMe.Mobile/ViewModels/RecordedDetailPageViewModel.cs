@@ -105,16 +105,7 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     if (_audioPlayer != null)
                     {
-                        _currentAudioFile = _audioFiles.First(x => x.Offset.Seconds + x.TotalTime.Seconds > value);
-                        var seconds = value - _currentAudioFile.Offset.Seconds;
-
-                        _audioPlayer.Load(_currentAudioFile.FilePath);
-                        _audioPlayer.Seek(seconds);
-
-                        if (IsPlaying)
-                            _audioPlayer.Play();
-
-                        UpdatePosition();
+                        Seek(value);
                     }
                 }
             }
@@ -149,6 +140,7 @@ namespace RewriteMe.Mobile.ViewModels
                 RecordedItem = navigationParameters.GetValue<RecordedItem>();
 
                 InitializePlaylist();
+                InitializeAudioPlayer();
                 InitializeTranscriptions();
                 InitializeNavigation();
 
@@ -252,13 +244,9 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 _audioPlayer.Pause();
             }
-            else if (_audioPlayer != null)
-            {
-                _audioPlayer.Play();
-            }
             else
             {
-                PlayAudioFile();
+                _audioPlayer.Play();
             }
 
             IsPlaying = !IsPlaying;
@@ -338,6 +326,14 @@ namespace RewriteMe.Mobile.ViewModels
             TotalTime = totalTime;
         }
 
+        private void InitializeAudioPlayer()
+        {
+            _audioPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
+            _audioPlayer.PlaybackEnded += HandlePlaybackEnded;
+
+            Seek(0);
+        }
+
         private AudioFile GetNextAudioFile()
         {
             if (_currentAudioFile == null)
@@ -350,6 +346,19 @@ namespace RewriteMe.Mobile.ViewModels
             return (_currentAudioFile = _audioFiles.First());
         }
 
+        private void Seek(double position)
+        {
+            _currentAudioFile = _audioFiles.First(x => x.Offset.Seconds + x.TotalTime.Seconds > position);
+            var seconds = position - _currentAudioFile.Offset.Seconds;
+
+            _audioPlayer.Load(_currentAudioFile.FilePath);
+            _audioPlayer.Seek(seconds);
+
+            if (IsPlaying)
+                _audioPlayer.Play();
+
+            UpdatePosition();
+        }
         private void PlayAudioFile()
         {
             if (_audioPlayer != null)
