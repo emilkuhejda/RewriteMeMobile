@@ -35,6 +35,8 @@ namespace RewriteMe.Mobile.ViewModels
         private AudioFile _currentAudioFile;
         private string _text;
         private string _position;
+        private double _duration = 1;
+        private double _audioCurrentProgress;
         private bool _isPlaying;
         private bool _isDirty;
 
@@ -86,6 +88,27 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get => _position;
             set => SetProperty(ref _position, value);
+        }
+
+        public double Duration
+        {
+            get => _duration;
+            set => SetProperty(ref _duration, value);
+        }
+
+        public double AudioCurrentProgress
+        {
+            get => _audioCurrentProgress;
+            set
+            {
+                if (SetProperty(ref _audioCurrentProgress, value))
+                {
+                    if (_audioPlayer != null && _audioPlayer.IsPlaying)
+                    {
+                        _audioPlayer.Seek(value);
+                    }
+                }
+            }
         }
 
         public bool IsPlaying
@@ -218,7 +241,11 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (IsPlaying)
             {
-                _audioPlayer.Stop();
+                _audioPlayer.Pause();
+            }
+            else if (_audioPlayer != null)
+            {
+                _audioPlayer.Play();
             }
             else
             {
@@ -237,6 +264,9 @@ namespace RewriteMe.Mobile.ViewModels
             var currentPosition = TimeSpan.FromSeconds((int)_audioPlayer.CurrentPosition).Add(currentAudioFile.Offset);
 
             Position = $"{currentPosition:mm\\:ss} / {TotalTime:mm\\:ss}";
+
+            _audioCurrentProgress = _audioPlayer.CurrentPosition + currentAudioFile.Offset.Seconds;
+            RaisePropertyChanged(nameof(AudioCurrentProgress));
 
             return IsPlaying;
         }
@@ -295,6 +325,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
             }
 
+            Duration = totalTime.Seconds;
             TotalTime = totalTime;
         }
 

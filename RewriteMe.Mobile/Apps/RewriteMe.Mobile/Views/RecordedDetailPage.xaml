@@ -17,6 +17,7 @@
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
             
             <Editor Grid.Row="0"
@@ -27,7 +28,14 @@
                     Text="{Binding Text}"
                     VerticalOptions="Fill" />
             
-            <Grid Grid.Row="1" Margin="0,0,0,20">
+            <Slider Grid.Row="1"
+                    Margin="10,0,10,0"
+                    Maximum="{Binding Duration}"
+                    Minimum="0"
+                    VerticalOptions="Center"
+                    Value="{Binding AudioCurrentProgress}" />
+            
+            <Grid Grid.Row="2" Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -66,7 +74,7 @@
                 </Grid.GestureRecognizers>
             </Grid>
             
-            <controls:ContextActionBar Grid.Row="2" ItemsSource="{Binding NavigationItems}" />
+            <controls:ContextActionBar Grid.Row="3" ItemsSource="{Binding NavigationItems}" />
         </Grid>
         
         <controls:PageActivityIndicator Grid.Row="0"
