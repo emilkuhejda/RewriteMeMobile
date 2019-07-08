@@ -28,7 +28,20 @@
                     VerticalOptions="Fill" />
             
             <Grid Grid.Row="1" Margin="0,0,0,20">
-                <forms:SvgCachedImage Margin="0"
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <Label Grid.Column="0"
+                       Margin="10,0,0,10"
+                       Text="{Binding Position}"
+                       Style="{StaticResource LabelStyle}"
+                       VerticalOptions="Center" />
+                
+                <forms:SvgCachedImage Grid.Column="1"
+                                      Margin="0"
                                       Aspect="AspectFit"
                                       BackgroundColor="Transparent"
                                       HeightRequest="80"
@@ -37,7 +50,8 @@
                                       IsVisible="{Binding IsPlaying, Converter={StaticResource InvertedBoolConverter}}"
                                       Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
                                       VerticalOptions="CenterAndExpand" />
-                <forms:SvgCachedImage Margin="0"
+                <forms:SvgCachedImage Grid.Column="1"
+                                      Margin="0"
                                       Aspect="AspectFit"
                                       BackgroundColor="Transparent"
                                       HeightRequest="80"

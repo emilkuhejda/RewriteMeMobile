@@ -9,7 +9,6 @@ using Plugin.Messaging;
 using Plugin.SimpleAudioPlayer;
 using Prism.Commands;
 using Prism.Navigation;
-using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
@@ -20,23 +19,28 @@ using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 using RewriteMe.Resources.Utils;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class RecordedDetailPageViewModel : ViewModelBase
     {
         private readonly IRecordedItemService _recordedItemService;
+        private readonly IMediaService _mediaService;
         private readonly IEmailTask _emailTask;
 
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private ISimpleAudioPlayer _audioPlayer;
-        private Queue<string> _audioFiles;
+        private IList<AudioFile> _audioFiles;
+        private AudioFile _currentAudioFile;
         private string _text;
+        private string _position;
         private bool _isPlaying;
         private bool _isDirty;
 
         public RecordedDetailPageViewModel(
             IRecordedItemService recordedItemService,
+            IMediaService mediaService,
             IEmailTask emailTask,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -44,6 +48,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
+            _mediaService = mediaService;
             _emailTask = emailTask;
 
             CanGoBack = true;
@@ -77,6 +82,12 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        public string Position
+        {
+            get => _position;
+            set => SetProperty(ref _position, value);
+        }
+
         public bool IsPlaying
         {
             get => _isPlaying;
@@ -88,6 +99,8 @@ namespace RewriteMe.Mobile.ViewModels
             get => _isDirty;
             set => SetProperty(ref _isDirty, value);
         }
+
+        private TimeSpan TotalTime { get; set; }
 
         private ActionBarTileViewModel SendTileItem { get; set; }
 
@@ -103,7 +116,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 RecordedItem = navigationParameters.GetValue<RecordedItem>();
 
-                ReloadPlaylist();
+                InitializePlaylist();
                 InitializeTranscriptions();
                 InitializeNavigation();
 
@@ -209,12 +222,23 @@ namespace RewriteMe.Mobile.ViewModels
             }
             else
             {
-                var path = _audioFiles.Dequeue();
-                PlayAudioFile(path);
+                PlayAudioFile();
             }
 
             IsPlaying = !IsPlaying;
             RefreshNavigationButtons();
+
+            Device.StartTimer(TimeSpan.FromSeconds(0.5), UpdatePosition);
+        }
+
+        private bool UpdatePosition()
+        {
+            var currentAudioFile = _currentAudioFile;
+            var currentPosition = TimeSpan.FromSeconds((int)_audioPlayer.CurrentPosition).Add(currentAudioFile.Offset);
+
+            Position = $"{currentPosition:mm\\:ss} / {TotalTime:mm\\:ss}";
+
+            return IsPlaying;
         }
 
         private void HandlePropertyChanged(object sender, PropertyChangedEventArgs e)
@@ -236,31 +260,57 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void HandlePlaybackEnded(object sender, EventArgs e)
         {
-            if (!_audioFiles.Any())
+            if (_currentAudioFile.IsLast)
             {
                 IsPlaying = false;
-                ReloadPlaylist();
                 return;
             }
 
-            var path = _audioFiles.Dequeue();
-            PlayAudioFile(path);
+            PlayAudioFile();
         }
 
-        private void ReloadPlaylist()
+        private void InitializePlaylist()
         {
-            _audioFiles = new Queue<string>();
+            _audioFiles = new List<AudioFile>();
 
+            var totalTime = TimeSpan.FromSeconds(0);
             var directoryPath = _recordedItemService.GetAudioFilePath(RecordedItem.Id.ToString());
             var directoryInfo = new DirectoryInfo(directoryPath);
             var files = directoryInfo.GetFiles().OrderBy(x => x.CreationTimeUtc);
             if (files.Any())
             {
-                files.ForEach(x => _audioFiles.Enqueue(x.FullName));
+                var lastItem = files.Last();
+                foreach (var file in files)
+                {
+                    var filePath = file.FullName;
+                    var audioFileTime = _mediaService.GetTotalTime(filePath);
+                    var isLast = file == lastItem;
+                    _audioFiles.Add(new AudioFile(filePath, audioFileTime)
+                    {
+                        IsLast = isLast,
+                        Offset = totalTime
+                    });
+
+                    totalTime = totalTime.Add(audioFileTime);
+                }
             }
+
+            TotalTime = totalTime;
         }
 
-        private void PlayAudioFile(string path)
+        private AudioFile GetNextAudioFile()
+        {
+            if (_currentAudioFile == null)
+                return (_currentAudioFile = _audioFiles.First());
+
+            var index = _audioFiles.IndexOf(_currentAudioFile);
+            if (index + 1 < _audioFiles.Count)
+                return (_currentAudioFile = _audioFiles[index + 1]);
+
+            return (_currentAudioFile = _audioFiles.First());
+        }
+
+        private void PlayAudioFile()
         {
             if (_audioPlayer != null)
             {
@@ -268,9 +318,10 @@ namespace RewriteMe.Mobile.ViewModels
                 _audioPlayer = null;
             }
 
+            var currentAudioFile = GetNextAudioFile();
             _audioPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
             _audioPlayer.PlaybackEnded += HandlePlaybackEnded;
-            _audioPlayer.Load(path);
+            _audioPlayer.Load(currentAudioFile.FilePath);
             _audioPlayer.Play();
         }
 
@@ -285,6 +336,23 @@ namespace RewriteMe.Mobile.ViewModels
             }
 
             PropertyChanged -= HandlePropertyChanged;
+        }
+
+        private class AudioFile
+        {
+            public AudioFile(string filePath, TimeSpan totalTime)
+            {
+                FilePath = filePath;
+                TotalTime = totalTime;
+            }
+
+            public string FilePath { get; }
+
+            public TimeSpan TotalTime { get; }
+
+            public TimeSpan Offset { get; set; }
+
+            public bool IsLast { get; set; }
         }
     }
 }
