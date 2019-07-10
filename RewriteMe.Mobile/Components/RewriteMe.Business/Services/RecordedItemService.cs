@@ -44,7 +44,7 @@ namespace RewriteMe.Business.Services
 
         public async Task DeleteRecordedItemAsync(Guid recordedItemId)
         {
-            await _recordedItemRepository.DeleteAsync(recordedItemId);
+            await _recordedItemRepository.DeleteAsync(recordedItemId).ConfigureAwait(false);
 
             var path = GetAudioFilePath(recordedItemId.ToString());
             Directory.Delete(path, true);
