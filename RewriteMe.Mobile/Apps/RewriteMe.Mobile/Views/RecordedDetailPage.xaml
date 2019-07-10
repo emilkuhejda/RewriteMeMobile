@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<views:BaseNavigationPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.RecordedDetailPage"
+                          xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          x:Class="RewriteMe.Mobile.Views.RecordedDetailPage"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
@@ -10,7 +10,7 @@
     <views:BaseNavigationPage.RightNavigationToolbarItems>
         <controls:NavigationToolbarItem Command="{Binding DeleteCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
-    
+
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
@@ -19,7 +19,7 @@
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            
+
             <Editor Grid.Row="0"
                     Margin="10,10,10,20"
                     FontSize="{StaticResource MediumSize}"
@@ -27,27 +27,27 @@
                     Keyboard="Text"
                     Text="{Binding Text}"
                     VerticalOptions="Fill" />
-            
+
             <Slider Grid.Row="1"
                     Margin="10,0,10,0"
                     Maximum="{Binding Duration}"
                     Minimum="0"
                     VerticalOptions="Center"
                     Value="{Binding AudioCurrentProgress}" />
-            
+
             <Grid Grid.Row="2" Margin="0,0,0,20">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                
+
                 <Label Grid.Column="0"
                        Margin="10,0,0,10"
-                       Text="{Binding Position}"
                        Style="{StaticResource LabelStyle}"
+                       Text="{Binding Position}"
                        VerticalOptions="Center" />
-                
+
                 <forms:SvgCachedImage Grid.Column="1"
                                       Margin="0"
                                       Aspect="AspectFit"
@@ -68,15 +68,15 @@
                                       IsVisible="{Binding IsPlaying}"
                                       Source="resource://RewriteMe.Mobile.Resources.Images.PauseRecording.svg"
                                       VerticalOptions="CenterAndExpand" />
-                
+
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding StopPlayCommand}" />
                 </Grid.GestureRecognizers>
             </Grid>
-            
+
             <controls:ContextActionBar Grid.Row="3" ItemsSource="{Binding NavigationItems}" />
         </Grid>
-        
+
         <controls:PageActivityIndicator Grid.Row="0"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
                                         IsVisible="{Binding OperationScope.IsBusy}" />

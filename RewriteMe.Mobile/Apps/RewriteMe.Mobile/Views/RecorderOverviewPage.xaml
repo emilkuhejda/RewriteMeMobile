@@ -1,7 +1,7 @@
-﻿<?xml version="1.0" encoding="UTF-8"?>
-<views:BaseNavigationPage xmlns="http://xamarin.com/schemas/2014/forms"
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.RecorderOverviewPage"
+                          xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          x:Class="RewriteMe.Mobile.Views.RecorderOverviewPage"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
@@ -15,7 +15,7 @@
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
                         </Grid.GestureRecognizers>
-                        
+
                         <StackLayout Orientation="Horizontal">
                             <forms:SvgCachedImage Margin="0,5,10,5"
                                                   Aspect="AspectFit"
@@ -24,7 +24,7 @@
                                                   InputTransparent="True"
                                                   Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
                                                   VerticalOptions="CenterAndExpand" />
-                            
+
                             <Label HeightRequest="30"
                                    Style="{StaticResource LabelStyle}"
                                    Text="{Binding Title}"
@@ -35,24 +35,24 @@
             </ViewCell>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
-    
+
     <views:BaseNavigationPage.RightNavigationToolbarItems>
         <controls:NavigationToolbarItem Command="{Binding NavigateToRecorderCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg" />
         <controls:NavigationToolbarItem Command="{Binding NavigateToSettingsCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Settings.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
-    
+
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <Grid Grid.Row="0" Padding="{StaticResource StandardPadding}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
-            
+
             <Grid Grid.Row="0"
                   Grid.Column="0"
                   Padding="5,8,5,8"
@@ -64,15 +64,15 @@
                     </Label.GestureRecognizers>
                 </Label>
             </Grid>
-            
+
             <ListView Grid.Row="1"
                       HasUnevenRows="True"
                       ItemTemplate="{StaticResource RecordedItemsTemplate}"
                       ItemsSource="{Binding RecordedItems}" />
         </Grid>
-        
+
         <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
-        
+
         <controls:PageActivityIndicator Grid.Row="0"
                                         Grid.RowSpan="2"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"

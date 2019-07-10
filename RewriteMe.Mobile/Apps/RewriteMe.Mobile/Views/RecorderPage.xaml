@@ -13,25 +13,25 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Margin="20,20,20,20"
-               Grid.Row="0"
+        <Label Grid.Row="0"
+               Margin="20,20,20,20"
                HorizontalOptions="CenterAndExpand"
                LineBreakMode="WordWrap"
                Text="{Binding Text}"
                VerticalOptions="Start" />
-        
+
         <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
             </Grid.ColumnDefinitions>
-            
+
             <Label Grid.Column="0"
                    HorizontalOptions="CenterAndExpand"
                    Text="{Binding RecordingTime}"
                    VerticalOptions="Center" />
-            
+
             <Grid Grid.Column="1">
                 <forms:SvgCachedImage Margin="0"
                                       Aspect="AspectFit"
@@ -49,13 +49,13 @@
                                       IsVisible="{Binding IsRecording}"
                                       Source="resource://RewriteMe.Mobile.Resources.Images.PauseRecording.svg"
                                       VerticalOptions="CenterAndExpand" />
-                
+
                 <Grid.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding RecordCommand}" />
                 </Grid.GestureRecognizers>
             </Grid>
         </Grid>
-        
+
         <controls:PageActivityIndicator Grid.Row="0"
                                         Grid.RowSpan="2"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"

@@ -60,7 +60,7 @@
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
-        
+
         <Grid Grid.Row="0" Padding="{StaticResource StandardPadding}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
@@ -107,9 +107,9 @@
                 </Grid.GestureRecognizers>
             </Grid>
         </Grid>
-        
+
         <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
-        
+
         <controls:PageActivityIndicator Grid.Row="0"
                                         Grid.RowSpan="2"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"

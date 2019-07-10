@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
@@ -23,6 +24,7 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
+    [SuppressMessage("Microsoft.Usage", "CA2213:DisposableFieldsShouldBeDisposed", Justification = "It is disposed.")]
     public class RecordedDetailPageViewModel : ViewModelBase
     {
         private readonly IRecordedItemService _recordedItemService;
@@ -303,7 +305,7 @@ namespace RewriteMe.Mobile.ViewModels
             var totalTime = TimeSpan.FromSeconds(0);
             var directoryPath = _recordedItemService.GetAudioFilePath(RecordedItem.Id.ToString());
             var directoryInfo = new DirectoryInfo(directoryPath);
-            var files = directoryInfo.GetFiles().OrderBy(x => x.CreationTimeUtc);
+            var files = directoryInfo.GetFiles().OrderBy(x => x.CreationTimeUtc).ToList();
             if (files.Any())
             {
                 var lastItem = files.Last();
@@ -337,13 +339,13 @@ namespace RewriteMe.Mobile.ViewModels
         private AudioFile GetNextAudioFile()
         {
             if (_currentAudioFile == null)
-                return (_currentAudioFile = _audioFiles.First());
+                return _currentAudioFile = _audioFiles.First();
 
             var index = _audioFiles.IndexOf(_currentAudioFile);
             if (index + 1 < _audioFiles.Count)
-                return (_currentAudioFile = _audioFiles[index + 1]);
+                return _currentAudioFile = _audioFiles[index + 1];
 
-            return (_currentAudioFile = _audioFiles.First());
+            return _currentAudioFile = _audioFiles.First();
         }
 
         private void Seek(double position)
@@ -364,6 +366,7 @@ namespace RewriteMe.Mobile.ViewModels
             if (_audioPlayer != null)
             {
                 _audioPlayer.PlaybackEnded -= HandlePlaybackEnded;
+                _audioPlayer.Dispose();
                 _audioPlayer = null;
             }
 
