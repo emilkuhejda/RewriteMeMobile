@@ -328,13 +328,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void InitializeAudioPlayer()
         {
-            var audioFile = GetNextAudioFile();
-
             _audioPlayer = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
             _audioPlayer.PlaybackEnded += HandlePlaybackEnded;
-            _audioPlayer.Load(audioFile.FilePath);
 
-            UpdatePosition();
+            Seek(0);
         }
 
         private AudioFile GetNextAudioFile()
