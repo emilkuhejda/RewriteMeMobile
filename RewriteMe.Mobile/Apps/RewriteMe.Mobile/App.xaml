@@ -286,7 +286,7 @@
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    
+
                     <!--  Header Row 1  -->
                     <Grid Grid.Row="0"
                           Margin="0"
@@ -423,6 +423,75 @@
             </ControlTemplate>
 
             <!--  Data Templates  -->
+            <DataTemplate x:Key="DetailItemsTemplate">
+                <ViewCell>
+                    <ViewCell.View>
+                        <StackLayout>
+                            <Editor AutoSize="TextChanges"
+                                    FontSize="{StaticResource MediumSize}"
+                                    Keyboard="Text"
+                                    Text="{Binding Transcript}"
+                                    VerticalOptions="Fill" />
+
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackLayout Grid.Column="0" Orientation="Horizontal">
+                                    <controls:PageActivityIndicator HeightRequest="30"
+                                                                    IsVisible="{Binding OperationScope.IsBusy}"
+                                                                    WidthRequest="30" />
+
+                                    <Grid BackgroundColor="Transparent"
+                                          HeightRequest="39"
+                                          HorizontalOptions="Start"
+                                          IsVisible="{Binding OperationScope.IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                                          WidthRequest="39">
+                                        <forms:SvgCachedImage Margin="0"
+                                                              Aspect="AspectFit"
+                                                              BackgroundColor="Transparent"
+                                                              HeightRequest="30"
+                                                              InputTransparent="True"
+                                                              Source="resource://RewriteMe.Mobile.Resources.Images.Play-Enabled.svg"
+                                                              VerticalOptions="CenterAndExpand" />
+
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding PlayCommand}" />
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+
+                                    <Grid Margin="0,0,0,0"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="39"
+                                          HorizontalOptions="Start"
+                                          IsVisible="{Binding IsReloadCommandVisible}"
+                                          WidthRequest="39">
+                                        <forms:SvgCachedImage Margin="0"
+                                                              Aspect="AspectFit"
+                                                              BackgroundColor="Transparent"
+                                                              HeightRequest="30"
+                                                              InputTransparent="True"
+                                                              Source="resource://RewriteMe.Mobile.Resources.Images.Reload.svg"
+                                                              VerticalOptions="CenterAndExpand" />
+
+                                        <Grid.GestureRecognizers>
+                                            <TapGestureRecognizer Command="{Binding ReloadCommand}" />
+                                        </Grid.GestureRecognizers>
+                                    </Grid>
+                                </StackLayout>
+
+                                <Label Grid.Column="1"
+                                       HorizontalOptions="End"
+                                       Style="{StaticResource LabelStyle}"
+                                       Text="{Binding Time}" />
+                            </Grid>
+                        </StackLayout>
+                    </ViewCell.View>
+                </ViewCell>
+            </DataTemplate>
+
             <DataTemplate x:Key="ContextActionBarTileCellTemplate">
                 <cells:ContextActionBarTileCell />
             </DataTemplate>

@@ -1,32 +1,21 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
-using Prism.Commands;
-using Prism.Mvvm;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
-using RewriteMe.Mobile.Commands;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class TranscribeItemViewModel : BindableBase
+    public class TranscribeItemViewModel : DetailItemViewModel<TranscribeItem>
     {
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IDialogService _dialogService;
-        private readonly PlayerViewModel _playerViewModel;
-
-        private bool _isReloadCommandVisible;
-        private string _userTranscript;
-        private bool _isDirty;
-
-        public event EventHandler IsDirtyChanged;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
@@ -34,94 +23,55 @@ namespace RewriteMe.Mobile.ViewModels
             IDialogService dialogService,
             PlayerViewModel playerViewModel,
             TranscribeItem transcribeItem)
+            : base(playerViewModel, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _rewriteMeWebService = rewriteMeWebService;
             _dialogService = dialogService;
-            _playerViewModel = playerViewModel;
-
-            TranscribeItem = transcribeItem;
-            OperationScope = new AsyncOperationScope();
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
-                _userTranscript = transcribeItem.UserTranscript;
-
-                IsReloadCommandVisible = CanExecuteReloadCommand();
+                SetTranscript(transcribeItem.UserTranscript);
+                IsReloadCommandVisible = CanExecuteReload();
             }
             else if (transcribeItem.Alternatives != null && transcribeItem.Alternatives.Any())
             {
                 var alternative = transcribeItem.Alternatives.First();
-                _userTranscript = alternative.Transcript;
+                SetTranscript(alternative.Transcript);
             }
 
             Time = $"{transcribeItem.StartTime:mm\\:ss} - {transcribeItem.EndTime:mm\\:ss}";
-
-            PlayCommand = new AsyncCommand(ExecutePlayCommandAsync);
-            ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
         }
 
-        public AsyncOperationScope OperationScope { get; }
-
-        public ICommand PlayCommand { get; }
-
-        public ICommand ReloadCommand { get; }
-
-        public bool IsReloadCommandVisible
+        protected override void OnTranscriptChanged(string transcript)
         {
-            get => _isReloadCommandVisible;
-            set => SetProperty(ref _isReloadCommandVisible, value);
+            DetailItem.UserTranscript = transcript;
         }
 
-        public TranscribeItem TranscribeItem { get; }
-
-        public string Time { get; }
-
-        public string UserTranscript
+        protected override bool CanExecuteReloadCommand()
         {
-            get => _userTranscript;
-            set
-            {
-                if (SetProperty(ref _userTranscript, value))
-                {
-                    TranscribeItem.UserTranscript = _userTranscript;
-                    IsReloadCommandVisible = CanExecuteReloadCommand();
-                    IsDirty = true;
-                }
-            }
+            return CanExecuteReload();
         }
 
-        public bool IsDirty
+        private bool CanExecuteReload()
         {
-            get => _isDirty;
-            private set
-            {
-                if (SetProperty(ref _isDirty, value))
-                {
-                    OnIsDirtyChanged();
-                }
-            }
-        }
-
-        private bool CanExecuteReloadCommand()
-        {
-            if (TranscribeItem.Alternatives == null || !TranscribeItem.Alternatives.Any())
+            if (DetailItem.Alternatives == null || !DetailItem.Alternatives.Any())
                 return false;
 
-            var alternative = TranscribeItem.Alternatives.First();
-            return !alternative.Transcript.Equals(TranscribeItem.UserTranscript, StringComparison.Ordinal);
+            var alternative = DetailItem.Alternatives.First();
+            return !alternative.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
         }
 
-        private async Task ExecutePlayCommandAsync()
+        protected override async Task ExecutePlayCommandAsync()
         {
             using (new OperationMonitor(OperationScope))
             {
-                var transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(TranscribeItem.Id).ConfigureAwait(false);
+                var transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
                 var source = transcriptAudioSource?.Source;
 
                 if (transcriptAudioSource == null)
                 {
-                    var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(TranscribeItem.Id).ConfigureAwait(false);
+                    var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(DetailItem.Id).ConfigureAwait(false);
                     if (httpRequestResult.State == HttpRequestState.Success)
                     {
                         source = httpRequestResult.Payload;
@@ -129,7 +79,7 @@ namespace RewriteMe.Mobile.ViewModels
                         var audioSource = new TranscriptAudioSource
                         {
                             Id = Guid.NewGuid(),
-                            TranscribeItemId = TranscribeItem.Id,
+                            TranscribeItemId = DetailItem.Id,
                             Source = source
                         };
 
@@ -143,22 +93,17 @@ namespace RewriteMe.Mobile.ViewModels
                     return;
                 }
 
-                _playerViewModel.Load(source);
+                PlayerViewModel.Load(source);
             }
         }
 
-        private void ExecuteReloadCommand()
+        protected override void ExecuteReloadCommand()
         {
-            if (TranscribeItem == null || !TranscribeItem.Alternatives.Any())
+            if (DetailItem == null || !DetailItem.Alternatives.Any())
                 return;
 
-            var alternative = TranscribeItem.Alternatives.First();
-            UserTranscript = alternative.Transcript;
-        }
-
-        private void OnIsDirtyChanged()
-        {
-            IsDirtyChanged?.Invoke(this, EventArgs.Empty);
+            var alternative = DetailItem.Alternatives.First();
+            Transcript = alternative.Transcript;
         }
     }
 }

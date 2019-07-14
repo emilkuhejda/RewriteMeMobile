@@ -1,111 +1,58 @@
 ﻿using System;
-using System.Windows.Input;
-using Prism.Commands;
-using Prism.Mvvm;
+using System.Threading.Tasks;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Transcription;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class RecordedAudioFileViewModel : BindableBase
+    public class RecordedAudioFileViewModel : DetailItemViewModel<RecordedAudioFile>
     {
-        private readonly PlayerViewModel _playerViewModel;
-
-        private bool _isReloadCommandVisible;
-        private string _transcript;
-        private bool _isDirty;
-
-        public event EventHandler IsDirtyChanged;
-
         public RecordedAudioFileViewModel(
             PlayerViewModel playerViewModel,
             RecordedAudioFile recordedAudioFile)
+            : base(playerViewModel, recordedAudioFile)
         {
-            _playerViewModel = playerViewModel;
-
-            RecordedAudioFile = recordedAudioFile;
-            OperationScope = new AsyncOperationScope();
-
             if (!string.IsNullOrWhiteSpace(recordedAudioFile.UserTranscript))
             {
-                _transcript = recordedAudioFile.UserTranscript;
-
-                IsReloadCommandVisible = CanExecuteReloadCommand();
+                SetTranscript(recordedAudioFile.UserTranscript);
+                IsReloadCommandVisible = CanExecuteReload();
             }
             else
             {
-                _transcript = recordedAudioFile.Transcript;
+                SetTranscript(recordedAudioFile.Transcript);
             }
 
             Time = $"{recordedAudioFile.StartTime:mm\\:ss} - {recordedAudioFile.EndTime:mm\\:ss}";
-
-            PlayCommand = new DelegateCommand(ExecutePlayCommand);
-            ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
         }
 
-        public AsyncOperationScope OperationScope { get; }
-
-        public ICommand PlayCommand { get; }
-
-        public ICommand ReloadCommand { get; }
-
-        public bool IsReloadCommandVisible
+        protected override void OnTranscriptChanged(string transcript)
         {
-            get => _isReloadCommandVisible;
-            set => SetProperty(ref _isReloadCommandVisible, value);
+            DetailItem.UserTranscript = transcript;
         }
 
-        public RecordedAudioFile RecordedAudioFile { get; }
-
-        public string Time { get; }
-
-        public string Transcript
+        protected override bool CanExecuteReloadCommand()
         {
-            get => _transcript;
-            set
-            {
-                if (SetProperty(ref _transcript, value))
-                {
-                    RecordedAudioFile.UserTranscript = _transcript;
-                    IsReloadCommandVisible = CanExecuteReloadCommand();
-                    IsDirty = true;
-                }
-            }
+            return CanExecuteReload();
         }
 
-        public bool IsDirty
+        private bool CanExecuteReload()
         {
-            get => _isDirty;
-            private set
-            {
-                if (SetProperty(ref _isDirty, value))
-                {
-                    OnIsDirtyChanged();
-                }
-            }
+            return !DetailItem.Transcript.Equals(Transcript, StringComparison.Ordinal);
         }
 
-        private bool CanExecuteReloadCommand()
-        {
-            return !RecordedAudioFile.Transcript.Equals(Transcript, StringComparison.Ordinal);
-        }
-
-        private void ExecutePlayCommand()
+        protected override async Task ExecutePlayCommandAsync()
         {
             using (new OperationMonitor(OperationScope))
             {
-                _playerViewModel.Load(RecordedAudioFile.Source);
+                PlayerViewModel.Load(DetailItem.Source);
             }
+
+            await Task.CompletedTask.ConfigureAwait(false);
         }
 
-        private void ExecuteReloadCommand()
+        protected override void ExecuteReloadCommand()
         {
-            Transcript = RecordedAudioFile.Transcript;
-        }
-
-        private void OnIsDirtyChanged()
-        {
-            IsDirtyChanged?.Invoke(this, EventArgs.Empty);
+            Transcript = DetailItem.Transcript;
         }
     }
 }
