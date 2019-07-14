@@ -9,12 +9,6 @@ namespace RewriteMe.DataAccess.Entities
         [PrimaryKey]
         public Guid Id { get; set; }
 
-        [MaxLength(150)]
-        public string FileName { get; set; }
-
-        [MaxLength(250)]
-        public string Path { get; set; }
-
         public DateTime DateCreated { get; set; }
 
         public TimeSpan DateCreatedOffset { get; set; }

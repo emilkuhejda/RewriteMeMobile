@@ -11,7 +11,7 @@ namespace RewriteMe.Business.Services
 {
     public class RecordedItemService : IRecordedItemService
     {
-        private const string DirectoryName = "Records";
+        private const string DirectoryName = "Recordings";
 
         private readonly IDirectoryProvider _directoryProvider;
         private readonly IRecordedItemRepository _recordedItemRepository;
@@ -29,14 +29,9 @@ namespace RewriteMe.Business.Services
 
         public async Task<RecordedItem> CreateRecordedItemAsync(Guid fileId)
         {
-            var path = GetAudioFilePath(fileId.ToString());
-            Directory.CreateDirectory(path);
-
             var recordedItem = new RecordedItem
             {
                 Id = fileId,
-                FileName = fileId.ToString(),
-                Path = path,
                 DateCreated = DateTime.UtcNow
             };
 
@@ -47,9 +42,6 @@ namespace RewriteMe.Business.Services
         public async Task DeleteRecordedItemAsync(Guid recordedItemId)
         {
             await _recordedItemRepository.DeleteAsync(recordedItemId).ConfigureAwait(false);
-
-            var path = GetAudioFilePath(recordedItemId.ToString());
-            Directory.Delete(path, true);
         }
 
         public async Task<IEnumerable<RecordedItem>> GetAllAsync()
@@ -69,7 +61,7 @@ namespace RewriteMe.Business.Services
 
         public void CreateDirectory()
         {
-            var directoryPath = GetAudioDirectory();
+            var directoryPath = GetDirectoryPath();
             if (Directory.Exists(directoryPath))
                 return;
 
@@ -80,20 +72,21 @@ namespace RewriteMe.Business.Services
         {
             await _recordedItemRepository.ClearAsync().ConfigureAwait(false);
 
-            var directoryPath = GetAudioDirectory();
+            ClearTemporaryFiles();
+        }
+
+        public void ClearTemporaryFiles()
+        {
+            var directoryPath = GetDirectoryPath();
             if (!Directory.Exists(directoryPath))
                 return;
 
             Directory.Delete(directoryPath, true);
+
+            CreateDirectory();
         }
 
-        public string GetAudioFilePath(string directoryName)
-        {
-            var directory = GetAudioDirectory();
-            return Path.Combine(directory, directoryName);
-        }
-
-        public string GetAudioDirectory()
+        public string GetDirectoryPath()
         {
             //var directory = _directoryProvider.GetPath();
             var directory = $"/storage/emulated/0/Download/";

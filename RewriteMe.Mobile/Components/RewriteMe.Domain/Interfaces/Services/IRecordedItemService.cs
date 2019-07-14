@@ -21,8 +21,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task ClearAsync();
 
-        string GetAudioFilePath(string directoryName);
+        void ClearTemporaryFiles();
 
-        string GetAudioDirectory();
+        string GetDirectoryPath();
     }
 }

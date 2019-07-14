@@ -87,7 +87,8 @@ namespace RewriteMe.Business.Services
             if (recordedItem == null)
                 return;
 
-            var filePath = Path.Combine(recordedItem.Path, Path.GetTempFileName());
+            var directoryPath = _recordedItemService.GetDirectoryPath();
+            var filePath = Path.Combine(directoryPath, Path.GetTempFileName());
             _recorder = new AudioRecorderService
             {
                 StopRecordingAfterTimeout = true,
@@ -176,13 +177,7 @@ namespace RewriteMe.Business.Services
 
         private void ClearTemporaryFiles()
         {
-            if (RecordedItem == null)
-                return;
-
-            if (!Directory.Exists(RecordedItem.Path))
-                return;
-
-            Directory.Delete(RecordedItem.Path, true);
+            _recordedItemService.ClearTemporaryFiles();
         }
 
         private void OnAudioInputReceived(object sender, string e)
