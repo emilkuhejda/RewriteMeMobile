@@ -90,7 +90,7 @@ namespace RewriteMe.Business.Services
             var filePath = Path.Combine(recordedItem.Path, $"{Guid.NewGuid()}.wav");
             _recorder = new AudioRecorderService
             {
-                StopRecordingAfterTimeout = false,
+                StopRecordingAfterTimeout = true,
                 StopRecordingOnSilence = false,
                 TotalAudioTimeout = TimeSpan.FromSeconds(5),
                 FilePath = filePath

@@ -15,7 +15,6 @@ namespace RewriteMe.Mobile.ViewModels
     public class RecorderPageViewModel : ViewModelBase
     {
         private readonly IRecorderService _recorderService;
-        private readonly IRecordedItemService _recordedItemService;
 
         private string _text;
         private string _recordingTime;
@@ -24,14 +23,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         public RecorderPageViewModel(
             IRecorderService recorderService,
-            IRecordedItemService recordedItemService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
             _recorderService = recorderService;
-            _recordedItemService = recordedItemService;
 
             CanGoBack = true;
 
@@ -69,7 +66,8 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 UpdateUi();
-                var items = await _recordedItemService.GetAllAsync().ConfigureAwait(false);
+
+                await Task.CompletedTask.ConfigureAwait(false);
             }
         }
 

@@ -15,7 +15,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task InsertAudioFileAsync(RecordedAudioFile recordedAudioFile);
 
-        Task UpdateAsync(RecordedItem recordedItem);
+        Task UpdateAudioFilesAsync(IEnumerable<RecordedAudioFile> recordedAudioFiles);
 
         void CreateDirectory();
 

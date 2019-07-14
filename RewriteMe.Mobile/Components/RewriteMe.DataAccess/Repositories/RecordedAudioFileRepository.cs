@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using RewriteMe.DataAccess.DataAdapters;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Interfaces.Repositories;
@@ -18,6 +20,12 @@ namespace RewriteMe.DataAccess.Repositories
         public async Task InsertAsync(RecordedAudioFile recordedItem)
         {
             await _contextProvider.Context.InsertAsync(recordedItem.ToRecordedAudioFileEntity()).ConfigureAwait(false);
+        }
+
+        public async Task UpdateAllAsync(IEnumerable<RecordedAudioFile> recordedAudioFiles)
+        {
+            var entities = recordedAudioFiles.Select(x => x.ToRecordedAudioFileEntity());
+            await _contextProvider.Context.UpdateAllAsync(entities).ConfigureAwait(false);
         }
     }
 }

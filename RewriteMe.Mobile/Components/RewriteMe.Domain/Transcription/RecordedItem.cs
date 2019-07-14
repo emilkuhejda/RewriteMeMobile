@@ -11,8 +11,6 @@ namespace RewriteMe.Domain.Transcription
 
         public string Path { get; set; }
 
-        public string UserTranscript { get; set; }
-
         public DateTimeOffset DateCreated { get; set; }
 
         public IEnumerable<RecordedAudioFile> AudioFiles { get; set; }

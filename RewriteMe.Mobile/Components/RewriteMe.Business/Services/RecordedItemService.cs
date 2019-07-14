@@ -62,9 +62,9 @@ namespace RewriteMe.Business.Services
             await _recordedAudioFileRepository.InsertAsync(recordedAudioFile).ConfigureAwait(false);
         }
 
-        public async Task UpdateAsync(RecordedItem recordedItem)
+        public async Task UpdateAudioFilesAsync(IEnumerable<RecordedAudioFile> recordedAudioFiles)
         {
-            await _recordedItemRepository.UpdateAsync(recordedItem).ConfigureAwait(false);
+            await _recordedAudioFileRepository.UpdateAllAsync(recordedAudioFiles).ConfigureAwait(false);
         }
 
         public void CreateDirectory()
@@ -95,7 +95,8 @@ namespace RewriteMe.Business.Services
 
         public string GetAudioDirectory()
         {
-            var directory = _directoryProvider.GetPath();
+            //var directory = _directoryProvider.GetPath();
+            var directory = $"/storage/emulated/0/Download/";
             return Path.Combine(directory, DirectoryName);
         }
     }

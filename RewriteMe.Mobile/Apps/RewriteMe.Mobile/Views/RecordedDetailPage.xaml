@@ -7,6 +7,77 @@
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <views:BaseNavigationPage.Resources>
+        <DataTemplate x:Key="RecordedAudioFilesTemplate">
+            <ViewCell>
+                <ViewCell.View>
+                    <StackLayout>
+                        <Editor AutoSize="TextChanges"
+                                FontSize="{StaticResource MediumSize}"
+                                Keyboard="Text"
+                                Text="{Binding Transcript}"
+                                VerticalOptions="Fill" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <StackLayout Grid.Column="0" Orientation="Horizontal">
+                                <controls:PageActivityIndicator HeightRequest="30"
+                                                                IsVisible="{Binding OperationScope.IsBusy}"
+                                                                WidthRequest="30" />
+
+                                <Grid BackgroundColor="Transparent"
+                                      HeightRequest="39"
+                                      HorizontalOptions="Start"
+                                      IsVisible="{Binding OperationScope.IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                                      WidthRequest="39">
+                                    <forms:SvgCachedImage Margin="0"
+                                                          Aspect="AspectFit"
+                                                          BackgroundColor="Transparent"
+                                                          HeightRequest="30"
+                                                          InputTransparent="True"
+                                                          Source="resource://RewriteMe.Mobile.Resources.Images.Play-Enabled.svg"
+                                                          VerticalOptions="CenterAndExpand" />
+
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding PlayCommand}" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+
+                                <Grid Margin="0,0,0,0"
+                                      BackgroundColor="Transparent"
+                                      HeightRequest="39"
+                                      HorizontalOptions="Start"
+                                      IsVisible="{Binding IsReloadCommandVisible}"
+                                      WidthRequest="39">
+                                    <forms:SvgCachedImage Margin="0"
+                                                          Aspect="AspectFit"
+                                                          BackgroundColor="Transparent"
+                                                          HeightRequest="30"
+                                                          InputTransparent="True"
+                                                          Source="resource://RewriteMe.Mobile.Resources.Images.Reload.svg"
+                                                          VerticalOptions="CenterAndExpand" />
+
+                                    <Grid.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding ReloadCommand}" />
+                                    </Grid.GestureRecognizers>
+                                </Grid>
+                            </StackLayout>
+
+                            <Label Grid.Column="1"
+                                   HorizontalOptions="End"
+                                   Style="{StaticResource LabelStyle}"
+                                   Text="{Binding Time}" />
+                        </Grid>
+                    </StackLayout>
+                </ViewCell.View>
+            </ViewCell>
+        </DataTemplate>
+    </views:BaseNavigationPage.Resources>
+
     <views:BaseNavigationPage.RightNavigationToolbarItems>
         <controls:NavigationToolbarItem Command="{Binding DeleteCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
@@ -14,67 +85,29 @@
     <Grid>
         <Grid>
             <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Editor Grid.Row="0"
-                    Margin="10,10,10,20"
-                    FontSize="{StaticResource MediumSize}"
-                    HorizontalOptions="Fill"
-                    Keyboard="Text"
-                    Text="{Binding Text}"
-                    VerticalOptions="Fill" />
+            <views:PlayerView Grid.Row="0" BindingContext="{Binding PlayerViewModel}" />
 
-            <Slider Grid.Row="1"
-                    Margin="10,0,10,0"
-                    Maximum="{Binding Duration}"
-                    Minimum="0"
-                    VerticalOptions="Center"
-                    Value="{Binding AudioCurrentProgress}" />
+            <Label Grid.Row="1"
+                   FontAttributes="Italic"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding NotAvailableData}"
+                   Style="{StaticResource LabelStyle}"
+                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
+                   VerticalOptions="Start" />
 
-            <Grid Grid.Row="2" Margin="0,0,0,20">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Label Grid.Column="0"
-                       Margin="10,0,0,10"
-                       Style="{StaticResource LabelStyle}"
-                       Text="{Binding Position}"
-                       VerticalOptions="Center" />
-
-                <forms:SvgCachedImage Grid.Column="1"
-                                      Margin="0"
-                                      Aspect="AspectFit"
-                                      BackgroundColor="Transparent"
-                                      HeightRequest="80"
-                                      HorizontalOptions="Center"
-                                      InputTransparent="True"
-                                      IsVisible="{Binding IsPlaying, Converter={StaticResource InvertedBoolConverter}}"
-                                      Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
-                                      VerticalOptions="CenterAndExpand" />
-                <forms:SvgCachedImage Grid.Column="1"
-                                      Margin="0"
-                                      Aspect="AspectFit"
-                                      BackgroundColor="Transparent"
-                                      HeightRequest="80"
-                                      HorizontalOptions="Center"
-                                      InputTransparent="True"
-                                      IsVisible="{Binding IsPlaying}"
-                                      Source="resource://RewriteMe.Mobile.Resources.Images.PauseRecording.svg"
-                                      VerticalOptions="CenterAndExpand" />
-
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding StopPlayCommand}" />
-                </Grid.GestureRecognizers>
+            <Grid Grid.Row="1" Padding="{StaticResource StandardPadding}">
+                <ListView HasUnevenRows="True"
+                          ItemTemplate="{StaticResource RecordedAudioFilesTemplate}"
+                          ItemsSource="{Binding RecordedAudioFiles}"
+                          SeparatorVisibility="None" />
             </Grid>
 
-            <controls:ContextActionBar Grid.Row="3" ItemsSource="{Binding NavigationItems}" />
+            <controls:ContextActionBar Grid.Row="2" ItemsSource="{Binding NavigationItems}" />
         </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"

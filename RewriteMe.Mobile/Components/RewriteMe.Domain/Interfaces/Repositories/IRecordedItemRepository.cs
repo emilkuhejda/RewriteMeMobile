@@ -15,8 +15,6 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task<RecordedItem> GetAsync(Guid recordedItemId);
 
-        Task UpdateAsync(RecordedItem recordedItem);
-
         Task ClearAsync();
     }
 }

@@ -13,6 +13,8 @@ namespace RewriteMe.Domain.Transcription
 
         public string Transcript { get; set; }
 
+        public string UserTranscript { get; set; }
+
         public RecognitionSpeechResult RecognitionSpeechResult { get; set; }
 
         public DateTime DateCreated { get; set; }
