@@ -71,7 +71,7 @@
                   Grid.Column="0"
                   Padding="5,8,5,8"
                   BackgroundColor="{StaticResource WarningMessageBackground}"
-                  IsVisible="{Binding IsUserRegistrationSuccess, Converter={StaticResource InvertedBoolConverter}}">
+                  IsVisible="{Binding IsNotUserRegistrationSuccess}">
                 <Label Style="{StaticResource RegistrationErrorLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegistrationErrorMessage}}">
                     <Label.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding SendEmailCommand}" />

@@ -50,7 +50,7 @@ namespace RewriteMe.Mobile.ViewModels
                     .Select(x => new RecordedItemViewModel(x, NavigationService))
                     .ToList();
 
-                IsUserRegistrationSuccess = await InternalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
+                IsNotUserRegistrationSuccess = !await InternalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
 
                 InitializeNavigation(false);
             }

@@ -29,7 +29,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IApplicationSettings _applicationSettings;
 
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
-        private bool _isUserRegistrationSuccess;
+        private bool _isNotUserRegistrationSuccess;
 
         protected OverviewBaseViewModel(
             IUserSessionService userSessionService,
@@ -63,10 +63,10 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _navigationItems, value);
         }
 
-        public bool IsUserRegistrationSuccess
+        public bool IsNotUserRegistrationSuccess
         {
-            get => _isUserRegistrationSuccess;
-            set => SetProperty(ref _isUserRegistrationSuccess, value);
+            get => _isNotUserRegistrationSuccess;
+            set => SetProperty(ref _isNotUserRegistrationSuccess, value);
         }
 
         public ICommand NavigateToRecorderCommand { get; }
