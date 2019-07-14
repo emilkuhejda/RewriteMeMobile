@@ -13,7 +13,6 @@ namespace RewriteMe.DataAccess.DataAdapters
             {
                 Id = entity.Id,
                 RecordedItemId = entity.RecordedItemId,
-                Path = entity.Path,
                 Transcript = entity.Transcript,
                 UserTranscript = entity.UserTranscript,
                 Source = entity.Source,
@@ -28,7 +27,6 @@ namespace RewriteMe.DataAccess.DataAdapters
             {
                 Id = recordedAudioFile.Id,
                 RecordedItemId = recordedAudioFile.RecordedItemId,
-                Path = recordedAudioFile.Path,
                 Transcript = recordedAudioFile.Transcript,
                 UserTranscript = recordedAudioFile.UserTranscript,
                 Source = recordedAudioFile.Source,

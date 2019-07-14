@@ -87,7 +87,7 @@ namespace RewriteMe.Business.Services
             if (recordedItem == null)
                 return;
 
-            var filePath = Path.Combine(recordedItem.Path, $"{Guid.NewGuid()}.wav");
+            var filePath = Path.Combine(recordedItem.Path, Path.GetTempFileName());
             _recorder = new AudioRecorderService
             {
                 StopRecordingAfterTimeout = true,
@@ -111,6 +111,8 @@ namespace RewriteMe.Business.Services
 
             await StopRecordingInternal().ConfigureAwait(false);
 
+            ClearTemporaryFiles();
+
             OnStatusChanged();
         }
 
@@ -133,6 +135,8 @@ namespace RewriteMe.Business.Services
 
             _stopwatch.Stop();
             _stopwatch.Reset();
+
+            ClearTemporaryFiles();
 
             RecordedItem = null;
         }
@@ -158,7 +162,6 @@ namespace RewriteMe.Business.Services
                 {
                     Id = Guid.NewGuid(),
                     RecordedItemId = RecordedItem.Id,
-                    Path = _recorder.FilePath,
                     Transcript = simpleResult.DisplayText,
                     Source = source,
                     RecognitionSpeechResult = simpleResult,
@@ -169,6 +172,17 @@ namespace RewriteMe.Business.Services
 
                 await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
             }
+        }
+
+        private void ClearTemporaryFiles()
+        {
+            if (RecordedItem == null)
+                return;
+
+            if (!Directory.Exists(RecordedItem.Path))
+                return;
+
+            Directory.Delete(RecordedItem.Path, true);
         }
 
         private void OnAudioInputReceived(object sender, string e)

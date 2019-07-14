@@ -9,8 +9,6 @@ namespace RewriteMe.Domain.Transcription
 
         public Guid RecordedItemId { get; set; }
 
-        public string Path { get; set; }
-
         public string Transcript { get; set; }
 
         public string UserTranscript { get; set; }

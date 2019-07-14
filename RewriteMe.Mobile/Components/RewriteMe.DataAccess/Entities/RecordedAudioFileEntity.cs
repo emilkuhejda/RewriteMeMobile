@@ -12,9 +12,6 @@ namespace RewriteMe.DataAccess.Entities
         [ForeignKey(typeof(RecordedItemEntity))]
         public Guid RecordedItemId { get; set; }
 
-        [MaxLength(250)]
-        public string Path { get; set; }
-
         public string Transcript { get; set; }
 
         public string UserTranscript { get; set; }
