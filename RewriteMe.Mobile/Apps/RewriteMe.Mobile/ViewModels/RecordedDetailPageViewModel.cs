@@ -23,7 +23,6 @@ namespace RewriteMe.Mobile.ViewModels
     public class RecordedDetailPageViewModel : ViewModelBase
     {
         private readonly IRecordedItemService _recordedItemService;
-        private readonly IMediaService _mediaService;
         private readonly IEmailTask _emailTask;
 
         private IList<RecordedAudioFileViewModel> _recordedAudioFiles;
@@ -32,7 +31,6 @@ namespace RewriteMe.Mobile.ViewModels
 
         public RecordedDetailPageViewModel(
             IRecordedItemService recordedItemService,
-            IMediaService mediaService,
             IEmailTask emailTask,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -40,7 +38,6 @@ namespace RewriteMe.Mobile.ViewModels
             : base(dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
-            _mediaService = mediaService;
             _emailTask = emailTask;
 
             CanGoBack = true;
@@ -150,6 +147,7 @@ namespace RewriteMe.Mobile.ViewModels
             foreach (var recordedAudioFile in RecordedAudioFiles)
             {
                 message.AppendLine(recordedAudioFile.Transcript);
+                message.AppendLine(recordedAudioFile.Time);
                 message.AppendLine();
             }
 

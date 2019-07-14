@@ -15,6 +15,8 @@ namespace RewriteMe.Business.Services
 {
     public class RecorderService : IRecorderService
     {
+        private const int AudioLengthInSeconds = 15;
+
         private readonly IRecordedItemService _recordedItemService;
         private readonly IMediaService _mediaService;
         private readonly IList<RecordedAudioFile> _recordedAudioFiles;
@@ -97,7 +99,7 @@ namespace RewriteMe.Business.Services
             {
                 StopRecordingAfterTimeout = true,
                 StopRecordingOnSilence = false,
-                TotalAudioTimeout = TimeSpan.FromSeconds(5),
+                TotalAudioTimeout = TimeSpan.FromSeconds(AudioLengthInSeconds),
                 FilePath = filePath
             };
 

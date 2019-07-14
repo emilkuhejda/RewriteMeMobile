@@ -28,7 +28,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (!string.IsNullOrWhiteSpace(recordedAudioFile.UserTranscript))
             {
-                _transcript = recordedAudioFile.Transcript;
+                _transcript = recordedAudioFile.UserTranscript;
 
                 IsReloadCommandVisible = CanExecuteReloadCommand();
             }
@@ -66,6 +66,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _transcript, value))
                 {
+                    RecordedAudioFile.UserTranscript = _transcript;
                     IsReloadCommandVisible = CanExecuteReloadCommand();
                     IsDirty = true;
                 }
