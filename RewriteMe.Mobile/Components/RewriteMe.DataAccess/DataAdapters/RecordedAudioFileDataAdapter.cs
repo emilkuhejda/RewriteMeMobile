@@ -15,6 +15,9 @@ namespace RewriteMe.DataAccess.DataAdapters
                 RecordedItemId = entity.RecordedItemId,
                 Transcript = entity.Transcript,
                 UserTranscript = entity.UserTranscript,
+                StartTime = entity.StartTime,
+                EndTime = entity.EndTime,
+                TotalTime = entity.TotalTime,
                 Source = entity.Source,
                 RecognitionSpeechResult = JsonConvert.DeserializeObject<RecognitionSpeechResult>(entity.RecognitionSpeechResult),
                 DateCreated = entity.DateCreated
@@ -29,6 +32,9 @@ namespace RewriteMe.DataAccess.DataAdapters
                 RecordedItemId = recordedAudioFile.RecordedItemId,
                 Transcript = recordedAudioFile.Transcript,
                 UserTranscript = recordedAudioFile.UserTranscript,
+                StartTime = recordedAudioFile.StartTime,
+                EndTime = recordedAudioFile.EndTime,
+                TotalTime = recordedAudioFile.TotalTime,
                 Source = recordedAudioFile.Source,
                 RecognitionSpeechResult = JsonConvert.SerializeObject(recordedAudioFile.RecognitionSpeechResult),
                 DateCreated = recordedAudioFile.DateCreated

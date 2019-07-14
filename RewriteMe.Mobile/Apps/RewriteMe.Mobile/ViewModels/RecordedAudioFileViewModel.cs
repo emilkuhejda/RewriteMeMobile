@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Input;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -38,7 +37,7 @@ namespace RewriteMe.Mobile.ViewModels
                 _transcript = recordedAudioFile.Transcript;
             }
 
-            //Time = "00:00 - 00:15";
+            Time = $"{recordedAudioFile.StartTime:mm\\:ss} - {recordedAudioFile.EndTime:mm\\:ss}";
 
             PlayCommand = new DelegateCommand(ExecutePlayCommand);
             ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);

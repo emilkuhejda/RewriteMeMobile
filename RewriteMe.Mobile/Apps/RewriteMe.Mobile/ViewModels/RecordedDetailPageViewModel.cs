@@ -87,7 +87,7 @@ namespace RewriteMe.Mobile.ViewModels
                     RecordedItem = navigationParameters.GetValue<RecordedItem>();
 
                     RecordedAudioFiles?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
-                    RecordedAudioFiles = RecordedItem.AudioFiles.OrderByDescending(x => x.DateCreated).Select(CreateRecordedAudioFileViewModel).ToList();
+                    RecordedAudioFiles = RecordedItem.AudioFiles.OrderBy(x => x.DateCreated).Select(CreateRecordedAudioFileViewModel).ToList();
 
                     NotAvailableData = !RecordedAudioFiles.Any();
                 }

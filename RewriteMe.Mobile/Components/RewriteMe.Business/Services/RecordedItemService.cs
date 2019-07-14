@@ -88,8 +88,7 @@ namespace RewriteMe.Business.Services
 
         public string GetDirectoryPath()
         {
-            //var directory = _directoryProvider.GetPath();
-            var directory = $"/storage/emulated/0/Download/";
+            var directory = _directoryProvider.GetPath();
             return Path.Combine(directory, DirectoryName);
         }
     }
