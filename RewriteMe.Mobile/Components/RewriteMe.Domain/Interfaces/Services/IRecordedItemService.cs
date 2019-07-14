@@ -17,6 +17,12 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task UpdateAsync(RecordedItem recordedItem);
 
+        void CreateDirectory();
+
+        Task ClearAsync();
+
         string GetAudioFilePath(string directoryName);
+
+        string GetAudioDirectory();
     }
 }

@@ -9,6 +9,7 @@ namespace RewriteMe.Business.Services
     public class CleanUpService : ICleanUpService
     {
         private readonly IInternalValueService _internalValueService;
+        private readonly IRecordedItemService _recordedItemService;
         private readonly IUserSessionRepository _userSessionRepository;
         private readonly IFileItemRepository _fileItemRepository;
         private readonly IDeletedFileItemRepository _deletedFileItemRepository;
@@ -16,12 +17,14 @@ namespace RewriteMe.Business.Services
 
         public CleanUpService(
             IInternalValueService internalValueService,
+            IRecordedItemService recordedItemService,
             IUserSessionRepository userSessionRepository,
             IFileItemRepository fileItemRepository,
             IDeletedFileItemRepository deletedFileItemRepository,
             IUserSubscriptionRepository userSubscriptionRepository)
         {
             _internalValueService = internalValueService;
+            _recordedItemService = recordedItemService;
             _userSessionRepository = userSessionRepository;
             _fileItemRepository = fileItemRepository;
             _deletedFileItemRepository = deletedFileItemRepository;
@@ -35,6 +38,7 @@ namespace RewriteMe.Business.Services
             await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronization, DateTime.MinValue).ConfigureAwait(false);
             await _internalValueService.UpdateValueAsync(InternalValues.ApplicationId, null).ConfigureAwait(false);
 
+            await _recordedItemService.ClearAsync().ConfigureAwait(false);
             await _fileItemRepository.ClearAsync().ConfigureAwait(false);
             await _deletedFileItemRepository.ClearAsync().ConfigureAwait(false);
             await _userSessionRepository.ClearAsync().ConfigureAwait(false);

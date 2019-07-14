@@ -11,6 +11,8 @@ namespace RewriteMe.Business.Services
 {
     public class RecordedItemService : IRecordedItemService
     {
+        private const string DirectoryName = "Records";
+
         private readonly IDirectoryProvider _directoryProvider;
         private readonly IRecordedItemRepository _recordedItemRepository;
         private readonly IRecordedAudioFileRepository _recordedAudioFileRepository;
@@ -65,10 +67,36 @@ namespace RewriteMe.Business.Services
             await _recordedItemRepository.UpdateAsync(recordedItem).ConfigureAwait(false);
         }
 
+        public void CreateDirectory()
+        {
+            var directoryPath = GetAudioDirectory();
+            if (Directory.Exists(directoryPath))
+                return;
+
+            Directory.CreateDirectory(directoryPath);
+        }
+
+        public async Task ClearAsync()
+        {
+            await _recordedItemRepository.ClearAsync().ConfigureAwait(false);
+
+            var directoryPath = GetAudioDirectory();
+            if (!Directory.Exists(directoryPath))
+                return;
+
+            Directory.Delete(directoryPath, true);
+        }
+
         public string GetAudioFilePath(string directoryName)
         {
-            var directory = _directoryProvider.GetPath();
+            var directory = GetAudioDirectory();
             return Path.Combine(directory, directoryName);
+        }
+
+        public string GetAudioDirectory()
+        {
+            var directory = _directoryProvider.GetPath();
+            return Path.Combine(directory, DirectoryName);
         }
     }
 }

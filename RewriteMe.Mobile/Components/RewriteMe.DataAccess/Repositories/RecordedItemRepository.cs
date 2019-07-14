@@ -45,5 +45,10 @@ namespace RewriteMe.DataAccess.Repositories
         {
             await _contextProvider.Context.UpdateAsync(recordedItem.ToRecordedItemEntity()).ConfigureAwait(false);
         }
+
+        public async Task ClearAsync()
+        {
+            await _contextProvider.Context.DeleteAllAsync<RecordedItemEntity>().ConfigureAwait(false);
+        }
     }
 }

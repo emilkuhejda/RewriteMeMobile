@@ -4,6 +4,7 @@ using System.IO;
 using System.Threading.Tasks;
 using Plugin.AudioRecorder;
 using RewriteMe.Domain.Events;
+using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using Xamarin.Cognitive.Speech;
@@ -13,6 +14,7 @@ namespace RewriteMe.Business.Services
     public class RecorderService : IRecorderService
     {
         private readonly IRecordedItemService _recordedItemService;
+        private readonly IMediaService _mediaService;
         private readonly Stopwatch _stopwatch;
 
         private AudioRecorderService _recorder;
@@ -21,9 +23,12 @@ namespace RewriteMe.Business.Services
         public event EventHandler<AudioTranscribedEventArgs> AudioTranscribed;
         public event EventHandler StatusChanged;
 
-        public RecorderService(IRecordedItemService recordedItemService)
+        public RecorderService(
+            IRecordedItemService recordedItemService,
+            IMediaService mediaService)
         {
             _recordedItemService = recordedItemService;
+            _mediaService = mediaService;
 
             _stopwatch = new Stopwatch();
         }
@@ -85,8 +90,8 @@ namespace RewriteMe.Business.Services
             var filePath = Path.Combine(recordedItem.Path, $"{Guid.NewGuid()}.wav");
             _recorder = new AudioRecorderService
             {
-                StopRecordingAfterTimeout = true,
-                StopRecordingOnSilence = true,
+                StopRecordingAfterTimeout = false,
+                StopRecordingOnSilence = false,
                 TotalAudioTimeout = TimeSpan.FromSeconds(5),
                 FilePath = filePath
             };
@@ -136,21 +141,23 @@ namespace RewriteMe.Business.Services
         {
             using (var stream = _recorder.GetAudioFileStream())
             {
-                var simleResult = await SpeechApiClient
-                    .SpeechToTextSimple(stream, _recorder.AudioStreamDetails.SampleRate, audioRecordTask)
-                    .ConfigureAwait(false);
+                //var simpleResult = await SpeechApiClient
+                //    .SpeechToTextSimple(stream, _recorder.AudioStreamDetails.SampleRate, audioRecordTask)
+                //    .ConfigureAwait(false);
+                await audioRecordTask.ConfigureAwait(false);
+                var simpleResult = new RecognitionSpeechResult { DisplayText = "Text." };
 
                 var recordedAudioFile = new RecordedAudioFile
                 {
                     Id = Guid.NewGuid(),
                     RecordedItemId = RecordedItem.Id,
                     Path = _recorder.FilePath,
-                    Transcript = simleResult.DisplayText,
-                    RecognitionSpeechResult = simleResult,
+                    Transcript = simpleResult.DisplayText,
+                    RecognitionSpeechResult = simpleResult,
                     DateCreated = DateTime.UtcNow
                 };
 
-                OnAudioTranscribed(simleResult.DisplayText);
+                OnAudioTranscribed(simpleResult.DisplayText);
 
                 await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
             }
