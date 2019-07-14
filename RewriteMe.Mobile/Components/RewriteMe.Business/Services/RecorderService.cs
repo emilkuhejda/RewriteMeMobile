@@ -147,12 +147,20 @@ namespace RewriteMe.Business.Services
                 await audioRecordTask.ConfigureAwait(false);
                 var simpleResult = new RecognitionSpeechResult { DisplayText = "Text." };
 
+                byte[] source;
+                using (var memoryStream = new MemoryStream())
+                {
+                    stream.CopyTo(memoryStream);
+                    source = memoryStream.ToArray();
+                }
+
                 var recordedAudioFile = new RecordedAudioFile
                 {
                     Id = Guid.NewGuid(),
                     RecordedItemId = RecordedItem.Id,
                     Path = _recorder.FilePath,
                     Transcript = simpleResult.DisplayText,
+                    Source = source,
                     RecognitionSpeechResult = simpleResult,
                     DateCreated = DateTime.UtcNow
                 };

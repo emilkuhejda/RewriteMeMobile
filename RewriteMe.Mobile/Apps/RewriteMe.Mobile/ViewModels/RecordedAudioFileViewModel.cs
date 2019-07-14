@@ -4,7 +4,6 @@ using System.Windows.Input;
 using Prism.Commands;
 using Prism.Mvvm;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Transcription;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -95,9 +94,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                var filePath = RecordedAudioFile.Path;
-                var bytes = File.ReadAllBytes(filePath);
-                _playerViewModel.Load(bytes);
+                _playerViewModel.Load(RecordedAudioFile.Source);
             }
         }
 
