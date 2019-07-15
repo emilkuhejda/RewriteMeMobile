@@ -9,6 +9,8 @@ namespace RewriteMe.Domain.Transcription
 
         public Guid RecordedItemId { get; set; }
 
+        public string FileName { get; set; }
+
         public string Transcript { get; set; }
 
         public string UserTranscript { get; set; }
@@ -24,5 +26,7 @@ namespace RewriteMe.Domain.Transcription
         public RecognitionSpeechResult RecognitionSpeechResult { get; set; }
 
         public DateTime DateCreated { get; set; }
+
+        public bool IsRecognizing { get; set; }
     }
 }

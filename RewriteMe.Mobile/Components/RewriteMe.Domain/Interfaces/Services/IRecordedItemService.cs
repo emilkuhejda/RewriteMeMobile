@@ -15,13 +15,11 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task InsertAudioFileAsync(RecordedAudioFile recordedAudioFile);
 
+        Task UpdateAudioFileAsync(RecordedAudioFile recordedAudioFile);
+
         Task UpdateAudioFilesAsync(IEnumerable<RecordedAudioFile> recordedAudioFiles);
 
         void CreateDirectory();
-
-        Task ClearAsync();
-
-        void ClearTemporaryFiles();
 
         string GetDirectoryPath();
     }

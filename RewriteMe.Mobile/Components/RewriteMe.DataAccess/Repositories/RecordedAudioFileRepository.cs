@@ -22,6 +22,11 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.InsertAsync(recordedItem.ToRecordedAudioFileEntity()).ConfigureAwait(false);
         }
 
+        public async Task UpdateAsync(RecordedAudioFile recordedItem)
+        {
+            await _contextProvider.Context.UpdateAsync(recordedItem.ToRecordedAudioFileEntity()).ConfigureAwait(false);
+        }
+
         public async Task UpdateAllAsync(IEnumerable<RecordedAudioFile> recordedAudioFiles)
         {
             var entities = recordedAudioFiles.Select(x => x.ToRecordedAudioFileEntity());

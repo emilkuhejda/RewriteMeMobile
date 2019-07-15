@@ -94,7 +94,8 @@ namespace RewriteMe.Business.Services
                 return;
 
             var directoryPath = _recordedItemService.GetDirectoryPath();
-            var filePath = Path.Combine(directoryPath, Path.GetTempFileName());
+            var fileName = Path.GetTempFileName();
+            var filePath = Path.Combine(directoryPath, fileName);
             _recorder = new AudioRecorderService
             {
                 StopRecordingAfterTimeout = true,
@@ -106,7 +107,7 @@ namespace RewriteMe.Business.Services
             _recorder.AudioInputReceived += OnAudioInputReceived;
 
             var audioRecordTask = await _recorder.StartRecording().ConfigureAwait(false);
-            RecognizeAsync(audioRecordTask);
+            RecognizeAsync(audioRecordTask, fileName);
 
             OnStatusChanged();
         }
@@ -118,9 +119,9 @@ namespace RewriteMe.Business.Services
 
             await StopRecordingInternal().ConfigureAwait(false);
 
-            ClearTemporaryFiles();
-
             OnStatusChanged();
+
+            await ProcessAudioFiles().ConfigureAwait(false);
         }
 
         public async Task StopRecordingInternal()
@@ -145,50 +146,71 @@ namespace RewriteMe.Business.Services
             _stopwatch.Stop();
             _stopwatch.Reset();
 
-            ClearTemporaryFiles();
-
             RecordedItem = null;
         }
 
-        private async void RecognizeAsync(Task audioRecordTask)
+        private async void RecognizeAsync(Task audioRecordTask, string fileName)
         {
             using (var stream = _recorder.GetAudioFileStream())
             {
+                var recordedAudioFile = new RecordedAudioFile
+                {
+                    Id = Guid.NewGuid(),
+                    RecordedItemId = RecordedItem.Id,
+                    FileName = fileName,
+                    DateCreated = DateTime.UtcNow,
+                    IsRecognizing = true
+                };
+                _recordedAudioFiles.Add(recordedAudioFile);
+
                 var simpleResult = await SpeechApiClient
                     .SpeechToTextSimple(stream, _recorder.AudioStreamDetails.SampleRate, audioRecordTask)
                     .ConfigureAwait(false);
 
                 OnAudioTranscribed(simpleResult.DisplayText);
 
-                byte[] source;
-                using (var memoryStream = new MemoryStream())
-                {
-                    stream.CopyTo(memoryStream);
-                    source = memoryStream.ToArray();
-                }
+                recordedAudioFile.Transcript = simpleResult.DisplayText;
+                recordedAudioFile.RecognitionSpeechResult = simpleResult;
+                recordedAudioFile.IsRecognizing = false;
 
-                var previousAudioFile = _recordedAudioFiles.LastOrDefault();
-                var filePath = _recorder.FilePath;
+                await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
+            }
+        }
+
+        private async Task ProcessAudioFiles()
+        {
+            while (true)
+            {
+                if (_recordedAudioFiles.All(x => !x.IsRecognizing))
+                    break;
+
+                await Task.Delay(TimeSpan.FromSeconds(0.5)).ConfigureAwait(false);
+            }
+
+            if (!_recordedAudioFiles.Any())
+                return;
+
+            RecordedAudioFile previousAudioFile = null;
+            foreach (var audioFile in _recordedAudioFiles.OrderBy(x => x.DateCreated))
+            {
+                var directoryPath = _recordedItemService.GetDirectoryPath();
+                var filePath = Path.Combine(directoryPath, audioFile.FileName);
                 var totalTime = GetTotalTime(filePath);
                 var startTime = previousAudioFile?.EndTime ?? TimeSpan.FromSeconds(0);
                 var endTime = startTime.Add(totalTime);
 
-                var recordedAudioFile = new RecordedAudioFile
-                {
-                    Id = Guid.NewGuid(),
-                    RecordedItemId = RecordedItem.Id,
-                    Transcript = simpleResult.DisplayText,
-                    StartTime = startTime,
-                    EndTime = endTime,
-                    TotalTime = GetTotalTime(filePath),
-                    Source = source,
-                    RecognitionSpeechResult = simpleResult,
-                    DateCreated = DateTime.UtcNow
-                };
+                audioFile.StartTime = startTime;
+                audioFile.EndTime = endTime;
+                audioFile.TotalTime = totalTime;
+                audioFile.Source = File.ReadAllBytes(filePath);
 
-                await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
-                _recordedAudioFiles.Add(recordedAudioFile);
+                await _recordedItemService.UpdateAudioFileAsync(audioFile).ConfigureAwait(false);
+                File.Delete(filePath);
+
+                previousAudioFile = audioFile;
             }
+
+            _recordedAudioFiles.Clear();
         }
 
         private TimeSpan GetTotalTime(string filePath)
@@ -197,11 +219,6 @@ namespace RewriteMe.Business.Services
                 return _mediaService.GetTotalTime(filePath);
 
             return TimeSpan.FromSeconds(0);
-        }
-
-        private void ClearTemporaryFiles()
-        {
-            _recordedItemService.ClearTemporaryFiles();
         }
 
         private void OnAudioInputReceived(object sender, string e)

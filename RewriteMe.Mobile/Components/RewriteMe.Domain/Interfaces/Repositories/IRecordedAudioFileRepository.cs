@@ -8,6 +8,8 @@ namespace RewriteMe.Domain.Interfaces.Repositories
     {
         Task InsertAsync(RecordedAudioFile recordedItem);
 
+        Task UpdateAsync(RecordedAudioFile recordedItem);
+
         Task UpdateAllAsync(IEnumerable<RecordedAudioFile> recordedAudioFiles);
     }
 }
