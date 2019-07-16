@@ -86,14 +86,6 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        protected override async Task UnloadDataAsync()
-        {
-            if (IsRecording)
-            {
-                await StopRecordingAsync().ConfigureAwait(false);
-            }
-        }
-
         private bool CanExecute()
         {
             return !_isExecuting;
@@ -258,10 +250,15 @@ namespace RewriteMe.Mobile.ViewModels
             return TimeSpan.FromSeconds(0);
         }
 
-        protected override void DisposeInternal()
+        protected override async void DisposeInternal()
         {
             if (_audioRecorder != null)
             {
+                if (IsRecording)
+                {
+                    await StopRecordingAsync().ConfigureAwait(false);
+                }
+
                 _audioRecorder.AudioInputReceived -= OnAudioInputReceived;
                 _audioRecorder = null;
             }
