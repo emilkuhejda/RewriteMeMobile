@@ -27,11 +27,11 @@ namespace RewriteMe.Business.Services
             _recordedAudioFileRepository = recordedAudioFileRepository;
         }
 
-        public async Task<RecordedItem> CreateRecordedItemAsync(Guid fileId)
+        public async Task<RecordedItem> CreateRecordedItemAsync()
         {
             var recordedItem = new RecordedItem
             {
-                Id = fileId,
+                Id = Guid.NewGuid(),
                 DateCreated = DateTime.UtcNow
             };
 

@@ -70,8 +70,14 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected bool IsCurrent => ((RewriteMeNavigationPage)Application.Current.MainPage).CurrentPage.BindingContext.GetType() == GetType();
 
-        public void OnNavigatedFrom(INavigationParameters parameters)
+        public async void OnNavigatedFrom(INavigationParameters parameters)
         {
+            await UnloadDataAsync().ConfigureAwait(false);
+        }
+
+        protected virtual async Task UnloadDataAsync()
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         public async void OnNavigatedTo(INavigationParameters parameters)

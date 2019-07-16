@@ -29,7 +29,6 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<ISynchronizationService, SynchronizationService>();
             containerRegistry.RegisterSingleton<IFileItemService, FileItemService>();
             containerRegistry.RegisterSingleton<IRecordedItemService, RecordedItemService>();
-            containerRegistry.RegisterSingleton<IRecorderService, RecorderService>();
             containerRegistry.RegisterSingleton<IDeletedFileItemService, DeletedFileItemService>();
             containerRegistry.RegisterSingleton<ITranscribeItemService, TranscribeItemService>();
             containerRegistry.RegisterSingleton<ITranscriptAudioSourceService, TranscriptAudioSourceService>();
