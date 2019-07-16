@@ -177,7 +177,7 @@ namespace RewriteMe.Mobile.ViewModels
                     .SpeechToTextSimple(stream, _audioRecorder.AudioStreamDetails.SampleRate, audioRecordTask)
                     .ConfigureAwait(false);
 
-                Text = simpleResult.DisplayText;
+                Text += simpleResult.DisplayText;
 
                 recordedAudioFile.Transcript = simpleResult.DisplayText;
                 recordedAudioFile.RecognitionSpeechResult = simpleResult;
