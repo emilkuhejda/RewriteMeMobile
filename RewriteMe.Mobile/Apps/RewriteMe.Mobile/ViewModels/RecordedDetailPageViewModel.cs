@@ -38,7 +38,8 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
-                    RecordedItem = navigationParameters.GetValue<RecordedItem>();
+                    var recordedItem = navigationParameters.GetValue<RecordedItem>();
+                    RecordedItem = await _recordedItemService.GetAsync(recordedItem.Id).ConfigureAwait(false);
 
                     DetailItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
                     DetailItems = RecordedItem.AudioFiles.OrderBy(x => x.DateCreated).Select(CreateDetailItemViewModel).ToList();

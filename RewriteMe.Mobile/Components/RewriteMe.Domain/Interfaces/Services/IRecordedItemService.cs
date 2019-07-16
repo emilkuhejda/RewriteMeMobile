@@ -11,6 +11,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task DeleteRecordedItemAsync(Guid recordedItemId);
 
+        Task<RecordedItem> GetAsync(Guid recordedItemId);
+
         Task<IEnumerable<RecordedItem>> GetAllAsync();
 
         Task InsertAudioFileAsync(RecordedAudioFile recordedAudioFile);

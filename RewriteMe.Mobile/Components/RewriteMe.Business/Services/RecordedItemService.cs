@@ -44,6 +44,11 @@ namespace RewriteMe.Business.Services
             await _recordedItemRepository.DeleteAsync(recordedItemId).ConfigureAwait(false);
         }
 
+        public async Task<RecordedItem> GetAsync(Guid recordedItemId)
+        {
+            return await _recordedItemRepository.GetAsync(recordedItemId).ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<RecordedItem>> GetAllAsync()
         {
             return await _recordedItemRepository.GetAllAsync().ConfigureAwait(false);

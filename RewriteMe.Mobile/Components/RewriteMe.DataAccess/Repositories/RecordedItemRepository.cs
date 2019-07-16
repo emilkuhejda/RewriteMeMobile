@@ -31,7 +31,7 @@ namespace RewriteMe.DataAccess.Repositories
 
         public async Task<IEnumerable<RecordedItem>> GetAllAsync()
         {
-            var entities = await _contextProvider.Context.GetAllWithChildrenAsync<RecordedItemEntity>(x => true).ConfigureAwait(false);
+            var entities = await _contextProvider.Context.RecordedItems.ToListAsync().ConfigureAwait(false);
             return entities.Select(x => x.ToRecordedItem());
         }
 
