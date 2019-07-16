@@ -24,7 +24,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private readonly IRecordedItemService _recordedItemService;
         private readonly IMediaService _mediaService;
-        private readonly IList<RecordedAudioFile> _recordedAudioFiles;
+        private readonly IList<RecognizedAudioFile> _recognizedAudioFiles;
         private readonly Stopwatch _stopwatch;
 
         private AudioRecorderService _audioRecorder;
@@ -46,7 +46,7 @@ namespace RewriteMe.Mobile.ViewModels
             _recordedItemService = recordedItemService;
             _mediaService = mediaService;
 
-            _recordedAudioFiles = new List<RecordedAudioFile>();
+            _recognizedAudioFiles = new List<RecognizedAudioFile>();
             _stopwatch = new Stopwatch();
 
             CanGoBack = true;
@@ -150,10 +150,10 @@ namespace RewriteMe.Mobile.ViewModels
             _audioRecorder.AudioInputReceived += OnAudioInputReceived;
 
             var audioRecordTask = await _audioRecorder.StartRecording().ConfigureAwait(false);
-            RecognizeAsync(audioRecordTask, fileName, CurrentRecordedItem.Id);
+            RecognizeAsync(audioRecordTask, filePath, CurrentRecordedItem.Id);
         }
 
-        private async void RecognizeAsync(Task audioRecordTask, string fileName, Guid recordedItemId)
+        private async void RecognizeAsync(Task audioRecordTask, string filePath, Guid recordedItemId)
         {
             using (var stream = _audioRecorder.GetAudioFileStream())
             {
@@ -161,11 +161,17 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     Id = Guid.NewGuid(),
                     RecordedItemId = recordedItemId,
-                    FileName = fileName,
-                    DateCreated = DateTime.UtcNow,
+                    DateCreated = DateTime.UtcNow
+                };
+
+                var recognizedAudioFile = new RecognizedAudioFile
+                {
+                    RecordedAudioFile = recordedAudioFile,
+                    FilePath = filePath,
                     IsRecognizing = true
                 };
-                _recordedAudioFiles.Add(recordedAudioFile);
+
+                _recognizedAudioFiles.Add(recognizedAudioFile);
 
                 var simpleResult = await _speechApiClient
                     .SpeechToTextSimple(stream, _audioRecorder.AudioStreamDetails.SampleRate, audioRecordTask)
@@ -175,7 +181,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 recordedAudioFile.Transcript = simpleResult.DisplayText;
                 recordedAudioFile.RecognitionSpeechResult = simpleResult;
-                recordedAudioFile.IsRecognizing = false;
+                recognizedAudioFile.IsRecognizing = false;
 
                 await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
             }
@@ -208,14 +214,14 @@ namespace RewriteMe.Mobile.ViewModels
                 await CheckRecognitionProcess().ConfigureAwait(false);
 
                 RecordedAudioFile previousAudioFile = null;
-                foreach (var audioFile in _recordedAudioFiles.OrderBy(x => x.DateCreated))
+                foreach (var recognizedAudioFile in _recognizedAudioFiles.OrderBy(x => x.RecordedAudioFile.DateCreated))
                 {
-                    var directoryPath = _recordedItemService.GetDirectoryPath();
-                    var filePath = Path.Combine(directoryPath, audioFile.FileName);
+                    var filePath = recognizedAudioFile.FilePath;
                     var totalTime = GetTotalTime(filePath);
                     var startTime = previousAudioFile?.EndTime ?? TimeSpan.FromSeconds(0);
                     var endTime = startTime.Add(totalTime);
 
+                    var audioFile = recognizedAudioFile.RecordedAudioFile;
                     audioFile.StartTime = startTime;
                     audioFile.EndTime = endTime;
                     audioFile.TotalTime = totalTime;
@@ -227,7 +233,7 @@ namespace RewriteMe.Mobile.ViewModels
                     previousAudioFile = audioFile;
                 }
 
-                _recordedAudioFiles.Clear();
+                _recognizedAudioFiles.Clear();
             }
         }
 
@@ -235,7 +241,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             while (true)
             {
-                if (_recordedAudioFiles.All(x => !x.IsRecognizing))
+                if (_recognizedAudioFiles.All(x => !x.IsRecognizing))
                     break;
 
                 await Task.Delay(TimeSpan.FromSeconds(0.5)).ConfigureAwait(false);
@@ -262,6 +268,15 @@ namespace RewriteMe.Mobile.ViewModels
                 _audioRecorder.AudioInputReceived -= OnAudioInputReceived;
                 _audioRecorder = null;
             }
+        }
+
+        private class RecognizedAudioFile
+        {
+            public RecordedAudioFile RecordedAudioFile { get; set; }
+
+            public string FilePath { get; set; }
+
+            public bool IsRecognizing { get; set; }
         }
     }
 }
