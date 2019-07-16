@@ -132,6 +132,7 @@ namespace RewriteMe.Mobile.ViewModels
             CurrentRecordedItem = await _recordedItemService.CreateRecordedItemAsync().ConfigureAwait(false);
             await StartRecordingInternalAsync().ConfigureAwait(false);
 
+            _stopwatch.Reset();
             _stopwatch.Start();
         }
 
