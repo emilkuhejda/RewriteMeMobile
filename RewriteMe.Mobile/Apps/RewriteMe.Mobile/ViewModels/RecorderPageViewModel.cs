@@ -36,7 +36,6 @@ namespace RewriteMe.Mobile.ViewModels
             recorderService.StatusChanged += OnStatusChanged;
 
             RecordCommand = new AsyncCommand(ExecuteRecordCommand, CanExecute);
-            StopRecordingCommand = new AsyncCommand(ExecuteStopRecordingCommand, CanExecute);
         }
 
         public string Text
@@ -58,8 +57,6 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         public ICommand RecordCommand { get; }
-
-        public ICommand StopRecordingCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
@@ -99,15 +96,6 @@ namespace RewriteMe.Mobile.ViewModels
                     await _recorderService.StopRecording().ConfigureAwait(false);
                 }
             }
-
-            _isExecuting = false;
-        }
-
-        private async Task ExecuteStopRecordingCommand()
-        {
-            _isExecuting = true;
-
-            await _recorderService.StopRecording().ConfigureAwait(false);
 
             _isExecuting = false;
         }
