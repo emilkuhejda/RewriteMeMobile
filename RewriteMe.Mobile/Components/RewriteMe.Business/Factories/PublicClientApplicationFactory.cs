@@ -13,10 +13,9 @@ namespace RewriteMe.Business.Factories
             if (redirectUri == null)
                 throw new ArgumentNullException(nameof(redirectUri));
 
-            return new PublicClientApplication(clienId)
-            {
-                RedirectUri = redirectUri
-            };
+            return PublicClientApplicationBuilder.Create(clienId)
+                .WithRedirectUri(redirectUri)
+                .Build();
         }
     }
 }

@@ -107,11 +107,9 @@ namespace RewriteMe.Business.Services
             {
                 try
                 {
-                    var result = await _publicClientApplication.AcquireTokenSilentAsync(
-                        _applicationSettings.Scopes,
-                        user,
-                        authority,
-                        false)
+                    var result = await _publicClientApplication.AcquireTokenSilent(_applicationSettings.Scopes, user)
+                        .WithAuthority(authority)
+                        .ExecuteAsync()
                         .ConfigureAwait(false);
                     return result.IdToken;
                 }
@@ -164,14 +162,12 @@ namespace RewriteMe.Business.Services
             var user = GetUserByPolicy(accounts, policy);
             try
             {
-                var signUpOrInResult = await _publicClientApplication.AcquireTokenAsync(
-                    _applicationSettings.Scopes,
-                    user,
-                    UIBehavior.SelectAccount,
-                    string.Empty,
-                    null,
-                    authority,
-                    uiParent)
+                var signUpOrInResult = await _publicClientApplication
+                    .AcquireTokenInteractive(_applicationSettings.Scopes)
+                    .WithAccount(user)
+                    .WithAuthority(authority)
+                    .WithParentActivityOrWindow(uiParent)
+                    .ExecuteAsync()
                     .ConfigureAwait(false);
 
                 await UpdateUserSessionAndRegisterUserAsync(signUpOrInResult.IdToken).ConfigureAwait(false);
@@ -233,14 +229,11 @@ namespace RewriteMe.Business.Services
             var user = GetUserByPolicy(accounts, _applicationSettings.PolicyEditProfile);
             try
             {
-                var result = await _publicClientApplication.AcquireTokenAsync(
-                        _applicationSettings.Scopes,
-                        user,
-                        UIBehavior.SelectAccount,
-                        string.Empty,
-                        null,
-                        _applicationSettings.AuthorityEditProfile,
-                        uiParent)
+                var result = await _publicClientApplication.AcquireTokenInteractive(_applicationSettings.Scopes)
+                    .WithAccount(user)
+                    .WithAuthority(_applicationSettings.AuthorityEditProfile)
+                    .WithParentActivityOrWindow(uiParent)
+                    .ExecuteAsync()
                     .ConfigureAwait(false);
 
                 await UpdateUserSessionAndRegisterUserAsync(result.IdToken).ConfigureAwait(false);
@@ -263,14 +256,11 @@ namespace RewriteMe.Business.Services
 
             try
             {
-                var result = await _publicClientApplication.AcquireTokenAsync(
-                        _applicationSettings.Scopes,
-                        user,
-                        UIBehavior.SelectAccount,
-                        string.Empty,
-                        null,
-                        _applicationSettings.AuthorityPasswordReset,
-                        uiParent)
+                var result = await _publicClientApplication.AcquireTokenInteractive(_applicationSettings.Scopes)
+                    .WithAccount(user)
+                    .WithAuthority(_applicationSettings.AuthorityPasswordReset)
+                    .WithParentActivityOrWindow(uiParent)
+                    .ExecuteAsync()
                     .ConfigureAwait(false);
 
                 await UpdateUserSessionAndRegisterUserAsync(result.IdToken).ConfigureAwait(false);
