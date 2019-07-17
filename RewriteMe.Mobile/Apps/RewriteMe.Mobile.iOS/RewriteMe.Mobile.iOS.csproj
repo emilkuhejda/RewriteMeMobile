@@ -216,7 +216,7 @@
     </PackageReference>
     <PackageReference Include="Xamarin.Forms" Version="4.1.0.581479" />
     <PackageReference Include="Microsoft.Identity.Client">
-      <Version>2.7.1</Version>
+      <Version>4.1.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
