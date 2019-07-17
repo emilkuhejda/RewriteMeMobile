@@ -43,6 +43,8 @@
         public static string Save => "Save";
         public static string SaveAndTranscribe => "SaveAndTranscribe";
         public static string Transcribe => "Transcribe";
+        public static string AudioFiles => "AudioFiles";
+        public static string RecordedFiles => "RecordedFiles";
         public static string InProgressLabel => "InProgressLabel";
         public static string OneHour => "OneHour";
         public static string TenHours => "TenHours";

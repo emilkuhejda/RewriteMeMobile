@@ -14,7 +14,7 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class ViewModelBase : BindableBase, INavigatedAware, IDisposable
+    public abstract class ViewModelBase : BindableBase, INavigatedAware, IDisposable
     {
         private string _title;
         private bool _hasTitleBar;
@@ -22,7 +22,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool _disposed;
 
-        public ViewModelBase(
+        protected ViewModelBase(
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)

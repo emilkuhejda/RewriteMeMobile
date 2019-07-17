@@ -223,6 +223,12 @@
   <data name="Transcribe" xml:space="preserve">
     <value>Transcribe</value>
   </data>
+  <data name="AudioFiles" xml:space="preserve">
+    <value>Audio files</value>
+  </data>
+  <data name="RecordedFiles" xml:space="preserve">
+    <value>Recorded files</value>
+  </data>
   <data name="InProgressLabel" xml:space="preserve">
     <value>In progress</value>
   </data>

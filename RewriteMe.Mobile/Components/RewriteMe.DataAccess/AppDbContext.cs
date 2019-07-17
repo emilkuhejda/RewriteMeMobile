@@ -86,10 +86,16 @@ namespace RewriteMe.DataAccess
             await Database.DeleteAsync<T>(primaryKey).ConfigureAwait(false);
         }
 
+        public async Task DeleteWithChildrenAsync<T>(object primaryKey) where T : new()
+        {
+            var entity = await GetWithChildrenAsync<T>(primaryKey).ConfigureAwait(false);
+            await Database.DeleteAsync(entity, true).ConfigureAwait(false);
+        }
+
         public async Task DeleteAllAsync<T>() where T : new()
         {
-            var items = await Database.GetAllWithChildrenAsync<T>(recursive: true).ConfigureAwait(false);
-            await Database.DeleteAllAsync(items, true).ConfigureAwait(false);
+            var entities = await Database.GetAllWithChildrenAsync<T>(recursive: true).ConfigureAwait(false);
+            await Database.DeleteAllAsync(entities, true).ConfigureAwait(false);
         }
 
         public async Task InsertOrReplaceAsync(object obj)

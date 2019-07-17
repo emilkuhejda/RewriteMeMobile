@@ -10,7 +10,6 @@
 
 namespace RewriteMe.Resources {
     using System;
-    using System.Reflection;
     
     
     /// <summary>
@@ -40,7 +39,7 @@ namespace RewriteMe.Resources {
         public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RewriteMe.Resources.Presentation", typeof(Presentation).GetTypeInfo().Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("RewriteMe.Resources.Presentation", typeof(Presentation).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -94,6 +93,15 @@ namespace RewriteMe.Resources {
         public static string AppStoreUnavailableErrorMessage {
             get {
                 return ResourceManager.GetString("AppStoreUnavailableErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audio files.
+        /// </summary>
+        public static string AudioFiles {
+            get {
+                return ResourceManager.GetString("AudioFiles", resourceCulture);
             }
         }
         
@@ -364,6 +372,15 @@ namespace RewriteMe.Resources {
         public static string PurchaseWasNotProcessedErrorMessage {
             get {
                 return ResourceManager.GetString("PurchaseWasNotProcessedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recorded files.
+        /// </summary>
+        public static string RecordedFiles {
+            get {
+                return ResourceManager.GetString("RecordedFiles", resourceCulture);
             }
         }
         
