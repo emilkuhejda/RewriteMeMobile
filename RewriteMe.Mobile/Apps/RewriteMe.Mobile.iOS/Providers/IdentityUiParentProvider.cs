@@ -1,13 +1,12 @@
-﻿using Microsoft.Identity.Client;
-using RewriteMe.Domain.Interfaces.Required;
+﻿using RewriteMe.Domain.Interfaces.Required;
 
 namespace RewriteMe.Mobile.iOS.Providers
 {
     public class IdentityUiParentProvider : IIdentityUiParentProvider
     {
-        public UIParent GetUiParent()
+        public object GetUiParent()
         {
-            return new UIParent(true);
+            return null;
         }
     }
 }

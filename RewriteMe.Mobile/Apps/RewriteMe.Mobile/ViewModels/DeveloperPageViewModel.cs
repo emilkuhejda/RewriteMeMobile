@@ -20,7 +20,6 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ILogFileReader _logFileReader;
         private readonly IEmailTask _emailTask;
         private readonly IApplicationSettings _applicationSettings;
-        private readonly IHardwareInfo _hardwareInfo;
 
         private string _logContent;
 
@@ -28,7 +27,6 @@ namespace RewriteMe.Mobile.ViewModels
             ILogFileReader logFileReader,
             IEmailTask emailTask,
             IApplicationSettings applicationSettings,
-            IHardwareInfo hardwareInfo,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
@@ -37,7 +35,6 @@ namespace RewriteMe.Mobile.ViewModels
             _logFileReader = logFileReader;
             _emailTask = emailTask;
             _applicationSettings = applicationSettings;
-            _hardwareInfo = hardwareInfo;
 
             CanGoBack = true;
 
@@ -85,14 +82,15 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (_emailTask.CanSendEmail)
             {
+                var device = CrossDevice.Device;
                 var subject = $"{Loc.Text(TranslationKeys.ApplicationTitleLog)}";
                 var message = new StringBuilder()
                     .AppendLine(LogContent)
                     .AppendLine()
                     .AppendLine()
                     .AppendLine("_______________________________________")
-                    .AppendLine($"Device hardware: {_hardwareInfo.Manufacturer} {_hardwareInfo.Model}")
-                    .AppendLine($"Operating system: {Device.RuntimePlatform} {_hardwareInfo.OperatingSystem}")
+                    .AppendLine($"Device hardware: {device.Manufacturer} {device.Model}")
+                    .AppendLine($"Operating system: {Device.RuntimePlatform} {device.OperatingSystem}")
                     .ToString();
 
                 _emailTask.SendEmail(_applicationSettings.SupportMailAddress, subject, message);
