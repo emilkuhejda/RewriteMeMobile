@@ -24,9 +24,14 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.InsertAsync(recordedItem.ToRecordedItemEntity()).ConfigureAwait(false);
         }
 
+        public async Task DeleteAsync(Guid recordedItemId)
+        {
+            await _contextProvider.Context.DeleteWithChildrenAsync<RecordedItemEntity>(recordedItemId).ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<RecordedItem>> GetAllAsync()
         {
-            var entities = await _contextProvider.Context.GetAllWithChildrenAsync<RecordedItemEntity>(x => true).ConfigureAwait(false);
+            var entities = await _contextProvider.Context.RecordedItems.ToListAsync().ConfigureAwait(false);
             return entities.Select(x => x.ToRecordedItem());
         }
 
@@ -34,6 +39,11 @@ namespace RewriteMe.DataAccess.Repositories
         {
             var entity = await _contextProvider.Context.GetWithChildrenAsync<RecordedItemEntity>(recordedItemId).ConfigureAwait(false);
             return entity.ToRecordedItem();
+        }
+
+        public async Task ClearAsync()
+        {
+            await _contextProvider.Context.DeleteAllAsync<RecordedItemEntity>().ConfigureAwait(false);
         }
     }
 }

@@ -9,8 +9,12 @@ namespace RewriteMe.Domain.Interfaces.Repositories
     {
         Task InsertAsync(RecordedItem recordedItem);
 
+        Task DeleteAsync(Guid recordedItemId);
+
         Task<IEnumerable<RecordedItem>> GetAllAsync();
 
         Task<RecordedItem> GetAsync(Guid recordedItemId);
+
+        Task ClearAsync();
     }
 }

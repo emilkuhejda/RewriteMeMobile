@@ -48,6 +48,8 @@ namespace RewriteMe.DataAccess
 
         Task DeleteAsync<T>(object primaryKey) where T : new();
 
+        Task DeleteWithChildrenAsync<T>(object primaryKey) where T : new();
+
         Task DeleteAllAsync<T>() where T : new();
 
         Task InsertOrReplaceAsync(object obj);

@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.OverviewPage"
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.RecorderOverviewPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
@@ -8,7 +8,7 @@
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.Resources>
-        <DataTemplate x:Key="FileItemsTemplate">
+        <DataTemplate x:Key="RecordedItemsTemplate">
             <ViewCell>
                 <ViewCell.View>
                     <Grid BackgroundColor="White">
@@ -16,34 +16,20 @@
                             <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
                         </Grid.GestureRecognizers>
 
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
+                        <StackLayout Orientation="Horizontal">
+                            <forms:SvgCachedImage Margin="0,5,10,5"
+                                                  Aspect="AspectFit"
+                                                  BackgroundColor="Transparent"
+                                                  HeightRequest="50"
+                                                  InputTransparent="True"
+                                                  Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
+                                                  VerticalOptions="CenterAndExpand" />
 
-                        <StackLayout Grid.Column="0" Padding="0,10,0,10">
                             <Label HeightRequest="30"
                                    Style="{StaticResource LabelStyle}"
-                                   Text="{Binding FileItem.Name}" />
-                            <Frame IsVisible="{Binding IsInProgress}" Style="{StaticResource InProgressBackground}">
-                                <Label FontAttributes="Italic"
-                                       FontSize="{StaticResource MidMediumSize}"
-                                       Style="{StaticResource LabelStyle}"
-                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.InProgressLabel}}"
-                                       TextColor="{StaticResource ColorWhite}" />
-                            </Frame>
+                                   Text="{Binding Title}"
+                                   VerticalOptions="Center" />
                         </StackLayout>
-
-                        <forms:SvgCachedImage Grid.Column="1"
-                                              Margin="0"
-                                              Aspect="AspectFit"
-                                              BackgroundColor="Transparent"
-                                              HeightRequest="40"
-                                              HorizontalOptions="End"
-                                              InputTransparent="True"
-                                              IsVisible="{Binding IsCompleted}"
-                                              Source="resource://RewriteMe.Mobile.Resources.Images.Ok.svg"
-                                              VerticalOptions="CenterAndExpand" />
                     </Grid>
                 </ViewCell.View>
             </ViewCell>
@@ -81,31 +67,8 @@
 
             <ListView Grid.Row="1"
                       HasUnevenRows="True"
-                      ItemTemplate="{StaticResource FileItemsTemplate}"
-                      ItemsSource="{Binding FileItems}" />
-
-            <Grid Grid.Row="1"
-                  Margin="0,0,0,10"
-                  Padding="0"
-                  BackgroundColor="Transparent"
-                  ColumnSpacing="0"
-                  HeightRequest="69"
-                  HorizontalOptions="End"
-                  RowSpacing="0"
-                  VerticalOptions="End"
-                  WidthRequest="69">
-                <forms:SvgCachedImage Margin="0"
-                                      Aspect="AspectFit"
-                                      BackgroundColor="Transparent"
-                                      HeightRequest="60"
-                                      HorizontalOptions="CenterAndExpand"
-                                      InputTransparent="True"
-                                      Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg"
-                                      VerticalOptions="CenterAndExpand" />
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateToCreatePageCommand}" />
-                </Grid.GestureRecognizers>
-            </Grid>
+                      ItemTemplate="{StaticResource RecordedItemsTemplate}"
+                      ItemsSource="{Binding RecordedItems}" />
         </Grid>
 
         <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
