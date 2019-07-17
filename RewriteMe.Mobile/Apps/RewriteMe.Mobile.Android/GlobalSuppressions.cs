@@ -7,3 +7,4 @@ using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "Disposed with caller", Scope = "member", Target = "~M:RewriteMe.Mobile.Droid.SplashActivity.OnCreate(Android.OS.Bundle)")]
 [assembly: SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "By design", Scope = "member", Target = "~M:RewriteMe.Mobile.Droid.Providers.IdentityUiParentProvider.GetUiParent~Microsoft.Identity.Client.UIParent")]
+[assembly: SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "By design", Scope = "member", Target = "~M:RewriteMe.Mobile.Droid.Logging.NLogLoggerConfiguration.Initialize(System.String)")]
