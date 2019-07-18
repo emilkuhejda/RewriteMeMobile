@@ -39,7 +39,6 @@ namespace RewriteMe.Mobile.ViewModels
                     SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
 
                     CanTranscribe = await FileItemService.CanTranscribeAsync(FileItem.TotalTime).ConfigureAwait(false);
-                    ReevaluateNavigationItemIconKeys();
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {

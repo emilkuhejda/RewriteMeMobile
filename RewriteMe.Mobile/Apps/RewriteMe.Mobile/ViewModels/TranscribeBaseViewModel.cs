@@ -24,6 +24,7 @@ namespace RewriteMe.Mobile.ViewModels
         private string _name;
         private SupportedLanguage _selectedLanguage;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
+        private bool _canTranscribe;
 
         protected TranscribeBaseViewModel(
             IFileItemService fileItemService,
@@ -41,7 +42,17 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected IFileItemService FileItemService { get; }
 
-        protected bool CanTranscribe { get; set; }
+        protected bool CanTranscribe
+        {
+            get => _canTranscribe;
+            set
+            {
+                if (SetProperty(ref _canTranscribe, value))
+                {
+                    ReevaluateNavigationItemIconKeys();
+                }
+            }
+        }
 
         public string Name
         {
@@ -77,6 +88,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected abstract Task ExecuteDeleteInternalAsync();
 
+        protected virtual void BeforeExecuteCommand()
+        { }
+
         protected void InitializeNavigationItems()
         {
             TranscribeTileItem = new ActionBarTileViewModel
@@ -91,7 +105,7 @@ namespace RewriteMe.Mobile.ViewModels
             NavigationItems = new[] { TranscribeTileItem };
         }
 
-        protected void ReevaluateNavigationItemIconKeys()
+        private void ReevaluateNavigationItemIconKeys()
         {
             TranscribeTileItem.IsEnabled = CanExecuteTranscribeCommand();
         }
@@ -113,6 +127,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteNavigateToLanguageCommandAsync()
         {
+            BeforeExecuteCommand();
+
             var languages = SupportedLanguages.All.Select(x => new DropDownListViewModel
             {
                 Text = x.Title,
@@ -140,6 +156,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteTranscribeCommandAsync()
         {
+            BeforeExecuteCommand();
+
             using (new OperationMonitor(OperationScope))
             {
                 CanGoBack = false;

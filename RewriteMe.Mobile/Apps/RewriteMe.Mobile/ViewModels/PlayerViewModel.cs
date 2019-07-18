@@ -106,6 +106,19 @@ namespace RewriteMe.Mobile.ViewModels
             IsPlaying = _player.IsPlaying;
         }
 
+        public void Pause()
+        {
+            if (_player == null)
+                return;
+
+            if (!_player.IsPlaying)
+                return;
+
+            _player.Pause();
+
+            IsPlaying = _player.IsPlaying;
+        }
+
         private bool UpdatePosition()
         {
             if (_player == null)
@@ -123,16 +136,14 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void ExecuteStartPauseCommand()
         {
-            if (IsPlaying)
+            if (_player.IsPlaying)
             {
-                _player.Pause();
+                Pause();
             }
             else
             {
                 Play();
             }
-
-            IsPlaying = _player.IsPlaying;
         }
 
         private void HandlePlaybackEnded(object sender, EventArgs e)

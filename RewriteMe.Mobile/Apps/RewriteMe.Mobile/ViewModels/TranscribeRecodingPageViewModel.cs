@@ -49,7 +49,6 @@ namespace RewriteMe.Mobile.ViewModels
                     var filePath = _recordedItemService.GetAudioPath(RecordedItem);
                     _audioTotalTime = _mediaService.GetTotalTime(filePath);
                     CanTranscribe = await FileItemService.CanTranscribeAsync(_audioTotalTime).ConfigureAwait(false);
-                    ReevaluateNavigationItemIconKeys();
 
                     PlayerViewModel.Load(File.ReadAllBytes(filePath));
                 }
@@ -111,6 +110,11 @@ namespace RewriteMe.Mobile.ViewModels
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
             }
+        }
+
+        protected override void BeforeExecuteCommand()
+        {
+            PlayerViewModel.Pause();
         }
 
         protected override void DisposeInternal()
