@@ -40,6 +40,7 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     var recordedItem = navigationParameters.GetValue<RecordedItem>();
                     RecordedItem = await _recordedItemService.GetAsync(recordedItem.Id).ConfigureAwait(false);
+                    Title = RecordedItem.FileName;
 
                     DetailItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
                     DetailItems = RecordedItem.AudioFiles.OrderBy(x => x.DateCreated).Select(CreateDetailItemViewModel).ToList();
@@ -91,7 +92,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override async Task ExecuteDeleteCommandAsync()
         {
-            var title = RecordedItem.DateCreated.ToLocalTime().ToString(Constants.TimeFormat);
+            var title = RecordedItem.FileName;
             var result = await DialogService.ConfirmAsync(
                 Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, title),
                 okText: Loc.Text(TranslationKeys.Ok),

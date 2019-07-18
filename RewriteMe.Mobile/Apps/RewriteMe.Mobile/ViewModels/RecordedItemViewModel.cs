@@ -33,7 +33,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var navigationParameters = new NavigationParameters();
             navigationParameters.Add<RecordedItem>(RecordedItem);
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.RecordedDetail, navigationParameters).ConfigureAwait(false);
+            var pageToNavigate = RecordedItem.IsRecordingOnly ? Pages.TranscribeRecoding : Pages.RecordedDetail;
+            await NavigationService.NavigateWithoutAnimationAsync(pageToNavigate, navigationParameters).ConfigureAwait(false);
         }
     }
 }

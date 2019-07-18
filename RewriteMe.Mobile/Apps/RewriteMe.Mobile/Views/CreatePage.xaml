@@ -7,11 +7,15 @@
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <Grid>
-        <controls:AlwaysScrollView>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <controls:AlwaysScrollView Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
@@ -40,12 +44,13 @@
                         Command="{Binding UploadFileCommand}"
                         Style="{StaticResource ActionButtonStyle}"
                         Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}" />
-
-                <controls:ContextActionBar Grid.Row="2" ItemsSource="{Binding NavigationItems}" />
             </Grid>
         </controls:AlwaysScrollView>
 
+        <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
+
         <controls:PageActivityIndicator Grid.Row="0"
+                                        Grid.RowSpan="2"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
                                         IsVisible="{Binding OperationScope.IsBusy}" />
     </Grid>

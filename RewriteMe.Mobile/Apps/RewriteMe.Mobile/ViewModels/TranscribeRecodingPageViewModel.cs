@@ -1,29 +1,33 @@
-﻿using System.Linq;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
-using RewriteMe.Mobile.Transcription;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class TranscribePageViewModel : TranscribeBaseViewModel
+    public class TranscribeRecodingPageViewModel : TranscribeBaseViewModel
     {
-        public TranscribePageViewModel(
+        private readonly IRecordedItemService _recordedItemService;
+        private readonly IMediaService _mediaService;
+
+        public TranscribeRecodingPageViewModel(
+            IRecordedItemService recordedItemService,
+            IMediaService mediaService,
             IFileItemService fileItemService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(fileItemService, dialogService, navigationService, loggerFactory)
         {
+            _recordedItemService = recordedItemService;
+            _mediaService = mediaService;
         }
-
-        private FileItem FileItem { get; set; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
@@ -33,12 +37,13 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
-                    FileItem = navigationParameters.GetValue<FileItem>();
-                    Title = FileItem.Name;
-                    Name = FileItem.Name;
-                    SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
+                    RecordedItem = navigationParameters.GetValue<RecordedItem>();
+                    Title = RecordedItem.FileName;
+                    Name = RecordedItem.FileName;
 
-                    CanTranscribe = await FileItemService.CanTranscribeAsync(FileItem.TotalTime).ConfigureAwait(false);
+                    var filePath = Path.Combine(_recordedItemService.GetDirectoryPath(), RecordedItem.AudioFileName);
+                    var audioTotalTime = _mediaService.GetTotalTime(filePath);
+                    CanTranscribe = await FileItemService.CanTranscribeAsync(audioTotalTime).ConfigureAwait(false);
                     ReevaluateNavigationItemIconKeys();
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
@@ -46,19 +51,23 @@ namespace RewriteMe.Mobile.ViewModels
                     var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
                     HandleSelectionAsync(dropDownListViewModel);
                 }
+
+                await Task.CompletedTask.ConfigureAwait(false);
             }
         }
 
+        protected RecordedItem RecordedItem { get; set; }
+
         protected override async Task ExecuteTranscribeInternalAsync()
         {
-            await FileItemService.TranscribeAsync(FileItem.Id, SelectedLanguage.Culture).ConfigureAwait(false);
-            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         protected override async Task ExecuteDeleteInternalAsync()
         {
+            var title = RecordedItem.FileName;
             var result = await DialogService.ConfirmAsync(
-                Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, FileItem.Name),
+                Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, title),
                 okText: Loc.Text(TranslationKeys.Ok),
                 cancelText: Loc.Text(TranslationKeys.Cancel)).ConfigureAwait(false);
 
@@ -66,7 +75,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 using (new OperationMonitor(OperationScope))
                 {
-                    await FileItemService.DeleteAsync(FileItem).ConfigureAwait(false);
+                    await _recordedItemService.DeleteRecordedItemAsync(RecordedItem).ConfigureAwait(false);
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
             }
