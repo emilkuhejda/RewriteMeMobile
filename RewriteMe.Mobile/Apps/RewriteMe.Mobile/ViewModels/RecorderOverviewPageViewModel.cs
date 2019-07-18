@@ -44,13 +44,15 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                var items = await _recordedItemService.GetAllAsync().ConfigureAwait(false);
+                var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
+                var items = await _recordedItemService.GetAllAsync(userId).ConfigureAwait(false);
                 RecordedItems = items
                     .OrderByDescending(x => x.DateCreated)
                     .Select(x => new RecordedItemViewModel(x, NavigationService))
                     .ToList();
 
                 IsNotUserRegistrationSuccess = !await InternalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
+                NotAvailableData = !RecordedItems.Any();
 
                 InitializeNavigation(false);
             }

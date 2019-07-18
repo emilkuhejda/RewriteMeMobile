@@ -13,7 +13,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<RecordedItem> GetAsync(Guid recordedItemId);
 
-        Task<IEnumerable<RecordedItem>> GetAllAsync();
+        Task<IEnumerable<RecordedItem>> GetAllAsync(Guid userId);
 
         Task InsertAudioFileAsync(RecordedAudioFile recordedAudioFile);
 

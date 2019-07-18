@@ -7,6 +7,8 @@ namespace RewriteMe.Domain.Transcription
     {
         public Guid Id { get; set; }
 
+        public Guid UserId { get; set; }
+
         public bool IsRecordingOnly { get; set; }
 
         public string FileName { get; set; }

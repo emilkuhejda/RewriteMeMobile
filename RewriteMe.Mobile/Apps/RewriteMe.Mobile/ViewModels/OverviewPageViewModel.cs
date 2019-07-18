@@ -68,9 +68,10 @@ namespace RewriteMe.Mobile.ViewModels
                     }
                 }
 
-                IsNotUserRegistrationSuccess = !await InternalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
-
                 await InitializeFileItems().ConfigureAwait(false);
+
+                IsNotUserRegistrationSuccess = !await InternalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
+                NotAvailableData = !FileItems.Any();
 
                 InitializeNavigation(true);
             }

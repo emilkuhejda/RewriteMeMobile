@@ -12,6 +12,7 @@ namespace RewriteMe.DataAccess.DataAdapters
             return new RecordedItem
             {
                 Id = entity.Id,
+                UserId = entity.UserId,
                 IsRecordingOnly = entity.IsRecordingOnly,
                 FileName = entity.FileName,
                 DateCreated = new DateTimeOffset(entity.DateCreated, entity.DateCreatedOffset),
@@ -24,6 +25,7 @@ namespace RewriteMe.DataAccess.DataAdapters
             return new RecordedItemEntity
             {
                 Id = recordedItem.Id,
+                UserId = recordedItem.UserId,
                 IsRecordingOnly = recordedItem.IsRecordingOnly,
                 FileName = recordedItem.FileName,
                 DateCreated = recordedItem.DateCreated.DateTime,

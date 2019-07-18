@@ -79,6 +79,14 @@
                 </Label>
             </Grid>
 
+            <Label Grid.Row="1"
+                   FontAttributes="Italic"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding NotAvailableData}"
+                   Style="{StaticResource LabelStyle}"
+                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
+                   VerticalOptions="Start" />
+
             <ListView Grid.Row="1"
                       HasUnevenRows="True"
                       ItemTemplate="{StaticResource FileItemsTemplate}"

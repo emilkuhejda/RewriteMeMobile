@@ -11,7 +11,7 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task DeleteAsync(Guid recordedItemId);
 
-        Task<IEnumerable<RecordedItem>> GetAllAsync();
+        Task<IEnumerable<RecordedItem>> GetAllAsync(Guid userId);
 
         Task<RecordedItem> GetAsync(Guid recordedItemId);
 

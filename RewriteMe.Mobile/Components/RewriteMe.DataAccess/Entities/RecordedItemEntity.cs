@@ -9,6 +9,8 @@ namespace RewriteMe.DataAccess.Entities
         [PrimaryKey]
         public Guid Id { get; set; }
 
+        public Guid UserId { get; set; }
+
         public bool IsRecordingOnly { get; set; }
 
         [MaxLength(100)]

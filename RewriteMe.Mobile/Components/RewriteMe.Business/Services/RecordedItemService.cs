@@ -13,15 +13,18 @@ namespace RewriteMe.Business.Services
     {
         private const string DirectoryName = "Recordings";
 
+        private readonly IUserSessionService _userSessionService;
         private readonly IDirectoryProvider _directoryProvider;
         private readonly IRecordedItemRepository _recordedItemRepository;
         private readonly IRecordedAudioFileRepository _recordedAudioFileRepository;
 
         public RecordedItemService(
+            IUserSessionService userSessionService,
             IDirectoryProvider directoryProvider,
             IRecordedItemRepository recordedItemRepository,
             IRecordedAudioFileRepository recordedAudioFileRepository)
         {
+            _userSessionService = userSessionService;
             _directoryProvider = directoryProvider;
             _recordedItemRepository = recordedItemRepository;
             _recordedAudioFileRepository = recordedAudioFileRepository;
@@ -29,9 +32,11 @@ namespace RewriteMe.Business.Services
 
         public async Task<RecordedItem> CreateRecordedItemAsync(bool isRecordingOnly)
         {
+            var userSession = await _userSessionService.GetUserSessionAsync().ConfigureAwait(false);
             var recordedItem = new RecordedItem
             {
                 Id = Guid.NewGuid(),
+                UserId = userSession.ObjectId,
                 FileName = DateTime.UtcNow.ToString("dd-MM-yyyy_HH_mm_ss"),
                 IsRecordingOnly = isRecordingOnly,
                 DateCreated = DateTime.UtcNow
@@ -57,9 +62,9 @@ namespace RewriteMe.Business.Services
             return await _recordedItemRepository.GetAsync(recordedItemId).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<RecordedItem>> GetAllAsync()
+        public async Task<IEnumerable<RecordedItem>> GetAllAsync(Guid userId)
         {
-            return await _recordedItemRepository.GetAllAsync().ConfigureAwait(false);
+            return await _recordedItemRepository.GetAllAsync(userId).ConfigureAwait(false);
         }
 
         public async Task InsertAudioFileAsync(RecordedAudioFile recordedAudioFile)
