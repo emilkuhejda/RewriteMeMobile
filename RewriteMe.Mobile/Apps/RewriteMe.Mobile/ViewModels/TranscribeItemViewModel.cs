@@ -94,6 +94,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 PlayerViewModel.Load(source);
+                PlayerViewModel.Play();
             }
         }
 

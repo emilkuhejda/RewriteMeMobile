@@ -27,6 +27,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _recordedItemService = recordedItemService;
             _mediaService = mediaService;
+
+            PlayerViewModel = new PlayerViewModel();
         }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
@@ -45,6 +47,8 @@ namespace RewriteMe.Mobile.ViewModels
                     var audioTotalTime = _mediaService.GetTotalTime(filePath);
                     CanTranscribe = await FileItemService.CanTranscribeAsync(audioTotalTime).ConfigureAwait(false);
                     ReevaluateNavigationItemIconKeys();
+
+                    PlayerViewModel.Load(File.ReadAllBytes(filePath));
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {
@@ -55,6 +59,8 @@ namespace RewriteMe.Mobile.ViewModels
                 await Task.CompletedTask.ConfigureAwait(false);
             }
         }
+
+        public PlayerViewModel PlayerViewModel { get; }
 
         protected RecordedItem RecordedItem { get; set; }
 
@@ -79,6 +85,11 @@ namespace RewriteMe.Mobile.ViewModels
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
             }
+        }
+
+        protected override void DisposeInternal()
+        {
+            PlayerViewModel?.Dispose();
         }
     }
 }

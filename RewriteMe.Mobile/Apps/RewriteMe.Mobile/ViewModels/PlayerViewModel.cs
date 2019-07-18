@@ -90,11 +90,19 @@ namespace RewriteMe.Mobile.ViewModels
 
             Duration = _player.Duration;
             TotalTime = TimeSpan.FromSeconds(Duration);
+            IsVisible = true;
+            IsPlaying = _player.IsPlaying;
+        }
+
+        public void Play()
+        {
+            if (_player == null)
+                throw new InvalidOperationException("Recorder is not loaded");
+
             Device.StartTimer(TimeSpan.FromSeconds(0.5), UpdatePosition);
 
             _player.Play();
 
-            IsVisible = true;
             IsPlaying = _player.IsPlaying;
         }
 
@@ -121,7 +129,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             else
             {
-                _player.Play();
+                Play();
             }
 
             IsPlaying = _player.IsPlaying;
