@@ -231,5 +231,13 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         Task<HttpOperationResponse<object>> CreateUserSubscriptionWithHttpMessagesAsync(BillingPurchase billingPurchase = default(BillingPurchase), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<SpeechConfiguration>> GetSpeechConfigurationWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
     }
 }
