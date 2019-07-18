@@ -37,5 +37,9 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<HttpRequestResult<byte[]>> GetTranscribeAudioSourceAsync(Guid transcribeItemId);
 
         Task<HttpRequestResult<Ok>> UpdateUserTranscriptAsync(Guid transcribeItemId, string transcript);
+
+        Task<HttpRequestResult<Ok>> CreateSpeechResultAsync(Guid recognizedAudioSampleId, string displayText);
+
+        Task<HttpRequestResult<Ok>> UpdateSpeechResultsAsync(IList<SpeechResultModel> speechResults);
     }
 }

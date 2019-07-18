@@ -333,6 +333,62 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='recognizedAudioSampleId'>
+            /// </param>
+            /// <param name='displayText'>
+            /// </param>
+            public static Ok CreateSpeechResult(this IRewriteMeAPI operations, System.Guid? recognizedAudioSampleId = default(System.Guid?), string displayText = default(string))
+            {
+                return operations.CreateSpeechResultAsync(recognizedAudioSampleId, displayText).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='recognizedAudioSampleId'>
+            /// </param>
+            /// <param name='displayText'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Ok> CreateSpeechResultAsync(this IRewriteMeAPI operations, System.Guid? recognizedAudioSampleId = default(System.Guid?), string displayText = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateSpeechResultWithHttpMessagesAsync(recognizedAudioSampleId, displayText, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='speechResultModels'>
+            /// </param>
+            public static Ok UpdateSpeechResults(this IRewriteMeAPI operations, IList<SpeechResultModel> speechResultModels = default(IList<SpeechResultModel>))
+            {
+                return operations.UpdateSpeechResultsAsync(speechResultModels).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='speechResultModels'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Ok> UpdateSpeechResultsAsync(this IRewriteMeAPI operations, IList<SpeechResultModel> speechResultModels = default(IList<SpeechResultModel>), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateSpeechResultsWithHttpMessagesAsync(speechResultModels, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='updatedAfter'>
             /// </param>
             /// <param name='applicationId'>

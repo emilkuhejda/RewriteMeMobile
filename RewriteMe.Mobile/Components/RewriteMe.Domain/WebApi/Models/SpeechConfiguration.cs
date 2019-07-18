@@ -22,10 +22,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the SpeechConfiguration class.
         /// </summary>
-        public SpeechConfiguration(string subscriptionKey = default(string), string speechRegion = default(string))
+        public SpeechConfiguration(string subscriptionKey = default(string), string speechRegion = default(string), System.Guid? audioSampleId = default(System.Guid?), string subscriptionRemainingTime = default(string))
         {
             SubscriptionKey = subscriptionKey;
             SpeechRegion = speechRegion;
+            AudioSampleId = audioSampleId;
+            SubscriptionRemainingTime = subscriptionRemainingTime;
             CustomInit();
         }
 
@@ -43,6 +45,16 @@ namespace RewriteMe.Domain.WebApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "speechRegion")]
         public string SpeechRegion { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "audioSampleId")]
+        public System.Guid? AudioSampleId { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "subscriptionRemainingTime")]
+        public string SubscriptionRemainingTime { get; set; }
 
     }
 }
