@@ -7,13 +7,13 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IRecordedItemService
     {
-        Task<RecordedItem> CreateRecordedItemAsync();
+        Task<RecordedItem> CreateRecordedItemAsync(bool isRecordingOnly);
 
-        Task DeleteRecordedItemAsync(Guid recordedItemId);
+        Task DeleteRecordedItemAsync(RecordedItem recordedItem);
 
         Task<RecordedItem> GetAsync(Guid recordedItemId);
 
-        Task<IEnumerable<RecordedItem>> GetAllAsync();
+        Task<IEnumerable<RecordedItem>> GetAllAsync(Guid userId);
 
         Task InsertAudioFileAsync(RecordedAudioFile recordedAudioFile);
 
@@ -24,5 +24,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         void CreateDirectory();
 
         string GetDirectoryPath();
+
+        string GetAudioPath(RecordedItem recordedItem);
     }
 }

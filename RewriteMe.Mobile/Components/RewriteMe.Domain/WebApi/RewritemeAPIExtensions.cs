@@ -506,5 +506,27 @@ namespace RewriteMe.Domain.WebApi
                 }
             }
 
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static SpeechConfiguration GetSpeechConfiguration(this IRewriteMeAPI operations)
+            {
+                return operations.GetSpeechConfigurationAsync().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<SpeechConfiguration> GetSpeechConfigurationAsync(this IRewriteMeAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSpeechConfigurationWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
     }
 }

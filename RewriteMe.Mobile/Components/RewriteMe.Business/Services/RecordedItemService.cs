@@ -13,25 +13,32 @@ namespace RewriteMe.Business.Services
     {
         private const string DirectoryName = "Recordings";
 
+        private readonly IUserSessionService _userSessionService;
         private readonly IDirectoryProvider _directoryProvider;
         private readonly IRecordedItemRepository _recordedItemRepository;
         private readonly IRecordedAudioFileRepository _recordedAudioFileRepository;
 
         public RecordedItemService(
+            IUserSessionService userSessionService,
             IDirectoryProvider directoryProvider,
             IRecordedItemRepository recordedItemRepository,
             IRecordedAudioFileRepository recordedAudioFileRepository)
         {
+            _userSessionService = userSessionService;
             _directoryProvider = directoryProvider;
             _recordedItemRepository = recordedItemRepository;
             _recordedAudioFileRepository = recordedAudioFileRepository;
         }
 
-        public async Task<RecordedItem> CreateRecordedItemAsync()
+        public async Task<RecordedItem> CreateRecordedItemAsync(bool isRecordingOnly)
         {
+            var userSession = await _userSessionService.GetUserSessionAsync().ConfigureAwait(false);
             var recordedItem = new RecordedItem
             {
                 Id = Guid.NewGuid(),
+                UserId = userSession.ObjectId,
+                FileName = DateTime.UtcNow.ToString("dd-MM-yyyy_HH_mm_ss"),
+                IsRecordingOnly = isRecordingOnly,
                 DateCreated = DateTime.UtcNow
             };
 
@@ -39,9 +46,15 @@ namespace RewriteMe.Business.Services
             return recordedItem;
         }
 
-        public async Task DeleteRecordedItemAsync(Guid recordedItemId)
+        public async Task DeleteRecordedItemAsync(RecordedItem recordedItem)
         {
-            await _recordedItemRepository.DeleteAsync(recordedItemId).ConfigureAwait(false);
+            await _recordedItemRepository.DeleteAsync(recordedItem.Id).ConfigureAwait(false);
+
+            var filePath = GetAudioPath(recordedItem);
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
         }
 
         public async Task<RecordedItem> GetAsync(Guid recordedItemId)
@@ -49,9 +62,9 @@ namespace RewriteMe.Business.Services
             return await _recordedItemRepository.GetAsync(recordedItemId).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<RecordedItem>> GetAllAsync()
+        public async Task<IEnumerable<RecordedItem>> GetAllAsync(Guid userId)
         {
-            return await _recordedItemRepository.GetAllAsync().ConfigureAwait(false);
+            return await _recordedItemRepository.GetAllAsync(userId).ConfigureAwait(false);
         }
 
         public async Task InsertAudioFileAsync(RecordedAudioFile recordedAudioFile)
@@ -82,6 +95,14 @@ namespace RewriteMe.Business.Services
         {
             var directory = _directoryProvider.GetPath();
             return Path.Combine(directory, DirectoryName);
+        }
+
+        public string GetAudioPath(RecordedItem recordedItem)
+        {
+            if (!recordedItem.IsRecordingOnly)
+                return null;
+
+            return Path.Combine(GetDirectoryPath(), recordedItem.AudioFileName);
         }
     }
 }
