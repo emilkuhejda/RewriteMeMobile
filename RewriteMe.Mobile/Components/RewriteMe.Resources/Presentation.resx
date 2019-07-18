@@ -241,6 +241,9 @@
   <data name="PromptDeleteFileItemMessage" xml:space="preserve">
     <value>Do you really want to delete file '{0}'?</value>
   </data>
+  <data name="RecordingOnly" xml:space="preserve">
+    <value>Recording only</value>
+  </data>
   
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>

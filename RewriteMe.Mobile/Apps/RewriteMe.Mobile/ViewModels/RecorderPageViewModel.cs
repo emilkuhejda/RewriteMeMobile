@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.AudioRecorder;
+using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
@@ -33,6 +34,7 @@ namespace RewriteMe.Mobile.ViewModels
         private string _text;
         private string _recordingTime;
         private bool _isRecording;
+        private bool _isRecordingOnly;
         private bool _isExecuting;
 
         public RecorderPageViewModel(
@@ -51,6 +53,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             CanGoBack = true;
 
+            RecordingOnlyClickCommand = new DelegateCommand(ExecuteRecordingOnlyClickCommand);
             RecordCommand = new AsyncCommand(ExecuteRecordCommand, CanExecute);
         }
 
@@ -74,6 +77,14 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _isRecording, value);
         }
 
+        public bool IsRecordingOnly
+        {
+            get => _isRecordingOnly;
+            set => SetProperty(ref _isRecordingOnly, value);
+        }
+
+        public ICommand RecordingOnlyClickCommand { get; }
+
         public ICommand RecordCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
@@ -86,6 +97,11 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        private void ExecuteRecordingOnlyClickCommand()
+        {
+            IsRecordingOnly = !IsRecordingOnly;
+        }
+
         private bool CanExecute()
         {
             return !_isExecuting;
@@ -96,6 +112,8 @@ namespace RewriteMe.Mobile.ViewModels
             _isExecuting = true;
 
             Device.StartTimer(TimeSpan.FromSeconds(0.5), UpdateTimer);
+
+            Text = string.Empty;
 
             if (IsRecording)
             {

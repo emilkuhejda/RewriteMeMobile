@@ -11,16 +11,28 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="0"
-               Margin="20,20,20,20"
-               HorizontalOptions="CenterAndExpand"
-               LineBreakMode="WordWrap"
-               Text="{Binding Text}"
-               VerticalOptions="Start" />
+        <ScrollView Grid.Row="0" Margin="20,20,20,20">
+            <Label HorizontalOptions="CenterAndExpand"
+                   LineBreakMode="WordWrap"
+                   Text="{Binding Text}"
+                   VerticalOptions="Start" />
+        </ScrollView>
 
-        <Grid Grid.Row="1">
+        <StackLayout Grid.Row="1"
+                     Margin="20,0,20,20"
+                     Orientation="Horizontal">
+            <CheckBox Margin="0,0,10,0" IsChecked="{Binding IsRecordingOnly}" />
+            <Label Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding RecordingOnlyClickCommand}" />
+                </Label.GestureRecognizers>
+            </Label>
+        </StackLayout>
+
+        <Grid Grid.Row="2">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="*" />

@@ -385,6 +385,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recording only.
+        /// </summary>
+        public static string RecordingOnly {
+            get {
+                return ResourceManager.GetString("RecordingOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register or sign in.
         /// </summary>
         public static string RegisterOrSignIn {
