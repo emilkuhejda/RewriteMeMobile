@@ -9,11 +9,13 @@ using Plugin.AudioRecorder;
 using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
+using RewriteMe.Resources.Localization;
 using Xamarin.Cognitive.Speech;
 using Xamarin.Forms;
 
@@ -25,6 +27,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private readonly IRecordedItemService _recordedItemService;
         private readonly IMediaService _mediaService;
+        private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IList<RecognizedAudioFile> _recognizedAudioFiles;
         private readonly Stopwatch _stopwatch;
 
@@ -40,6 +43,7 @@ namespace RewriteMe.Mobile.ViewModels
         public RecorderPageViewModel(
             IRecordedItemService recordedItemService,
             IMediaService mediaService,
+            IRewriteMeWebService rewriteMeWebService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
@@ -47,6 +51,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _recordedItemService = recordedItemService;
             _mediaService = mediaService;
+            _rewriteMeWebService = rewriteMeWebService;
 
             _recognizedAudioFiles = new List<RecognizedAudioFile>();
             _stopwatch = new Stopwatch();
@@ -87,16 +92,6 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand RecordCommand { get; }
 
-        protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
-        {
-            using (new OperationMonitor(OperationScope))
-            {
-                _speechApiClient = new SpeechApiClient("471ab4db87064a9db2ad428c64d82b0d", SpeechRegion.WestEurope);
-
-                await Task.CompletedTask.ConfigureAwait(false);
-            }
-        }
-
         private bool CanExecuteRecordingOnlyClickCommand()
         {
             return !IsRecording;
@@ -126,10 +121,40 @@ namespace RewriteMe.Mobile.ViewModels
             }
             else
             {
+                if (!IsRecordingOnly)
+                {
+                    await InitializeSpeechApiClient().ConfigureAwait(false);
+                    if (_speechApiClient == null)
+                    {
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.SpeechClientNotInitializedErrorMessage)).ConfigureAwait(false);
+                        _isExecuting = false;
+                        return;
+                    }
+                }
+
                 await StartRecordingAsync(IsRecordingOnly).ConfigureAwait(false);
             }
 
             _isExecuting = false;
+        }
+
+        private async Task InitializeSpeechApiClient()
+        {
+            if (_speechApiClient != null)
+                return;
+
+            using (new OperationMonitor(OperationScope))
+            {
+                var httpRequestResult = await _rewriteMeWebService.GetSpeechConfigurationAsync().ConfigureAwait(false);
+                if (httpRequestResult.State == HttpRequestState.Success)
+                {
+                    var speechConfiguration = httpRequestResult.Payload;
+                    var subscriptionKey = speechConfiguration.SubscriptionKey;
+                    var speechRegion = EnumHelper.Parse(speechConfiguration.SpeechRegion, SpeechRegion.WestEurope);
+
+                    _speechApiClient = new SpeechApiClient(subscriptionKey, speechRegion);
+                }
+            }
         }
 
         private bool UpdateTimer()

@@ -71,7 +71,7 @@
         </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"
-                                        Grid.RowSpan="2"
+                                        Grid.RowSpan="3"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
                                         IsVisible="{Binding OperationScope.IsBusy}" />
     </Grid>

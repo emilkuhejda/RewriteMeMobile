@@ -547,6 +547,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Connection was not established. Please, try it later..
+        /// </summary>
+        public static string SpeechClientNotInitializedErrorMessage {
+            get {
+                return ResourceManager.GetString("SpeechClientNotInitializedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subscriptions.
         /// </summary>
         public static string Subscriptions {
