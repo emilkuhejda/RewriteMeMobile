@@ -25,6 +25,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         public string Title => RecordedItem.DateCreated.ToLocalTime().ToString(Constants.TimeFormat);
 
+        public bool IsRecordingOnly => RecordedItem.IsRecordingOnly;
+
         public ICommand NavigateToDetailPageCommand { get; }
 
         private async Task ExecuteNavigateToDetailPageCommandAsync()

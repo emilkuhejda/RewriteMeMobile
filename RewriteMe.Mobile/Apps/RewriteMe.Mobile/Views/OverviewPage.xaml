@@ -25,7 +25,7 @@
                             <Label HeightRequest="30"
                                    Style="{StaticResource LabelStyle}"
                                    Text="{Binding FileItem.Name}" />
-                            <Frame IsVisible="{Binding IsInProgress}" Style="{StaticResource InProgressBackground}">
+                            <Frame IsVisible="{Binding IsInProgress}" Style="{StaticResource InfoTileBackground}">
                                 <Label FontAttributes="Italic"
                                        FontSize="{StaticResource MidMediumSize}"
                                        Style="{StaticResource LabelStyle}"

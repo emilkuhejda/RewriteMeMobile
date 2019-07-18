@@ -25,10 +25,19 @@
                                                   Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
                                                   VerticalOptions="CenterAndExpand" />
 
-                            <Label HeightRequest="30"
-                                   Style="{StaticResource LabelStyle}"
-                                   Text="{Binding Title}"
-                                   VerticalOptions="Center" />
+                            <StackLayout Padding="0,10,0,10">
+                                <Label HeightRequest="30"
+                                       Style="{StaticResource LabelStyle}"
+                                       Text="{Binding Title}"
+                                       VerticalOptions="Center" />
+                                <Frame IsVisible="{Binding IsRecordingOnly}" Style="{StaticResource InfoTileBackground}">
+                                    <Label FontAttributes="Italic"
+                                           FontSize="{StaticResource MidMediumSize}"
+                                           Style="{StaticResource LabelStyle}"
+                                           Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}"
+                                           TextColor="{StaticResource ColorWhite}" />
+                                </Frame>
+                            </StackLayout>
                         </StackLayout>
                     </Grid>
                 </ViewCell.View>
