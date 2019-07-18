@@ -49,6 +49,9 @@
         public static string OneHour => "OneHour";
         public static string TenHours => "TenHours";
         public static string PromptDeleteFileItemMessage => "PromptDeleteFileItemMessage";
+        public static string RecordingOnly => "RecordingOnly";
+        public static string RemainingTime => "RemainingTime";
+        public static string NoAvailableData => "NoAvailableData";
 
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
         public static string OfflineErrorMessage => "OfflineErrorMessage";
@@ -58,8 +61,7 @@
         public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
         public static string NotEnoughFreeMinutesInSubscriptionErrorMessage => "NotEnoughFreeMinutesInSubscriptionErrorMessage";
         public static string TranscribeAudioSourceNotFoundErrorMessage => "TranscribeAudioSourceNotFoundErrorMessage";
-        public static string RemainingTime => "RemainingTime";
-        public static string NoAvailableData => "NoAvailableData";
+        public static string SpeechClientNotInitializedErrorMessage => "SpeechClientNotInitializedErrorMessage";
         public static string SubscriptionWasSuccessfullyPurchased => "SubscriptionWasSuccessfullyPurchased";
         public static string AppStoreUnavailableErrorMessage => "AppStoreUnavailableErrorMessage";
         public static string BillingUnavailableErrorMessage => "BillingUnavailableErrorMessage";

@@ -241,6 +241,15 @@
   <data name="PromptDeleteFileItemMessage" xml:space="preserve">
     <value>Do you really want to delete file '{0}'?</value>
   </data>
+  <data name="RecordingOnly" xml:space="preserve">
+    <value>Recording only</value>
+  </data>
+  <data name="RemainingTime" xml:space="preserve">
+    <value>Remaining time</value>
+  </data>
+  <data name="NoAvailableData" xml:space="preserve">
+    <value>No available data</value>
+  </data>
   
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>
@@ -266,11 +275,8 @@
   <data name="TranscribeAudioSourceNotFoundErrorMessage" xml:space="preserve">
     <value>Transcribe audio source not found. Please, check your internet connection.</value>
   </data>
-  <data name="RemainingTime" xml:space="preserve">
-    <value>Remaining time</value>
-  </data>
-  <data name="NoAvailableData" xml:space="preserve">
-    <value>No available data</value>
+  <data name="SpeechClientNotInitializedErrorMessage" xml:space="preserve">
+    <value>Connection was not established. Please, try it later.</value>
   </data>
   <data name="SubscriptionWasSuccessfullyPurchased" xml:space="preserve">
     <value>Subscription was successfully purchased.</value>

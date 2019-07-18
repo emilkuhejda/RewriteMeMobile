@@ -45,6 +45,7 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 PlayerViewModel.Load(DetailItem.Source);
+                PlayerViewModel.Play();
             }
 
             await Task.CompletedTask.ConfigureAwait(false);

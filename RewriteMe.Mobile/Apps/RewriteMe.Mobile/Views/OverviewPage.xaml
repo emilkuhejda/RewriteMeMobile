@@ -25,7 +25,7 @@
                             <Label HeightRequest="30"
                                    Style="{StaticResource LabelStyle}"
                                    Text="{Binding FileItem.Name}" />
-                            <Frame IsVisible="{Binding IsInProgress}" Style="{StaticResource InProgressBackground}">
+                            <Frame IsVisible="{Binding IsInProgress}" Style="{StaticResource InfoTileBackground}">
                                 <Label FontAttributes="Italic"
                                        FontSize="{StaticResource MidMediumSize}"
                                        Style="{StaticResource LabelStyle}"
@@ -78,6 +78,14 @@
                     </Label.GestureRecognizers>
                 </Label>
             </Grid>
+
+            <Label Grid.Row="1"
+                   FontAttributes="Italic"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding NotAvailableData}"
+                   Style="{StaticResource LabelStyle}"
+                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
+                   VerticalOptions="Start" />
 
             <ListView Grid.Row="1"
                       HasUnevenRows="True"

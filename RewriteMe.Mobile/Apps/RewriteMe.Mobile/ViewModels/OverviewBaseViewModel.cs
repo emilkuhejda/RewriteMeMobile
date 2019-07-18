@@ -23,13 +23,13 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public abstract class OverviewBaseViewModel : ViewModelBase
     {
-        private readonly IUserSessionService _userSessionService;
         private readonly ILatestVersion _latestVersion;
         private readonly IEmailTask _emailTask;
         private readonly IApplicationSettings _applicationSettings;
 
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _isNotUserRegistrationSuccess;
+        private bool _notAvailableData;
 
         protected OverviewBaseViewModel(
             IUserSessionService userSessionService,
@@ -42,16 +42,18 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
-            _userSessionService = userSessionService;
             _latestVersion = latestVersion;
             _emailTask = emailTask;
             _applicationSettings = applicationSettings;
 
+            UserSessionService = userSessionService;
             InternalValueService = internalValueService;
 
             SendEmailCommand = new DelegateCommand(ExecuteSendEmailCommand);
             NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
         }
+
+        protected IUserSessionService UserSessionService { get; }
 
         protected IInternalValueService InternalValueService { get; }
 
@@ -67,6 +69,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get => _isNotUserRegistrationSuccess;
             set => SetProperty(ref _isNotUserRegistrationSuccess, value);
+        }
+
+        public bool NotAvailableData
+        {
+            get => _notAvailableData;
+            set => SetProperty(ref _notAvailableData, value);
         }
 
         public ICommand NavigateToRecorderCommand { get; }
@@ -106,7 +114,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (_emailTask.CanSendEmail)
             {
-                var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
+                var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
                 var subject = $"{Loc.Text(TranslationKeys.ApplicationTitle)} - {Loc.Text(TranslationKeys.RegistrationErrorTitle)}";
                 var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz", CultureInfo.InvariantCulture);
                 var message = new StringBuilder()

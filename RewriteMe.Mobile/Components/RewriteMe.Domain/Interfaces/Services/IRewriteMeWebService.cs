@@ -28,6 +28,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<UserSubscription>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase);
 
+        Task<HttpRequestResult<SpeechConfiguration>> GetSpeechConfigurationAsync();
+
         Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile);
 
         Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language);

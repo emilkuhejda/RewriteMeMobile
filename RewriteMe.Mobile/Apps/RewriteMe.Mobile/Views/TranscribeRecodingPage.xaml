@@ -1,30 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.CreatePage"
+<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.TranscribeRecodingPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
-    <Grid>
+    <views:BaseNavigationPage.RightNavigationToolbarItems>
+        <controls:NavigationToolbarItem Command="{Binding DeleteCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg" />
+    </views:BaseNavigationPage.RightNavigationToolbarItems>
+
+    <Grid RowSpacing="0">
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <controls:AlwaysScrollView Grid.Row="0">
-            <Grid>
+            <Grid RowSpacing="0">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
                 <StackLayout Grid.Row="0" Padding="{StaticResource StandardPadding}">
-                    <Label Style="{StaticResource LabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}" />
+                    <Label FontAttributes="Bold"
+                           HeightRequest="20"
+                           Style="{StaticResource LabelStyle}"
+                           Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}" />
                     <Editor FontSize="{StaticResource MediumSize}"
                             Keyboard="Text"
                             Text="{Binding Name}"
                             VerticalOptions="Fill" />
+                    <controls:Divider />
 
                     <controls:DrillDownButton Command="{Binding NavigateToLanguageCommand}"
                                               ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
@@ -32,18 +40,9 @@
                         <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedLanguage.Title}" />
                     </controls:DrillDownButton>
                     <controls:Divider />
-
-                    <StackLayout IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}">
-                        <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedFile.FileName}" />
-                        <controls:Divider />
-                    </StackLayout>
                 </StackLayout>
 
-                <Button Grid.Row="1"
-                        Margin="20,0,20,20"
-                        Command="{Binding UploadFileCommand}"
-                        Style="{StaticResource ActionButtonStyle}"
-                        Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}" />
+                <views:PlayerView Grid.Row="1" BindingContext="{Binding PlayerViewModel}" />
             </Grid>
         </controls:AlwaysScrollView>
 

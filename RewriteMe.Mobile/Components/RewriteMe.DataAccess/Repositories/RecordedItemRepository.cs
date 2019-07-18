@@ -29,9 +29,9 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.DeleteWithChildrenAsync<RecordedItemEntity>(recordedItemId).ConfigureAwait(false);
         }
 
-        public async Task<IEnumerable<RecordedItem>> GetAllAsync()
+        public async Task<IEnumerable<RecordedItem>> GetAllAsync(Guid userId)
         {
-            var entities = await _contextProvider.Context.RecordedItems.ToListAsync().ConfigureAwait(false);
+            var entities = await _contextProvider.Context.RecordedItems.Where(x => x.UserId == userId).ToListAsync().ConfigureAwait(false);
             return entities.Select(x => x.ToRecordedItem());
         }
 

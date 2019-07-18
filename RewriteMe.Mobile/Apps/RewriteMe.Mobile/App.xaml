@@ -248,7 +248,7 @@
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />
             </Style>
 
-            <Style x:Key="InProgressBackground" TargetType="Frame">
+            <Style x:Key="InfoTileBackground" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="CornerRadius" Value="25" />
                 <Setter Property="Padding" Value="10,2,10,2" />

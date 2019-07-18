@@ -385,6 +385,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recording only.
+        /// </summary>
+        public static string RecordingOnly {
+            get {
+                return ResourceManager.GetString("RecordingOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Register or sign in.
         /// </summary>
         public static string RegisterOrSignIn {
@@ -534,6 +543,15 @@ namespace RewriteMe.Resources {
         public static string Slovak {
             get {
                 return ResourceManager.GetString("Slovak", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Connection was not established. Please, try it later..
+        /// </summary>
+        public static string SpeechClientNotInitializedErrorMessage {
+            get {
+                return ResourceManager.GetString("SpeechClientNotInitializedErrorMessage", resourceCulture);
             }
         }
         

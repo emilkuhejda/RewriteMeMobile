@@ -18,6 +18,8 @@
 
         public static string Transcribe { get; } = "Transcribe";
 
+        public static string TranscribeRecoding { get; } = "TranscribeRecoding";
+
         public static string Detail { get; } = "Detail";
 
         public static string RecordedDetail { get; } = "RecordedDetail";
