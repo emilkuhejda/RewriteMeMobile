@@ -7,9 +7,9 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IRecordedItemService
     {
-        Task<RecordedItem> CreateRecordedItemAsync();
+        Task<RecordedItem> CreateRecordedItemAsync(bool isRecordingOnly);
 
-        Task DeleteRecordedItemAsync(Guid recordedItemId);
+        Task DeleteRecordedItemAsync(RecordedItem recordedItem);
 
         Task<RecordedItem> GetAsync(Guid recordedItemId);
 

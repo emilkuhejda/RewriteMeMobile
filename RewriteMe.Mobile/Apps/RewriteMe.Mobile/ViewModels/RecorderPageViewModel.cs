@@ -53,7 +53,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             CanGoBack = true;
 
-            RecordingOnlyClickCommand = new DelegateCommand(ExecuteRecordingOnlyClickCommand);
+            RecordingOnlyClickCommand = new DelegateCommand(ExecuteRecordingOnlyClickCommand, CanExecuteRecordingOnlyClickCommand);
             RecordCommand = new AsyncCommand(ExecuteRecordCommand, CanExecute);
         }
 
@@ -97,6 +97,11 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        private bool CanExecuteRecordingOnlyClickCommand()
+        {
+            return !IsRecording;
+        }
+
         private void ExecuteRecordingOnlyClickCommand()
         {
             IsRecordingOnly = !IsRecordingOnly;
@@ -121,7 +126,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             else
             {
-                await StartRecordingAsync().ConfigureAwait(false);
+                await StartRecordingAsync(IsRecordingOnly).ConfigureAwait(false);
             }
 
             _isExecuting = false;
@@ -135,18 +140,18 @@ namespace RewriteMe.Mobile.ViewModels
             return IsRecording;
         }
 
-        private async Task StartRecordingAsync()
+        private async Task StartRecordingAsync(bool isRecordingOnly)
         {
             IsRecording = true;
 
-            CurrentRecordedItem = await _recordedItemService.CreateRecordedItemAsync().ConfigureAwait(false);
-            await StartRecordingInternalAsync().ConfigureAwait(false);
+            CurrentRecordedItem = await _recordedItemService.CreateRecordedItemAsync(isRecordingOnly).ConfigureAwait(false);
+            await StartRecordingInternalAsync(isRecordingOnly).ConfigureAwait(false);
 
             _stopwatch.Reset();
             _stopwatch.Start();
         }
 
-        private async Task StartRecordingInternalAsync()
+        private async Task StartRecordingInternalAsync(bool isRecordingOnly)
         {
             if (_audioRecorder != null)
             {
@@ -155,8 +160,36 @@ namespace RewriteMe.Mobile.ViewModels
             }
 
             var directoryPath = _recordedItemService.GetDirectoryPath();
+            if (isRecordingOnly)
+            {
+                await StartRecordingWithoutRecognitionAsync(directoryPath).ConfigureAwait(false);
+            }
+            else
+            {
+                await StartRecordingWithRecognitionAsync(directoryPath).ConfigureAwait(false);
+            }
+        }
+
+        private async Task StartRecordingWithoutRecognitionAsync(string directoryPath)
+        {
+            var fileName = CurrentRecordedItem.AudioFileName;
+            var filePath = Path.Combine(directoryPath, fileName);
+
+            _audioRecorder = new AudioRecorderService
+            {
+                StopRecordingAfterTimeout = true,
+                StopRecordingOnSilence = false,
+                FilePath = filePath
+            };
+
+            await _audioRecorder.StartRecording().ConfigureAwait(false);
+        }
+
+        private async Task StartRecordingWithRecognitionAsync(string directoryPath)
+        {
             var fileName = Path.GetTempFileName();
             var filePath = Path.Combine(directoryPath, fileName);
+
             _audioRecorder = new AudioRecorderService
             {
                 StopRecordingAfterTimeout = true,
@@ -210,7 +243,7 @@ namespace RewriteMe.Mobile.ViewModels
             if (!IsRecording)
                 return;
 
-            await StartRecordingInternalAsync().ConfigureAwait(false);
+            await StartRecordingInternalAsync(IsRecordingOnly).ConfigureAwait(false);
         }
 
         private async Task StopRecordingAsync()

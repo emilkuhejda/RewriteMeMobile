@@ -9,6 +9,11 @@ namespace RewriteMe.DataAccess.Entities
         [PrimaryKey]
         public Guid Id { get; set; }
 
+        public bool IsRecordingOnly { get; set; }
+
+        [MaxLength(100)]
+        public string FileName { get; set; }
+
         public DateTime DateCreated { get; set; }
 
         public TimeSpan DateCreatedOffset { get; set; }

@@ -12,6 +12,8 @@ namespace RewriteMe.DataAccess.DataAdapters
             return new RecordedItem
             {
                 Id = entity.Id,
+                IsRecordingOnly = entity.IsRecordingOnly,
+                FileName = entity.FileName,
                 DateCreated = new DateTimeOffset(entity.DateCreated, entity.DateCreatedOffset),
                 AudioFiles = entity.AudioFiles?.Select(x => x.ToRecordedAudioFile())
             };
@@ -22,6 +24,8 @@ namespace RewriteMe.DataAccess.DataAdapters
             return new RecordedItemEntity
             {
                 Id = recordedItem.Id,
+                IsRecordingOnly = recordedItem.IsRecordingOnly,
+                FileName = recordedItem.FileName,
                 DateCreated = recordedItem.DateCreated.DateTime,
                 DateCreatedOffset = recordedItem.DateCreated.Offset,
                 AudioFiles = recordedItem.AudioFiles?.Select(x => x.ToRecordedAudioFileEntity()).ToArray()

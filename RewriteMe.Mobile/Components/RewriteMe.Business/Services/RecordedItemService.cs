@@ -27,11 +27,13 @@ namespace RewriteMe.Business.Services
             _recordedAudioFileRepository = recordedAudioFileRepository;
         }
 
-        public async Task<RecordedItem> CreateRecordedItemAsync()
+        public async Task<RecordedItem> CreateRecordedItemAsync(bool isRecordingOnly)
         {
             var recordedItem = new RecordedItem
             {
                 Id = Guid.NewGuid(),
+                FileName = DateTime.UtcNow.ToString("dd-MM-yyyy_HH_mm_ss"),
+                IsRecordingOnly = isRecordingOnly,
                 DateCreated = DateTime.UtcNow
             };
 
@@ -39,9 +41,15 @@ namespace RewriteMe.Business.Services
             return recordedItem;
         }
 
-        public async Task DeleteRecordedItemAsync(Guid recordedItemId)
+        public async Task DeleteRecordedItemAsync(RecordedItem recordedItem)
         {
-            await _recordedItemRepository.DeleteAsync(recordedItemId).ConfigureAwait(false);
+            await _recordedItemRepository.DeleteAsync(recordedItem.Id).ConfigureAwait(false);
+
+            var filePath = Path.Combine(GetDirectoryPath(), recordedItem.AudioFileName);
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
         }
 
         public async Task<RecordedItem> GetAsync(Guid recordedItemId)

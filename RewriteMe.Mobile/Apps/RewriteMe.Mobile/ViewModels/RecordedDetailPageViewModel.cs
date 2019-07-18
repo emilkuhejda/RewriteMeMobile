@@ -101,7 +101,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 using (new OperationMonitor(OperationScope))
                 {
-                    await _recordedItemService.DeleteRecordedItemAsync(RecordedItem.Id).ConfigureAwait(false);
+                    await _recordedItemService.DeleteRecordedItemAsync(RecordedItem).ConfigureAwait(false);
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
             }

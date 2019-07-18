@@ -24,7 +24,9 @@
         <StackLayout Grid.Row="1"
                      Margin="20,0,20,20"
                      Orientation="Horizontal">
-            <CheckBox Margin="0,0,10,0" IsChecked="{Binding IsRecordingOnly}" />
+            <CheckBox Margin="0,0,10,0"
+                      IsChecked="{Binding IsRecordingOnly}"
+                      IsEnabled="{Binding IsRecording, Converter={StaticResource InvertedBoolConverter}}" />
             <Label Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding RecordingOnlyClickCommand}" />
