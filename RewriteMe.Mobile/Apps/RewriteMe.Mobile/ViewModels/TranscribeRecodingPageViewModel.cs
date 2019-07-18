@@ -1,4 +1,5 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
@@ -15,6 +16,8 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IRecordedItemService _recordedItemService;
         private readonly IMediaService _mediaService;
+
+        private TimeSpan _audioTotalTime;
 
         public TranscribeRecodingPageViewModel(
             IRecordedItemService recordedItemService,
@@ -44,8 +47,8 @@ namespace RewriteMe.Mobile.ViewModels
                     Name = RecordedItem.FileName;
 
                     var filePath = Path.Combine(_recordedItemService.GetDirectoryPath(), RecordedItem.AudioFileName);
-                    var audioTotalTime = _mediaService.GetTotalTime(filePath);
-                    CanTranscribe = await FileItemService.CanTranscribeAsync(audioTotalTime).ConfigureAwait(false);
+                    _audioTotalTime = _mediaService.GetTotalTime(filePath);
+                    CanTranscribe = await FileItemService.CanTranscribeAsync(_audioTotalTime).ConfigureAwait(false);
                     ReevaluateNavigationItemIconKeys();
 
                     PlayerViewModel.Load(File.ReadAllBytes(filePath));
@@ -66,7 +69,30 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override async Task ExecuteTranscribeInternalAsync()
         {
-            await Task.CompletedTask.ConfigureAwait(false);
+            var result = await DialogService.ConfirmAsync(
+                Loc.Text(TranslationKeys.UploadFileItemInfoMessage),
+                okText: Loc.Text(TranslationKeys.Ok),
+                cancelText: Loc.Text(TranslationKeys.Cancel)).ConfigureAwait(false);
+
+            if (result)
+            {
+                var filePath = Path.Combine(_recordedItemService.GetDirectoryPath(), RecordedItem.AudioFileName);
+                using (var fileStream = File.OpenRead(filePath))
+                {
+                    var mediaFile = new MediaFile()
+                    {
+                        Name = Name,
+                        Language = SelectedLanguage?.Culture,
+                        FileName = RecordedItem.AudioFileName,
+                        TotalTime = _audioTotalTime,
+                        Stream = fileStream
+                    };
+
+                    var fileItem = await FileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
+                    await FileItemService.TranscribeAsync(fileItem.Id, fileItem.Language).ConfigureAwait(false);
+                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+                }
+            }
         }
 
         protected override async Task ExecuteDeleteInternalAsync()

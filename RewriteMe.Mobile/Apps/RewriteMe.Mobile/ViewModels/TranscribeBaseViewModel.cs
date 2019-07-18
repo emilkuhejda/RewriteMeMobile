@@ -179,6 +179,9 @@ namespace RewriteMe.Mobile.ViewModels
                 case 406:
                     message = Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
                     break;
+                case 415:
+                    message = Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
+                    break;
                 default:
                     message = Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
                     break;
