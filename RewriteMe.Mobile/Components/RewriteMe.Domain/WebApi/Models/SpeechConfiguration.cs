@@ -91,10 +91,6 @@ namespace RewriteMe.Domain.WebApi.Models
                     throw new ValidationException(ValidationRules.MaxLength, "SpeechRegion", 50);
                 }
             }
-            if (AudioSampleId.Length > 100)
-            {
-                throw new ValidationException(ValidationRules.MaxLength, "AudioSampleId", 100);
-            }
             if (SubscriptionRemainingTimeString != null)
             {
                 if (SubscriptionRemainingTimeString.Length > 50)
