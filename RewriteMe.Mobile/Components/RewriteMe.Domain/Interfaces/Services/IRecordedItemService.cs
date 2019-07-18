@@ -24,5 +24,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         void CreateDirectory();
 
         string GetDirectoryPath();
+
+        string GetAudioPath(RecordedItem recordedItem);
     }
 }

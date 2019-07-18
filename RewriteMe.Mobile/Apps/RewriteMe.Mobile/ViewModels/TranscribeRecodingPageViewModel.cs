@@ -46,7 +46,7 @@ namespace RewriteMe.Mobile.ViewModels
                     Title = RecordedItem.FileName;
                     Name = RecordedItem.FileName;
 
-                    var filePath = Path.Combine(_recordedItemService.GetDirectoryPath(), RecordedItem.AudioFileName);
+                    var filePath = _recordedItemService.GetAudioPath(RecordedItem);
                     _audioTotalTime = _mediaService.GetTotalTime(filePath);
                     CanTranscribe = await FileItemService.CanTranscribeAsync(_audioTotalTime).ConfigureAwait(false);
                     ReevaluateNavigationItemIconKeys();
@@ -76,7 +76,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (result)
             {
-                var filePath = Path.Combine(_recordedItemService.GetDirectoryPath(), RecordedItem.AudioFileName);
+                var filePath = _recordedItemService.GetAudioPath(RecordedItem);
                 using (var fileStream = File.OpenRead(filePath))
                 {
                     var mediaFile = new MediaFile()

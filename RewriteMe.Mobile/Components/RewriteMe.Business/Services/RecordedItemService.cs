@@ -45,7 +45,7 @@ namespace RewriteMe.Business.Services
         {
             await _recordedItemRepository.DeleteAsync(recordedItem.Id).ConfigureAwait(false);
 
-            var filePath = Path.Combine(GetDirectoryPath(), recordedItem.AudioFileName);
+            var filePath = GetAudioPath(recordedItem);
             if (File.Exists(filePath))
             {
                 File.Delete(filePath);
@@ -90,6 +90,14 @@ namespace RewriteMe.Business.Services
         {
             var directory = _directoryProvider.GetPath();
             return Path.Combine(directory, DirectoryName);
+        }
+
+        public string GetAudioPath(RecordedItem recordedItem)
+        {
+            if (!recordedItem.IsRecordingOnly)
+                return null;
+
+            return Path.Combine(GetDirectoryPath(), recordedItem.AudioFileName);
         }
     }
 }
