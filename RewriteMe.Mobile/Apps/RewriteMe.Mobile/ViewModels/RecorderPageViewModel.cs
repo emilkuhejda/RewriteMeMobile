@@ -122,7 +122,6 @@ namespace RewriteMe.Mobile.ViewModels
             _isExecuting = true;
 
             Text = string.Empty;
-            Configuration = null;
 
             if (IsRecording)
             {
@@ -130,6 +129,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             else
             {
+                Configuration = null;
                 if (!IsRecordingOnly)
                 {
                     var isSuccess = await InitializeSpeechConfigurationAsync().ConfigureAwait(false);
