@@ -59,8 +59,8 @@ namespace RewriteMe.Business.Services
 
         public async Task RecognizedTimeSynchronizationAsync()
         {
-            var recognizedTime = await _internalValueService.GetValueAsync(InternalValues.RecognizedTimeTicks).ConfigureAwait(false);
-            if (recognizedTime > 0)
+            var recognizedTimeTicks = await _internalValueService.GetValueAsync(InternalValues.RecognizedTimeTicks).ConfigureAwait(false);
+            if (recognizedTimeTicks > 0)
                 return;
 
             var httpRequestResult = await _rewriteMeWebService.GetRecognizedTimeAsync().ConfigureAwait(false);

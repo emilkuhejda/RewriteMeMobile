@@ -9,6 +9,7 @@ using Plugin.AudioRecorder;
 using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
@@ -29,6 +30,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IRecordedItemService _recordedItemService;
         private readonly IMediaService _mediaService;
         private readonly IUserSubscriptionService _userSubscriptionService;
+        private readonly IInternalValueService _internalValueService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IList<RecognizedAudioFile> _recognizedAudioFiles;
         private readonly Stopwatch _stopwatch;
@@ -46,6 +48,7 @@ namespace RewriteMe.Mobile.ViewModels
             IRecordedItemService recordedItemService,
             IMediaService mediaService,
             IUserSubscriptionService userSubscriptionService,
+            IInternalValueService internalValueService,
             IRewriteMeWebService rewriteMeWebService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -55,6 +58,7 @@ namespace RewriteMe.Mobile.ViewModels
             _recordedItemService = recordedItemService;
             _mediaService = mediaService;
             _userSubscriptionService = userSubscriptionService;
+            _internalValueService = internalValueService;
             _rewriteMeWebService = rewriteMeWebService;
 
             _recognizedAudioFiles = new List<RecognizedAudioFile>();
@@ -332,6 +336,7 @@ namespace RewriteMe.Mobile.ViewModels
                 RecordedAudioFile previousAudioFile = null;
                 foreach (var recognizedAudioFile in _recognizedAudioFiles.OrderBy(x => x.RecordedAudioFile.DateCreated))
                 {
+                    var recognizedTimeTicks = await _internalValueService.GetValueAsync(InternalValues.RecognizedTimeTicks).ConfigureAwait(false);
                     var filePath = recognizedAudioFile.FilePath;
                     var totalTime = GetTotalTime(filePath);
                     var startTime = previousAudioFile?.EndTime ?? TimeSpan.FromSeconds(0);
@@ -347,6 +352,10 @@ namespace RewriteMe.Mobile.ViewModels
                     File.Delete(filePath);
 
                     previousAudioFile = audioFile;
+
+                    await _internalValueService
+                        .UpdateValueAsync(InternalValues.RecognizedTimeTicks, recognizedTimeTicks + totalTime.Ticks)
+                        .ConfigureAwait(false);
                 }
 
                 var models = _recognizedAudioFiles.Select(x => new SpeechResultModel(x.RecordedAudioFile.Id, x.RecordedAudioFile.TotalTime.ToString())).ToList();
