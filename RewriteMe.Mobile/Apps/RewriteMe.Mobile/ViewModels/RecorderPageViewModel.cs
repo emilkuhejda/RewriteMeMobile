@@ -13,6 +13,7 @@ using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
+using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Resources.Localization;
@@ -63,6 +64,8 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         private RecordedItem CurrentRecordedItem { get; set; }
+
+        private SpeechConfiguration Configuration { get; set; }
 
         public string Text
         {
@@ -152,6 +155,7 @@ namespace RewriteMe.Mobile.ViewModels
                     var speechRegion = EnumHelper.Parse(speechConfiguration.SpeechRegion, SpeechRegion.WestEurope);
 
                     _speechApiClient = new SpeechApiClient(subscriptionKey, speechRegion);
+                    Configuration = speechConfiguration;
                 }
             }
         }
@@ -260,6 +264,10 @@ namespace RewriteMe.Mobile.ViewModels
 
             await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
             recognizedAudioFile.IsRecognizing = false;
+
+            await _rewriteMeWebService
+                .CreateSpeechResultAsync(Configuration.AudioSampleId, recordedAudioFile.Transcript)
+                .ConfigureAwait(false);
         }
 
         private async void OnAudioInputReceived(object sender, string e)
@@ -307,6 +315,9 @@ namespace RewriteMe.Mobile.ViewModels
 
                     previousAudioFile = audioFile;
                 }
+
+                var models = _recognizedAudioFiles.Select(x => new SpeechResultModel(x.RecordedAudioFile.Id, x.RecordedAudioFile.TotalTime.ToString())).ToList();
+                await _rewriteMeWebService.UpdateSpeechResultsAsync(models).ConfigureAwait(false);
 
                 _recognizedAudioFiles.Clear();
             }
