@@ -111,8 +111,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _isExecuting = true;
 
-            Device.StartTimer(TimeSpan.FromSeconds(0.5), UpdateTimer);
-
             Text = string.Empty;
 
             if (IsRecording)
@@ -133,6 +131,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 await StartRecordingAsync(IsRecordingOnly).ConfigureAwait(false);
+                Device.StartTimer(TimeSpan.FromSeconds(0.5), UpdateTimer);
             }
 
             _isExecuting = false;
@@ -231,24 +230,24 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async void RecognizeAsync(Task audioRecordTask, string filePath, Guid recordedItemId)
         {
+            var recordedAudioFile = new RecordedAudioFile
+            {
+                Id = Guid.NewGuid(),
+                RecordedItemId = recordedItemId,
+                DateCreated = DateTime.UtcNow
+            };
+
+            var recognizedAudioFile = new RecognizedAudioFile
+            {
+                RecordedAudioFile = recordedAudioFile,
+                FilePath = filePath,
+                IsRecognizing = true
+            };
+
+            _recognizedAudioFiles.Add(recognizedAudioFile);
+
             using (var stream = _audioRecorder.GetAudioFileStream())
             {
-                var recordedAudioFile = new RecordedAudioFile
-                {
-                    Id = Guid.NewGuid(),
-                    RecordedItemId = recordedItemId,
-                    DateCreated = DateTime.UtcNow
-                };
-
-                var recognizedAudioFile = new RecognizedAudioFile
-                {
-                    RecordedAudioFile = recordedAudioFile,
-                    FilePath = filePath,
-                    IsRecognizing = true
-                };
-
-                _recognizedAudioFiles.Add(recognizedAudioFile);
-
                 var simpleResult = await _speechApiClient
                     .SpeechToTextSimple(stream, _audioRecorder.AudioStreamDetails.SampleRate, audioRecordTask)
                     .ConfigureAwait(false);
@@ -257,10 +256,10 @@ namespace RewriteMe.Mobile.ViewModels
 
                 recordedAudioFile.Transcript = simpleResult.DisplayText;
                 recordedAudioFile.RecognitionSpeechResult = simpleResult;
-                recognizedAudioFile.IsRecognizing = false;
-
-                await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
             }
+
+            await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
+            recognizedAudioFile.IsRecognizing = false;
         }
 
         private async void OnAudioInputReceived(object sender, string e)
