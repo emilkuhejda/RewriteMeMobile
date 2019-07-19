@@ -393,9 +393,9 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static void Test(this IRewriteMeAPI operations)
+            public static RecognizedTime GetRecognizedTime(this IRewriteMeAPI operations)
             {
-                operations.TestAsync().GetAwaiter().GetResult();
+                return operations.GetRecognizedTimeAsync().GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -404,9 +404,12 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task TestAsync(this IRewriteMeAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<RecognizedTime> GetRecognizedTimeAsync(this IRewriteMeAPI operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                (await operations.TestWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
+                using (var _result = await operations.GetRecognizedTimeWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
             }
 
             /// <param name='operations'>

@@ -142,6 +142,14 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<RecognizedTime> GetRecognizedTimeAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.GetRecognizedTimeWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<RecognizedTime>(result.Body);
+            }
+        }
+
         public static async Task<UserSubscription> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel)
         {
             using (var result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel).ConfigureAwait(false))

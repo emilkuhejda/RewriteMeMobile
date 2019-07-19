@@ -123,6 +123,12 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UpdateSpeechResultsAsync(speechResults, customHeaders)).ConfigureAwait(false);
         }
 
+        public async Task<HttpRequestResult<RecognizedTime>> GetRecognizedTimeAsync()
+        {
+            var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetRecognizedTimeAsync(customHeaders)).ConfigureAwait(false);
+        }
+
         private async Task<CustomHeadersDictionary> GetAuthHeaders()
         {
             var accessToken = await _userSessionService.GetAccessTokenSilentAsync().ConfigureAwait(false);
