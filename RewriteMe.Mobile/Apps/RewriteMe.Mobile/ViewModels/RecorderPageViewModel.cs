@@ -266,7 +266,7 @@ namespace RewriteMe.Mobile.ViewModels
             recognizedAudioFile.IsRecognizing = false;
 
             await _rewriteMeWebService
-                .CreateSpeechResultAsync(Configuration.AudioSampleId, recordedAudioFile.Transcript)
+                .CreateSpeechResultAsync(recordedAudioFile.Id, Configuration.AudioSampleId, recordedAudioFile.Transcript)
                 .ConfigureAwait(false);
         }
 

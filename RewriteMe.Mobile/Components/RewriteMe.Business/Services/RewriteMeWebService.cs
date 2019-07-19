@@ -111,10 +111,10 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UpdateUserTranscriptAsync(transcribeItemId, transcript, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<Ok>> CreateSpeechResultAsync(Guid recognizedAudioSampleId, string displayText)
+        public async Task<HttpRequestResult<Ok>> CreateSpeechResultAsync(Guid speechResultId, Guid recognizedAudioSampleId, string displayText)
         {
             var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateSpeechResultAsync(recognizedAudioSampleId, displayText, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateSpeechResultAsync(speechResultId, recognizedAudioSampleId, displayText, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<Ok>> UpdateSpeechResultsAsync(IList<SpeechResultModel> speechResults)

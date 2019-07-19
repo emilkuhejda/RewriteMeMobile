@@ -126,9 +126,9 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<Ok> CreateSpeechResultAsync(this IRewriteMeAPI operations, Guid recognizedAudioSampleId, string displayText, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> CreateSpeechResultAsync(this IRewriteMeAPI operations, Guid speechResultId, Guid recognizedAudioSampleId, string displayText, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.CreateSpeechResultWithHttpMessagesAsync(recognizedAudioSampleId, displayText, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.CreateSpeechResultWithHttpMessagesAsync(speechResultId, recognizedAudioSampleId, displayText, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result.Body);
             }

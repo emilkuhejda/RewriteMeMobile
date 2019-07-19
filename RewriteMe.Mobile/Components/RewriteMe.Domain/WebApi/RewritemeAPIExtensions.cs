@@ -333,17 +333,21 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='speechResultId'>
+            /// </param>
             /// <param name='recognizedAudioSampleId'>
             /// </param>
             /// <param name='displayText'>
             /// </param>
-            public static Ok CreateSpeechResult(this IRewriteMeAPI operations, System.Guid? recognizedAudioSampleId = default(System.Guid?), string displayText = default(string))
+            public static Ok CreateSpeechResult(this IRewriteMeAPI operations, System.Guid speechResultId, System.Guid recognizedAudioSampleId, string displayText = default(string))
             {
-                return operations.CreateSpeechResultAsync(recognizedAudioSampleId, displayText).GetAwaiter().GetResult();
+                return operations.CreateSpeechResultAsync(speechResultId, recognizedAudioSampleId, displayText).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='speechResultId'>
             /// </param>
             /// <param name='recognizedAudioSampleId'>
             /// </param>
@@ -352,9 +356,9 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<Ok> CreateSpeechResultAsync(this IRewriteMeAPI operations, System.Guid? recognizedAudioSampleId = default(System.Guid?), string displayText = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<Ok> CreateSpeechResultAsync(this IRewriteMeAPI operations, System.Guid speechResultId, System.Guid recognizedAudioSampleId, string displayText = default(string), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateSpeechResultWithHttpMessagesAsync(recognizedAudioSampleId, displayText, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateSpeechResultWithHttpMessagesAsync(speechResultId, recognizedAudioSampleId, displayText, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -384,6 +388,25 @@ namespace RewriteMe.Domain.WebApi
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static void Test(this IRewriteMeAPI operations)
+            {
+                operations.TestAsync().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task TestAsync(this IRewriteMeAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.TestWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <param name='operations'>
