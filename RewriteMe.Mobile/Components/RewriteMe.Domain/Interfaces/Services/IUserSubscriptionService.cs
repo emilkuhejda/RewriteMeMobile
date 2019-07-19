@@ -8,6 +8,8 @@ namespace RewriteMe.Domain.Interfaces.Services
     {
         Task SynchronizationAsync(DateTime applicationUpdateDate);
 
+        Task RecognizedTimeSynchronizationAsync();
+
         Task AddAsync(UserSubscription userSubscription);
 
         Task<TimeSpan> GetRemainingTimeAsync();
