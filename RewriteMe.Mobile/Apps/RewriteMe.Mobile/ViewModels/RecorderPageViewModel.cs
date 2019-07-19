@@ -190,6 +190,14 @@ namespace RewriteMe.Mobile.ViewModels
             var ts = _stopwatch.Elapsed;
             RecordingTime = $"{ts.Minutes:00}:{ts.Seconds:00}";
 
+            if (!IsRecordingOnly && _audioRecorder.IsRecording)
+            {
+                if (ts.Ticks >= Configuration.SubscriptionRemainingTime.Ticks)
+                {
+                    StopRecordingAsync().ConfigureAwait(false);
+                }
+            }
+
             return IsRecording;
         }
 
