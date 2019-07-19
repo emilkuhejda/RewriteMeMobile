@@ -28,6 +28,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private readonly IRecordedItemService _recordedItemService;
         private readonly IMediaService _mediaService;
+        private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IList<RecognizedAudioFile> _recognizedAudioFiles;
         private readonly Stopwatch _stopwatch;
@@ -44,6 +45,7 @@ namespace RewriteMe.Mobile.ViewModels
         public RecorderPageViewModel(
             IRecordedItemService recordedItemService,
             IMediaService mediaService,
+            IUserSubscriptionService userSubscriptionService,
             IRewriteMeWebService rewriteMeWebService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -52,6 +54,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _recordedItemService = recordedItemService;
             _mediaService = mediaService;
+            _userSubscriptionService = userSubscriptionService;
             _rewriteMeWebService = rewriteMeWebService;
 
             _recognizedAudioFiles = new List<RecognizedAudioFile>();
@@ -115,6 +118,7 @@ namespace RewriteMe.Mobile.ViewModels
             _isExecuting = true;
 
             Text = string.Empty;
+            Configuration = null;
 
             if (IsRecording)
             {
@@ -124,13 +128,15 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (!IsRecordingOnly)
                 {
-                    await InitializeSpeechApiClient().ConfigureAwait(false);
-                    if (_speechApiClient == null)
+                    var isSuccess = await InitializeSpeechConfigurationAsync().ConfigureAwait(false);
+                    if (!isSuccess)
                     {
-                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.SpeechClientNotInitializedErrorMessage)).ConfigureAwait(false);
                         _isExecuting = false;
                         return;
                     }
+
+                    var speechRegion = EnumHelper.Parse(Configuration.SpeechRegion, SpeechRegion.WestEurope);
+                    _speechApiClient = new SpeechApiClient(Configuration.SubscriptionKey, speechRegion);
                 }
 
                 await StartRecordingAsync(IsRecordingOnly).ConfigureAwait(false);
@@ -140,24 +146,43 @@ namespace RewriteMe.Mobile.ViewModels
             _isExecuting = false;
         }
 
-        private async Task InitializeSpeechApiClient()
+        private async Task<bool> InitializeSpeechConfigurationAsync()
         {
-            if (_speechApiClient != null)
-                return;
+            var remainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
+            if (remainingTime.Ticks < 0)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
+                return false;
+            }
 
+            Configuration = await GetSpeechConfigurationAsync().ConfigureAwait(false);
+            if (Configuration == null)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.SpeechClientNotInitializedErrorMessage)).ConfigureAwait(false);
+                return false;
+            }
+
+            if (Configuration.SubscriptionRemainingTime.Ticks < 0)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
+                return false;
+            }
+
+            return true;
+        }
+
+        private async Task<SpeechConfiguration> GetSpeechConfigurationAsync()
+        {
             using (new OperationMonitor(OperationScope))
             {
                 var httpRequestResult = await _rewriteMeWebService.GetSpeechConfigurationAsync().ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    var speechConfiguration = httpRequestResult.Payload;
-                    var subscriptionKey = speechConfiguration.SubscriptionKey;
-                    var speechRegion = EnumHelper.Parse(speechConfiguration.SpeechRegion, SpeechRegion.WestEurope);
-
-                    _speechApiClient = new SpeechApiClient(subscriptionKey, speechRegion);
-                    Configuration = speechConfiguration;
+                    return httpRequestResult.Payload;
                 }
             }
+
+            return null;
         }
 
         private bool UpdateTimer()
