@@ -334,9 +334,9 @@ namespace RewriteMe.Mobile.ViewModels
                 await CheckRecognitionProcess().ConfigureAwait(false);
 
                 RecordedAudioFile previousAudioFile = null;
+                var audioRecordTotalTime = TimeSpan.FromSeconds(0);
                 foreach (var recognizedAudioFile in _recognizedAudioFiles.OrderBy(x => x.RecordedAudioFile.DateCreated))
                 {
-                    var recognizedTimeTicks = await _internalValueService.GetValueAsync(InternalValues.RecognizedTimeTicks).ConfigureAwait(false);
                     var filePath = recognizedAudioFile.FilePath;
                     var totalTime = GetTotalTime(filePath);
                     var startTime = previousAudioFile?.EndTime ?? TimeSpan.FromSeconds(0);
@@ -351,12 +351,14 @@ namespace RewriteMe.Mobile.ViewModels
                     await _recordedItemService.UpdateAudioFileAsync(audioFile).ConfigureAwait(false);
                     File.Delete(filePath);
 
+                    audioRecordTotalTime = audioRecordTotalTime.Add(totalTime);
                     previousAudioFile = audioFile;
-
-                    await _internalValueService
-                        .UpdateValueAsync(InternalValues.RecognizedTimeTicks, recognizedTimeTicks + totalTime.Ticks)
-                        .ConfigureAwait(false);
                 }
+
+                var recognizedTimeTicks = await _internalValueService.GetValueAsync(InternalValues.RecognizedTimeTicks).ConfigureAwait(false);
+                await _internalValueService
+                    .UpdateValueAsync(InternalValues.RecognizedTimeTicks, recognizedTimeTicks + audioRecordTotalTime.Ticks)
+                    .ConfigureAwait(false);
 
                 var models = _recognizedAudioFiles.Select(x => new SpeechResultModel(x.RecordedAudioFile.Id, x.RecordedAudioFile.TotalTime.ToString())).ToList();
                 await _rewriteMeWebService.UpdateSpeechResultsAsync(models).ConfigureAwait(false);
