@@ -24,7 +24,7 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class RecorderPageViewModel : ViewModelBase
     {
-        private const int AudioLengthInSeconds = 15;
+        private const int AudioLengthInSeconds = 10;
 
         private readonly IRecordedItemService _recordedItemService;
         private readonly IMediaService _mediaService;
