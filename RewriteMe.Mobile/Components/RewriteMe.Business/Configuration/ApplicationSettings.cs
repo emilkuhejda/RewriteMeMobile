@@ -18,7 +18,11 @@ namespace RewriteMe.Business.Configuration
             _internalValueService = internalValueService;
         }
 
+#if DEBUG
         public Uri WebApiUri { get; } = new Uri("https://192.168.0.105:45456/");
+#else
+        public Uri WebApiUri { get; } = new Uri("http://rewrite-me.com/");
+#endif
 
         public Guid ApplicationId { get; private set; }
 
