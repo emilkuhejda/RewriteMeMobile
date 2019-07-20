@@ -220,7 +220,7 @@
                    BasedOn="{StaticResource TitleLabelSyle}"
                    TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource ApplicationTitleTextColor}" />
-                <Setter Property="FontSize" Value="{StaticResource LargerSize}" />
+                <Setter Property="FontSize" Value="{StaticResource BigSize}" />
                 <Setter Property="FontFamily" Value="{StaticResource FontFamilyDancingScriptRegular}" />
             </Style>
 
