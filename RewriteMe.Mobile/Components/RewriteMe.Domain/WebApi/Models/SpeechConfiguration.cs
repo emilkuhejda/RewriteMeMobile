@@ -6,6 +6,7 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -22,10 +23,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the SpeechConfiguration class.
         /// </summary>
-        public SpeechConfiguration(string subscriptionKey = default(string), string speechRegion = default(string))
+        public SpeechConfiguration(string subscriptionKey, string speechRegion, System.Guid audioSampleId, string subscriptionRemainingTimeString)
         {
             SubscriptionKey = subscriptionKey;
             SpeechRegion = speechRegion;
+            AudioSampleId = audioSampleId;
+            SubscriptionRemainingTimeString = subscriptionRemainingTimeString;
             CustomInit();
         }
 
@@ -44,5 +47,57 @@ namespace RewriteMe.Domain.WebApi.Models
         [JsonProperty(PropertyName = "speechRegion")]
         public string SpeechRegion { get; set; }
 
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "audioSampleId")]
+        public System.Guid AudioSampleId { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "subscriptionRemainingTimeString")]
+        public string SubscriptionRemainingTimeString { get; set; }
+
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (SubscriptionKey == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SubscriptionKey");
+            }
+            if (SpeechRegion == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SpeechRegion");
+            }
+            if (SubscriptionRemainingTimeString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "SubscriptionRemainingTimeString");
+            }
+            if (SubscriptionKey != null)
+            {
+                if (SubscriptionKey.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "SubscriptionKey", 50);
+                }
+            }
+            if (SpeechRegion != null)
+            {
+                if (SpeechRegion.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "SpeechRegion", 50);
+                }
+            }
+            if (SubscriptionRemainingTimeString != null)
+            {
+                if (SubscriptionRemainingTimeString.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "SubscriptionRemainingTimeString", 50);
+                }
+            }
+        }
     }
 }

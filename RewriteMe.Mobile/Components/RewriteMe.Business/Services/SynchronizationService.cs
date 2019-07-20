@@ -50,7 +50,8 @@ namespace RewriteMe.Business.Services
                 DeletedFileItemsSynchronizationAsync,
                 DeletedFileItemsTotalTimeSynchronizationAsync,
                 UpdateTranscribeItemsAsync,
-                UpdateUserSubscriptionAsync
+                UpdateUserSubscriptionAsync,
+                UpdateRecognizedTimeAsync
             };
 
             _totalResourceInitializationTasks = updateMethods.Count;
@@ -112,6 +113,11 @@ namespace RewriteMe.Business.Services
             var applicationUserSubscriptionUpdateDate = _lastUpdatesService.GetUserSubscriptionLastUpdate();
 
             await _userSubscriptionService.SynchronizationAsync(applicationUserSubscriptionUpdateDate).ConfigureAwait(false);
+        }
+
+        private async Task UpdateRecognizedTimeAsync()
+        {
+            await _userSubscriptionService.RecognizedTimeSynchronizationAsync().ConfigureAwait(false);
         }
     }
 }
