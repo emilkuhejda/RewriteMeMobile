@@ -9,10 +9,12 @@ using Plugin.AudioRecorder;
 using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
+using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Resources.Localization;
@@ -23,12 +25,16 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class RecorderPageViewModel : ViewModelBase
     {
-        private const int AudioLengthInSeconds = 15;
+        private const int AudioDurationInSeconds = 11;
+        private const int TotalAudioDurationInMinutes = 5;
 
         private readonly IRecordedItemService _recordedItemService;
         private readonly IMediaService _mediaService;
+        private readonly IUserSubscriptionService _userSubscriptionService;
+        private readonly IInternalValueService _internalValueService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IList<RecognizedAudioFile> _recognizedAudioFiles;
+        private readonly TimeSpan _totalAudioDuration;
         private readonly Stopwatch _stopwatch;
 
         private AudioRecorderService _audioRecorder;
@@ -43,6 +49,8 @@ namespace RewriteMe.Mobile.ViewModels
         public RecorderPageViewModel(
             IRecordedItemService recordedItemService,
             IMediaService mediaService,
+            IUserSubscriptionService userSubscriptionService,
+            IInternalValueService internalValueService,
             IRewriteMeWebService rewriteMeWebService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -51,9 +59,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _recordedItemService = recordedItemService;
             _mediaService = mediaService;
+            _userSubscriptionService = userSubscriptionService;
+            _internalValueService = internalValueService;
             _rewriteMeWebService = rewriteMeWebService;
 
             _recognizedAudioFiles = new List<RecognizedAudioFile>();
+            _totalAudioDuration = TimeSpan.FromMinutes(TotalAudioDurationInMinutes);
             _stopwatch = new Stopwatch();
 
             CanGoBack = true;
@@ -63,6 +74,8 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         private RecordedItem CurrentRecordedItem { get; set; }
+
+        private SpeechConfiguration Configuration { get; set; }
 
         public string Text
         {
@@ -111,8 +124,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _isExecuting = true;
 
-            Device.StartTimer(TimeSpan.FromSeconds(0.5), UpdateTimer);
-
             Text = string.Empty;
 
             if (IsRecording)
@@ -121,46 +132,78 @@ namespace RewriteMe.Mobile.ViewModels
             }
             else
             {
+                Configuration = null;
                 if (!IsRecordingOnly)
                 {
-                    await InitializeSpeechApiClient().ConfigureAwait(false);
-                    if (_speechApiClient == null)
+                    var isSuccess = await InitializeSpeechConfigurationAsync().ConfigureAwait(false);
+                    if (!isSuccess)
                     {
-                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.SpeechClientNotInitializedErrorMessage)).ConfigureAwait(false);
                         _isExecuting = false;
                         return;
                     }
+
+                    var speechRegion = EnumHelper.Parse(Configuration.SpeechRegion, SpeechRegion.WestEurope);
+                    _speechApiClient = new SpeechApiClient(Configuration.SubscriptionKey, speechRegion);
                 }
 
                 await StartRecordingAsync(IsRecordingOnly).ConfigureAwait(false);
+                Device.StartTimer(TimeSpan.FromSeconds(0.5), UpdateTimer);
             }
 
             _isExecuting = false;
         }
 
-        private async Task InitializeSpeechApiClient()
+        private async Task<bool> InitializeSpeechConfigurationAsync()
         {
-            if (_speechApiClient != null)
-                return;
+            var remainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
+            if (remainingTime.Ticks < 0)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
+                return false;
+            }
 
+            Configuration = await GetSpeechConfigurationAsync().ConfigureAwait(false);
+            if (Configuration == null)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.SpeechClientNotInitializedErrorMessage)).ConfigureAwait(false);
+                return false;
+            }
+
+            if (Configuration.SubscriptionRemainingTime.Ticks < 0)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
+                return false;
+            }
+
+            return true;
+        }
+
+        private async Task<SpeechConfiguration> GetSpeechConfigurationAsync()
+        {
             using (new OperationMonitor(OperationScope))
             {
                 var httpRequestResult = await _rewriteMeWebService.GetSpeechConfigurationAsync().ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    var speechConfiguration = httpRequestResult.Payload;
-                    var subscriptionKey = speechConfiguration.SubscriptionKey;
-                    var speechRegion = EnumHelper.Parse(speechConfiguration.SpeechRegion, SpeechRegion.WestEurope);
-
-                    _speechApiClient = new SpeechApiClient(subscriptionKey, speechRegion);
+                    return httpRequestResult.Payload;
                 }
             }
+
+            return null;
         }
 
         private bool UpdateTimer()
         {
             var ts = _stopwatch.Elapsed;
             RecordingTime = $"{ts.Minutes:00}:{ts.Seconds:00}";
+
+            if (!IsRecordingOnly && _audioRecorder != null && _audioRecorder.IsRecording)
+            {
+                if (ts.Ticks >= _totalAudioDuration.Ticks || ts.Ticks >= Configuration.SubscriptionRemainingTime.Ticks)
+                {
+                    StopRecordingAsync().ConfigureAwait(false);
+                }
+            }
 
             return IsRecording;
         }
@@ -219,7 +262,8 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 StopRecordingAfterTimeout = true,
                 StopRecordingOnSilence = false,
-                TotalAudioTimeout = TimeSpan.FromSeconds(AudioLengthInSeconds),
+                TotalAudioTimeout = TimeSpan.FromSeconds(AudioDurationInSeconds),
+                SilenceThreshold = 1,
                 FilePath = filePath
             };
 
@@ -231,24 +275,24 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async void RecognizeAsync(Task audioRecordTask, string filePath, Guid recordedItemId)
         {
+            var recordedAudioFile = new RecordedAudioFile
+            {
+                Id = Guid.NewGuid(),
+                RecordedItemId = recordedItemId,
+                DateCreated = DateTime.UtcNow
+            };
+
+            var recognizedAudioFile = new RecognizedAudioFile
+            {
+                RecordedAudioFile = recordedAudioFile,
+                FilePath = filePath,
+                IsRecognizing = true
+            };
+
+            _recognizedAudioFiles.Add(recognizedAudioFile);
+
             using (var stream = _audioRecorder.GetAudioFileStream())
             {
-                var recordedAudioFile = new RecordedAudioFile
-                {
-                    Id = Guid.NewGuid(),
-                    RecordedItemId = recordedItemId,
-                    DateCreated = DateTime.UtcNow
-                };
-
-                var recognizedAudioFile = new RecognizedAudioFile
-                {
-                    RecordedAudioFile = recordedAudioFile,
-                    FilePath = filePath,
-                    IsRecognizing = true
-                };
-
-                _recognizedAudioFiles.Add(recognizedAudioFile);
-
                 var simpleResult = await _speechApiClient
                     .SpeechToTextSimple(stream, _audioRecorder.AudioStreamDetails.SampleRate, audioRecordTask)
                     .ConfigureAwait(false);
@@ -257,10 +301,14 @@ namespace RewriteMe.Mobile.ViewModels
 
                 recordedAudioFile.Transcript = simpleResult.DisplayText;
                 recordedAudioFile.RecognitionSpeechResult = simpleResult;
-                recognizedAudioFile.IsRecognizing = false;
-
-                await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
             }
+
+            await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
+            recognizedAudioFile.IsRecognizing = false;
+
+            await _rewriteMeWebService
+                .CreateSpeechResultAsync(recordedAudioFile.Id, Configuration.AudioSampleId, recordedAudioFile.Transcript)
+                .ConfigureAwait(false);
         }
 
         private async void OnAudioInputReceived(object sender, string e)
@@ -290,6 +338,7 @@ namespace RewriteMe.Mobile.ViewModels
                 await CheckRecognitionProcess().ConfigureAwait(false);
 
                 RecordedAudioFile previousAudioFile = null;
+                var audioRecordTotalTime = TimeSpan.FromSeconds(0);
                 foreach (var recognizedAudioFile in _recognizedAudioFiles.OrderBy(x => x.RecordedAudioFile.DateCreated))
                 {
                     var filePath = recognizedAudioFile.FilePath;
@@ -306,8 +355,17 @@ namespace RewriteMe.Mobile.ViewModels
                     await _recordedItemService.UpdateAudioFileAsync(audioFile).ConfigureAwait(false);
                     File.Delete(filePath);
 
+                    audioRecordTotalTime = audioRecordTotalTime.Add(totalTime);
                     previousAudioFile = audioFile;
                 }
+
+                var recognizedTimeTicks = await _internalValueService.GetValueAsync(InternalValues.RecognizedTimeTicks).ConfigureAwait(false);
+                await _internalValueService
+                    .UpdateValueAsync(InternalValues.RecognizedTimeTicks, recognizedTimeTicks + audioRecordTotalTime.Ticks)
+                    .ConfigureAwait(false);
+
+                var models = _recognizedAudioFiles.Select(x => new SpeechResultModel(x.RecordedAudioFile.Id, x.RecordedAudioFile.TotalTime.ToString())).ToList();
+                await _rewriteMeWebService.UpdateSpeechResultsAsync(models).ConfigureAwait(false);
 
                 _recognizedAudioFiles.Clear();
             }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Globalization;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Repositories;
@@ -29,7 +30,7 @@ namespace RewriteMe.Business.Services
         {
             try
             {
-                var result = (T)Convert.ChangeType(value, typeof(T));
+                var result = (T)Convert.ChangeType(value, typeof(T), CultureInfo.InvariantCulture);
                 return result;
             }
             catch (NotSupportedException)
@@ -41,7 +42,7 @@ namespace RewriteMe.Business.Services
         public async Task UpdateValueAsync<T>(InternalValue<T> internalValue, T value)
         {
             var key = internalValue.Key;
-            var entityValue = Convert.ToString(value);
+            var entityValue = Convert.ToString(value, CultureInfo.InvariantCulture);
 
             await _internalValueRepository.UpdateValue(key, entityValue).ConfigureAwait(false);
         }

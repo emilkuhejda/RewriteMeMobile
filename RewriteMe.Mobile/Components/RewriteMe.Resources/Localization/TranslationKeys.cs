@@ -52,6 +52,7 @@
         public static string RecordingOnly => "RecordingOnly";
         public static string RemainingTime => "RemainingTime";
         public static string NoAvailableData => "NoAvailableData";
+        public static string UnableToLoadAudioFile => "UnableToLoadAudioFile";
 
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
         public static string OfflineErrorMessage => "OfflineErrorMessage";

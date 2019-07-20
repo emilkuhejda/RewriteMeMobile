@@ -57,6 +57,17 @@ namespace RewriteMe.Business.Services
             }
         }
 
+        public async Task RecognizedTimeSynchronizationAsync()
+        {
+            var httpRequestResult = await _rewriteMeWebService.GetRecognizedTimeAsync().ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            {
+                await _internalValueService
+                    .UpdateValueAsync(InternalValues.RecognizedTimeTicks, httpRequestResult.Payload.TotalTime.Ticks)
+                    .ConfigureAwait(false);
+            }
+        }
+
         public async Task AddAsync(UserSubscription userSubscription)
         {
             await _userSubscriptionRepository.AddAsync(userSubscription).ConfigureAwait(false);
@@ -65,6 +76,7 @@ namespace RewriteMe.Business.Services
         public async Task<TimeSpan> GetRemainingTimeAsync()
         {
             var deletedFilesTotalTime = await _internalValueService.GetValueAsync(InternalValues.DeletedFileItemsTotalTime).ConfigureAwait(false);
+            var recognizedTimeTicks = await _internalValueService.GetValueAsync(InternalValues.RecognizedTimeTicks).ConfigureAwait(false);
 
             var userSubscriptionsTime = await _userSubscriptionRepository.GetTotalTimeAsync().ConfigureAwait(false);
             var processedFilesTotalTime = await _fileItemRepository.GetProcessedFilesTotalTimeAsync().ConfigureAwait(false);
@@ -72,7 +84,8 @@ namespace RewriteMe.Business.Services
 
             processedFilesTotalTime = processedFilesTotalTime
                 .Add(processedDeletedFilesTotalTime)
-                .Add(TimeSpanHelper.Parse(deletedFilesTotalTime));
+                .Add(TimeSpanHelper.Parse(deletedFilesTotalTime))
+                .Add(TimeSpan.FromTicks(recognizedTimeTicks));
             return userSubscriptionsTime.Subtract(processedFilesTotalTime);
         }
     }

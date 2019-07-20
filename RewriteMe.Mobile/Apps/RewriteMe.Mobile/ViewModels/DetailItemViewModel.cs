@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Prism.Commands;
 using Prism.Mvvm;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Mobile.Commands;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -18,9 +19,11 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected DetailItemViewModel(
             PlayerViewModel playerViewModel,
+            IDialogService dialogService,
             T detailItem)
         {
             PlayerViewModel = playerViewModel;
+            DialogService = dialogService;
             DetailItem = detailItem;
             OperationScope = new AsyncOperationScope();
 
@@ -29,6 +32,8 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         protected PlayerViewModel PlayerViewModel { get; }
+
+        protected IDialogService DialogService { get; }
 
         public AsyncOperationScope OperationScope { get; }
 

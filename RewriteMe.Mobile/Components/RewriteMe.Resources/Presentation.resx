@@ -250,6 +250,9 @@
   <data name="NoAvailableData" xml:space="preserve">
     <value>No available data</value>
   </data>
+  <data name="UnableToLoadAudioFile" xml:space="preserve">
+    <value>Unable to load audio file.</value>
+  </data>
   
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>

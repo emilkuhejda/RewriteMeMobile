@@ -126,6 +126,30 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<Ok> CreateSpeechResultAsync(this IRewriteMeAPI operations, Guid speechResultId, Guid recognizedAudioSampleId, string displayText, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.CreateSpeechResultWithHttpMessagesAsync(speechResultId, recognizedAudioSampleId, displayText, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<Ok>(result.Body);
+            }
+        }
+
+        public static async Task<Ok> UpdateSpeechResultsAsync(this IRewriteMeAPI operations, IList<SpeechResultModel> speechResults, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.UpdateSpeechResultsWithHttpMessagesAsync(speechResults, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<Ok>(result.Body);
+            }
+        }
+
+        public static async Task<RecognizedTime> GetRecognizedTimeAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.GetRecognizedTimeWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<RecognizedTime>(result.Body);
+            }
+        }
+
         public static async Task<UserSubscription> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel)
         {
             using (var result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel).ConfigureAwait(false))

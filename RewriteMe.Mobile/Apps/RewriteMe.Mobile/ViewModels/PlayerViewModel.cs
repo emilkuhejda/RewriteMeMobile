@@ -83,6 +83,9 @@ namespace RewriteMe.Mobile.ViewModels
             if (_player.IsPlaying)
                 _player.Stop();
 
+            if (data == null)
+                return;
+
             using (var memoryStream = new MemoryStream(data))
             {
                 _player.Load(memoryStream);
