@@ -24,6 +24,27 @@
                        Right="{StaticResource StandardSpacing}"
                        Top="{StaticResource StandardSpacing}" />
 
+            <!--  Fonts  -->
+            <OnPlatform x:Key="FontFamilyQuicksandLight"
+                        x:TypeArguments="x:String"
+                        Android="Quicksand-Light.ttf#Quicksand-Light"
+                        iOS="Quicksand-Light" />
+
+            <OnPlatform x:Key="FontFamilyQuicksandRegular"
+                        x:TypeArguments="x:String"
+                        Android="Quicksand-Regular.ttf#Quicksand-Regular"
+                        iOS="Quicksand-Regular" />
+
+            <OnPlatform x:Key="FontFamilyQuicksandMedium"
+                        x:TypeArguments="x:String"
+                        Android="Quicksand-Medium.ttf#Quicksand-Medium"
+                        iOS="Quicksand-Medium" />
+
+            <OnPlatform x:Key="FontFamilyQuicksandBold"
+                        x:TypeArguments="x:String"
+                        Android="Quicksand-Bold.ttf#Quicksand-Bold"
+                        iOS="Quicksand-Bold" />
+
             <!--  Colors  -->
             <!--  Source: https://material.io/guidelines/style/color.html#color-color-palette  -->
             <Color x:Key="ColorGrey50">#FAFAFA</Color>
@@ -108,11 +129,18 @@
             <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
 
             <!--  Styles  -->
+            <Style TargetType="Editor">
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
+            </Style>
+
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
                 <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="CenterAndExpand" />
                 <Setter Property="HorizontalTextAlignment" Value="Start" />
@@ -122,6 +150,7 @@
 
             <Style x:Key="LabelSmall" TargetType="Label">
                 <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
             </Style>
 
             <Style x:Key="LabelStyle" TargetType="Label">
@@ -129,6 +158,7 @@
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
                 <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="Opacity" Value="1.0" />
@@ -147,6 +177,7 @@
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
                 <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="Opacity" Value="1.0" />
@@ -164,6 +195,7 @@
                    BasedOn="{StaticResource LabelStyle}"
                    TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandBold}" />
             </Style>
 
             <Style x:Key="TitleLabelSyle" TargetType="Label">
@@ -171,6 +203,7 @@
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
                 <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandBold}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="Opacity" Value="1.0" />
@@ -183,6 +216,7 @@
                    TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource ApplicationTitleTextColor}" />
                 <Setter Property="FontSize" Value="{StaticResource LargerSize}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandMedium}" />
             </Style>
 
             <Style x:Key="DropDownButtonStyle" TargetType="controls:DrillDownButton">
@@ -197,6 +231,7 @@
                 <Setter Property="TextColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
                 <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
             </Style>
 
             <Style x:Key="CustomButtonPrimaryStyle"
@@ -206,6 +241,7 @@
                 <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="BackgroundColorPressed" Value="{StaticResource ColorPrimaryDark}" />
                 <Setter Property="BorderColorPressed" Value="{StaticResource ColorPrimaryDark}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Setter Property="TextColor" Value="{StaticResource ColorGrey300}" />
                 <Style.Triggers>
                     <Trigger TargetType="Button" Property="IsEnabled" Value="True">
@@ -226,6 +262,7 @@
                 <Setter Property="BackgroundColorPressed" Value="{StaticResource WindowBackground}" />
                 <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="BorderColorPressed" Value="{StaticResource ColorPrimary}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Style.Triggers>
                     <Trigger TargetType="Button" Property="IsEnabled" Value="True">
                         <Setter Property="BackgroundColor" Value="{StaticResource ColorWhite}" />
@@ -243,6 +280,7 @@
                 <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="CornerRadius" Value="30" />
                 <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandBold}" />
                 <Setter Property="TextColor" Value="{StaticResource ColorWhite}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />
