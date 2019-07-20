@@ -25,6 +25,11 @@
                        Top="{StaticResource StandardSpacing}" />
 
             <!--  Fonts  -->
+            <OnPlatform x:Key="FontFamilyDancingScriptRegular"
+                        x:TypeArguments="x:String"
+                        Android="DancingScript-Regular.ttf#DancingScript-Regular"
+                        iOS="DancingScript-Regular" />
+
             <OnPlatform x:Key="FontFamilyQuicksandLight"
                         x:TypeArguments="x:String"
                         Android="Quicksand-Light.ttf#Quicksand-Light"
@@ -216,7 +221,7 @@
                    TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource ApplicationTitleTextColor}" />
                 <Setter Property="FontSize" Value="{StaticResource LargerSize}" />
-                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandMedium}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyDancingScriptRegular}" />
             </Style>
 
             <Style x:Key="DropDownButtonStyle" TargetType="controls:DrillDownButton">
