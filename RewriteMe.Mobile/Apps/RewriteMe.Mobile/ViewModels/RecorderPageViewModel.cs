@@ -25,7 +25,8 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class RecorderPageViewModel : ViewModelBase
     {
-        private const int AudioLengthInSeconds = 10;
+        private const int AudioDurationInSeconds = 11;
+        private const int TotalAudioDurationInMinutes = 5;
 
         private readonly IRecordedItemService _recordedItemService;
         private readonly IMediaService _mediaService;
@@ -33,6 +34,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IInternalValueService _internalValueService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IList<RecognizedAudioFile> _recognizedAudioFiles;
+        private readonly TimeSpan _totalAudioDuration;
         private readonly Stopwatch _stopwatch;
 
         private AudioRecorderService _audioRecorder;
@@ -62,6 +64,7 @@ namespace RewriteMe.Mobile.ViewModels
             _rewriteMeWebService = rewriteMeWebService;
 
             _recognizedAudioFiles = new List<RecognizedAudioFile>();
+            _totalAudioDuration = TimeSpan.FromMinutes(TotalAudioDurationInMinutes);
             _stopwatch = new Stopwatch();
 
             CanGoBack = true;
@@ -196,7 +199,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (!IsRecordingOnly && _audioRecorder != null && _audioRecorder.IsRecording)
             {
-                if (ts.Ticks >= Configuration.SubscriptionRemainingTime.Ticks)
+                if (ts.Ticks >= _totalAudioDuration.Ticks || ts.Ticks >= Configuration.SubscriptionRemainingTime.Ticks)
                 {
                     StopRecordingAsync().ConfigureAwait(false);
                 }
@@ -259,7 +262,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 StopRecordingAfterTimeout = true,
                 StopRecordingOnSilence = false,
-                TotalAudioTimeout = TimeSpan.FromSeconds(AudioLengthInSeconds),
+                TotalAudioTimeout = TimeSpan.FromSeconds(AudioDurationInSeconds),
                 SilenceThreshold = 1,
                 FilePath = filePath
             };
