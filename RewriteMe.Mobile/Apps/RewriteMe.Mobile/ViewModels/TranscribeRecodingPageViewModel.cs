@@ -43,7 +43,6 @@ namespace RewriteMe.Mobile.ViewModels
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     RecordedItem = navigationParameters.GetValue<RecordedItem>();
-                    Title = RecordedItem.FileName;
                     Name = RecordedItem.FileName;
 
                     var filePath = _recordedItemService.GetAudioPath(RecordedItem);

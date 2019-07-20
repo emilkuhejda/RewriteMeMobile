@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
-using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
@@ -33,14 +32,6 @@ namespace RewriteMe.Mobile.ViewModels
         public ICommand EditProfileCommand { get; }
 
         public ICommand LogoutCommand { get; }
-
-        protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
-        {
-            using (new OperationMonitor(OperationScope))
-            {
-                Title = await _userSessionService.GetUserNameAsync().ConfigureAwait(false);
-            }
-        }
 
         private async Task ExecuteEditProfileCommandAsync()
         {

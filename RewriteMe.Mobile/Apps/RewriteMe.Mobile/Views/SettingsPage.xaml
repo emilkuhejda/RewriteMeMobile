@@ -30,7 +30,9 @@
                 <controls:Divider />
 
                 <!--  User profile  -->
-                <controls:DrillDownButton Command="{Binding NavigateToUserSettingsCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UserProfile}}">
+                <controls:DrillDownButton Command="{Binding NavigateToUserSettingsCommand}"
+                                          ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UserProfile}}">
                     <Label Style="{StaticResource LabelStyle}" Text="{Binding UserName}" />
                 </controls:DrillDownButton>
                 <controls:Divider />

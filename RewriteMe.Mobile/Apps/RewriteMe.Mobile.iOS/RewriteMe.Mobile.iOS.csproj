@@ -126,6 +126,11 @@
     <None Include="Info.plist" />
     <Compile Include="Providers\IdentityUiParentProvider.cs" />
     <Compile Include="Utils\Colors.cs" />
+    <BundleResource Include="Resources\Fonts\Quicksand-Regular.ttf" />
+    <BundleResource Include="Resources\Fonts\Quicksand-Medium.ttf" />
+    <BundleResource Include="Resources\Fonts\Quicksand-Light.ttf" />
+    <BundleResource Include="Resources\Fonts\Quicksand-Bold.ttf" />
+    <BundleResource Include="Resources\Fonts\DancingScript-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

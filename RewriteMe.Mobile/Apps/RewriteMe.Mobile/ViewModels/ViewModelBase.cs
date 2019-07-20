@@ -16,7 +16,6 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public abstract class ViewModelBase : BindableBase, INavigatedAware, IDisposable
     {
-        private string _title;
         private bool _hasTitleBar;
         private bool _canGoBack;
 
@@ -49,12 +48,6 @@ namespace RewriteMe.Mobile.ViewModels
         public ICommand NavigateBackCommand { get; }
 
         public ICommand NavigateToSettingsCommand { get; }
-
-        public string Title
-        {
-            get => _title;
-            set => SetProperty(ref _title, value);
-        }
 
         public bool HasTitleBar
         {

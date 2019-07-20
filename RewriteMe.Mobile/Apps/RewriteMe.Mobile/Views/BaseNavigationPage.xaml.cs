@@ -12,13 +12,6 @@ namespace RewriteMe.Mobile.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class BaseNavigationPage
     {
-        public static readonly BindableProperty HasNavigationBarProperty =
-            BindableProperty.Create(
-                nameof(HasNavigationBar),
-                typeof(bool),
-                typeof(BaseNavigationPage),
-                defaultValue: true);
-
         public BaseNavigationPage()
         {
             NavigationPage.SetHasBackButton(this, false);
@@ -29,12 +22,6 @@ namespace RewriteMe.Mobile.Views
             RightNavigationToolbarItems = rightToolbarItems;
 
             InitializeComponent();
-        }
-
-        public bool HasNavigationBar
-        {
-            get => (bool)GetValue(HasNavigationBarProperty);
-            set => SetValue(HasNavigationBarProperty, value);
         }
 
         public ObservableCollection<NavigationToolbarItem> RightNavigationToolbarItems { get; internal set; }

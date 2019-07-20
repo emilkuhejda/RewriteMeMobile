@@ -47,7 +47,6 @@ namespace RewriteMe.Mobile.ViewModels
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     FileItem = navigationParameters.GetValue<FileItem>();
-                    Title = FileItem.Name;
 
                     var transcribeItems = await _transcribeItemService.GetAllAsync(FileItem.Id).ConfigureAwait(false);
 
