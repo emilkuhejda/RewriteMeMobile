@@ -15,7 +15,6 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
-        private readonly IDialogService _dialogService;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
@@ -23,11 +22,10 @@ namespace RewriteMe.Mobile.ViewModels
             IDialogService dialogService,
             PlayerViewModel playerViewModel,
             TranscribeItem transcribeItem)
-            : base(playerViewModel, transcribeItem)
+            : base(playerViewModel, dialogService, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _rewriteMeWebService = rewriteMeWebService;
-            _dialogService = dialogService;
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
@@ -89,7 +87,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 if (source == null)
                 {
-                    await _dialogService.AlertAsync(Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage)).ConfigureAwait(false);
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage)).ConfigureAwait(false);
                     return;
                 }
 

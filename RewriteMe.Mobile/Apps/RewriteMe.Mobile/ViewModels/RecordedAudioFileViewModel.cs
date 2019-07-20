@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Transcription;
+using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -9,8 +11,9 @@ namespace RewriteMe.Mobile.ViewModels
     {
         public RecordedAudioFileViewModel(
             PlayerViewModel playerViewModel,
+            IDialogService dialogService,
             RecordedAudioFile recordedAudioFile)
-            : base(playerViewModel, recordedAudioFile)
+            : base(playerViewModel, dialogService, recordedAudioFile)
         {
             if (!string.IsNullOrWhiteSpace(recordedAudioFile.UserTranscript))
             {
@@ -44,6 +47,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                if (DetailItem.Source == null)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.UnableToLoadAudioFile)).ConfigureAwait(false);
+                    return;
+                }
+
                 PlayerViewModel.Load(DetailItem.Source);
                 PlayerViewModel.Play();
             }

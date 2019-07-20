@@ -601,6 +601,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Unable to load audio file..
+        /// </summary>
+        public static string UnableToLoadAudioFile {
+            get {
+                return ResourceManager.GetString("UnableToLoadAudioFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Server is unreachable. Please try it later..
         /// </summary>
         public static string UnreachableServerErrorMessage {
