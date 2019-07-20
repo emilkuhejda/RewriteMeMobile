@@ -38,7 +38,14 @@
 	<string>0.9</string>
 	<key>XSLaunchImageAssets</key>
 	<string>Assets.xcassets/LaunchImage-1.launchimage</string>
-	<key>UIBackgroundModes</key>
+  <key>UIAppFonts</key>
+  <array>
+    <string>Fonts/Quicksand-Light.ttf</string>
+    <string>Fonts/Quicksand-Regular.ttf</string>
+    <string>Fonts/Quicksand-Medium.ttf</string>
+    <string>Fonts/Quicksand-Bold.ttf</string>
+  </array>
+  <key>UIBackgroundModes</key>
 	<array>
 		<string>location</string>
 		<string>remote-notification</string>
