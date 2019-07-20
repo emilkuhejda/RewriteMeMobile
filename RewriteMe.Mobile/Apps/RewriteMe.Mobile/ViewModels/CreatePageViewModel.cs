@@ -177,7 +177,7 @@ namespace RewriteMe.Mobile.ViewModels
             });
 
             var navigationParameters = new NavigationParameters();
-            var parameters = new DropDownListNavigationParameters(Loc.Text(TranslationKeys.Languages), languages);
+            var parameters = new DropDownListNavigationParameters(languages);
             navigationParameters.Add<DropDownListNavigationParameters>(parameters);
 
             await NavigationService.NavigateWithoutAnimationAsync(Pages.DropDownListPage, navigationParameters).ConfigureAwait(false);

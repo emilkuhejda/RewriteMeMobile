@@ -122,6 +122,11 @@
     <None Include="..\..\Global\RewriteMe.CodeAnalysis.ruleset">
       <Link>Properties\RewriteMe.CodeAnalysis.ruleset</Link>
     </None>
+    <AndroidAsset Include="Assets\Quicksand-Regular.ttf" />
+    <AndroidAsset Include="Assets\Quicksand-Medium.ttf" />
+    <AndroidAsset Include="Assets\Quicksand-Light.ttf" />
+    <AndroidAsset Include="Assets\Quicksand-Bold.ttf" />
+    <AndroidAsset Include="Assets\DancingScript-Regular.ttf" />
     <None Include="Resources\AboutResources.txt" />
     <None Include="Assets\AboutAssets.txt" />
     <None Include="Properties\AndroidManifest.xml">

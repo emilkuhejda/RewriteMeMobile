@@ -24,6 +24,32 @@
                        Right="{StaticResource StandardSpacing}"
                        Top="{StaticResource StandardSpacing}" />
 
+            <!--  Fonts  -->
+            <OnPlatform x:Key="FontFamilyDancingScriptRegular"
+                        x:TypeArguments="x:String"
+                        Android="DancingScript-Regular.ttf#DancingScript-Regular"
+                        iOS="DancingScript-Regular" />
+
+            <OnPlatform x:Key="FontFamilyQuicksandLight"
+                        x:TypeArguments="x:String"
+                        Android="Quicksand-Light.ttf#Quicksand-Light"
+                        iOS="Quicksand-Light" />
+
+            <OnPlatform x:Key="FontFamilyQuicksandRegular"
+                        x:TypeArguments="x:String"
+                        Android="Quicksand-Regular.ttf#Quicksand-Regular"
+                        iOS="Quicksand-Regular" />
+
+            <OnPlatform x:Key="FontFamilyQuicksandMedium"
+                        x:TypeArguments="x:String"
+                        Android="Quicksand-Medium.ttf#Quicksand-Medium"
+                        iOS="Quicksand-Medium" />
+
+            <OnPlatform x:Key="FontFamilyQuicksandBold"
+                        x:TypeArguments="x:String"
+                        Android="Quicksand-Bold.ttf#Quicksand-Bold"
+                        iOS="Quicksand-Bold" />
+
             <!--  Colors  -->
             <!--  Source: https://material.io/guidelines/style/color.html#color-color-palette  -->
             <Color x:Key="ColorGrey50">#FAFAFA</Color>
@@ -108,11 +134,18 @@
             <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
 
             <!--  Styles  -->
+            <Style TargetType="Editor">
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
+            </Style>
+
             <Style TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
                 <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="CenterAndExpand" />
                 <Setter Property="HorizontalTextAlignment" Value="Start" />
@@ -122,6 +155,7 @@
 
             <Style x:Key="LabelSmall" TargetType="Label">
                 <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
             </Style>
 
             <Style x:Key="LabelStyle" TargetType="Label">
@@ -129,6 +163,7 @@
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
                 <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="Opacity" Value="1.0" />
@@ -147,6 +182,7 @@
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
                 <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="Opacity" Value="1.0" />
@@ -164,6 +200,7 @@
                    BasedOn="{StaticResource LabelStyle}"
                    TargetType="Label">
                 <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandBold}" />
             </Style>
 
             <Style x:Key="TitleLabelSyle" TargetType="Label">
@@ -171,6 +208,7 @@
                 <Setter Property="BackgroundColor" Value="Transparent" />
                 <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
                 <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandBold}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="Center" />
                 <Setter Property="Opacity" Value="1.0" />
@@ -182,7 +220,8 @@
                    BasedOn="{StaticResource TitleLabelSyle}"
                    TargetType="Label">
                 <Setter Property="TextColor" Value="{StaticResource ApplicationTitleTextColor}" />
-                <Setter Property="FontSize" Value="{StaticResource LargerSize}" />
+                <Setter Property="FontSize" Value="{StaticResource BigSize}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyDancingScriptRegular}" />
             </Style>
 
             <Style x:Key="DropDownButtonStyle" TargetType="controls:DrillDownButton">
@@ -197,6 +236,7 @@
                 <Setter Property="TextColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
                 <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
             </Style>
 
             <Style x:Key="CustomButtonPrimaryStyle"
@@ -206,6 +246,7 @@
                 <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="BackgroundColorPressed" Value="{StaticResource ColorPrimaryDark}" />
                 <Setter Property="BorderColorPressed" Value="{StaticResource ColorPrimaryDark}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Setter Property="TextColor" Value="{StaticResource ColorGrey300}" />
                 <Style.Triggers>
                     <Trigger TargetType="Button" Property="IsEnabled" Value="True">
@@ -226,6 +267,7 @@
                 <Setter Property="BackgroundColorPressed" Value="{StaticResource WindowBackground}" />
                 <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="BorderColorPressed" Value="{StaticResource ColorPrimary}" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Style.Triggers>
                     <Trigger TargetType="Button" Property="IsEnabled" Value="True">
                         <Setter Property="BackgroundColor" Value="{StaticResource ColorWhite}" />
@@ -243,6 +285,7 @@
                 <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="CornerRadius" Value="30" />
                 <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandBold}" />
                 <Setter Property="TextColor" Value="{StaticResource ColorWhite}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />
@@ -260,7 +303,6 @@
             <!--  Navigation Bar  -->
             <x:Double x:Key="HeaderImageHeight">60</x:Double>
             <GridLength x:Key="NavigationBarRow1Height">52</GridLength>
-            <GridLength x:Key="NavigationBarRow2Height">52</GridLength>
             <converters:BoolToGridLengthConverter x:Key="BoolToNavigationBarRow1HeightConverter"
                                                   FalseValue="0"
                                                   TrueValue="{StaticResource NavigationBarRow1Height}" />
@@ -277,8 +319,6 @@
                     <Grid.RowDefinitions>
                         <!--  Headline row  -->
                         <RowDefinition Height="{Binding HasTitleBar, Mode=OneWay, Converter={StaticResource BoolToNavigationBarRow1HeightConverter}}" />
-                        <!--  Gray headline row  -->
-                        <RowDefinition Height="{StaticResource NavigationBarRow2Height}" />
                         <!--  Content row  -->
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
@@ -300,30 +340,6 @@
                           VerticalOptions="FillAndExpand">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="{StaticResource NavigationBarRow1Height}" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label HorizontalOptions="FillAndExpand"
-                               HorizontalTextAlignment="Center"
-                               Style="{StaticResource MainTitleLabelSyle}"
-                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ApplicationTitle}}"
-                               VerticalOptions="FillAndExpand"
-                               VerticalTextAlignment="Center" />
-                    </Grid>
-
-                    <!--  Header Row 2: gray subtitle bar  -->
-                    <Grid Grid.Row="1"
-                          Margin="0"
-                          Padding="0"
-                          BackgroundColor="{StaticResource NavigationBarGray}"
-                          BindingContext="{TemplateBinding Parent}"
-                          ColumnSpacing="0"
-                          IsVisible="{TemplateBinding HasNavigationBar}"
-                          RowSpacing="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="{StaticResource NavigationBarRow2Height}" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="90" />
@@ -359,14 +375,12 @@
                             </Grid.GestureRecognizers>
                         </Grid>
 
-                        <!--  Title within in gray headline  -->
                         <Label Grid.Row="0"
                                Grid.Column="1"
-                               BindingContext="{TemplateBinding Parent}"
                                HorizontalOptions="FillAndExpand"
                                HorizontalTextAlignment="Center"
-                               Style="{StaticResource TitleLabelSyle}"
-                               Text="{TemplateBinding Title}"
+                               Style="{StaticResource MainTitleLabelSyle}"
+                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ApplicationTitle}}"
                                VerticalOptions="FillAndExpand"
                                VerticalTextAlignment="Center" />
 
@@ -390,7 +404,7 @@
                                           RowSpacing="0"
                                           WidthRequest="39">
                                         <StackLayout Padding="0" Orientation="Vertical">
-                                            <Grid BackgroundColor="{StaticResource NavigationBarGray}"
+                                            <Grid BackgroundColor="Transparent"
                                                   HeightRequest="30"
                                                   HorizontalOptions="CenterAndExpand"
                                                   VerticalOptions="CenterAndExpand"
@@ -415,7 +429,7 @@
                     </Grid>
 
                     <!--  Page Content  -->
-                    <ContentPresenter Grid.Row="2"
+                    <ContentPresenter Grid.Row="1"
                                       Grid.Column="0"
                                       HorizontalOptions="FillAndExpand"
                                       VerticalOptions="FillAndExpand" />
@@ -427,12 +441,6 @@
                 <ViewCell>
                     <ViewCell.View>
                         <StackLayout>
-                            <Editor AutoSize="TextChanges"
-                                    FontSize="{StaticResource MediumSize}"
-                                    Keyboard="Text"
-                                    Text="{Binding Transcript}"
-                                    VerticalOptions="Fill" />
-
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -487,6 +495,12 @@
                                        Style="{StaticResource LabelStyle}"
                                        Text="{Binding Time}" />
                             </Grid>
+
+                            <Editor AutoSize="TextChanges"
+                                    FontSize="{StaticResource MediumSize}"
+                                    Keyboard="Text"
+                                    Text="{Binding Transcript}"
+                                    VerticalOptions="Fill" />
                         </StackLayout>
                     </ViewCell.View>
                 </ViewCell>
