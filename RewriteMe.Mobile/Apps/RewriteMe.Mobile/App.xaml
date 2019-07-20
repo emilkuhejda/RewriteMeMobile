@@ -427,12 +427,6 @@
                 <ViewCell>
                     <ViewCell.View>
                         <StackLayout>
-                            <Editor AutoSize="TextChanges"
-                                    FontSize="{StaticResource MediumSize}"
-                                    Keyboard="Text"
-                                    Text="{Binding Transcript}"
-                                    VerticalOptions="Fill" />
-
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -487,6 +481,12 @@
                                        Style="{StaticResource LabelStyle}"
                                        Text="{Binding Time}" />
                             </Grid>
+
+                            <Editor AutoSize="TextChanges"
+                                    FontSize="{StaticResource MediumSize}"
+                                    Keyboard="Text"
+                                    Text="{Binding Transcript}"
+                                    VerticalOptions="Fill" />
                         </StackLayout>
                     </ViewCell.View>
                 </ViewCell>
