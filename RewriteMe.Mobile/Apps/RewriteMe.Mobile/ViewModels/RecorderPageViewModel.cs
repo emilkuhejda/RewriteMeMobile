@@ -260,6 +260,7 @@ namespace RewriteMe.Mobile.ViewModels
                 StopRecordingAfterTimeout = true,
                 StopRecordingOnSilence = false,
                 TotalAudioTimeout = TimeSpan.FromSeconds(AudioLengthInSeconds),
+                SilenceThreshold = 1,
                 FilePath = filePath
             };
 
