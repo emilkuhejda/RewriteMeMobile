@@ -34,7 +34,6 @@ namespace RewriteMe.Mobile.ViewModels
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     FileItem = navigationParameters.GetValue<FileItem>();
-                    Title = FileItem.Name;
                     Name = FileItem.Name;
                     SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
 

@@ -260,7 +260,6 @@
             <!--  Navigation Bar  -->
             <x:Double x:Key="HeaderImageHeight">60</x:Double>
             <GridLength x:Key="NavigationBarRow1Height">52</GridLength>
-            <GridLength x:Key="NavigationBarRow2Height">52</GridLength>
             <converters:BoolToGridLengthConverter x:Key="BoolToNavigationBarRow1HeightConverter"
                                                   FalseValue="0"
                                                   TrueValue="{StaticResource NavigationBarRow1Height}" />
@@ -277,8 +276,6 @@
                     <Grid.RowDefinitions>
                         <!--  Headline row  -->
                         <RowDefinition Height="{Binding HasTitleBar, Mode=OneWay, Converter={StaticResource BoolToNavigationBarRow1HeightConverter}}" />
-                        <!--  Gray headline row  -->
-                        <RowDefinition Height="{StaticResource NavigationBarRow2Height}" />
                         <!--  Content row  -->
                         <RowDefinition Height="*" />
                     </Grid.RowDefinitions>
@@ -300,30 +297,6 @@
                           VerticalOptions="FillAndExpand">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="{StaticResource NavigationBarRow1Height}" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-
-                        <Label HorizontalOptions="FillAndExpand"
-                               HorizontalTextAlignment="Center"
-                               Style="{StaticResource MainTitleLabelSyle}"
-                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ApplicationTitle}}"
-                               VerticalOptions="FillAndExpand"
-                               VerticalTextAlignment="Center" />
-                    </Grid>
-
-                    <!--  Header Row 2: gray subtitle bar  -->
-                    <Grid Grid.Row="1"
-                          Margin="0"
-                          Padding="0"
-                          BackgroundColor="{StaticResource NavigationBarGray}"
-                          BindingContext="{TemplateBinding Parent}"
-                          ColumnSpacing="0"
-                          IsVisible="{TemplateBinding HasNavigationBar}"
-                          RowSpacing="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="{StaticResource NavigationBarRow2Height}" />
                         </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="90" />
@@ -359,14 +332,12 @@
                             </Grid.GestureRecognizers>
                         </Grid>
 
-                        <!--  Title within in gray headline  -->
                         <Label Grid.Row="0"
                                Grid.Column="1"
-                               BindingContext="{TemplateBinding Parent}"
                                HorizontalOptions="FillAndExpand"
                                HorizontalTextAlignment="Center"
-                               Style="{StaticResource TitleLabelSyle}"
-                               Text="{TemplateBinding Title}"
+                               Style="{StaticResource MainTitleLabelSyle}"
+                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ApplicationTitle}}"
                                VerticalOptions="FillAndExpand"
                                VerticalTextAlignment="Center" />
 
@@ -390,7 +361,7 @@
                                           RowSpacing="0"
                                           WidthRequest="39">
                                         <StackLayout Padding="0" Orientation="Vertical">
-                                            <Grid BackgroundColor="{StaticResource NavigationBarGray}"
+                                            <Grid BackgroundColor="Transparent"
                                                   HeightRequest="30"
                                                   HorizontalOptions="CenterAndExpand"
                                                   VerticalOptions="CenterAndExpand"
@@ -415,7 +386,7 @@
                     </Grid>
 
                     <!--  Page Content  -->
-                    <ContentPresenter Grid.Row="2"
+                    <ContentPresenter Grid.Row="1"
                                       Grid.Column="0"
                                       HorizontalOptions="FillAndExpand"
                                       VerticalOptions="FillAndExpand" />

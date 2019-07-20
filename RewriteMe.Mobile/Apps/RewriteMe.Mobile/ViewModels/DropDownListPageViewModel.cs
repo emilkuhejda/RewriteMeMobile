@@ -46,7 +46,6 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 var dropDownListNavigationParameters = navigationParameters.GetValue<DropDownListNavigationParameters>();
-                Title = dropDownListNavigationParameters.Title;
                 Items = dropDownListNavigationParameters.Items;
 
                 await Task.CompletedTask.ConfigureAwait(false);
