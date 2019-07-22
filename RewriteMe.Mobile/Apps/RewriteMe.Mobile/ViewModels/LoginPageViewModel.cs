@@ -17,6 +17,7 @@ namespace RewriteMe.Mobile.ViewModels
     public class LoginPageViewModel : ViewModelBase
     {
         private readonly IUserSessionService _userSessionService;
+        private readonly ILanguageService _languageService;
         private readonly IApplicationSettings _applicationSettings;
 
         private string _loginFeedback;
@@ -24,6 +25,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public LoginPageViewModel(
             IUserSessionService userSessionService,
+            ILanguageService languageService,
             IApplicationSettings applicationSettings,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -31,6 +33,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(dialogService, navigationService, loggerFactory)
         {
             _userSessionService = userSessionService;
+            _languageService = languageService;
             _applicationSettings = applicationSettings;
 
             HasTitleBar = false;
@@ -65,6 +68,7 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 await _applicationSettings.InitializeAsync().ConfigureAwait(false);
+                await _languageService.InitializeAsync().ConfigureAwait(false);
 
                 var alreadySignedIn = await _userSessionService.IsSignedInAsync().ConfigureAwait(false);
                 if (alreadySignedIn)

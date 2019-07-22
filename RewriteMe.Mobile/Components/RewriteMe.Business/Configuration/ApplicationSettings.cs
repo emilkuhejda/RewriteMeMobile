@@ -28,6 +28,8 @@ namespace RewriteMe.Business.Configuration
 
         public string SupportMailAddress => "emil.kuhejda@gmail.com";
 
+        public string DefaultLanguage { get; } = "en";
+
         public string ClientId => "94983a85-6f54-4940-849e-55eaeb1d89dd";
 
         public string RedirectUri => "msal94983a85-6f54-4940-849e-55eaeb1d89dd://auth";
