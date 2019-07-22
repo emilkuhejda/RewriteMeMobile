@@ -1,4 +1,5 @@
-﻿using Plugin.LatestVersion;
+﻿using Plugin.Connectivity;
+using Plugin.LatestVersion;
 using Plugin.Messaging;
 using Prism.Ioc;
 using RewriteMe.Common;
@@ -18,6 +19,7 @@ namespace RewriteMe.Mobile.Configuration
         {
             containerRegistry.RegisterInstance(CrossLatestVersion.Current);
             containerRegistry.RegisterInstance(CrossMessaging.Current.EmailMessenger);
+            containerRegistry.RegisterInstance(CrossConnectivity.Current);
             containerRegistry.RegisterSingleton<IDialogService, DialogService>();
             containerRegistry.RegisterSingleton<IExceptionHandlingStrategy, ExceptionHandlingStrategy>();
 

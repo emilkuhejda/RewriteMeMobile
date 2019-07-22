@@ -6,6 +6,7 @@ using Microsoft.Rest;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
@@ -14,10 +15,14 @@ namespace RewriteMe.Business.Utils
 {
     public class WebServiceErrorHandler : IWebServiceErrorHandler
     {
+        private readonly IConnectivityService _connectivityService;
         private readonly ILogger _logger;
 
-        public WebServiceErrorHandler(ILoggerFactory loggerFactory)
+        public WebServiceErrorHandler(
+            IConnectivityService connectivityService,
+            ILoggerFactory loggerFactory)
         {
+            _connectivityService = connectivityService;
             _logger = loggerFactory.CreateLogger(typeof(IWebServiceErrorHandler));
         }
 
@@ -25,6 +30,9 @@ namespace RewriteMe.Business.Utils
         {
             if (webServiceCall == null)
                 throw new ArgumentNullException(nameof(webServiceCall));
+
+            if (!_connectivityService.IsConnected)
+                return new HttpRequestResult<T>(HttpRequestState.Offline);
 
             var targetTypeName = typeof(T).GetFriendlyName();
             try
