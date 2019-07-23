@@ -37,6 +37,7 @@ namespace RewriteMe.Mobile.ViewModels
             _applicationSettings = applicationSettings;
 
             HasTitleBar = false;
+            CanGoBack = false;
 
             LoginCommand = new AsyncCommand(ExecuteLoginCommandAsync, CanExecuteLoginCommand);
         }

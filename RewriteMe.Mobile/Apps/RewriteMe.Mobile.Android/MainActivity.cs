@@ -29,6 +29,7 @@ namespace RewriteMe.Mobile.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
+            Forms.SetFlags("CollectionView_Experimental");
             Forms.Init(this, savedInstanceState);
 
             CachedImageRenderer.Init(null);
