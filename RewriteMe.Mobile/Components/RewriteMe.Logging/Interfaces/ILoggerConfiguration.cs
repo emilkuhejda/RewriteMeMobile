@@ -6,6 +6,6 @@ namespace RewriteMe.Logging.Interfaces
     {
         void Initialize(string logFileName);
 
-        FileInfo GetLogFilePath();
+        FileInfo GetLogFileInfo();
     }
 }

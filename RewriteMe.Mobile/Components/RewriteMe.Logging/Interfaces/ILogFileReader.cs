@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.IO;
+using System.Threading.Tasks;
 
 namespace RewriteMe.Logging.Interfaces
 {
@@ -7,5 +8,7 @@ namespace RewriteMe.Logging.Interfaces
         Task<string> ReadLogFileAsync();
 
         Task ClearLogFileAsync();
+
+        FileInfo GetLogFileInfo();
     }
 }
