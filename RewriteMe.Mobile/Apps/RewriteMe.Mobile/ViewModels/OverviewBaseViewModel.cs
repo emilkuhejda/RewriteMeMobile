@@ -144,14 +144,8 @@ namespace RewriteMe.Mobile.ViewModels
             await NavigationService.NavigateWithoutAnimationAsync(Pages.Recorder).ConfigureAwait(false);
         }
 
-        private async Task ExecuteNavigateToOverviewAsync()
-        {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.Overview).ConfigureAwait(false);
-        }
+        protected abstract Task ExecuteNavigateToOverviewAsync();
 
-        private async Task ExecuteNavigateToRecorderOverviewAsync()
-        {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.RecorderOverview).ConfigureAwait(false);
-        }
+        protected abstract Task ExecuteNavigateToRecorderOverviewAsync();
     }
 }

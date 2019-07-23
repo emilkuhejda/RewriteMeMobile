@@ -108,6 +108,16 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        protected override async Task ExecuteNavigateToOverviewAsync()
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
+        }
+
+        protected override async Task ExecuteNavigateToRecorderOverviewAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.RecorderOverview).ConfigureAwait(false);
+        }
+
         protected override void DisposeInternal()
         {
             _schedulerService.SynchronizationCompleted -= HandleSynchronizationCompleted;
