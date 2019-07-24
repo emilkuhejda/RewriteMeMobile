@@ -79,6 +79,7 @@
             <Color x:Key="ActionBarTileBackgroundColorTouch">#BDBDBD</Color>
             <Color x:Key="WarningMessageBackground">#E65100</Color>
             <Color x:Key="PlayerBackground">#D2F9F1</Color>
+            <Color x:Key="RecorderResultBackground">#c3d5d5</Color>
 
             <!--  Font Sizes  -->
             <OnPlatform x:Key="LittleSize"
