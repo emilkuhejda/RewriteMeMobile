@@ -1,4 +1,6 @@
-﻿namespace RewriteMe.Resources.Localization
+﻿using RewriteMe.Domain.Localization;
+
+namespace RewriteMe.Resources.Localization
 {
     public static class Languages
     {

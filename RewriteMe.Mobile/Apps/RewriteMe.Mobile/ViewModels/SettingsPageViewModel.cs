@@ -9,10 +9,10 @@ using Plugin.Messaging;
 using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Localization;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
@@ -26,13 +26,12 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
-        private readonly IInternalValueService _internalValueService;
         private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
+        private readonly ILanguageService _languageService;
         private readonly IApplicationSettings _applicationSettings;
         private readonly ILatestVersion _latestVersion;
         private readonly IEmailTask _emailTask;
-        private readonly ILocalizer _localizer;
 
         private LanguageInfo _selectedLanguage;
         private string _userName;
@@ -40,25 +39,23 @@ namespace RewriteMe.Mobile.ViewModels
         private string _applicationVersion;
 
         public SettingsPageViewModel(
-            IInternalValueService internalValueService,
             IUserSessionService userSessionService,
             IUserSubscriptionService userSubscriptionService,
+            ILanguageService languageService,
             IApplicationSettings applicationSettings,
             ILatestVersion latestVersion,
             IEmailTask emailTask,
-            ILocalizer localizer,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
-            _internalValueService = internalValueService;
             _userSessionService = userSessionService;
             _userSubscriptionService = userSubscriptionService;
+            _languageService = languageService;
             _applicationSettings = applicationSettings;
             _latestVersion = latestVersion;
             _emailTask = emailTask;
-            _localizer = localizer;
 
             CanGoBack = true;
 
@@ -127,7 +124,7 @@ namespace RewriteMe.Mobile.ViewModels
                 var sign = remainingTime.Ticks < 0 ? "-" : string.Empty;
                 RemainingTime = $"{sign}{remainingTime:hh\\:mm\\:ss}";
 
-                await InitializeLanguageSettingAsync().ConfigureAwait(false);
+                SelectedLanguage = await _languageService.GetLanguageInfo().ConfigureAwait(false);
             }
         }
 
@@ -140,30 +137,11 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 case nameof(SelectedLanguage):
                     var language = (CultureInfo)dropDownListViewModel.Value;
-                    await ChangeUserLanguageAsync(language).ConfigureAwait(false);
+                    await _languageService.ChangeUserLanguageAsync(language).ConfigureAwait(false);
                     break;
                 default:
                     throw new NotSupportedException(nameof(SelectedLanguage));
             }
-        }
-
-        private async Task ChangeUserLanguageAsync(CultureInfo language)
-        {
-            await _internalValueService.UpdateValueAsync(InternalValues.LanguageSetting, language.TwoLetterISOLanguageName).ConfigureAwait(false);
-            _localizer.SetCultureInfo(language);
-        }
-
-        private async Task InitializeLanguageSettingAsync()
-        {
-            var languageName = await _internalValueService.GetValueAsync(InternalValues.LanguageSetting).ConfigureAwait(false);
-            if (languageName == null)
-            {
-                var currentCulture = _localizer.GetCurrentCulture();
-                languageName = currentCulture.TwoLetterISOLanguageName;
-            }
-
-            var language = Languages.All.FirstOrDefault(x => x.Culture == languageName) ?? Languages.English;
-            SelectedLanguage = language;
         }
 
         private async Task ExecuteNavigateToLanguageCommandAsync()

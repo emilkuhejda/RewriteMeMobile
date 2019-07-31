@@ -10,6 +10,7 @@ using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
+using Xamarin.Essentials;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -32,6 +33,7 @@ namespace RewriteMe.Mobile
         {
             InitializeComponent();
 
+            InitializeExperimentalFeatures();
             InitializeStorage();
 
             var navigationParameters = CreateNavigationParameters(InitializationParameters.Current.ImportedFilePath);
@@ -47,6 +49,11 @@ namespace RewriteMe.Mobile
             }
 
             return navigationParameters;
+        }
+
+        private void InitializeExperimentalFeatures()
+        {
+            ExperimentalFeatures.Enable(ExperimentalFeatures.EmailAttachments);
         }
 
         private void InitializeStorage()

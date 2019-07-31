@@ -24,7 +24,6 @@ namespace RewriteMe.DataAccess
 
             var tables = new[]
             {
-                typeof(AudioSourceEntity),
                 typeof(DeletedFileItemEntity),
                 typeof(FileItemEntity),
                 typeof(InternalValueEntity),

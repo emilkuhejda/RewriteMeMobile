@@ -187,6 +187,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to English only and 5 minutes maximum.
+        /// </summary>
+        public static string EnglishOnlyAndFiveMinutesOnly {
+            get {
+                return ResourceManager.GetString("EnglishOnlyAndFiveMinutesOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment method is not supported. Please, configure it first..
         /// </summary>
         public static string InAppBillingIsNotSupportedErrorMessage {

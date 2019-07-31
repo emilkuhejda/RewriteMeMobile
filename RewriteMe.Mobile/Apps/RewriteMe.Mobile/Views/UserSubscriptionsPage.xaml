@@ -9,14 +9,12 @@
                           Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="ProductsTemplate">
-            <ViewCell>
-                <ViewCell.View>
-                    <Button Margin="20,0,20,20"
-                            Command="{Binding BuyCommand}"
-                            Style="{StaticResource ActionButtonStyle}"
-                            Text="{Binding Text}" />
-                </ViewCell.View>
-            </ViewCell>
+            <Grid>
+                <Button Margin="20,0,20,20"
+                        Command="{Binding BuyCommand}"
+                        Style="{StaticResource ActionButtonStyle}"
+                        Text="{Binding Text}" />
+            </Grid>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
@@ -24,11 +22,9 @@
         <Grid Grid.Row="0"
               Grid.Column="0"
               Padding="{StaticResource StandardPadding}">
-            <ListView HasUnevenRows="True"
-                      ItemTemplate="{StaticResource ProductsTemplate}"
-                      ItemsSource="{Binding Products}"
-                      SeparatorVisibility="None"
-                      VerticalOptions="Start" />
+            <CollectionView ItemTemplate="{StaticResource ProductsTemplate}"
+                            ItemsSource="{Binding Products}"
+                            VerticalOptions="Start" />
         </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"
