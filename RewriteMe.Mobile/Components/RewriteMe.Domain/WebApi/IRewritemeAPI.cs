@@ -101,11 +101,7 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         /// <param name='language'>
         /// </param>
-        /// <param name='fileName'>
-        /// </param>
         /// <param name='applicationId'>
-        /// </param>
-        /// <param name='file'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -113,7 +109,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), string fileName = default(string), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='fileItemId'>
         /// </param>
@@ -137,7 +133,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<Ok>> DeleteAllFileItemWithHttpMessagesAsync(IList<DeletedFileItemModel> fileItems = default(IList<DeletedFileItemModel>), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<Ok>> DeleteAllFileItemsWithHttpMessagesAsync(IList<DeletedFileItemModel> fileItems = default(IList<DeletedFileItemModel>), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='fileItemId'>
         /// </param>
@@ -193,6 +189,16 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         Task<HttpOperationResponse<RecognizedTime>> GetRecognizedTimeWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<IList<TranscribeItem>>> GetTranscribeItemsWithHttpMessagesAsync(System.Guid fileItemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='updatedAfter'>
         /// </param>
         /// <param name='applicationId'>
@@ -214,6 +220,16 @@ namespace RewriteMe.Domain.WebApi
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<byte[]>> GetTranscribeAudioSourceWithHttpMessagesAsync(System.Guid transcribeItemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='transcribeItemId'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse> GetTranscribeAudioSourceStreamWithHttpMessagesAsync(System.Guid transcribeItemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='transcribeItemId'>
         /// </param>

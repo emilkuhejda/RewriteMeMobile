@@ -31,11 +31,6 @@ namespace RewriteMe.DataAccess.Entities
 
         public DateTime DateUpdated { get; set; }
 
-        public int AudioSourceVersion { get; set; }
-
-        [OneToOne(CascadeOperations = CascadeOperation.All)]
-        public AudioSourceEntity AudioSource { get; set; }
-
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public TranscribeItemEntity[] TranscribeItems { get; set; }
     }
