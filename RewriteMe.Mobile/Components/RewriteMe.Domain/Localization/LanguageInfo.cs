@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace RewriteMe.Resources.Localization
+namespace RewriteMe.Domain.Localization
 {
     public class LanguageInfo
     {

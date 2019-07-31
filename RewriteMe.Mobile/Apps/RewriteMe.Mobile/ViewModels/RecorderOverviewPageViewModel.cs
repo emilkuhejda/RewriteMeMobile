@@ -10,6 +10,7 @@ using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Extensions;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -56,6 +57,16 @@ namespace RewriteMe.Mobile.ViewModels
 
                 InitializeNavigation(false);
             }
+        }
+
+        protected override async Task ExecuteNavigateToOverviewAsync()
+        {
+            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+        }
+
+        protected override async Task ExecuteNavigateToRecorderOverviewAsync()
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
         }
     }
 }

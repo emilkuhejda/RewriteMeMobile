@@ -26,7 +26,7 @@ namespace RewriteMe.Mobile.iOS.Localization
             config.LoggingRules.Add(consoleRule);
 
             // File Target
-            var logFilePath = GetLogFilePath().FullName;
+            var logFilePath = GetLogFileInfo().FullName;
             var fileTarget = NLogTargets.GetFileTarget(layout, logFilePath);
             config.AddTarget("file", fileTarget);
 
@@ -36,7 +36,7 @@ namespace RewriteMe.Mobile.iOS.Localization
             LogManager.Configuration = config;
         }
 
-        public FileInfo GetLogFilePath()
+        public FileInfo GetLogFileInfo()
         {
             var folder = Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments);
             if (!Directory.Exists(folder))

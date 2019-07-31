@@ -11,6 +11,8 @@ namespace RewriteMe.Domain.Interfaces.Configuration
 
         string SupportMailAddress { get; }
 
+        string DefaultLanguage { get; }
+
         string ClientId { get; }
 
         string RedirectUri { get; }

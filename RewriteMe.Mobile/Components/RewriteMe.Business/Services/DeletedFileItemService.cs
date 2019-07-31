@@ -81,7 +81,7 @@ namespace RewriteMe.Business.Services
 
             _logger.Info($"Send pending deleted file items {pendingFileItems.Count} to server.");
 
-            var httpRequestResult = await _rewriteMeWebService.DeleteAllFileItemAsync(pendingFileItems).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.DeleteAllFileItemsAsync(pendingFileItems).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 await _deletedFileItemRepository.ClearAsync().ConfigureAwait(false);

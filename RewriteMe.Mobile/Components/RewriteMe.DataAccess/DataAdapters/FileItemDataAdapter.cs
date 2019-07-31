@@ -17,8 +17,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 TotalTimeString = entity.TotalTime.ToString(),
                 DateCreated = entity.DateCreated,
                 DateProcessed = entity.DateProcessed,
-                DateUpdated = entity.DateUpdated,
-                AudioSourceVersion = entity.AudioSourceVersion
+                DateUpdated = entity.DateUpdated
             };
         }
 
@@ -34,8 +33,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 TotalTime = fileItem.TotalTime,
                 DateCreated = fileItem.DateCreated,
                 DateProcessed = fileItem.DateProcessed,
-                DateUpdated = fileItem.DateUpdated,
-                AudioSourceVersion = fileItem.AudioSourceVersion
+                DateUpdated = fileItem.DateUpdated
             };
         }
     }

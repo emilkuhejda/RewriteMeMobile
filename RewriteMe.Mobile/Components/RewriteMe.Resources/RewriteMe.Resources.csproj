@@ -41,4 +41,8 @@
   <ItemGroup>
     <Folder Include="Utils\" />
   </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RewriteMe.Domain\RewriteMe.Domain.csproj" />
+  </ItemGroup>
 </Project>

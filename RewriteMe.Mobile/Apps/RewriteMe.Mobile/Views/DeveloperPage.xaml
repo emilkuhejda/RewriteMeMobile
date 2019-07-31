@@ -14,13 +14,10 @@
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <Editor Grid.Row="0"
-                    Margin="0"
-                    FontSize="{StaticResource LittleSize}"
-                    HorizontalOptions="Fill"
-                    Keyboard="Text"
-                    Text="{Binding LogContent}"
-                    VerticalOptions="Fill" />
+            <WebView Grid.Row="0"
+                     HorizontalOptions="Center"
+                     Source="{Binding WebViewSource}"
+                     VerticalOptions="Fill" />
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>

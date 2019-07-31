@@ -1,9 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.DeviceInfo;
-using Plugin.Messaging;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Configuration;
@@ -11,6 +11,7 @@ using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Resources.Localization;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -18,14 +19,12 @@ namespace RewriteMe.Mobile.ViewModels
     public class DeveloperPageViewModel : ViewModelBase
     {
         private readonly ILogFileReader _logFileReader;
-        private readonly IEmailTask _emailTask;
         private readonly IApplicationSettings _applicationSettings;
 
-        private string _logContent;
+        private HtmlWebViewSource _webViewSource;
 
         public DeveloperPageViewModel(
             ILogFileReader logFileReader,
-            IEmailTask emailTask,
             IApplicationSettings applicationSettings,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -33,7 +32,6 @@ namespace RewriteMe.Mobile.ViewModels
             : base(dialogService, navigationService, loggerFactory)
         {
             _logFileReader = logFileReader;
-            _emailTask = emailTask;
             _applicationSettings = applicationSettings;
 
             CanGoBack = true;
@@ -43,10 +41,10 @@ namespace RewriteMe.Mobile.ViewModels
             ReloadLogCommand = new AsyncCommand(ExecuteReloadLogCommandAsync);
         }
 
-        public string LogContent
+        public HtmlWebViewSource WebViewSource
         {
-            get => _logContent;
-            set => SetProperty(ref _logContent, value);
+            get => _webViewSource;
+            set => SetProperty(ref _webViewSource, value);
         }
 
         public ICommand ClearLogFileCommand { get; }
@@ -62,8 +60,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task LoadLogFileAsync()
         {
-            LogContent = string.Empty;
-            LogContent = await _logFileReader.ReadLogFileAsync().ConfigureAwait(false);
+            var content = await _logFileReader.ReadLogFileAsync().ConfigureAwait(false);
+            WebViewSource = new HtmlWebViewSource { Html = content };
         }
 
         private async Task ExecuteClearLogFileCommandAsync()
@@ -80,12 +78,11 @@ namespace RewriteMe.Mobile.ViewModels
             if (string.IsNullOrWhiteSpace(_applicationSettings.SupportMailAddress))
                 return;
 
-            if (_emailTask.CanSendEmail)
+            try
             {
                 var device = CrossDevice.Device;
                 var subject = $"{Loc.Text(TranslationKeys.ApplicationTitleLog)}";
                 var message = new StringBuilder()
-                    .AppendLine(LogContent)
                     .AppendLine()
                     .AppendLine()
                     .AppendLine("_______________________________________")
@@ -93,9 +90,22 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine($"Operating system: {Device.RuntimePlatform} {device.OperatingSystem}")
                     .ToString();
 
-                _emailTask.SendEmail(_applicationSettings.SupportMailAddress, subject, message);
+                var emailMessage = new EmailMessage
+                {
+                    To = new List<string> { _applicationSettings.SupportMailAddress },
+                    Subject = subject,
+                    Body = message
+                };
+
+                var fileInfo = _logFileReader.GetLogFileInfo();
+                if (fileInfo.Exists)
+                {
+                    emailMessage.Attachments.Add(new EmailAttachment(fileInfo.FullName));
+                }
+
+                await Email.ComposeAsync(emailMessage).ConfigureAwait(false);
             }
-            else
+            catch (Exception)
             {
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.EmailIsNotSupported)).ConfigureAwait(false);
             }

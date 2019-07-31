@@ -15,7 +15,7 @@ namespace RewriteMe.Mobile.iOS.Localization
 
         public async Task<string> ReadLogFileAsync()
         {
-            var logFile = _loggerConfiguration.GetLogFilePath();
+            var logFile = GetLogFileInfo();
             if (!logFile.Exists)
             {
                 throw new FileNotFoundException(logFile.FullName);
@@ -30,7 +30,7 @@ namespace RewriteMe.Mobile.iOS.Localization
 
         public async Task ClearLogFileAsync()
         {
-            var logFile = _loggerConfiguration.GetLogFilePath();
+            var logFile = GetLogFileInfo();
             if (!logFile.Exists)
             {
                 throw new FileNotFoundException(logFile.FullName);
@@ -40,6 +40,11 @@ namespace RewriteMe.Mobile.iOS.Localization
             {
                 await streamWriter.FlushAsync().ConfigureAwait(false);
             }
+        }
+
+        public FileInfo GetLogFileInfo()
+        {
+            return _loggerConfiguration.GetLogFileInfo();
         }
     }
 }
