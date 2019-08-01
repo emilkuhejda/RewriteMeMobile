@@ -6,7 +6,7 @@ using Plugin.Messaging;
 using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
-using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Utils;

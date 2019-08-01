@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Acr.UserDialogs;
-using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Utils;
 
 namespace RewriteMe.Mobile.Services

@@ -4,7 +4,7 @@ using System.Windows.Input;
 using Prism.Commands;
 using Prism.Mvvm;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Commands;
 
 namespace RewriteMe.Mobile.ViewModels
