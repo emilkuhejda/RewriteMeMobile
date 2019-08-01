@@ -35,13 +35,14 @@ namespace RewriteMe.Business.Services
 
         public async Task SynchronizationAsync(DateTime applicationUpdateDate, DateTime lastFileItemSynchronization)
         {
-            if (lastFileItemSynchronization == default(DateTime))
+            if (lastFileItemSynchronization == default)
             {
-                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemSynchronization, DateTime.UtcNow).ConfigureAwait(false);
+                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 return;
             }
 
-            var lastDeletedFileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.DeletedFileItemSynchronization).ConfigureAwait(false);
+            var lastDeletedFileItemSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.DeletedFileItemSynchronizationTicks).ConfigureAwait(false);
+            var lastDeletedFileItemSynchronization = new DateTime(lastDeletedFileItemSynchronizationTicks);
             _logger.Debug($"Synchronization of deleted file items with timestamp '{lastFileItemSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
             if (applicationUpdateDate >= lastDeletedFileItemSynchronization)
@@ -53,7 +54,7 @@ namespace RewriteMe.Business.Services
                     _logger.Info($"Web server returned {fileItemIds.Count} items for synchronization.");
 
                     await _fileItemRepository.DeleteAsync(fileItemIds).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemSynchronization, DateTime.UtcNow).ConfigureAwait(false);
+                    await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
         }

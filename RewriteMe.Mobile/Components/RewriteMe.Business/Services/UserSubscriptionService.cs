@@ -40,7 +40,8 @@ namespace RewriteMe.Business.Services
 
         public async Task SynchronizationAsync(DateTime applicationUpdateDate)
         {
-            var lastUserSubscriptionSynchronization = await _internalValueService.GetValueAsync(InternalValues.UserSubscriptionSynchronization).ConfigureAwait(false);
+            var lastUserSubscriptionSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.UserSubscriptionSynchronizationTicks).ConfigureAwait(false);
+            var lastUserSubscriptionSynchronization = new DateTime(lastUserSubscriptionSynchronizationTicks);
             _logger.Debug($"Update user subscriptions with timestamp '{lastUserSubscriptionSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
             if (applicationUpdateDate >= lastUserSubscriptionSynchronization)
@@ -52,7 +53,7 @@ namespace RewriteMe.Business.Services
                     _logger.Info($"Web server returned {userSubscriptions.Count} items for synchronization.");
 
                     await _userSubscriptionRepository.InsertOrReplaceAllAsync(userSubscriptions).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronization, DateTime.UtcNow).ConfigureAwait(false);
+                    await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
         }

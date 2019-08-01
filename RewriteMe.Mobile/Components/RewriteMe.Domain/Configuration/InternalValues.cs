@@ -6,13 +6,13 @@ namespace RewriteMe.Domain.Configuration
     {
         public static InternalValue<string> ApplicationId { get; } = new InternalValue<string>("ApplicationId", null);
 
-        public static InternalValue<DateTime> FileItemSynchronization { get; } = new InternalValue<DateTime>("FileItemSynchronization", default(DateTime));
+        public static InternalValue<long> FileItemSynchronizationTicks { get; } = new InternalValue<long>("FileItemSynchronizationTicks", 0);
 
-        public static InternalValue<DateTime> DeletedFileItemSynchronization { get; } = new InternalValue<DateTime>("DeletedFileItemSynchronization", default(DateTime));
+        public static InternalValue<long> DeletedFileItemSynchronizationTicks { get; } = new InternalValue<long>("DeletedFileItemSynchronizationTicks", 0);
 
-        public static InternalValue<DateTime> TranscribeItemSynchronization { get; } = new InternalValue<DateTime>("TranscribeItemSynchronization", default(DateTime));
+        public static InternalValue<long> TranscribeItemSynchronizationTicks { get; } = new InternalValue<long>("TranscribeItemSynchronizationTicks", 0);
 
-        public static InternalValue<DateTime> UserSubscriptionSynchronization { get; } = new InternalValue<DateTime>("UserSubscriptionSynchronization", default(DateTime));
+        public static InternalValue<long> UserSubscriptionSynchronizationTicks { get; } = new InternalValue<long>("UserSubscriptionSynchronizationTicks", 0);
 
         public static InternalValue<string> LanguageSetting { get; } = new InternalValue<string>("LanguageSetting", null);
 
