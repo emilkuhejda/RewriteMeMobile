@@ -5,7 +5,6 @@ using Plugin.Messaging;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;

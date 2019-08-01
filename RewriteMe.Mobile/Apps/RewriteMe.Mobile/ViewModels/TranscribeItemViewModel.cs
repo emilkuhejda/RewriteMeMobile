@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Http;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
