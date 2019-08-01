@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 using Plugin.InAppBilling;
 using Plugin.InAppBilling.Abstractions;
 using Plugin.LatestVersion.Abstractions;
-using Plugin.Messaging;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
@@ -27,9 +26,9 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IBillingPurchaseService _billingPurchaseService;
+        private readonly IEmailService _emailService;
         private readonly IApplicationSettings _applicationSettings;
         private readonly ILatestVersion _latestVersion;
-        private readonly IEmailTask _emailTask;
 
         private IList<SubscriptionProductViewModel> _products;
 
@@ -37,9 +36,9 @@ namespace RewriteMe.Mobile.ViewModels
             IUserSessionService userSessionService,
             IUserSubscriptionService userSubscriptionService,
             IBillingPurchaseService billingPurchaseService,
+            IEmailService emailService,
             IApplicationSettings applicationSettings,
             ILatestVersion latestVersion,
-            IEmailTask emailTask,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
@@ -48,9 +47,9 @@ namespace RewriteMe.Mobile.ViewModels
             _userSessionService = userSessionService;
             _userSubscriptionService = userSubscriptionService;
             _billingPurchaseService = billingPurchaseService;
+            _emailService = emailService;
             _applicationSettings = applicationSettings;
             _latestVersion = latestVersion;
-            _emailTask = emailTask;
 
             CanGoBack = true;
         }
@@ -248,7 +247,7 @@ namespace RewriteMe.Mobile.ViewModels
             if (string.IsNullOrWhiteSpace(_applicationSettings.SupportMailAddress))
                 return;
 
-            if (_emailTask.CanSendEmail)
+            if (_emailService.CanSendEmail)
             {
                 var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
                 var subject = $"{Loc.Text(TranslationKeys.ApplicationTitle)} - Purchase problem";
@@ -269,7 +268,7 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine($"Time stamp: {timestamp}")
                     .ToString();
 
-                _emailTask.SendEmail(_applicationSettings.SupportMailAddress, subject, message);
+                _emailService.Send(_applicationSettings.SupportMailAddress, subject, message);
             }
             else
             {

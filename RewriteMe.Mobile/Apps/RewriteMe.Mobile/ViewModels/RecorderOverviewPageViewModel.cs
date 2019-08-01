@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Plugin.LatestVersion.Abstractions;
-using Plugin.Messaging;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
@@ -23,13 +22,13 @@ namespace RewriteMe.Mobile.ViewModels
             IRecordedItemService recordedItemService,
             IUserSessionService userSessionService,
             IInternalValueService internalValueService,
+            IEmailService emailService,
             ILatestVersion latestVersion,
-            IEmailTask emailTask,
             IApplicationSettings applicationSettings,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(userSessionService, internalValueService, latestVersion, emailTask, applicationSettings, dialogService, navigationService, loggerFactory)
+            : base(userSessionService, internalValueService, emailService, latestVersion, applicationSettings, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
         }

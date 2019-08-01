@@ -96,7 +96,7 @@ namespace RewriteMe.Mobile.Services
             });
         }
 
-        public void Send(string recipient, string subject, string message)
+        public void Send(string recipient = null, string subject = null, string message = null)
         {
             ThreadHelper.InvokeOnUiThread(() =>
             {

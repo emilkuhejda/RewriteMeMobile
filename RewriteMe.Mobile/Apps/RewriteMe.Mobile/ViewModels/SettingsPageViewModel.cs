@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.LatestVersion.Abstractions;
-using Plugin.Messaging;
 using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
@@ -28,9 +27,9 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly ILanguageService _languageService;
+        private readonly IEmailService _emailService;
         private readonly IApplicationSettings _applicationSettings;
         private readonly ILatestVersion _latestVersion;
-        private readonly IEmailTask _emailTask;
 
         private LanguageInfo _selectedLanguage;
         private string _userName;
@@ -41,9 +40,9 @@ namespace RewriteMe.Mobile.ViewModels
             IUserSessionService userSessionService,
             IUserSubscriptionService userSubscriptionService,
             ILanguageService languageService,
+            IEmailService emailService,
             IApplicationSettings applicationSettings,
             ILatestVersion latestVersion,
-            IEmailTask emailTask,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
@@ -52,9 +51,9 @@ namespace RewriteMe.Mobile.ViewModels
             _userSessionService = userSessionService;
             _userSubscriptionService = userSubscriptionService;
             _languageService = languageService;
+            _emailService = emailService;
             _applicationSettings = applicationSettings;
             _latestVersion = latestVersion;
-            _emailTask = emailTask;
 
             CanGoBack = true;
 
@@ -180,7 +179,7 @@ namespace RewriteMe.Mobile.ViewModels
             if (string.IsNullOrWhiteSpace(_applicationSettings.SupportMailAddress))
                 return;
 
-            if (_emailTask.CanSendEmail)
+            if (_emailService.CanSendEmail)
             {
                 var subject = $"{Loc.Text(TranslationKeys.ApplicationTitle)}";
                 var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz", CultureInfo.InvariantCulture);
@@ -197,7 +196,7 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine($"Time stamp: {timestamp}")
                     .ToString();
 
-                _emailTask.SendEmail(_applicationSettings.SupportMailAddress, subject, message);
+                _emailService.Send(_applicationSettings.SupportMailAddress, subject, message);
             }
             else
             {
