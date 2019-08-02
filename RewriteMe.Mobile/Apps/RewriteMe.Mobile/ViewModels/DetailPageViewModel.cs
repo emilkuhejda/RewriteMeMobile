@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Plugin.Messaging;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
@@ -26,11 +24,11 @@ namespace RewriteMe.Mobile.ViewModels
             ITranscriptAudioSourceService transcriptAudioSourceService,
             IFileItemService fileItemService,
             IRewriteMeWebService rewriteMeWebService,
-            IEmailTask emailTask,
+            IEmailService emailService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(emailTask, dialogService, navigationService, loggerFactory)
+            : base(emailService, dialogService, navigationService, loggerFactory)
         {
             _transcribeItemService = transcribeItemService;
             _transcriptAudioSourceService = transcriptAudioSourceService;
@@ -78,7 +76,7 @@ namespace RewriteMe.Mobile.ViewModels
                 message.AppendLine().AppendLine();
             }
 
-            EmailTask.SendEmail(
+            EmailService.Send(
                 subject: FileItem.Name,
                 message: message.ToString());
         }

@@ -4,7 +4,7 @@ using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;

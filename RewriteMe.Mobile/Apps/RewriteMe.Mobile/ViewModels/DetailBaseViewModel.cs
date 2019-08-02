@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Plugin.Messaging;
 using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
-using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Utils;
@@ -21,13 +20,13 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _notAvailableData;
 
         protected DetailBaseViewModel(
-            IEmailTask emailTask,
+            IEmailService emailService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
-            EmailTask = emailTask;
+            EmailService = emailService;
 
             CanGoBack = true;
 
@@ -36,7 +35,7 @@ namespace RewriteMe.Mobile.ViewModels
             PlayerViewModel = new PlayerViewModel();
         }
 
-        public IEmailTask EmailTask { get; }
+        public IEmailService EmailService { get; }
 
         public IAsyncCommand DeleteCommand { get; }
 
@@ -94,7 +93,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSendCommand()
         {
-            return ThreadHelper.InvokeOnUiThread(() => EmailTask.CanSendEmail && DetailItems.Any());
+            return ThreadHelper.InvokeOnUiThread(() => EmailService.CanSendEmail && DetailItems.Any());
         }
 
         private void ExecuteSendCommand()

@@ -4,12 +4,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.LatestVersion.Abstractions;
-using Plugin.Messaging;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Configuration;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
@@ -31,13 +29,13 @@ namespace RewriteMe.Mobile.ViewModels
             ISchedulerService schedulerService,
             IUserSessionService userSessionService,
             IInternalValueService internalValueService,
+            IEmailService emailService,
             ILatestVersion latestVersion,
-            IEmailTask emailTask,
             IApplicationSettings applicationSettings,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(userSessionService, internalValueService, latestVersion, emailTask, applicationSettings, dialogService, navigationService, loggerFactory)
+            : base(userSessionService, internalValueService, emailService, latestVersion, applicationSettings, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
             _schedulerService = schedulerService;

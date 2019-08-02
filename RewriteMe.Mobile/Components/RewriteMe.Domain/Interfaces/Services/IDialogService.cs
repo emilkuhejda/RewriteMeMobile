@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace RewriteMe.Domain.Interfaces.Required
+namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IDialogService
     {

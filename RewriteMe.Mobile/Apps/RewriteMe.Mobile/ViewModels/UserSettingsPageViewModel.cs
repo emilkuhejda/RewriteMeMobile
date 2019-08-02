@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;

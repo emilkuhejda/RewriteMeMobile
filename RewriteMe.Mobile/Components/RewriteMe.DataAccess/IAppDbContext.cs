@@ -30,6 +30,10 @@ namespace RewriteMe.DataAccess
 
         Task RunInTransactionAsync(Action<SQLiteConnection> action);
 
+        Task<int> GetVersionNumberAsync();
+
+        Task UpdateVersionNumberAsync(int versionNumber);
+
         Task CreateTablesAsync(params Type[] types);
 
         Task<T> GetAsync<T>(Expression<Func<T, bool>> predicate) where T : new();
@@ -51,6 +55,8 @@ namespace RewriteMe.DataAccess
         Task DeleteWithChildrenAsync<T>(object primaryKey) where T : new();
 
         Task DeleteAllAsync<T>() where T : new();
+
+        Task DropTable(Type type);
 
         Task InsertOrReplaceAsync(object obj);
 

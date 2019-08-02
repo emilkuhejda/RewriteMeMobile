@@ -63,10 +63,10 @@ namespace RewriteMe.Business.Services
 
         public async Task<bool> IsFirstTimeDataSyncAsync()
         {
-            var lastFileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
-            var lastTranscribeItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.TranscribeItemSynchronization).ConfigureAwait(false);
+            var lastFileItemSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronizationTicks).ConfigureAwait(false);
+            var lastTranscribeItemSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.TranscribeItemSynchronizationTicks).ConfigureAwait(false);
 
-            var atLeastOneHasNoData = lastFileItemSynchronization == default(DateTime) || lastTranscribeItemSynchronization == default(DateTime);
+            var atLeastOneHasNoData = new DateTime(lastFileItemSynchronizationTicks) == default || new DateTime(lastTranscribeItemSynchronizationTicks) == default;
             return atLeastOneHasNoData;
         }
 
@@ -90,7 +90,8 @@ namespace RewriteMe.Business.Services
 
         private async Task DeletedFileItemsSynchronizationAsync()
         {
-            var lastFileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
+            var lastFileItemSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronizationTicks).ConfigureAwait(false);
+            var lastFileItemSynchronization = new DateTime(lastFileItemSynchronizationTicks);
             var applicationDeletedFileItemUpdateDate = _lastUpdatesService.GetDeletedFileItemLastUpdate();
 
             await _deletedFileItemService.SynchronizationAsync(applicationDeletedFileItemUpdateDate, lastFileItemSynchronization).ConfigureAwait(false);

@@ -41,6 +41,16 @@ namespace RewriteMe.DataAccess
             await Database.RunInTransactionAsync(action).ConfigureAwait(false);
         }
 
+        public async Task<int> GetVersionNumberAsync()
+        {
+            return await Database.ExecuteScalarAsync<int>("PRAGMA user_version;").ConfigureAwait(false);
+        }
+
+        public async Task UpdateVersionNumberAsync(int versionNumber)
+        {
+            await Database.ExecuteAsync($"PRAGMA user_version = {versionNumber};").ConfigureAwait(false);
+        }
+
         public async Task CreateTablesAsync(params Type[] types)
         {
             await Database.CreateTablesAsync(CreateFlags.None, types).ConfigureAwait(false);
@@ -96,6 +106,11 @@ namespace RewriteMe.DataAccess
         {
             var entities = await Database.GetAllWithChildrenAsync<T>(recursive: true).ConfigureAwait(false);
             await Database.DeleteAllAsync(entities, true).ConfigureAwait(false);
+        }
+
+        public async Task DropTable(Type type)
+        {
+            await Database.DropTableAsync(new TableMapping(type)).ConfigureAwait(false);
         }
 
         public async Task InsertOrReplaceAsync(object obj)

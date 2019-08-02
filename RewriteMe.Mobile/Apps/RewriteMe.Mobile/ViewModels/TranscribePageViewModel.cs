@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
