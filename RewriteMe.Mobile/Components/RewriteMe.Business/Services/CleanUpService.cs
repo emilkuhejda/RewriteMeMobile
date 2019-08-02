@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
@@ -30,9 +29,9 @@ namespace RewriteMe.Business.Services
 
         public async Task CleanUp()
         {
-            await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.MinValue).ConfigureAwait(false);
-            await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronization, DateTime.MinValue).ConfigureAwait(false);
-            await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronization, DateTime.MinValue).ConfigureAwait(false);
+            await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronizationTicks, 0).ConfigureAwait(false);
+            await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronizationTicks, 0).ConfigureAwait(false);
+            await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronizationTicks, 0).ConfigureAwait(false);
             await _internalValueService.UpdateValueAsync(InternalValues.ApplicationId, null).ConfigureAwait(false);
             await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, false).ConfigureAwait(false);
 

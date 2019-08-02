@@ -34,7 +34,8 @@ namespace RewriteMe.Business.Services
 
         public async Task SynchronizationAsync(DateTime applicationUpdateDate)
         {
-            var lastTranscribeItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.TranscribeItemSynchronization).ConfigureAwait(false);
+            var lastTranscribeItemSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.TranscribeItemSynchronizationTicks).ConfigureAwait(false);
+            var lastTranscribeItemSynchronization = new DateTime(lastTranscribeItemSynchronizationTicks);
             _logger.Debug($"Update transcribe items with timestamp '{lastTranscribeItemSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
             if (applicationUpdateDate >= lastTranscribeItemSynchronization)
@@ -46,7 +47,7 @@ namespace RewriteMe.Business.Services
                     _logger.Info($"Web server returned {transcribeItems.Count} items for synchronization.");
 
                     await _transcribeItemRepository.InsertOrReplaceAllAsync(transcribeItems).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronization, DateTime.UtcNow).ConfigureAwait(false);
+                    await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
 

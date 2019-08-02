@@ -6,7 +6,6 @@ using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Http;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;

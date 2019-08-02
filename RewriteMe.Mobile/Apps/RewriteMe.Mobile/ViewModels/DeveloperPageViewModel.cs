@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -7,23 +6,24 @@ using Plugin.DeviceInfo;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Configuration;
-using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Resources.Localization;
-using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class DeveloperPageViewModel : ViewModelBase
     {
+        private readonly IEmailService _emailService;
         private readonly ILogFileReader _logFileReader;
         private readonly IApplicationSettings _applicationSettings;
 
         private HtmlWebViewSource _webViewSource;
 
         public DeveloperPageViewModel(
+            IEmailService emailService,
             ILogFileReader logFileReader,
             IApplicationSettings applicationSettings,
             IDialogService dialogService,
@@ -31,6 +31,7 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
+            _emailService = emailService;
             _logFileReader = logFileReader;
             _applicationSettings = applicationSettings;
 
@@ -90,20 +91,10 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine($"Operating system: {Device.RuntimePlatform} {device.OperatingSystem}")
                     .ToString();
 
-                var emailMessage = new EmailMessage
-                {
-                    To = new List<string> { _applicationSettings.SupportMailAddress },
-                    Subject = subject,
-                    Body = message
-                };
-
                 var fileInfo = _logFileReader.GetLogFileInfo();
-                if (fileInfo.Exists)
-                {
-                    emailMessage.Attachments.Add(new EmailAttachment(fileInfo.FullName));
-                }
-
-                await Email.ComposeAsync(emailMessage).ConfigureAwait(false);
+                await _emailService
+                    .SendAsync(_applicationSettings.SupportMailAddress, subject, message, fileInfo.FullName)
+                    .ConfigureAwait(false);
             }
             catch (Exception)
             {

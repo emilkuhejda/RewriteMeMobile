@@ -4,7 +4,6 @@ using Plugin.Messaging;
 using Prism.Ioc;
 using RewriteMe.Common;
 using RewriteMe.Domain.Interfaces.ExceptionHandling;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.ExceptionHandling;
 using RewriteMe.Mobile.Navigation;
@@ -23,6 +22,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterInstance(CrossConnectivity.Current);
             containerRegistry.RegisterSingleton<IDialogService, DialogService>();
             containerRegistry.RegisterSingleton<ILanguageService, LanguageService>();
+            containerRegistry.RegisterSingleton<IEmailService, EmailService>();
             containerRegistry.RegisterSingleton<IExceptionHandlingStrategy, ExceptionHandlingStrategy>();
 
             RegisterPages(containerRegistry);

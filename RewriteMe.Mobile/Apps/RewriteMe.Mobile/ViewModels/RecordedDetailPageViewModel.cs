@@ -1,11 +1,9 @@
 ﻿using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Plugin.Messaging;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Logging.Interfaces;
@@ -21,11 +19,11 @@ namespace RewriteMe.Mobile.ViewModels
 
         public RecordedDetailPageViewModel(
             IRecordedItemService recordedItemService,
-            IEmailTask emailTask,
+            IEmailService emailService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(emailTask, dialogService, navigationService, loggerFactory)
+            : base(emailService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
         }
@@ -71,7 +69,7 @@ namespace RewriteMe.Mobile.ViewModels
                 message.AppendLine();
             }
 
-            EmailTask.SendEmail(
+            EmailService.Send(
                 subject: RecordedItem.DateCreated.ToLocalTime().ToString(Constants.TimeFormat),
                 message: message.ToString());
         }

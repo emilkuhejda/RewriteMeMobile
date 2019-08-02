@@ -44,7 +44,8 @@ namespace RewriteMe.Business.Services
 
         public async Task SynchronizationAsync(DateTime applicationUpdateDate)
         {
-            var lastFileItemSynchronization = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronization).ConfigureAwait(false);
+            var lastFileItemSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronizationTicks).ConfigureAwait(false);
+            var lastFileItemSynchronization = new DateTime(lastFileItemSynchronizationTicks);
             _logger.Debug($"Update file items with timestamp '{lastFileItemSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
             if (applicationUpdateDate >= lastFileItemSynchronization)
@@ -56,7 +57,7 @@ namespace RewriteMe.Business.Services
                     _logger.Info($"Web server returned {fileItems.Count} items for synchronization.");
 
                     await _fileItemRepository.InsertOrReplaceAllAsync(fileItems).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronization, DateTime.UtcNow).ConfigureAwait(false);
+                    await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
         }
