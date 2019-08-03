@@ -64,5 +64,7 @@
 	</array>
 	<key>Custom ProperNSMicrophoneUsageDescriptionty</key>
 	<string>The RewriteMe wants to use your microphone to record audio.</string>
+	<key>com.apple.developer.icloud-container-environment</key>
+	<string>Production</string>
 </dict>
 </plist>
