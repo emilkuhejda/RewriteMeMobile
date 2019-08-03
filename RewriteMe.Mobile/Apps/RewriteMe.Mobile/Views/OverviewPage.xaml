@@ -9,40 +9,44 @@
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="FileItemsTemplate">
-            <Grid BackgroundColor="White">
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
-                </Grid.GestureRecognizers>
+            <ViewCell>
+                <ViewCell.View>
+                    <Grid BackgroundColor="White">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
+                        </Grid.GestureRecognizers>
 
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="Auto" />
-                </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                <StackLayout Grid.Column="0" Padding="0,10,0,10">
-                    <Label HeightRequest="30"
-                           Style="{StaticResource LabelStyle}"
-                           Text="{Binding FileItem.Name}" />
-                    <Frame IsVisible="{Binding IsInProgress}" Style="{StaticResource InfoTileBackground}">
-                        <Label FontAttributes="Italic"
-                               FontSize="{StaticResource MidMediumSize}"
-                               Style="{StaticResource LabelStyle}"
-                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.InProgressLabel}}"
-                               TextColor="{StaticResource ColorWhite}" />
-                    </Frame>
-                </StackLayout>
+                        <StackLayout Grid.Column="0" Padding="0,10,0,10">
+                            <Label HeightRequest="30"
+                                   Style="{StaticResource LabelStyle}"
+                                   Text="{Binding FileItem.Name}" />
+                            <Frame IsVisible="{Binding IsInProgress}" Style="{StaticResource InfoTileBackground}">
+                                <Label FontAttributes="Italic"
+                                       FontSize="{StaticResource MidMediumSize}"
+                                       Style="{StaticResource LabelStyle}"
+                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.InProgressLabel}}"
+                                       TextColor="{StaticResource ColorWhite}" />
+                            </Frame>
+                        </StackLayout>
 
-                <forms:SvgCachedImage Grid.Column="1"
-                                      Margin="0"
-                                      Aspect="AspectFit"
-                                      BackgroundColor="Transparent"
-                                      HeightRequest="40"
-                                      HorizontalOptions="End"
-                                      InputTransparent="True"
-                                      IsVisible="{Binding IsCompleted}"
-                                      Source="resource://RewriteMe.Mobile.Resources.Images.Ok.svg"
-                                      VerticalOptions="CenterAndExpand" />
-            </Grid>
+                        <forms:SvgCachedImage Grid.Column="1"
+                                              Margin="0"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="40"
+                                              HorizontalOptions="End"
+                                              InputTransparent="True"
+                                              IsVisible="{Binding IsCompleted}"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.Ok.svg"
+                                              VerticalOptions="CenterAndExpand" />
+                    </Grid>
+                </ViewCell.View>
+            </ViewCell>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
@@ -83,9 +87,10 @@
                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
                    VerticalOptions="Start" />
 
-            <CollectionView Grid.Row="1"
-                            ItemTemplate="{StaticResource FileItemsTemplate}"
-                            ItemsSource="{Binding FileItems}" />
+            <ListView Grid.Row="1"
+                      HasUnevenRows="True"
+                      ItemTemplate="{StaticResource FileItemsTemplate}"
+                      ItemsSource="{Binding FileItems}" />
 
             <Grid Grid.Row="1"
                   Margin="0,0,0,10"

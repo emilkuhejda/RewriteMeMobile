@@ -29,7 +29,9 @@
                    VerticalOptions="Start" />
 
             <Grid Grid.Row="1" Padding="{StaticResource StandardPadding}">
-                <CollectionView ItemTemplate="{StaticResource DetailItemsTemplate}" ItemsSource="{Binding DetailItems}" />
+                <ListView HasUnevenRows="True"
+                          ItemTemplate="{StaticResource DetailItemsTemplate}"
+                          ItemsSource="{Binding DetailItems}" />
             </Grid>
 
             <controls:ContextActionBar Grid.Row="2" ItemsSource="{Binding NavigationItems}" />
