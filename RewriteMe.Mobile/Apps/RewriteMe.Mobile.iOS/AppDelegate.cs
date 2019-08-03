@@ -44,10 +44,13 @@ namespace RewriteMe.Mobile.iOS
 
         private void InitializeStatusBarColor()
         {
-            var statusBar = UIApplication.SharedApplication.ValueForKey(new NSString("statusBar")) as UIView;
-            if (statusBar != null && statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
+            using (var nsString = new NSString("statusBar"))
             {
-                statusBar.BackgroundColor = Colors.Primary;
+                var statusBar = UIApplication.SharedApplication.ValueForKey(nsString) as UIView;
+                if (statusBar != null && statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
+                {
+                    statusBar.BackgroundColor = Colors.Primary;
+                }
             }
         }
     }

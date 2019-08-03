@@ -19,21 +19,25 @@ namespace RewriteMe.Mobile.iOS.Localization
             var layout = NLogLayouts.GetDefaultLayout();
 
             // Console Target
-            var consoleTarget = NLogTargets.GetConsoletTarget(layout);
-            config.AddTarget("console", consoleTarget);
+            using (var consoleTarget = NLogTargets.GetConsoletTarget(layout))
+            {
+                config.AddTarget("console", consoleTarget);
 
-            var consoleRule = new LoggingRule("*", LogLevel.Trace, consoleTarget);
-            config.LoggingRules.Add(consoleRule);
+                var consoleRule = new LoggingRule("*", LogLevel.Trace, consoleTarget);
+                config.LoggingRules.Add(consoleRule);
+            }
 
             // File Target
             var logFilePath = GetLogFileInfo().FullName;
-            var fileTarget = NLogTargets.GetFileTarget(layout, logFilePath);
-            config.AddTarget("file", fileTarget);
+            using (var fileTarget = NLogTargets.GetFileTarget(layout, logFilePath))
+            {
+                config.AddTarget("file", fileTarget);
 
-            var fileRule = new LoggingRule("*", LogLevel.Trace, fileTarget);
-            config.LoggingRules.Add(fileRule);
+                var fileRule = new LoggingRule("*", LogLevel.Trace, fileTarget);
+                config.LoggingRules.Add(fileRule);
 
-            LogManager.Configuration = config;
+                LogManager.Configuration = config;
+            }
         }
 
         public FileInfo GetLogFileInfo()
