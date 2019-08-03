@@ -66,5 +66,10 @@
 	<string>The RewriteMe wants to use your microphone to record audio.</string>
 	<key>com.apple.developer.icloud-container-environment</key>
 	<string>Production</string>
+	<key>com.apple.developer.icloud-container-identifiers</key>
+	<array>
+		<string>iCloud.com.RewriteMe.Mobile</string>
+		<string>iCloud.com.rewriteme.cloud</string>
+	</array>
 </dict>
 </plist>
