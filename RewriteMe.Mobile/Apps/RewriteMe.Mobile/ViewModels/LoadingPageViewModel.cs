@@ -61,7 +61,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                var isAlive = await _rewriteMeWebService.IsAlive().ConfigureAwait(false);
+                var isAlive = await _rewriteMeWebService.IsAliveAsync().ConfigureAwait(false);
 
                 var isUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
                 if (!isUserRegistrationSuccess)

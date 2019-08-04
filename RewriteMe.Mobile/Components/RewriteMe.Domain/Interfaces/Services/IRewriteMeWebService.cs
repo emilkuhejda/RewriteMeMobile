@@ -10,9 +10,9 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IRewriteMeWebService
     {
-        Task<bool> IsAlive();
+        Task<bool> IsAliveAsync();
 
-        Task<HttpRequestResult<LastUpdates>> GetLastUpdates();
+        Task<HttpRequestResult<LastUpdates>> GetLastUpdatesAsync();
 
         Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(DateTime updatedAfter);
 

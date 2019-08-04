@@ -13,7 +13,7 @@ namespace RewriteMe.Business.Extensions
 {
     public static class RewriteMeApiExtensions
     {
-        public static async Task<LastUpdates> GetLastUpdates(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        public static async Task<LastUpdates> GetLastUpdatesAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.GetLastUpdatesWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
             {
