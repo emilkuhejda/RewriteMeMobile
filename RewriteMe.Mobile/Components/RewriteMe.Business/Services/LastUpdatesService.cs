@@ -22,7 +22,7 @@ namespace RewriteMe.Business.Services
 
         public async Task InitializeAsync()
         {
-            var httpRequestResult = await _rewriteMeWebService.GetLastUpdates().ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.GetLastUpdatesAsync().ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 _lastUpdates = httpRequestResult.Payload;

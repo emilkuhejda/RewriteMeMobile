@@ -6,7 +6,7 @@ namespace RewriteMe.Business.Extensions
 {
     public static class ApiClientExtensions
     {
-        private static TimeSpan Timeout { get; } = TimeSpan.FromSeconds(10);
+        private static TimeSpan Timeout { get; } = TimeSpan.FromMinutes(10);
 
         public static void Optimize(this IApiClient apiClient)
         {
