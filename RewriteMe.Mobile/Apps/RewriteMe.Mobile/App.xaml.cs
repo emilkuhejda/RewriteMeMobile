@@ -23,9 +23,9 @@ namespace RewriteMe.Mobile
         {
         }
 
-        public void ImportFile(string path)
+        public void ImportFile(string absolutePath, string path)
         {
-            var navigationParameters = CreateNavigationParameters(path);
+            var navigationParameters = CreateNavigationParameters(absolutePath, path);
             NavigationService.NavigateAsync($"{Pages.Login}", navigationParameters);
         }
 
@@ -42,10 +42,16 @@ namespace RewriteMe.Mobile
 
         private NavigationParameters CreateNavigationParameters(string filePath)
         {
+            return CreateNavigationParameters(filePath, filePath);
+        }
+
+        private NavigationParameters CreateNavigationParameters(string absolutePath, string filePath)
+        {
             var navigationParameters = new NavigationParameters();
             if (!string.IsNullOrWhiteSpace(filePath))
             {
-                navigationParameters.Add<ImportedFileNavigationParameters>(new ImportedFileNavigationParameters(filePath));
+                var importedFileNavigationParameters = new ImportedFileNavigationParameters(absolutePath, filePath);
+                navigationParameters.Add<ImportedFileNavigationParameters>(importedFileNavigationParameters);
             }
 
             return navigationParameters;
