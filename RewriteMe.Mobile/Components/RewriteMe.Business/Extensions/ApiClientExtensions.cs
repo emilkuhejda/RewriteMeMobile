@@ -10,10 +10,15 @@ namespace RewriteMe.Business.Extensions
 
         public static void Optimize(this IApiClient apiClient)
         {
+            apiClient.Optimize(Timeout);
+        }
+
+        public static void Optimize(this IApiClient apiClient, TimeSpan timeout)
+        {
             if (apiClient == null)
                 throw new ArgumentNullException(nameof(apiClient));
 
-            apiClient.HttpClient.Timeout = Timeout;
+            apiClient.HttpClient.Timeout = timeout;
             apiClient.HttpHandler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
         }
     }

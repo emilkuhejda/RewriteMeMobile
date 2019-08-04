@@ -110,7 +110,7 @@ namespace RewriteMe.Mobile.ViewModels
                         var fileName = Path.GetFileName(Uri.UnescapeDataString(path));
                         var fileData = new FileData(path, fileName, () => File.OpenRead(path));
 
-                        await InitializeFile(fileData).ConfigureAwait(false);
+                        await InitializeFile(importedFile.AbsolutePath, fileData).ConfigureAwait(false);
                     }
                 }
 
@@ -189,12 +189,12 @@ namespace RewriteMe.Mobile.ViewModels
                             .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
                             .ConfigureAwait(false);
 
-            await InitializeFile(selectedFile).ConfigureAwait(false);
+            await InitializeFile(selectedFile.FilePath, selectedFile).ConfigureAwait(false);
         }
 
-        private async Task InitializeFile(FileData fileData)
+        private async Task InitializeFile(string audioFilePath, FileData fileData)
         {
-            var totalTime = _mediaService.GetTotalTime(fileData.FilePath);
+            var totalTime = _mediaService.GetTotalTime(audioFilePath);
             var canTranscribe = await _fileItemService.CanTranscribeAsync(totalTime).ConfigureAwait(false);
             SelectedFile = new FileDataWrapper(fileData)
             {
