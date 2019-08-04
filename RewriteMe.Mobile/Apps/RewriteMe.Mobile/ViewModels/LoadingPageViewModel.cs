@@ -23,6 +23,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ILastUpdatesService _lastUpdatesService;
         private readonly ISynchronizationService _synchronizationService;
         private readonly ISchedulerService _schedulerService;
+        private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IRegistrationUserWebService _registrationUserWebService;
 
         private string _progressText;
@@ -34,6 +35,7 @@ namespace RewriteMe.Mobile.ViewModels
             ILastUpdatesService lastUpdatesService,
             ISynchronizationService synchronizationService,
             ISchedulerService schedulerService,
+            IRewriteMeWebService rewriteMeWebService,
             IRegistrationUserWebService registrationUserWebService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -46,6 +48,7 @@ namespace RewriteMe.Mobile.ViewModels
             _lastUpdatesService = lastUpdatesService;
             _synchronizationService = synchronizationService;
             _schedulerService = schedulerService;
+            _rewriteMeWebService = rewriteMeWebService;
             _registrationUserWebService = registrationUserWebService;
 
             HasTitleBar = false;
@@ -58,9 +61,14 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                var isAlive = await _rewriteMeWebService.IsAlive().ConfigureAwait(false);
+
                 var isUserRegistrationSuccess = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
                 if (!isUserRegistrationSuccess)
                 {
+                    if (!isAlive)
+                        return;
+
                     ProgressText = Loc.Text(TranslationKeys.UserRegistration);
 
                     var userSession = await _userSessionService.GetUserSessionAsync().ConfigureAwait(false);
@@ -74,15 +82,15 @@ namespace RewriteMe.Mobile.ViewModels
 
                 ProgressText = Loc.Text(TranslationKeys.LoadingData);
 
-                _synchronizationService.InitializationProgress += OnInitializationProgress;
-
-                await _lastUpdatesService.InitializeAsync().ConfigureAwait(false);
-                if (_lastUpdatesService.IsConnectionSuccessful)
+                if (isAlive)
                 {
-                    await _synchronizationService.InitializeAsync().ConfigureAwait(false);
-                }
+                    _synchronizationService.InitializationProgress += OnInitializationProgress;
 
-                _synchronizationService.InitializationProgress -= OnInitializationProgress;
+                    await _lastUpdatesService.InitializeAsync().ConfigureAwait(false);
+                    await _synchronizationService.InitializeAsync().ConfigureAwait(false);
+
+                    _synchronizationService.InitializationProgress -= OnInitializationProgress;
+                }
 
                 var isFirstTimeDataSync = await _synchronizationService.IsFirstTimeDataSyncAsync().ConfigureAwait(false);
                 if (!isFirstTimeDataSync)

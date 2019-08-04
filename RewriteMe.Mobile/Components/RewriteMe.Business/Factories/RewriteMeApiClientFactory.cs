@@ -18,5 +18,13 @@ namespace RewriteMe.Business.Factories
 
             return _client = client;
         }
+
+        public RewriteMeApiClient CreateSingleClient(Uri baseUri, TimeSpan timeout)
+        {
+            var client = new RewriteMeApiClient(baseUri);
+            client.Optimize(timeout);
+
+            return client;
+        }
     }
 }

@@ -7,8 +7,6 @@ namespace RewriteMe.Business.Services
 {
     public abstract class WebServiceBase
     {
-        private readonly IRewriteMeApiClientFactory _rewriteMeApiClientFactory;
-
         private IRewriteMeAPI _client;
 
         protected WebServiceBase(
@@ -16,13 +14,14 @@ namespace RewriteMe.Business.Services
             IWebServiceErrorHandler webServiceErrorHandler,
             IApplicationSettings applicationSettings)
         {
-            _rewriteMeApiClientFactory = rewriteMeApiClientFactory;
-
+            RewriteMeApiClientFactory = rewriteMeApiClientFactory;
             WebServiceErrorHandler = webServiceErrorHandler;
             ApplicationSettings = applicationSettings;
         }
 
-        protected IRewriteMeAPI Client => _client ?? (_client = _rewriteMeApiClientFactory.CreateClient(ApplicationSettings.WebApiUri));
+        protected IRewriteMeAPI Client => _client ?? (_client = RewriteMeApiClientFactory.CreateClient(ApplicationSettings.WebApiUri));
+
+        protected IRewriteMeApiClientFactory RewriteMeApiClientFactory { get; }
 
         protected IWebServiceErrorHandler WebServiceErrorHandler { get; }
 
