@@ -35,6 +35,16 @@ namespace RewriteMe.Domain.WebApi
         JsonSerializerSettings DeserializationSettings { get; }
 
 
+        /// <param name='contactFormModel'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<Ok>> CreateContactFormWithHttpMessagesAsync(ContactFormModel contactFormModel = default(ContactFormModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='updatedAfter'>
         /// </param>
         /// <param name='applicationId'>
@@ -286,6 +296,14 @@ namespace RewriteMe.Domain.WebApi
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<SpeechConfiguration>> GetSpeechConfigurationWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<bool?>> IsAliveWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
