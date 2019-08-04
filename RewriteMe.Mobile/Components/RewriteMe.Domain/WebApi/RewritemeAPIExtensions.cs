@@ -21,6 +21,32 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='contactFormModel'>
+            /// </param>
+            public static Ok CreateContactForm(this IRewriteMeAPI operations, ContactFormModel contactFormModel = default(ContactFormModel))
+            {
+                return operations.CreateContactFormAsync(contactFormModel).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='contactFormModel'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<Ok> CreateContactFormAsync(this IRewriteMeAPI operations, ContactFormModel contactFormModel = default(ContactFormModel), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.CreateContactFormWithHttpMessagesAsync(contactFormModel, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='updatedAfter'>
             /// </param>
             /// <param name='applicationId'>
@@ -646,6 +672,28 @@ namespace RewriteMe.Domain.WebApi
             public static async Task<SpeechConfiguration> GetSpeechConfigurationAsync(this IRewriteMeAPI operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSpeechConfigurationWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static bool? IsAlive(this IRewriteMeAPI operations)
+            {
+                return operations.IsAliveAsync().GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<bool?> IsAliveAsync(this IRewriteMeAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.IsAliveWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -27,10 +27,25 @@ namespace RewriteMe.Business.Services
             _userSessionService = userSessionService;
         }
 
-        public async Task<HttpRequestResult<LastUpdates>> GetLastUpdates()
+        public async Task<bool> IsAliveAsync()
+        {
+            var timeout = TimeSpan.FromSeconds(5);
+            var client = RewriteMeApiClientFactory.CreateSingleClient(ApplicationSettings.WebApiUri, timeout);
+
+            var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => client.IsAliveWithHttpMessagesAsync()).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            {
+                var result = httpRequestResult.Payload?.Body;
+                return result.HasValue && result.Value;
+            }
+
+            return false;
+        }
+
+        public async Task<HttpRequestResult<LastUpdates>> GetLastUpdatesAsync()
         {
             var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetLastUpdates(customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetLastUpdatesAsync(customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(DateTime updatedAfter)
