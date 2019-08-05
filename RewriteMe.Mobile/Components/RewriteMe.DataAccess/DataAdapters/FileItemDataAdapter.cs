@@ -15,6 +15,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Language = entity.Language,
                 RecognitionStateString = entity.RecognitionState.ToString(),
                 TotalTimeString = entity.TotalTime.ToString(),
+                TranscribedTimeString = entity.TranscribedTime.ToString(),
                 DateCreated = entity.DateCreated,
                 DateProcessed = entity.DateProcessed,
                 DateUpdated = entity.DateUpdated
@@ -31,6 +32,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Language = fileItem.Language,
                 RecognitionState = fileItem.RecognitionState,
                 TotalTime = fileItem.TotalTime,
+                TranscribedTime = fileItem.TranscribedTime,
                 DateCreated = fileItem.DateCreated,
                 DateProcessed = fileItem.DateProcessed,
                 DateUpdated = fileItem.DateUpdated

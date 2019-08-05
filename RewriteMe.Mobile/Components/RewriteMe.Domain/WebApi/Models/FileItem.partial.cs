@@ -9,5 +9,7 @@ namespace RewriteMe.Domain.WebApi.Models
         public RecognitionState RecognitionState => EnumHelper.Parse(RecognitionStateString, RecognitionState.None);
 
         public TimeSpan TotalTime => TimeSpanHelper.Parse(TotalTimeString);
+
+        public TimeSpan TranscribedTime => TimeSpanHelper.Parse(TranscribedTimeString);
     }
 }

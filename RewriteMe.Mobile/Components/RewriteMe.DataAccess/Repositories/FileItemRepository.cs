@@ -92,7 +92,7 @@ namespace RewriteMe.DataAccess.Repositories
         public async Task<TimeSpan> GetProcessedFilesTotalTimeAsync()
         {
             var files = await _contextProvider.Context.FileItems.Where(x => x.RecognitionState > RecognitionState.Prepared).ToListAsync().ConfigureAwait(false);
-            var ticks = files.Select(x => x.TotalTime.Ticks).Sum();
+            var ticks = files.Select(x => x.TranscribedTime.Ticks).Sum();
 
             return TimeSpan.FromTicks(ticks);
         }
