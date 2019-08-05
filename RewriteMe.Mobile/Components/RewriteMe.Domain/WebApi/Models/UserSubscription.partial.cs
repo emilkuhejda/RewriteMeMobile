@@ -6,6 +6,6 @@ namespace RewriteMe.Domain.WebApi.Models
     {
         public bool IsEmpty => Id == Guid.Empty;
 
-        public TimeSpan Time => new TimeSpan(TimeTicks);
+        public TimeSpan Time => TimeSpan.FromTicks(TimeTicks);
     }
 }

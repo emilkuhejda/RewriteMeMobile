@@ -4,6 +4,6 @@ namespace RewriteMe.Domain.WebApi.Models
 {
     public partial class SpeechConfiguration
     {
-        public TimeSpan SubscriptionRemainingTime => new TimeSpan(SubscriptionRemainingTimeTicks);
+        public TimeSpan SubscriptionRemainingTime => TimeSpan.FromTicks(SubscriptionRemainingTimeTicks);
     }
 }
