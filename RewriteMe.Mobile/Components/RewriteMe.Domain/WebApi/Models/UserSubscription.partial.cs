@@ -1,5 +1,4 @@
 ﻿using System;
-using RewriteMe.Common.Utils;
 
 namespace RewriteMe.Domain.WebApi.Models
 {
@@ -7,6 +6,6 @@ namespace RewriteMe.Domain.WebApi.Models
     {
         public bool IsEmpty => Id == Guid.Empty;
 
-        public TimeSpan Time => TimeSpanHelper.Parse(TimeString);
+        public TimeSpan Time => new TimeSpan(TimeTicks);
     }
 }

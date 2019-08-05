@@ -22,6 +22,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<bool> CanTranscribeAsync();
 
+        Task<bool> CanTranscribeAsync(TimeSpan fileTime);
+
         Task TranscribeAsync(Guid fileItemId, string language);
     }
 }

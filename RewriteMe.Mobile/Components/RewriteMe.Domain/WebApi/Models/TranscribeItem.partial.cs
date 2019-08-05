@@ -1,15 +1,14 @@
 ﻿using System;
-using RewriteMe.Common.Utils;
 
 namespace RewriteMe.Domain.WebApi.Models
 {
     public partial class TranscribeItem
     {
-        public TimeSpan StartTime => TimeSpanHelper.Parse(StartTimeString);
+        public TimeSpan StartTime => new TimeSpan(StartTimeTicks);
 
-        public TimeSpan EndTime => TimeSpanHelper.Parse(EndTimeString);
+        public TimeSpan EndTime => new TimeSpan(EndTimeTicks);
 
-        public TimeSpan TotalTime => TimeSpanHelper.Parse(TotalTimeString);
+        public TimeSpan TotalTime => new TimeSpan(TotalTimeTicks);
 
         public bool IsPendingSynchronization { get; set; }
     }

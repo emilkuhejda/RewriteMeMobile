@@ -6,7 +6,6 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -23,9 +22,9 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the RecognizedTime class.
         /// </summary>
-        public RecognizedTime(string totalTimeString)
+        public RecognizedTime(long totalTimeTicks)
         {
-            TotalTimeString = totalTimeString;
+            TotalTimeTicks = totalTimeTicks;
             CustomInit();
         }
 
@@ -36,21 +35,18 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "totalTimeString")]
-        public string TotalTimeString { get; set; }
+        [JsonProperty(PropertyName = "totalTimeTicks")]
+        public long TotalTimeTicks { get; set; }
 
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (TotalTimeString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TotalTimeString");
-            }
+            //Nothing to validate
         }
     }
 }

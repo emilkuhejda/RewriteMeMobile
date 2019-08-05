@@ -23,15 +23,15 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the FileItem class.
         /// </summary>
-        public FileItem(System.Guid id, string name, string fileName, string language, string recognitionStateString, string totalTimeString, string transcribedTimeString, System.DateTime dateCreated, System.DateTime dateUpdated, bool isDeleted, System.DateTime? dateProcessed = default(System.DateTime?))
+        public FileItem(System.Guid id, string name, string fileName, string language, string recognitionStateString, long totalTimeTicks, long transcribedTimeTicks, System.DateTime dateCreated, System.DateTime dateUpdated, bool isDeleted, System.DateTime? dateProcessed = default(System.DateTime?))
         {
             Id = id;
             Name = name;
             FileName = fileName;
             Language = language;
             RecognitionStateString = recognitionStateString;
-            TotalTimeString = totalTimeString;
-            TranscribedTimeString = transcribedTimeString;
+            TotalTimeTicks = totalTimeTicks;
+            TranscribedTimeTicks = transcribedTimeTicks;
             DateCreated = dateCreated;
             DateProcessed = dateProcessed;
             DateUpdated = dateUpdated;
@@ -71,13 +71,13 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "totalTimeString")]
-        public string TotalTimeString { get; set; }
+        [JsonProperty(PropertyName = "totalTimeTicks")]
+        public long TotalTimeTicks { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "transcribedTimeString")]
-        public string TranscribedTimeString { get; set; }
+        [JsonProperty(PropertyName = "transcribedTimeTicks")]
+        public long TranscribedTimeTicks { get; set; }
 
         /// <summary>
         /// </summary>
@@ -123,14 +123,6 @@ namespace RewriteMe.Domain.WebApi.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RecognitionStateString");
             }
-            if (TotalTimeString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TotalTimeString");
-            }
-            if (TranscribedTimeString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TranscribedTimeString");
-            }
             if (Name != null)
             {
                 if (Name.Length > 150)
@@ -157,20 +149,6 @@ namespace RewriteMe.Domain.WebApi.Models
                 if (RecognitionStateString.Length > 20)
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "RecognitionStateString", 20);
-                }
-            }
-            if (TotalTimeString != null)
-            {
-                if (TotalTimeString.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "TotalTimeString", 50);
-                }
-            }
-            if (TranscribedTimeString != null)
-            {
-                if (TranscribedTimeString.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "TranscribedTimeString", 50);
                 }
             }
         }
