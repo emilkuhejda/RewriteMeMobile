@@ -36,7 +36,7 @@ namespace RewriteMe.Mobile.iOS
 
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
-            _application.ImportFile(url.AbsoluteUrl.ToString(), url.Path);
+            _application.ImportFile(url.Path);
 
             return true;
         }

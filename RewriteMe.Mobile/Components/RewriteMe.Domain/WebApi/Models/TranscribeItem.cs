@@ -25,15 +25,15 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the TranscribeItem class.
         /// </summary>
-        public TranscribeItem(System.Guid id, System.Guid fileItemId, IList<RecognitionAlternative> alternatives, string userTranscript, string startTimeString, string endTimeString, string totalTimeString, System.DateTime dateCreated, System.DateTime dateUpdated)
+        public TranscribeItem(System.Guid id, System.Guid fileItemId, IList<RecognitionAlternative> alternatives, string userTranscript, long startTimeTicks, long endTimeTicks, long totalTimeTicks, System.DateTime dateCreated, System.DateTime dateUpdated)
         {
             Id = id;
             FileItemId = fileItemId;
             Alternatives = alternatives;
             UserTranscript = userTranscript;
-            StartTimeString = startTimeString;
-            EndTimeString = endTimeString;
-            TotalTimeString = totalTimeString;
+            StartTimeTicks = startTimeTicks;
+            EndTimeTicks = endTimeTicks;
+            TotalTimeTicks = totalTimeTicks;
             DateCreated = dateCreated;
             DateUpdated = dateUpdated;
             CustomInit();
@@ -66,18 +66,18 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "startTimeString")]
-        public string StartTimeString { get; set; }
+        [JsonProperty(PropertyName = "startTimeTicks")]
+        public long StartTimeTicks { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "endTimeString")]
-        public string EndTimeString { get; set; }
+        [JsonProperty(PropertyName = "endTimeTicks")]
+        public long EndTimeTicks { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "totalTimeString")]
-        public string TotalTimeString { get; set; }
+        [JsonProperty(PropertyName = "totalTimeTicks")]
+        public long TotalTimeTicks { get; set; }
 
         /// <summary>
         /// </summary>
@@ -104,39 +104,6 @@ namespace RewriteMe.Domain.WebApi.Models
             if (UserTranscript == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "UserTranscript");
-            }
-            if (StartTimeString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "StartTimeString");
-            }
-            if (EndTimeString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "EndTimeString");
-            }
-            if (TotalTimeString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TotalTimeString");
-            }
-            if (StartTimeString != null)
-            {
-                if (StartTimeString.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "StartTimeString", 50);
-                }
-            }
-            if (EndTimeString != null)
-            {
-                if (EndTimeString.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "EndTimeString", 50);
-                }
-            }
-            if (TotalTimeString != null)
-            {
-                if (TotalTimeString.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "TotalTimeString", 50);
-                }
             }
         }
     }

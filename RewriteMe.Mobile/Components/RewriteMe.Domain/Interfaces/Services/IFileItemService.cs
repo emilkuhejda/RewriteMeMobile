@@ -20,7 +20,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<FileItem> UploadAsync(MediaFile mediaFile);
 
-        Task<bool> CanTranscribeAsync(TimeSpan fileTime);
+        Task<bool> CanTranscribeAsync();
 
         Task TranscribeAsync(Guid fileItemId, string language);
     }

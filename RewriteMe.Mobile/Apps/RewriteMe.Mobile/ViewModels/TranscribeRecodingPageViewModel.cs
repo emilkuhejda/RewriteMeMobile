@@ -1,9 +1,7 @@
-﻿using System;
-using System.IO;
+﻿using System.IO;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Logging.Interfaces;
@@ -15,13 +13,9 @@ namespace RewriteMe.Mobile.ViewModels
     public class TranscribeRecodingPageViewModel : TranscribeBaseViewModel
     {
         private readonly IRecordedItemService _recordedItemService;
-        private readonly IMediaService _mediaService;
-
-        private TimeSpan _audioTotalTime;
 
         public TranscribeRecodingPageViewModel(
             IRecordedItemService recordedItemService,
-            IMediaService mediaService,
             IFileItemService fileItemService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -29,7 +23,6 @@ namespace RewriteMe.Mobile.ViewModels
             : base(fileItemService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
-            _mediaService = mediaService;
 
             PlayerViewModel = new PlayerViewModel();
         }
@@ -46,8 +39,7 @@ namespace RewriteMe.Mobile.ViewModels
                     Name = RecordedItem.FileName;
 
                     var filePath = _recordedItemService.GetAudioPath(RecordedItem);
-                    _audioTotalTime = _mediaService.GetTotalTime(filePath);
-                    CanTranscribe = await FileItemService.CanTranscribeAsync(_audioTotalTime).ConfigureAwait(false);
+                    CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
 
                     PlayerViewModel.Load(File.ReadAllBytes(filePath));
                 }
@@ -77,12 +69,11 @@ namespace RewriteMe.Mobile.ViewModels
                 var filePath = _recordedItemService.GetAudioPath(RecordedItem);
                 using (var fileStream = File.OpenRead(filePath))
                 {
-                    var mediaFile = new MediaFile()
+                    var mediaFile = new MediaFile
                     {
                         Name = Name,
                         Language = SelectedLanguage?.Culture,
                         FileName = RecordedItem.AudioFileName,
-                        TotalTime = _audioTotalTime,
                         Stream = fileStream
                     };
 

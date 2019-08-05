@@ -12,7 +12,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = entity.Id,
                 DeletedDate = entity.DeletedDate,
                 RecognitionState = entity.RecognitionState,
-                TotalTime = entity.TotalTime
+                TotalTime = entity.TotalTime,
+                TranscribedTime = entity.TranscribedTime
             };
         }
 
@@ -23,7 +24,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = deletedFileItem.Id,
                 DeletedDate = deletedFileItem.DeletedDate,
                 RecognitionState = deletedFileItem.RecognitionState,
-                TotalTime = deletedFileItem.TotalTime
+                TotalTime = deletedFileItem.TotalTime,
+                TranscribedTime = deletedFileItem.TranscribedTime
             };
         }
     }

@@ -9,22 +9,22 @@ namespace RewriteMe.Domain.WebApi.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class RecognizedTime
+    public partial class TimeSpanWrapper
     {
         /// <summary>
-        /// Initializes a new instance of the RecognizedTime class.
+        /// Initializes a new instance of the TimeSpanWrapper class.
         /// </summary>
-        public RecognizedTime()
+        public TimeSpanWrapper()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RecognizedTime class.
+        /// Initializes a new instance of the TimeSpanWrapper class.
         /// </summary>
-        public RecognizedTime(long totalTimeTicks)
+        public TimeSpanWrapper(long ticks)
         {
-            TotalTimeTicks = totalTimeTicks;
+            Ticks = ticks;
             CustomInit();
         }
 
@@ -35,8 +35,8 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "totalTimeTicks")]
-        public long TotalTimeTicks { get; set; }
+        [JsonProperty(PropertyName = "ticks")]
+        public long Ticks { get; set; }
 
         /// <summary>
         /// Validate the object.

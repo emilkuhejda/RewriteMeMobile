@@ -6,7 +6,6 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
-    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -23,11 +22,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the UserSubscription class.
         /// </summary>
-        public UserSubscription(System.Guid id, System.Guid userId, string timeString, System.DateTime dateCreated)
+        public UserSubscription(System.Guid id, System.Guid userId, long timeTicks, System.DateTime dateCreated)
         {
             Id = id;
             UserId = userId;
-            TimeString = timeString;
+            TimeTicks = timeTicks;
             DateCreated = dateCreated;
             CustomInit();
         }
@@ -49,8 +48,8 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "timeString")]
-        public string TimeString { get; set; }
+        [JsonProperty(PropertyName = "timeTicks")]
+        public long TimeTicks { get; set; }
 
         /// <summary>
         /// </summary>
@@ -60,22 +59,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="ValidationException">
+        /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            if (TimeString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "TimeString");
-            }
-            if (TimeString != null)
-            {
-                if (TimeString.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "TimeString", 50);
-                }
-            }
+            //Nothing to validate
         }
     }
 }

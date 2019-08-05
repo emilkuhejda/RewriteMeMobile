@@ -1,5 +1,4 @@
-﻿using System;
-using Plugin.FilePicker.Abstractions;
+﻿using Plugin.FilePicker.Abstractions;
 
 namespace RewriteMe.Mobile.Transcription
 {
@@ -13,8 +12,6 @@ namespace RewriteMe.Mobile.Transcription
         public FileData FileData { get; }
 
         public string FileName => FileData.FileName;
-
-        public TimeSpan TotalTime { get; set; }
 
         public bool CanTranscribe { get; set; }
     }

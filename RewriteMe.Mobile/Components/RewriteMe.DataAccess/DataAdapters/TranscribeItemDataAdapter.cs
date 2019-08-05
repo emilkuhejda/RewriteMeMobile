@@ -15,9 +15,9 @@ namespace RewriteMe.DataAccess.DataAdapters
                 FileItemId = entity.FileItemId,
                 Alternatives = JsonConvert.DeserializeObject<IList<RecognitionAlternative>>(entity.Alternatives),
                 UserTranscript = entity.UserTranscript,
-                StartTimeString = entity.StartTime.ToString(),
-                EndTimeString = entity.EndTime.ToString(),
-                TotalTimeString = entity.TotalTime.ToString(),
+                StartTimeTicks = entity.StartTime.Ticks,
+                EndTimeTicks = entity.EndTime.Ticks,
+                TotalTimeTicks = entity.TotalTime.Ticks,
                 DateCreated = entity.DateCreated,
                 DateUpdated = entity.DateUpdated,
                 IsPendingSynchronization = entity.IsPendingSynchronization

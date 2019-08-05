@@ -8,6 +8,8 @@ namespace RewriteMe.Domain.WebApi.Models
     {
         public RecognitionState RecognitionState => EnumHelper.Parse(RecognitionStateString, RecognitionState.None);
 
-        public TimeSpan TotalTime => TimeSpanHelper.Parse(TotalTimeString);
+        public TimeSpan TotalTime => TimeSpan.FromTicks(TotalTimeTicks);
+
+        public TimeSpan TranscribedTime => TimeSpan.FromTicks(TranscribedTimeTicks);
     }
 }
