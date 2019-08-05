@@ -18,7 +18,7 @@ namespace RewriteMe.Domain.Configuration
 
         public static InternalValue<bool> IsUserRegistrationSuccess { get; } = new InternalValue<bool>("IsUserRegistrationSuccess", false);
 
-        public static InternalValue<string> DeletedFileItemsTotalTime { get; } = new InternalValue<string>("DeletedFileItemsTotalTime", null);
+        public static InternalValue<long> DeletedFileItemsTotalTime { get; } = new InternalValue<long>("DeletedFileItemsTotalTime", 0);
 
         public static InternalValue<long> RecognizedTimeTicks { get; } = new InternalValue<long>("RecognizedTimeTicks", 0);
     }

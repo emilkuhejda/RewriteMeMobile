@@ -60,13 +60,13 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetDeletedFileItemIdsAsync(updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<string>> GetDeletedFileItemsTotalTimeAsync()
+        public async Task<HttpRequestResult<TimeSpanWrapper>> GetDeletedFileItemsTotalTimeAsync()
         {
             var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetDeletedFileItemsTotalTimeAsync(customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<string>> DeleteFileItemAsync(Guid fileItemId)
+        public async Task<HttpRequestResult<TimeSpanWrapper>> DeleteFileItemAsync(Guid fileItemId)
         {
             var customHeaders = await GetAuthHeaders().ConfigureAwait(false);
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.DeleteFileItemAsync(fileItemId, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
