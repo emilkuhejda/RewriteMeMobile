@@ -120,14 +120,6 @@ namespace RewriteMe.Business.Services
             return remainingSubscriptionTime.TotalSeconds >= 15;
         }
 
-        public async Task<bool> CanTranscribeAsync(TimeSpan fileTime)
-        {
-            var remainingSubscriptionTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
-            var remainingTime = remainingSubscriptionTime.Subtract(fileTime);
-
-            return remainingTime.Ticks >= 0;
-        }
-
         public async Task TranscribeAsync(Guid fileItemId, string language)
         {
             var canTranscribeFileItem = await CanTranscribeAsync().ConfigureAwait(false);

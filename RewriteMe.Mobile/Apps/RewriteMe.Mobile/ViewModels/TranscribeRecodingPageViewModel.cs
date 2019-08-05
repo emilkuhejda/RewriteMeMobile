@@ -47,7 +47,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                     var filePath = _recordedItemService.GetAudioPath(RecordedItem);
                     _audioTotalTime = _mediaService.GetTotalTime(filePath);
-                    CanTranscribe = await FileItemService.CanTranscribeAsync(_audioTotalTime).ConfigureAwait(false);
+                    CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
 
                     PlayerViewModel.Load(File.ReadAllBytes(filePath));
                 }
@@ -77,7 +77,7 @@ namespace RewriteMe.Mobile.ViewModels
                 var filePath = _recordedItemService.GetAudioPath(RecordedItem);
                 using (var fileStream = File.OpenRead(filePath))
                 {
-                    var mediaFile = new MediaFile()
+                    var mediaFile = new MediaFile
                     {
                         Name = Name,
                         Language = SelectedLanguage?.Culture,

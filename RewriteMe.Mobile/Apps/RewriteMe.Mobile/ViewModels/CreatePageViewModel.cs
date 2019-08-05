@@ -195,7 +195,7 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task InitializeFile(string audioFilePath, FileData fileData)
         {
             var totalTime = _mediaService.GetTotalTime(audioFilePath);
-            var canTranscribe = await _fileItemService.CanTranscribeAsync(totalTime).ConfigureAwait(false);
+            var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
             SelectedFile = new FileDataWrapper(fileData)
             {
                 TotalTime = totalTime,
