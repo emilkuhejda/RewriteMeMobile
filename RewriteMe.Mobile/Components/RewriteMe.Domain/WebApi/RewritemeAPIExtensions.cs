@@ -107,7 +107,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static string GetDeletedFileItemsTotalTime(this IRewriteMeAPI operations)
+            public static TimeSpanWrapper GetDeletedFileItemsTotalTime(this IRewriteMeAPI operations)
             {
                 return operations.GetDeletedFileItemsTotalTimeAsync().GetAwaiter().GetResult();
             }
@@ -118,7 +118,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> GetDeletedFileItemsTotalTimeAsync(this IRewriteMeAPI operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TimeSpanWrapper> GetDeletedFileItemsTotalTimeAsync(this IRewriteMeAPI operations, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
@@ -239,7 +239,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='applicationId'>
             /// </param>
-            public static string DeleteFileItem(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?))
+            public static TimeSpanWrapper DeleteFileItem(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?))
             {
                 return operations.DeleteFileItemAsync(fileItemId, applicationId).GetAwaiter().GetResult();
             }
@@ -254,7 +254,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<string> DeleteFileItemAsync(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TimeSpanWrapper> DeleteFileItemAsync(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.DeleteFileItemWithHttpMessagesAsync(fileItemId, applicationId, null, cancellationToken).ConfigureAwait(false))
                 {

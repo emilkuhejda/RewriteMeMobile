@@ -77,7 +77,7 @@ namespace RewriteMe.Business.Services
             var httpRequestResult = await _rewriteMeWebService.DeleteFileItemAsync(fileItem.Id).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
-                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload).ConfigureAwait(false);
+                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload.Ticks).ConfigureAwait(false);
             }
             else
             {
@@ -86,7 +86,8 @@ namespace RewriteMe.Business.Services
                     Id = fileItem.Id,
                     DeletedDate = DateTime.UtcNow,
                     RecognitionState = fileItem.RecognitionState,
-                    TotalTime = fileItem.TotalTime
+                    TotalTime = fileItem.TotalTime,
+                    TranscribedTime = fileItem.TranscribedTime
                 };
 
                 await _deletedFileItemService.InsertAsync(deletedFileItem).ConfigureAwait(false);
@@ -113,18 +114,15 @@ namespace RewriteMe.Business.Services
             throw new OfflineRequestException();
         }
 
-        public async Task<bool> CanTranscribeAsync(TimeSpan fileTime)
+        public async Task<bool> CanTranscribeAsync()
         {
             var remainingSubscriptionTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
-            var remainingTime = remainingSubscriptionTime.Subtract(fileTime);
-
-            return remainingTime.Ticks >= 0;
+            return remainingSubscriptionTime.TotalSeconds >= 15;
         }
 
         public async Task TranscribeAsync(Guid fileItemId, string language)
         {
-            var fileItem = await _fileItemRepository.GetAsync(fileItemId).ConfigureAwait(false);
-            var canTranscribeFileItem = await CanTranscribeAsync(fileItem.TotalTime).ConfigureAwait(false);
+            var canTranscribeFileItem = await CanTranscribeAsync().ConfigureAwait(false);
             if (!canTranscribeFileItem)
                 throw new NoSubscritionFreeTimeException();
 

@@ -10,7 +10,6 @@ using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess.Transcription;
 using RewriteMe.Domain.Exceptions;
-using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Logging.Interfaces;
@@ -27,7 +26,6 @@ namespace RewriteMe.Mobile.ViewModels
     public class CreatePageViewModel : ViewModelBase
     {
         private readonly IFileItemService _fileItemService;
-        private readonly IMediaService _mediaService;
 
         private string _name;
         private SupportedLanguage _selectedLanguage;
@@ -36,14 +34,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         public CreatePageViewModel(
             IFileItemService fileItemService,
-            IMediaService mediaService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
-            _mediaService = mediaService;
 
             CanGoBack = true;
 
@@ -110,7 +106,7 @@ namespace RewriteMe.Mobile.ViewModels
                         var fileName = Path.GetFileName(Uri.UnescapeDataString(path));
                         var fileData = new FileData(path, fileName, () => File.OpenRead(path));
 
-                        await InitializeFile(importedFile.AbsolutePath, fileData).ConfigureAwait(false);
+                        await InitializeFile(fileData).ConfigureAwait(false);
                     }
                 }
 
@@ -189,16 +185,14 @@ namespace RewriteMe.Mobile.ViewModels
                             .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
                             .ConfigureAwait(false);
 
-            await InitializeFile(selectedFile.FilePath, selectedFile).ConfigureAwait(false);
+            await InitializeFile(selectedFile).ConfigureAwait(false);
         }
 
-        private async Task InitializeFile(string audioFilePath, FileData fileData)
+        private async Task InitializeFile(FileData fileData)
         {
-            var totalTime = _mediaService.GetTotalTime(audioFilePath);
-            var canTranscribe = await _fileItemService.CanTranscribeAsync(totalTime).ConfigureAwait(false);
+            var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
             SelectedFile = new FileDataWrapper(fileData)
             {
-                TotalTime = totalTime,
                 CanTranscribe = canTranscribe
             };
 
@@ -310,7 +304,6 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = name,
                 Language = SelectedLanguage?.Culture,
                 FileName = SelectedFile.FileName,
-                TotalTime = SelectedFile.TotalTime,
                 Stream = SelectedFile.FileData.GetStream()
             };
         }

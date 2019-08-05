@@ -23,12 +23,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the SpeechConfiguration class.
         /// </summary>
-        public SpeechConfiguration(string subscriptionKey, string speechRegion, System.Guid audioSampleId, string subscriptionRemainingTimeString)
+        public SpeechConfiguration(string subscriptionKey, string speechRegion, System.Guid audioSampleId, long subscriptionRemainingTimeTicks)
         {
             SubscriptionKey = subscriptionKey;
             SpeechRegion = speechRegion;
             AudioSampleId = audioSampleId;
-            SubscriptionRemainingTimeString = subscriptionRemainingTimeString;
+            SubscriptionRemainingTimeTicks = subscriptionRemainingTimeTicks;
             CustomInit();
         }
 
@@ -54,8 +54,8 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "subscriptionRemainingTimeString")]
-        public string SubscriptionRemainingTimeString { get; set; }
+        [JsonProperty(PropertyName = "subscriptionRemainingTimeTicks")]
+        public long SubscriptionRemainingTimeTicks { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -73,10 +73,6 @@ namespace RewriteMe.Domain.WebApi.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SpeechRegion");
             }
-            if (SubscriptionRemainingTimeString == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "SubscriptionRemainingTimeString");
-            }
             if (SubscriptionKey != null)
             {
                 if (SubscriptionKey.Length > 50)
@@ -89,13 +85,6 @@ namespace RewriteMe.Domain.WebApi.Models
                 if (SpeechRegion.Length > 50)
                 {
                     throw new ValidationException(ValidationRules.MaxLength, "SpeechRegion", 50);
-                }
-            }
-            if (SubscriptionRemainingTimeString != null)
-            {
-                if (SubscriptionRemainingTimeString.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "SubscriptionRemainingTimeString", 50);
                 }
             }
         }

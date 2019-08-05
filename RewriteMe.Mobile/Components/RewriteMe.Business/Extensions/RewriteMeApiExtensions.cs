@@ -37,19 +37,19 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<string> GetDeletedFileItemsTotalTimeAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        public static async Task<TimeSpanWrapper> GetDeletedFileItemsTotalTimeAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<string>(result.Body);
+                return ParseBody<TimeSpanWrapper>(result.Body);
             }
         }
 
-        public static async Task<string> DeleteFileItemAsync(this IRewriteMeAPI operations, Guid fileItemId, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<TimeSpanWrapper> DeleteFileItemAsync(this IRewriteMeAPI operations, Guid fileItemId, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.DeleteFileItemWithHttpMessagesAsync(fileItemId, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<string>(result.Body);
+                return ParseBody<TimeSpanWrapper>(result.Body);
             }
         }
 

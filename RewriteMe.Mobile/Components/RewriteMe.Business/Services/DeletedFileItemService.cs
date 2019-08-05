@@ -64,7 +64,7 @@ namespace RewriteMe.Business.Services
             var httpRequestResult = await _rewriteMeWebService.GetDeletedFileItemsTotalTimeAsync().ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
-                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload).ConfigureAwait(false);
+                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload.Ticks).ConfigureAwait(false);
             }
         }
 

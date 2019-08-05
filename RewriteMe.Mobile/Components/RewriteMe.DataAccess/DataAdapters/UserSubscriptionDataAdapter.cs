@@ -11,7 +11,7 @@ namespace RewriteMe.DataAccess.DataAdapters
             {
                 Id = entity.Id,
                 UserId = entity.UserId,
-                TimeString = entity.Time.ToString(),
+                TimeTicks = entity.Time.Ticks,
                 DateCreated = entity.DateCreated
             };
         }
