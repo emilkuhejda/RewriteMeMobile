@@ -15,5 +15,7 @@ namespace RewriteMe.DataAccess.Entities
         public RecognitionState RecognitionState { get; set; }
 
         public TimeSpan TotalTime { get; set; }
+
+        public TimeSpan TranscribedTime { get; set; }
     }
 }

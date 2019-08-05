@@ -35,7 +35,7 @@ namespace RewriteMe.DataAccess.Repositories
         public async Task<TimeSpan> GetProcessedFilesTotalTimeAsync()
         {
             var deletedFileItem = await _contextProvider.Context.DeletedFileItems.Where(x => x.RecognitionState > RecognitionState.Prepared).ToListAsync().ConfigureAwait(false);
-            var ticks = deletedFileItem.Select(x => x.TotalTime.Ticks).Sum();
+            var ticks = deletedFileItem.Select(x => x.TranscribedTime.Ticks).Sum();
 
             return TimeSpan.FromTicks(ticks);
         }

@@ -12,5 +12,7 @@ namespace RewriteMe.Domain.Configuration
         public RecognitionState RecognitionState { get; set; }
 
         public TimeSpan TotalTime { get; set; }
+
+        public TimeSpan TranscribedTime { get; set; }
     }
 }
