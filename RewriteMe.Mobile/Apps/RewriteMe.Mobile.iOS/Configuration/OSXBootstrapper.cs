@@ -5,6 +5,7 @@ using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Configuration;
 using RewriteMe.Mobile.iOS.ExceptionHandling;
 using RewriteMe.Mobile.iOS.Localization;
+using RewriteMe.Mobile.iOS.Logging;
 using RewriteMe.Mobile.iOS.Providers;
 using RewriteMe.Mobile.iOS.Services;
 

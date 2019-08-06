@@ -5,7 +5,7 @@ using NLog.Config;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Logging.Layouts;
 
-namespace RewriteMe.Mobile.iOS.Localization
+namespace RewriteMe.Mobile.iOS.Logging
 {
     public class NLogLoggerConfiguration : ILoggerConfiguration
     {

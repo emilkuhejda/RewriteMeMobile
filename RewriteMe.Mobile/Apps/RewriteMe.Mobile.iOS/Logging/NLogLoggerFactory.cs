@@ -2,7 +2,7 @@
 using RewriteMe.Logging;
 using RewriteMe.Logging.Interfaces;
 
-namespace RewriteMe.Mobile.iOS.Localization
+namespace RewriteMe.Mobile.iOS.Logging
 {
     public class NLogLoggerFactory : ILoggerFactory
     {

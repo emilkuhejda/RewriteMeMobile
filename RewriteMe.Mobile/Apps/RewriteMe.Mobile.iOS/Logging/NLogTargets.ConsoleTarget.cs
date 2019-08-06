@@ -1,7 +1,7 @@
 ﻿using NLog.Layouts;
 using NLog.Targets;
 
-namespace RewriteMe.Mobile.iOS.Localization
+namespace RewriteMe.Mobile.iOS.Logging
 {
     internal static partial class NLogTargets
     {
