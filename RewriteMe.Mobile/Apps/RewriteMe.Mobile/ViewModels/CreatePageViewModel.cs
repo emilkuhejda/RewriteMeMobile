@@ -185,6 +185,9 @@ namespace RewriteMe.Mobile.ViewModels
                             .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
                             .ConfigureAwait(false);
 
+            if (selectedFile == null)
+                return;
+
             await InitializeFile(selectedFile).ConfigureAwait(false);
         }
 
