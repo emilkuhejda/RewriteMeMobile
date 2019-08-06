@@ -83,7 +83,8 @@
             <ListView Grid.Row="1"
                       HasUnevenRows="True"
                       ItemTemplate="{StaticResource RecordedItemsTemplate}"
-                      ItemsSource="{Binding RecordedItems}" />
+                      ItemsSource="{Binding RecordedItems}"
+                      SeparatorVisibility="None" />
         </Grid>
 
         <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />

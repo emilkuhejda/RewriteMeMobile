@@ -31,7 +31,8 @@
             <Grid Grid.Row="1" Padding="{StaticResource StandardPadding}">
                 <ListView HasUnevenRows="True"
                           ItemTemplate="{StaticResource DetailItemsTemplate}"
-                          ItemsSource="{Binding DetailItems}" />
+                          ItemsSource="{Binding DetailItems}"
+                          SeparatorVisibility="None" />
             </Grid>
 
             <controls:ContextActionBar Grid.Row="2" ItemsSource="{Binding NavigationItems}" />
