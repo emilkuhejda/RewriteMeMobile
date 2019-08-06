@@ -6,7 +6,7 @@ namespace RewriteMe.Mobile.iOS.Localization
 {
     public class NLogLoggerFactory : ILoggerFactory
     {
-        private const string LogFileName = "Uster.MobileAlerts.Mobile.log";
+        private const string LogFileName = "RewriteMe.log";
 
         public NLogLoggerFactory(ILoggerConfiguration loggerConfiguration)
         {
