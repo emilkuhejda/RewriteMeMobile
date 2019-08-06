@@ -10,37 +10,35 @@
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="RecordedItemsTemplate">
             <ViewCell>
-                <ViewCell.View>
-                    <Grid BackgroundColor="White">
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
-                        </Grid.GestureRecognizers>
+                <Grid BackgroundColor="White">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
+                    </Grid.GestureRecognizers>
 
-                        <StackLayout Orientation="Horizontal">
-                            <forms:SvgCachedImage Margin="0,5,10,5"
-                                                  Aspect="AspectFit"
-                                                  BackgroundColor="Transparent"
-                                                  HeightRequest="50"
-                                                  InputTransparent="True"
-                                                  Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
-                                                  VerticalOptions="CenterAndExpand" />
+                    <StackLayout Orientation="Horizontal">
+                        <forms:SvgCachedImage Margin="0,5,10,5"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="50"
+                                              InputTransparent="True"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
+                                              VerticalOptions="CenterAndExpand" />
 
-                            <StackLayout Padding="0,10,0,10">
-                                <Label HeightRequest="30"
+                        <StackLayout Padding="0,10,0,10">
+                            <Label HeightRequest="30"
+                                   Style="{StaticResource LabelStyle}"
+                                   Text="{Binding Title}"
+                                   VerticalOptions="Center" />
+                            <Frame IsVisible="{Binding IsRecordingOnly}" Style="{StaticResource InfoTileBackground}">
+                                <Label FontAttributes="Italic"
+                                       FontSize="{StaticResource MidMediumSize}"
                                        Style="{StaticResource LabelStyle}"
-                                       Text="{Binding Title}"
-                                       VerticalOptions="Center" />
-                                <Frame IsVisible="{Binding IsRecordingOnly}" Style="{StaticResource InfoTileBackground}">
-                                    <Label FontAttributes="Italic"
-                                           FontSize="{StaticResource MidMediumSize}"
-                                           Style="{StaticResource LabelStyle}"
-                                           Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}"
-                                           TextColor="{StaticResource ColorWhite}" />
-                                </Frame>
-                            </StackLayout>
+                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}"
+                                       TextColor="{StaticResource ColorWhite}" />
+                            </Frame>
                         </StackLayout>
-                    </Grid>
-                </ViewCell.View>
+                    </StackLayout>
+                </Grid>
             </ViewCell>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>

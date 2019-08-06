@@ -12,49 +12,47 @@
         <ResourceDictionary>
             <DataTemplate x:Key="GenericListItemCell">
                 <ViewCell>
-                    <ViewCell.View>
-                        <Grid RowSpacing="0">
+                    <Grid RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <Grid Padding="{StaticResource SmallPadding}"
+                              ColumnSpacing="{StaticResource MediumSpacing}"
+                              RowSpacing="0">
+                            <Grid.Resources>
+                                <ResourceDictionary>
+                                    <converters:BoolToColorConverter x:Key="IsSelectedToTextColorConverter"
+                                                                     FalseValue="{StaticResource PrimaryTextColor}"
+                                                                     TrueValue="{StaticResource ColorPrimaryBright}" />
+                                    <converters:BoolToStyleConverter x:Key="IsSelectedToStyleConverter"
+                                                                     FalseValue="{StaticResource LabelStyle}"
+                                                                     TrueValue="{StaticResource LabelBoldStyle}" />
+                                </ResourceDictionary>
+                            </Grid.Resources>
+
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="48" />
                             </Grid.RowDefinitions>
 
-                            <Grid Padding="{StaticResource SmallPadding}"
-                                  ColumnSpacing="{StaticResource MediumSpacing}"
-                                  RowSpacing="0">
-                                <Grid.Resources>
-                                    <ResourceDictionary>
-                                        <converters:BoolToColorConverter x:Key="IsSelectedToTextColorConverter"
-                                                                         FalseValue="{StaticResource PrimaryTextColor}"
-                                                                         TrueValue="{StaticResource ColorPrimaryBright}" />
-                                        <converters:BoolToStyleConverter x:Key="IsSelectedToStyleConverter"
-                                                                         FalseValue="{StaticResource LabelStyle}"
-                                                                         TrueValue="{StaticResource LabelBoldStyle}" />
-                                    </ResourceDictionary>
-                                </Grid.Resources>
-
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="48" />
-                                </Grid.RowDefinitions>
-
-                                <Label Grid.Column="0"
-                                       HorizontalTextAlignment="Start"
-                                       Style="{Binding IsSelected,
+                            <Label Grid.Column="0"
+                                   HorizontalTextAlignment="Start"
+                                   Style="{Binding IsSelected,
+                                                   Mode=OneWay,
+                                                   Converter={StaticResource IsSelectedToStyleConverter}}"
+                                   Text="{Binding Text}"
+                                   TextColor="{Binding IsSelected,
                                                        Mode=OneWay,
-                                                       Converter={StaticResource IsSelectedToStyleConverter}}"
-                                       Text="{Binding Text}"
-                                       TextColor="{Binding IsSelected,
-                                                           Mode=OneWay,
-                                                           Converter={StaticResource IsSelectedToTextColorConverter}}"
-                                       VerticalTextAlignment="Center" />
-                            </Grid>
-
-                            <!--  Separator  -->
-                            <Grid Grid.Row="1"
-                                  BackgroundColor="{DynamicResource Divider}"
-                                  HeightRequest="1" />
+                                                       Converter={StaticResource IsSelectedToTextColorConverter}}"
+                                   VerticalTextAlignment="Center" />
                         </Grid>
-                    </ViewCell.View>
+
+                        <!--  Separator  -->
+                        <Grid Grid.Row="1"
+                              BackgroundColor="{DynamicResource Divider}"
+                              HeightRequest="1" />
+                    </Grid>
                 </ViewCell>
             </DataTemplate>
         </ResourceDictionary>

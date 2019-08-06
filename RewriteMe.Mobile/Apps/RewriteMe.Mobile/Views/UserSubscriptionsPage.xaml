@@ -10,14 +10,12 @@
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="ProductsTemplate">
             <ViewCell>
-                <ViewCell.View>
-                    <Grid>
-                        <Button Margin="20,0,20,20"
-                                Command="{Binding BuyCommand}"
-                                Style="{StaticResource ActionButtonStyle}"
-                                Text="{Binding Text}" />
-                    </Grid>
-                </ViewCell.View>
+                <Grid>
+                    <Button Margin="20,0,20,20"
+                            Command="{Binding BuyCommand}"
+                            Style="{StaticResource ActionButtonStyle}"
+                            Text="{Binding Text}" />
+                </Grid>
             </ViewCell>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
