@@ -3,6 +3,7 @@
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
@@ -39,11 +40,21 @@
                     </StackLayout>
                 </StackLayout>
 
-                <Button Grid.Row="1"
-                        Margin="20,0,20,20"
-                        Command="{Binding UploadFileCommand}"
-                        Style="{StaticResource ActionButtonStyle}"
-                        Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}" />
+                <Grid Grid.Row="1"
+                      Margin="20,0,20,20"
+                      HorizontalOptions="Center">
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="50"
+                                          InputTransparent="True"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Upload.svg"
+                                          VerticalOptions="CenterAndExpand" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding UploadFileCommand}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
             </Grid>
         </controls:AlwaysScrollView>
 
@@ -51,7 +62,7 @@
 
         <controls:PageActivityIndicator Grid.Row="0"
                                         Grid.RowSpan="2"
-                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
+                                        Caption="{Binding ProgressText}"
                                         IsVisible="{Binding OperationScope.IsBusy}" />
     </Grid>
 </views:BaseNavigationPage>

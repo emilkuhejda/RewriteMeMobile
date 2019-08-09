@@ -40,6 +40,7 @@
     <None Remove="Resources\Images\Overview-Enabled.svg" />
     <None Remove="Resources\Images\RecorderOverview-Disabled.svg" />
     <None Remove="Resources\Images\RecorderOverview-Enabled.svg" />
+    <None Remove="Resources\Images\Upload.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -68,6 +69,7 @@
     <EmbeddedResource Include="Resources\Images\Overview-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\RecorderOverview-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\RecorderOverview-Enabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Upload.svg" />
   </ItemGroup>
   
   <ItemGroup>

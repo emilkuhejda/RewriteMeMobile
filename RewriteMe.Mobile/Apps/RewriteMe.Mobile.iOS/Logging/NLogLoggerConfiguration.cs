@@ -5,7 +5,7 @@ using NLog.Config;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Logging.Layouts;
 
-namespace RewriteMe.Mobile.iOS.Localization
+namespace RewriteMe.Mobile.iOS.Logging
 {
     public class NLogLoggerConfiguration : ILoggerConfiguration
     {
@@ -19,25 +19,21 @@ namespace RewriteMe.Mobile.iOS.Localization
             var layout = NLogLayouts.GetDefaultLayout();
 
             // Console Target
-            using (var consoleTarget = NLogTargets.GetConsoletTarget(layout))
-            {
-                config.AddTarget("console", consoleTarget);
+            var consoleTarget = NLogTargets.GetConsoletTarget(layout);
+            config.AddTarget("console", consoleTarget);
 
-                var consoleRule = new LoggingRule("*", LogLevel.Trace, consoleTarget);
-                config.LoggingRules.Add(consoleRule);
-            }
+            var consoleRule = new LoggingRule("*", LogLevel.Trace, consoleTarget);
+            config.LoggingRules.Add(consoleRule);
 
             // File Target
             var logFilePath = GetLogFileInfo().FullName;
-            using (var fileTarget = NLogTargets.GetFileTarget(layout, logFilePath))
-            {
-                config.AddTarget("file", fileTarget);
+            var fileTarget = NLogTargets.GetFileTarget(layout, logFilePath);
+            config.AddTarget("file", fileTarget);
 
-                var fileRule = new LoggingRule("*", LogLevel.Trace, fileTarget);
-                config.LoggingRules.Add(fileRule);
+            var fileRule = new LoggingRule("*", LogLevel.Trace, fileTarget);
+            config.LoggingRules.Add(fileRule);
 
-                LogManager.Configuration = config;
-            }
+            LogManager.Configuration = config;
         }
 
         public FileInfo GetLogFileInfo()
