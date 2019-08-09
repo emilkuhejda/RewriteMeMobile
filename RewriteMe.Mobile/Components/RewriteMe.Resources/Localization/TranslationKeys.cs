@@ -24,6 +24,7 @@
         public static string Language => "Language";
         public static string UserProfile => "UserProfile";
         public static string EditProfile => "EditProfile";
+        public static string ResetPassword => "ResetPassword";
         public static string SignOut => "SignOut";
         public static string Version => "Version";
         public static string ContactUs => "ContactUs";
