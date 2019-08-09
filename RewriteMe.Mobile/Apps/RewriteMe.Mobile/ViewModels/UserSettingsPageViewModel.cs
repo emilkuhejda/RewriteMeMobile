@@ -25,16 +25,24 @@ namespace RewriteMe.Mobile.ViewModels
             CanGoBack = true;
 
             EditProfileCommand = new AsyncCommand(ExecuteEditProfileCommandAsync);
+            ResetPasswordCommand = new AsyncCommand(ExecuteResetPasswordCommandAsync);
             LogoutCommand = new AsyncCommand(ExecuteLogoutCommandAsync);
         }
 
         public ICommand EditProfileCommand { get; }
+
+        public ICommand ResetPasswordCommand { get; }
 
         public ICommand LogoutCommand { get; }
 
         private async Task ExecuteEditProfileCommandAsync()
         {
             await _userSessionService.EditProfileAsync().ConfigureAwait(false);
+        }
+
+        private async Task ExecuteResetPasswordCommandAsync()
+        {
+            await _userSessionService.ResetPasswordAsync().ConfigureAwait(false);
         }
 
         private async Task ExecuteLogoutCommandAsync()

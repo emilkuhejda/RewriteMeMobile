@@ -163,6 +163,9 @@
   <data name="EditProfile" xml:space="preserve">
     <value>Edit profile</value>
   </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Reset password</value>
+  </data>
   <data name="SignOut" xml:space="preserve">
     <value>Sign out</value>
   </data>
@@ -256,7 +259,7 @@
   <data name="UnableToLoadAudioFile" xml:space="preserve">
     <value>Unable to load audio file.</value>
   </data>
-  
+
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>
   </data>
