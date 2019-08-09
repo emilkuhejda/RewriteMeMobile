@@ -115,6 +115,7 @@
     <Compile Include="Providers\DirectoryProvider.cs" />
     <Compile Include="Providers\IdentityUiParentProvider.cs" />
     <Compile Include="Renderers\NoBarsScrollViewerRenderer.cs" />
+    <Compile Include="Renderers\RewriteMeEditorRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Services\MediaService.cs" />
     <Compile Include="SplashActivity.cs" />

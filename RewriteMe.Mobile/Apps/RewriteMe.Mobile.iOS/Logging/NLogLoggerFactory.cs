@@ -2,11 +2,11 @@
 using RewriteMe.Logging;
 using RewriteMe.Logging.Interfaces;
 
-namespace RewriteMe.Mobile.iOS.Localization
+namespace RewriteMe.Mobile.iOS.Logging
 {
     public class NLogLoggerFactory : ILoggerFactory
     {
-        private const string LogFileName = "Uster.MobileAlerts.Mobile.log";
+        private const string LogFileName = "RewriteMe.log";
 
         public NLogLoggerFactory(ILoggerConfiguration loggerConfiguration)
         {
