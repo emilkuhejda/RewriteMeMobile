@@ -178,7 +178,7 @@ namespace RewriteMe.Business.Services
                 // Application is currently offline
                 _logger.Warning("No connection could be established to the authority.");
             }
-            catch (MsalServiceException e)
+            catch (MsalException e)
             {
                 if (e.Message.Contains("AADB2C90118"))
                 {
@@ -196,18 +196,6 @@ namespace RewriteMe.Business.Services
                 }
                 else if ("authentication_canceled".Equals(e.ErrorCode, StringComparison.Ordinal))
                 {
-                    _logger.Info("The user has canceled the sign-in.");
-                }
-                else
-                {
-                    _logger.Exception(e);
-                }
-            }
-            catch (MsalException e)
-            {
-                if ("authentication_canceled".Equals(e.ErrorCode, StringComparison.Ordinal))
-                {
-                    // User has canceled the sign in or registering
                     _logger.Info("The user has canceled the sign-in.");
                 }
                 else
