@@ -25,9 +25,18 @@
             </ActivityIndicator.WidthRequest>
         </ActivityIndicator>
 
-        <Label Margin="20,0,20,0"
-               HorizontalOptions="Center"
-               LineBreakMode="WordWrap"
-               Text="{Binding Caption, Source={x:Reference Control}}" />
+        <Label LineBreakMode="WordWrap" Text="{Binding Caption, Source={x:Reference Control}}">
+            <Label.HorizontalOptions>
+                <OnPlatform x:TypeArguments="LayoutOptions"
+                            Android="Center"
+                            WinPhone="Center"
+                            iOS="StartAndExpand" />
+            </Label.HorizontalOptions>
+            <Label.Margin>
+                <OnPlatform x:TypeArguments="Thickness"
+                            Android="20,0,20,0"
+                            iOS="-40,0,20,0" />
+            </Label.Margin>
+        </Label>
     </StackLayout>
 </Grid>
