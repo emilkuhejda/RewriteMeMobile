@@ -13,7 +13,7 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <!--<controls:AlwaysScrollView Grid.Row="0">
+        <controls:AlwaysScrollView Grid.Row="0">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
@@ -56,13 +56,9 @@
                     </Grid.GestureRecognizers>
                 </Grid>
             </Grid>
-        </controls:AlwaysScrollView>-->
+        </controls:AlwaysScrollView>
 
         <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
-
-        <controls:PageActivityIndicator Grid.Row="0"
-                                        Grid.RowSpan="2"
-                                        Caption="Upload might take some time. Please do not turn off application. File might not be uploaded." />
 
         <controls:PageActivityIndicator Grid.Row="0"
                                         Grid.RowSpan="2"
