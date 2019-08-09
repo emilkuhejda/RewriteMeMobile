@@ -30,6 +30,7 @@ namespace RewriteMe.Mobile.ViewModels
         private string _name;
         private SupportedLanguage _selectedLanguage;
         private FileDataWrapper _selectedFile;
+        private string _progressText;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
 
         public CreatePageViewModel(
@@ -45,6 +46,8 @@ namespace RewriteMe.Mobile.ViewModels
 
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
             UploadFileCommand = new AsyncCommand(ExecuteUploadFileCommandAsync);
+
+            ResetLoadingText();
         }
 
         public string Name
@@ -75,6 +78,12 @@ namespace RewriteMe.Mobile.ViewModels
                     ReevaluateNavigationItemIconKeys();
                 }
             }
+        }
+
+        public string ProgressText
+        {
+            get => _progressText;
+            set => SetProperty(ref _progressText, value);
         }
 
         public IEnumerable<ActionBarTileViewModel> NavigationItems
@@ -240,6 +249,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteSendToServer(Func<MediaFile, Task> func)
         {
+            ProgressText = Loc.Text(TranslationKeys.UploadFileItemInfoMessage);
+
             using (new OperationMonitor(OperationScope))
             {
                 CanGoBack = false;
@@ -272,6 +283,8 @@ namespace RewriteMe.Mobile.ViewModels
 
                 CanGoBack = true;
             }
+
+            ResetLoadingText();
         }
 
         private async Task HandleErrorMessage(int? statusCode)
@@ -309,6 +322,11 @@ namespace RewriteMe.Mobile.ViewModels
                 FileName = SelectedFile.FileName,
                 Stream = SelectedFile.FileData.GetStream()
             };
+        }
+
+        private void ResetLoadingText()
+        {
+            ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
         }
     }
 }
