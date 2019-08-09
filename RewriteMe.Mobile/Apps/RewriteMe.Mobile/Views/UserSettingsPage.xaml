@@ -13,6 +13,10 @@
                 <controls:DrillDownButton Command="{Binding EditProfileCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EditProfile}}" />
                 <controls:Divider />
 
+                <!--  Reset password  -->
+                <controls:DrillDownButton Command="{Binding ResetPasswordCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ResetPassword}}" />
+                <controls:Divider />
+
                 <!--  Log out  -->
                 <controls:DrillDownButton Command="{Binding LogoutCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SignOut}}" />
                 <controls:Divider />
