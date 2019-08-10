@@ -152,9 +152,17 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<string> RefreshTokenAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.RefreshTokenWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<string>(result);
+            }
+        }
+
         public static async Task<RegistrationModel> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel, Dictionary<string, List<string>> customHeaders)
         {
-            using (HttpOperationResponse<object> result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<RegistrationModel>(result);
             }

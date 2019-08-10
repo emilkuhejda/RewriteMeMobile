@@ -87,7 +87,7 @@ namespace RewriteMe.Business.Services
             return CrossSecureStorage.Current.GetValue(AccessTokenKey);
         }
 
-        private void SetAccessToken(string accessToken)
+        public void SetAccessToken(string accessToken)
         {
             CrossSecureStorage.Current.SetValue(AccessTokenKey, accessToken);
         }

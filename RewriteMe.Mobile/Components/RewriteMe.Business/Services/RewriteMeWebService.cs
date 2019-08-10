@@ -144,6 +144,16 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetRecognizedTimeAsync(customHeaders)).ConfigureAwait(false);
         }
 
+        public async Task RefreshTokenAsync()
+        {
+            var customHeaders = GetAuthHeaders();
+            var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => Client.RefreshTokenAsync(customHeaders)).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            {
+                _userSessionService.SetAccessToken(httpRequestResult.Payload);
+            }
+        }
+
         private CustomHeadersDictionary GetAuthHeaders()
         {
             var accessToken = _userSessionService.GetAccessToken();

@@ -16,14 +16,12 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly ISynchronizationService _synchronizationService;
         private readonly ISchedulerService _schedulerService;
-        private readonly IRewriteMeWebService _rewriteMeWebService;
 
         private string _progressText;
 
         public LoadingPageViewModel(
             ISynchronizationService synchronizationService,
             ISchedulerService schedulerService,
-            IRewriteMeWebService rewriteMeWebService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -32,7 +30,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _synchronizationService = synchronizationService;
             _schedulerService = schedulerService;
-            _rewriteMeWebService = rewriteMeWebService;
 
             HasTitleBar = false;
             CanGoBack = false;
@@ -44,18 +41,11 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                var isAlive = await _rewriteMeWebService.IsAliveAsync().ConfigureAwait(false);
-
                 ProgressText = Loc.Text(TranslationKeys.LoadingData);
 
-                if (isAlive)
-                {
-                    _synchronizationService.InitializationProgress += OnInitializationProgress;
-
-                    await _synchronizationService.InitializeAsync().ConfigureAwait(false);
-
-                    _synchronizationService.InitializationProgress -= OnInitializationProgress;
-                }
+                _synchronizationService.InitializationProgress += OnInitializationProgress;
+                await _synchronizationService.InitializeAsync().ConfigureAwait(false);
+                _synchronizationService.InitializationProgress -= OnInitializationProgress;
 
                 var isFirstTimeDataSync = await _synchronizationService.IsFirstTimeDataSyncAsync().ConfigureAwait(false);
                 if (!isFirstTimeDataSync)

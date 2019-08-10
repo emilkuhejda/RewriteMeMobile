@@ -14,6 +14,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         string GetAccessToken();
 
+        void SetAccessToken(string accessToken);
+
         Task<bool> IsSignedInAsync();
 
         Task<bool> SignUpOrInAsync();
