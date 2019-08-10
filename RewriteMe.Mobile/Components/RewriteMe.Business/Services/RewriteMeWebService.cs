@@ -146,17 +146,22 @@ namespace RewriteMe.Business.Services
 
         public async Task RefreshTokenAsync()
         {
+            var accessToken = _userSessionService.AccessToken;
+            var daysToExpire = (accessToken.ExpirationDate - DateTimeOffset.UtcNow).TotalDays;
+            if (daysToExpire > 60)
+                return;
+
             var customHeaders = GetAuthHeaders();
             var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => Client.RefreshTokenAsync(customHeaders)).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
-                _userSessionService.SetAccessToken(httpRequestResult.Payload);
+                _userSessionService.SetToken(httpRequestResult.Payload);
             }
         }
 
         private CustomHeadersDictionary GetAuthHeaders()
         {
-            var accessToken = _userSessionService.GetAccessToken();
+            var accessToken = _userSessionService.GetToken();
             return new CustomHeadersDictionary().AddBearerToken(accessToken);
         }
     }

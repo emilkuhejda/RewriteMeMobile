@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using Plugin.SecureStorage;
-using RewriteMe.Business.Configuration;
 using RewriteMe.Business.Wrappers;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Exceptions;
@@ -34,6 +33,7 @@ namespace RewriteMe.Business.Services
         private readonly ILogger _logger;
 
         private Guid _userId = Guid.Empty;
+        private AccessToken _accessToken;
 
         public UserSessionService(
             IRegistrationUserWebService registrationUserWebService,
@@ -57,6 +57,8 @@ namespace RewriteMe.Business.Services
                 applicationSettings.ClientId,
                 applicationSettings.RedirectUri);
         }
+
+        public AccessToken AccessToken => _accessToken ?? (_accessToken = new AccessToken(GetToken()));
 
         public async Task<Guid> GetUserIdAsync()
         {
@@ -82,19 +84,21 @@ namespace RewriteMe.Business.Services
             return await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
         }
 
-        public string GetAccessToken()
+        public string GetToken()
         {
             return CrossSecureStorage.Current.GetValue(AccessTokenKey);
         }
 
-        public void SetAccessToken(string accessToken)
+        public void SetToken(string accessToken)
         {
+            _accessToken = null;
+
             CrossSecureStorage.Current.SetValue(AccessTokenKey, accessToken);
         }
 
         public async Task<bool> IsSignedInAsync()
         {
-            var token = GetAccessToken();
+            var token = GetToken();
             if (token == null)
                 return false;
 
@@ -225,6 +229,7 @@ namespace RewriteMe.Business.Services
             _logger.Info("Sign out");
 
             _userId = Guid.Empty;
+            _accessToken = null;
 
             await RemoveLocalAccountsAsync().ConfigureAwait(false);
             await _cleanUpService.CleanUp().ConfigureAwait(false);
@@ -299,7 +304,7 @@ namespace RewriteMe.Business.Services
             if (httpRequestResult.State != HttpRequestState.Success)
                 throw new UserRegistrationFailedException();
 
-            SetAccessToken(httpRequestResult.Payload.Token);
+            SetToken(httpRequestResult.Payload.Token);
 
             await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload.UserSubscription).ConfigureAwait(false);
         }
