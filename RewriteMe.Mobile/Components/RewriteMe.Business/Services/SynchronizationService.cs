@@ -42,6 +42,10 @@ namespace RewriteMe.Business.Services
 
         public async Task InitializeAsync()
         {
+            await _lastUpdatesService.InitializeAsync().ConfigureAwait(false);
+            if (!_lastUpdatesService.IsConnectionSuccessful)
+                return;
+
             await SendPendingDeletedFileItems().ConfigureAwait(false);
 
             var updateMethods = new List<Func<Task>>

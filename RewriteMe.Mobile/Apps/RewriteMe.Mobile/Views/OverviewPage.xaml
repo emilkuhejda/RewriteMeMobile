@@ -87,8 +87,11 @@
 
             <ListView Grid.Row="1"
                       HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsRefreshing}"
                       ItemTemplate="{StaticResource FileItemsTemplate}"
                       ItemsSource="{Binding FileItems}"
+                      RefreshCommand="{Binding RefreshCommand}"
                       SeparatorVisibility="None" />
 
             <Grid Grid.Row="1"

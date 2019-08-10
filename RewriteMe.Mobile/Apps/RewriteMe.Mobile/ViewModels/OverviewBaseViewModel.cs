@@ -21,6 +21,7 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public abstract class OverviewBaseViewModel : ViewModelBase
     {
+        private readonly ISynchronizationService _synchronizationService;
         private readonly IEmailService _emailService;
         private readonly ILatestVersion _latestVersion;
         private readonly IApplicationSettings _applicationSettings;
@@ -28,8 +29,10 @@ namespace RewriteMe.Mobile.ViewModels
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _isNotUserRegistrationSuccess;
         private bool _notAvailableData;
+        private bool _isRefreshing;
 
         protected OverviewBaseViewModel(
+            ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IInternalValueService internalValueService,
             IEmailService emailService,
@@ -40,6 +43,7 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(dialogService, navigationService, loggerFactory)
         {
+            _synchronizationService = synchronizationService;
             _emailService = emailService;
             _latestVersion = latestVersion;
             _applicationSettings = applicationSettings;
@@ -49,13 +53,12 @@ namespace RewriteMe.Mobile.ViewModels
 
             SendEmailCommand = new DelegateCommand(ExecuteSendEmailCommand);
             NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
+            RefreshCommand = new AsyncCommand(ExecuteRefreshCommandAsync);
         }
 
         protected IUserSessionService UserSessionService { get; }
 
         protected IInternalValueService InternalValueService { get; }
-
-        public ICommand SendEmailCommand { get; }
 
         public IEnumerable<ActionBarTileViewModel> NavigationItems
         {
@@ -75,7 +78,17 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _notAvailableData, value);
         }
 
+        public bool IsRefreshing
+        {
+            get => _isRefreshing;
+            set => SetProperty(ref _isRefreshing, value);
+        }
+
+        public ICommand SendEmailCommand { get; }
+
         public ICommand NavigateToRecorderCommand { get; }
+
+        public ICommand RefreshCommand { get; }
 
         protected void InitializeNavigation(bool isOverview)
         {
@@ -140,6 +153,15 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteNavigateToRecorderCommandAsync()
         {
             await NavigationService.NavigateWithoutAnimationAsync(Pages.Recorder).ConfigureAwait(false);
+        }
+
+        private async Task ExecuteRefreshCommandAsync()
+        {
+            IsRefreshing = true;
+
+            await _synchronizationService.InitializeAsync().ConfigureAwait(false);
+
+            IsRefreshing = false;
         }
 
         protected abstract Task ExecuteNavigateToOverviewAsync();

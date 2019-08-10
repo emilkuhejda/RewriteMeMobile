@@ -20,7 +20,6 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
-        private readonly ILastUpdatesService _lastUpdatesService;
         private readonly ISynchronizationService _synchronizationService;
         private readonly ISchedulerService _schedulerService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
@@ -32,7 +31,6 @@ namespace RewriteMe.Mobile.ViewModels
             IUserSessionService userSessionService,
             IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService,
-            ILastUpdatesService lastUpdatesService,
             ISynchronizationService synchronizationService,
             ISchedulerService schedulerService,
             IRewriteMeWebService rewriteMeWebService,
@@ -45,7 +43,6 @@ namespace RewriteMe.Mobile.ViewModels
             _userSessionService = userSessionService;
             _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
-            _lastUpdatesService = lastUpdatesService;
             _synchronizationService = synchronizationService;
             _schedulerService = schedulerService;
             _rewriteMeWebService = rewriteMeWebService;
@@ -86,7 +83,6 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     _synchronizationService.InitializationProgress += OnInitializationProgress;
 
-                    await _lastUpdatesService.InitializeAsync().ConfigureAwait(false);
                     await _synchronizationService.InitializeAsync().ConfigureAwait(false);
 
                     _synchronizationService.InitializationProgress -= OnInitializationProgress;
