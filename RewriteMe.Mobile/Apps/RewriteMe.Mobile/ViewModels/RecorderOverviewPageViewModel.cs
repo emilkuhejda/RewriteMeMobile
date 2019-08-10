@@ -20,6 +20,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public RecorderOverviewPageViewModel(
             IRecordedItemService recordedItemService,
+            ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IInternalValueService internalValueService,
             IEmailService emailService,
@@ -28,7 +29,7 @@ namespace RewriteMe.Mobile.ViewModels
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(userSessionService, internalValueService, emailService, latestVersion, applicationSettings, dialogService, navigationService, loggerFactory)
+            : base(synchronizationService, userSessionService, internalValueService, emailService, latestVersion, applicationSettings, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
         }
