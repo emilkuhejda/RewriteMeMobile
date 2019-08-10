@@ -27,6 +27,7 @@ namespace RewriteMe.Mobile.ViewModels
         public OverviewPageViewModel(
             IFileItemService fileItemService,
             ISchedulerService schedulerService,
+            ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IInternalValueService internalValueService,
             IEmailService emailService,
@@ -35,7 +36,7 @@ namespace RewriteMe.Mobile.ViewModels
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(userSessionService, internalValueService, emailService, latestVersion, applicationSettings, dialogService, navigationService, loggerFactory)
+            : base(synchronizationService, userSessionService, internalValueService, emailService, latestVersion, applicationSettings, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
             _schedulerService = schedulerService;

@@ -10,7 +10,6 @@ namespace RewriteMe.Business.Services
         private const int TimeoutSeconds = 30;
 
         private readonly IFileItemService _fileItemService;
-        private readonly ILastUpdatesService _lastUpdatesService;
         private readonly ISynchronizationService _synchronizationService;
         private readonly object _lockObject = new object();
 
@@ -20,11 +19,9 @@ namespace RewriteMe.Business.Services
 
         public SchedulerService(
             IFileItemService fileItemService,
-            ILastUpdatesService lastUpdatesService,
             ISynchronizationService synchronizationService)
         {
             _fileItemService = fileItemService;
-            _lastUpdatesService = lastUpdatesService;
             _synchronizationService = synchronizationService;
 
             _cancellationTokenSource = new CancellationTokenSource();
@@ -90,11 +87,6 @@ namespace RewriteMe.Business.Services
         private async Task StartSynchronizationAsync(CancellationToken token)
         {
             if (token.IsCancellationRequested)
-                return;
-
-            await _lastUpdatesService.InitializeAsync().ConfigureAwait(false);
-
-            if (token.IsCancellationRequested || !_lastUpdatesService.IsConnectionSuccessful)
                 return;
 
             await _synchronizationService.InitializeAsync().ConfigureAwait(false);
