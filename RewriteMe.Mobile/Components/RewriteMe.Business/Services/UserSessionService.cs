@@ -7,6 +7,7 @@ using Microsoft.Identity.Client;
 using RewriteMe.Business.Configuration;
 using RewriteMe.Business.Wrappers;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Factories;
@@ -22,7 +23,6 @@ namespace RewriteMe.Business.Services
     public class UserSessionService : IUserSessionService
     {
         private readonly IRegistrationUserWebService _registrationUserWebService;
-        private readonly IInternalValueService _internalValueService;
         private readonly ICleanUpService _cleanUpService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
@@ -36,7 +36,6 @@ namespace RewriteMe.Business.Services
 
         public UserSessionService(
             IRegistrationUserWebService registrationUserWebService,
-            IInternalValueService internalValueService,
             ICleanUpService cleanUpService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
@@ -46,7 +45,6 @@ namespace RewriteMe.Business.Services
             ILoggerFactory loggerFactory)
         {
             _registrationUserWebService = registrationUserWebService;
-            _internalValueService = internalValueService;
             _cleanUpService = cleanUpService;
             _identityUiParentProvider = identityUiParentProvider;
             _applicationSettings = applicationSettings;
@@ -96,6 +94,16 @@ namespace RewriteMe.Business.Services
 
             await UpdateUserSessionAndRegisterUserAsync(accessToken).ConfigureAwait(false);
             return accessToken;
+        }
+
+        public string GetAccessToken()
+        {
+            return _accessToken;
+        }
+
+        public void SetAccessToken(string accessToken)
+        {
+            _accessToken = accessToken;
         }
 
         private async Task<string> GetAccessTokenSilentAsync(string policy, string authority)
@@ -327,24 +335,21 @@ namespace RewriteMe.Business.Services
             var accessTokenObject = new AccessToken(accessToken);
             await UpdateUserSession(accessTokenObject).ConfigureAwait(false);
 
-            var isUserRegistered = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
-            if (accessTokenObject.NewUser && !isUserRegistered)
+            var registerUserModel = new RegisterUserModel
             {
-                var registerUserModel = new RegisterUserModel
-                {
-                    Id = Guid.Parse(accessTokenObject.ObjectId),
-                    Email = accessTokenObject.Email,
-                    GivenName = accessTokenObject.GivenName,
-                    FamilyName = accessTokenObject.FamilyName
-                };
+                Id = Guid.Parse(accessTokenObject.ObjectId),
+                Email = accessTokenObject.Email,
+                GivenName = accessTokenObject.GivenName,
+                FamilyName = accessTokenObject.FamilyName
+            };
 
-                var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel, accessToken).ConfigureAwait(false);
-                if (httpRequestResult.State == HttpRequestState.Success)
-                {
-                    await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload.UserSubscription).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true).ConfigureAwait(false);
-                }
-            }
+            var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel, accessToken).ConfigureAwait(false);
+            if (httpRequestResult.State != HttpRequestState.Success)
+                throw new UserRegistrationFailedException();
+
+            SetAccessToken(httpRequestResult.Payload.Token);
+
+            await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload.UserSubscription).ConfigureAwait(false);
         }
 
         private async Task UpdateUserSession(AccessToken accessToken)

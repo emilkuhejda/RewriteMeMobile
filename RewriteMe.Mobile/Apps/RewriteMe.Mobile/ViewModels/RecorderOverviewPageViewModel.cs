@@ -1,11 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Plugin.LatestVersion.Abstractions;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Configuration;
-using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
@@ -21,15 +18,11 @@ namespace RewriteMe.Mobile.ViewModels
         public RecorderOverviewPageViewModel(
             IRecordedItemService recordedItemService,
             ISynchronizationService synchronizationService,
-            IInternalValueService internalValueService,
-            IEmailService emailService,
-            ILatestVersion latestVersion,
-            IApplicationSettings applicationSettings,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(synchronizationService, internalValueService, emailService, latestVersion, applicationSettings, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
         }
@@ -51,7 +44,6 @@ namespace RewriteMe.Mobile.ViewModels
                     .Select(x => new RecordedItemViewModel(x, NavigationService))
                     .ToList();
 
-                IsNotUserRegistrationSuccess = !await InternalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
                 NotAvailableData = !RecordedItems.Any();
 
                 InitializeNavigation(false);

@@ -3,11 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Plugin.LatestVersion.Abstractions;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Configuration;
-using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
@@ -28,15 +25,11 @@ namespace RewriteMe.Mobile.ViewModels
             IFileItemService fileItemService,
             ISchedulerService schedulerService,
             ISynchronizationService synchronizationService,
-            IInternalValueService internalValueService,
-            IEmailService emailService,
-            ILatestVersion latestVersion,
-            IApplicationSettings applicationSettings,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(synchronizationService, internalValueService, emailService, latestVersion, applicationSettings, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
             _schedulerService = schedulerService;
@@ -69,7 +62,6 @@ namespace RewriteMe.Mobile.ViewModels
 
                 await InitializeFileItems().ConfigureAwait(false);
 
-                IsNotUserRegistrationSuccess = !await InternalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
                 NotAvailableData = !FileItems.Any();
 
                 InitializeNavigation(true);
