@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
+using Plugin.SecureStorage;
 using RewriteMe.Business.Configuration;
 using RewriteMe.Business.Wrappers;
 using RewriteMe.Domain.Configuration;
@@ -22,6 +22,8 @@ namespace RewriteMe.Business.Services
 {
     public class UserSessionService : IUserSessionService
     {
+        private const string AccessTokenKey = "AccessToken";
+
         private readonly IRegistrationUserWebService _registrationUserWebService;
         private readonly ICleanUpService _cleanUpService;
         private readonly IPublicClientApplication _publicClientApplication;
@@ -32,7 +34,6 @@ namespace RewriteMe.Business.Services
         private readonly ILogger _logger;
 
         private Guid _userId = Guid.Empty;
-        private string _accessToken;
 
         public UserSessionService(
             IRegistrationUserWebService registrationUserWebService,
@@ -83,34 +84,25 @@ namespace RewriteMe.Business.Services
 
         public string GetAccessToken()
         {
-            return _accessToken;
+            return CrossSecureStorage.Current.GetValue(AccessTokenKey);
         }
 
         private void SetAccessToken(string accessToken)
         {
-            _accessToken = accessToken;
+            CrossSecureStorage.Current.SetValue(AccessTokenKey, accessToken);
         }
 
         public async Task<bool> IsSignedInAsync()
         {
-            IEnumerable<IAccount> account;
+            var token = GetAccessToken();
+            if (token == null)
+                return false;
 
-            var offline = false;
-            try
-            {
-                account = await _publicClientApplication.GetAccountsAsync().ConfigureAwait(false);
-            }
-            catch (HttpRequestException)
-            {
-                // MSAL 2.x throws HttpRequestException when not connected to the internet, this is a workaround!
-                offline = true;
-                account = new List<IAccount>();
-            }
-
-            var userExists = account.Any();
             var userSessionExists = await _userSessionRepository.UserSessionExistsAsync().ConfigureAwait(false);
-            var isSignedIn = (userExists || offline) && userSessionExists;
-            return isSignedIn;
+            if (!userSessionExists)
+                return false;
+
+            return true;
         }
 
         public async Task<bool> SignUpOrInAsync()
@@ -233,10 +225,10 @@ namespace RewriteMe.Business.Services
             _logger.Info("Sign out");
 
             _userId = Guid.Empty;
-            _accessToken = null;
 
             await RemoveLocalAccountsAsync().ConfigureAwait(false);
             await _cleanUpService.CleanUp().ConfigureAwait(false);
+            CrossSecureStorage.Current.DeleteKey(AccessTokenKey);
         }
 
         private async Task RemoveLocalAccountsAsync()
