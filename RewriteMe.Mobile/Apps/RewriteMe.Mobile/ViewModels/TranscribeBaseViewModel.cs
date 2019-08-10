@@ -27,10 +27,11 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected TranscribeBaseViewModel(
             IFileItemService fileItemService,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             FileItemService = fileItemService;
             CanGoBack = true;

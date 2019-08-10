@@ -4,6 +4,7 @@ using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
@@ -22,10 +23,12 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _disposed;
 
         protected ViewModelBase(
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
         {
+            UserSessionService = userSessionService;
             DialogService = dialogService;
             NavigationService = navigationService;
             Logger = loggerFactory.CreateLogger(GetType());
@@ -36,6 +39,8 @@ namespace RewriteMe.Mobile.ViewModels
             NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommandAsync, () => CanGoBack);
             NavigateToSettingsCommand = new AsyncCommand(ExecuteNavigateToSettingsCommandAsync);
         }
+
+        protected IUserSessionService UserSessionService { get; }
 
         protected IDialogService DialogService { get; }
 
@@ -69,7 +74,15 @@ namespace RewriteMe.Mobile.ViewModels
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            await LoadDataAsync(parameters).ConfigureAwait(false);
+            try
+            {
+                await LoadDataAsync(parameters).ConfigureAwait(false);
+            }
+            catch (UnauthorizedCallException)
+            {
+                await UserSessionService.SignOutAsync().ConfigureAwait(false);
+                await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Login}").ConfigureAwait(false);
+            }
         }
 
         protected virtual async Task LoadDataAsync(INavigationParameters navigationParameters)

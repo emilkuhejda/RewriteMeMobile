@@ -338,10 +338,10 @@ namespace RewriteMe.Business.Services
                     FamilyName = accessTokenObject.FamilyName
                 };
 
-                var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel).ConfigureAwait(false);
+                var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel, accessToken).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload).ConfigureAwait(false);
+                    await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload.UserSubscription).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true).ConfigureAwait(false);
                 }
             }

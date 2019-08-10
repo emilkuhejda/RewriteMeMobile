@@ -28,15 +28,15 @@ namespace RewriteMe.Mobile.ViewModels
             IFileItemService fileItemService,
             ISchedulerService schedulerService,
             ISynchronizationService synchronizationService,
-            IUserSessionService userSessionService,
             IInternalValueService internalValueService,
             IEmailService emailService,
             ILatestVersion latestVersion,
             IApplicationSettings applicationSettings,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(synchronizationService, userSessionService, internalValueService, emailService, latestVersion, applicationSettings, dialogService, navigationService, loggerFactory)
+            : base(synchronizationService, internalValueService, emailService, latestVersion, applicationSettings, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
             _schedulerService = schedulerService;

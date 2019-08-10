@@ -17,7 +17,6 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class LoadingPageViewModel : ViewModelBase
     {
-        private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
         private readonly ISynchronizationService _synchronizationService;
@@ -28,19 +27,18 @@ namespace RewriteMe.Mobile.ViewModels
         private string _progressText;
 
         public LoadingPageViewModel(
-            IUserSessionService userSessionService,
             IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService,
             ISynchronizationService synchronizationService,
             ISchedulerService schedulerService,
             IRewriteMeWebService rewriteMeWebService,
             IRegistrationUserWebService registrationUserWebService,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
-            _userSessionService = userSessionService;
             _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
             _synchronizationService = synchronizationService;
@@ -68,12 +66,13 @@ namespace RewriteMe.Mobile.ViewModels
 
                     ProgressText = Loc.Text(TranslationKeys.UserRegistration);
 
-                    var userSession = await _userSessionService.GetUserSessionAsync().ConfigureAwait(false);
-                    var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(userSession.ToRegisterUserModel()).ConfigureAwait(false);
+                    var userSession = await UserSessionService.GetUserSessionAsync().ConfigureAwait(false);
+                    var accessToken = await UserSessionService.GetAccessTokenSilentAsync().ConfigureAwait(false);
+                    var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(userSession.ToRegisterUserModel(), accessToken).ConfigureAwait(false);
                     if (httpRequestResult.State != HttpRequestState.Success)
                         return;
 
-                    await _userSubscriptionService.AddAsync(httpRequestResult.Payload).ConfigureAwait(false);
+                    await _userSubscriptionService.AddAsync(httpRequestResult.Payload.UserSubscription).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true).ConfigureAwait(false);
                 }
 

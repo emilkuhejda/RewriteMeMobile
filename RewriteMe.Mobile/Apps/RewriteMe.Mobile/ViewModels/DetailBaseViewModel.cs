@@ -21,10 +21,11 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected DetailBaseViewModel(
             IEmailService emailService,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             EmailService = emailService;
 

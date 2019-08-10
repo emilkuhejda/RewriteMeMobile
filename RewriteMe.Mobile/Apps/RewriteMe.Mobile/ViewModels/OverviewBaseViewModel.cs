@@ -33,30 +33,27 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected OverviewBaseViewModel(
             ISynchronizationService synchronizationService,
-            IUserSessionService userSessionService,
             IInternalValueService internalValueService,
             IEmailService emailService,
             ILatestVersion latestVersion,
             IApplicationSettings applicationSettings,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _synchronizationService = synchronizationService;
             _emailService = emailService;
             _latestVersion = latestVersion;
             _applicationSettings = applicationSettings;
 
-            UserSessionService = userSessionService;
             InternalValueService = internalValueService;
 
             SendEmailCommand = new DelegateCommand(ExecuteSendEmailCommand);
             NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
             RefreshCommand = new AsyncCommand(ExecuteRefreshCommandAsync);
         }
-
-        protected IUserSessionService UserSessionService { get; }
 
         protected IInternalValueService InternalValueService { get; }
 
