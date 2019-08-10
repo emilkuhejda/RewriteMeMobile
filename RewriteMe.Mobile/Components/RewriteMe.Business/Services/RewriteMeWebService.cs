@@ -144,11 +144,11 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetRecognizedTimeAsync(customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task RefreshTokenAsync()
+        public async Task RefreshTokenIfNeededAsync()
         {
             var accessToken = _userSessionService.AccessToken;
             var daysToExpire = (accessToken.ExpirationDate - DateTimeOffset.UtcNow).TotalDays;
-            if (daysToExpire > 60)
+            if (daysToExpire > 30)
                 return;
 
             var customHeaders = GetAuthHeaders();

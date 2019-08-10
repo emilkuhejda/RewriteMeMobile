@@ -49,7 +49,7 @@ namespace RewriteMe.Business.Services
             if (!isAlive)
                 return;
 
-            await _rewriteMeWebService.RefreshTokenAsync().ConfigureAwait(false);
+            await _rewriteMeWebService.RefreshTokenIfNeededAsync().ConfigureAwait(false);
 
             await _lastUpdatesService.InitializeAsync().ConfigureAwait(false);
             if (!_lastUpdatesService.IsConnectionSuccessful)

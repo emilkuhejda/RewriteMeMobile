@@ -46,6 +46,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<RecognizedTime>> GetRecognizedTimeAsync();
 
-        Task RefreshTokenAsync();
+        Task RefreshTokenIfNeededAsync();
     }
 }
