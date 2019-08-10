@@ -5,9 +5,9 @@ using RewriteMe.Business.Extensions;
 
 namespace RewriteMe.Business.Configuration
 {
-    public class AccessToken
+    public class B2CAccessToken
     {
-        public AccessToken(string accessToken)
+        public B2CAccessToken(string accessToken)
         {
             if (accessToken == null)
                 throw new ArgumentNullException(nameof(accessToken));

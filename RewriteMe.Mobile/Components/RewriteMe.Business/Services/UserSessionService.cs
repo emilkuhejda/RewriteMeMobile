@@ -284,15 +284,15 @@ namespace RewriteMe.Business.Services
             if (accessToken == null)
                 return;
 
-            var accessTokenObject = new AccessToken(accessToken);
-            await UpdateUserSession(accessTokenObject).ConfigureAwait(false);
+            var b2CAccessToken = new B2CAccessToken(accessToken);
+            await UpdateUserSession(b2CAccessToken).ConfigureAwait(false);
 
             var registerUserModel = new RegisterUserModel
             {
-                Id = Guid.Parse(accessTokenObject.ObjectId),
-                Email = accessTokenObject.Email,
-                GivenName = accessTokenObject.GivenName,
-                FamilyName = accessTokenObject.FamilyName
+                Id = Guid.Parse(b2CAccessToken.ObjectId),
+                Email = b2CAccessToken.Email,
+                GivenName = b2CAccessToken.GivenName,
+                FamilyName = b2CAccessToken.FamilyName
             };
 
             var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel, accessToken).ConfigureAwait(false);
@@ -304,15 +304,15 @@ namespace RewriteMe.Business.Services
             await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload.UserSubscription).ConfigureAwait(false);
         }
 
-        private async Task UpdateUserSession(AccessToken accessToken)
+        private async Task UpdateUserSession(B2CAccessToken b2CAccessToken)
         {
-            _logger.Debug($"Update user session for '{accessToken.GivenName} {accessToken.FamilyName}' with id '{accessToken.ObjectId}'.");
+            _logger.Debug($"Update user session for '{b2CAccessToken.GivenName} {b2CAccessToken.FamilyName}' with id '{b2CAccessToken.ObjectId}'.");
 
             var userSession = await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
-            userSession.ObjectId = Guid.Parse(accessToken.ObjectId);
-            userSession.Email = accessToken.Email;
-            userSession.GivenName = accessToken.GivenName;
-            userSession.FamilyName = accessToken.FamilyName;
+            userSession.ObjectId = Guid.Parse(b2CAccessToken.ObjectId);
+            userSession.Email = b2CAccessToken.Email;
+            userSession.GivenName = b2CAccessToken.GivenName;
+            userSession.FamilyName = b2CAccessToken.FamilyName;
 
             ValidateUserSession(userSession);
 
