@@ -191,11 +191,11 @@ namespace RewriteMe.Mobile.ViewModels
                 case 400:
                     message = Loc.Text(TranslationKeys.UploadedFileNotFoundErrorMessage);
                     break;
-                case 403:
-                    message = Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
-                    break;
                 case 406:
                     message = Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
+                    break;
+                case 409:
+                    message = Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
                     break;
                 case 415:
                     message = Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
