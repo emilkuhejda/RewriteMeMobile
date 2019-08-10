@@ -6,6 +6,7 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -22,7 +23,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the RegistrationModel class.
         /// </summary>
-        public RegistrationModel(string token = default(string), UserSubscription userSubscription = default(UserSubscription))
+        public RegistrationModel(string token, UserSubscription userSubscription)
         {
             Token = token;
             UserSubscription = userSubscription;
@@ -47,11 +48,19 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
+            if (Token == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Token");
+            }
+            if (UserSubscription == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "UserSubscription");
+            }
             if (UserSubscription != null)
             {
                 UserSubscription.Validate();
