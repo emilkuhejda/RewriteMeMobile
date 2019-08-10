@@ -12,11 +12,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<UserSession> GetUserSessionAsync();
 
-        Task<string> GetAccessTokenSilentAsync();
-
         string GetAccessToken();
-
-        void SetAccessToken(string accessToken);
 
         Task<bool> IsSignedInAsync();
 

@@ -81,54 +81,14 @@ namespace RewriteMe.Business.Services
             return await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
         }
 
-        public async Task<string> GetAccessTokenSilentAsync()
-        {
-            if (!string.IsNullOrEmpty(_accessToken))
-                return _accessToken;
-
-            var accessToken = await GetAccessTokenSilentAsync(_applicationSettings.PolicySignUpSignIn, _applicationSettings.AuthoritySignUpSignIn).ConfigureAwait(false);
-            if (accessToken == null)
-            {
-                accessToken = await GetAccessTokenSilentAsync(_applicationSettings.PolicySignIn, _applicationSettings.AuthoritySignIn).ConfigureAwait(false);
-            }
-
-            await UpdateUserSessionAndRegisterUserAsync(accessToken).ConfigureAwait(false);
-            return accessToken;
-        }
-
         public string GetAccessToken()
         {
             return _accessToken;
         }
 
-        public void SetAccessToken(string accessToken)
+        private void SetAccessToken(string accessToken)
         {
             _accessToken = accessToken;
-        }
-
-        private async Task<string> GetAccessTokenSilentAsync(string policy, string authority)
-        {
-            var accounts = await GetAccountsLocalAsync().ConfigureAwait(false);
-
-            var user = GetUserByPolicy(accounts, policy);
-            if (user != null)
-            {
-                try
-                {
-                    var result = await _publicClientApplication.AcquireTokenSilent(_applicationSettings.Scopes, user)
-                        .WithAuthority(authority)
-                        .ExecuteAsync()
-                        .ConfigureAwait(false);
-                    return result.IdToken;
-                }
-                catch (Exception e)
-                {
-                    // Ignore exception
-                    _logger.Exception(e, "Could not retrieve access token silent.");
-                }
-            }
-
-            return null;
         }
 
         public async Task<bool> IsSignedInAsync()
