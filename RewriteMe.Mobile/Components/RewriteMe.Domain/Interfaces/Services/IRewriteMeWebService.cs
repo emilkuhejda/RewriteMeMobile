@@ -45,5 +45,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<HttpRequestResult<Ok>> UpdateSpeechResultsAsync(IList<SpeechResultModel> speechResults);
 
         Task<HttpRequestResult<RecognizedTime>> GetRecognizedTimeAsync();
+
+        Task RefreshTokenIfNeededAsync();
     }
 }

@@ -23,7 +23,6 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class UserSubscriptionsPageViewModel : ViewModelBase
     {
-        private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IBillingPurchaseService _billingPurchaseService;
         private readonly IEmailService _emailService;
@@ -33,18 +32,17 @@ namespace RewriteMe.Mobile.ViewModels
         private IList<SubscriptionProductViewModel> _products;
 
         public UserSubscriptionsPageViewModel(
-            IUserSessionService userSessionService,
             IUserSubscriptionService userSubscriptionService,
             IBillingPurchaseService billingPurchaseService,
             IEmailService emailService,
             IApplicationSettings applicationSettings,
             ILatestVersion latestVersion,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
-            _userSessionService = userSessionService;
             _userSubscriptionService = userSubscriptionService;
             _billingPurchaseService = billingPurchaseService;
             _emailService = emailService;
@@ -225,7 +223,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             try
             {
-                var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
+                var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
                 var userSubscription = await _billingPurchaseService.SendBillingPurchaseAsync(purchase.ToBillingPurchase(userId)).ConfigureAwait(false);
 
                 await _userSubscriptionService.AddAsync(userSubscription).ConfigureAwait(false);
@@ -249,7 +247,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (_emailService.CanSendEmail)
             {
-                var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
+                var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
                 var subject = $"{Loc.Text(TranslationKeys.ApplicationTitle)} - Purchase problem";
                 var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz", CultureInfo.InvariantCulture);
                 var message = new StringBuilder()

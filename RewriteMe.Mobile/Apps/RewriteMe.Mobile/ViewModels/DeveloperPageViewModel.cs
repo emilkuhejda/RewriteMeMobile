@@ -26,10 +26,11 @@ namespace RewriteMe.Mobile.ViewModels
             IEmailService emailService,
             ILogFileReader logFileReader,
             IApplicationSettings applicationSettings,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _emailService = emailService;
             _logFileReader = logFileReader;

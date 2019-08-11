@@ -60,18 +60,6 @@
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0"
-                  Grid.Column="0"
-                  Padding="5,8,5,8"
-                  BackgroundColor="{StaticResource WarningMessageBackground}"
-                  IsVisible="{Binding IsNotUserRegistrationSuccess}">
-                <Label Style="{StaticResource RegistrationErrorLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegistrationErrorMessage}}">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding SendEmailCommand}" />
-                    </Label.GestureRecognizers>
-                </Label>
-            </Grid>
-
             <Label Grid.Row="1"
                    FontAttributes="Italic"
                    HorizontalOptions="Center"

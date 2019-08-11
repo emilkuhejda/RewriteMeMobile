@@ -35,10 +35,11 @@ namespace RewriteMe.Mobile.ViewModels
 
         public CreatePageViewModel(
             IFileItemService fileItemService,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
 
@@ -295,11 +296,11 @@ namespace RewriteMe.Mobile.ViewModels
                 case 400:
                     message = Loc.Text(TranslationKeys.UploadedFileNotFoundErrorMessage);
                     break;
-                case 403:
-                    message = Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
-                    break;
                 case 406:
                     message = Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
+                    break;
+                case 409:
+                    message = Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
                     break;
                 case 415:
                     message = Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);

@@ -20,10 +20,11 @@ namespace RewriteMe.Mobile.ViewModels
         public RecordedDetailPageViewModel(
             IRecordedItemService recordedItemService,
             IEmailService emailService,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(emailService, dialogService, navigationService, loggerFactory)
+            : base(emailService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
         }

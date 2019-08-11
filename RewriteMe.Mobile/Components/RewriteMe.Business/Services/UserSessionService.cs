@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Identity.Client;
-using RewriteMe.Business.Configuration;
+using Plugin.SecureStorage;
 using RewriteMe.Business.Wrappers;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Factories;
@@ -21,8 +21,9 @@ namespace RewriteMe.Business.Services
 {
     public class UserSessionService : IUserSessionService
     {
+        private const string AccessTokenKey = "AccessToken";
+
         private readonly IRegistrationUserWebService _registrationUserWebService;
-        private readonly IInternalValueService _internalValueService;
         private readonly ICleanUpService _cleanUpService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
@@ -32,11 +33,10 @@ namespace RewriteMe.Business.Services
         private readonly ILogger _logger;
 
         private Guid _userId = Guid.Empty;
-        private string _accessToken;
+        private AccessToken _accessToken;
 
         public UserSessionService(
             IRegistrationUserWebService registrationUserWebService,
-            IInternalValueService internalValueService,
             ICleanUpService cleanUpService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
@@ -46,7 +46,6 @@ namespace RewriteMe.Business.Services
             ILoggerFactory loggerFactory)
         {
             _registrationUserWebService = registrationUserWebService;
-            _internalValueService = internalValueService;
             _cleanUpService = cleanUpService;
             _identityUiParentProvider = identityUiParentProvider;
             _applicationSettings = applicationSettings;
@@ -58,6 +57,8 @@ namespace RewriteMe.Business.Services
                 applicationSettings.ClientId,
                 applicationSettings.RedirectUri);
         }
+
+        public AccessToken AccessToken => _accessToken ?? (_accessToken = new AccessToken(GetToken()));
 
         public async Task<Guid> GetUserIdAsync()
         {
@@ -83,66 +84,29 @@ namespace RewriteMe.Business.Services
             return await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
         }
 
-        public async Task<string> GetAccessTokenSilentAsync()
+        public string GetToken()
         {
-            if (!string.IsNullOrEmpty(_accessToken))
-                return _accessToken;
-
-            var accessToken = await GetAccessTokenSilentAsync(_applicationSettings.PolicySignUpSignIn, _applicationSettings.AuthoritySignUpSignIn).ConfigureAwait(false);
-            if (accessToken == null)
-            {
-                accessToken = await GetAccessTokenSilentAsync(_applicationSettings.PolicySignIn, _applicationSettings.AuthoritySignIn).ConfigureAwait(false);
-            }
-
-            await UpdateUserSessionAndRegisterUserAsync(accessToken).ConfigureAwait(false);
-            return accessToken;
+            return CrossSecureStorage.Current.GetValue(AccessTokenKey);
         }
 
-        private async Task<string> GetAccessTokenSilentAsync(string policy, string authority)
+        public void SetToken(string accessToken)
         {
-            var accounts = await GetAccountsLocalAsync().ConfigureAwait(false);
+            _accessToken = null;
 
-            var user = GetUserByPolicy(accounts, policy);
-            if (user != null)
-            {
-                try
-                {
-                    var result = await _publicClientApplication.AcquireTokenSilent(_applicationSettings.Scopes, user)
-                        .WithAuthority(authority)
-                        .ExecuteAsync()
-                        .ConfigureAwait(false);
-                    return result.IdToken;
-                }
-                catch (Exception e)
-                {
-                    // Ignore exception
-                    _logger.Exception(e, "Could not retrieve access token silent.");
-                }
-            }
-
-            return null;
+            CrossSecureStorage.Current.SetValue(AccessTokenKey, accessToken);
         }
 
         public async Task<bool> IsSignedInAsync()
         {
-            IEnumerable<IAccount> account;
+            var token = GetToken();
+            if (token == null)
+                return false;
 
-            var offline = false;
-            try
-            {
-                account = await _publicClientApplication.GetAccountsAsync().ConfigureAwait(false);
-            }
-            catch (HttpRequestException)
-            {
-                // MSAL 2.x throws HttpRequestException when not connected to the internet, this is a workaround!
-                offline = true;
-                account = new List<IAccount>();
-            }
-
-            var userExists = account.Any();
             var userSessionExists = await _userSessionRepository.UserSessionExistsAsync().ConfigureAwait(false);
-            var isSignedIn = (userExists || offline) && userSessionExists;
-            return isSignedIn;
+            if (!userSessionExists)
+                return false;
+
+            return true;
         }
 
         public async Task<bool> SignUpOrInAsync()
@@ -269,6 +233,7 @@ namespace RewriteMe.Business.Services
 
             await RemoveLocalAccountsAsync().ConfigureAwait(false);
             await _cleanUpService.CleanUp().ConfigureAwait(false);
+            CrossSecureStorage.Current.DeleteKey(AccessTokenKey);
         }
 
         private async Task RemoveLocalAccountsAsync()
@@ -324,38 +289,35 @@ namespace RewriteMe.Business.Services
             if (accessToken == null)
                 return;
 
-            var accessTokenObject = new AccessToken(accessToken);
-            await UpdateUserSession(accessTokenObject).ConfigureAwait(false);
+            var b2CAccessToken = new B2CAccessToken(accessToken);
+            await UpdateUserSession(b2CAccessToken).ConfigureAwait(false);
 
-            var isUserRegistered = await _internalValueService.GetValueAsync(InternalValues.IsUserRegistrationSuccess).ConfigureAwait(false);
-            if (accessTokenObject.NewUser && !isUserRegistered)
+            var registerUserModel = new RegisterUserModel
             {
-                var registerUserModel = new RegisterUserModel
-                {
-                    Id = Guid.Parse(accessTokenObject.ObjectId),
-                    Email = accessTokenObject.Email,
-                    GivenName = accessTokenObject.GivenName,
-                    FamilyName = accessTokenObject.FamilyName
-                };
+                Id = Guid.Parse(b2CAccessToken.ObjectId),
+                Email = b2CAccessToken.Email,
+                GivenName = b2CAccessToken.GivenName,
+                FamilyName = b2CAccessToken.FamilyName
+            };
 
-                var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel).ConfigureAwait(false);
-                if (httpRequestResult.State == HttpRequestState.Success)
-                {
-                    await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, true).ConfigureAwait(false);
-                }
-            }
+            var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel, accessToken).ConfigureAwait(false);
+            if (httpRequestResult.State != HttpRequestState.Success)
+                throw new UserRegistrationFailedException();
+
+            SetToken(httpRequestResult.Payload.Token);
+
+            await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload.UserSubscription).ConfigureAwait(false);
         }
 
-        private async Task UpdateUserSession(AccessToken accessToken)
+        private async Task UpdateUserSession(B2CAccessToken b2CAccessToken)
         {
-            _logger.Debug($"Update user session for '{accessToken.GivenName} {accessToken.FamilyName}' with id '{accessToken.ObjectId}'.");
+            _logger.Debug($"Update user session for '{b2CAccessToken.GivenName} {b2CAccessToken.FamilyName}' with id '{b2CAccessToken.ObjectId}'.");
 
             var userSession = await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
-            userSession.ObjectId = Guid.Parse(accessToken.ObjectId);
-            userSession.Email = accessToken.Email;
-            userSession.GivenName = accessToken.GivenName;
-            userSession.FamilyName = accessToken.FamilyName;
+            userSession.ObjectId = Guid.Parse(b2CAccessToken.ObjectId);
+            userSession.Email = b2CAccessToken.Email;
+            userSession.GivenName = b2CAccessToken.GivenName;
+            userSession.FamilyName = b2CAccessToken.FamilyName;
 
             ValidateUserSession(userSession);
 
