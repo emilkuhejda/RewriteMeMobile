@@ -16,11 +16,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         public TranscribeRecodingPageViewModel(
             IRecordedItemService recordedItemService,
+            IUserSessionService userSessionService,
             IFileItemService fileItemService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(fileItemService, dialogService, navigationService, loggerFactory)
+            : base(fileItemService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
 

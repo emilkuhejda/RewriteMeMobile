@@ -17,10 +17,11 @@ namespace RewriteMe.Mobile.ViewModels
         private DropDownListViewModel _selectedItem;
 
         public DropDownListPageViewModel(
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             CanGoBack = true;
 

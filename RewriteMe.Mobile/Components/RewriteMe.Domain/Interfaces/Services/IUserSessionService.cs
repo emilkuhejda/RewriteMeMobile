@@ -6,13 +6,17 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IUserSessionService
     {
+        AccessToken AccessToken { get; }
+
         Task<Guid> GetUserIdAsync();
 
         Task<string> GetUserNameAsync();
 
         Task<UserSession> GetUserSessionAsync();
 
-        Task<string> GetAccessTokenSilentAsync();
+        string GetToken();
+
+        void SetToken(string accessToken);
 
         Task<bool> IsSignedInAsync();
 

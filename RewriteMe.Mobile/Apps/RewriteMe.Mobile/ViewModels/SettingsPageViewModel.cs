@@ -24,7 +24,6 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class SettingsPageViewModel : ViewModelBase
     {
-        private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly ILanguageService _languageService;
         private readonly IEmailService _emailService;
@@ -37,18 +36,17 @@ namespace RewriteMe.Mobile.ViewModels
         private string _applicationVersion;
 
         public SettingsPageViewModel(
-            IUserSessionService userSessionService,
             IUserSubscriptionService userSubscriptionService,
             ILanguageService languageService,
             IEmailService emailService,
             IApplicationSettings applicationSettings,
             ILatestVersion latestVersion,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
-            _userSessionService = userSessionService;
             _userSubscriptionService = userSubscriptionService;
             _languageService = languageService;
             _emailService = emailService;
@@ -109,7 +107,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
-                    UserName = await _userSessionService.GetUserNameAsync().ConfigureAwait(false);
+                    UserName = await UserSessionService.GetUserNameAsync().ConfigureAwait(false);
                     ApplicationVersion = _latestVersion.InstalledVersionNumber;
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)

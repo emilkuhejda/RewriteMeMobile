@@ -421,24 +421,6 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Registration was not successful. Application might not work correctly. Please, contact us..
-        /// </summary>
-        public static string RegistrationErrorMessage {
-            get {
-                return ResourceManager.GetString("RegistrationErrorMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Registration error.
-        /// </summary>
-        public static string RegistrationErrorTitle {
-            get {
-                return ResourceManager.GetString("RegistrationErrorTitle", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Subscription was purchased but it was not successfully registered. Please, contact us..
         /// </summary>
         public static string RegistrationPurchaseBillingErrorMessage {
@@ -678,15 +660,6 @@ namespace RewriteMe.Resources {
         public static string UserProfile {
             get {
                 return ResourceManager.GetString("UserProfile", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to User registration.
-        /// </summary>
-        public static string UserRegistration {
-            get {
-                return ResourceManager.GetString("UserRegistration", resourceCulture);
             }
         }
         

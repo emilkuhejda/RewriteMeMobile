@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
+using Microsoft.Rest;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Extensions;
@@ -17,7 +19,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.GetLastUpdatesWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<LastUpdates>(result.Body);
+                return ParseBody<LastUpdates>(result);
             }
         }
 
@@ -25,7 +27,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.GetFileItemsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<IEnumerable<FileItem>>(result.Body);
+                return ParseBody<IEnumerable<FileItem>>(result);
             }
         }
 
@@ -33,7 +35,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.GetDeletedFileItemIdsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<IEnumerable<Guid?>>(result.Body).Where(x => x.HasValue).Select(x => x.Value);
+                return ParseBody<IEnumerable<Guid?>>(result).Where(x => x.HasValue).Select(x => x.Value);
             }
         }
 
@@ -41,7 +43,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<TimeSpanWrapper>(result.Body);
+                return ParseBody<TimeSpanWrapper>(result);
             }
         }
 
@@ -49,7 +51,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.DeleteFileItemWithHttpMessagesAsync(fileItemId, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<TimeSpanWrapper>(result.Body);
+                return ParseBody<TimeSpanWrapper>(result);
             }
         }
 
@@ -58,7 +60,7 @@ namespace RewriteMe.Business.Extensions
             var deletedFileItemModels = fileItems.Select(x => x.ToDeletedFileItemModel()).ToList();
             using (var result = await operations.DeleteAllFileItemsWithHttpMessagesAsync(deletedFileItemModels, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<Ok>(result.Body);
+                return ParseBody<Ok>(result);
             }
         }
 
@@ -66,7 +68,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<IEnumerable<TranscribeItem>>(result.Body);
+                return ParseBody<IEnumerable<TranscribeItem>>(result);
             }
         }
 
@@ -74,7 +76,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<IEnumerable<UserSubscription>>(result.Body);
+                return ParseBody<IEnumerable<UserSubscription>>(result);
             }
         }
 
@@ -82,7 +84,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(billingPurchase, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<UserSubscription>(result.Body);
+                return ParseBody<UserSubscription>(result);
             }
         }
 
@@ -90,7 +92,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.GetSpeechConfigurationWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<SpeechConfiguration>(result.Body);
+                return ParseBody<SpeechConfiguration>(result);
             }
         }
 
@@ -98,7 +100,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, applicationId, mediaFile.Stream, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<FileItem>(result.Body);
+                return ParseBody<FileItem>(result);
             }
         }
 
@@ -106,7 +108,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.TranscribeFileItemWithHttpMessagesAsync(fileItemId, language, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<Ok>(result.Body);
+                return ParseBody<Ok>(result);
             }
         }
 
@@ -114,7 +116,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.GetTranscribeAudioSourceWithHttpMessagesAsync(transcribeItemId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<byte[]>(result.Body);
+                return ParseBody<byte[]>(result);
             }
         }
 
@@ -122,7 +124,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(transcribeItemId, applicationId, transcript, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<Ok>(result.Body);
+                return ParseBody<Ok>(result);
             }
         }
 
@@ -130,7 +132,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.CreateSpeechResultWithHttpMessagesAsync(speechResultId, recognizedAudioSampleId, displayText, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<Ok>(result.Body);
+                return ParseBody<Ok>(result);
             }
         }
 
@@ -138,7 +140,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.UpdateSpeechResultsWithHttpMessagesAsync(speechResults, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<Ok>(result.Body);
+                return ParseBody<Ok>(result);
             }
         }
 
@@ -146,24 +148,35 @@ namespace RewriteMe.Business.Extensions
         {
             using (var result = await operations.GetRecognizedTimeWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<RecognizedTime>(result.Body);
+                return ParseBody<RecognizedTime>(result);
             }
         }
 
-        public static async Task<UserSubscription> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel)
+        public static async Task<string> RefreshTokenAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel).ConfigureAwait(false))
+            using (var result = await operations.RefreshTokenWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<UserSubscription>(result.Body);
+                return ParseBody<string>(result);
             }
         }
 
-        private static T ParseBody<T>(object body)
+        public static async Task<RegistrationModel> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel, Dictionary<string, List<string>> customHeaders)
         {
-            if (body is ProblemDetails problemDetails)
+            using (var result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<RegistrationModel>(result);
+            }
+        }
+
+        private static T ParseBody<T>(HttpOperationResponse<object> httpOperationResponse)
+        {
+            if (httpOperationResponse.Response.StatusCode == HttpStatusCode.Unauthorized)
+                throw new UnauthorizedCallException();
+
+            if (httpOperationResponse.Body is ProblemDetails problemDetails)
                 throw new ProblemDetailsException(problemDetails);
 
-            return (T)body;
+            return (T)httpOperationResponse.Body;
         }
     }
 }

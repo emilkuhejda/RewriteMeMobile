@@ -15,10 +15,11 @@ namespace RewriteMe.Mobile.ViewModels
     {
         public TranscribePageViewModel(
             IFileItemService fileItemService,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(fileItemService, dialogService, navigationService, loggerFactory)
+            : base(fileItemService, userSessionService, dialogService, navigationService, loggerFactory)
         {
         }
 

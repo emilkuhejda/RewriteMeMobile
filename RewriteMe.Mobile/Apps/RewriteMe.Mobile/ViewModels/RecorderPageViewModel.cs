@@ -52,10 +52,11 @@ namespace RewriteMe.Mobile.ViewModels
             IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService,
             IRewriteMeWebService rewriteMeWebService,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
             _mediaService = mediaService;

@@ -77,7 +77,6 @@
             <Color x:Key="ActionBarTileBackgroundColor">#FFFFFF</Color>
             <Color x:Key="ActionBarTileBackgroundColorHover">#E0E0E0</Color>
             <Color x:Key="ActionBarTileBackgroundColorTouch">#BDBDBD</Color>
-            <Color x:Key="WarningMessageBackground">#E65100</Color>
             <Color x:Key="PlayerBackground">#D2F9F1</Color>
             <Color x:Key="RecorderResultBackground">#c3d5d5</Color>
 
@@ -176,25 +175,6 @@
                                 iOS="0, 0, 0, 0" />
                 </Setter>
                 <Setter Property="HeightRequest" Value="48" />
-            </Style>
-
-            <Style x:Key="RegistrationErrorLabelStyle" TargetType="Label">
-                <Setter Property="TextColor" Value="{StaticResource ColorWhite}" />
-                <Setter Property="BackgroundColor" Value="Transparent" />
-                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
-                <Setter Property="FontAttributes" Value="None" />
-                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
-                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-                <Setter Property="VerticalOptions" Value="Center" />
-                <Setter Property="Opacity" Value="1.0" />
-                <Setter Property="LineBreakMode" Value="WordWrap" />
-                <Setter Property="TextDecorations" Value="Underline" />
-                <Setter Property="Margin">
-                    <OnPlatform x:TypeArguments="Thickness"
-                                Android="4, 0, 0, 0"
-                                WinPhone="0, 0, 0, 0"
-                                iOS="0, 0, 0, 0" />
-                </Setter>
             </Style>
 
             <Style x:Key="LabelBoldStyle"
@@ -416,8 +396,7 @@
                                                                       HeightRequest="30"
                                                                       HorizontalOptions="CenterAndExpand"
                                                                       InputTransparent="True"
-                                                                      Source="{Binding Source,
-                                                                                       Mode=OneWay}"
+                                                                      Source="{Binding Source, Mode=OneWay}"
                                                                       VerticalOptions="CenterAndExpand" />
                                                 <Grid.GestureRecognizers>
                                                     <TapGestureRecognizer Command="{Binding Command}" />
@@ -456,8 +435,7 @@
                                 <Grid BackgroundColor="Transparent"
                                       HeightRequest="39"
                                       HorizontalOptions="Start"
-                                      IsVisible="{Binding OperationScope.IsBusy,
-                                                          Converter={StaticResource InvertedBoolConverter}}"
+                                      IsVisible="{Binding OperationScope.IsBusy, Converter={StaticResource InvertedBoolConverter}}"
                                       WidthRequest="39">
                                     <forms:SvgCachedImage Margin="0"
                                                           Aspect="AspectFit"

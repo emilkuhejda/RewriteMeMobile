@@ -11,17 +11,13 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class UserSettingsPageViewModel : ViewModelBase
     {
-        private readonly IUserSessionService _userSessionService;
-
         public UserSettingsPageViewModel(
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
-            _userSessionService = userSessionService;
-
             CanGoBack = true;
 
             EditProfileCommand = new AsyncCommand(ExecuteEditProfileCommandAsync);
@@ -37,17 +33,17 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteEditProfileCommandAsync()
         {
-            await _userSessionService.EditProfileAsync().ConfigureAwait(false);
+            await UserSessionService.EditProfileAsync().ConfigureAwait(false);
         }
 
         private async Task ExecuteResetPasswordCommandAsync()
         {
-            await _userSessionService.ResetPasswordAsync().ConfigureAwait(false);
+            await UserSessionService.ResetPasswordAsync().ConfigureAwait(false);
         }
 
         private async Task ExecuteLogoutCommandAsync()
         {
-            await _userSessionService.SignOutAsync().ConfigureAwait(false);
+            await UserSessionService.SignOutAsync().ConfigureAwait(false);
             await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Login}").ConfigureAwait(false);
         }
     }

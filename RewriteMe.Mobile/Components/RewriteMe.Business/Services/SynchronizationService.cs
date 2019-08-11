@@ -17,6 +17,7 @@ namespace RewriteMe.Business.Services
         private readonly IFileItemService _fileItemService;
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly IUserSubscriptionService _userSubscriptionService;
+        private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IInternalValueService _internalValueService;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
@@ -30,6 +31,7 @@ namespace RewriteMe.Business.Services
             IFileItemService fileItemService,
             ITranscribeItemService transcribeItemService,
             IUserSubscriptionService userSubscriptionService,
+            IRewriteMeWebService rewriteMeWebService,
             IInternalValueService internalValueService)
         {
             _lastUpdatesService = lastUpdatesService;
@@ -37,11 +39,18 @@ namespace RewriteMe.Business.Services
             _fileItemService = fileItemService;
             _transcribeItemService = transcribeItemService;
             _userSubscriptionService = userSubscriptionService;
+            _rewriteMeWebService = rewriteMeWebService;
             _internalValueService = internalValueService;
         }
 
         public async Task InitializeAsync()
         {
+            var isAlive = await _rewriteMeWebService.IsAliveAsync().ConfigureAwait(false);
+            if (!isAlive)
+                return;
+
+            await _rewriteMeWebService.RefreshTokenIfNeededAsync().ConfigureAwait(false);
+
             await _lastUpdatesService.InitializeAsync().ConfigureAwait(false);
             if (!_lastUpdatesService.IsConnectionSuccessful)
                 return;

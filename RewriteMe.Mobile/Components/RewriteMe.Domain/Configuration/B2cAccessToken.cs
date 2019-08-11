@@ -1,20 +1,12 @@
-﻿using System;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Linq;
-using RewriteMe.Business.Extensions;
+﻿using Newtonsoft.Json;
 
-namespace RewriteMe.Business.Configuration
+namespace RewriteMe.Domain.Configuration
 {
-    public class AccessToken
+    public class B2CAccessToken : AccessTokenBase
     {
-        public AccessToken(string accessToken)
+        public B2CAccessToken(string accessToken)
         {
-            if (accessToken == null)
-                throw new ArgumentNullException(nameof(accessToken));
-
-            var dataPartEncoded = accessToken.Split('.')[1];
-            var dataPartDecoded = dataPartEncoded.Base64UrlDecode();
-            var accessTokenObject = JObject.Parse(dataPartDecoded);
+            var accessTokenObject = ParseAccessToken(accessToken);
 
             ObjectId = accessTokenObject["oid"]?.ToString();
             GivenName = accessTokenObject["given_name"]?.ToString();

@@ -33,7 +33,6 @@ namespace RewriteMe.Business.Services
             await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronizationTicks, 0).ConfigureAwait(false);
             await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronizationTicks, 0).ConfigureAwait(false);
             await _internalValueService.UpdateValueAsync(InternalValues.ApplicationId, null).ConfigureAwait(false);
-            await _internalValueService.UpdateValueAsync(InternalValues.IsUserRegistrationSuccess, false).ConfigureAwait(false);
 
             await _fileItemRepository.ClearAsync().ConfigureAwait(false);
             await _deletedFileItemRepository.ClearAsync().ConfigureAwait(false);

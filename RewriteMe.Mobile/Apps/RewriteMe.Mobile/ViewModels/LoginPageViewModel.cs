@@ -15,7 +15,6 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
-        private readonly IUserSessionService _userSessionService;
         private readonly ILanguageService _languageService;
         private readonly IApplicationSettings _applicationSettings;
 
@@ -23,15 +22,14 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isLoading;
 
         public LoginPageViewModel(
-            IUserSessionService userSessionService,
             ILanguageService languageService,
             IApplicationSettings applicationSettings,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
-            _userSessionService = userSessionService;
             _languageService = languageService;
             _applicationSettings = applicationSettings;
 
@@ -70,7 +68,7 @@ namespace RewriteMe.Mobile.ViewModels
                 await _applicationSettings.InitializeAsync().ConfigureAwait(false);
                 await _languageService.InitializeAsync().ConfigureAwait(false);
 
-                var alreadySignedIn = await _userSessionService.IsSignedInAsync().ConfigureAwait(false);
+                var alreadySignedIn = await UserSessionService.IsSignedInAsync().ConfigureAwait(false);
                 if (alreadySignedIn)
                 {
                     Logger.Info("User is already signed in. Navigate to loading page.");
@@ -92,7 +90,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteLoginCommandAsync()
         {
-            var signinSuccessful = await _userSessionService.SignUpOrInAsync().ConfigureAwait(false);
+            var signinSuccessful = await UserSessionService.SignUpOrInAsync().ConfigureAwait(false);
             if (signinSuccessful)
             {
                 LoginFeedback = Loc.Text(TranslationKeys.SignInSuccessful);
