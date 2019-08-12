@@ -5,8 +5,9 @@ namespace RewriteMe.Domain.Configuration
     public class AccessToken : AccessTokenBase
     {
         public AccessToken(string accessToken)
+            : base(accessToken)
         {
-            var accessTokenObject = ParseAccessToken(accessToken);
+            var accessTokenObject = ParseAccessToken();
 
             var exp = accessTokenObject["exp"]?.ToString();
 

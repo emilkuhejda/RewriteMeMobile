@@ -134,8 +134,15 @@ namespace RewriteMe.Business.Services
                     .ExecuteAsync()
                     .ConfigureAwait(false);
 
-                await UpdateUserSessionAndRegisterUserAsync(signUpOrInResult.IdToken).ConfigureAwait(false);
-                return signUpOrInResult.IdToken != null;
+                if (signUpOrInResult.IdToken == null)
+                    return false;
+
+                var accessToken = new B2CAccessToken(signUpOrInResult.IdToken);
+
+                await UpdateUserSessionAsync(accessToken).ConfigureAwait(false);
+                await RegisterUserAsync(accessToken).ConfigureAwait(false);
+
+                return true;
             }
             catch (HttpRequestException)
             {
@@ -188,8 +195,15 @@ namespace RewriteMe.Business.Services
                     .ExecuteAsync()
                     .ConfigureAwait(false);
 
-                await UpdateUserSessionAndRegisterUserAsync(result.IdToken).ConfigureAwait(false);
-                return result.IdToken != null;
+                if (result.IdToken == null)
+                    return false;
+
+                var accessToken = new B2CAccessToken(result.IdToken);
+
+                await UpdateUserSessionAsync(accessToken).ConfigureAwait(false);
+                await UpdateUserAsync(accessToken).ConfigureAwait(false);
+
+                return true;
             }
             catch (Exception)
             {
@@ -215,8 +229,13 @@ namespace RewriteMe.Business.Services
                     .ExecuteAsync()
                     .ConfigureAwait(false);
 
-                await UpdateUserSessionAndRegisterUserAsync(result.IdToken).ConfigureAwait(false);
-                return result.IdToken != null;
+                if (result.IdToken == null)
+                    return false;
+
+                var accessToken = new B2CAccessToken(result.IdToken);
+                await UpdateUserSessionAsync(accessToken).ConfigureAwait(false);
+
+                return true;
             }
             catch (Exception)
             {
@@ -284,23 +303,38 @@ namespace RewriteMe.Business.Services
             return null;
         }
 
-        private async Task UpdateUserSessionAndRegisterUserAsync(string accessToken)
+        private async Task UpdateUserSessionAsync(B2CAccessToken accessToken)
         {
             if (accessToken == null)
-                return;
+                throw new ArgumentNullException(nameof(accessToken));
 
-            var b2CAccessToken = new B2CAccessToken(accessToken);
-            await UpdateUserSession(b2CAccessToken).ConfigureAwait(false);
+            _logger.Debug($"Update user session for '{accessToken.GivenName} {accessToken.FamilyName}' with id '{accessToken.ObjectId}'.");
+
+            var userSession = await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
+            userSession.ObjectId = Guid.Parse(accessToken.ObjectId);
+            userSession.Email = accessToken.Email;
+            userSession.GivenName = accessToken.GivenName;
+            userSession.FamilyName = accessToken.FamilyName;
+
+            ValidateUserSession(userSession);
+
+            await _userSessionRepository.UpdateUserSessionAsync(userSession).ConfigureAwait(false);
+        }
+
+        private async Task RegisterUserAsync(B2CAccessToken accessToken)
+        {
+            if (accessToken == null)
+                throw new ArgumentNullException(nameof(accessToken));
 
             var registerUserModel = new RegisterUserModel
             {
-                Id = Guid.Parse(b2CAccessToken.ObjectId),
-                Email = b2CAccessToken.Email,
-                GivenName = b2CAccessToken.GivenName,
-                FamilyName = b2CAccessToken.FamilyName
+                Id = Guid.Parse(accessToken.ObjectId),
+                Email = accessToken.Email,
+                GivenName = accessToken.GivenName,
+                FamilyName = accessToken.FamilyName
             };
 
-            var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel, accessToken).ConfigureAwait(false);
+            var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel, accessToken.Token).ConfigureAwait(false);
             if (httpRequestResult.State != HttpRequestState.Success)
                 throw new UserRegistrationFailedException();
 
@@ -309,19 +343,18 @@ namespace RewriteMe.Business.Services
             await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload.UserSubscription).ConfigureAwait(false);
         }
 
-        private async Task UpdateUserSession(B2CAccessToken b2CAccessToken)
+        private async Task UpdateUserAsync(B2CAccessToken accessToken)
         {
-            _logger.Debug($"Update user session for '{b2CAccessToken.GivenName} {b2CAccessToken.FamilyName}' with id '{b2CAccessToken.ObjectId}'.");
+            if (accessToken == null)
+                throw new ArgumentNullException(nameof(accessToken));
 
-            var userSession = await _userSessionRepository.GetUserSessionAsync().ConfigureAwait(false);
-            userSession.ObjectId = Guid.Parse(b2CAccessToken.ObjectId);
-            userSession.Email = b2CAccessToken.Email;
-            userSession.GivenName = b2CAccessToken.GivenName;
-            userSession.FamilyName = b2CAccessToken.FamilyName;
+            var updateUserModel = new UpdateUserModel
+            {
+                GivenName = accessToken.GivenName,
+                FamilyName = accessToken.FamilyName
+            };
 
-            ValidateUserSession(userSession);
-
-            await _userSessionRepository.UpdateUserSessionAsync(userSession).ConfigureAwait(false);
+            await _registrationUserWebService.UpdateUserAsync(updateUserModel, GetToken()).ConfigureAwait(false);
         }
 
         private void ValidateUserSession(UserSession userSession)

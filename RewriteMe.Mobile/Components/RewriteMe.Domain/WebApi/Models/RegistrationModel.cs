@@ -23,9 +23,10 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the RegistrationModel class.
         /// </summary>
-        public RegistrationModel(string token, UserSubscription userSubscription)
+        public RegistrationModel(string token, User identity, UserSubscription userSubscription)
         {
             Token = token;
+            Identity = identity;
             UserSubscription = userSubscription;
             CustomInit();
         }
@@ -39,6 +40,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "token")]
         public string Token { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "identity")]
+        public User Identity { get; set; }
 
         /// <summary>
         /// </summary>
@@ -56,6 +62,10 @@ namespace RewriteMe.Domain.WebApi.Models
             if (Token == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Token");
+            }
+            if (Identity == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Identity");
             }
             if (UserSubscription == null)
             {

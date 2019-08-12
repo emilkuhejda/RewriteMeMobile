@@ -575,6 +575,32 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='updateUserModel'>
+            /// </param>
+            public static object UpdateUser(this IRewriteMeAPI operations, UpdateUserModel updateUserModel = default(UpdateUserModel))
+            {
+                return operations.UpdateUserAsync(updateUserModel).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='updateUserModel'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> UpdateUserAsync(this IRewriteMeAPI operations, UpdateUserModel updateUserModel = default(UpdateUserModel), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateUserWithHttpMessagesAsync(updateUserModel, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             /// <param name='registerUserModel'>
             /// </param>
             public static object RegisterUser(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel))

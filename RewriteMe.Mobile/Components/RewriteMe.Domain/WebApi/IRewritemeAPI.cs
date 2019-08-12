@@ -255,6 +255,16 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         Task<HttpOperationResponse<object>> UpdateUserTranscriptWithHttpMessagesAsync(System.Guid transcribeItemId, System.Guid applicationId, string transcript, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='updateUserModel'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> UpdateUserWithHttpMessagesAsync(UpdateUserModel updateUserModel = default(UpdateUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='registerUserModel'>
         /// </param>
         /// <param name='customHeaders'>
