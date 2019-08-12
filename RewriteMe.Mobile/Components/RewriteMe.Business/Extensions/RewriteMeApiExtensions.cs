@@ -160,11 +160,11 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<RegistrationModel> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel, Dictionary<string, List<string>> customHeaders)
+        public static async Task<UserRegistration> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<RegistrationModel>(result);
+                return ParseBody<UserRegistration>(result);
             }
         }
 

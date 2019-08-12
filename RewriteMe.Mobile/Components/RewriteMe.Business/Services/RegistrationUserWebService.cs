@@ -19,7 +19,7 @@ namespace RewriteMe.Business.Services
         {
         }
 
-        public async Task<HttpRequestResult<RegistrationModel>> RegisterUserAsync(RegisterUserModel registerUserModel, string b2CAccessToken)
+        public async Task<HttpRequestResult<UserRegistration>> RegisterUserAsync(RegisterUserModel registerUserModel, string b2CAccessToken)
         {
             registerUserModel.ApplicationId = ApplicationSettings.ApplicationId;
             var customHeaders = new CustomHeadersDictionary().AddBearerToken(b2CAccessToken);
