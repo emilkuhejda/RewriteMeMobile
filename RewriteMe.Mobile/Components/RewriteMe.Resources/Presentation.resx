@@ -251,6 +251,9 @@
     <value>Unable to load audio file.</value>
   </data>
 
+  <data name="ProfileEditErrorMessage" xml:space="preserve">
+    <value>Your data was not changed. Please, try it later.</value>
+  </data>
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>
   </data>

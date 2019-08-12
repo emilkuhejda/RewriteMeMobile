@@ -107,7 +107,6 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
-                    UserName = await UserSessionService.GetUserNameAsync().ConfigureAwait(false);
                     ApplicationVersion = _latestVersion.InstalledVersionNumber;
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
@@ -115,6 +114,8 @@ namespace RewriteMe.Mobile.ViewModels
                     var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
                     await HandleSelectionAsync(dropDownListViewModel).ConfigureAwait(false);
                 }
+
+                UserName = await UserSessionService.GetUserNameAsync().ConfigureAwait(false);
 
                 var remainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
                 var sign = remainingTime.Ticks < 0 ? "-" : string.Empty;

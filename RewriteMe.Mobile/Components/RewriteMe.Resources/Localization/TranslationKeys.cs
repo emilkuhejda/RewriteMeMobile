@@ -53,6 +53,7 @@
         public static string NoAvailableData => "NoAvailableData";
         public static string UnableToLoadAudioFile => "UnableToLoadAudioFile";
 
+        public static string ProfileEditErrorMessage => "ProfileEditErrorMessage";
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
         public static string OfflineErrorMessage => "OfflineErrorMessage";
         public static string UnreachableServerErrorMessage => "UnreachableServerErrorMessage";
