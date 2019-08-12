@@ -19,11 +19,17 @@ namespace RewriteMe.Business.Services
         {
         }
 
-        public async Task<HttpRequestResult<RegistrationModel>> RegisterUserAsync(RegisterUserModel registerUserModel, string accessToken)
+        public async Task<HttpRequestResult<RegistrationModel>> RegisterUserAsync(RegisterUserModel registerUserModel, string b2CAccessToken)
         {
             registerUserModel.ApplicationId = ApplicationSettings.ApplicationId;
-            var customHeaders = new CustomHeadersDictionary().AddBearerToken(accessToken);
+            var customHeaders = new CustomHeadersDictionary().AddBearerToken(b2CAccessToken);
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.RegisterUserAsync(registerUserModel, customHeaders)).ConfigureAwait(false);
+        }
+
+        public async Task<HttpRequestResult<User>> UpdateUserAsync(UpdateUserModel updateUserModel, string accessToken)
+        {
+            var customHeaders = new CustomHeadersDictionary().AddBearerToken(accessToken);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UpdateUserAsync(updateUserModel, customHeaders)).ConfigureAwait(false);
         }
     }
 }

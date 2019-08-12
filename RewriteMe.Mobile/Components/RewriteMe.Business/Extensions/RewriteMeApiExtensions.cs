@@ -168,6 +168,14 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<User> UpdateUserAsync(this IRewriteMeAPI operations, UpdateUserModel updateUserModel, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.UpdateUserWithHttpMessagesAsync(updateUserModel, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<User>(result);
+            }
+        }
+
         private static T ParseBody<T>(HttpOperationResponse<object> httpOperationResponse)
         {
             if (httpOperationResponse.Response.StatusCode == HttpStatusCode.Unauthorized)

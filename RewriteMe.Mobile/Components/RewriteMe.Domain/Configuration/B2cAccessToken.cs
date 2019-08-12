@@ -5,8 +5,9 @@ namespace RewriteMe.Domain.Configuration
     public class B2CAccessToken : AccessTokenBase
     {
         public B2CAccessToken(string accessToken)
+            : base(accessToken)
         {
-            var accessTokenObject = ParseAccessToken(accessToken);
+            var accessTokenObject = ParseAccessToken();
 
             ObjectId = accessTokenObject["oid"]?.ToString();
             GivenName = accessTokenObject["given_name"]?.ToString();

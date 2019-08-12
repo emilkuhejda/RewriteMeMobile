@@ -6,12 +6,16 @@ namespace RewriteMe.Domain.Configuration
 {
     public abstract class AccessTokenBase
     {
-        protected JObject ParseAccessToken(string accessToken)
+        protected AccessTokenBase(string accessToken)
         {
-            if (accessToken == null)
-                throw new ArgumentNullException(nameof(accessToken));
+            Token = accessToken ?? throw new ArgumentNullException(nameof(accessToken));
+        }
 
-            var dataPartEncoded = accessToken.Split('.')[1];
+        public string Token { get; }
+
+        protected JObject ParseAccessToken()
+        {
+            var dataPartEncoded = Token.Split('.')[1];
             var dataPartDecoded = dataPartEncoded.Base64UrlDecode();
             var accessTokenObject = JObject.Parse(dataPartDecoded);
 

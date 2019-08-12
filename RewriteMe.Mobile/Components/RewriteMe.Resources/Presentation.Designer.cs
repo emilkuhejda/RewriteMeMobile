@@ -358,6 +358,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your data was not changed. Please, try it later..
+        /// </summary>
+        public static string ProfileEditErrorMessage {
+            get {
+                return ResourceManager.GetString("ProfileEditErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Do you really want to delete file &apos;{0}&apos;?.
         /// </summary>
         public static string PromptDeleteFileItemMessage {
