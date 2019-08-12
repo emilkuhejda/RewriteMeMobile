@@ -6,6 +6,7 @@ using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -33,12 +34,20 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteEditProfileCommandAsync()
         {
-            await UserSessionService.EditProfileAsync().ConfigureAwait(false);
+            var result = await UserSessionService.EditProfileAsync().ConfigureAwait(false);
+            if (!result)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.ProfileEditErrorMessage)).ConfigureAwait(false);
+            }
         }
 
         private async Task ExecuteResetPasswordCommandAsync()
         {
-            await UserSessionService.ResetPasswordAsync().ConfigureAwait(false);
+            var result = await UserSessionService.ResetPasswordAsync().ConfigureAwait(false);
+            if (!result)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.ProfileEditErrorMessage)).ConfigureAwait(false);
+            }
         }
 
         private async Task ExecuteLogoutCommandAsync()
