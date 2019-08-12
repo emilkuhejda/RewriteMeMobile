@@ -23,7 +23,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the RegistrationModel class.
         /// </summary>
-        public RegistrationModel(string token, User identity, UserSubscription userSubscription)
+        public RegistrationModel(string token, Identity identity, UserSubscription userSubscription)
         {
             Token = token;
             Identity = identity;
@@ -44,7 +44,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
-        public User Identity { get; set; }
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// </summary>

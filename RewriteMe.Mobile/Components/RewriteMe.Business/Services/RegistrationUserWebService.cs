@@ -26,7 +26,7 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.RegisterUserAsync(registerUserModel, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<User>> UpdateUserAsync(UpdateUserModel updateUserModel, string accessToken)
+        public async Task<HttpRequestResult<Identity>> UpdateUserAsync(UpdateUserModel updateUserModel, string accessToken)
         {
             var customHeaders = new CustomHeadersDictionary().AddBearerToken(accessToken);
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UpdateUserAsync(updateUserModel, customHeaders)).ConfigureAwait(false);

@@ -10,20 +10,20 @@ namespace RewriteMe.Domain.WebApi.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class User
+    public partial class Identity
     {
         /// <summary>
-        /// Initializes a new instance of the User class.
+        /// Initializes a new instance of the Identity class.
         /// </summary>
-        public User()
+        public Identity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the User class.
+        /// Initializes a new instance of the Identity class.
         /// </summary>
-        public User(System.Guid id, string email, string givenName, string familyName)
+        public Identity(System.Guid id, string email, string givenName, string familyName)
         {
             Id = id;
             Email = email;

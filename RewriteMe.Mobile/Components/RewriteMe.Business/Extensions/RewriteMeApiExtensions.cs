@@ -168,11 +168,11 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<User> UpdateUserAsync(this IRewriteMeAPI operations, UpdateUserModel updateUserModel, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Identity> UpdateUserAsync(this IRewriteMeAPI operations, UpdateUserModel updateUserModel, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.UpdateUserWithHttpMessagesAsync(updateUserModel, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<User>(result);
+                return ParseBody<Identity>(result);
             }
         }
 
