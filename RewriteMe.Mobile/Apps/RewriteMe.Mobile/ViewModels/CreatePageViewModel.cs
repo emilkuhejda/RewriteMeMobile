@@ -287,14 +287,18 @@ namespace RewriteMe.Mobile.ViewModels
                 }
                 catch (NoSubscritionFreeTimeException)
                 {
-                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
+                    await DialogService
+                        .AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage))
+                        .ConfigureAwait(false);
                 }
                 catch (OfflineRequestException)
                 {
                     await DialogService.AlertAsync(Loc.Text(TranslationKeys.OfflineErrorMessage)).ConfigureAwait(false);
                 }
-
-                CanGoBack = true;
+                finally
+                {
+                    CanGoBack = true;
+                }
             }
 
             ResetLoadingText();
