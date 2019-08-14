@@ -15,6 +15,14 @@
             }
         }
 
-        public string ImportedFilePath { get; set; }
+        public string ImportedFileName { get; set; }
+
+        public byte[] ImportedFileSource { get; set; }
+
+        public void Clear()
+        {
+            ImportedFileName = null;
+            ImportedFileSource = null;
+        }
     }
 }

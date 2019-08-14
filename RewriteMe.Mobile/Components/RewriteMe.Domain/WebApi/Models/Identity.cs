@@ -6,23 +6,24 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class User
+    public partial class Identity
     {
         /// <summary>
-        /// Initializes a new instance of the User class.
+        /// Initializes a new instance of the Identity class.
         /// </summary>
-        public User()
+        public Identity()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the User class.
+        /// Initializes a new instance of the Identity class.
         /// </summary>
-        public User(System.Guid? id = default(System.Guid?), string email = default(string), string givenName = default(string), string familyName = default(string))
+        public Identity(System.Guid id, string email, string givenName, string familyName)
         {
             Id = id;
             Email = email;
@@ -39,7 +40,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public System.Guid? Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// </summary>
@@ -56,5 +57,26 @@ namespace RewriteMe.Domain.WebApi.Models
         [JsonProperty(PropertyName = "familyName")]
         public string FamilyName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Email == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Email");
+            }
+            if (GivenName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "GivenName");
+            }
+            if (FamilyName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FamilyName");
+            }
+        }
     }
 }

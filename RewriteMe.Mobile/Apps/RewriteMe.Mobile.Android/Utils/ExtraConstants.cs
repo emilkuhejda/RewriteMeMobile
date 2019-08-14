@@ -2,6 +2,6 @@
 {
     public static class ExtraConstants
     {
-        public static string FilePath { get; } = "FilePath";
+        public static string FileUri { get; } = "FileUri";
     }
 }

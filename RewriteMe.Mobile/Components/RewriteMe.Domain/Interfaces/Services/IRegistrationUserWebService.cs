@@ -6,8 +6,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IRegistrationUserWebService
     {
-        Task<HttpRequestResult<RegistrationModel>> RegisterUserAsync(RegisterUserModel registerUserModel, string b2CAccessToken);
+        Task<HttpRequestResult<UserRegistration>> RegisterUserAsync(RegisterUserModel registerUserModel, string b2CAccessToken);
 
-        Task<HttpRequestResult<User>> UpdateUserAsync(UpdateUserModel updateUserModel, string accessToken);
+        Task<HttpRequestResult<Identity>> UpdateUserAsync(UpdateUserModel updateUserModel, string accessToken);
     }
 }

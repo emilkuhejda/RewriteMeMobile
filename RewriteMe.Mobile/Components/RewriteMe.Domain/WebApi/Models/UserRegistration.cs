@@ -10,20 +10,20 @@ namespace RewriteMe.Domain.WebApi.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class RegistrationModel
+    public partial class UserRegistration
     {
         /// <summary>
-        /// Initializes a new instance of the RegistrationModel class.
+        /// Initializes a new instance of the UserRegistration class.
         /// </summary>
-        public RegistrationModel()
+        public UserRegistration()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RegistrationModel class.
+        /// Initializes a new instance of the UserRegistration class.
         /// </summary>
-        public RegistrationModel(string token, User identity, UserSubscription userSubscription)
+        public UserRegistration(string token, Identity identity = default(Identity), UserSubscription userSubscription = default(UserSubscription))
         {
             Token = token;
             Identity = identity;
@@ -44,7 +44,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "identity")]
-        public User Identity { get; set; }
+        public Identity Identity { get; set; }
 
         /// <summary>
         /// </summary>
@@ -63,13 +63,9 @@ namespace RewriteMe.Domain.WebApi.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "Token");
             }
-            if (Identity == null)
+            if (Identity != null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Identity");
-            }
-            if (UserSubscription == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "UserSubscription");
+                Identity.Validate();
             }
             if (UserSubscription != null)
             {

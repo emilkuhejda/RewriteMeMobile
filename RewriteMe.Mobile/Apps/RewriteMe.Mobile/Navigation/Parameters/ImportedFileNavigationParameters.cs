@@ -2,11 +2,14 @@
 {
     public class ImportedFileNavigationParameters
     {
-        public ImportedFileNavigationParameters(string path)
+        public ImportedFileNavigationParameters(string fileName, byte[] source)
         {
-            Path = path;
+            FileName = fileName;
+            Source = source;
         }
 
-        public string Path { get; }
+        public string FileName { get; }
+
+        public byte[] Source { get; }
     }
 }
