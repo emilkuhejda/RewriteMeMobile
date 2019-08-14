@@ -17,3 +17,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Usage", "CA2227:Collection properties should be read only", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Mobile.ViewModels.DetailBaseViewModel`1.DetailItems")]
 [assembly: SuppressMessage("Design", "CA1031:Do not catch general exception types", Justification = "By design", Scope = "member", Target = "~M:RewriteMe.Mobile.ViewModels.DeveloperPageViewModel.ExecuteSendLogMailCommandAsync~System.Threading.Tasks.Task")]
 [assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Mobile.Transcription.PickedFile.Source")]
+[assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Mobile.Navigation.Parameters.ImportedFileNavigationParameters.Source")]

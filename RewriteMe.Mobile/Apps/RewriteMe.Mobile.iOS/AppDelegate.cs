@@ -1,4 +1,6 @@
-﻿using FFImageLoading.Forms.Platform;
+﻿using System;
+using System.IO;
+using FFImageLoading.Forms.Platform;
 using Foundation;
 using RewriteMe.Mobile.iOS.Configuration;
 using RewriteMe.Mobile.iOS.Utils;
@@ -36,7 +38,14 @@ namespace RewriteMe.Mobile.iOS
 
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
-            _application.ImportFile(url.Path);
+            byte[] source = null;
+            if (File.Exists(url.Path))
+            {
+                source = File.ReadAllBytes(url.Path);
+            }
+
+            var fileName = Path.GetFileName(Uri.UnescapeDataString(url.Path));
+            _application.ImportFile(fileName, source);
 
             return true;
         }

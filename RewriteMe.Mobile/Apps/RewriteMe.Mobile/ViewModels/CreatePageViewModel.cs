@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -109,17 +108,14 @@ namespace RewriteMe.Mobile.ViewModels
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
-                    if (importedFile != null)
+                    if (importedFile?.Source != null && importedFile.Source.Any())
                     {
-                        var path = importedFile.Path;
-                        var fileName = Path.GetFileName(Uri.UnescapeDataString(path));
-
                         var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
                         SelectedFile = new PickedFile
                         {
-                            FileName = fileName,
+                            FileName = importedFile.FileName,
                             CanTranscribe = canTranscribe,
-                            Source = File.ReadAllBytes(path)
+                            Source = importedFile.Source
                         };
 
                         Name = SelectedFile.FileName;

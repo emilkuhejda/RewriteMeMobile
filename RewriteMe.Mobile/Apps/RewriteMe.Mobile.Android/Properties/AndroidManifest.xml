@@ -6,6 +6,7 @@
 	<uses-permission android:name="com.android.vending.BILLING" />
 	<uses-permission android:name="android.permission.RECORD_AUDIO" />
 	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 	<application android:label="@string/ApplicationName" android:theme="@style/RewriteMeTheme" android:icon="@mipmap/ic_launcher">
 		<activity android:name="microsoft.identity.client.BrowserTabActivity">
 			<intent-filter>
