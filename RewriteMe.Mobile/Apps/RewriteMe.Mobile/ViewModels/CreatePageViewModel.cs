@@ -197,9 +197,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteUploadFileCommandAsync()
         {
-            using (var selectedFile = await ThreadHelper
-                .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
-                .ConfigureAwait(false))
+            await ThreadHelper.InvokeOnUiThread(async () => await PickFileAsync().ConfigureAwait(false)).ConfigureAwait(false);
+        }
+
+        private async Task PickFileAsync()
+        {
+            using (var selectedFile = await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
             {
                 if (selectedFile == null)
                     return;
