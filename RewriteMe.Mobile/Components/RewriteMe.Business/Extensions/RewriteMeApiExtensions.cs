@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -98,7 +99,8 @@ namespace RewriteMe.Business.Extensions
 
         public static async Task<FileItem> UploadFileItemAsync(this IRewriteMeAPI operations, MediaFile mediaFile, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, applicationId, mediaFile.Stream, customHeaders).ConfigureAwait(false))
+            using (var stream = new MemoryStream(mediaFile.Source))
+            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, applicationId, stream, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<FileItem>(result);
             }

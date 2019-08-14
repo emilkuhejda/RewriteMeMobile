@@ -5,7 +5,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.FilePicker;
-using Plugin.FilePicker.Abstractions;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess.Transcription;
@@ -29,7 +28,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private string _name;
         private SupportedLanguage _selectedLanguage;
-        private FileDataWrapper _selectedFile;
+        private PickedFile _selectedFile;
         private string _progressText;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
 
@@ -69,7 +68,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        public FileDataWrapper SelectedFile
+        public PickedFile SelectedFile
         {
             get => _selectedFile;
             set
@@ -114,9 +113,16 @@ namespace RewriteMe.Mobile.ViewModels
                     {
                         var path = importedFile.Path;
                         var fileName = Path.GetFileName(Uri.UnescapeDataString(path));
-                        var fileData = new FileData(path, fileName, () => File.OpenRead(path));
 
-                        await InitializeFile(fileData).ConfigureAwait(false);
+                        var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
+                        SelectedFile = new PickedFile
+                        {
+                            FileName = fileName,
+                            CanTranscribe = canTranscribe,
+                            Source = File.ReadAllBytes(path)
+                        };
+
+                        Name = SelectedFile.FileName;
                     }
                 }
 
@@ -191,27 +197,25 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteUploadFileCommandAsync()
         {
-            var selectedFile = await ThreadHelper
-                            .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
-                            .ConfigureAwait(false);
-
-            if (selectedFile == null)
-                return;
-
-            await InitializeFile(selectedFile).ConfigureAwait(false);
-        }
-
-        private async Task InitializeFile(FileData fileData)
-        {
-            var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
-            SelectedFile = new FileDataWrapper(fileData)
+            using (var selectedFile = await ThreadHelper
+                .InvokeOnUiThread(async () => await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
+                .ConfigureAwait(false))
             {
-                CanTranscribe = canTranscribe
-            };
+                if (selectedFile == null)
+                    return;
 
-            if (string.IsNullOrWhiteSpace(Name))
-            {
-                Name = SelectedFile.FileName;
+                var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
+                SelectedFile = new PickedFile
+                {
+                    FileName = selectedFile.FileName,
+                    CanTranscribe = canTranscribe,
+                    Source = selectedFile.DataArray
+                };
+
+                if (string.IsNullOrWhiteSpace(Name))
+                {
+                    Name = SelectedFile.FileName;
+                }
             }
         }
 
@@ -321,7 +325,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = name,
                 Language = SelectedLanguage?.Culture,
                 FileName = SelectedFile.FileName,
-                Stream = SelectedFile.FileData.GetStream()
+                Source = SelectedFile.Source
             };
         }
 
