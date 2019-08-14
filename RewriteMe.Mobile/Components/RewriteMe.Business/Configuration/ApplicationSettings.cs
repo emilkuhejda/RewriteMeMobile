@@ -19,8 +19,7 @@ namespace RewriteMe.Business.Configuration
         }
 
 #if DEBUG
-        //public Uri WebApiUri { get; } = new Uri("https://192.168.0.107:45457/");
-        public Uri WebApiUri { get; } = new Uri("https://rewrite-me.com/");
+        public Uri WebApiUri { get; } = new Uri("https://192.168.0.107:45457/");
 #else
         public Uri WebApiUri { get; } = new Uri("https://rewrite-me.com/");
 #endif
