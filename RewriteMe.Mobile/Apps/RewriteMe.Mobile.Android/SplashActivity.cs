@@ -2,7 +2,6 @@
 using Android.Content;
 using Android.OS;
 using Android.Support.V7.App;
-using RewriteMe.Mobile.Droid.Extensions;
 using RewriteMe.Mobile.Droid.Utils;
 
 namespace RewriteMe.Mobile.Droid
@@ -28,7 +27,7 @@ namespace RewriteMe.Mobile.Droid
             if (Intent.Action == Intent.ActionSend)
             {
                 var path = Intent.ClipData.GetItemAt(0);
-                intent.PutExtra(ExtraConstants.FilePath, path.Uri.GetPath(ContentResolver));
+                intent.PutExtra(ExtraConstants.FileUri, path.Uri);
             }
 
             StartActivity(intent);

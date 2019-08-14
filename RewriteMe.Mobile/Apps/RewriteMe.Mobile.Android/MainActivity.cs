@@ -1,8 +1,10 @@
-﻿using Acr.UserDialogs;
+﻿using System.IO;
+using Acr.UserDialogs;
 using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
+using Android.Net;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
@@ -11,8 +13,10 @@ using Microsoft.Identity.Client;
 using Plugin.InAppBilling;
 using RewriteMe.Business.Configuration;
 using RewriteMe.Mobile.Droid.Configuration;
+using RewriteMe.Mobile.Droid.Extensions;
 using RewriteMe.Mobile.Droid.Utils;
 using Xamarin.Forms;
+using SystemUri = System.Uri;
 
 namespace RewriteMe.Mobile.Droid
 {
@@ -34,7 +38,7 @@ namespace RewriteMe.Mobile.Droid
             CachedImageRenderer.Init(null);
             UserDialogs.Init(this);
 
-            InitializationParameters.Current.ImportedFilePath = Intent.GetStringExtra(ExtraConstants.FilePath);
+            InitializeSharedFile();
 
             var bootstrapper = new AndroidBootstrapper();
             var application = new App(bootstrapper);
@@ -44,6 +48,25 @@ namespace RewriteMe.Mobile.Droid
             {
                 ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.RecordAudio }, 1);
             }
+        }
+
+        private void InitializeSharedFile()
+        {
+            if (!(Intent.GetParcelableExtra(ExtraConstants.FileUri) is Uri uri))
+                return;
+
+            byte[] bytes;
+            var stream = ContentResolver.OpenInputStream(uri);
+            using (var memoryStream = new MemoryStream())
+            {
+                stream.CopyTo(memoryStream);
+                bytes = memoryStream.ToArray();
+            }
+
+            var filePath = uri.GetPath(ContentResolver);
+            var fileName = Path.GetFileName(SystemUri.UnescapeDataString(filePath));
+            InitializationParameters.Current.ImportedFileName = fileName;
+            InitializationParameters.Current.ImportedFileSource = bytes;
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)

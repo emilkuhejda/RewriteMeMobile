@@ -1,6 +1,4 @@
-﻿using System.IO;
-
-namespace RewriteMe.Domain.Transcription
+﻿namespace RewriteMe.Domain.Transcription
 {
     public class MediaFile
     {
@@ -10,6 +8,6 @@ namespace RewriteMe.Domain.Transcription
 
         public string FileName { get; set; }
 
-        public Stream Stream { get; set; }
+        public byte[] Source { get; set; }
     }
 }

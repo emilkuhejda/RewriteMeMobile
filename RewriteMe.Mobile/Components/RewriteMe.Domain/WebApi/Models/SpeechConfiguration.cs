@@ -73,20 +73,6 @@ namespace RewriteMe.Domain.WebApi.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "SpeechRegion");
             }
-            if (SubscriptionKey != null)
-            {
-                if (SubscriptionKey.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "SubscriptionKey", 50);
-                }
-            }
-            if (SpeechRegion != null)
-            {
-                if (SpeechRegion.Length > 50)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "SpeechRegion", 50);
-                }
-            }
         }
     }
 }

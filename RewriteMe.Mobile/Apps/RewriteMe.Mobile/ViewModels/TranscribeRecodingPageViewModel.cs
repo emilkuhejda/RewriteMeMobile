@@ -68,20 +68,17 @@ namespace RewriteMe.Mobile.ViewModels
             if (result)
             {
                 var filePath = _recordedItemService.GetAudioPath(RecordedItem);
-                using (var fileStream = File.OpenRead(filePath))
+                var mediaFile = new MediaFile
                 {
-                    var mediaFile = new MediaFile
-                    {
-                        Name = Name,
-                        Language = SelectedLanguage?.Culture,
-                        FileName = RecordedItem.AudioFileName,
-                        Stream = fileStream
-                    };
+                    Name = Name,
+                    Language = SelectedLanguage?.Culture,
+                    FileName = RecordedItem.AudioFileName,
+                    Source = File.ReadAllBytes(filePath)
+                };
 
-                    var fileItem = await FileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
-                    await FileItemService.TranscribeAsync(fileItem.Id, fileItem.Language).ConfigureAwait(false);
-                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
-                }
+                var fileItem = await FileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
+                await FileItemService.TranscribeAsync(fileItem.Id, fileItem.Language).ConfigureAwait(false);
+                await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
             }
         }
 

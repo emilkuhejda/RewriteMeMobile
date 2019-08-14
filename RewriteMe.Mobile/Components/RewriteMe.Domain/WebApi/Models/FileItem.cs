@@ -123,34 +123,6 @@ namespace RewriteMe.Domain.WebApi.Models
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "RecognitionStateString");
             }
-            if (Name != null)
-            {
-                if (Name.Length > 150)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Name", 150);
-                }
-            }
-            if (FileName != null)
-            {
-                if (FileName.Length > 150)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "FileName", 150);
-                }
-            }
-            if (Language != null)
-            {
-                if (Language.Length > 20)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "Language", 20);
-                }
-            }
-            if (RecognitionStateString != null)
-            {
-                if (RecognitionStateString.Length > 20)
-                {
-                    throw new ValidationException(ValidationRules.MaxLength, "RecognitionStateString", 20);
-                }
-            }
         }
     }
 }

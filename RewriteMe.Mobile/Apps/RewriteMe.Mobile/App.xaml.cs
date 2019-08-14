@@ -23,9 +23,10 @@ namespace RewriteMe.Mobile
         {
         }
 
-        public void ImportFile(string path)
+        public void ImportFile(string fileName, byte[] source)
         {
-            var navigationParameters = CreateNavigationParameters(path);
+            var navigationParameters = CreateNavigationParameters(fileName, source);
+
             NavigationService.NavigateAsync($"{Pages.Login}", navigationParameters);
         }
 
@@ -36,16 +37,25 @@ namespace RewriteMe.Mobile
             InitializeExperimentalFeatures();
             InitializeStorage();
 
-            var navigationParameters = CreateNavigationParameters(InitializationParameters.Current.ImportedFilePath);
+            var navigationParameters = InitializeNavigationParameters();
             NavigationService.NavigateAsync($"/{Pages.Login}", navigationParameters);
         }
 
-        private NavigationParameters CreateNavigationParameters(string filePath)
+        private INavigationParameters InitializeNavigationParameters()
+        {
+            var initializationParameters = InitializationParameters.Current;
+            var navigationParameters = CreateNavigationParameters(initializationParameters.ImportedFileName, initializationParameters.ImportedFileSource);
+            initializationParameters.Clear();
+
+            return navigationParameters;
+        }
+
+        private NavigationParameters CreateNavigationParameters(string fileName, byte[] source)
         {
             var navigationParameters = new NavigationParameters();
-            if (!string.IsNullOrWhiteSpace(filePath))
+            if (!string.IsNullOrWhiteSpace(fileName))
             {
-                var importedFileNavigationParameters = new ImportedFileNavigationParameters(filePath);
+                var importedFileNavigationParameters = new ImportedFileNavigationParameters(fileName, source);
                 navigationParameters.Add<ImportedFileNavigationParameters>(importedFileNavigationParameters);
             }
 

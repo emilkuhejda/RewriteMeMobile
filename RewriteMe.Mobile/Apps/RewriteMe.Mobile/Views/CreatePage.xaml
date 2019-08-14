@@ -42,7 +42,8 @@
 
                 <Grid Grid.Row="1"
                       Margin="20,0,20,20"
-                      HorizontalOptions="Center">
+                      HorizontalOptions="Center"
+                      IsVisible="{Binding IsUploadButtonVisible}">
                     <forms:SvgCachedImage Margin="0"
                                           Aspect="AspectFit"
                                           BackgroundColor="Transparent"
