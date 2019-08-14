@@ -28,6 +28,7 @@ namespace RewriteMe.Mobile.ViewModels
         private string _name;
         private SupportedLanguage _selectedLanguage;
         private PickedFile _selectedFile;
+        private bool _isUploadButtonVisible;
         private string _progressText;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
 
@@ -42,6 +43,7 @@ namespace RewriteMe.Mobile.ViewModels
             _fileItemService = fileItemService;
 
             CanGoBack = true;
+            IsUploadButtonVisible = true;
 
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
             UploadFileCommand = new AsyncCommand(ExecuteUploadFileCommandAsync);
@@ -77,6 +79,12 @@ namespace RewriteMe.Mobile.ViewModels
                     ReevaluateNavigationItemIconKeys();
                 }
             }
+        }
+
+        public bool IsUploadButtonVisible
+        {
+            get => _isUploadButtonVisible;
+            set => SetProperty(ref _isUploadButtonVisible, value);
         }
 
         public string ProgressText
@@ -119,6 +127,7 @@ namespace RewriteMe.Mobile.ViewModels
                         };
 
                         Name = SelectedFile.FileName;
+                        IsUploadButtonVisible = false;
                     }
                 }
 
