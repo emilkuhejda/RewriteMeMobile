@@ -106,6 +106,7 @@ namespace RewriteMe.Mobile.ViewModels
                         if (purchase.Payload != payload)
                             throw new PurchasePayloadNotValidException(purchase.Id, purchase.ProductId);
 
+                        var orderId = purchase.Id;
                         InAppBillingPurchase billingPurchase = null;
                         if (Device.RuntimePlatform == Device.iOS)
                         {
@@ -127,7 +128,7 @@ namespace RewriteMe.Mobile.ViewModels
                         if (billingPurchase == null)
                             throw new PurchaseWasNotProcessedException();
 
-                        await SendBillingPurchaseAsync(productId, billingPurchase).ConfigureAwait(false);
+                        await SendBillingPurchaseAsync(orderId, productId, billingPurchase).ConfigureAwait(false);
 
                         return true;
                     }
@@ -219,12 +220,13 @@ namespace RewriteMe.Mobile.ViewModels
             return false;
         }
 
-        private async Task SendBillingPurchaseAsync(string productId, InAppBillingPurchase purchase)
+        private async Task SendBillingPurchaseAsync(string orderId, string productId, InAppBillingPurchase purchase)
         {
             try
             {
                 var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
-                var userSubscription = await _billingPurchaseService.SendBillingPurchaseAsync(purchase.ToBillingPurchase(userId)).ConfigureAwait(false);
+                var billingPurchase = purchase.ToBillingPurchase(userId, orderId);
+                var userSubscription = await _billingPurchaseService.SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 
                 await _userSubscriptionService.AddAsync(userSubscription).ConfigureAwait(false);
 
