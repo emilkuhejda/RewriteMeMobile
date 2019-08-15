@@ -7,13 +7,13 @@ namespace RewriteMe.Mobile.Extensions
 {
     public static class InAppBillingPurchaseExtensions
     {
-        public static BillingPurchase ToBillingPurchase(this InAppBillingPurchase inAppBillingPurchase, Guid userId)
+        public static BillingPurchase ToBillingPurchase(this InAppBillingPurchase inAppBillingPurchase, Guid userId, string orderId)
         {
             return new BillingPurchase
             {
                 Id = Guid.NewGuid(),
                 UserId = userId,
-                PurchaseId = inAppBillingPurchase.Id,
+                PurchaseId = orderId,
                 ProductId = inAppBillingPurchase.ProductId,
                 AutoRenewing = inAppBillingPurchase.AutoRenewing,
                 PurchaseState = inAppBillingPurchase.State.ToString(),
