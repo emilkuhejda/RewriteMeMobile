@@ -9,6 +9,8 @@ namespace RewriteMe.Domain.Interfaces.Configuration
 
         Guid ApplicationId { get; }
 
+        string AppCenterKeys { get; }
+
         string SupportMailAddress { get; }
 
         string DefaultLanguage { get; }
