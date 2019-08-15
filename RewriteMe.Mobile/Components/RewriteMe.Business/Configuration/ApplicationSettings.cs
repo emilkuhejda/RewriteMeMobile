@@ -26,6 +26,8 @@ namespace RewriteMe.Business.Configuration
 
         public Guid ApplicationId { get; private set; }
 
+        public string AppCenterKeys { get; } = "ios=0bdf549f-bbd5-4345-8d3a-eef3981cd099;android=7bdd3197-262d-4138-9a8e-b327d453bc93";
+
         public string SupportMailAddress => "emil.kuhejda@gmail.com";
 
         public string DefaultLanguage { get; } = "en";

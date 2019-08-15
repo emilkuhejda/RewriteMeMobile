@@ -23,6 +23,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterSingleton<IDialogService, DialogService>();
             containerRegistry.RegisterSingleton<ILanguageService, LanguageService>();
             containerRegistry.RegisterSingleton<IEmailService, EmailService>();
+            containerRegistry.RegisterSingleton<IAppCenterMetricsService, AppCenterMetricsService>();
             containerRegistry.RegisterSingleton<IExceptionHandlingStrategy, ExceptionHandlingStrategy>();
 
             RegisterPages(containerRegistry);
