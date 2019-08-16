@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Exceptions;
@@ -96,9 +97,9 @@ namespace RewriteMe.Business.Services
             await _fileItemRepository.DeleteAsync(fileItem.Id).ConfigureAwait(false);
         }
 
-        public async Task<FileItem> UploadAsync(MediaFile mediaFile)
+        public async Task<FileItem> UploadAsync(MediaFile mediaFile, CancellationToken cancellationToken)
         {
-            var httpRequestResult = await _rewriteMeWebService.UploadFileItemAsync(mediaFile).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.UploadFileItemAsync(mediaFile, cancellationToken).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 var fileItem = httpRequestResult.Payload;

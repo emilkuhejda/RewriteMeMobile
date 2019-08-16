@@ -61,7 +61,13 @@ namespace RewriteMe.Mobile.ViewModels
 
         private DetailItemViewModel<TranscribeItem> CreateDetailItemViewModel(TranscribeItem detailItem)
         {
-            var viewModel = new TranscribeItemViewModel(_transcriptAudioSourceService, _rewriteMeWebService, DialogService, PlayerViewModel, detailItem);
+            var viewModel = new TranscribeItemViewModel(
+                _transcriptAudioSourceService,
+                _rewriteMeWebService,
+                DialogService,
+                PlayerViewModel,
+                detailItem,
+                CancellationToken);
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
             return viewModel;
