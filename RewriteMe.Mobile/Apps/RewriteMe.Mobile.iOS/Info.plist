@@ -60,9 +60,13 @@
 			<array>
 				<string>public.audio</string>
 			</array>
+			<key>LSHandlerRank</key>
+			<string>Alternate</string>
 		</dict>
 	</array>
 	<key>Custom ProperNSMicrophoneUsageDescriptionty</key>
 	<string>The RewriteMe wants to use your microphone to record audio.</string>
+	<key>LSSupportsOpeningDocumentsInPlace</key>
+	<true/>
 </dict>
 </plist>
