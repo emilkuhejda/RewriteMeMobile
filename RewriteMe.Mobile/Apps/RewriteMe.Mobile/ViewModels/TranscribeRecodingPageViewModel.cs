@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
@@ -13,6 +14,7 @@ namespace RewriteMe.Mobile.ViewModels
     public class TranscribeRecodingPageViewModel : TranscribeBaseViewModel
     {
         private readonly IRecordedItemService _recordedItemService;
+        private readonly CancellationTokenSource _cancellationTokenSource;
 
         public TranscribeRecodingPageViewModel(
             IRecordedItemService recordedItemService,
@@ -24,6 +26,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(fileItemService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
+            _cancellationTokenSource = new CancellationTokenSource();
 
             PlayerViewModel = new PlayerViewModel();
         }
@@ -76,7 +79,7 @@ namespace RewriteMe.Mobile.ViewModels
                     Source = File.ReadAllBytes(filePath)
                 };
 
-                var fileItem = await FileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
+                var fileItem = await FileItemService.UploadAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
                 await FileItemService.TranscribeAsync(fileItem.Id, fileItem.Language).ConfigureAwait(false);
                 await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
             }
@@ -107,6 +110,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override void DisposeInternal()
         {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+
             PlayerViewModel?.Dispose();
         }
     }

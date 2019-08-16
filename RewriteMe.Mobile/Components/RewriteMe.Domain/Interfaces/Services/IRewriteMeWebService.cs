@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
@@ -32,11 +33,11 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<SpeechConfiguration>> GetSpeechConfigurationAsync();
 
-        Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile);
+        Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken);
 
         Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language);
 
-        Task<HttpRequestResult<byte[]>> GetTranscribeAudioSourceAsync(Guid transcribeItemId);
+        Task<HttpRequestResult<byte[]>> GetTranscribeAudioSourceAsync(Guid transcribeItemId, CancellationToken cancellationToken);
 
         Task<HttpRequestResult<Ok>> UpdateUserTranscriptAsync(Guid transcribeItemId, string transcript);
 

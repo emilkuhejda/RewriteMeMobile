@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Prism.Commands;
 using Prism.Navigation;
@@ -15,6 +16,8 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public abstract class DetailBaseViewModel<T> : ViewModelBase
     {
+        private readonly CancellationTokenSource _cancellationTokenSource;
+
         private IList<DetailItemViewModel<T>> _detailItems;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _notAvailableData;
@@ -27,6 +30,8 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
+            _cancellationTokenSource = new CancellationTokenSource();
+
             EmailService = emailService;
 
             CanGoBack = true;
@@ -35,6 +40,8 @@ namespace RewriteMe.Mobile.ViewModels
 
             PlayerViewModel = new PlayerViewModel();
         }
+
+        protected CancellationToken CancellationToken => _cancellationTokenSource.Token;
 
         public IEmailService EmailService { get; }
 
@@ -112,6 +119,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override void DisposeInternal()
         {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+
             DetailItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
             PlayerViewModel?.Dispose();
         }
