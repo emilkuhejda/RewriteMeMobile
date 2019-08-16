@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Http;
@@ -14,17 +15,20 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly CancellationToken _cancellationToken;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
             IRewriteMeWebService rewriteMeWebService,
             IDialogService dialogService,
             PlayerViewModel playerViewModel,
-            TranscribeItem transcribeItem)
+            TranscribeItem transcribeItem,
+            CancellationToken cancellationToken)
             : base(playerViewModel, dialogService, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _rewriteMeWebService = rewriteMeWebService;
+            _cancellationToken = cancellationToken;
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
@@ -68,7 +72,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 if (transcriptAudioSource == null)
                 {
-                    var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(DetailItem.Id).ConfigureAwait(false);
+                    var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(DetailItem.Id, _cancellationToken).ConfigureAwait(false);
                     if (httpRequestResult.State == HttpRequestState.Success)
                     {
                         source = httpRequestResult.Payload;

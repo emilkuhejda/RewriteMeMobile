@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
@@ -18,7 +19,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task DeleteAsync(FileItem fileItem);
 
-        Task<FileItem> UploadAsync(MediaFile mediaFile);
+        Task<FileItem> UploadAsync(MediaFile mediaFile, CancellationToken cancellationToken);
 
         Task<bool> CanTranscribeAsync();
 

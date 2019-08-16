@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.FilePicker;
@@ -24,6 +25,7 @@ namespace RewriteMe.Mobile.ViewModels
     public class CreatePageViewModel : ViewModelBase
     {
         private readonly IFileItemService _fileItemService;
+        private readonly CancellationTokenSource _cancellationTokenSource;
 
         private string _name;
         private SupportedLanguage _selectedLanguage;
@@ -41,6 +43,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
+            _cancellationTokenSource = new CancellationTokenSource();
 
             CanGoBack = true;
             IsUploadButtonVisible = true;
@@ -236,7 +239,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var func = new Func<MediaFile, Task>(async mediaFile =>
             {
-                await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
+                await _fileItemService.UploadAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
                 await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
             });
 
@@ -252,7 +255,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var func = new Func<MediaFile, Task>(async mediaFile =>
             {
-                var fileItem = await _fileItemService.UploadAsync(mediaFile).ConfigureAwait(false);
+                var fileItem = await _fileItemService.UploadAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
                 await _fileItemService.TranscribeAsync(fileItem.Id, fileItem.Language).ConfigureAwait(false);
                 await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
             });
@@ -344,6 +347,12 @@ namespace RewriteMe.Mobile.ViewModels
         private void ResetLoadingText()
         {
             ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
+        }
+
+        protected override void DisposeInternal()
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
         }
     }
 }
