@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Extensions;
@@ -90,11 +91,13 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteLoginCommandAsync()
         {
-            var signinSuccessful = await UserSessionService.SignUpOrInAsync().ConfigureAwait(false);
-            if (signinSuccessful)
+            var accessToken = await UserSessionService.SignUpOrInAsync().ConfigureAwait(false);
+            if (accessToken != null)
             {
                 LoginFeedback = Loc.Text(TranslationKeys.SignInSuccessful);
-                await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading).ConfigureAwait(false);
+                var navigationParameters = new NavigationParameters();
+                navigationParameters.Add<B2CAccessToken>(accessToken);
+                await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading, navigationParameters).ConfigureAwait(false);
             }
             else
             {

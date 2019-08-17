@@ -14,6 +14,7 @@
         public static string SignInSuccessful => "SignInSuccessful";
         public static string SignInFailed => "SignInFailed";
         public static string RegisterToUseApplication => "RegisterToUseApplication";
+        public static string UserRegistration => "UserRegistration";
         public static string English => "English";
         public static string Slovak => "Slovak";
         public static string Settings => "Settings";

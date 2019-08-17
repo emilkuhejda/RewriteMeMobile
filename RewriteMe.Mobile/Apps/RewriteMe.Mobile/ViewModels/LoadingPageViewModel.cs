@@ -1,9 +1,13 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Events;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
@@ -41,6 +45,31 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                var accessToken = navigationParameters.GetValue<B2CAccessToken>();
+                if (accessToken != null)
+                {
+                    ProgressText = Loc.Text(TranslationKeys.UserRegistration);
+
+                    try
+                    {
+                        await UserSessionService.RegisterUserAsync(accessToken).ConfigureAwait(false);
+                    }
+                    catch (ArgumentNullException ex)
+                    {
+                        Logger.Error(ExceptionFormatter.FormatException(ex));
+
+                        await SignOutAsync().ConfigureAwait(false);
+                        return;
+                    }
+                    catch (UserRegistrationFailedException ex)
+                    {
+                        Logger.Error(ExceptionFormatter.FormatException(ex));
+
+                        await SignOutAsync().ConfigureAwait(false);
+                        return;
+                    }
+                }
+
                 ProgressText = Loc.Text(TranslationKeys.LoadingData);
 
                 _synchronizationService.InitializationProgress += OnInitializationProgress;
@@ -73,6 +102,12 @@ namespace RewriteMe.Mobile.ViewModels
         private void OnInitializationProgress(object sender, ProgressEventArgs e)
         {
             ProgressText = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
+        }
+
+        private async Task SignOutAsync()
+        {
+            await UserSessionService.SignOutAsync().ConfigureAwait(false);
+            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Login}").ConfigureAwait(false);
         }
     }
 }

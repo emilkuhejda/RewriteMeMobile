@@ -133,7 +133,10 @@
   <data name="RegisterToUseApplication" xml:space="preserve">
     <value>Please register to use RewriteMe</value>
   </data>
-  <data name="English" xml:space="preserve">
+  <data name="UserRegistration" xml:space="preserve">
+    <value>User registration</value>
+  </data>
+    <data name="English" xml:space="preserve">
     <value>English</value>
   </data>
   <data name="Slovak" xml:space="preserve">

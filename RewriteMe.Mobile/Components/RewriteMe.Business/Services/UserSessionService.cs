@@ -109,12 +109,12 @@ namespace RewriteMe.Business.Services
             return true;
         }
 
-        public async Task<bool> SignUpOrInAsync()
+        public async Task<B2CAccessToken> SignUpOrInAsync()
         {
             return await SignUpOrInAsync(_applicationSettings.PolicySignUpSignIn, _applicationSettings.AuthoritySignUpSignIn).ConfigureAwait(false);
         }
 
-        private async Task<bool> SignUpOrInAsync(string policy, string authority)
+        private async Task<B2CAccessToken> SignUpOrInAsync(string policy, string authority)
         {
             _logger.Info($"Sign-in (with policy '{policy}')");
 
@@ -135,14 +135,12 @@ namespace RewriteMe.Business.Services
                     .ConfigureAwait(false);
 
                 if (signUpOrInResult.IdToken == null)
-                    return false;
+                    return null;
 
                 var accessToken = new B2CAccessToken(signUpOrInResult.IdToken);
 
                 await UpdateUserSessionAsync(accessToken).ConfigureAwait(false);
-                await RegisterUserAsync(accessToken).ConfigureAwait(false);
-
-                return true;
+                return accessToken;
             }
             catch (HttpRequestException)
             {
@@ -155,11 +153,7 @@ namespace RewriteMe.Business.Services
                 {
                     // Password reset requested
                     _logger.Info("The user has requested to reset the password.");
-                    var passwordResetSuccessful = await ResetPasswordAsync().ConfigureAwait(false);
-                    if (passwordResetSuccessful)
-                    {
-                        return true;
-                    }
+                    return await ResetPasswordAsync().ConfigureAwait(false);
                 }
                 else if (e.Message.Contains("AADB2C90091"))
                 {
@@ -175,10 +169,10 @@ namespace RewriteMe.Business.Services
                 }
             }
 
-            return false;
+            return null;
         }
 
-        public async Task<bool> EditProfileAsync()
+        public async Task<B2CAccessToken> EditProfileAsync()
         {
             _logger.Info("Edit profile");
 
@@ -196,22 +190,22 @@ namespace RewriteMe.Business.Services
                     .ConfigureAwait(false);
 
                 if (result.IdToken == null)
-                    return false;
+                    return null;
 
                 var accessToken = new B2CAccessToken(result.IdToken);
 
                 await UpdateUserSessionAsync(accessToken).ConfigureAwait(false);
                 await UpdateUserAsync(accessToken).ConfigureAwait(false);
 
-                return true;
+                return accessToken;
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
 
-        public async Task<bool> ResetPasswordAsync()
+        public async Task<B2CAccessToken> ResetPasswordAsync()
         {
             _logger.Info("Reset password");
 
@@ -230,16 +224,16 @@ namespace RewriteMe.Business.Services
                     .ConfigureAwait(false);
 
                 if (result.IdToken == null)
-                    return false;
+                    return null;
 
                 var accessToken = new B2CAccessToken(result.IdToken);
                 await UpdateUserSessionAsync(accessToken).ConfigureAwait(false);
 
-                return true;
+                return accessToken;
             }
             catch (Exception)
             {
-                return false;
+                return null;
             }
         }
 
@@ -321,7 +315,7 @@ namespace RewriteMe.Business.Services
             await _userSessionRepository.UpdateUserSessionAsync(userSession).ConfigureAwait(false);
         }
 
-        private async Task RegisterUserAsync(B2CAccessToken accessToken)
+        public async Task RegisterUserAsync(B2CAccessToken accessToken)
         {
             if (accessToken == null)
                 throw new ArgumentNullException(nameof(accessToken));
