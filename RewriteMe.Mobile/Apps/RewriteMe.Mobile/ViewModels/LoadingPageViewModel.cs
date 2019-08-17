@@ -48,24 +48,10 @@ namespace RewriteMe.Mobile.ViewModels
                 var accessToken = navigationParameters.GetValue<B2CAccessToken>();
                 if (accessToken != null)
                 {
-                    ProgressText = Loc.Text(TranslationKeys.UserRegistration);
-
-                    try
+                    var isSuccess = await RegisterUserAsync(accessToken).ConfigureAwait(false);
+                    if (!isSuccess)
                     {
-                        await UserSessionService.RegisterUserAsync(accessToken).ConfigureAwait(false);
-                    }
-                    catch (ArgumentNullException ex)
-                    {
-                        Logger.Error(ExceptionFormatter.FormatException(ex));
-
-                        await SignOutAsync().ConfigureAwait(false);
-                        return;
-                    }
-                    catch (UserRegistrationFailedException ex)
-                    {
-                        Logger.Error(ExceptionFormatter.FormatException(ex));
-
-                        await SignOutAsync().ConfigureAwait(false);
+                        await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Login}").ConfigureAwait(false);
                         return;
                     }
                 }
@@ -104,10 +90,28 @@ namespace RewriteMe.Mobile.ViewModels
             ProgressText = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
         }
 
-        private async Task SignOutAsync()
+        private async Task<bool> RegisterUserAsync(B2CAccessToken accessToken)
         {
+            ProgressText = Loc.Text(TranslationKeys.UserRegistration);
+
+            try
+            {
+                await UserSessionService.RegisterUserAsync(accessToken).ConfigureAwait(false);
+
+                return true;
+            }
+            catch (ArgumentNullException ex)
+            {
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+            }
+            catch (UserRegistrationFailedException ex)
+            {
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+            }
+
             await UserSessionService.SignOutAsync().ConfigureAwait(false);
-            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Login}").ConfigureAwait(false);
+
+            return false;
         }
     }
 }
