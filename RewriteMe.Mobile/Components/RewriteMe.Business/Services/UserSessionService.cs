@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using Plugin.SecureStorage;
 using RewriteMe.Business.Wrappers;
+using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
@@ -25,6 +26,7 @@ namespace RewriteMe.Business.Services
 
         private readonly IRegistrationUserWebService _registrationUserWebService;
         private readonly ICleanUpService _cleanUpService;
+        private readonly IAppCenterMetricsService _appCenterMetricsService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
         private readonly IApplicationSettings _applicationSettings;
@@ -38,6 +40,7 @@ namespace RewriteMe.Business.Services
         public UserSessionService(
             IRegistrationUserWebService registrationUserWebService,
             ICleanUpService cleanUpService,
+            IAppCenterMetricsService appCenterMetricsService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
             IApplicationSettings applicationSettings,
@@ -47,6 +50,7 @@ namespace RewriteMe.Business.Services
         {
             _registrationUserWebService = registrationUserWebService;
             _cleanUpService = cleanUpService;
+            _appCenterMetricsService = appCenterMetricsService;
             _identityUiParentProvider = identityUiParentProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
@@ -199,10 +203,13 @@ namespace RewriteMe.Business.Services
 
                 return accessToken;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                _logger.Error(ExceptionFormatter.FormatException(ex));
+                _appCenterMetricsService.TrackException(ex);
             }
+
+            return null;
         }
 
         public async Task<B2CAccessToken> ResetPasswordAsync()
@@ -231,10 +238,13 @@ namespace RewriteMe.Business.Services
 
                 return accessToken;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return null;
+                _logger.Error(ExceptionFormatter.FormatException(ex));
+                _appCenterMetricsService.TrackException(ex);
             }
+
+            return null;
         }
 
         public async Task SignOutAsync()
@@ -289,9 +299,10 @@ namespace RewriteMe.Business.Services
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.Exception(e, "Failed to get userIdentifier");
+                _logger.Exception(ex, "Failed to get userIdentifier");
+                _appCenterMetricsService.TrackException(ex);
             }
 
             return null;
