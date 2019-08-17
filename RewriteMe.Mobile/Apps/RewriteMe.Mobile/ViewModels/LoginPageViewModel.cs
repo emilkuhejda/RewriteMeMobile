@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Extensions;
@@ -8,6 +9,7 @@ using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 
@@ -78,6 +80,15 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     Logger.Info("No user is currently signed in. Sign in is required.");
                 }
+
+                if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
+                {
+                    var userRegistrationNavigationParameters = navigationParameters.GetValue<UserRegistrationNavigationParameters>();
+                    if (userRegistrationNavigationParameters != null && userRegistrationNavigationParameters.IsError)
+                    {
+                        LoginFeedback = Loc.Text(TranslationKeys.UserRegistrationFailed);
+                    }
+                }
             }
 
             IsLoading = false;
@@ -90,11 +101,13 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteLoginCommandAsync()
         {
-            var signinSuccessful = await UserSessionService.SignUpOrInAsync().ConfigureAwait(false);
-            if (signinSuccessful)
+            var accessToken = await UserSessionService.SignUpOrInAsync().ConfigureAwait(false);
+            if (accessToken != null)
             {
                 LoginFeedback = Loc.Text(TranslationKeys.SignInSuccessful);
-                await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading).ConfigureAwait(false);
+                var navigationParameters = new NavigationParameters();
+                navigationParameters.Add<B2CAccessToken>(accessToken);
+                await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading, navigationParameters).ConfigureAwait(false);
             }
             else
             {

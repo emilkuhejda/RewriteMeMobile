@@ -1,4 +1,5 @@
 ﻿using System;
+using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.ExceptionHandling;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Extensions;
@@ -21,7 +22,7 @@ namespace RewriteMe.Mobile.ExceptionHandling
 
         public bool HandleException(Exception exception)
         {
-            _logger.Exception(exception);
+            _logger.Error(ExceptionFormatter.FormatException(exception));
             _appCenterMetricsService.TrackException(exception);
 
             return false;

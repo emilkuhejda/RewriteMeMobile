@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Identity.Client;
 using Plugin.SecureStorage;
 using RewriteMe.Business.Wrappers;
+using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
@@ -25,6 +26,7 @@ namespace RewriteMe.Business.Services
 
         private readonly IRegistrationUserWebService _registrationUserWebService;
         private readonly ICleanUpService _cleanUpService;
+        private readonly IAppCenterMetricsService _appCenterMetricsService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
         private readonly IApplicationSettings _applicationSettings;
@@ -38,6 +40,7 @@ namespace RewriteMe.Business.Services
         public UserSessionService(
             IRegistrationUserWebService registrationUserWebService,
             ICleanUpService cleanUpService,
+            IAppCenterMetricsService appCenterMetricsService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
             IApplicationSettings applicationSettings,
@@ -47,6 +50,7 @@ namespace RewriteMe.Business.Services
         {
             _registrationUserWebService = registrationUserWebService;
             _cleanUpService = cleanUpService;
+            _appCenterMetricsService = appCenterMetricsService;
             _identityUiParentProvider = identityUiParentProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
@@ -109,12 +113,12 @@ namespace RewriteMe.Business.Services
             return true;
         }
 
-        public async Task<bool> SignUpOrInAsync()
+        public async Task<B2CAccessToken> SignUpOrInAsync()
         {
             return await SignUpOrInAsync(_applicationSettings.PolicySignUpSignIn, _applicationSettings.AuthoritySignUpSignIn).ConfigureAwait(false);
         }
 
-        private async Task<bool> SignUpOrInAsync(string policy, string authority)
+        private async Task<B2CAccessToken> SignUpOrInAsync(string policy, string authority)
         {
             _logger.Info($"Sign-in (with policy '{policy}')");
 
@@ -135,14 +139,12 @@ namespace RewriteMe.Business.Services
                     .ConfigureAwait(false);
 
                 if (signUpOrInResult.IdToken == null)
-                    return false;
+                    return null;
 
                 var accessToken = new B2CAccessToken(signUpOrInResult.IdToken);
 
                 await UpdateUserSessionAsync(accessToken).ConfigureAwait(false);
-                await RegisterUserAsync(accessToken).ConfigureAwait(false);
-
-                return true;
+                return accessToken;
             }
             catch (HttpRequestException)
             {
@@ -155,11 +157,7 @@ namespace RewriteMe.Business.Services
                 {
                     // Password reset requested
                     _logger.Info("The user has requested to reset the password.");
-                    var passwordResetSuccessful = await ResetPasswordAsync().ConfigureAwait(false);
-                    if (passwordResetSuccessful)
-                    {
-                        return true;
-                    }
+                    return await ResetPasswordAsync().ConfigureAwait(false);
                 }
                 else if (e.Message.Contains("AADB2C90091"))
                 {
@@ -175,10 +173,10 @@ namespace RewriteMe.Business.Services
                 }
             }
 
-            return false;
+            return null;
         }
 
-        public async Task<bool> EditProfileAsync()
+        public async Task<B2CAccessToken> EditProfileAsync()
         {
             _logger.Info("Edit profile");
 
@@ -196,22 +194,25 @@ namespace RewriteMe.Business.Services
                     .ConfigureAwait(false);
 
                 if (result.IdToken == null)
-                    return false;
+                    return null;
 
                 var accessToken = new B2CAccessToken(result.IdToken);
 
                 await UpdateUserSessionAsync(accessToken).ConfigureAwait(false);
                 await UpdateUserAsync(accessToken).ConfigureAwait(false);
 
-                return true;
+                return accessToken;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                _logger.Error(ExceptionFormatter.FormatException(ex));
+                _appCenterMetricsService.TrackException(ex);
             }
+
+            return null;
         }
 
-        public async Task<bool> ResetPasswordAsync()
+        public async Task<B2CAccessToken> ResetPasswordAsync()
         {
             _logger.Info("Reset password");
 
@@ -230,17 +231,20 @@ namespace RewriteMe.Business.Services
                     .ConfigureAwait(false);
 
                 if (result.IdToken == null)
-                    return false;
+                    return null;
 
                 var accessToken = new B2CAccessToken(result.IdToken);
                 await UpdateUserSessionAsync(accessToken).ConfigureAwait(false);
 
-                return true;
+                return accessToken;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                return false;
+                _logger.Error(ExceptionFormatter.FormatException(ex));
+                _appCenterMetricsService.TrackException(ex);
             }
+
+            return null;
         }
 
         public async Task SignOutAsync()
@@ -295,9 +299,10 @@ namespace RewriteMe.Business.Services
                     }
                 }
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.Exception(e, "Failed to get userIdentifier");
+                _logger.Exception(ex, "Failed to get userIdentifier");
+                _appCenterMetricsService.TrackException(ex);
             }
 
             return null;
@@ -321,7 +326,7 @@ namespace RewriteMe.Business.Services
             await _userSessionRepository.UpdateUserSessionAsync(userSession).ConfigureAwait(false);
         }
 
-        private async Task RegisterUserAsync(B2CAccessToken accessToken)
+        public async Task RegisterUserAsync(B2CAccessToken accessToken)
         {
             if (accessToken == null)
                 throw new ArgumentNullException(nameof(accessToken));
