@@ -20,11 +20,13 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<bool> IsSignedInAsync();
 
-        Task<bool> SignUpOrInAsync();
+        Task<B2CAccessToken> SignUpOrInAsync();
 
-        Task<bool> EditProfileAsync();
+        Task<B2CAccessToken> EditProfileAsync();
 
-        Task<bool> ResetPasswordAsync();
+        Task<B2CAccessToken> ResetPasswordAsync();
+
+        Task RegisterUserAsync(B2CAccessToken accessToken);
 
         Task SignOutAsync();
     }

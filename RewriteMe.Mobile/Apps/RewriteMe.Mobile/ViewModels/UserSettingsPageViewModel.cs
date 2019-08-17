@@ -35,7 +35,7 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteEditProfileCommandAsync()
         {
             var result = await UserSessionService.EditProfileAsync().ConfigureAwait(false);
-            if (!result)
+            if (result != null)
             {
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.ProfileEditErrorMessage)).ConfigureAwait(false);
             }
@@ -44,7 +44,7 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteResetPasswordCommandAsync()
         {
             var result = await UserSessionService.ResetPasswordAsync().ConfigureAwait(false);
-            if (!result)
+            if (result != null)
             {
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.ProfileEditErrorMessage)).ConfigureAwait(false);
             }
