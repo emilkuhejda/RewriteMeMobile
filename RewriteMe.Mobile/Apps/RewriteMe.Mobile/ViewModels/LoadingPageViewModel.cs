@@ -12,6 +12,7 @@ using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -51,7 +52,9 @@ namespace RewriteMe.Mobile.ViewModels
                     var isSuccess = await RegisterUserAsync(accessToken).ConfigureAwait(false);
                     if (!isSuccess)
                     {
-                        await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Login}").ConfigureAwait(false);
+                        var parameters = new NavigationParameters();
+                        parameters.Add<UserRegistrationNavigationParameters>(new UserRegistrationNavigationParameters(true));
+                        await NavigationService.GoBackWithoutAnimationAsync(parameters).ConfigureAwait(false);
                         return;
                     }
                 }

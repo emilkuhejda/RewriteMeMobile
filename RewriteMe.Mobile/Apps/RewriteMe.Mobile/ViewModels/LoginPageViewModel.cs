@@ -9,6 +9,7 @@ using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 
@@ -78,6 +79,15 @@ namespace RewriteMe.Mobile.ViewModels
                 else
                 {
                     Logger.Info("No user is currently signed in. Sign in is required.");
+                }
+
+                if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
+                {
+                    var userRegistrationNavigationParameters = navigationParameters.GetValue<UserRegistrationNavigationParameters>();
+                    if (userRegistrationNavigationParameters != null && userRegistrationNavigationParameters.IsError)
+                    {
+                        LoginFeedback = Loc.Text(TranslationKeys.UserRegistrationFailed);
+                    }
                 }
             }
 

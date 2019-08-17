@@ -107,6 +107,12 @@ namespace RewriteMe.Resources {
             }
         }
         
+        public static string UserRegistrationFailed {
+            get {
+                return ResourceManager.GetString("UserRegistrationFailed", resourceCulture);
+            }
+        }
+        
         public static string RegisterToUseApplication {
             get {
                 return ResourceManager.GetString("RegisterToUseApplication", resourceCulture);
