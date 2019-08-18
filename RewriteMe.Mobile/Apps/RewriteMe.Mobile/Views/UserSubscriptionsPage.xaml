@@ -3,6 +3,7 @@
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
@@ -10,26 +11,43 @@
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="ProductsTemplate">
             <ViewCell>
-                <Grid>
-                    <Button Margin="20,0,20,20"
-                            Command="{Binding BuyCommand}"
-                            Style="{StaticResource ActionButtonStyle}"
-                            Text="{Binding Text}" />
-                </Grid>
+                <StackLayout Margin="20,0,20,20">
+                    <Grid HorizontalOptions="Center">
+                        <forms:SvgCachedImage Margin="0"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="50"
+                                              InputTransparent="True"
+                                              Source="{Binding IconKey}"
+                                              VerticalOptions="CenterAndExpand" />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding BuyCommand}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+
+                    <Label HorizontalTextAlignment="Center" Text="{Binding Text}" />
+                </StackLayout>
             </ViewCell>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
     <Grid>
-        <Grid Grid.Row="0"
-              Grid.Column="0"
-              Padding="{StaticResource StandardPadding}">
+        <StackLayout Grid.Row="0"
+                     Grid.Column="0"
+                     Margin="20,20,20,20"
+                     Padding="{StaticResource StandardPadding}">
+            <Label Margin="0,0,0,20"
+                   FontSize="{StaticResource LargeSize}"
+                   HorizontalTextAlignment="Center"
+                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}" />
+
             <ListView HasUnevenRows="True"
                       ItemTemplate="{StaticResource ProductsTemplate}"
                       ItemsSource="{Binding Products}"
                       SeparatorVisibility="None"
                       VerticalOptions="Start" />
-        </Grid>
+        </StackLayout>
 
         <controls:PageActivityIndicator Grid.Row="0"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"

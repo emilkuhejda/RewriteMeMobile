@@ -1,20 +1,18 @@
-﻿using System;
-
-namespace RewriteMe.Domain.Transcription
+﻿namespace RewriteMe.Domain.Transcription
 {
     public class SubscriptionProduct
     {
-        public SubscriptionProduct(string id, string text, TimeSpan time)
+        public SubscriptionProduct(string id, string text, string iconKey)
         {
             Id = id;
             Text = text;
-            Time = time;
+            IconKey = iconKey;
         }
 
         public string Id { get; }
 
         public string Text { get; }
 
-        public TimeSpan Time { get; }
+        public string IconKey { get; }
     }
 }

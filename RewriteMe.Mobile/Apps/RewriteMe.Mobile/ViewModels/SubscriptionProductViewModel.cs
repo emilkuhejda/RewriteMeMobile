@@ -20,6 +20,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private SubscriptionProduct SubscriptionProduct { get; }
 
+        public string IconKey => SubscriptionProduct.IconKey;
+
         public string Text => SubscriptionProduct.Text;
 
         public ICommand BuyCommand { get; }
