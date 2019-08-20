@@ -2,14 +2,14 @@
 {
     public class SubscriptionProduct
     {
-        public SubscriptionProduct(string id, string text, string iconKey)
+        public SubscriptionProduct(string productId, string text, string iconKey)
         {
-            Id = id;
+            ProductId = productId;
             Text = text;
             IconKey = iconKey;
         }
 
-        public string Id { get; }
+        public string ProductId { get; }
 
         public string Text { get; }
 

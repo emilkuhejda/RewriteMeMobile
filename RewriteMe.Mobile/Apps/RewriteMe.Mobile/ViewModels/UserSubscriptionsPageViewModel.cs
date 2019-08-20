@@ -62,11 +62,55 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                Products = SubscriptionProducts.All
-                    .Select(x => new SubscriptionProductViewModel(x, OnBuyAction))
-                    .ToList();
+                if (navigationParameters.GetNavigationMode() == NavigationMode.New)
+                {
+                    await InitializeProductsAsync().ConfigureAwait(false);
+                }
+            }
+        }
 
-                await Task.CompletedTask.ConfigureAwait(false);
+        private async Task InitializeProductsAsync()
+        {
+            try
+            {
+                if (!CrossInAppBilling.IsSupported)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.InAppBillingIsNotSupportedErrorMessage)).ConfigureAwait(false);
+                    return;
+                }
+
+                var billing = CrossInAppBilling.Current;
+                var connected = await billing.ConnectAsync().ConfigureAwait(false);
+                if (!connected)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage)).ConfigureAwait(false);
+                    return;
+                }
+
+                var inAppBillingProducts = await billing.GetProductInfoAsync(ItemType.InAppPurchase, SubscriptionProducts.All.Select(x => x.ProductId).ToArray()).ConfigureAwait(false);
+                var billingProducts = inAppBillingProducts.ToList();
+
+                var products = new List<SubscriptionProductViewModel>();
+                foreach (var subscription in SubscriptionProducts.All)
+                {
+                    var appBillingProduct = billingProducts.FirstOrDefault(x => x.ProductId == subscription.ProductId);
+                    if (appBillingProduct == null)
+                        continue;
+
+                    var subscriptionProductViewModel = new SubscriptionProductViewModel(appBillingProduct.ProductId, OnBuyAction)
+                    {
+                        Description = $"{subscription.Text} - {appBillingProduct.LocalizedPrice}",
+                        IconKey = subscription.IconKey
+                    };
+
+                    products.Add(subscriptionProductViewModel);
+                }
+
+                Products = products;
+            }
+            finally
+            {
+                await CrossInAppBilling.Current.DisconnectAsync().ConfigureAwait(false);
             }
         }
 
