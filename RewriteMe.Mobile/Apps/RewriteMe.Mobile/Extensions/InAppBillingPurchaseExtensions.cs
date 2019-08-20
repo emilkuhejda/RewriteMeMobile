@@ -16,6 +16,7 @@ namespace RewriteMe.Mobile.Extensions
                 PurchaseId = orderId,
                 ProductId = inAppBillingPurchase.ProductId,
                 AutoRenewing = inAppBillingPurchase.AutoRenewing,
+                PurchaseToken = inAppBillingPurchase.PurchaseToken,
                 PurchaseState = inAppBillingPurchase.State.ToString(),
                 ConsumptionState = inAppBillingPurchase.ConsumptionState.ToString(),
                 Platform = Device.RuntimePlatform,
