@@ -147,8 +147,8 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     if (purchase != null && purchase.State == PurchaseState.Purchased)
                     {
-                        if (purchase.Payload != payload)
-                            throw new PurchasePayloadNotValidException(purchase.Id, purchase.ProductId);
+                        if (string.IsNullOrWhiteSpace(purchase.PurchaseToken))
+                            throw new EmptyPurchaseTokenException(purchase.Id, purchase.ProductId);
 
                         var orderId = purchase.Id;
                         InAppBillingPurchase billingPurchase = null;
@@ -201,9 +201,9 @@ namespace RewriteMe.Mobile.ViewModels
 
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage)).ConfigureAwait(false);
             }
-            catch (PurchasePayloadNotValidException ex)
+            catch (EmptyPurchaseTokenException ex)
             {
-                Logger.Error("Purchase payload is not valid.");
+                Logger.Error("Purchase token is empty.");
                 Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 var result = await DialogService.ConfirmAsync(
