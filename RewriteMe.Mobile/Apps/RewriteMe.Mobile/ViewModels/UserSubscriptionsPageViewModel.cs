@@ -182,23 +182,29 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (PurchaseWasNotProcessedException ex)
             {
-                Logger.Warning($"Product '{productId}' was not purchased. {ex}");
+                Logger.Error("Product '{productId}' was not purchased.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.PurchaseWasNotProcessedErrorMessage)).ConfigureAwait(false);
             }
             catch (InAppBillingNotSupportedException ex)
             {
-                Logger.Warning($"In-App Purchases is not supported in the device. {ex}");
+                Logger.Error("In-App Purchases is not supported in the device.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.InAppBillingIsNotSupportedErrorMessage)).ConfigureAwait(false);
             }
             catch (AppStoreNotConnectedException ex)
             {
-                Logger.Error($"App store is not connected. {ex}");
+                Logger.Error("App store is not connected.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage)).ConfigureAwait(false);
             }
             catch (PurchasePayloadNotValidException ex)
             {
-                Logger.Error($"Purchase payload is not valid. {ex}");
+                Logger.Error("Purchase payload is not valid.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 var result = await DialogService.ConfirmAsync(
                     Loc.Text(TranslationKeys.PurchaseProcessedIncorrectlyErrorMessage),
@@ -212,7 +218,8 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (RegistrationPurchaseBillingException ex)
             {
-                Logger.Error($"Exception during registration of purchase billing. {ex}");
+                Logger.Error("Exception during registration of purchase billing.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 var result = await DialogService.ConfirmAsync(
                     Loc.Text(TranslationKeys.RegistrationPurchaseBillingErrorMessage),
@@ -229,7 +236,8 @@ namespace RewriteMe.Mobile.ViewModels
                 if (ex.PurchaseError == PurchaseError.UserCancelled)
                     return false;
 
-                Logger.Error($"Exception during purchasing process. {ex}");
+                Logger.Error("Exception during purchasing process.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 var message = Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage);
                 switch (ex.PurchaseError)
@@ -252,7 +260,8 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception during purchasing process. {ex}");
+                Logger.Error("Exception during purchasing process.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.PurchaseWasNotProcessedErrorMessage)).ConfigureAwait(false);
             }
