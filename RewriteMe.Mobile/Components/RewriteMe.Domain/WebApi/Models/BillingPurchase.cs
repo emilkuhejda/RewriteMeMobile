@@ -22,13 +22,14 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the BillingPurchase class.
         /// </summary>
-        public BillingPurchase(System.Guid? id = default(System.Guid?), System.Guid? userId = default(System.Guid?), string purchaseId = default(string), string productId = default(string), bool? autoRenewing = default(bool?), string purchaseState = default(string), string consumptionState = default(string), string platform = default(string), System.DateTime? transactionDateUtc = default(System.DateTime?))
+        public BillingPurchase(System.Guid? id = default(System.Guid?), System.Guid? userId = default(System.Guid?), string purchaseId = default(string), string productId = default(string), bool? autoRenewing = default(bool?), string purchaseToken = default(string), string purchaseState = default(string), string consumptionState = default(string), string platform = default(string), System.DateTime? transactionDateUtc = default(System.DateTime?))
         {
             Id = id;
             UserId = userId;
             PurchaseId = purchaseId;
             ProductId = productId;
             AutoRenewing = autoRenewing;
+            PurchaseToken = purchaseToken;
             PurchaseState = purchaseState;
             ConsumptionState = consumptionState;
             Platform = platform;
@@ -65,6 +66,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "autoRenewing")]
         public bool? AutoRenewing { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "purchaseToken")]
+        public string PurchaseToken { get; set; }
 
         /// <summary>
         /// </summary>

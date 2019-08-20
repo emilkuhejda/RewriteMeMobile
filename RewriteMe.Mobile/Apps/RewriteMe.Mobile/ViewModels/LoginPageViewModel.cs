@@ -19,6 +19,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly ILanguageService _languageService;
         private readonly IApplicationSettings _applicationSettings;
+        private readonly IConnectivityService _connectivityService;
 
         private string _loginFeedback;
         private bool _isLoading;
@@ -26,6 +27,7 @@ namespace RewriteMe.Mobile.ViewModels
         public LoginPageViewModel(
             ILanguageService languageService,
             IApplicationSettings applicationSettings,
+            IConnectivityService connectivityService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -34,6 +36,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _languageService = languageService;
             _applicationSettings = applicationSettings;
+            _connectivityService = connectivityService;
 
             HasTitleBar = false;
             CanGoBack = false;
@@ -101,10 +104,17 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteLoginCommandAsync()
         {
+            if (!_connectivityService.IsConnected)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.OfflineErrorMessage)).ConfigureAwait(false);
+                return;
+            }
+
             var accessToken = await UserSessionService.SignUpOrInAsync().ConfigureAwait(false);
             if (accessToken != null)
             {
                 LoginFeedback = Loc.Text(TranslationKeys.SignInSuccessful);
+
                 var navigationParameters = new NavigationParameters();
                 navigationParameters.Add<B2CAccessToken>(accessToken);
                 await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading, navigationParameters).ConfigureAwait(false);

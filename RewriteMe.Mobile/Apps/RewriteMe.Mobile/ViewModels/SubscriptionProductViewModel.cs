@@ -1,26 +1,25 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using RewriteMe.Domain.Transcription;
 using RewriteMe.Mobile.Commands;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class SubscriptionProductViewModel
     {
-        public SubscriptionProductViewModel(
-            SubscriptionProduct subscriptionProduct,
-            Func<string, Task> onBuyAction)
+        public SubscriptionProductViewModel(string productId, Func<string, Task> onBuyAction)
         {
-            SubscriptionProduct = subscriptionProduct;
+            ProductId = productId;
             OnBuyAction = onBuyAction;
 
             BuyCommand = new AsyncCommand(ExecuteBuyCommandAsync);
         }
 
-        private SubscriptionProduct SubscriptionProduct { get; }
+        public string ProductId { get; }
 
-        public string Text => SubscriptionProduct.Text;
+        public string IconKey { get; set; }
+
+        public string Description { get; set; }
 
         public ICommand BuyCommand { get; }
 
@@ -28,7 +27,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteBuyCommandAsync()
         {
-            await OnBuyAction(SubscriptionProduct.Id).ConfigureAwait(false);
+            await OnBuyAction(ProductId).ConfigureAwait(false);
         }
     }
 }
