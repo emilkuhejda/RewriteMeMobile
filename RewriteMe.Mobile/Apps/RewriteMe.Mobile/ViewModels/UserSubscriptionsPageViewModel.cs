@@ -62,11 +62,55 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                Products = SubscriptionProducts.All
-                    .Select(x => new SubscriptionProductViewModel(x, OnBuyAction))
-                    .ToList();
+                if (navigationParameters.GetNavigationMode() == NavigationMode.New)
+                {
+                    await InitializeProductsAsync().ConfigureAwait(false);
+                }
+            }
+        }
 
-                await Task.CompletedTask.ConfigureAwait(false);
+        private async Task InitializeProductsAsync()
+        {
+            try
+            {
+                if (!CrossInAppBilling.IsSupported)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.InAppBillingIsNotSupportedErrorMessage)).ConfigureAwait(false);
+                    return;
+                }
+
+                var billing = CrossInAppBilling.Current;
+                var connected = await billing.ConnectAsync().ConfigureAwait(false);
+                if (!connected)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage)).ConfigureAwait(false);
+                    return;
+                }
+
+                var inAppBillingProducts = await billing.GetProductInfoAsync(ItemType.InAppPurchase, SubscriptionProducts.All.Select(x => x.ProductId).ToArray()).ConfigureAwait(false);
+                var billingProducts = inAppBillingProducts.ToList();
+
+                var products = new List<SubscriptionProductViewModel>();
+                foreach (var subscription in SubscriptionProducts.All)
+                {
+                    var appBillingProduct = billingProducts.FirstOrDefault(x => x.ProductId == subscription.ProductId);
+                    if (appBillingProduct == null)
+                        continue;
+
+                    var subscriptionProductViewModel = new SubscriptionProductViewModel(appBillingProduct.ProductId, OnBuyAction)
+                    {
+                        Description = $"{subscription.Text} - {appBillingProduct.LocalizedPrice}",
+                        IconKey = subscription.IconKey
+                    };
+
+                    products.Add(subscriptionProductViewModel);
+                }
+
+                Products = products;
+            }
+            finally
+            {
+                await CrossInAppBilling.Current.DisconnectAsync().ConfigureAwait(false);
             }
         }
 
@@ -103,8 +147,8 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     if (purchase != null && purchase.State == PurchaseState.Purchased)
                     {
-                        if (purchase.Payload != payload)
-                            throw new PurchasePayloadNotValidException(purchase.Id, purchase.ProductId);
+                        if (string.IsNullOrWhiteSpace(purchase.PurchaseToken))
+                            throw new EmptyPurchaseTokenException(purchase.Id, purchase.ProductId);
 
                         var orderId = purchase.Id;
                         InAppBillingPurchase billingPurchase = null;
@@ -138,23 +182,29 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (PurchaseWasNotProcessedException ex)
             {
-                Logger.Warning($"Product '{productId}' was not purchased. {ex}");
+                Logger.Error("Product '{productId}' was not purchased.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.PurchaseWasNotProcessedErrorMessage)).ConfigureAwait(false);
             }
             catch (InAppBillingNotSupportedException ex)
             {
-                Logger.Warning($"In-App Purchases is not supported in the device. {ex}");
+                Logger.Error("In-App Purchases is not supported in the device.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.InAppBillingIsNotSupportedErrorMessage)).ConfigureAwait(false);
             }
             catch (AppStoreNotConnectedException ex)
             {
-                Logger.Error($"App store is not connected. {ex}");
+                Logger.Error("App store is not connected.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage)).ConfigureAwait(false);
             }
-            catch (PurchasePayloadNotValidException ex)
+            catch (EmptyPurchaseTokenException ex)
             {
-                Logger.Error($"Purchase payload is not valid. {ex}");
+                Logger.Error("Purchase token is empty.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 var result = await DialogService.ConfirmAsync(
                     Loc.Text(TranslationKeys.PurchaseProcessedIncorrectlyErrorMessage),
@@ -168,7 +218,8 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (RegistrationPurchaseBillingException ex)
             {
-                Logger.Error($"Exception during registration of purchase billing. {ex}");
+                Logger.Error("Exception during registration of purchase billing.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 var result = await DialogService.ConfirmAsync(
                     Loc.Text(TranslationKeys.RegistrationPurchaseBillingErrorMessage),
@@ -185,7 +236,8 @@ namespace RewriteMe.Mobile.ViewModels
                 if (ex.PurchaseError == PurchaseError.UserCancelled)
                     return false;
 
-                Logger.Error($"Exception during purchasing process. {ex}");
+                Logger.Error("Exception during purchasing process.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 var message = Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage);
                 switch (ex.PurchaseError)
@@ -208,7 +260,8 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (Exception ex)
             {
-                Logger.Error($"Exception during purchasing process. {ex}");
+                Logger.Error("Exception during purchasing process.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
 
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.PurchaseWasNotProcessedErrorMessage)).ConfigureAwait(false);
             }
