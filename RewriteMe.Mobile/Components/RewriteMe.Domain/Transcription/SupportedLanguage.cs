@@ -1,4 +1,4 @@
-﻿namespace RewriteMe.DataAccess.Transcription
+﻿namespace RewriteMe.Domain.Transcription
 {
     public class SupportedLanguage
     {
