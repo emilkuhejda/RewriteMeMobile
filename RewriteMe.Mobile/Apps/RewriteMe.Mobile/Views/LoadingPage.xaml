@@ -33,7 +33,9 @@
               HorizontalOptions="Fill"
               IsVisible="{Binding OperationScope.IsBusy, Mode=OneWay}"
               VerticalOptions="Fill">
-            <controls:PageActivityIndicator Caption="{Binding ProgressText}" />
+            <controls:PageActivityIndicator BackgroundOpacity="1"
+                                            Caption="{Binding ProgressText}"
+                                            Color="{StaticResource ColorWhite}" />
         </Grid>
     </Grid>
 </views:BaseNavigationPage>
