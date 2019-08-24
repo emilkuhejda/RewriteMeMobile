@@ -5,12 +5,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
+using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -19,6 +21,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IFileItemService _fileItemService;
         private readonly ISchedulerService _schedulerService;
 
+        private string _progressText;
         private IList<FileItemViewModel> _fileItems;
 
         public OverviewPageViewModel(
@@ -41,6 +44,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand NavigateToCreatePageCommand { get; }
 
+        public string ProgressText
+        {
+            get => _progressText;
+            set => SetProperty(ref _progressText, value);
+        }
+
         public IList<FileItemViewModel> FileItems
         {
             get => _fileItems;
@@ -51,6 +60,10 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                _schedulerService.Start();
+
+                ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
+
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
@@ -58,6 +71,8 @@ namespace RewriteMe.Mobile.ViewModels
                     {
                         await NavigationService.NavigateWithoutAnimationAsync(Pages.Create, navigationParameters).ConfigureAwait(false);
                     }
+
+                    await SynchronizationAsync().ConfigureAwait(false);
                 }
 
                 await InitializeFileItems().ConfigureAwait(false);
@@ -68,15 +83,26 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        private async Task SynchronizationAsync()
+        {
+            ProgressText = Loc.Text(TranslationKeys.LoadingData);
+
+            SynchronizationService.InitializationProgress += OnInitializationProgress;
+            await SynchronizationService.InitializeAsync().ConfigureAwait(false);
+            SynchronizationService.InitializationProgress -= OnInitializationProgress;
+
+            ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
+        }
+
         private async Task InitializeFileItems()
         {
             var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
             FileItems = fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)).ToList();
         }
 
-        private async Task ExecuteNavigateToCreatePageCommandAsync()
+        private void OnInitializationProgress(object sender, ProgressEventArgs e)
         {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.Create).ConfigureAwait(false);
+            ProgressText = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
         }
 
         private async void HandleSynchronizationCompleted(object sender, EventArgs e)
@@ -97,6 +123,11 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 await InitializeFileItems().ConfigureAwait(false);
             }
+        }
+
+        private async Task ExecuteNavigateToCreatePageCommandAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.Create).ConfigureAwait(false);
         }
 
         protected override async Task ExecuteNavigateToOverviewAsync()

@@ -6,7 +6,7 @@ namespace RewriteMe.Domain.Interfaces.Services
     {
         event EventHandler SynchronizationCompleted;
 
-        void StartAsync();
+        void Start();
 
         void Stop();
     }

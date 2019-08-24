@@ -1,4 +1,4 @@
-﻿using RewriteMe.DataAccess.Transcription;
+﻿using RewriteMe.Domain.Transcription;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.Transcription

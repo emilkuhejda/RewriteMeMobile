@@ -29,8 +29,7 @@
                      Orientation="Horizontal">
             <CheckBox Margin="0,0,10,0"
                       IsChecked="{Binding IsRecordingOnly}"
-                      IsEnabled="{Binding IsRecording,
-                                          Converter={StaticResource InvertedBoolConverter}}" />
+                      IsEnabled="{Binding IsRecording, Converter={StaticResource InvertedBoolConverter}}" />
             <Label Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}">
                 <Label.GestureRecognizers>
                     <TapGestureRecognizer Command="{Binding RecordingOnlyClickCommand}" />
@@ -41,8 +40,7 @@
         <Label Grid.Row="2"
                Margin="20,0,20,0"
                HorizontalOptions="Center"
-               IsVisible="{Binding IsRecordingOnly,
-                                   Converter={StaticResource InvertedBoolConverter}}"
+               IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}"
                Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EnglishOnlyAndFiveMinutesOnly}}" />
 
         <Grid Grid.Row="3">
@@ -63,8 +61,7 @@
                                       BackgroundColor="Transparent"
                                       HeightRequest="80"
                                       InputTransparent="True"
-                                      IsVisible="{Binding IsRecording,
-                                                          Converter={StaticResource InvertedBoolConverter}}"
+                                      IsVisible="{Binding IsRecording, Converter={StaticResource InvertedBoolConverter}}"
                                       Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
                                       VerticalOptions="CenterAndExpand" />
                 <forms:SvgCachedImage Margin="0"
@@ -83,7 +80,7 @@
         </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"
-                                        Grid.RowSpan="3"
+                                        Grid.RowSpan="4"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
                                         IsVisible="{Binding OperationScope.IsBusy}" />
     </Grid>
