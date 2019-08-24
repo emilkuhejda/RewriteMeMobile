@@ -298,10 +298,10 @@ namespace RewriteMe.Mobile.ViewModels
                     .SpeechToTextSimple(stream, _audioRecorder.AudioStreamDetails.SampleRate, audioRecordTask)
                     .ConfigureAwait(false);
 
-                Text += simpleResult.DisplayText;
-
                 recordedAudioFile.Transcript = simpleResult.DisplayText;
                 recordedAudioFile.RecognitionSpeechResult = simpleResult;
+
+                ReloadText();
             }
 
             await _recordedItemService.InsertAudioFileAsync(recordedAudioFile).ConfigureAwait(false);
@@ -310,6 +310,11 @@ namespace RewriteMe.Mobile.ViewModels
             await _rewriteMeWebService
                 .CreateSpeechResultAsync(recordedAudioFile.Id, Configuration.AudioSampleId, recordedAudioFile.Transcript)
                 .ConfigureAwait(false);
+        }
+
+        private void ReloadText()
+        {
+            Text = string.Join(" ", _recognizedAudioFiles.OrderBy(x => x.RecordedAudioFile.DateCreated).Select(x => x.RecordedAudioFile.Transcript));
         }
 
         private async void OnAudioInputReceived(object sender, string e)
@@ -367,6 +372,8 @@ namespace RewriteMe.Mobile.ViewModels
 
                 var models = _recognizedAudioFiles.Select(x => new SpeechResultModel(x.RecordedAudioFile.Id, x.RecordedAudioFile.TotalTime.ToString())).ToList();
                 await _rewriteMeWebService.UpdateSpeechResultsAsync(models).ConfigureAwait(false);
+
+                ReloadText();
 
                 _recognizedAudioFiles.Clear();
             }
