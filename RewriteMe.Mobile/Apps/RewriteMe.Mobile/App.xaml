@@ -428,7 +428,9 @@
                             </Grid.ColumnDefinitions>
 
                             <StackLayout Grid.Column="0" Orientation="Horizontal">
-                                <controls:PageActivityIndicator HeightRequest="30"
+                                <controls:PageActivityIndicator BackgroundOpacity="1"
+                                                                HeightRequest="30"
+                                                                IndicatorBackgroundColor="{StaticResource ColorWhite}"
                                                                 IsVisible="{Binding OperationScope.IsBusy}"
                                                                 WidthRequest="30" />
 

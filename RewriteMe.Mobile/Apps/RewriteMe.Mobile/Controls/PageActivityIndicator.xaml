@@ -6,7 +6,7 @@
       HorizontalOptions="Fill"
       VerticalOptions="Fill">
     <Grid Grid.Row="0"
-          BackgroundColor="{Binding Color, Source={x:Reference Control}}"
+          BackgroundColor="{Binding IndicatorBackgroundColor, Source={x:Reference Control}}"
           HorizontalOptions="Fill"
           Opacity="{Binding BackgroundOpacity, Source={x:Reference Control}}"
           VerticalOptions="Fill" />

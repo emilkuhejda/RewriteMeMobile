@@ -36,7 +36,7 @@
             <controls:PageActivityIndicator BackgroundOpacity="1"
                                             Caption="{Binding ProgressText}"
                                             CaptionColor="{StaticResource ColorBlack}"
-                                            Color="{StaticResource ColorWhite}" />
+                                            IndicatorBackgroundColor="{StaticResource ColorWhite}" />
         </Grid>
     </Grid>
 </views:BaseNavigationPage>
