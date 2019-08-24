@@ -3,11 +3,17 @@
       xmlns="http://xamarin.com/schemas/2014/forms"
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
       x:Name="Control"
-      BackgroundColor="{Binding Color, Source={x:Reference Control}}"
       HorizontalOptions="Fill"
-      Opacity="{Binding BackgroundOpacity, Source={x:Reference Control}}"
       VerticalOptions="Fill">
-    <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+    <Grid Grid.Row="0"
+          BackgroundColor="{Binding Color, Source={x:Reference Control}}"
+          HorizontalOptions="Fill"
+          Opacity="{Binding BackgroundOpacity, Source={x:Reference Control}}"
+          VerticalOptions="Fill" />
+
+    <StackLayout Grid.Row="0"
+                 HorizontalOptions="Center"
+                 VerticalOptions="Center">
         <StackLayout.Orientation>
             <OnPlatform x:TypeArguments="StackOrientation" iOS="Horizontal" />
         </StackLayout.Orientation>
@@ -26,7 +32,9 @@
             </ActivityIndicator.WidthRequest>
         </ActivityIndicator>
 
-        <Label LineBreakMode="WordWrap" Text="{Binding Caption, Source={x:Reference Control}}">
+        <Label LineBreakMode="WordWrap"
+               Text="{Binding Caption, Source={x:Reference Control}}"
+               TextColor="{Binding CaptionColor, Source={x:Reference Control}}">
             <Label.HorizontalOptions>
                 <OnPlatform x:TypeArguments="LayoutOptions"
                             Android="Center"

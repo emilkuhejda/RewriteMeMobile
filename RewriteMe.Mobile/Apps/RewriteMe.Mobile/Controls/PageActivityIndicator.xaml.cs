@@ -9,8 +9,13 @@ namespace RewriteMe.Mobile.Controls
         public static readonly BindableProperty CaptionProperty = BindableProperty.Create(
                 nameof(Caption),
                 typeof(string),
-                typeof(PageActivityIndicator),
-                null);
+                typeof(PageActivityIndicator));
+
+        public static readonly BindableProperty CaptionColorProperty = BindableProperty.Create(
+            nameof(CaptionColor),
+            typeof(Color),
+            typeof(PageActivityIndicator),
+            Color.White);
 
         public static readonly BindableProperty ColorProperty = BindableProperty.Create(
             nameof(Color),
@@ -22,7 +27,7 @@ namespace RewriteMe.Mobile.Controls
             nameof(BackgroundOpacity),
             typeof(double),
             typeof(PageActivityIndicator),
-            0.8);
+            0.6);
 
         public PageActivityIndicator()
         {
@@ -33,6 +38,12 @@ namespace RewriteMe.Mobile.Controls
         {
             get => (string)GetValue(CaptionProperty);
             set => SetValue(CaptionProperty, value);
+        }
+
+        public Color CaptionColor
+        {
+            get => (Color)GetValue(CaptionColorProperty);
+            set => SetValue(CaptionColorProperty, value);
         }
 
         public Color Color

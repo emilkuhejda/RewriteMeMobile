@@ -35,6 +35,7 @@
               VerticalOptions="Fill">
             <controls:PageActivityIndicator BackgroundOpacity="1"
                                             Caption="{Binding ProgressText}"
+                                            CaptionColor="{StaticResource ColorBlack}"
                                             Color="{StaticResource ColorWhite}" />
         </Grid>
     </Grid>
