@@ -3,8 +3,9 @@
       xmlns="http://xamarin.com/schemas/2014/forms"
       xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
       x:Name="Control"
-      BackgroundColor="{StaticResource WindowBackground}"
+      BackgroundColor="{StaticResource ColorBlack}"
       HorizontalOptions="Fill"
+      Opacity="0.8"
       VerticalOptions="Fill">
     <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
         <StackLayout.Orientation>
