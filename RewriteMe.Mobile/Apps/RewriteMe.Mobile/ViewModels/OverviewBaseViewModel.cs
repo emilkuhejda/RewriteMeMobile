@@ -13,8 +13,6 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public abstract class OverviewBaseViewModel : ViewModelBase
     {
-        private readonly ISynchronizationService _synchronizationService;
-
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _notAvailableData;
         private bool _isRefreshing;
@@ -27,11 +25,13 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
-            _synchronizationService = synchronizationService;
+            SynchronizationService = synchronizationService;
 
             NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
             RefreshCommand = new AsyncCommand(ExecuteRefreshCommandAsync);
         }
+
+        protected ISynchronizationService SynchronizationService { get; }
 
         public IEnumerable<ActionBarTileViewModel> NavigationItems
         {
@@ -87,7 +87,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             IsRefreshing = true;
 
-            await _synchronizationService.InitializeAsync().ConfigureAwait(false);
+            await SynchronizationService.InitializeAsync().ConfigureAwait(false);
 
             IsRefreshing = false;
         }

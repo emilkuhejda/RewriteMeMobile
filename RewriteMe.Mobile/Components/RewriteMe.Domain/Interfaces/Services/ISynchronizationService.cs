@@ -9,7 +9,5 @@ namespace RewriteMe.Domain.Interfaces.Services
         event EventHandler<ProgressEventArgs> InitializationProgress;
 
         Task InitializeAsync();
-
-        Task<bool> IsFirstTimeDataSyncAsync();
     }
 }

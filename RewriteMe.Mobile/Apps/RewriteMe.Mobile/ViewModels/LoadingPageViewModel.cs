@@ -4,7 +4,6 @@ using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
-using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Extensions;
@@ -19,22 +18,22 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class LoadingPageViewModel : ViewModelBase
     {
-        private readonly ISynchronizationService _synchronizationService;
-        private readonly ISchedulerService _schedulerService;
+        private readonly IConnectivityService _connectivityService;
+        private readonly IRewriteMeWebService _rewriteMeWebService;
 
         private string _progressText;
 
         public LoadingPageViewModel(
-            ISynchronizationService synchronizationService,
-            ISchedulerService schedulerService,
+            IConnectivityService connectivityService,
+            IRewriteMeWebService rewriteMeWebService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
-            _synchronizationService = synchronizationService;
-            _schedulerService = schedulerService;
+            _connectivityService = connectivityService;
+            _rewriteMeWebService = rewriteMeWebService;
 
             HasTitleBar = false;
             CanGoBack = false;
@@ -46,32 +45,25 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                ProgressText = Loc.Text(TranslationKeys.LoadingData);
+
+                if (!_connectivityService.IsConnected)
+                    return;
+
                 var accessToken = navigationParameters.GetValue<B2CAccessToken>();
                 if (accessToken != null)
                 {
                     var isSuccess = await RegisterUserAsync(accessToken).ConfigureAwait(false);
-                    if (!isSuccess)
+                    if (isSuccess)
                     {
-                        var parameters = new NavigationParameters();
-                        parameters.Add<UserRegistrationNavigationParameters>(new UserRegistrationNavigationParameters(true));
-                        await NavigationService.GoBackWithoutAnimationAsync(parameters).ConfigureAwait(false);
+                        await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
                         return;
                     }
                 }
 
-                ProgressText = Loc.Text(TranslationKeys.LoadingData);
-
-                _synchronizationService.InitializationProgress += OnInitializationProgress;
-                await _synchronizationService.InitializeAsync().ConfigureAwait(false);
-                _synchronizationService.InitializationProgress -= OnInitializationProgress;
-
-                var isFirstTimeDataSync = await _synchronizationService.IsFirstTimeDataSyncAsync().ConfigureAwait(false);
-                if (!isFirstTimeDataSync)
-                {
-                    _schedulerService.StartAsync();
-
-                    await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
-                }
+                var parameters = new NavigationParameters();
+                parameters.Add<UserRegistrationNavigationParameters>(new UserRegistrationNavigationParameters(true));
+                await NavigationService.GoBackWithoutAnimationAsync(parameters).ConfigureAwait(false);
             }
         }
 
@@ -88,14 +80,13 @@ namespace RewriteMe.Mobile.ViewModels
             await LoadDataAsync(null).ConfigureAwait(false);
         }
 
-        private void OnInitializationProgress(object sender, ProgressEventArgs e)
-        {
-            ProgressText = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
-        }
-
         private async Task<bool> RegisterUserAsync(B2CAccessToken accessToken)
         {
             ProgressText = Loc.Text(TranslationKeys.UserRegistration);
+
+            var isAlive = await _rewriteMeWebService.IsAliveAsync().ConfigureAwait(false);
+            if (!isAlive)
+                return false;
 
             try
             {
