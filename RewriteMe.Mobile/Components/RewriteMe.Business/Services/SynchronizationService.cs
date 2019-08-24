@@ -74,15 +74,6 @@ namespace RewriteMe.Business.Services
             await Task.WhenAll(tasks).ConfigureAwait(false);
         }
 
-        public async Task<bool> IsFirstTimeDataSyncAsync()
-        {
-            var lastFileItemSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronizationTicks).ConfigureAwait(false);
-            var lastTranscribeItemSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.TranscribeItemSynchronizationTicks).ConfigureAwait(false);
-
-            var atLeastOneHasNoData = new DateTime(lastFileItemSynchronizationTicks) == default || new DateTime(lastTranscribeItemSynchronizationTicks) == default;
-            return atLeastOneHasNoData;
-        }
-
         private void OnInitializationProgress()
         {
             var currentTask = Interlocked.Increment(ref _resourceInitializationTasksDone);

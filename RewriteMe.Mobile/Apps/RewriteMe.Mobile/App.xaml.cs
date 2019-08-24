@@ -91,7 +91,7 @@ namespace RewriteMe.Mobile
 
         protected override void OnResume()
         {
-            Container.Resolve<ISchedulerService>().StartAsync();
+            Container.Resolve<ISchedulerService>().Start();
         }
 
         protected override async void OnSleep()

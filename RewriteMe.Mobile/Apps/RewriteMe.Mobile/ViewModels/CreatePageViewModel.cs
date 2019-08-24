@@ -7,7 +7,6 @@ using System.Windows.Input;
 using Plugin.FilePicker;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
-using RewriteMe.DataAccess.Transcription;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;

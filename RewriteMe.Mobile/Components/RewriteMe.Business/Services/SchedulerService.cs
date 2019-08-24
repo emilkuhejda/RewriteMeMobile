@@ -31,7 +31,7 @@ namespace RewriteMe.Business.Services
 
         public bool IsRunning { get; private set; }
 
-        public async void StartAsync()
+        public async void Start()
         {
             lock (_lockObject)
             {
@@ -96,7 +96,7 @@ namespace RewriteMe.Business.Services
 
         private void HandleTranscriptionStarted(object sender, EventArgs e)
         {
-            StartAsync();
+            Start();
         }
 
         private void OnSynchronizationCompleted()
