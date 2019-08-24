@@ -3,6 +3,5 @@
              xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ios="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
-             Title="{Binding Title, Mode=OneWay}"
              ios:Page.UseSafeArea="True"
              ControlTemplate="{StaticResource MainPageTemplate}" />
