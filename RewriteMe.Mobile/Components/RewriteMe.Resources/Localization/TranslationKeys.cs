@@ -2,9 +2,22 @@
 {
     public static class TranslationKeys
     {
+        public static string LanguageEnAu => "Language_EN_AU";
         public static string LanguageEnGb => "Language_EN_GB";
         public static string LanguageEnUs => "Language_EN_US";
+        public static string LanguageDeDe => "Language_DE_DE";
+        public static string LanguageFrFr => "Language_FR_FR";
+        public static string LanguageEsEs => "Language_ES_ES";
+        public static string LanguageItIt => "Language_IT_IT";
+        public static string LanguagePtPt => "Language_PT_PT";
         public static string LanguageSkSk => "Language_SK_SK";
+        public static string LanguageCsCz => "Language_CS_CZ";
+        public static string LanguagePlPl => "Language_PL_PL";
+        public static string LanguageHuHu => "Language_HU_HU";
+        public static string LanguageRuRu => "Language_RU_RU";
+        public static string LanguageJaJp => "Language_JA_JP";
+        public static string LanguageZhCn => "Language_ZH_CN";
+        public static string LanguageZh => "Language_ZH";
 
         public static string ApplicationTitle => "ApplicationTitle";
         public static string ActivityIndicatorCaptionText => "ActivityIndicatorCaptionText";
