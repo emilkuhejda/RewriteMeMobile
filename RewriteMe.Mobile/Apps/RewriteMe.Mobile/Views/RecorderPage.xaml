@@ -11,8 +11,6 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <ScrollView Grid.Row="0" Margin="20,20,20,0">
@@ -24,63 +22,68 @@
             </Grid>
         </ScrollView>
 
-        <StackLayout Grid.Row="1"
-                     Margin="20,0,20,0"
-                     Orientation="Horizontal">
-            <CheckBox Margin="0,0,10,0"
-                      IsChecked="{Binding IsRecordingOnly}"
-                      IsEnabled="{Binding IsRecording, Converter={StaticResource InvertedBoolConverter}}" />
-            <Label Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding RecordingOnlyClickCommand}" />
-                </Label.GestureRecognizers>
-            </Label>
+        <StackLayout Grid.Row="1" Margin="20,0,20,0">
+            <StackLayout Orientation="Horizontal">
+                <CheckBox Margin="0,0,10,0"
+                          IsChecked="{Binding IsRecordingOnly}"
+                          IsEnabled="{Binding IsRecording, Converter={StaticResource InvertedBoolConverter}}" />
+                <Label Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RecordingOnlyClickCommand}" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </StackLayout>
+
+            <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Languages}}"
+                    IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}"
+                    ItemDisplayBinding="{Binding Title}"
+                    ItemsSource="{Binding Languages}"
+                    SelectedItem="{Binding SelectedLanguage}"
+                    Style="{StaticResource PickerStyle}" />
+
+            <Label HorizontalOptions="Start"
+                   IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}"
+                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EnglishOnlyAndFiveMinutesOnly}}" />
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Column="0"
+                       HorizontalOptions="CenterAndExpand"
+                       Text="{Binding RecordingTime}"
+                       VerticalOptions="Center" />
+
+                <Grid Grid.Column="1">
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="80"
+                                          InputTransparent="True"
+                                          IsVisible="{Binding IsRecording, Converter={StaticResource InvertedBoolConverter}}"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
+                                          VerticalOptions="CenterAndExpand" />
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="80"
+                                          InputTransparent="True"
+                                          IsVisible="{Binding IsRecording}"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.PauseRecording.svg"
+                                          VerticalOptions="CenterAndExpand" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding RecordCommand}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+            </Grid>
         </StackLayout>
 
-        <Label Grid.Row="2"
-               Margin="20,0,20,0"
-               HorizontalOptions="Center"
-               IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}"
-               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EnglishOnlyAndFiveMinutesOnly}}" />
-
-        <Grid Grid.Row="3">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-
-            <Label Grid.Column="0"
-                   HorizontalOptions="CenterAndExpand"
-                   Text="{Binding RecordingTime}"
-                   VerticalOptions="Center" />
-
-            <Grid Grid.Column="1">
-                <forms:SvgCachedImage Margin="0"
-                                      Aspect="AspectFit"
-                                      BackgroundColor="Transparent"
-                                      HeightRequest="80"
-                                      InputTransparent="True"
-                                      IsVisible="{Binding IsRecording, Converter={StaticResource InvertedBoolConverter}}"
-                                      Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
-                                      VerticalOptions="CenterAndExpand" />
-                <forms:SvgCachedImage Margin="0"
-                                      Aspect="AspectFit"
-                                      BackgroundColor="Transparent"
-                                      HeightRequest="80"
-                                      InputTransparent="True"
-                                      IsVisible="{Binding IsRecording}"
-                                      Source="resource://RewriteMe.Mobile.Resources.Images.PauseRecording.svg"
-                                      VerticalOptions="CenterAndExpand" />
-
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding RecordCommand}" />
-                </Grid.GestureRecognizers>
-            </Grid>
-        </Grid>
-
         <controls:PageActivityIndicator Grid.Row="0"
-                                        Grid.RowSpan="4"
+                                        Grid.RowSpan="2"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
                                         IsVisible="{Binding OperationScope.IsBusy}" />
     </Grid>

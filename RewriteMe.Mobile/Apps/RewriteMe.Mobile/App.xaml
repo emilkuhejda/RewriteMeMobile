@@ -281,6 +281,12 @@
                 <Setter Property="VerticalOptions" Value="Center" />
             </Style>
 
+            <Style x:Key="PickerStyle" TargetType="Picker">
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
+            </Style>
+
             <!--  Navigation Bar  -->
             <x:Double x:Key="HeaderImageHeight">60</x:Double>
             <GridLength x:Key="NavigationBarRow1Height">52</GridLength>

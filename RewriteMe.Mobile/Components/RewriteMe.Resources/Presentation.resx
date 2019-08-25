@@ -99,14 +99,53 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
 
+  <data name="Language_EN_AU" xml:space="preserve">
+    <value>English (Australia)</value>
+  </data>
   <data name="Language_EN_GB" xml:space="preserve">
     <value>English (United Kingdom)</value>
   </data>
   <data name="Language_EN_US" xml:space="preserve">
     <value>English (United States)</value>
   </data>
+  <data name="Language_DE_DE" xml:space="preserve">
+    <value>German (Germany)</value>
+  </data>
+  <data name="Language_FR_FR" xml:space="preserve">
+    <value>French (France)</value>
+  </data>
+  <data name="Language_ES_ES" xml:space="preserve">
+    <value>Spanish (Spain)</value>
+  </data>
+  <data name="Language_IT_IT" xml:space="preserve">
+    <value>Italian (Italy)</value>
+  </data>
+  <data name="Language_PT_PT" xml:space="preserve">
+    <value>Portuguese (Portugal)</value>
+  </data>
   <data name="Language_SK_SK" xml:space="preserve">
     <value>Slovak (Slovakia)</value>
+  </data>
+  <data name="Language_CS_CZ" xml:space="preserve">
+    <value>Czech (Czech Republic)</value>
+  </data>
+  <data name="Language_PL_PL" xml:space="preserve">
+    <value>Polish (Poland)</value>
+  </data>
+  <data name="Language_HU_HU" xml:space="preserve">
+    <value>Hungarian (Hungary)</value>
+  </data>
+  <data name="Language_RU_RU" xml:space="preserve">
+    <value>Russian (Russia)</value>
+  </data>
+  <data name="Language_JA_JP" xml:space="preserve">
+    <value>Japanese (Japan)</value>
+  </data>
+  <data name="Language_ZH_CN" xml:space="preserve">
+    <value>Chinese (Mandarin, simplified)</value>
+  </data>
+  <data name="Language_ZH" xml:space="preserve">
+    <value>Chinese (Mandarin, simplified)</value>
   </data>
 
   <data name="ApplicationTitle" xml:space="preserve">
@@ -133,7 +172,7 @@
   <data name="UserRegistrationFailed" xml:space="preserve">
     <value>User registration failed</value>
   </data>
-    <data name="RegisterToUseApplication" xml:space="preserve">
+  <data name="RegisterToUseApplication" xml:space="preserve">
     <value>Please register to use RewriteMe</value>
   </data>
   <data name="UserRegistration" xml:space="preserve">
