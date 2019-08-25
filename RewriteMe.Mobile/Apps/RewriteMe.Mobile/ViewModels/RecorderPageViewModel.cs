@@ -47,6 +47,7 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isRecording;
         private bool _isRecordingOnly;
         private bool _isExecuting;
+        private bool _isNotSupportedLanguage;
 
         public RecorderPageViewModel(
             IRecordedItemService recordedItemService,
@@ -145,7 +146,9 @@ namespace RewriteMe.Mobile.ViewModels
             }
             else
             {
+                _isNotSupportedLanguage = false;
                 Configuration = null;
+
                 if (!IsRecordingOnly)
                 {
                     var isSuccess = await InitializeSpeechConfigurationAsync().ConfigureAwait(false);
@@ -306,12 +309,25 @@ namespace RewriteMe.Mobile.ViewModels
 
             using (var stream = _audioRecorder.GetAudioFileStream())
             {
-                var simpleResult = await _speechApiClient
-                    .SpeechToTextSimple(stream, _audioRecorder.AudioStreamDetails.SampleRate, audioRecordTask)
-                    .ConfigureAwait(false);
+                try
+                {
+                    var simpleResult = await _speechApiClient
+                        .SpeechToTextSimple(stream, _audioRecorder.AudioStreamDetails.SampleRate, audioRecordTask)
+                        .ConfigureAwait(false);
 
-                recordedAudioFile.Transcript = simpleResult.DisplayText;
-                recordedAudioFile.RecognitionSpeechResult = simpleResult;
+                    recordedAudioFile.Transcript = simpleResult.DisplayText;
+                    recordedAudioFile.RecognitionSpeechResult = simpleResult;
+                }
+                catch (Exception)
+                {
+                    if (_isNotSupportedLanguage)
+                        return;
+
+                    _isNotSupportedLanguage = true;
+                    await StopRecordingAsync().ConfigureAwait(false);
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage)).ConfigureAwait(false);
+                    return;
+                }
 
                 ReloadText();
             }
@@ -355,6 +371,12 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 await CheckRecognitionProcess().ConfigureAwait(false);
 
+                if (_isNotSupportedLanguage)
+                {
+                    _recognizedAudioFiles.Clear();
+                    return;
+                }
+
                 RecordedAudioFile previousAudioFile = null;
                 var audioRecordTotalTime = TimeSpan.FromSeconds(0);
                 foreach (var recognizedAudioFile in _recognizedAudioFiles.OrderBy(x => x.RecordedAudioFile.DateCreated))
@@ -395,7 +417,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             while (true)
             {
-                if (_recognizedAudioFiles.All(x => !x.IsRecognizing))
+                if (_recognizedAudioFiles.All(x => !x.IsRecognizing) || _isNotSupportedLanguage)
                     break;
 
                 await Task.Delay(TimeSpan.FromSeconds(0.5)).ConfigureAwait(false);
