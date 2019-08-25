@@ -18,6 +18,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IConnectivityService _connectivityService;
 
+        private INavigationParameters _navigationParameters;
         private string _loginFeedback;
         private bool _isLoading;
 
@@ -63,20 +64,22 @@ namespace RewriteMe.Mobile.ViewModels
 
             using (new OperationMonitor(OperationScope))
             {
+                _navigationParameters = navigationParameters;
+
                 var alreadySignedIn = await UserSessionService.IsSignedInAsync().ConfigureAwait(false);
                 if (alreadySignedIn)
                 {
                     Logger.Info("User is already signed in. Navigate to loading page.");
-                    await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
+                    await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", _navigationParameters).ConfigureAwait(false);
                 }
                 else
                 {
                     Logger.Info("No user is currently signed in. Sign in is required.");
                 }
 
-                if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
+                if (_navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {
-                    var userRegistrationNavigationParameters = navigationParameters.GetValue<UserRegistrationNavigationParameters>();
+                    var userRegistrationNavigationParameters = _navigationParameters.GetValue<UserRegistrationNavigationParameters>();
                     if (userRegistrationNavigationParameters != null && userRegistrationNavigationParameters.IsError)
                     {
                         LoginFeedback = Loc.Text(TranslationKeys.UserRegistrationFailed);
@@ -105,9 +108,8 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 LoginFeedback = Loc.Text(TranslationKeys.SignInSuccessful);
 
-                var navigationParameters = new NavigationParameters();
-                navigationParameters.Add<B2CAccessToken>(accessToken);
-                await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading, navigationParameters).ConfigureAwait(false);
+                _navigationParameters.Add<B2CAccessToken>(accessToken);
+                await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading, _navigationParameters).ConfigureAwait(false);
             }
             else
             {
