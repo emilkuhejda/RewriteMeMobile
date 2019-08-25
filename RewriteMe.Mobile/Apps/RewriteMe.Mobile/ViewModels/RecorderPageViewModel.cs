@@ -151,6 +151,13 @@ namespace RewriteMe.Mobile.ViewModels
 
                 if (!IsRecordingOnly)
                 {
+                    if (!AzureSupportedLanguages.IsSupported(SelectedLanguage.Culture))
+                    {
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage)).ConfigureAwait(false);
+                        _isExecuting = false;
+                        return;
+                    }
+
                     var isSuccess = await InitializeSpeechConfigurationAsync().ConfigureAwait(false);
                     if (!isSuccess)
                     {
