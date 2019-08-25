@@ -17,6 +17,7 @@ using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
+using RewriteMe.Mobile.Transcription;
 using RewriteMe.Resources.Localization;
 using Xamarin.Cognitive.Speech;
 using Xamarin.Forms;
@@ -40,6 +41,7 @@ namespace RewriteMe.Mobile.ViewModels
         private AudioRecorderService _audioRecorder;
         private SpeechApiClient _speechApiClient;
 
+        private SupportedLanguage _selectedLanguage;
         private string _text;
         private string _recordingTime;
         private bool _isRecording;
@@ -69,6 +71,8 @@ namespace RewriteMe.Mobile.ViewModels
             _stopwatch = new Stopwatch();
 
             CanGoBack = true;
+            Languages = SupportedLanguages.All.Where(x => x.IsAzureSupported).ToList();
+            SelectedLanguage = SupportedLanguages.EnglishGb;
 
             RecordingOnlyClickCommand = new DelegateCommand(ExecuteRecordingOnlyClickCommand, CanExecuteRecordingOnlyClickCommand);
             RecordCommand = new AsyncCommand(ExecuteRecordCommand, CanExecute);
@@ -77,6 +81,14 @@ namespace RewriteMe.Mobile.ViewModels
         private RecordedItem CurrentRecordedItem { get; set; }
 
         private SpeechConfiguration Configuration { get; set; }
+
+        public IEnumerable<SupportedLanguage> Languages { get; set; }
+
+        public SupportedLanguage SelectedLanguage
+        {
+            get => _selectedLanguage;
+            set => SetProperty(ref _selectedLanguage, value);
+        }
 
         public string Text
         {
@@ -144,7 +156,7 @@ namespace RewriteMe.Mobile.ViewModels
                     }
 
                     var speechRegion = EnumHelper.Parse(Configuration.SpeechRegion, SpeechRegion.WestEurope);
-                    _speechApiClient = new SpeechApiClient(Configuration.SubscriptionKey, speechRegion);
+                    _speechApiClient = new SpeechApiClient(Configuration.SubscriptionKey, speechRegion) { RecognitionLanguage = SelectedLanguage.Culture };
                 }
 
                 await StartRecordingAsync(IsRecordingOnly).ConfigureAwait(false);
