@@ -187,7 +187,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteNavigateToLanguageCommandAsync()
         {
-            var languages = SupportedLanguages.All.Select(x => new DropDownListViewModel
+            var languages = SupportedLanguages.All.Where(x => !x.OnlyInAzure).Select(x => new DropDownListViewModel
             {
                 Text = x.Title,
                 Value = x,

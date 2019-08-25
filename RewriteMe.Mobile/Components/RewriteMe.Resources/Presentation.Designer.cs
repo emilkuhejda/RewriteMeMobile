@@ -223,6 +223,33 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Czech (Czech Republic).
+        /// </summary>
+        public static string Language_CS_CZ {
+            get {
+                return ResourceManager.GetString("Language_CS_CZ", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to German (Germany).
+        /// </summary>
+        public static string Language_DE_DE {
+            get {
+                return ResourceManager.GetString("Language_DE_DE", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to English (Australia).
+        /// </summary>
+        public static string Language_EN_AU {
+            get {
+                return ResourceManager.GetString("Language_EN_AU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English (United Kingdom).
         /// </summary>
         public static string Language_EN_GB {
@@ -241,11 +268,101 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Spanish (Spain).
+        /// </summary>
+        public static string Language_ES_ES {
+            get {
+                return ResourceManager.GetString("Language_ES_ES", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to French (France).
+        /// </summary>
+        public static string Language_FR_FR {
+            get {
+                return ResourceManager.GetString("Language_FR_FR", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Hungarian (Hungary).
+        /// </summary>
+        public static string Language_HU_HU {
+            get {
+                return ResourceManager.GetString("Language_HU_HU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Italian (Italy).
+        /// </summary>
+        public static string Language_IT_IT {
+            get {
+                return ResourceManager.GetString("Language_IT_IT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Japanese (Japan).
+        /// </summary>
+        public static string Language_JA_JP {
+            get {
+                return ResourceManager.GetString("Language_JA_JP", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Polish (Poland).
+        /// </summary>
+        public static string Language_PL_PL {
+            get {
+                return ResourceManager.GetString("Language_PL_PL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Portuguese (Portugal).
+        /// </summary>
+        public static string Language_PT_PT {
+            get {
+                return ResourceManager.GetString("Language_PT_PT", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Russian (Russia).
+        /// </summary>
+        public static string Language_RU_RU {
+            get {
+                return ResourceManager.GetString("Language_RU_RU", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Slovak (Slovakia).
         /// </summary>
         public static string Language_SK_SK {
             get {
                 return ResourceManager.GetString("Language_SK_SK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chinese (Mandarin, simplified).
+        /// </summary>
+        public static string Language_ZH {
+            get {
+                return ResourceManager.GetString("Language_ZH", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Chinese (Mandarin, simplified).
+        /// </summary>
+        public static string Language_ZH_CN {
+            get {
+                return ResourceManager.GetString("Language_ZH_CN", resourceCulture);
             }
         }
         
