@@ -120,6 +120,7 @@
     <Compile Include="Renderers\RewriteMeEditorRenderer.cs" />
     <Compile Include="Resources\Resource.designer.cs" />
     <Compile Include="Services\MediaService.cs" />
+    <Compile Include="Services\ScreenService.cs" />
     <Compile Include="SplashActivity.cs" />
     <Compile Include="Utils\ExtraConstants.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />

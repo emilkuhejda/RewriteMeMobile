@@ -23,6 +23,7 @@ namespace RewriteMe.Mobile.Droid.Configuration
             containerRegistry.RegisterSingleton<ILoggerFactory, NLogLoggerFactory>();
             containerRegistry.RegisterSingleton<IExceptionHandler, ExceptionHandler>();
             containerRegistry.RegisterSingleton<IMediaService, MediaService>();
+            containerRegistry.RegisterSingleton<IScreenService, ScreenService>();
         }
     }
 }
