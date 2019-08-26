@@ -11,7 +11,7 @@ using RewriteMe.Mobile.iOS.Services;
 
 namespace RewriteMe.Mobile.iOS.Configuration
 {
-    public class OSXBootstrapper : Bootstrapper
+    public class OsxBootstrapper : Bootstrapper
     {
         protected override void RegisterPlatformServices(IContainerRegistry containerRegistry)
         {
@@ -23,6 +23,7 @@ namespace RewriteMe.Mobile.iOS.Configuration
             containerRegistry.RegisterSingleton<ILoggerFactory, NLogLoggerFactory>();
             containerRegistry.RegisterSingleton<IExceptionHandler, ExceptionHandler>();
             containerRegistry.RegisterSingleton<IMediaService, MediaService>();
+            containerRegistry.RegisterSingleton<IScreenService, ScreenService>();
         }
     }
 }
