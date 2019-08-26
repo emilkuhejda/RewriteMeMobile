@@ -15,9 +15,9 @@
             </Grid.RowDefinitions>
 
             <WebView Grid.Row="0"
-                     HorizontalOptions="Center"
+                     HorizontalOptions="FillAndExpand"
                      Source="{Binding WebViewSource}"
-                     VerticalOptions="Fill" />
+                     VerticalOptions="FillAndExpand" />
 
             <Grid Grid.Row="1">
                 <Grid.RowDefinitions>

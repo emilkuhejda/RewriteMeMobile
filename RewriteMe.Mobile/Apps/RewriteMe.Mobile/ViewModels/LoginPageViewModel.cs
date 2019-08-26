@@ -2,7 +2,6 @@
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
-using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
@@ -17,16 +16,13 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class LoginPageViewModel : ViewModelBase
     {
-        private readonly ILanguageService _languageService;
-        private readonly IApplicationSettings _applicationSettings;
         private readonly IConnectivityService _connectivityService;
 
+        private INavigationParameters _navigationParameters;
         private string _loginFeedback;
         private bool _isLoading;
 
         public LoginPageViewModel(
-            ILanguageService languageService,
-            IApplicationSettings applicationSettings,
             IConnectivityService connectivityService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -34,8 +30,6 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
-            _languageService = languageService;
-            _applicationSettings = applicationSettings;
             _connectivityService = connectivityService;
 
             HasTitleBar = false;
@@ -70,23 +64,22 @@ namespace RewriteMe.Mobile.ViewModels
 
             using (new OperationMonitor(OperationScope))
             {
-                await _applicationSettings.InitializeAsync().ConfigureAwait(false);
-                await _languageService.InitializeAsync().ConfigureAwait(false);
+                _navigationParameters = navigationParameters;
 
                 var alreadySignedIn = await UserSessionService.IsSignedInAsync().ConfigureAwait(false);
                 if (alreadySignedIn)
                 {
                     Logger.Info("User is already signed in. Navigate to loading page.");
-                    await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
+                    await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", _navigationParameters).ConfigureAwait(false);
                 }
                 else
                 {
                     Logger.Info("No user is currently signed in. Sign in is required.");
                 }
 
-                if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
+                if (_navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {
-                    var userRegistrationNavigationParameters = navigationParameters.GetValue<UserRegistrationNavigationParameters>();
+                    var userRegistrationNavigationParameters = _navigationParameters.GetValue<UserRegistrationNavigationParameters>();
                     if (userRegistrationNavigationParameters != null && userRegistrationNavigationParameters.IsError)
                     {
                         LoginFeedback = Loc.Text(TranslationKeys.UserRegistrationFailed);
@@ -115,9 +108,8 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 LoginFeedback = Loc.Text(TranslationKeys.SignInSuccessful);
 
-                var navigationParameters = new NavigationParameters();
-                navigationParameters.Add<B2CAccessToken>(accessToken);
-                await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading, navigationParameters).ConfigureAwait(false);
+                _navigationParameters.Add<B2CAccessToken>(accessToken);
+                await NavigationService.NavigateWithoutAnimationAsync(Pages.Loading, _navigationParameters).ConfigureAwait(false);
             }
             else
             {
