@@ -1,4 +1,5 @@
 ﻿using RewriteMe.Domain.Interfaces.Required;
+using RewriteMe.Mobile.Utils;
 using UIKit;
 
 namespace RewriteMe.Mobile.iOS.Services
@@ -7,12 +8,12 @@ namespace RewriteMe.Mobile.iOS.Services
     {
         public void DisableIdle()
         {
-            UIApplication.SharedApplication.IdleTimerDisabled = true;
+            ThreadHelper.InvokeOnUiThread(() => UIApplication.SharedApplication.IdleTimerDisabled = true);
         }
 
         public void EnableIdle()
         {
-            UIApplication.SharedApplication.IdleTimerDisabled = false;
+            ThreadHelper.InvokeOnUiThread(() => UIApplication.SharedApplication.IdleTimerDisabled = false);
         }
     }
 }
