@@ -1,4 +1,8 @@
-﻿using Microsoft.AppCenter;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
 using Prism;
 using Prism.Ioc;
@@ -32,8 +36,7 @@ namespace RewriteMe.Mobile
         public void ImportFile(string fileName, byte[] source)
         {
             var navigationParameters = CreateNavigationParameters(fileName, source);
-
-            NavigationService.NavigateAsync($"{Pages.Login}", navigationParameters);
+            NavigateToPage(navigationParameters);
         }
 
         protected override void OnInitialized()
@@ -41,10 +44,10 @@ namespace RewriteMe.Mobile
             InitializeComponent();
 
             InitializeExperimentalFeatures();
-            InitializeStorage();
+            InitializeServices();
 
             var navigationParameters = InitializeNavigationParameters();
-            NavigationService.NavigateAsync($"/{Pages.Login}", navigationParameters);
+            NavigateToPage(navigationParameters);
         }
 
         private INavigationParameters InitializeNavigationParameters()
@@ -73,9 +76,36 @@ namespace RewriteMe.Mobile
             ExperimentalFeatures.Enable(ExperimentalFeatures.EmailAttachments);
         }
 
-        private void InitializeStorage()
+        private void InitializeServices()
         {
-            AsyncHelper.RunSync(() => Container.Resolve<IStorageInitializer>().InitializeAsync());
+            AsyncHelper.RunSync(InitializeServicesAsync);
+        }
+
+        private async Task InitializeServicesAsync()
+        {
+            await Container.Resolve<IStorageInitializer>().InitializeAsync().ConfigureAwait(false);
+
+            var tasks = new List<Func<Task>>
+            {
+                Container.Resolve<IApplicationSettings>().InitializeAsync,
+                Container.Resolve<ILanguageService>().InitializeAsync,
+            };
+
+            IEnumerable<Func<Task>> t = tasks.Select(x => x);
+            await Task.WhenAll(tasks.Select(x => x()));
+        }
+
+        private void NavigateToPage(INavigationParameters navigationParameters)
+        {
+            var alreadySignedIn = AsyncHelper.RunSync(() => Container.Resolve<IUserSessionService>().IsSignedInAsync());
+            if (alreadySignedIn)
+            {
+                NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters);
+            }
+            else
+            {
+                NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Login}", navigationParameters);
+            }
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)

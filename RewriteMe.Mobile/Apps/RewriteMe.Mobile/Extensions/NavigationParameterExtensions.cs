@@ -4,7 +4,7 @@ namespace RewriteMe.Mobile.Extensions
 {
     public static class NavigationParameterExtensions
     {
-        public static void Add<T>(this NavigationParameters navigationParameters, object value)
+        public static void Add<T>(this INavigationParameters navigationParameters, object value)
         {
             navigationParameters.Add(typeof(T).Name, value);
         }
