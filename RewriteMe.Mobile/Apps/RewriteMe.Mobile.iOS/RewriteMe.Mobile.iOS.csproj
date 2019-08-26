@@ -103,7 +103,7 @@
     <Compile Include="..\..\Global\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Configuration\OSXBootstrapper.cs" />
+    <Compile Include="Configuration\OsxBootstrapper.cs" />
     <Compile Include="ExceptionHandling\ExceptionHandler.cs" />
     <Compile Include="ExceptionHandling\NativeMethods.cs" />
     <Compile Include="GlobalSuppressions.cs" />
@@ -127,6 +127,7 @@
     <None Include="Entitlements.plist" />
     <None Include="Info.plist" />
     <Compile Include="Providers\IdentityUiParentProvider.cs" />
+    <Compile Include="Services\ScreenService.cs" />
     <Compile Include="Utils\Colors.cs" />
     <BundleResource Include="Resources\Fonts\Quicksand-Regular.ttf" />
     <BundleResource Include="Resources\Fonts\Quicksand-Medium.ttf" />

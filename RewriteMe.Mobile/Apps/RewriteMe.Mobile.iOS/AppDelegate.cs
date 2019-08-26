@@ -27,7 +27,7 @@ namespace RewriteMe.Mobile.iOS
             Forms.Init();
             CachedImageRenderer.Init();
 
-            var bootstrapper = new OSXBootstrapper();
+            var bootstrapper = new OsxBootstrapper();
             _application = new App(bootstrapper);
             LoadApplication(_application);
 

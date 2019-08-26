@@ -31,6 +31,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private readonly IRecordedItemService _recordedItemService;
         private readonly IMediaService _mediaService;
+        private readonly IScreenService _screenService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
@@ -52,6 +53,7 @@ namespace RewriteMe.Mobile.ViewModels
         public RecorderPageViewModel(
             IRecordedItemService recordedItemService,
             IMediaService mediaService,
+            IScreenService screenService,
             IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService,
             IRewriteMeWebService rewriteMeWebService,
@@ -63,6 +65,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _recordedItemService = recordedItemService;
             _mediaService = mediaService;
+            _screenService = screenService;
             _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
             _rewriteMeWebService = rewriteMeWebService;
@@ -146,6 +149,8 @@ namespace RewriteMe.Mobile.ViewModels
             }
             else
             {
+                _screenService.DisableIdle();
+
                 _isNotSupportedLanguage = false;
                 Configuration = null;
 
@@ -441,6 +446,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override async void DisposeInternal()
         {
+            _screenService.EnableIdle();
+
             if (_audioRecorder != null)
             {
                 if (IsRecording)
