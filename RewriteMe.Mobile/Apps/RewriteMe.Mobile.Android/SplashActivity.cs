@@ -13,7 +13,7 @@ namespace RewriteMe.Mobile.Droid
         Theme = "@style/SplashTheme",
         MainLauncher = true,
         NoHistory = true,
-        LaunchMode = LaunchMode.SingleInstance)]
+        LaunchMode = LaunchMode.SingleTask)]
     [IntentFilter(
         new[] { Intent.ActionSend },
         Categories = new[] { Intent.CategoryDefault },

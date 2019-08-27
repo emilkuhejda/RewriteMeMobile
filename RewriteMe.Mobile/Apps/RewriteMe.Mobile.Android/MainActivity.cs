@@ -25,7 +25,7 @@ namespace RewriteMe.Mobile.Droid
         Label = "@string/ApplicationName",
         Icon = "@mipmap/ic_launcher",
         MainLauncher = false,
-        LaunchMode = LaunchMode.SingleInstance,
+        LaunchMode = LaunchMode.SingleTask,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
