@@ -60,6 +60,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                InitializeNavigation(true);
+
                 _schedulerService.Start();
 
                 ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
@@ -77,10 +79,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 await InitializeFileItems().ConfigureAwait(false);
-
                 NotAvailableData = !FileItems.Any();
-
-                InitializeNavigation(true);
             }
         }
 

@@ -39,6 +39,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                InitializeNavigation(false);
+
                 var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
                 var items = await _recordedItemService.GetAllAsync(userId).ConfigureAwait(false);
                 RecordedItems = items
@@ -47,8 +49,6 @@ namespace RewriteMe.Mobile.ViewModels
                     .ToList();
 
                 NotAvailableData = !RecordedItems.Any();
-
-                InitializeNavigation(false);
             }
         }
 
