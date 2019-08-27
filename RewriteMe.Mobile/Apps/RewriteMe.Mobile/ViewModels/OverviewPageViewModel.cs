@@ -64,7 +64,8 @@ namespace RewriteMe.Mobile.ViewModels
 
                 ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
 
-                if (navigationParameters.GetNavigationMode() == NavigationMode.New)
+                var isNavigationBack = navigationParameters.GetValue<bool>(NavigationConstants.NavigationBack);
+                if (navigationParameters.GetNavigationMode() == NavigationMode.New && !isNavigationBack)
                 {
                     var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
                     if (importedFile != null)
