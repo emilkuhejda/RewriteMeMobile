@@ -6,6 +6,7 @@ using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
+using RewriteMe.Mobile.Navigation;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -52,7 +53,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override async Task ExecuteNavigateToOverviewAsync()
         {
-            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}").ConfigureAwait(false);
         }
 
         protected override async Task ExecuteNavigateToRecorderOverviewAsync()
