@@ -9,6 +9,7 @@ using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using FFImageLoading.Forms.Platform;
+using Microsoft.AppCenter.Push;
 using Microsoft.Identity.Client;
 using Plugin.InAppBilling;
 using RewriteMe.Business.Configuration;
@@ -24,6 +25,7 @@ namespace RewriteMe.Mobile.Droid
         Label = "@string/ApplicationName",
         Icon = "@mipmap/ic_launcher",
         MainLauncher = false,
+        LaunchMode = LaunchMode.SingleInstance,
         ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
@@ -74,6 +76,12 @@ namespace RewriteMe.Mobile.Droid
             base.OnActivityResult(requestCode, resultCode, data);
             AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
             InAppBillingImplementation.HandleActivityResult(requestCode, resultCode, data);
+        }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            base.OnNewIntent(intent);
+            Push.CheckLaunchedFromNotification(this, intent);
         }
     }
 }
