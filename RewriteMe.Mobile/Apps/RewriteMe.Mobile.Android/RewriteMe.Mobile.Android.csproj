@@ -37,6 +37,10 @@
     <AndroidSigningStorePass>4DGntEAqtW3C</AndroidSigningStorePass>
     <AndroidSigningKeyAlias>RewriteMe</AndroidSigningKeyAlias>
     <AndroidSigningKeyPass>4DGntEAqtW3C</AndroidSigningKeyPass>
+    <AotAssemblies>false</AotAssemblies>
+    <EnableLLVM>false</EnableLLVM>
+    <BundleAssemblies>false</BundleAssemblies>
+    <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
