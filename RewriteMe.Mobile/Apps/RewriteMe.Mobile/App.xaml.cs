@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.AppCenter.Push;
 using Prism;
 using Prism.Ioc;
 using Prism.Navigation;
@@ -116,7 +117,7 @@ namespace RewriteMe.Mobile
         {
             base.OnStart();
 
-            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes));
+            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Push));
         }
 
         protected override void OnResume()
