@@ -2,7 +2,6 @@
 using System.IO;
 using FFImageLoading.Forms.Platform;
 using Foundation;
-using Microsoft.AppCenter.Push;
 using RewriteMe.Mobile.iOS.Configuration;
 using RewriteMe.Mobile.iOS.Utils;
 using UIKit;
@@ -60,19 +59,6 @@ namespace RewriteMe.Mobile.iOS
                 {
                     statusBar.BackgroundColor = Colors.Primary;
                 }
-            }
-        }
-
-        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, Action<UIBackgroundFetchResult> completionHandler)
-        {
-            var result = Push.DidReceiveRemoteNotification(userInfo);
-            if (result)
-            {
-                completionHandler?.Invoke(UIBackgroundFetchResult.NewData);
-            }
-            else
-            {
-                completionHandler?.Invoke(UIBackgroundFetchResult.NoData);
             }
         }
     }
