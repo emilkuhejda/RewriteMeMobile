@@ -18,7 +18,6 @@ using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
-using Xamarin.Essentials;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -44,7 +43,6 @@ namespace RewriteMe.Mobile
         {
             InitializeComponent();
 
-            InitializeExperimentalFeatures();
             InitializeServices();
 
             var navigationParameters = InitializeNavigationParameters();
@@ -72,11 +70,6 @@ namespace RewriteMe.Mobile
             return navigationParameters;
         }
 
-        private void InitializeExperimentalFeatures()
-        {
-            ExperimentalFeatures.Enable(ExperimentalFeatures.EmailAttachments);
-        }
-
         private void InitializeServices()
         {
             AsyncHelper.RunSync(InitializeServicesAsync);
@@ -92,8 +85,7 @@ namespace RewriteMe.Mobile
                 Container.Resolve<ILanguageService>().InitializeAsync,
             };
 
-            IEnumerable<Func<Task>> t = tasks.Select(x => x);
-            await Task.WhenAll(tasks.Select(x => x()));
+            await Task.WhenAll(tasks.Select(x => x())).ConfigureAwait(false);
         }
 
         private void NavigateToPage(INavigationParameters navigationParameters)
@@ -101,11 +93,11 @@ namespace RewriteMe.Mobile
             var alreadySignedIn = AsyncHelper.RunSync(() => Container.Resolve<IUserSessionService>().IsSignedInAsync());
             if (alreadySignedIn)
             {
-                NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters);
+                NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
             }
             else
             {
-                NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Login}", navigationParameters);
+                NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Login}", navigationParameters).ConfigureAwait(false);
             }
         }
 
