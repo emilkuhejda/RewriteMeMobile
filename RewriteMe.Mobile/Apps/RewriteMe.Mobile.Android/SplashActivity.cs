@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Content;
+using Android.Content.PM;
 using Android.OS;
 using Android.Support.V7.App;
 using RewriteMe.Mobile.Droid.Utils;
@@ -11,7 +12,8 @@ namespace RewriteMe.Mobile.Droid
         Icon = "@mipmap/ic_launcher",
         Theme = "@style/SplashTheme",
         MainLauncher = true,
-        NoHistory = true)]
+        NoHistory = true,
+        LaunchMode = LaunchMode.SingleTask)]
     [IntentFilter(
         new[] { Intent.ActionSend },
         Categories = new[] { Intent.CategoryDefault },
@@ -23,6 +25,8 @@ namespace RewriteMe.Mobile.Droid
             base.OnCreate(savedInstanceState);
 
             var intent = new Intent(this, typeof(MainActivity));
+            if (Intent.Extras != null)
+                intent.PutExtras(Intent.Extras);
 
             if (Intent.Action == Intent.ActionSend)
             {
