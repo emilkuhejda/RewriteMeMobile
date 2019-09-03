@@ -60,11 +60,14 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                InitializeNavigation(true);
+
                 _schedulerService.Start();
 
                 ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
 
-                if (navigationParameters.GetNavigationMode() == NavigationMode.New)
+                var isNavigationBack = navigationParameters.GetValue<bool>(NavigationConstants.NavigationBack);
+                if (navigationParameters.GetNavigationMode() == NavigationMode.New && !isNavigationBack)
                 {
                     var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
                     if (importedFile != null)
@@ -76,10 +79,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 await InitializeFileItems().ConfigureAwait(false);
-
                 NotAvailableData = !FileItems.Any();
-
-                InitializeNavigation(true);
             }
         }
 
@@ -137,7 +137,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override async Task ExecuteNavigateToRecorderOverviewAsync()
         {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.RecorderOverview).ConfigureAwait(false);
+            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.RecorderOverview}").ConfigureAwait(false);
         }
 
         protected override void DisposeInternal()
