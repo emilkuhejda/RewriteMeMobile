@@ -82,10 +82,10 @@ namespace RewriteMe.Mobile
             var tasks = new List<Func<Task>>
             {
                 Container.Resolve<IApplicationSettings>().InitializeAsync,
-                Container.Resolve<ILanguageService>().InitializeAsync,
+                Container.Resolve<ILanguageService>().InitializeAsync
             };
 
-            await Task.WhenAll(tasks.Select(x => x())).ConfigureAwait(false);
+            Task.WaitAll(tasks.Select(x => x()).ToArray());
         }
 
         private void NavigateToPage(INavigationParameters navigationParameters)

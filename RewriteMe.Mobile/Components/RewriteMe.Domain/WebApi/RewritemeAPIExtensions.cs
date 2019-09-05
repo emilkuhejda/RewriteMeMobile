@@ -329,6 +329,32 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
+            /// <param name='updatedAfter'>
+            /// </param>
+            public static object GetInformationMessages(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?))
+            {
+                return operations.GetInformationMessagesAsync(updatedAfter).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='updatedAfter'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetInformationMessagesAsync(this IRewriteMeAPI operations, System.DateTime? updatedAfter = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetInformationMessagesWithHttpMessagesAsync(updatedAfter, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
             public static object GetLastUpdates(this IRewriteMeAPI operations)
             {
                 return operations.GetLastUpdatesAsync().GetAwaiter().GetResult();
@@ -601,24 +627,54 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='registerUserModel'>
+            /// <param name='registrationUserModel'>
             /// </param>
-            public static object RegisterUser(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel))
+            public static object RegisterUser(this IRewriteMeAPI operations, RegistrationUserModel registrationUserModel = default(RegistrationUserModel))
             {
-                return operations.RegisterUserAsync(registerUserModel).GetAwaiter().GetResult();
+                return operations.RegisterUserAsync(registrationUserModel).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='registerUserModel'>
+            /// <param name='registrationUserModel'>
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel = default(RegisterUserModel), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> RegisterUserAsync(this IRewriteMeAPI operations, RegistrationUserModel registrationUserModel = default(RegistrationUserModel), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.RegisterUserWithHttpMessagesAsync(registrationUserModel, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='installationId'>
+            /// </param>
+            /// <param name='language'>
+            /// </param>
+            public static object UpdateLanguage(this IRewriteMeAPI operations, System.Guid? installationId = default(System.Guid?), int? language = default(int?))
+            {
+                return operations.UpdateLanguageAsync(installationId, language).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='installationId'>
+            /// </param>
+            /// <param name='language'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> UpdateLanguageAsync(this IRewriteMeAPI operations, System.Guid? installationId = default(System.Guid?), int? language = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.UpdateLanguageWithHttpMessagesAsync(installationId, language, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

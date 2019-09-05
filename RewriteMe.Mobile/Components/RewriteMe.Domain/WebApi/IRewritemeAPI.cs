@@ -159,6 +159,16 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         Task<HttpOperationResponse<object>> TranscribeFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), string language = default(string), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='updatedAfter'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> GetInformationMessagesWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>
@@ -265,7 +275,7 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         Task<HttpOperationResponse<object>> UpdateUserWithHttpMessagesAsync(UpdateUserModel updateUserModel = default(UpdateUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='registerUserModel'>
+        /// <param name='registrationUserModel'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -273,7 +283,19 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> RegisterUserWithHttpMessagesAsync(RegisterUserModel registerUserModel = default(RegisterUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> RegisterUserWithHttpMessagesAsync(RegistrationUserModel registrationUserModel = default(RegistrationUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
+        /// <param name='installationId'>
+        /// </param>
+        /// <param name='language'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> UpdateLanguageWithHttpMessagesAsync(System.Guid? installationId = default(System.Guid?), int? language = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='updatedAfter'>
         /// </param>
