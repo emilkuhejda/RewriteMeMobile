@@ -10,6 +10,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<LanguageInfo> GetLanguageInfo();
 
+        Task<string> GetLanguageName();
+
         Task ChangeUserLanguageAsync(CultureInfo language);
     }
 }

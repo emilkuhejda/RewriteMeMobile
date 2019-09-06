@@ -22,6 +22,7 @@ namespace RewriteMe.DataAccess
             containerRegistry.RegisterSingleton<ITranscriptAudioSourceRepository, TranscriptAudioSourceRepository>();
             containerRegistry.RegisterSingleton<IRecordedItemRepository, RecordedItemRepository>();
             containerRegistry.RegisterSingleton<IRecordedAudioFileRepository, RecordedAudioFileRepository>();
+            containerRegistry.RegisterSingleton<IInformationMessageRepository, InformationMessageRepository>();
         }
     }
 }

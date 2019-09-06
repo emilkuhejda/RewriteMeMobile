@@ -22,12 +22,13 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the LastUpdates class.
         /// </summary>
-        public LastUpdates(System.DateTime fileItem, System.DateTime deletedFileItem, System.DateTime transcribeItem, System.DateTime userSubscription)
+        public LastUpdates(System.DateTime fileItem, System.DateTime deletedFileItem, System.DateTime transcribeItem, System.DateTime userSubscription, System.DateTime informationMessage)
         {
             FileItem = fileItem;
             DeletedFileItem = deletedFileItem;
             TranscribeItem = transcribeItem;
             UserSubscription = userSubscription;
+            InformationMessage = informationMessage;
             CustomInit();
         }
 
@@ -55,6 +56,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "userSubscription")]
         public System.DateTime UserSubscription { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "informationMessage")]
+        public System.DateTime InformationMessage { get; set; }
 
         /// <summary>
         /// Validate the object.

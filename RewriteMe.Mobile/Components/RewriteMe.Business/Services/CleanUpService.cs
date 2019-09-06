@@ -12,19 +12,22 @@ namespace RewriteMe.Business.Services
         private readonly IFileItemRepository _fileItemRepository;
         private readonly IDeletedFileItemRepository _deletedFileItemRepository;
         private readonly IUserSubscriptionRepository _userSubscriptionRepository;
+        private readonly IInformationMessageRepository _informationMessageRepository;
 
         public CleanUpService(
             IInternalValueService internalValueService,
             IUserSessionRepository userSessionRepository,
             IFileItemRepository fileItemRepository,
             IDeletedFileItemRepository deletedFileItemRepository,
-            IUserSubscriptionRepository userSubscriptionRepository)
+            IUserSubscriptionRepository userSubscriptionRepository,
+            IInformationMessageRepository informationMessageRepository)
         {
             _internalValueService = internalValueService;
             _userSessionRepository = userSessionRepository;
             _fileItemRepository = fileItemRepository;
             _deletedFileItemRepository = deletedFileItemRepository;
             _userSubscriptionRepository = userSubscriptionRepository;
+            _informationMessageRepository = informationMessageRepository;
         }
 
         public async Task CleanUp()
@@ -32,12 +35,14 @@ namespace RewriteMe.Business.Services
             await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronizationTicks, 0).ConfigureAwait(false);
             await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronizationTicks, 0).ConfigureAwait(false);
             await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronizationTicks, 0).ConfigureAwait(false);
+            await _internalValueService.UpdateValueAsync(InternalValues.InformationMessageSynchronizationTicks, 0).ConfigureAwait(false);
             await _internalValueService.UpdateValueAsync(InternalValues.ApplicationId, null).ConfigureAwait(false);
 
             await _fileItemRepository.ClearAsync().ConfigureAwait(false);
             await _deletedFileItemRepository.ClearAsync().ConfigureAwait(false);
             await _userSessionRepository.ClearAsync().ConfigureAwait(false);
             await _userSubscriptionRepository.ClearAsync().ConfigureAwait(false);
+            await _informationMessageRepository.ClearAsync().ConfigureAwait(false);
         }
     }
 }

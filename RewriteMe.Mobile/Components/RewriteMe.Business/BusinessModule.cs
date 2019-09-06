@@ -35,6 +35,7 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<ISchedulerService, SchedulerService>();
             containerRegistry.RegisterSingleton<ICleanUpService, CleanUpService>();
             containerRegistry.RegisterSingleton<IConnectivityService, ConnectivityService>();
+            containerRegistry.RegisterSingleton<IInformationMessageService, InformationMessageService>();
         }
     }
 }

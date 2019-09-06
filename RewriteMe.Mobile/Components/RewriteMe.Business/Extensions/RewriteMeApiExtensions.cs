@@ -147,6 +147,14 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<IEnumerable<InformationMessage>> GetInformationMessagesAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.GetInformationMessagesWithHttpMessagesAsync(updatedAfter, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<IEnumerable<InformationMessage>>(result);
+            }
+        }
+
         public static async Task<RecognizedTime> GetRecognizedTimeAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.GetRecognizedTimeWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
@@ -163,9 +171,9 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<UserRegistration> RegisterUserAsync(this IRewriteMeAPI operations, RegisterUserModel registerUserModel, Dictionary<string, List<string>> customHeaders)
+        public static async Task<UserRegistration> RegisterUserAsync(this IRewriteMeAPI operations, RegistrationUserModel registrationUserModel, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.RegisterUserWithHttpMessagesAsync(registerUserModel, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.RegisterUserWithHttpMessagesAsync(registrationUserModel, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<UserRegistration>(result);
             }

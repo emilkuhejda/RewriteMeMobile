@@ -19,12 +19,13 @@ namespace RewriteMe.Mobile.ViewModels
 
         public RecorderOverviewPageViewModel(
             IRecordedItemService recordedItemService,
+            IInformationMessageService informationMessageService,
             ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(informationMessageService, synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
         }
@@ -39,7 +40,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                InitializeNavigation(false);
+                await InitializeNavigation(CurrentPage.RecorderOverview).ConfigureAwait(false);
 
                 var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
                 var items = await _recordedItemService.GetAllAsync(userId).ConfigureAwait(false);
@@ -57,6 +58,8 @@ namespace RewriteMe.Mobile.ViewModels
             var navigationParameters = new NavigationParameters();
             navigationParameters.Add(NavigationConstants.NavigationBack, true);
             await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
+
+            Dispose();
         }
 
         protected override async Task ExecuteNavigateToRecorderOverviewAsync()

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AppCenter;
 using Microsoft.Identity.Client;
 using Plugin.SecureStorage;
 using RewriteMe.Business.Wrappers;
@@ -17,6 +18,7 @@ using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
+using FormsDevice = Xamarin.Forms.Device;
 
 namespace RewriteMe.Business.Services
 {
@@ -24,11 +26,13 @@ namespace RewriteMe.Business.Services
     {
         private const string AccessTokenKey = "AccessToken";
 
+        private readonly ILanguageService _languageService;
         private readonly IRegistrationUserWebService _registrationUserWebService;
         private readonly ICleanUpService _cleanUpService;
         private readonly IAppCenterMetricsService _appCenterMetricsService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
+        private readonly IApplicationVersionProvider _applicationVersionProvider;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IUserSessionRepository _userSessionRepository;
         private readonly IUserSubscriptionRepository _userSubscriptionRepository;
@@ -38,20 +42,24 @@ namespace RewriteMe.Business.Services
         private AccessToken _accessToken;
 
         public UserSessionService(
+            ILanguageService languageService,
             IRegistrationUserWebService registrationUserWebService,
             ICleanUpService cleanUpService,
             IAppCenterMetricsService appCenterMetricsService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
+            IApplicationVersionProvider applicationVersionProvider,
             IApplicationSettings applicationSettings,
             IUserSessionRepository userSessionRepository,
             IUserSubscriptionRepository userSubscriptionRepository,
             ILoggerFactory loggerFactory)
         {
+            _languageService = languageService;
             _registrationUserWebService = registrationUserWebService;
             _cleanUpService = cleanUpService;
             _appCenterMetricsService = appCenterMetricsService;
             _identityUiParentProvider = identityUiParentProvider;
+            _applicationVersionProvider = applicationVersionProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
             _userSubscriptionRepository = userSubscriptionRepository;
@@ -331,12 +339,24 @@ namespace RewriteMe.Business.Services
             if (accessToken == null)
                 throw new ArgumentNullException(nameof(accessToken));
 
-            var registerUserModel = new RegisterUserModel
+            var installationId = await AppCenter.GetInstallIdAsync().ConfigureAwait(false) ?? Guid.Empty;
+            var language = await _languageService.GetLanguageName().ConfigureAwait(false);
+            var registrationDeviceModel = new RegistrationDeviceModel
+            {
+                InstallationId = installationId,
+                RuntimePlatform = FormsDevice.RuntimePlatform,
+                InstalledVersionNumber = _applicationVersionProvider.GetInstalledVersionNumber(),
+                Language = language
+            };
+
+            var registerUserModel = new RegistrationUserModel
             {
                 Id = Guid.Parse(accessToken.ObjectId),
+                ApplicationId = _applicationSettings.ApplicationId,
                 Email = accessToken.Email,
                 GivenName = accessToken.GivenName,
-                FamilyName = accessToken.FamilyName
+                FamilyName = accessToken.FamilyName,
+                Device = registrationDeviceModel
             };
 
             var httpRequestResult = await _registrationUserWebService.RegisterUserAsync(registerUserModel, accessToken.Token).ConfigureAwait(false);
