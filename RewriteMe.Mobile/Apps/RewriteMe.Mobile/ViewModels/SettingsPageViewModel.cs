@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Plugin.LatestVersion.Abstractions;
 using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Configuration;
+using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Localization;
 using RewriteMe.Logging.Interfaces;
@@ -28,7 +28,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ILanguageService _languageService;
         private readonly IEmailService _emailService;
         private readonly IApplicationSettings _applicationSettings;
-        private readonly ILatestVersion _latestVersion;
+        private readonly IApplicationVersionProvider _applicationVersionProvider;
 
         private LanguageInfo _selectedLanguage;
         private string _userName;
@@ -40,7 +40,7 @@ namespace RewriteMe.Mobile.ViewModels
             ILanguageService languageService,
             IEmailService emailService,
             IApplicationSettings applicationSettings,
-            ILatestVersion latestVersion,
+            IApplicationVersionProvider applicationVersionProvider,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -51,7 +51,7 @@ namespace RewriteMe.Mobile.ViewModels
             _languageService = languageService;
             _emailService = emailService;
             _applicationSettings = applicationSettings;
-            _latestVersion = latestVersion;
+            _applicationVersionProvider = applicationVersionProvider;
 
             CanGoBack = true;
 
@@ -107,7 +107,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
-                    ApplicationVersion = _latestVersion.InstalledVersionNumber;
+                    ApplicationVersion = _applicationVersionProvider.GetInstalledVersionNumber();
                 }
                 else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
                 {
@@ -191,7 +191,7 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine()
                     .AppendLine()
                     .AppendLine("_______________________________________")
-                    .AppendLine($"Application version: {_latestVersion.InstalledVersionNumber} ({Device.RuntimePlatform})")
+                    .AppendLine($"Application version: {_applicationVersionProvider.GetInstalledVersionNumber()} ({Device.RuntimePlatform})")
                     .AppendLine($"Time stamp: {timestamp}")
                     .ToString();
 

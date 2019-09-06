@@ -6,11 +6,11 @@ using System.Text;
 using System.Threading.Tasks;
 using Plugin.InAppBilling;
 using Plugin.InAppBilling.Abstractions;
-using Plugin.LatestVersion.Abstractions;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
+using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
@@ -27,7 +27,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IBillingPurchaseService _billingPurchaseService;
         private readonly IEmailService _emailService;
         private readonly IApplicationSettings _applicationSettings;
-        private readonly ILatestVersion _latestVersion;
+        private readonly IApplicationVersionProvider _applicationVersionProvider;
 
         private IList<SubscriptionProductViewModel> _products;
 
@@ -36,7 +36,7 @@ namespace RewriteMe.Mobile.ViewModels
             IBillingPurchaseService billingPurchaseService,
             IEmailService emailService,
             IApplicationSettings applicationSettings,
-            ILatestVersion latestVersion,
+            IApplicationVersionProvider applicationVersionProvider,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -47,7 +47,7 @@ namespace RewriteMe.Mobile.ViewModels
             _billingPurchaseService = billingPurchaseService;
             _emailService = emailService;
             _applicationSettings = applicationSettings;
-            _latestVersion = latestVersion;
+            _applicationVersionProvider = applicationVersionProvider;
 
             CanGoBack = true;
         }
@@ -317,7 +317,7 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine($"Order Id: {purchaseId}")
                     .AppendLine($"User subscription: {productId}")
                     .AppendLine($"User identification: {userId}")
-                    .AppendLine($"Application version: {_latestVersion.InstalledVersionNumber} ({Device.RuntimePlatform})")
+                    .AppendLine($"Application version: {_applicationVersionProvider.GetInstalledVersionNumber()} ({Device.RuntimePlatform})")
                     .AppendLine($"Time stamp: {timestamp}")
                     .ToString();
 
