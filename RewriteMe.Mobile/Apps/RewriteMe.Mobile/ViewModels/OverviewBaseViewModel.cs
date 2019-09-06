@@ -18,6 +18,7 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isRefreshing;
 
         protected OverviewBaseViewModel(
+            IInformationMessageService informationMessageService,
             ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -25,11 +26,14 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
+            InformationMessageService = informationMessageService;
             SynchronizationService = synchronizationService;
 
             NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
             RefreshCommand = new AsyncCommand(ExecuteRefreshCommandAsync);
         }
+
+        protected IInformationMessageService InformationMessageService { get; }
 
         protected ISynchronizationService SynchronizationService { get; }
 

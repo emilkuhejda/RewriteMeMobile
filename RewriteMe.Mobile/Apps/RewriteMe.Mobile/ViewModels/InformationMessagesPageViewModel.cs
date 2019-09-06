@@ -11,22 +11,20 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class InformationMessagesPageViewModel : OverviewBaseViewModel
     {
-        private readonly IInformationMessageService _informationMessageService;
         private readonly ILanguageService _languageService;
 
         private IEnumerable<InformationMessageViewModel> _informationMessages;
 
         public InformationMessagesPageViewModel(
-            IInformationMessageService informationMessageService,
             ILanguageService languageService,
+            IInformationMessageService informationMessageService,
             ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(informationMessageService, synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
-            _informationMessageService = informationMessageService;
             _languageService = languageService;
         }
 
@@ -43,7 +41,7 @@ namespace RewriteMe.Mobile.ViewModels
                 InitializeNavigation(CurrentPage.InformationMessages);
 
                 var languageInfo = await _languageService.GetLanguageInfo().ConfigureAwait(false);
-                var informationMessages = await _informationMessageService.GetAllAsync().ConfigureAwait(false);
+                var informationMessages = await InformationMessageService.GetAllAsync().ConfigureAwait(false);
                 InformationMessages = informationMessages.Select(x => new InformationMessageViewModel(x, languageInfo, NavigationService)).ToList();
 
                 NotAvailableData = !InformationMessages.Any();
