@@ -6,6 +6,7 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -22,14 +23,14 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the LanguageVersion class.
         /// </summary>
-        public LanguageVersion(System.Guid? id = default(System.Guid?), System.Guid? informationMessageId = default(System.Guid?), string title = default(string), string message = default(string), string description = default(string), int? language = default(int?), bool? sentOnOsx = default(bool?), bool? sentOnAndroid = default(bool?))
+        public LanguageVersion(System.Guid id, System.Guid informationMessageId, string title, string message, string description, string languageString, bool sentOnOsx, bool sentOnAndroid)
         {
             Id = id;
             InformationMessageId = informationMessageId;
             Title = title;
             Message = message;
             Description = description;
-            Language = language;
+            LanguageString = languageString;
             SentOnOsx = sentOnOsx;
             SentOnAndroid = sentOnAndroid;
             CustomInit();
@@ -43,12 +44,12 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public System.Guid? Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "informationMessageId")]
-        public System.Guid? InformationMessageId { get; set; }
+        public System.Guid InformationMessageId { get; set; }
 
         /// <summary>
         /// </summary>
@@ -67,18 +68,43 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "language")]
-        public int? Language { get; set; }
+        [JsonProperty(PropertyName = "languageString")]
+        public string LanguageString { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "sentOnOsx")]
-        public bool? SentOnOsx { get; set; }
+        public bool SentOnOsx { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "sentOnAndroid")]
-        public bool? SentOnAndroid { get; set; }
+        public bool SentOnAndroid { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (Title == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Title");
+            }
+            if (Message == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Message");
+            }
+            if (Description == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "Description");
+            }
+            if (LanguageString == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "LanguageString");
+            }
+        }
     }
 }

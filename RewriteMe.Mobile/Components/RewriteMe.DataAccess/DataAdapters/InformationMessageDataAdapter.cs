@@ -20,8 +20,8 @@ namespace RewriteMe.DataAccess.DataAdapters
         {
             return new InformationMessageEntity
             {
-                Id = informationMessage.Id.GetValueOrDefault(),
-                DateCreated = informationMessage.DateCreated.GetValueOrDefault(),
+                Id = informationMessage.Id,
+                DateCreated = informationMessage.DateCreated,
                 LanguageVersions = informationMessage.LanguageVersions?.Select(x => x.ToLanguageVersionEntity()).ToArray()
             };
         }

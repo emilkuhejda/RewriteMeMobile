@@ -14,7 +14,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Title = entity.Title,
                 Message = entity.Message,
                 Description = entity.Description,
-                Language = entity.Language,
+                LanguageString = entity.Language.ToString(),
                 SentOnOsx = entity.SentOnOsx,
                 SentOnAndroid = entity.SentOnAndroid
             };
@@ -24,14 +24,14 @@ namespace RewriteMe.DataAccess.DataAdapters
         {
             return new LanguageVersionEntity
             {
-                Id = languageVersion.Id.GetValueOrDefault(),
-                InformationMessageId = languageVersion.InformationMessageId.GetValueOrDefault(),
+                Id = languageVersion.Id,
+                InformationMessageId = languageVersion.InformationMessageId,
                 Title = languageVersion.Title,
                 Message = languageVersion.Message,
                 Description = languageVersion.Description,
-                Language = languageVersion.Language.GetValueOrDefault(),
-                SentOnOsx = languageVersion.SentOnOsx.GetValueOrDefault(),
-                SentOnAndroid = languageVersion.SentOnAndroid.GetValueOrDefault()
+                Language = languageVersion.Language,
+                SentOnOsx = languageVersion.SentOnOsx,
+                SentOnAndroid = languageVersion.SentOnAndroid
             };
         }
     }

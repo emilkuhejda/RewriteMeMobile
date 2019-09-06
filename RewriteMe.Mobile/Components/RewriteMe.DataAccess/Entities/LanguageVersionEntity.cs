@@ -1,4 +1,5 @@
 ﻿using System;
+using RewriteMe.Domain.Enums;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
 
@@ -19,7 +20,7 @@ namespace RewriteMe.DataAccess.Entities
 
         public string Description { get; set; }
 
-        public int Language { get; set; }
+        public Language Language { get; set; }
 
         public bool SentOnOsx { get; set; }
 

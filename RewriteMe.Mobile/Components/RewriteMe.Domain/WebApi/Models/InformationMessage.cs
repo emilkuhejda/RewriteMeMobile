@@ -24,7 +24,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the InformationMessage class.
         /// </summary>
-        public InformationMessage(System.Guid? id = default(System.Guid?), System.DateTime? dateCreated = default(System.DateTime?), IList<LanguageVersion> languageVersions = default(IList<LanguageVersion>))
+        public InformationMessage(System.Guid id, System.DateTime dateCreated, IList<LanguageVersion> languageVersions = default(IList<LanguageVersion>))
         {
             Id = id;
             DateCreated = dateCreated;
@@ -40,17 +40,36 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "id")]
-        public System.Guid? Id { get; set; }
+        public System.Guid Id { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "dateCreated")]
-        public System.DateTime? DateCreated { get; set; }
+        public System.DateTime DateCreated { get; set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "languageVersions")]
         public IList<LanguageVersion> LanguageVersions { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (LanguageVersions != null)
+            {
+                foreach (var element in LanguageVersions)
+                {
+                    if (element != null)
+                    {
+                        element.Validate();
+                    }
+                }
+            }
+        }
     }
 }
