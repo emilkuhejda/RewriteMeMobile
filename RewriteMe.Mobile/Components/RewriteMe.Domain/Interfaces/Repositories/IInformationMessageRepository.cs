@@ -9,5 +9,9 @@ namespace RewriteMe.Domain.Interfaces.Repositories
         Task<IEnumerable<InformationMessage>> GetAllAsync();
 
         Task InsertOrReplaceAllAsync(IEnumerable<InformationMessage> informationMessages);
+
+        Task<bool> IsUnopenedMessageAsync();
+
+        Task ClearAsync();
     }
 }

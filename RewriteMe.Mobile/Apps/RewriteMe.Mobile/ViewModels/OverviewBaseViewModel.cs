@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
@@ -28,6 +29,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             InformationMessageService = informationMessageService;
             SynchronizationService = synchronizationService;
+            SynchronizationService.SynchronizationCompleted += HandleSynchronizationCompleted;
 
             NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
             RefreshCommand = new AsyncCommand(ExecuteRefreshCommandAsync);
@@ -59,7 +61,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand RefreshCommand { get; }
 
-        protected void InitializeNavigation(CurrentPage currentPage)
+        private ActionBarTileViewModel InfoNavigationItem { get; set; }
+
+        protected async Task InitializeNavigation(CurrentPage currentPage)
         {
             var audioFilesNavigationItem = new ActionBarTileViewModel
             {
@@ -89,6 +93,20 @@ namespace RewriteMe.Mobile.ViewModels
             };
 
             NavigationItems = new[] { audioFilesNavigationItem, recordedFilesNavigationItem, informationMessagesNavigationItem };
+            InfoNavigationItem = informationMessagesNavigationItem;
+
+            await UpdateNavigationItemIconAsync().ConfigureAwait(false);
+        }
+
+        private async Task UpdateNavigationItemIconAsync()
+        {
+            if (InfoNavigationItem == null)
+                return;
+
+            var isUnopenedMessage = await InformationMessageService.IsUnopenedMessageAsync().ConfigureAwait(false);
+            InfoNavigationItem.IconKeyEnabled = isUnopenedMessage
+                ? "resource://RewriteMe.Mobile.Resources.Images.Notification-Active.svg"
+                : "resource://RewriteMe.Mobile.Resources.Images.Notification-Enabled.svg";
         }
 
         private async Task ExecuteNavigateToRecorderCommandAsync()
@@ -112,6 +130,16 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteNavigateToInformationMessagesAsync()
         {
             await NavigationService.NavigateWithoutAnimationAsync(Pages.InformationMessages).ConfigureAwait(false);
+        }
+
+        private async void HandleSynchronizationCompleted(object sender, EventArgs e)
+        {
+            await UpdateNavigationItemIconAsync().ConfigureAwait(false);
+        }
+
+        protected override void DisposeInternal()
+        {
+            SynchronizationService.SynchronizationCompleted -= HandleSynchronizationCompleted;
         }
 
         protected enum CurrentPage

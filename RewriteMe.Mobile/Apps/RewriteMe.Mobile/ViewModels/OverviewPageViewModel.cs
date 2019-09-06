@@ -61,7 +61,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                InitializeNavigation(CurrentPage.Overview);
+                await InitializeNavigation(CurrentPage.Overview).ConfigureAwait(false);
 
                 _schedulerService.Start();
 
@@ -139,10 +139,14 @@ namespace RewriteMe.Mobile.ViewModels
         protected override async Task ExecuteNavigateToRecorderOverviewAsync()
         {
             await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.RecorderOverview}").ConfigureAwait(false);
+
+            Dispose();
         }
 
         protected override void DisposeInternal()
         {
+            base.DisposeInternal();
+
             _schedulerService.SynchronizationCompleted -= HandleSynchronizationCompleted;
         }
     }

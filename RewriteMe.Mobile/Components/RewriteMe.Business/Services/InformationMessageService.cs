@@ -56,5 +56,10 @@ namespace RewriteMe.Business.Services
         {
             return await _informationMessageRepository.GetAllAsync().ConfigureAwait(false);
         }
+
+        public async Task<bool> IsUnopenedMessageAsync()
+        {
+            return await _informationMessageRepository.IsUnopenedMessageAsync().ConfigureAwait(false);
+        }
     }
 }

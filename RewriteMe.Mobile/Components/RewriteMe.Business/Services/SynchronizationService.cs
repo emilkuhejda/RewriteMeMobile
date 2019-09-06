@@ -22,6 +22,7 @@ namespace RewriteMe.Business.Services
         private readonly IInternalValueService _internalValueService;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
+        public event EventHandler SynchronizationCompleted;
 
         private int _totalResourceInitializationTasks;
         private int _resourceInitializationTasksDone;
@@ -76,6 +77,8 @@ namespace RewriteMe.Business.Services
 
             var tasks = updateMethods.WhenTaskDone(OnInitializationProgress).Select(x => x());
             await Task.WhenAll(tasks).ConfigureAwait(false);
+
+            OnSynchronizationCompleted();
         }
 
         private void OnInitializationProgress()
@@ -134,6 +137,11 @@ namespace RewriteMe.Business.Services
         private async Task UpdateRecognizedTimeAsync()
         {
             await _userSubscriptionService.RecognizedTimeSynchronizationAsync().ConfigureAwait(false);
+        }
+
+        private void OnSynchronizationCompleted()
+        {
+            SynchronizationCompleted?.Invoke(this, EventArgs.Empty);
         }
     }
 }

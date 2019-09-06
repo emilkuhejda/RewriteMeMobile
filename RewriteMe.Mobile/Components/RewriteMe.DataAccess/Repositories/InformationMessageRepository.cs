@@ -42,5 +42,16 @@ namespace RewriteMe.DataAccess.Repositories
                 database.InsertAllWithChildren(mergedFileItems);
             }).ConfigureAwait(false);
         }
+
+        public async Task<bool> IsUnopenedMessageAsync()
+        {
+            var informationMessageEntity = await _contextProvider.Context.InformationMessages.CountAsync(x => !x.WasOpened).ConfigureAwait(false);
+            return informationMessageEntity > 0;
+        }
+
+        public async Task ClearAsync()
+        {
+            await _contextProvider.Context.DeleteAllAsync<InformationMessageEntity>().ConfigureAwait(false);
+        }
     }
 }

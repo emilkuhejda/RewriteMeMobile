@@ -10,5 +10,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task SynchronizationAsync(DateTime applicationUpdateDate);
 
         Task<IEnumerable<InformationMessage>> GetAllAsync();
+
+        Task<bool> IsUnopenedMessageAsync();
     }
 }

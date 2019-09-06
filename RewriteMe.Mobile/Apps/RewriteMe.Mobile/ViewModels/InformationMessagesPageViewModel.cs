@@ -38,7 +38,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                InitializeNavigation(CurrentPage.InformationMessages);
+                await InitializeNavigation(CurrentPage.InformationMessages).ConfigureAwait(false);
 
                 var languageInfo = await _languageService.GetLanguageInfo().ConfigureAwait(false);
                 var informationMessages = await InformationMessageService.GetAllAsync().ConfigureAwait(false);
