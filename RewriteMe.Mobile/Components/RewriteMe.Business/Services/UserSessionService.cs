@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AppCenter;
 using Microsoft.Identity.Client;
-using Plugin.LatestVersion.Abstractions;
 using Plugin.SecureStorage;
 using RewriteMe.Business.Wrappers;
 using RewriteMe.Common.Utils;
@@ -33,10 +32,10 @@ namespace RewriteMe.Business.Services
         private readonly IAppCenterMetricsService _appCenterMetricsService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
+        private readonly IApplicationVersionProvider _applicationVersionProvider;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IUserSessionRepository _userSessionRepository;
         private readonly IUserSubscriptionRepository _userSubscriptionRepository;
-        private readonly ILatestVersion _latestVersion;
         private readonly ILogger _logger;
 
         private Guid _userId = Guid.Empty;
@@ -49,10 +48,10 @@ namespace RewriteMe.Business.Services
             IAppCenterMetricsService appCenterMetricsService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
+            IApplicationVersionProvider applicationVersionProvider,
             IApplicationSettings applicationSettings,
             IUserSessionRepository userSessionRepository,
             IUserSubscriptionRepository userSubscriptionRepository,
-            ILatestVersion latestVersion,
             ILoggerFactory loggerFactory)
         {
             _languageService = languageService;
@@ -60,10 +59,10 @@ namespace RewriteMe.Business.Services
             _cleanUpService = cleanUpService;
             _appCenterMetricsService = appCenterMetricsService;
             _identityUiParentProvider = identityUiParentProvider;
+            _applicationVersionProvider = applicationVersionProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
             _userSubscriptionRepository = userSubscriptionRepository;
-            _latestVersion = latestVersion;
             _logger = loggerFactory.CreateLogger(typeof(UserSessionService));
 
             _publicClientApplication = publicClientApplicationFactory.CreatePublicClientApplication(
@@ -346,7 +345,7 @@ namespace RewriteMe.Business.Services
             {
                 InstallationId = installationId,
                 RuntimePlatform = FormsDevice.RuntimePlatform,
-                InstalledVersionNumber = _latestVersion.InstalledVersionNumber,
+                InstalledVersionNumber = _applicationVersionProvider.GetInstalledVersionNumber(),
                 Language = language
             };
 
