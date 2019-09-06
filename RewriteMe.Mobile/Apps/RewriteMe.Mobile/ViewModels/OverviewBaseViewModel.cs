@@ -107,6 +107,9 @@ namespace RewriteMe.Mobile.ViewModels
             InfoNavigationItem.IconKeyEnabled = isUnopenedMessage
                 ? "resource://RewriteMe.Mobile.Resources.Images.Notification-Active.svg"
                 : "resource://RewriteMe.Mobile.Resources.Images.Notification-Enabled.svg";
+            InfoNavigationItem.IconKeyDisabled = isUnopenedMessage
+                ? "resource://RewriteMe.Mobile.Resources.Images.Notification-Active-Disabled.svg"
+                : "resource://RewriteMe.Mobile.Resources.Images.Notification-Disabled.svg";
         }
 
         private async Task ExecuteNavigateToRecorderCommandAsync()
