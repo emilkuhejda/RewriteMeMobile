@@ -8,6 +8,7 @@ using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -126,13 +127,28 @@ namespace RewriteMe.Mobile.ViewModels
             IsRefreshing = false;
         }
 
-        protected abstract Task ExecuteNavigateToOverviewAsync();
+        protected virtual async Task ExecuteNavigateToOverviewAsync()
+        {
+            var navigationParameters = new NavigationParameters();
+            navigationParameters.Add(NavigationConstants.NavigationBack, true);
+            await NavigateToAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
+        }
 
-        protected abstract Task ExecuteNavigateToRecorderOverviewAsync();
+        protected virtual async Task ExecuteNavigateToRecorderOverviewAsync()
+        {
+            await NavigateToAsync($"/{Pages.Navigation}/{Pages.RecorderOverview}").ConfigureAwait(false);
+        }
 
         private async Task ExecuteNavigateToInformationMessagesAsync()
         {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.InfoOverview).ConfigureAwait(false);
+            await NavigateToAsync($"/{Pages.Navigation}/{Pages.InfoOverview}").ConfigureAwait(false);
+        }
+
+        private async Task NavigateToAsync(string name, NavigationParameters navigationParameters = null)
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
+
+            Dispose();
         }
 
         private async void HandleSynchronizationCompleted(object sender, EventArgs e)

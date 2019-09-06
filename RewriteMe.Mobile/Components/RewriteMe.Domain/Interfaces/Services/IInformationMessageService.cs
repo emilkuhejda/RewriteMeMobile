@@ -9,8 +9,10 @@ namespace RewriteMe.Domain.Interfaces.Services
     {
         Task SynchronizationAsync(DateTime applicationUpdateDate);
 
-        Task<IEnumerable<InformationMessage>> GetAllAsync();
+        Task<IEnumerable<InformationMessage>> GetAllForLastWeekAsync();
 
         Task<bool> IsUnopenedMessageAsync();
+
+        Task MarkAsOpenedAsync(InformationMessage informationMessage);
     }
 }
