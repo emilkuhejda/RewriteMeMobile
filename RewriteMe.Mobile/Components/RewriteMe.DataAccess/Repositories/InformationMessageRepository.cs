@@ -6,6 +6,7 @@ using RewriteMe.DataAccess.Entities;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.WebApi.Models;
+using SQLiteNetExtensions.Extensions;
 
 namespace RewriteMe.DataAccess.Repositories
 {
@@ -38,7 +39,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.RunInTransactionAsync(database =>
             {
                 database.DeleteAll<InformationMessageEntity>();
-                database.InsertAll(mergedFileItems);
+                database.InsertAllWithChildren(mergedFileItems);
             }).ConfigureAwait(false);
         }
     }

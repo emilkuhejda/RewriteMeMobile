@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
 
@@ -14,7 +13,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IInformationMessageService _informationMessageService;
 
-        private IEnumerable<InformationMessage> _informationMessages;
+        private IEnumerable<InformationMessageViewModel> _informationMessages;
 
         public InformationMessagesPageViewModel(
             IInformationMessageService informationMessageService,
@@ -28,7 +27,7 @@ namespace RewriteMe.Mobile.ViewModels
             _informationMessageService = informationMessageService;
         }
 
-        public IEnumerable<InformationMessage> InformationMessages
+        public IEnumerable<InformationMessageViewModel> InformationMessages
         {
             get => _informationMessages;
             set => SetProperty(ref _informationMessages, value);
@@ -41,7 +40,7 @@ namespace RewriteMe.Mobile.ViewModels
                 InitializeNavigation(CurrentPage.InformationMessages);
 
                 var informationMessages = await _informationMessageService.GetAllAsync().ConfigureAwait(false);
-                InformationMessages = informationMessages.ToList();
+                InformationMessages = informationMessages.Select(x => new InformationMessageViewModel(x, NavigationService)).ToList();
 
                 NotAvailableData = !InformationMessages.Any();
             }
