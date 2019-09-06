@@ -12,6 +12,8 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task<bool> IsUnopenedMessageAsync();
 
+        Task UpdateAsync(InformationMessage informationMessage);
+
         Task ClearAsync();
     }
 }

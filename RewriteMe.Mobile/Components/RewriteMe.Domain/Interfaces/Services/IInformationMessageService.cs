@@ -12,5 +12,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<IEnumerable<InformationMessage>> GetAllAsync();
 
         Task<bool> IsUnopenedMessageAsync();
+
+        Task MarkAsOpenedAsync(InformationMessage informationMessage);
     }
 }

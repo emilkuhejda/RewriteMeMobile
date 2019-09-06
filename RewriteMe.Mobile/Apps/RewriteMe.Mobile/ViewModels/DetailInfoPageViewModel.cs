@@ -14,12 +14,14 @@ namespace RewriteMe.Mobile.ViewModels
     public class DetailInfoPageViewModel : ViewModelBase
     {
         private readonly ILanguageService _languageService;
+        private readonly IInformationMessageService _informationMessageService;
 
         private string _title;
         private HtmlWebViewSource _description;
 
         public DetailInfoPageViewModel(
             ILanguageService languageService,
+            IInformationMessageService informationMessageService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -27,6 +29,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _languageService = languageService;
+            _informationMessageService = informationMessageService;
 
             CanGoBack = true;
         }
@@ -52,6 +55,8 @@ namespace RewriteMe.Mobile.ViewModels
                 var languageVersion = informationMessage?.LanguageVersions.FirstOrDefault(x => x.Language == languageInfo.ToLanguage());
                 if (languageVersion == null)
                     return;
+
+                await _informationMessageService.MarkAsOpenedAsync(informationMessage).ConfigureAwait(false);
 
                 Title = languageVersion.Title;
                 Description = new HtmlWebViewSource { Html = languageVersion.Description };

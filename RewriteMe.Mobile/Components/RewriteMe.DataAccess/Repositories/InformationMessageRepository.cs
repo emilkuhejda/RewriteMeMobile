@@ -49,6 +49,11 @@ namespace RewriteMe.DataAccess.Repositories
             return informationMessageEntity > 0;
         }
 
+        public async Task UpdateAsync(InformationMessage informationMessage)
+        {
+            await _contextProvider.Context.UpdateAsync(informationMessage.ToInformationMessageEntity()).ConfigureAwait(false);
+        }
+
         public async Task ClearAsync()
         {
             await _contextProvider.Context.DeleteAllAsync<InformationMessageEntity>().ConfigureAwait(false);
