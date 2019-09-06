@@ -36,6 +36,8 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterForNavigation<LoadingPage, LoadingPageViewModel>(Pages.Loading);
             containerRegistry.RegisterForNavigation<OverviewPage, OverviewPageViewModel>(Pages.Overview);
             containerRegistry.RegisterForNavigation<RecorderOverviewPage, RecorderOverviewPageViewModel>(Pages.RecorderOverview);
+            containerRegistry.RegisterForNavigation<InfoOverviewPage, InfoOverviewPageViewModel>(Pages.InfoOverview);
+            containerRegistry.RegisterForNavigation<DetailInfoPage, DetailInfoPageViewModel>(Pages.DetailInfo);
             containerRegistry.RegisterForNavigation<RecorderPage, RecorderPageViewModel>(Pages.Recorder);
             containerRegistry.RegisterForNavigation<CreatePage, CreatePageViewModel>(Pages.Create);
             containerRegistry.RegisterForNavigation<TranscribePage, TranscribePageViewModel>(Pages.Transcribe);

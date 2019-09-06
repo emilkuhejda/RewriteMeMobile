@@ -17,10 +17,12 @@ namespace RewriteMe.Business.Services
         private readonly IFileItemService _fileItemService;
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly IUserSubscriptionService _userSubscriptionService;
+        private readonly IInformationMessageService _informationMessageService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IInternalValueService _internalValueService;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
+        public event EventHandler SynchronizationCompleted;
 
         private int _totalResourceInitializationTasks;
         private int _resourceInitializationTasksDone;
@@ -31,6 +33,7 @@ namespace RewriteMe.Business.Services
             IFileItemService fileItemService,
             ITranscribeItemService transcribeItemService,
             IUserSubscriptionService userSubscriptionService,
+            IInformationMessageService informationMessageService,
             IRewriteMeWebService rewriteMeWebService,
             IInternalValueService internalValueService)
         {
@@ -39,6 +42,7 @@ namespace RewriteMe.Business.Services
             _fileItemService = fileItemService;
             _transcribeItemService = transcribeItemService;
             _userSubscriptionService = userSubscriptionService;
+            _informationMessageService = informationMessageService;
             _rewriteMeWebService = rewriteMeWebService;
             _internalValueService = internalValueService;
         }
@@ -64,6 +68,7 @@ namespace RewriteMe.Business.Services
                 DeletedFileItemsTotalTimeSynchronizationAsync,
                 UpdateTranscribeItemsAsync,
                 UpdateUserSubscriptionAsync,
+                UpdateInformationMessageAsync,
                 UpdateRecognizedTimeAsync
             };
 
@@ -72,6 +77,8 @@ namespace RewriteMe.Business.Services
 
             var tasks = updateMethods.WhenTaskDone(OnInitializationProgress).Select(x => x());
             await Task.WhenAll(tasks).ConfigureAwait(false);
+
+            OnSynchronizationCompleted();
         }
 
         private void OnInitializationProgress()
@@ -120,9 +127,21 @@ namespace RewriteMe.Business.Services
             await _userSubscriptionService.SynchronizationAsync(applicationUserSubscriptionUpdateDate).ConfigureAwait(false);
         }
 
+        private async Task UpdateInformationMessageAsync()
+        {
+            var applicationInformationMessageUpdateDate = _lastUpdatesService.GetInformationMessageLastUpdate();
+
+            await _informationMessageService.SynchronizationAsync(applicationInformationMessageUpdateDate).ConfigureAwait(false);
+        }
+
         private async Task UpdateRecognizedTimeAsync()
         {
             await _userSubscriptionService.RecognizedTimeSynchronizationAsync().ConfigureAwait(false);
+        }
+
+        private void OnSynchronizationCompleted()
+        {
+            SynchronizationCompleted?.Invoke(this, EventArgs.Empty);
         }
     }
 }

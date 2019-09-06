@@ -10,26 +10,27 @@ namespace RewriteMe.Domain.WebApi.Models
     using Newtonsoft.Json;
     using System.Linq;
 
-    public partial class RegisterUserModel
+    public partial class RegistrationUserModel
     {
         /// <summary>
-        /// Initializes a new instance of the RegisterUserModel class.
+        /// Initializes a new instance of the RegistrationUserModel class.
         /// </summary>
-        public RegisterUserModel()
+        public RegistrationUserModel()
         {
             CustomInit();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RegisterUserModel class.
+        /// Initializes a new instance of the RegistrationUserModel class.
         /// </summary>
-        public RegisterUserModel(System.Guid id, System.Guid applicationId, string email, string givenName, string familyName)
+        public RegistrationUserModel(System.Guid id, System.Guid applicationId, string email, string givenName, string familyName, RegistrationDeviceModel device = default(RegistrationDeviceModel))
         {
             Id = id;
             ApplicationId = applicationId;
             Email = email;
             GivenName = givenName;
             FamilyName = familyName;
+            Device = device;
             CustomInit();
         }
 
@@ -64,6 +65,11 @@ namespace RewriteMe.Domain.WebApi.Models
         public string FamilyName { get; set; }
 
         /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "device")]
+        public RegistrationDeviceModel Device { get; set; }
+
+        /// <summary>
         /// Validate the object.
         /// </summary>
         /// <exception cref="ValidationException">
@@ -82,6 +88,10 @@ namespace RewriteMe.Domain.WebApi.Models
             if (FamilyName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "FamilyName");
+            }
+            if (Device != null)
+            {
+                Device.Validate();
             }
         }
     }

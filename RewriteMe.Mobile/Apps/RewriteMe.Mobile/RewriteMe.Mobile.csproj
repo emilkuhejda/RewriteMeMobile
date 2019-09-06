@@ -18,6 +18,11 @@
     <None Remove="Resources\Images\Back.svg" />
     <None Remove="Resources\Images\Delete.svg" />
     <None Remove="Resources\Images\Forward.svg" />
+    <None Remove="Resources\Images\Info.svg" />
+    <None Remove="Resources\Images\Notification-Active-Disabled.svg" />
+    <None Remove="Resources\Images\Notification-Active.svg" />
+    <None Remove="Resources\Images\Notification-Disabled.svg" />
+    <None Remove="Resources\Images\Notification-Enabled.svg" />
     <None Remove="Resources\Images\Ok.svg" />
     <None Remove="Resources\Images\Pause-Enabled.svg" />
     <None Remove="Resources\Images\Play-Enabled.svg" />
@@ -50,6 +55,11 @@
     <EmbeddedResource Include="Resources\Images\Back.svg" />
     <EmbeddedResource Include="Resources\Images\Delete.svg" />
     <EmbeddedResource Include="Resources\Images\Forward.svg" />
+    <EmbeddedResource Include="Resources\Images\Info.svg" />
+    <EmbeddedResource Include="Resources\Images\Notification-Active-Disabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Notification-Active.svg" />
+    <EmbeddedResource Include="Resources\Images\Notification-Disabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Notification-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Ok.svg" />
     <EmbeddedResource Include="Resources\Images\Pause-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Play-Enabled.svg" />
@@ -121,7 +131,22 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Compile Update="Views\DetailInfoPage.xaml.cs">
+      <DependentUpon>DetailInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\InfoOverviewPage.xaml.cs">
+      <DependentUpon>InfoOverviewPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
     <EmbeddedResource Update="Controls\DrillDownButton.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\DetailInfoPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\InfoOverviewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TranscribeRecodingPage.xaml">

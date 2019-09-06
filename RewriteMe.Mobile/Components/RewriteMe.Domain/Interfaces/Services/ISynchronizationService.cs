@@ -8,6 +8,8 @@ namespace RewriteMe.Domain.Interfaces.Services
     {
         event EventHandler<ProgressEventArgs> InitializationProgress;
 
+        event EventHandler SynchronizationCompleted;
+
         Task InitializeAsync();
     }
 }

@@ -16,5 +16,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         DateTime GetTranscribeItemLastUpdate();
 
         DateTime GetUserSubscriptionLastUpdate();
+
+        DateTime GetInformationMessageLastUpdate();
     }
 }

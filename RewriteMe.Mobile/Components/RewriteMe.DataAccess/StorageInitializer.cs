@@ -28,7 +28,9 @@ namespace RewriteMe.DataAccess
             {
                 typeof(DeletedFileItemEntity),
                 typeof(FileItemEntity),
+                typeof(InformationMessageEntity),
                 typeof(InternalValueEntity),
+                typeof(LanguageVersionEntity),
                 typeof(RecordedAudioFileEntity),
                 typeof(RecordedItemEntity),
                 typeof(TranscribeItemEntity),

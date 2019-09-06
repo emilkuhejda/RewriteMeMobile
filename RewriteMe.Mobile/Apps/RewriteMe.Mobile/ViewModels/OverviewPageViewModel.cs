@@ -27,12 +27,13 @@ namespace RewriteMe.Mobile.ViewModels
         public OverviewPageViewModel(
             IFileItemService fileItemService,
             ISchedulerService schedulerService,
+            IInformationMessageService informationMessageService,
             ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(informationMessageService, synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
             _schedulerService = schedulerService;
@@ -60,7 +61,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                InitializeNavigation(true);
+                await InitializeNavigation(CurrentPage.Overview).ConfigureAwait(false);
 
                 _schedulerService.Start();
 
@@ -138,10 +139,14 @@ namespace RewriteMe.Mobile.ViewModels
         protected override async Task ExecuteNavigateToRecorderOverviewAsync()
         {
             await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.RecorderOverview}").ConfigureAwait(false);
+
+            Dispose();
         }
 
         protected override void DisposeInternal()
         {
+            base.DisposeInternal();
+
             _schedulerService.SynchronizationCompleted -= HandleSynchronizationCompleted;
         }
     }

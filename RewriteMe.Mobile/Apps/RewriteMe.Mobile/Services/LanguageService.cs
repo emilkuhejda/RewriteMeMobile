@@ -38,7 +38,7 @@ namespace RewriteMe.Mobile.Services
             return Languages.All.FirstOrDefault(x => x.Culture == languageName) ?? Languages.English;
         }
 
-        private async Task<string> GetLanguageName()
+        public async Task<string> GetLanguageName()
         {
             var language = await _internalValueService.GetValueAsync(InternalValues.LanguageSetting).ConfigureAwait(false);
             if (language != null)

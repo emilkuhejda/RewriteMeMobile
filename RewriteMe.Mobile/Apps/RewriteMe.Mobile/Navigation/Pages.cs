@@ -12,6 +12,10 @@
 
         public static string RecorderOverview { get; } = "RecorderOverview";
 
+        public static string InfoOverview { get; } = "Info";
+
+        public static string DetailInfo { get; } = "DetailInfo";
+
         public static string Recorder { get; } = "Recorder";
 
         public static string Create { get; } = "Create";

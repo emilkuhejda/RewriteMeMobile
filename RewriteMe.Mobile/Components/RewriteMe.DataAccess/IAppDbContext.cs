@@ -28,6 +28,8 @@ namespace RewriteMe.DataAccess
 
         AsyncTableQuery<RecordedAudioFileEntity> RecordedAudioFiles { get; }
 
+        AsyncTableQuery<InformationMessageEntity> InformationMessages { get; }
+
         Task RunInTransactionAsync(Action<SQLiteConnection> action);
 
         Task<int> GetVersionNumberAsync();
