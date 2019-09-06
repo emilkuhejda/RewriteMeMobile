@@ -21,23 +21,27 @@ namespace RewriteMe.Mobile.ViewModels
             _informationMessage = informationMessage;
             _navigationService = navigationService;
 
-            Initialize(languageInfo);
+            Initialize(informationMessage, languageInfo);
 
             NavigateToDetailPageCommand = new AsyncCommand(ExecuteNavigateToDetailPageCommandAsync);
         }
 
         public string Title { get; private set; }
 
+        public bool WasOpened { get; private set; }
+
         public ICommand NavigateToDetailPageCommand { get; }
 
-        private void Initialize(LanguageInfo languageInfo)
+        private void Initialize(InformationMessage informationMessage, LanguageInfo languageInfo)
         {
             var currentLanguage = languageInfo.ToLanguage();
-            var languageVersion = _informationMessage.LanguageVersions?.FirstOrDefault(x => x.Language == currentLanguage);
+            var languageVersion = informationMessage.LanguageVersions?.FirstOrDefault(x => x.Language == currentLanguage);
             if (languageVersion != null)
             {
                 Title = languageVersion.Title;
             }
+
+            WasOpened = informationMessage.WasOpened;
         }
 
         private async Task ExecuteNavigateToDetailPageCommandAsync()
