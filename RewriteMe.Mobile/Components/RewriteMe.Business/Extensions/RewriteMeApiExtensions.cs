@@ -147,6 +147,14 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
+        public static async Task<IEnumerable<InformationMessage>> GetInformationMessagesAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Dictionary<string, List<string>> customHeaders)
+        {
+            using (var result = await operations.GetInformationMessagesWithHttpMessagesAsync(updatedAfter, customHeaders).ConfigureAwait(false))
+            {
+                return ParseBody<IEnumerable<InformationMessage>>(result);
+            }
+        }
+
         public static async Task<RecognizedTime> GetRecognizedTimeAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.GetRecognizedTimeWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))

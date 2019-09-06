@@ -14,6 +14,8 @@ namespace RewriteMe.Domain.Configuration
 
         public static InternalValue<long> UserSubscriptionSynchronizationTicks { get; } = new InternalValue<long>("UserSubscriptionSynchronizationTicks", 0);
 
+        public static InternalValue<long> InformationMessageSynchronizationTicks { get; } = new InternalValue<long>("InformationMessageSynchronizationTicks", 0);
+
         public static InternalValue<string> LanguageSetting { get; } = new InternalValue<string>("LanguageSetting", null);
 
         public static InternalValue<long> DeletedFileItemsTotalTime { get; } = new InternalValue<long>("DeletedFileItemsTotalTime", 0);
