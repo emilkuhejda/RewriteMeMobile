@@ -3,9 +3,9 @@
 namespace RewriteMe.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class DetailInformationMessagePage
+    public partial class DetailInfoPage
     {
-        public DetailInformationMessagePage()
+        public DetailInfoPage()
         {
             InitializeComponent();
         }

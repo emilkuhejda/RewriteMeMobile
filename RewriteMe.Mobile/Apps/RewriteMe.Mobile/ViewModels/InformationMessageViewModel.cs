@@ -44,7 +44,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var navigationParameters = new NavigationParameters();
             navigationParameters.Add<InformationMessage>(_informationMessage);
-            await _navigationService.NavigateWithoutAnimationAsync(Pages.DetailInformationMessage, navigationParameters).ConfigureAwait(false);
+            await _navigationService.NavigateWithoutAnimationAsync(Pages.DetailInfo, navigationParameters).ConfigureAwait(false);
         }
     }
 }

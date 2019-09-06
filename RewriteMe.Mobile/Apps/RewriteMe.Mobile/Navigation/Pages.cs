@@ -12,9 +12,9 @@
 
         public static string RecorderOverview { get; } = "RecorderOverview";
 
-        public static string InformationMessages { get; } = "InformationMessages";
+        public static string InfoOverview { get; } = "Info";
 
-        public static string DetailInformationMessage { get; } = "DetailInformationMessage";
+        public static string DetailInfo { get; } = "DetailInfo";
 
         public static string Recorder { get; } = "Recorder";
 

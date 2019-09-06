@@ -4,9 +4,9 @@ using RewriteMe.Logging.Interfaces;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class DetailInformationMessagePageViewModel : ViewModelBase
+    public class DetailInfoPageViewModel : ViewModelBase
     {
-        public DetailInformationMessagePageViewModel(
+        public DetailInfoPageViewModel(
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,

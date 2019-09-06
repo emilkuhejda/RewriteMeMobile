@@ -9,13 +9,13 @@ using RewriteMe.Mobile.Extensions;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class InformationMessagesPageViewModel : OverviewBaseViewModel
+    public class InfoOverviewPageViewModel : OverviewBaseViewModel
     {
         private readonly ILanguageService _languageService;
 
         private IEnumerable<InformationMessageViewModel> _informationMessages;
 
-        public InformationMessagesPageViewModel(
+        public InfoOverviewPageViewModel(
             ILanguageService languageService,
             IInformationMessageService informationMessageService,
             ISynchronizationService synchronizationService,

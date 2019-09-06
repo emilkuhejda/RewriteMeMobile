@@ -129,13 +129,22 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Compile Update="Views\DetailInfoPage.xaml.cs">
+      <DependentUpon>DetailInfoPage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\InfoOverviewPage.xaml.cs">
+      <DependentUpon>InfoOverviewPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  
+  <ItemGroup>
     <EmbeddedResource Update="Controls\DrillDownButton.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\DetailInformationMessagePage.xaml">
+    <EmbeddedResource Update="Views\DetailInfoPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\InformationMessagesPage.xaml">
+    <EmbeddedResource Update="Views\InfoOverviewPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TranscribeRecodingPage.xaml">

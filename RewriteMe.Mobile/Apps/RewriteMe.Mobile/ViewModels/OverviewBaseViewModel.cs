@@ -129,7 +129,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteNavigateToInformationMessagesAsync()
         {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.InformationMessages).ConfigureAwait(false);
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.InfoOverview).ConfigureAwait(false);
         }
 
         private async void HandleSynchronizationCompleted(object sender, EventArgs e)
