@@ -55,12 +55,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand RefreshCommand { get; }
 
-        protected void InitializeNavigation(bool isOverview)
+        protected void InitializeNavigation(CurrentPage currentPage)
         {
             var audioFilesNavigationItem = new ActionBarTileViewModel
             {
                 Text = Loc.Text(TranslationKeys.AudioFiles),
-                IsEnabled = !isOverview,
+                IsEnabled = currentPage != CurrentPage.Overview,
                 IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Overview-Enabled.svg",
                 IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Overview-Disabled.svg",
                 SelectedCommand = new AsyncCommand(ExecuteNavigateToOverviewAsync)
@@ -69,13 +69,22 @@ namespace RewriteMe.Mobile.ViewModels
             var recordedFilesNavigationItem = new ActionBarTileViewModel
             {
                 Text = Loc.Text(TranslationKeys.RecordedFiles),
-                IsEnabled = isOverview,
+                IsEnabled = currentPage != CurrentPage.RecorderOverview,
                 IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.RecorderOverview-Enabled.svg",
                 IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.RecorderOverview-Disabled.svg",
                 SelectedCommand = new AsyncCommand(ExecuteNavigateToRecorderOverviewAsync)
             };
 
-            NavigationItems = new[] { audioFilesNavigationItem, recordedFilesNavigationItem };
+            var informationMessagesNavigationItem = new ActionBarTileViewModel
+            {
+                Text = Loc.Text(TranslationKeys.Info),
+                IsEnabled = currentPage != CurrentPage.InformationMessages,
+                IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Notification-Enabled.svg",
+                IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Notification-Disabled.svg",
+                SelectedCommand = new AsyncCommand(ExecuteNavigateToInformationMessagesAsync)
+            };
+
+            NavigationItems = new[] { audioFilesNavigationItem, recordedFilesNavigationItem, informationMessagesNavigationItem };
         }
 
         private async Task ExecuteNavigateToRecorderCommandAsync()
@@ -95,5 +104,17 @@ namespace RewriteMe.Mobile.ViewModels
         protected abstract Task ExecuteNavigateToOverviewAsync();
 
         protected abstract Task ExecuteNavigateToRecorderOverviewAsync();
+
+        private async Task ExecuteNavigateToInformationMessagesAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.InformationMessages).ConfigureAwait(false);
+        }
+
+        protected enum CurrentPage
+        {
+            Overview = 0,
+            RecorderOverview,
+            InformationMessages
+        }
     }
 }

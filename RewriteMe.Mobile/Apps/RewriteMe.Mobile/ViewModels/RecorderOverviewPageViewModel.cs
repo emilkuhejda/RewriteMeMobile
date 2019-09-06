@@ -39,7 +39,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                InitializeNavigation(false);
+                InitializeNavigation(CurrentPage.RecorderOverview);
 
                 var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
                 var items = await _recordedItemService.GetAllAsync(userId).ConfigureAwait(false);

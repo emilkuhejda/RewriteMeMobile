@@ -60,7 +60,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                InitializeNavigation(true);
+                InitializeNavigation(CurrentPage.Overview);
 
                 _schedulerService.Start();
 

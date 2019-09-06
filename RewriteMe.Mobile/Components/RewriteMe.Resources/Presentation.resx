@@ -268,6 +268,9 @@
   <data name="RecordedFiles" xml:space="preserve">
     <value>Recorded files</value>
   </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
   <data name="InProgressLabel" xml:space="preserve">
     <value>In progress</value>
   </data>

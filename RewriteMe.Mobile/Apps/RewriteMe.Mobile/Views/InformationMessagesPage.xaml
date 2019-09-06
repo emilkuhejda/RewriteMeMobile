@@ -6,17 +6,58 @@
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <views:BaseNavigationPage.Resources>
+        <DataTemplate x:Key="InformationMessagesTemplate">
+            <ViewCell>
+                <Grid BackgroundColor="White">
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
+                    </Grid.GestureRecognizers>
+
+                    <Label Text="{Binding DateCreated}" />
+                </Grid>
+            </ViewCell>
+        </DataTemplate>
+    </views:BaseNavigationPage.Resources>
+
     <views:BaseNavigationPage.RightNavigationToolbarItems>
         <controls:NavigationToolbarItem Command="{Binding NavigateToRecorderCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg" />
         <controls:NavigationToolbarItem Command="{Binding NavigateToSettingsCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Settings.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
 
     <Grid>
-        <StackLayout>
-            <Label HorizontalOptions="CenterAndExpand"
-                   Text="Welcome to Xamarin.Forms!"
-                   VerticalOptions="CenterAndExpand" />
-        </StackLayout>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="0" Padding="{StaticResource StandardPadding}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <Label Grid.Row="1"
+                       FontAttributes="Italic"
+                       HorizontalOptions="Center"
+                       IsVisible="{Binding NotAvailableData}"
+                       Style="{StaticResource LabelStyle}"
+                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
+                       VerticalOptions="Start" />
+
+                <ListView Grid.Row="1"
+                          HasUnevenRows="True"
+                          IsPullToRefreshEnabled="True"
+                          IsRefreshing="{Binding IsRefreshing}"
+                          ItemTemplate="{StaticResource InformationMessagesTemplate}"
+                          ItemsSource="{Binding InformationMessages}"
+                          RefreshCommand="{Binding RefreshCommand}"
+                          SeparatorVisibility="None" />
+            </Grid>
+
+            <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
+        </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"
                                         Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
