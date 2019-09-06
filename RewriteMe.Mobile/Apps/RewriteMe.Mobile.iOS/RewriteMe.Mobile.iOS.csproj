@@ -116,6 +116,7 @@
     <Compile Include="Logging\NLogTargets.FileTarget.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
+    <Compile Include="Providers\ApplicationVersionProvider.cs" />
     <Compile Include="Providers\DirectoryProvider.cs" />
     <Compile Include="Renderers\AlwaysScrollViewRenderer.cs" />
     <Compile Include="Renderers\NoBarsScrollViewerRenderer.cs" />
@@ -223,6 +224,9 @@
       <Version>1.1.118</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Xam.Plugin.LatestVersion">
+      <Version>1.1.2</Version>
     </PackageReference>
     <PackageReference Include="Xamarin.Essentials">
       <Version>1.3.0</Version>
