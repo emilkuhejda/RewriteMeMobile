@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using RewriteMe.DataAccess.DataAdapters;
@@ -19,9 +20,11 @@ namespace RewriteMe.DataAccess.Repositories
             _contextProvider = contextProvider;
         }
 
-        public async Task<IEnumerable<InformationMessage>> GetAllAsync()
+        public async Task<IEnumerable<InformationMessage>> GetAllAsync(DateTime minimumDateTime)
         {
-            var entities = await _contextProvider.Context.GetAllWithChildrenAsync<InformationMessageEntity>(x => true).ConfigureAwait(false);
+            var entities = await _contextProvider.Context
+                .GetAllWithChildrenAsync<InformationMessageEntity>(x => x.DateCreated >= minimumDateTime)
+                .ConfigureAwait(false);
 
             return entities?.Select(x => x.ToInformationMessage());
         }

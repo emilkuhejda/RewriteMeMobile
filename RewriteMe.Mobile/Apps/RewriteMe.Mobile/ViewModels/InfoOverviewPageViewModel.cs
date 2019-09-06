@@ -41,7 +41,7 @@ namespace RewriteMe.Mobile.ViewModels
                 await InitializeNavigation(CurrentPage.InformationMessages).ConfigureAwait(false);
 
                 var languageInfo = await _languageService.GetLanguageInfo().ConfigureAwait(false);
-                var informationMessages = await InformationMessageService.GetAllAsync().ConfigureAwait(false);
+                var informationMessages = await InformationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
                 InformationMessages = informationMessages.Select(x => new InformationMessageViewModel(x, languageInfo, NavigationService)).ToList();
 
                 NotAvailableData = !InformationMessages.Any();

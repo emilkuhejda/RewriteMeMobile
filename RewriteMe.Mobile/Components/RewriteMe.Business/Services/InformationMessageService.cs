@@ -52,9 +52,10 @@ namespace RewriteMe.Business.Services
             }
         }
 
-        public async Task<IEnumerable<InformationMessage>> GetAllAsync()
+        public async Task<IEnumerable<InformationMessage>> GetAllForLastWeekAsync()
         {
-            return await _informationMessageRepository.GetAllAsync().ConfigureAwait(false);
+            var minimumDateTime = DateTime.UtcNow.AddDays(-7);
+            return await _informationMessageRepository.GetAllAsync(minimumDateTime).ConfigureAwait(false);
         }
 
         public async Task<bool> IsUnopenedMessageAsync()
