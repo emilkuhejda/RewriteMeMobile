@@ -5,7 +5,6 @@ using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
-using RewriteMe.Mobile.Extensions;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -41,21 +40,11 @@ namespace RewriteMe.Mobile.ViewModels
                 await InitializeNavigation(CurrentPage.InformationMessages).ConfigureAwait(false);
 
                 var languageInfo = await _languageService.GetLanguageInfo().ConfigureAwait(false);
-                var informationMessages = await InformationMessageService.GetAllAsync().ConfigureAwait(false);
+                var informationMessages = await InformationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
                 InformationMessages = informationMessages.Select(x => new InformationMessageViewModel(x, languageInfo, NavigationService)).ToList();
 
                 NotAvailableData = !InformationMessages.Any();
             }
-        }
-
-        protected override async Task ExecuteNavigateToOverviewAsync()
-        {
-            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
-        }
-
-        protected override async Task ExecuteNavigateToRecorderOverviewAsync()
-        {
-            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
         }
     }
 }

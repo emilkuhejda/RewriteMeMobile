@@ -14,8 +14,10 @@ namespace RewriteMe.DataAccess.Entities
         [ForeignKey(typeof(InformationMessageEntity))]
         public Guid InformationMessageId { get; set; }
 
+        [MaxLength(150)]
         public string Title { get; set; }
 
+        [MaxLength(150)]
         public string Message { get; set; }
 
         public string Description { get; set; }

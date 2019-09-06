@@ -7,10 +7,15 @@
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <Grid>
-        <StackLayout>
-            <Label HorizontalOptions="CenterAndExpand"
-                   Text="Welcome to Xamarin.Forms!"
-                   VerticalOptions="CenterAndExpand" />
+        <StackLayout Padding="{StaticResource StandardPadding}">
+            <Label FontSize="{StaticResource LargerSize}"
+                   HorizontalOptions="CenterAndExpand"
+                   Style="{StaticResource LabelBoldStyle}"
+                   Text="{Binding Title}" />
+
+            <WebView HorizontalOptions="FillAndExpand"
+                     Source="{Binding Description}"
+                     VerticalOptions="FillAndExpand" />
         </StackLayout>
 
         <controls:PageActivityIndicator Grid.Row="0"

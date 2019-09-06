@@ -5,9 +5,6 @@ using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
-using RewriteMe.Mobile.Extensions;
-using RewriteMe.Mobile.Navigation;
-using RewriteMe.Mobile.Navigation.Parameters;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -51,15 +48,6 @@ namespace RewriteMe.Mobile.ViewModels
 
                 NotAvailableData = !RecordedItems.Any();
             }
-        }
-
-        protected override async Task ExecuteNavigateToOverviewAsync()
-        {
-            var navigationParameters = new NavigationParameters();
-            navigationParameters.Add(NavigationConstants.NavigationBack, true);
-            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
-
-            Dispose();
         }
 
         protected override async Task ExecuteNavigateToRecorderOverviewAsync()

@@ -136,13 +136,6 @@ namespace RewriteMe.Mobile.ViewModels
             await Task.CompletedTask.ConfigureAwait(false);
         }
 
-        protected override async Task ExecuteNavigateToRecorderOverviewAsync()
-        {
-            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.RecorderOverview}").ConfigureAwait(false);
-
-            Dispose();
-        }
-
         protected override void DisposeInternal()
         {
             base.DisposeInternal();
