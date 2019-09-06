@@ -6,6 +6,8 @@ using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
+using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Navigation.Parameters;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -50,12 +52,18 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override async Task ExecuteNavigateToOverviewAsync()
         {
-            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+            var navigationParameters = new NavigationParameters();
+            navigationParameters.Add(NavigationConstants.NavigationBack, true);
+            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
+
+            DisposeInternal();
         }
 
         protected override async Task ExecuteNavigateToRecorderOverviewAsync()
         {
-            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.RecorderOverview}").ConfigureAwait(false);
+
+            DisposeInternal();
         }
     }
 }
