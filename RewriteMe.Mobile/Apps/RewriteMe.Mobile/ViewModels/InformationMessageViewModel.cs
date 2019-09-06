@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
+using RewriteMe.Domain.Extensions;
+using RewriteMe.Domain.Localization;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
@@ -14,23 +16,29 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly InformationMessage _informationMessage;
         private readonly INavigationService _navigationService;
 
-        public InformationMessageViewModel(InformationMessage informationMessage, INavigationService navigationService)
+        public InformationMessageViewModel(InformationMessage informationMessage, LanguageInfo languageInfo, INavigationService navigationService)
         {
             _informationMessage = informationMessage;
             _navigationService = navigationService;
 
-            if (informationMessage.LanguageVersions.Any())
-            {
-                var languageVersion = informationMessage.LanguageVersions.First();
-                Title = languageVersion.Title;
-            }
+            Initialize(languageInfo);
 
             NavigateToDetailPageCommand = new AsyncCommand(ExecuteNavigateToDetailPageCommandAsync);
         }
 
-        public string Title { get; }
+        public string Title { get; private set; }
 
         public ICommand NavigateToDetailPageCommand { get; }
+
+        private void Initialize(LanguageInfo languageInfo)
+        {
+            var currentLanguage = languageInfo.ToLanguage();
+            var languageVersion = _informationMessage.LanguageVersions?.FirstOrDefault(x => x.Language == currentLanguage);
+            if (languageVersion != null)
+            {
+                Title = languageVersion.Title;
+            }
+        }
 
         private async Task ExecuteNavigateToDetailPageCommandAsync()
         {

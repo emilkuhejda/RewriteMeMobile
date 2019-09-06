@@ -12,6 +12,8 @@ namespace RewriteMe.DataAccess.Entities
 
         public DateTime DateCreated { get; set; }
 
+        public bool WasOpened { get; set; }
+
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public LanguageVersionEntity[] LanguageVersions { get; set; }
     }

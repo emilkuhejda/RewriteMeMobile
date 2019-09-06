@@ -12,6 +12,7 @@ namespace RewriteMe.DataAccess.DataAdapters
             {
                 Id = entity.Id,
                 DateCreated = entity.DateCreated,
+                WasOpened = entity.WasOpened,
                 LanguageVersions = entity.LanguageVersions?.Select(x => x.ToLanguageVersion()).ToList()
             };
         }
@@ -22,6 +23,7 @@ namespace RewriteMe.DataAccess.DataAdapters
             {
                 Id = informationMessage.Id,
                 DateCreated = informationMessage.DateCreated,
+                WasOpened = informationMessage.WasOpened,
                 LanguageVersions = informationMessage.LanguageVersions?.Select(x => x.ToLanguageVersionEntity()).ToArray()
             };
         }
