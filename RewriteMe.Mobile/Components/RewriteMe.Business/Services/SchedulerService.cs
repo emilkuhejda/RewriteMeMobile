@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 
 namespace RewriteMe.Business.Services
@@ -14,8 +15,6 @@ namespace RewriteMe.Business.Services
         private readonly object _lockObject = new object();
 
         private CancellationTokenSource _cancellationTokenSource;
-
-        public event EventHandler SynchronizationCompleted;
 
         public SchedulerService(
             IFileItemService fileItemService,
@@ -78,9 +77,15 @@ namespace RewriteMe.Business.Services
             var anyWaitingForSynchronization = await _fileItemService.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
             if (anyWaitingForSynchronization)
             {
-                await StartSynchronizationAsync(token).ConfigureAwait(false);
+                try
+                {
+                    await StartSynchronizationAsync(token).ConfigureAwait(false);
 
-                await StartInternalAsync().ConfigureAwait(false);
+                    await StartInternalAsync().ConfigureAwait(false);
+                }
+                catch (UnauthorizedCallException)
+                {
+                }
             }
         }
 
@@ -89,19 +94,12 @@ namespace RewriteMe.Business.Services
             if (token.IsCancellationRequested)
                 return;
 
-            await _synchronizationService.InitializeAsync().ConfigureAwait(false);
-
-            OnSynchronizationCompleted();
+            await _synchronizationService.StartAsync().ConfigureAwait(false);
         }
 
         private void HandleTranscriptionStarted(object sender, EventArgs e)
         {
             Start();
-        }
-
-        private void OnSynchronizationCompleted()
-        {
-            SynchronizationCompleted?.Invoke(this, EventArgs.Empty);
         }
     }
 }

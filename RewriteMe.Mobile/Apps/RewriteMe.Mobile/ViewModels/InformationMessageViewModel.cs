@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
@@ -25,6 +26,8 @@ namespace RewriteMe.Mobile.ViewModels
 
             NavigateToDetailPageCommand = new AsyncCommand(ExecuteNavigateToDetailPageCommandAsync);
         }
+
+        public Guid Id => _informationMessage.Id;
 
         public string Title { get; private set; }
 

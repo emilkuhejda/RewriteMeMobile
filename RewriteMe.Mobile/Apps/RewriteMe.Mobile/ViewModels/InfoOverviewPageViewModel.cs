@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using Prism.Navigation;
@@ -12,7 +12,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly ILanguageService _languageService;
 
-        private IEnumerable<InformationMessageViewModel> _informationMessages;
+        private ObservableCollection<InformationMessageViewModel> _informationMessages;
 
         public InfoOverviewPageViewModel(
             ILanguageService languageService,
@@ -27,10 +27,10 @@ namespace RewriteMe.Mobile.ViewModels
             _languageService = languageService;
         }
 
-        public IEnumerable<InformationMessageViewModel> InformationMessages
+        public ObservableCollection<InformationMessageViewModel> InformationMessages
         {
             get => _informationMessages;
-            set => SetProperty(ref _informationMessages, value);
+            private set => SetProperty(ref _informationMessages, value);
         }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
@@ -38,13 +38,36 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 await InitializeNavigation(CurrentPage.InformationMessages).ConfigureAwait(false);
-
-                var languageInfo = await _languageService.GetLanguageInfo().ConfigureAwait(false);
-                var informationMessages = await InformationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
-                InformationMessages = informationMessages.Select(x => new InformationMessageViewModel(x, languageInfo, NavigationService)).ToList();
+                await InitializeInformationMessageAsync().ConfigureAwait(false);
 
                 NotAvailableData = !InformationMessages.Any();
             }
+        }
+
+        protected override async Task RefreshList()
+        {
+            var informationMessages = await InformationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
+
+            if (IsCurrent)
+            {
+                var languageInfo = await _languageService.GetLanguageInfo().ConfigureAwait(false);
+                var informationMessagesToAdd = informationMessages.Where(x => !InformationMessages.Select(info => info.Id).Contains(x.Id));
+                foreach (var informationMessageToAdd in informationMessagesToAdd)
+                {
+                    InformationMessages.Add(new InformationMessageViewModel(informationMessageToAdd, languageInfo, NavigationService));
+                }
+            }
+            else
+            {
+                await InitializeInformationMessageAsync().ConfigureAwait(false);
+            }
+        }
+
+        private async Task InitializeInformationMessageAsync()
+        {
+            var languageInfo = await _languageService.GetLanguageInfo().ConfigureAwait(false);
+            var informationMessages = await InformationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
+            InformationMessages = new ObservableCollection<InformationMessageViewModel>(informationMessages.Select(x => new InformationMessageViewModel(x, languageInfo, NavigationService)));
         }
     }
 }

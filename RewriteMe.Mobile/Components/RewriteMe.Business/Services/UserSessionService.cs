@@ -98,6 +98,9 @@ namespace RewriteMe.Business.Services
 
         public string GetToken()
         {
+            if (!CrossSecureStorage.Current.HasKey(AccessTokenKey))
+                return null;
+
             return CrossSecureStorage.Current.GetValue(AccessTokenKey);
         }
 
