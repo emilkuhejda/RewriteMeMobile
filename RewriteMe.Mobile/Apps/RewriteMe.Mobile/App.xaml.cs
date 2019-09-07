@@ -13,6 +13,7 @@ using RewriteMe.Business.Configuration;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Extensions;
@@ -113,7 +114,13 @@ namespace RewriteMe.Mobile
             {
                 Push.PushNotificationReceived += async (sender, e) =>
                 {
-                    await Container.Resolve<ISynchronizationService>().StartAsync().ConfigureAwait(false);
+                    try
+                    {
+                        await Container.Resolve<ISynchronizationService>().StartAsync().ConfigureAwait(false);
+                    }
+                    catch (UnauthorizedCallException)
+                    {
+                    }
                 };
             }
 
