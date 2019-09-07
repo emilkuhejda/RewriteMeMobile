@@ -87,7 +87,7 @@ namespace RewriteMe.Business.Services
             if (token.IsCancellationRequested)
                 return;
 
-            await _synchronizationService.InitializeAsync().ConfigureAwait(false);
+            await _synchronizationService.StartAsync().ConfigureAwait(false);
         }
 
         private void HandleTranscriptionStarted(object sender, EventArgs e)

@@ -113,7 +113,7 @@ namespace RewriteMe.Mobile
             {
                 Push.PushNotificationReceived += async (sender, e) =>
                 {
-                    await Container.Resolve<ISynchronizationService>().InitializeAsync().ConfigureAwait(false);
+                    await Container.Resolve<ISynchronizationService>().StartAsync().ConfigureAwait(false);
                 };
             }
 

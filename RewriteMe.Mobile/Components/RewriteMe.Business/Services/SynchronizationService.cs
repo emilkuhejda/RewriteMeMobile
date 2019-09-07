@@ -47,7 +47,7 @@ namespace RewriteMe.Business.Services
             _internalValueService = internalValueService;
         }
 
-        public async Task InitializeAsync()
+        public async Task StartAsync()
         {
             var isAlive = await _rewriteMeWebService.IsAliveAsync().ConfigureAwait(false);
             if (!isAlive)

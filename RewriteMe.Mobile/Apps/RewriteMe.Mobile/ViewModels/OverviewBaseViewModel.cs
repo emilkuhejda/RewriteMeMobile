@@ -122,7 +122,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             IsRefreshing = true;
 
-            await SynchronizationService.InitializeAsync().ConfigureAwait(false);
+            await SynchronizationService.StartAsync().ConfigureAwait(false);
 
             IsRefreshing = false;
         }
