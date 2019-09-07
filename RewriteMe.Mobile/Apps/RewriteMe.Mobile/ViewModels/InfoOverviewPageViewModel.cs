@@ -54,7 +54,7 @@ namespace RewriteMe.Mobile.ViewModels
                 var informationMessagesToAdd = informationMessages.Where(x => !InformationMessages.Select(info => info.Id).Contains(x.Id));
                 foreach (var informationMessageToAdd in informationMessagesToAdd)
                 {
-                    InformationMessages.Add(new InformationMessageViewModel(informationMessageToAdd, languageInfo, NavigationService));
+                    InformationMessages.Insert(0, new InformationMessageViewModel(informationMessageToAdd, languageInfo, NavigationService));
                 }
             }
             else
