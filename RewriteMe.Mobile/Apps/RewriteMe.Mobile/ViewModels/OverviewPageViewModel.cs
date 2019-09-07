@@ -121,7 +121,7 @@ namespace RewriteMe.Mobile.ViewModels
             ProgressText = Loc.Text(TranslationKeys.LoadingData);
 
             SynchronizationService.InitializationProgress += OnInitializationProgress;
-            await SynchronizationService.InitializeAsync().ConfigureAwait(false);
+            await SynchronizationService.StartAsync().ConfigureAwait(false);
             SynchronizationService.InitializationProgress -= OnInitializationProgress;
 
             ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);

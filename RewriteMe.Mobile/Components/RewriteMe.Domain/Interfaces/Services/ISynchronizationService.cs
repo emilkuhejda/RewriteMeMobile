@@ -10,6 +10,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         event EventHandler SynchronizationCompleted;
 
-        Task InitializeAsync();
+        Task StartAsync();
     }
 }
