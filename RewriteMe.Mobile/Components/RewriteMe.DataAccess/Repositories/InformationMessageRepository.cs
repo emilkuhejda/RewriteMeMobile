@@ -23,7 +23,7 @@ namespace RewriteMe.DataAccess.Repositories
         public async Task<IEnumerable<InformationMessage>> GetAllAsync(DateTime minimumDateTime)
         {
             var entities = await _contextProvider.Context
-                .GetAllWithChildrenAsync<InformationMessageEntity>(x => x.DateCreated >= minimumDateTime)
+                .GetAllWithChildrenAsync<InformationMessageEntity>(x => x.DatePublished >= minimumDateTime)
                 .ConfigureAwait(false);
 
             return entities?.Select(x => x.ToInformationMessage());
@@ -42,6 +42,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.RunInTransactionAsync(database =>
             {
                 database.DeleteAll<InformationMessageEntity>();
+                database.DeleteAll<LanguageVersionEntity>();
                 database.InsertAllWithChildren(mergedFileItems);
             }).ConfigureAwait(false);
         }

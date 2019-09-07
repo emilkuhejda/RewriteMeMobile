@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -22,7 +21,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ISchedulerService _schedulerService;
 
         private string _progressText;
-        private IList<FileItemViewModel> _fileItems;
+        private ObservableCollection<FileItemViewModel> _fileItems;
 
         public OverviewPageViewModel(
             IFileItemService fileItemService,
@@ -38,8 +37,6 @@ namespace RewriteMe.Mobile.ViewModels
             _fileItemService = fileItemService;
             _schedulerService = schedulerService;
 
-            _schedulerService.SynchronizationCompleted += HandleSynchronizationCompleted;
-
             NavigateToCreatePageCommand = new AsyncCommand(ExecuteNavigateToCreatePageCommandAsync);
         }
 
@@ -51,7 +48,7 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _progressText, value);
         }
 
-        public IList<FileItemViewModel> FileItems
+        public ObservableCollection<FileItemViewModel> FileItems
         {
             get => _fileItems;
             set => SetProperty(ref _fileItems, value);
@@ -79,8 +76,43 @@ namespace RewriteMe.Mobile.ViewModels
                     await SynchronizationAsync().ConfigureAwait(false);
                 }
 
-                await InitializeFileItems().ConfigureAwait(false);
+                await InitializeFileItemsAsync().ConfigureAwait(false);
                 NotAvailableData = !FileItems.Any();
+            }
+        }
+
+        protected override async Task RefreshList()
+        {
+            if (FileItems == null || !FileItems.Any())
+                return;
+
+            if (IsCurrent)
+            {
+                var fileItems = (await _fileItemService.GetAllAsync().ConfigureAwait(false)).ToList();
+                foreach (var fileItem in fileItems)
+                {
+                    var viewModel = FileItems.SingleOrDefault(x => x.FileItem.Id == fileItem.Id);
+                    if (viewModel != null)
+                    {
+                        viewModel.Update(fileItem);
+                    }
+                    else
+                    {
+                        var fileItemViewModel = FileItems.FirstOrDefault(x => x.FileItem.DateCreated < fileItem.DateCreated);
+                        var index = fileItemViewModel == null ? 0 : FileItems.IndexOf(fileItemViewModel);
+                        FileItems.Insert(index, new FileItemViewModel(fileItem, NavigationService));
+                    }
+                }
+
+                var fileItemsToDelete = FileItems.Where(x => !fileItems.Select(file => file.Id).Contains(x.FileItem.Id)).ToList();
+                foreach (var fileItemToDelete in fileItemsToDelete)
+                {
+                    FileItems.Remove(fileItemToDelete);
+                }
+            }
+            else
+            {
+                await InitializeFileItemsAsync().ConfigureAwait(false);
             }
         }
 
@@ -89,41 +121,21 @@ namespace RewriteMe.Mobile.ViewModels
             ProgressText = Loc.Text(TranslationKeys.LoadingData);
 
             SynchronizationService.InitializationProgress += OnInitializationProgress;
-            await SynchronizationService.InitializeAsync().ConfigureAwait(false);
+            await SynchronizationService.StartAsync().ConfigureAwait(false);
             SynchronizationService.InitializationProgress -= OnInitializationProgress;
 
             ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
         }
 
-        private async Task InitializeFileItems()
+        private async Task InitializeFileItemsAsync()
         {
             var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
-            FileItems = fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)).ToList();
+            FileItems = new ObservableCollection<FileItemViewModel>(fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)));
         }
 
         private void OnInitializationProgress(object sender, ProgressEventArgs e)
         {
             ProgressText = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
-        }
-
-        private async void HandleSynchronizationCompleted(object sender, EventArgs e)
-        {
-            if (!FileItems.Any())
-                return;
-
-            if (IsCurrent)
-            {
-                var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
-                foreach (var fileItem in fileItems)
-                {
-                    var viewModel = FileItems.SingleOrDefault(x => x.FileItem.Id == fileItem.Id && x.FileItem.RecognitionState != fileItem.RecognitionState);
-                    viewModel?.Update(fileItem);
-                }
-            }
-            else
-            {
-                await InitializeFileItems().ConfigureAwait(false);
-            }
         }
 
         private async Task ExecuteNavigateToCreatePageCommandAsync()
@@ -134,13 +146,6 @@ namespace RewriteMe.Mobile.ViewModels
         protected override async Task ExecuteNavigateToOverviewAsync()
         {
             await Task.CompletedTask.ConfigureAwait(false);
-        }
-
-        protected override void DisposeInternal()
-        {
-            base.DisposeInternal();
-
-            _schedulerService.SynchronizationCompleted -= HandleSynchronizationCompleted;
         }
     }
 }

@@ -13,6 +13,7 @@ using RewriteMe.Business.Configuration;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Extensions;
@@ -108,6 +109,20 @@ namespace RewriteMe.Mobile
         protected override void OnStart()
         {
             base.OnStart();
+
+            if (!AppCenter.Configured)
+            {
+                Push.PushNotificationReceived += async (sender, e) =>
+                {
+                    try
+                    {
+                        await Container.Resolve<ISynchronizationService>().StartAsync().ConfigureAwait(false);
+                    }
+                    catch (UnauthorizedCallException)
+                    {
+                    }
+                };
+            }
 
             AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Push));
         }
