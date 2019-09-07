@@ -109,6 +109,14 @@ namespace RewriteMe.Mobile
         {
             base.OnStart();
 
+            if (!AppCenter.Configured)
+            {
+                Push.PushNotificationReceived += async (sender, e) =>
+                {
+                    await Container.Resolve<ISynchronizationService>().InitializeAsync().ConfigureAwait(false);
+                };
+            }
+
             AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Push));
         }
 
