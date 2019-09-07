@@ -74,9 +74,17 @@ namespace RewriteMe.Mobile.ViewModels
 
         public async void OnNavigatedTo(INavigationParameters parameters)
         {
-            try
+            await HandleWebServiceCallAsync(async () =>
             {
                 await LoadDataAsync(parameters).ConfigureAwait(false);
+            }).ConfigureAwait(false);
+        }
+
+        protected async Task HandleWebServiceCallAsync(Func<Task> action)
+        {
+            try
+            {
+                await action().ConfigureAwait(false);
             }
             catch (UnauthorizedCallException)
             {
