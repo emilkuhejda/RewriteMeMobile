@@ -15,8 +15,6 @@ namespace RewriteMe.Business.Services
 
         private CancellationTokenSource _cancellationTokenSource;
 
-        public event EventHandler SynchronizationCompleted;
-
         public SchedulerService(
             IFileItemService fileItemService,
             ISynchronizationService synchronizationService)
@@ -90,18 +88,11 @@ namespace RewriteMe.Business.Services
                 return;
 
             await _synchronizationService.InitializeAsync().ConfigureAwait(false);
-
-            OnSynchronizationCompleted();
         }
 
         private void HandleTranscriptionStarted(object sender, EventArgs e)
         {
             Start();
-        }
-
-        private void OnSynchronizationCompleted()
-        {
-            SynchronizationCompleted?.Invoke(this, EventArgs.Empty);
         }
     }
 }

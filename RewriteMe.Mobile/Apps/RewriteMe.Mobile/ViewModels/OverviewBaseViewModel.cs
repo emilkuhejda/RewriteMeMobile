@@ -154,6 +154,12 @@ namespace RewriteMe.Mobile.ViewModels
         private async void HandleSynchronizationCompleted(object sender, EventArgs e)
         {
             await UpdateNavigationItemIconAsync().ConfigureAwait(false);
+            await RefreshList().ConfigureAwait(false);
+        }
+
+        protected virtual async Task RefreshList()
+        {
+            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         protected override void DisposeInternal()
