@@ -42,6 +42,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.RunInTransactionAsync(database =>
             {
                 database.DeleteAll<InformationMessageEntity>();
+                database.DeleteAll<LanguageVersionEntity>();
                 database.InsertAllWithChildren(mergedFileItems);
             }).ConfigureAwait(false);
         }
