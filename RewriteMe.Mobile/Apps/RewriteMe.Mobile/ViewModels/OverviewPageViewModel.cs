@@ -76,31 +76,9 @@ namespace RewriteMe.Mobile.ViewModels
                     await SynchronizationAsync().ConfigureAwait(false);
                 }
 
-                await InitializeFileItems().ConfigureAwait(false);
+                await InitializeFileItemsAsync().ConfigureAwait(false);
                 NotAvailableData = !FileItems.Any();
             }
-        }
-
-        private async Task SynchronizationAsync()
-        {
-            ProgressText = Loc.Text(TranslationKeys.LoadingData);
-
-            SynchronizationService.InitializationProgress += OnInitializationProgress;
-            await SynchronizationService.InitializeAsync().ConfigureAwait(false);
-            SynchronizationService.InitializationProgress -= OnInitializationProgress;
-
-            ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
-        }
-
-        private async Task InitializeFileItems()
-        {
-            var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
-            FileItems = new ObservableCollection<FileItemViewModel>(fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)));
-        }
-
-        private void OnInitializationProgress(object sender, ProgressEventArgs e)
-        {
-            ProgressText = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
         }
 
         protected override async Task RefreshList()
@@ -134,8 +112,30 @@ namespace RewriteMe.Mobile.ViewModels
             }
             else
             {
-                await InitializeFileItems().ConfigureAwait(false);
+                await InitializeFileItemsAsync().ConfigureAwait(false);
             }
+        }
+
+        private async Task SynchronizationAsync()
+        {
+            ProgressText = Loc.Text(TranslationKeys.LoadingData);
+
+            SynchronizationService.InitializationProgress += OnInitializationProgress;
+            await SynchronizationService.InitializeAsync().ConfigureAwait(false);
+            SynchronizationService.InitializationProgress -= OnInitializationProgress;
+
+            ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
+        }
+
+        private async Task InitializeFileItemsAsync()
+        {
+            var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
+            FileItems = new ObservableCollection<FileItemViewModel>(fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)));
+        }
+
+        private void OnInitializationProgress(object sender, ProgressEventArgs e)
+        {
+            ProgressText = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
         }
 
         private async Task ExecuteNavigateToCreatePageCommandAsync()
