@@ -67,7 +67,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var languageInfo = await _languageService.GetLanguageInfo().ConfigureAwait(false);
             var informationMessages = await InformationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
-            InformationMessages = new ObservableCollection<InformationMessageViewModel>(informationMessages.Select(x => new InformationMessageViewModel(x, languageInfo, NavigationService)));
+            var viewModels = informationMessages.OrderByDescending(x => x.DatePublished).Select(x => new InformationMessageViewModel(x, languageInfo, NavigationService));
+            InformationMessages = new ObservableCollection<InformationMessageViewModel>(viewModels);
         }
     }
 }
