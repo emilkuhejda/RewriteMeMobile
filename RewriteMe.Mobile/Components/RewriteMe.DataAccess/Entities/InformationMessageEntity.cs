@@ -10,7 +10,7 @@ namespace RewriteMe.DataAccess.Entities
         [PrimaryKey]
         public Guid Id { get; set; }
 
-        public DateTime DateCreated { get; set; }
+        public DateTime DatePublished { get; set; }
 
         public bool WasOpened { get; set; }
 
