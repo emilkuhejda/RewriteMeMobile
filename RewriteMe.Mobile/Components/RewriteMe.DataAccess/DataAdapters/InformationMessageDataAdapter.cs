@@ -15,6 +15,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 WasOpened = entity.WasOpened,
                 DateUpdated = entity.DateUpdated,
                 DatePublished = entity.DatePublished,
+                IsPendingSynchronization = entity.IsPendingSynchronization,
                 LanguageVersions = entity.LanguageVersions?.Select(x => x.ToLanguageVersion()).ToList()
             };
         }
@@ -28,6 +29,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 WasOpened = informationMessage.WasOpened,
                 DateUpdated = informationMessage.DateUpdated,
                 DatePublished = informationMessage.DatePublished,
+                IsPendingSynchronization = informationMessage.IsPendingSynchronization,
                 LanguageVersions = informationMessage.LanguageVersions?.Select(x => x.ToLanguageVersionEntity()).ToArray()
             };
         }
