@@ -51,6 +51,8 @@ namespace RewriteMe.Business.Services
                     await _internalValueService.UpdateValueAsync(InternalValues.InformationMessageSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
+
+            SendPendingInformationMessagesAsync().FireAndForget();
         }
 
         public async Task<IEnumerable<InformationMessage>> GetAllForLastWeekAsync()
@@ -72,7 +74,31 @@ namespace RewriteMe.Business.Services
 
             if (informationMessage.IsUserSpecific)
             {
-                _rewriteMeWebService.MarkMessageAsOpenedAsync(informationMessage.Id).FireAndForget();
+                MarkMessageAsOpenedAsync(informationMessage).FireAndForget();
+            }
+        }
+
+        private async Task MarkMessageAsOpenedAsync(InformationMessage informationMessage)
+        {
+            var httpRequestResult = await _rewriteMeWebService.MarkMessageAsOpenedAsync(informationMessage.Id).ConfigureAwait(false);
+            if (httpRequestResult.State != HttpRequestState.Success)
+            {
+                informationMessage.IsPendingSynchronization = true;
+
+                await _informationMessageRepository.UpdateAsync(informationMessage).ConfigureAwait(false);
+            }
+        }
+
+        private async Task SendPendingInformationMessagesAsync()
+        {
+            var pendingInformationMessages = await _informationMessageRepository.GetPendingAsync().ConfigureAwait(false);
+            var informationMessages = pendingInformationMessages.ToList();
+            if (!informationMessages.Any())
+                return;
+
+            foreach (var informationMessage in informationMessages)
+            {
+                MarkMessageAsOpenedAsync(informationMessage).FireAndForget();
             }
         }
     }

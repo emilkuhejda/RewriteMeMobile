@@ -18,6 +18,8 @@ namespace RewriteMe.DataAccess.Entities
 
         public DateTime DatePublished { get; set; }
 
+        public bool IsPendingSynchronization { get; set; }
+
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public LanguageVersionEntity[] LanguageVersions { get; set; }
     }
