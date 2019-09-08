@@ -20,6 +20,7 @@ namespace RewriteMe.Business.Services
         private readonly IInformationMessageService _informationMessageService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IInternalValueService _internalValueService;
+        private readonly IConnectivityService _connectivityService;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
         public event EventHandler SynchronizationCompleted;
@@ -35,7 +36,8 @@ namespace RewriteMe.Business.Services
             IUserSubscriptionService userSubscriptionService,
             IInformationMessageService informationMessageService,
             IRewriteMeWebService rewriteMeWebService,
-            IInternalValueService internalValueService)
+            IInternalValueService internalValueService,
+            IConnectivityService connectivityService)
         {
             _lastUpdatesService = lastUpdatesService;
             _deletedFileItemService = deletedFileItemService;
@@ -45,6 +47,7 @@ namespace RewriteMe.Business.Services
             _informationMessageService = informationMessageService;
             _rewriteMeWebService = rewriteMeWebService;
             _internalValueService = internalValueService;
+            _connectivityService = connectivityService;
         }
 
         public async Task StartAsync()
