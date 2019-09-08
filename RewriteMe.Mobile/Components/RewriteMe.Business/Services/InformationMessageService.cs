@@ -69,6 +69,7 @@ namespace RewriteMe.Business.Services
         public async Task MarkAsOpenedAsync(InformationMessage informationMessage)
         {
             informationMessage.WasOpened = true;
+            informationMessage.IsPendingSynchronization = false;
 
             await _informationMessageRepository.UpdateAsync(informationMessage).ConfigureAwait(false);
 
@@ -96,9 +97,15 @@ namespace RewriteMe.Business.Services
             if (!informationMessages.Any())
                 return;
 
-            foreach (var informationMessage in informationMessages)
+            var ids = informationMessages.Select(x => (Guid?)x.Id);
+            var httpRequestResult = await _rewriteMeWebService.MarkMessagesAsOpenedAsync(ids).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
             {
-                MarkMessageAsOpenedAsync(informationMessage).FireAndForget();
+                foreach (var informationMessage in informationMessages)
+                {
+                    informationMessage.IsPendingSynchronization = false;
+                    await _informationMessageRepository.UpdateAsync(informationMessage).ConfigureAwait(false);
+                }
             }
         }
     }
