@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 
@@ -30,7 +31,7 @@ namespace RewriteMe.Business.Services
 
         public bool IsRunning { get; private set; }
 
-        public async void Start()
+        public async Task Start()
         {
             lock (_lockObject)
             {
@@ -99,7 +100,7 @@ namespace RewriteMe.Business.Services
 
         private void HandleTranscriptionStarted(object sender, EventArgs e)
         {
-            Start();
+            Start().FireAndForget();
         }
     }
 }

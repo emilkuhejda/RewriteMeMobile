@@ -8,6 +8,7 @@ using System.Windows.Input;
 using Plugin.AudioRecorder;
 using Prism.Commands;
 using Prism.Navigation;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
@@ -298,10 +299,10 @@ namespace RewriteMe.Mobile.ViewModels
             _audioRecorder.AudioInputReceived += OnAudioInputReceived;
 
             var audioRecordTask = await _audioRecorder.StartRecording().ConfigureAwait(false);
-            RecognizeAsync(audioRecordTask, filePath, CurrentRecordedItem.Id);
+            RecognizeAsync(audioRecordTask, filePath, CurrentRecordedItem.Id).FireAndForget();
         }
 
-        private async void RecognizeAsync(Task audioRecordTask, string filePath, Guid recordedItemId)
+        private async Task RecognizeAsync(Task audioRecordTask, string filePath, Guid recordedItemId)
         {
             var recordedAudioFile = new RecordedAudioFile
             {
