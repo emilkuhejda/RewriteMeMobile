@@ -51,8 +51,6 @@ namespace RewriteMe.Business.Services
                     await _internalValueService.UpdateValueAsync(InternalValues.InformationMessageSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
-
-            SendPendingInformationMessagesAsync().FireAndForget();
         }
 
         public async Task<IEnumerable<InformationMessage>> GetAllForLastWeekAsync()
@@ -90,12 +88,14 @@ namespace RewriteMe.Business.Services
             }
         }
 
-        private async Task SendPendingInformationMessagesAsync()
+        public async Task SendPendingAsync()
         {
             var pendingInformationMessages = await _informationMessageRepository.GetPendingAsync().ConfigureAwait(false);
             var informationMessages = pendingInformationMessages.ToList();
             if (!informationMessages.Any())
                 return;
+
+            _logger.Info($"Send pending information message open marks {informationMessages.Count} to server.");
 
             var ids = informationMessages.Select(x => (Guid?)x.Id);
             var httpRequestResult = await _rewriteMeWebService.MarkMessagesAsOpenedAsync(ids).ConfigureAwait(false);

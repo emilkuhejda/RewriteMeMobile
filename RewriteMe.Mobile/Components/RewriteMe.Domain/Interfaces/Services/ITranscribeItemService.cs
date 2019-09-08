@@ -12,5 +12,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<IEnumerable<TranscribeItem>> GetAllAsync(Guid fileItemId);
 
         Task SaveAndSendAsync(IEnumerable<TranscribeItem> transcribeItems);
+
+        Task SendPendingAsync();
     }
 }
