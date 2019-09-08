@@ -10,9 +10,13 @@ namespace RewriteMe.DataAccess.Entities
         [PrimaryKey]
         public Guid Id { get; set; }
 
-        public DateTime DatePublished { get; set; }
+        public bool IsUserSpecific { get; set; }
 
         public bool WasOpened { get; set; }
+
+        public DateTime DateUpdated { get; set; }
+
+        public DateTime DatePublished { get; set; }
 
         [OneToMany(CascadeOperations = CascadeOperation.All)]
         public LanguageVersionEntity[] LanguageVersions { get; set; }

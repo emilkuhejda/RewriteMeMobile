@@ -69,7 +69,11 @@ namespace RewriteMe.Business.Services
             informationMessage.WasOpened = true;
 
             await _informationMessageRepository.UpdateAsync(informationMessage).ConfigureAwait(false);
-            _rewriteMeWebService.MarkMessageAsOpenedAsync(informationMessage.Id).FireAndForget();
+
+            if (informationMessage.IsUserSpecific)
+            {
+                _rewriteMeWebService.MarkMessageAsOpenedAsync(informationMessage.Id).FireAndForget();
+            }
         }
     }
 }
