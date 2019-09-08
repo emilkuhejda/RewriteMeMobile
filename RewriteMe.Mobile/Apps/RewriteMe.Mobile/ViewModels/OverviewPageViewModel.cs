@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Services;
@@ -60,7 +61,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 await InitializeNavigation(CurrentPage.Overview).ConfigureAwait(false);
 
-                _schedulerService.Start();
+                _schedulerService.Start().FireAndForget();
 
                 ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
 

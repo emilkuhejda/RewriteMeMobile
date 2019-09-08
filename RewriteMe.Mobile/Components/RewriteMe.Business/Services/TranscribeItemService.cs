@@ -52,10 +52,10 @@ namespace RewriteMe.Business.Services
                 }
             }
 
-            SendPendingTranscribeItemsAsync();
+            SendPendingTranscribeItemsAsync().FireAndForget();
         }
 
-        private async void SendPendingTranscribeItemsAsync()
+        private async Task SendPendingTranscribeItemsAsync()
         {
             var pendingTranscribeItems = await _transcribeItemRepository.GetPendingAsync().ConfigureAwait(false);
             var transcribeItems = pendingTranscribeItems.ToList();
