@@ -56,10 +56,13 @@ namespace RewriteMe.Mobile.ViewModels
                 if (languageVersion == null)
                     return;
 
-                await _informationMessageService.MarkAsOpenedAsync(informationMessage).ConfigureAwait(false);
-
                 Title = languageVersion.Title;
                 Description = new HtmlWebViewSource { Html = languageVersion.Description };
+
+                if (!informationMessage.WasOpened)
+                {
+                    await _informationMessageService.MarkAsOpenedAsync(informationMessage).ConfigureAwait(false);
+                }
             }
         }
     }

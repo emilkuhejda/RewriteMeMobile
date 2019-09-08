@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
@@ -68,6 +69,7 @@ namespace RewriteMe.Business.Services
             informationMessage.WasOpened = true;
 
             await _informationMessageRepository.UpdateAsync(informationMessage).ConfigureAwait(false);
+            _rewriteMeWebService.MarkMessageAsOpenedAsync(informationMessage.Id).FireAndForget();
         }
     }
 }
