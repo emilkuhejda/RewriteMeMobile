@@ -58,6 +58,13 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(informationMessage.ToInformationMessageEntity()).ConfigureAwait(false);
         }
 
+        public async Task<IEnumerable<InformationMessage>> GetPendingAsync()
+        {
+            var entities = await _contextProvider.Context.GetAllWithChildrenAsync<InformationMessageEntity>(x => x.IsPendingSynchronization).ConfigureAwait(false);
+
+            return entities.Select(x => x.ToInformationMessage());
+        }
+
         public async Task ClearAsync()
         {
             await _contextProvider.Context.DeleteAllAsync<InformationMessageEntity>().ConfigureAwait(false);

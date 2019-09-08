@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
@@ -51,10 +52,10 @@ namespace RewriteMe.Business.Services
                 }
             }
 
-            SendPendingTranscribeItemsAsync();
+            SendPendingTranscribeItemsAsync().FireAndForget();
         }
 
-        private async void SendPendingTranscribeItemsAsync()
+        private async Task SendPendingTranscribeItemsAsync()
         {
             var pendingTranscribeItems = await _transcribeItemRepository.GetPendingAsync().ConfigureAwait(false);
             var transcribeItems = pendingTranscribeItems.ToList();
@@ -81,11 +82,11 @@ namespace RewriteMe.Business.Services
         {
             foreach (var transcribeItem in transcribeItems)
             {
-                Send(transcribeItem);
+                SendAsync(transcribeItem).FireAndForget();
             }
         }
 
-        private async void Send(TranscribeItem transcribeItem)
+        private async Task SendAsync(TranscribeItem transcribeItem)
         {
             var httpRequestResult = await _rewriteMeWebService.UpdateUserTranscriptAsync(transcribeItem.Id, transcribeItem.UserTranscript).ConfigureAwait(false);
             if (httpRequestResult.State != HttpRequestState.Success)

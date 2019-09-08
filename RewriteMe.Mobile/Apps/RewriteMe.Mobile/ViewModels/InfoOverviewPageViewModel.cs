@@ -54,7 +54,7 @@ namespace RewriteMe.Mobile.ViewModels
                 var informationMessagesToAdd = informationMessages.Where(x => !InformationMessages.Select(info => info.Id).Contains(x.Id));
                 foreach (var informationMessageToAdd in informationMessagesToAdd)
                 {
-                    InformationMessages.Add(new InformationMessageViewModel(informationMessageToAdd, languageInfo, NavigationService));
+                    InformationMessages.Insert(0, new InformationMessageViewModel(informationMessageToAdd, languageInfo, NavigationService));
                 }
             }
             else
@@ -67,7 +67,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var languageInfo = await _languageService.GetLanguageInfo().ConfigureAwait(false);
             var informationMessages = await InformationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
-            InformationMessages = new ObservableCollection<InformationMessageViewModel>(informationMessages.Select(x => new InformationMessageViewModel(x, languageInfo, NavigationService)));
+            var viewModels = informationMessages.OrderByDescending(x => x.DatePublished).Select(x => new InformationMessageViewModel(x, languageInfo, NavigationService));
+            InformationMessages = new ObservableCollection<InformationMessageViewModel>(viewModels);
         }
     }
 }

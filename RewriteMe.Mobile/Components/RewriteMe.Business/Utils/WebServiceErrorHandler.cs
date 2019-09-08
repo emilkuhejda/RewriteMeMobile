@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.Rest;
 using RewriteMe.Business.Extensions;
+using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Services;
@@ -42,9 +43,10 @@ namespace RewriteMe.Business.Utils
                 _logger.Info($"Web service request for type '{targetTypeName}' finished.");
                 return new HttpRequestResult<T>(HttpRequestState.Success, (int)HttpStatusCode.OK, payload);
             }
-            catch (UnauthorizedCallException)
+            catch (UnauthorizedCallException ex)
             {
                 _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '401'.");
+                _logger.Error(ExceptionFormatter.FormatException(ex));
                 throw;
             }
             catch (ProblemDetailsException exception)

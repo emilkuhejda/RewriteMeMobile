@@ -11,8 +11,11 @@ namespace RewriteMe.DataAccess.DataAdapters
             return new InformationMessage
             {
                 Id = entity.Id,
-                DatePublished = entity.DatePublished,
+                IsUserSpecific = entity.IsUserSpecific,
                 WasOpened = entity.WasOpened,
+                DateUpdated = entity.DateUpdated,
+                DatePublished = entity.DatePublished,
+                IsPendingSynchronization = entity.IsPendingSynchronization,
                 LanguageVersions = entity.LanguageVersions?.Select(x => x.ToLanguageVersion()).ToList()
             };
         }
@@ -22,8 +25,11 @@ namespace RewriteMe.DataAccess.DataAdapters
             return new InformationMessageEntity
             {
                 Id = informationMessage.Id,
-                DatePublished = informationMessage.DatePublished,
+                IsUserSpecific = informationMessage.IsUserSpecific,
                 WasOpened = informationMessage.WasOpened,
+                DateUpdated = informationMessage.DateUpdated,
+                DatePublished = informationMessage.DatePublished,
+                IsPendingSynchronization = informationMessage.IsPendingSynchronization,
                 LanguageVersions = informationMessage.LanguageVersions?.Select(x => x.ToLanguageVersionEntity()).ToArray()
             };
         }
