@@ -51,18 +51,6 @@ namespace RewriteMe.Business.Services
                     await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
-
-            SendPendingTranscribeItemsAsync().FireAndForget();
-        }
-
-        private async Task SendPendingTranscribeItemsAsync()
-        {
-            var pendingTranscribeItems = await _transcribeItemRepository.GetPendingAsync().ConfigureAwait(false);
-            var transcribeItems = pendingTranscribeItems.ToList();
-            if (!transcribeItems.Any())
-                return;
-
-            SendAllAsync(transcribeItems);
         }
 
         public async Task<IEnumerable<TranscribeItem>> GetAllAsync(Guid fileItemId)
@@ -76,6 +64,18 @@ namespace RewriteMe.Business.Services
             await _transcribeItemRepository.UpdateAllAsync(items).ConfigureAwait(false);
 
             SendAllAsync(items);
+        }
+
+        public async Task SendPendingAsync()
+        {
+            var pendingTranscribeItems = await _transcribeItemRepository.GetPendingAsync().ConfigureAwait(false);
+            var transcribeItems = pendingTranscribeItems.ToList();
+            if (!transcribeItems.Any())
+                return;
+
+            _logger.Info($"Send pending transcribe items {transcribeItems.Count} to server.");
+
+            SendAllAsync(transcribeItems);
         }
 
         private void SendAllAsync(IEnumerable<TranscribeItem> transcribeItems)
