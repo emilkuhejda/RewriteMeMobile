@@ -14,5 +14,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<bool> IsUnopenedMessageAsync();
 
         Task MarkAsOpenedAsync(InformationMessage informationMessage);
+
+        Task SendPendingAsync();
     }
 }

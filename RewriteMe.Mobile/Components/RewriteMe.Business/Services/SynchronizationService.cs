@@ -20,6 +20,7 @@ namespace RewriteMe.Business.Services
         private readonly IInformationMessageService _informationMessageService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IInternalValueService _internalValueService;
+        private readonly IConnectivityService _connectivityService;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
         public event EventHandler SynchronizationCompleted;
@@ -35,7 +36,8 @@ namespace RewriteMe.Business.Services
             IUserSubscriptionService userSubscriptionService,
             IInformationMessageService informationMessageService,
             IRewriteMeWebService rewriteMeWebService,
-            IInternalValueService internalValueService)
+            IInternalValueService internalValueService,
+            IConnectivityService connectivityService)
         {
             _lastUpdatesService = lastUpdatesService;
             _deletedFileItemService = deletedFileItemService;
@@ -45,6 +47,9 @@ namespace RewriteMe.Business.Services
             _informationMessageService = informationMessageService;
             _rewriteMeWebService = rewriteMeWebService;
             _internalValueService = internalValueService;
+            _connectivityService = connectivityService;
+
+            _connectivityService.ConnectivityChanged += HandleConnectivityChanged;
         }
 
         public async Task StartAsync()
@@ -59,7 +64,7 @@ namespace RewriteMe.Business.Services
             if (!_lastUpdatesService.IsConnectionSuccessful)
                 return;
 
-            await SendPendingDeletedFileItems().ConfigureAwait(false);
+            await SendPendingDataAsync().ConfigureAwait(false);
 
             var updateMethods = new List<Func<Task>>
             {
@@ -87,9 +92,17 @@ namespace RewriteMe.Business.Services
             InitializationProgress?.Invoke(this, new ProgressEventArgs(_totalResourceInitializationTasks, currentTask));
         }
 
-        private async Task SendPendingDeletedFileItems()
+        private async Task SendPendingDataAsync()
         {
-            await _deletedFileItemService.SendPendingAsync().ConfigureAwait(false);
+            var updateMethods = new List<Func<Task>>
+            {
+                _deletedFileItemService.SendPendingAsync,
+                _transcribeItemService.SendPendingAsync,
+                _informationMessageService.SendPendingAsync
+            };
+
+            var tasks = updateMethods.Select(x => x()).ToArray();
+            await Task.WhenAll(tasks).ConfigureAwait(false);
         }
 
         private async Task UpdateFileItemsAsync()
@@ -142,6 +155,14 @@ namespace RewriteMe.Business.Services
         private void OnSynchronizationCompleted()
         {
             SynchronizationCompleted?.Invoke(this, EventArgs.Empty);
+        }
+
+        private async void HandleConnectivityChanged(object sender, EventArgs e)
+        {
+            if (!_connectivityService.IsConnected)
+                return;
+
+            await SendPendingDataAsync().ConfigureAwait(false);
         }
     }
 }
