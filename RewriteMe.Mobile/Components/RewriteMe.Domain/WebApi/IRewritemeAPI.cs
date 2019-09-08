@@ -179,6 +179,16 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         Task<HttpOperationResponse<object>> MarkMessageAsOpenedWithHttpMessagesAsync(System.Guid? informationMessageId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
+        /// <param name='ids'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<HttpOperationResponse<object>> MarkMessagesAsOpenedWithHttpMessagesAsync(IList<System.Guid?> ids = default(IList<System.Guid?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
         /// </param>

@@ -49,6 +49,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<InformationMessage>> MarkMessageAsOpenedAsync(Guid informationMessageId);
 
+        Task<HttpRequestResult<Ok>> MarkMessagesAsOpenedAsync(IEnumerable<Guid?> ids);
+
         Task<HttpRequestResult<RecognizedTime>> GetRecognizedTimeAsync();
 
         Task RefreshTokenIfNeededAsync();

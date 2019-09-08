@@ -151,6 +151,12 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.MarkMessageAsOpenedAsync(informationMessageId, customHeaders)).ConfigureAwait(false);
         }
 
+        public async Task<HttpRequestResult<Ok>> MarkMessagesAsOpenedAsync(IEnumerable<Guid?> ids)
+        {
+            var customHeaders = GetAuthHeaders();
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.MarkMessagesAsOpenedAsync(ids, customHeaders)).ConfigureAwait(false);
+        }
+
         public async Task<HttpRequestResult<RecognizedTime>> GetRecognizedTimeAsync()
         {
             var customHeaders = GetAuthHeaders();
