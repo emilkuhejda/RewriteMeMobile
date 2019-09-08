@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
@@ -50,6 +51,8 @@ namespace RewriteMe.Business.Services
                     await _internalValueService.UpdateValueAsync(InternalValues.InformationMessageSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
+
+            SendPendingInformationMessagesAsync().FireAndForget();
         }
 
         public async Task<IEnumerable<InformationMessage>> GetAllForLastWeekAsync()
@@ -66,8 +69,44 @@ namespace RewriteMe.Business.Services
         public async Task MarkAsOpenedAsync(InformationMessage informationMessage)
         {
             informationMessage.WasOpened = true;
+            informationMessage.IsPendingSynchronization = false;
 
             await _informationMessageRepository.UpdateAsync(informationMessage).ConfigureAwait(false);
+
+            if (informationMessage.IsUserSpecific)
+            {
+                MarkMessageAsOpenedAsync(informationMessage).FireAndForget();
+            }
+        }
+
+        private async Task MarkMessageAsOpenedAsync(InformationMessage informationMessage)
+        {
+            var httpRequestResult = await _rewriteMeWebService.MarkMessageAsOpenedAsync(informationMessage.Id).ConfigureAwait(false);
+            if (httpRequestResult.State != HttpRequestState.Success)
+            {
+                informationMessage.IsPendingSynchronization = true;
+
+                await _informationMessageRepository.UpdateAsync(informationMessage).ConfigureAwait(false);
+            }
+        }
+
+        private async Task SendPendingInformationMessagesAsync()
+        {
+            var pendingInformationMessages = await _informationMessageRepository.GetPendingAsync().ConfigureAwait(false);
+            var informationMessages = pendingInformationMessages.ToList();
+            if (!informationMessages.Any())
+                return;
+
+            var ids = informationMessages.Select(x => (Guid?)x.Id);
+            var httpRequestResult = await _rewriteMeWebService.MarkMessagesAsOpenedAsync(ids).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            {
+                foreach (var informationMessage in informationMessages)
+                {
+                    informationMessage.IsPendingSynchronization = false;
+                    await _informationMessageRepository.UpdateAsync(informationMessage).ConfigureAwait(false);
+                }
+            }
         }
     }
 }

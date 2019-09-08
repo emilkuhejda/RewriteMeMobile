@@ -1,8 +1,10 @@
-﻿namespace RewriteMe.Domain.Interfaces.Services
+﻿using System.Threading.Tasks;
+
+namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface ISchedulerService
     {
-        void Start();
+        Task Start();
 
         void Stop();
     }

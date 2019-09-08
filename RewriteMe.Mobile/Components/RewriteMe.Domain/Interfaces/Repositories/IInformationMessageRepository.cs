@@ -15,6 +15,8 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task UpdateAsync(InformationMessage informationMessage);
 
+        Task<IEnumerable<InformationMessage>> GetPendingAsync();
+
         Task ClearAsync();
     }
 }

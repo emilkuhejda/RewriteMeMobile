@@ -10,6 +10,7 @@ using Prism.Ioc;
 using Prism.Navigation;
 using Prism.Unity;
 using RewriteMe.Business.Configuration;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
@@ -129,7 +130,7 @@ namespace RewriteMe.Mobile
 
         protected override void OnResume()
         {
-            Container.Resolve<ISchedulerService>().Start();
+            Container.Resolve<ISchedulerService>().Start().FireAndForget();
         }
 
         protected override async void OnSleep()

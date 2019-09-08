@@ -37,6 +37,7 @@ namespace RewriteMe.Business.Services
         private readonly IUserSessionRepository _userSessionRepository;
         private readonly IUserSubscriptionRepository _userSubscriptionRepository;
         private readonly ILogger _logger;
+        private readonly object _lockObject = new object();
 
         private Guid _userId = Guid.Empty;
         private AccessToken _accessToken;
@@ -98,10 +99,13 @@ namespace RewriteMe.Business.Services
 
         public string GetToken()
         {
-            if (!CrossSecureStorage.Current.HasKey(AccessTokenKey))
-                return null;
+            lock (_lockObject)
+            {
+                if (!CrossSecureStorage.Current.HasKey(AccessTokenKey))
+                    return null;
 
-            return CrossSecureStorage.Current.GetValue(AccessTokenKey);
+                return CrossSecureStorage.Current.GetValue(AccessTokenKey);
+            }
         }
 
         public void SetToken(string accessToken)

@@ -2,6 +2,6 @@
 {
     public partial class InformationMessage
     {
-        public bool WasOpened { get; set; }
+        public bool IsPendingSynchronization { get; set; }
     }
 }
