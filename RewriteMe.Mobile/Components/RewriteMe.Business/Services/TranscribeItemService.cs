@@ -59,11 +59,15 @@ namespace RewriteMe.Business.Services
 
         public async Task AudioSourcesSynchronizationAsync(CancellationToken cancellationToken)
         {
-            var transcribeItemsToUpdate = await _transcribeItemRepository.GetAllForAudioSourceSynchronizationAsync().ConfigureAwait(false);
-            var transcribeItems = transcribeItemsToUpdate.Select(x => x.Id).ToArray().Split(10);
+            var itemsToUpdate = await _transcribeItemRepository.GetAllForAudioSourceSynchronizationAsync().ConfigureAwait(false);
+            var transcribeItemsToUpdate = itemsToUpdate.ToList();
+            if (!transcribeItemsToUpdate.Any())
+                return;
 
+            var transcribeItems = transcribeItemsToUpdate.Select(x => x.Id).ToArray().Split(10);
             foreach (var transcribeItemIds in transcribeItems)
             {
+                cancellationToken.ThrowIfCancellationRequested();
                 var updateMethods = new List<Func<Task>>();
                 foreach (var transcribeItem in transcribeItemIds)
                 {
@@ -73,6 +77,9 @@ namespace RewriteMe.Business.Services
                 var tasks = updateMethods.Select(x => x());
                 await Task.WhenAll(tasks).ConfigureAwait(false);
             }
+
+            cancellationToken.ThrowIfCancellationRequested();
+            await AudioSourcesSynchronizationAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<TranscribeItem>> GetAllAsync(Guid fileItemId)

@@ -4,6 +4,7 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Prism.Ioc;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 using OperationCanceledException = System.OperationCanceledException;
 
@@ -12,7 +13,9 @@ namespace RewriteMe.Mobile.Droid.BackgroundServices
     [Service]
     public class TranscribeItemBackgroundService : Service
     {
+        private readonly object _lockObject = new object();
         private CancellationTokenSource _cancellationTokenSource;
+        private bool _isRunning;
 
         public override IBinder OnBind(Intent intent)
         {
@@ -30,6 +33,14 @@ namespace RewriteMe.Mobile.Droid.BackgroundServices
 
         public async Task RunAsync(int startId)
         {
+            lock (_lockObject)
+            {
+                if (_isRunning)
+                    return;
+
+                _isRunning = true;
+            }
+
             try
             {
                 var app = (App)Xamarin.Forms.Application.Current;
@@ -40,12 +51,18 @@ namespace RewriteMe.Mobile.Droid.BackgroundServices
             catch (OperationCanceledException)
             {
             }
+            catch (UnauthorizedCallException)
+            {
+                _cancellationTokenSource.Cancel();
+            }
             finally
             {
                 if (!_cancellationTokenSource.IsCancellationRequested)
                 {
                     StopSelf(startId);
                 }
+
+                _isRunning = false;
             }
         }
 

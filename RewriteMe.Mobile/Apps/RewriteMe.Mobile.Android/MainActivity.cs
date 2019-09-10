@@ -13,6 +13,7 @@ using Microsoft.AppCenter.Push;
 using Microsoft.Identity.Client;
 using Plugin.InAppBilling;
 using RewriteMe.Business.Configuration;
+using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.Droid.BackgroundServices;
 using RewriteMe.Mobile.Droid.Configuration;
 using RewriteMe.Mobile.Droid.Extensions;
@@ -51,6 +52,16 @@ namespace RewriteMe.Mobile.Droid
             {
                 ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.RecordAudio }, 1);
             }
+
+            WireUpBackgroundService();
+        }
+
+        private void WireUpBackgroundService()
+        {
+            MessagingCenter.Subscribe<StartTranscribeItemBackgroundServiceMessage>(
+                this,
+                nameof(StartTranscribeItemBackgroundServiceMessage),
+                message => { StartTranscribeItemBackgroundService(); });
         }
 
         private void StartTranscribeItemBackgroundService()

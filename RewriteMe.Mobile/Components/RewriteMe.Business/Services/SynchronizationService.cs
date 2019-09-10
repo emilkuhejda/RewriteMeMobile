@@ -7,6 +7,8 @@ using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Messages;
+using Xamarin.Forms;
 
 namespace RewriteMe.Business.Services
 {
@@ -84,6 +86,7 @@ namespace RewriteMe.Business.Services
             await Task.WhenAll(tasks).ConfigureAwait(false);
 
             OnSynchronizationCompleted();
+            MessagingCenter.Send(new StartTranscribeItemBackgroundServiceMessage(), nameof(StartTranscribeItemBackgroundServiceMessage));
         }
 
         private void OnInitializationProgress()
