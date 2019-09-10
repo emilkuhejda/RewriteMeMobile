@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Configuration;
@@ -17,23 +16,20 @@ namespace RewriteMe.Business.Services
 {
     public class TranscribeItemService : ITranscribeItemService
     {
-        private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly IInternalValueService _internalValueService;
-        private readonly ITranscribeItemRepository _transcribeItemRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly ITranscribeItemRepository _transcribeItemRepository;
         private readonly ILogger _logger;
 
         public TranscribeItemService(
-            ITranscriptAudioSourceService transcriptAudioSourceService,
             IInternalValueService internalValueService,
-            ITranscribeItemRepository transcribeItemRepository,
             IRewriteMeWebService rewriteMeWebService,
+            ITranscribeItemRepository transcribeItemRepository,
             ILoggerFactory loggerFactory)
         {
-            _transcriptAudioSourceService = transcriptAudioSourceService;
             _internalValueService = internalValueService;
-            _transcribeItemRepository = transcribeItemRepository;
             _rewriteMeWebService = rewriteMeWebService;
+            _transcribeItemRepository = transcribeItemRepository;
             _logger = loggerFactory.CreateLogger(typeof(TranscribeItemService));
         }
 
@@ -55,29 +51,6 @@ namespace RewriteMe.Business.Services
                     await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
-        }
-
-        public async Task AudioSourcesSynchronizationAsync(CancellationToken cancellationToken)
-        {
-            var itemsToUpdate = await _transcribeItemRepository.GetAllForAudioSourceSynchronizationAsync().ConfigureAwait(false);
-            var transcribeItemsToUpdate = itemsToUpdate.ToList();
-            if (!transcribeItemsToUpdate.Any())
-                return;
-
-            var transcribeItems = transcribeItemsToUpdate.Select(x => x.Id).ToArray().Split(10);
-            foreach (var transcribeItemIds in transcribeItems)
-            {
-                var updateMethods = new List<Func<Task>>();
-                foreach (var transcribeItem in transcribeItemIds)
-                {
-                    updateMethods.Add(() => _transcriptAudioSourceService.SynchronizeAsync(transcribeItem, cancellationToken));
-                }
-
-                var tasks = updateMethods.Select(x => x());
-                await Task.WhenAll(tasks).ConfigureAwait(false);
-            }
-
-            await AudioSourcesSynchronizationAsync(cancellationToken).ConfigureAwait(false);
         }
 
         public async Task<IEnumerable<TranscribeItem>> GetAllAsync(Guid fileItemId)

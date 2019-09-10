@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Events;
+using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Interfaces;
@@ -17,13 +19,13 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly IFileItemService _fileItemService;
-        private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly ITranscribeItemManager _transcribeItemManager;
 
         public DetailPageViewModel(
             ITranscribeItemService transcribeItemService,
             ITranscriptAudioSourceService transcriptAudioSourceService,
             IFileItemService fileItemService,
-            IRewriteMeWebService rewriteMeWebService,
+            ITranscribeItemManager transcribeItemManager,
             IEmailService emailService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -34,7 +36,9 @@ namespace RewriteMe.Mobile.ViewModels
             _transcribeItemService = transcribeItemService;
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _fileItemService = fileItemService;
-            _rewriteMeWebService = rewriteMeWebService;
+            _transcribeItemManager = transcribeItemManager;
+
+            _transcribeItemManager.InitializationProgress += HandleInitializationProgress;
         }
 
         private FileItem FileItem { get; set; }
@@ -63,11 +67,9 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var viewModel = new TranscribeItemViewModel(
                 _transcriptAudioSourceService,
-                _rewriteMeWebService,
                 DialogService,
                 PlayerViewModel,
-                detailItem,
-                CancellationToken);
+                detailItem);
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
             return viewModel;
@@ -116,6 +118,17 @@ namespace RewriteMe.Mobile.ViewModels
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
             }
+        }
+
+        private void HandleInitializationProgress(object sender, ProgressEventArgs e)
+        {
+        }
+
+        protected override void DisposeInternal()
+        {
+            base.DisposeInternal();
+
+            _transcribeItemManager.InitializationProgress -= HandleInitializationProgress;
         }
     }
 }

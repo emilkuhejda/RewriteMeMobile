@@ -47,7 +47,6 @@ namespace RewriteMe.Mobile
             InitializeComponent();
 
             InitializeServices();
-            InitializeManagers();
 
             var navigationParameters = InitializeNavigationParameters();
             NavigateToPage(navigationParameters);
@@ -77,11 +76,6 @@ namespace RewriteMe.Mobile
         private void InitializeServices()
         {
             AsyncHelper.RunSync(InitializeServicesAsync);
-        }
-
-        private void InitializeManagers()
-        {
-            Container.Resolve<IBackgroundTasksManager>().Initialize();
         }
 
         private async Task InitializeServicesAsync()

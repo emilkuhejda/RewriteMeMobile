@@ -1,11 +1,8 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Resources.Localization;
 
@@ -14,21 +11,15 @@ namespace RewriteMe.Mobile.ViewModels
     public class TranscribeItemViewModel : DetailItemViewModel<TranscribeItem>
     {
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
-        private readonly IRewriteMeWebService _rewriteMeWebService;
-        private readonly CancellationToken _cancellationToken;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
-            IRewriteMeWebService rewriteMeWebService,
             IDialogService dialogService,
             PlayerViewModel playerViewModel,
-            TranscribeItem transcribeItem,
-            CancellationToken cancellationToken)
+            TranscribeItem transcribeItem)
             : base(playerViewModel, dialogService, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
-            _rewriteMeWebService = rewriteMeWebService;
-            _cancellationToken = cancellationToken;
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {

@@ -39,7 +39,7 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<IConnectivityService, ConnectivityService>();
             containerRegistry.RegisterSingleton<IInformationMessageService, InformationMessageService>();
 
-            containerRegistry.RegisterSingleton<IBackgroundTasksManager, BackgroundTasksManager>();
+            containerRegistry.RegisterSingleton<ITranscribeItemManager, TranscribeItemManager>();
         }
     }
 }

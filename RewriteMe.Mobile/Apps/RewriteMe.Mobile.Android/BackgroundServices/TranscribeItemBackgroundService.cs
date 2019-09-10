@@ -1,83 +1,46 @@
-﻿using System.Threading;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Android.App;
 using Android.Content;
 using Android.OS;
 using Prism.Ioc;
-using RewriteMe.Domain.Enums;
-using RewriteMe.Domain.Exceptions;
-using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.Messages;
-using Xamarin.Forms;
-using OperationCanceledException = System.OperationCanceledException;
+using RewriteMe.Domain.Interfaces.Managers;
 
 namespace RewriteMe.Mobile.Droid.BackgroundServices
 {
     [Service]
     public class TranscribeItemBackgroundService : Service
     {
-        private readonly object _lockObject = new object();
-        private CancellationTokenSource _cancellationTokenSource;
-        private bool _isRunning;
+        private ITranscribeItemManager _transcribeItemManager;
 
         public override IBinder OnBind(Intent intent)
         {
             return null;
         }
 
+        private ITranscribeItemManager TranscribeItemManager
+        {
+            get
+            {
+                if (_transcribeItemManager == null)
+                {
+                    var app = (App)Xamarin.Forms.Application.Current;
+                    _transcribeItemManager = app.Container.Resolve<ITranscribeItemManager>();
+                }
+
+                return _transcribeItemManager;
+            }
+        }
+
         public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
         {
-            _cancellationTokenSource = new CancellationTokenSource();
-
-            Task.Run(async () => await RunAsync().ConfigureAwait(false), _cancellationTokenSource.Token);
+            Task.Run(async () => await TranscribeItemManager.SynchronizationAsync().ConfigureAwait(false));
 
             return StartCommandResult.Sticky;
         }
 
-        public async Task RunAsync()
-        {
-            lock (_lockObject)
-            {
-                if (_isRunning)
-                    return;
-
-                _isRunning = true;
-
-                var message = new TranscribeItemBackgroundServiceStatusChangedMessage(RunningStatus.Running);
-                MessagingCenter.Send(message, nameof(TranscribeItemBackgroundServiceStatusChangedMessage));
-            }
-
-            try
-            {
-                var app = (App)Xamarin.Forms.Application.Current;
-                var transcribeItemService = app.Container.Resolve<ITranscribeItemService>();
-
-                await transcribeItemService.AudioSourcesSynchronizationAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
-            }
-            catch (OperationCanceledException)
-            {
-            }
-            catch (UnauthorizedCallException)
-            {
-                _cancellationTokenSource.Cancel();
-            }
-            finally
-            {
-                _isRunning = false;
-
-                var message = new TranscribeItemBackgroundServiceStatusChangedMessage(RunningStatus.Running);
-                MessagingCenter.Send(message, nameof(TranscribeItemBackgroundServiceStatusChangedMessage));
-            }
-        }
-
         public override void OnDestroy()
         {
-            if (_cancellationTokenSource != null)
-            {
-                _cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                _cancellationTokenSource.Cancel();
-                _cancellationTokenSource = null;
-            }
+            TranscribeItemManager?.Cancel();
 
             base.OnDestroy();
         }
