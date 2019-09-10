@@ -4,8 +4,11 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Prism.Ioc;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Messages;
+using Xamarin.Forms;
 using OperationCanceledException = System.OperationCanceledException;
 
 namespace RewriteMe.Mobile.Droid.BackgroundServices
@@ -39,6 +42,9 @@ namespace RewriteMe.Mobile.Droid.BackgroundServices
                     return;
 
                 _isRunning = true;
+
+                var message = new TranscribeItemBackgroundServiceStatusChangedMessage(RunningStatus.Running);
+                MessagingCenter.Send(message, nameof(TranscribeItemBackgroundServiceStatusChangedMessage));
             }
 
             try
@@ -58,6 +64,9 @@ namespace RewriteMe.Mobile.Droid.BackgroundServices
             finally
             {
                 _isRunning = false;
+
+                var message = new TranscribeItemBackgroundServiceStatusChangedMessage(RunningStatus.Running);
+                MessagingCenter.Send(message, nameof(TranscribeItemBackgroundServiceStatusChangedMessage));
             }
         }
 

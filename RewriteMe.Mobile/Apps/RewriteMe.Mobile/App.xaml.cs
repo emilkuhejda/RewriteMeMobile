@@ -16,6 +16,7 @@ using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
+using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
@@ -46,6 +47,7 @@ namespace RewriteMe.Mobile
             InitializeComponent();
 
             InitializeServices();
+            InitializeManagers();
 
             var navigationParameters = InitializeNavigationParameters();
             NavigateToPage(navigationParameters);
@@ -75,6 +77,11 @@ namespace RewriteMe.Mobile
         private void InitializeServices()
         {
             AsyncHelper.RunSync(InitializeServicesAsync);
+        }
+
+        private void InitializeManagers()
+        {
+            Container.Resolve<IBackgroundTasksManager>().Initialize();
         }
 
         private async Task InitializeServicesAsync()

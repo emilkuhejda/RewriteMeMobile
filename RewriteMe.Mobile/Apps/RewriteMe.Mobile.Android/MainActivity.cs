@@ -53,10 +53,10 @@ namespace RewriteMe.Mobile.Droid
                 ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.RecordAudio }, 1);
             }
 
-            WireUpBackgroundService();
+            WireUpBackgroundServices();
         }
 
-        private void WireUpBackgroundService()
+        private void WireUpBackgroundServices()
         {
             MessagingCenter.Subscribe<StartTranscribeItemBackgroundServiceMessage>(
                 this,

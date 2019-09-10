@@ -10,6 +10,7 @@ using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Services;
 using RewriteMe.Mobile.ViewModels;
 using RewriteMe.Mobile.Views;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Configuration
 {
@@ -20,6 +21,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterInstance(CrossLatestVersion.Current);
             containerRegistry.RegisterInstance(CrossMessaging.Current.EmailMessenger);
             containerRegistry.RegisterInstance(CrossConnectivity.Current);
+            containerRegistry.RegisterInstance(MessagingCenter.Instance);
             containerRegistry.RegisterSingleton<IDialogService, DialogService>();
             containerRegistry.RegisterSingleton<ILanguageService, LanguageService>();
             containerRegistry.RegisterSingleton<IEmailService, EmailService>();
