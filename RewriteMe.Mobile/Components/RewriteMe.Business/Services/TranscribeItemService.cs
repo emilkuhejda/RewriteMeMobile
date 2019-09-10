@@ -67,7 +67,6 @@ namespace RewriteMe.Business.Services
             var transcribeItems = transcribeItemsToUpdate.Select(x => x.Id).ToArray().Split(10);
             foreach (var transcribeItemIds in transcribeItems)
             {
-                cancellationToken.ThrowIfCancellationRequested();
                 var updateMethods = new List<Func<Task>>();
                 foreach (var transcribeItem in transcribeItemIds)
                 {
@@ -78,7 +77,6 @@ namespace RewriteMe.Business.Services
                 await Task.WhenAll(tasks).ConfigureAwait(false);
             }
 
-            cancellationToken.ThrowIfCancellationRequested();
             await AudioSourcesSynchronizationAsync(cancellationToken).ConfigureAwait(false);
         }
 

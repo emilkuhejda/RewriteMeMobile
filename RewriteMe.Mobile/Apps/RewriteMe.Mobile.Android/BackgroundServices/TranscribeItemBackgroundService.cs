@@ -57,11 +57,6 @@ namespace RewriteMe.Mobile.Droid.BackgroundServices
             }
             finally
             {
-                if (!_cancellationTokenSource.IsCancellationRequested)
-                {
-                    StopSelf(startId);
-                }
-
                 _isRunning = false;
             }
         }
