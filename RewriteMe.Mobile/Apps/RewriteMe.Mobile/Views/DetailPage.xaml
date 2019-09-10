@@ -11,7 +11,7 @@
     </views:BaseNavigationPage.RightNavigationToolbarItems>
 
     <Grid>
-        <Grid>
+        <Grid RowSpacing="0">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
