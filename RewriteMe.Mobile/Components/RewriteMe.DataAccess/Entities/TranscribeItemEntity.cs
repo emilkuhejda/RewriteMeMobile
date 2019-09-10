@@ -28,8 +28,5 @@ namespace RewriteMe.DataAccess.Entities
         public DateTime DateUpdated { get; set; }
 
         public bool IsPendingSynchronization { get; set; }
-
-        [OneToOne(CascadeOperations = CascadeOperation.All)]
-        public TranscriptAudioSourceEntity TranscriptAudioSource { get; set; }
     }
 }
