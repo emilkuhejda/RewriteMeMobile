@@ -61,15 +61,13 @@ namespace RewriteMe.Mobile.Droid
             MessagingCenter.Subscribe<StartTranscribeItemBackgroundServiceMessage>(
                 this,
                 nameof(StartTranscribeItemBackgroundServiceMessage),
-                message => { StartTranscribeItemBackgroundService(); });
-        }
-
-        private void StartTranscribeItemBackgroundService()
-        {
-            using (var intent = new Intent(this, typeof(TranscribeItemBackgroundService)))
-            {
-                StartService(intent);
-            }
+                message =>
+                {
+                    using (var intent = new Intent(this, typeof(TranscribeItemBackgroundService)))
+                    {
+                        StartService(intent);
+                    }
+                });
         }
 
         private void InitializeSharedFile()
