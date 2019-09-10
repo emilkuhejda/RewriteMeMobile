@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Prism.Ioc;
 using RewriteMe.Domain.Interfaces.Managers;
 using UIKit;
