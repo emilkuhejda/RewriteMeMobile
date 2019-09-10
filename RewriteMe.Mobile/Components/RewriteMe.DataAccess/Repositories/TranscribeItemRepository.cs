@@ -19,6 +19,15 @@ namespace RewriteMe.DataAccess.Repositories
             _contextProvider = contextProvider;
         }
 
+        public async Task<IEnumerable<TranscribeItem>> GetAllForAudioSourceSynchronizationAsync()
+        {
+            var entities = await _contextProvider.Context
+                .GetAllWithChildrenAsync<TranscribeItemEntity>(x => true)
+                .ConfigureAwait(false);
+
+            return entities.Where(x => x.TranscriptAudioSource == null).Select(x => x.ToTranscribeItem());
+        }
+
         public async Task<IEnumerable<TranscribeItem>> GetAllAsync(Guid fileItemId)
         {
             var entities = await _contextProvider.Context.TranscribeItems

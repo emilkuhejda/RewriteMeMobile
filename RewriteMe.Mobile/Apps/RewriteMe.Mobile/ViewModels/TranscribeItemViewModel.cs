@@ -70,23 +70,12 @@ namespace RewriteMe.Mobile.ViewModels
                 var transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
                 var source = transcriptAudioSource?.Source;
 
-                if (transcriptAudioSource == null)
-                {
-                    var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(DetailItem.Id, _cancellationToken).ConfigureAwait(false);
-                    if (httpRequestResult.State == HttpRequestState.Success)
-                    {
-                        source = httpRequestResult.Payload;
-
-                        var audioSource = new TranscriptAudioSource
-                        {
-                            Id = Guid.NewGuid(),
-                            TranscribeItemId = DetailItem.Id,
-                            Source = source
-                        };
-
-                        await _transcriptAudioSourceService.InsertAsync(audioSource).ConfigureAwait(false);
-                    }
-                }
+                // TODO
+                //if (transcriptAudioSource == null)
+                //{
+                //    var audioSource = await _transcriptAudioSourceService.SynchronizeAsync(DetailItem.Id, _cancellationToken).ConfigureAwait(false);
+                //    source = audioSource?.Source;
+                //}
 
                 if (source == null)
                 {

@@ -13,6 +13,7 @@ using Microsoft.AppCenter.Push;
 using Microsoft.Identity.Client;
 using Plugin.InAppBilling;
 using RewriteMe.Business.Configuration;
+using RewriteMe.Mobile.Droid.BackgroundServices;
 using RewriteMe.Mobile.Droid.Configuration;
 using RewriteMe.Mobile.Droid.Extensions;
 using RewriteMe.Mobile.Droid.Utils;
@@ -49,6 +50,14 @@ namespace RewriteMe.Mobile.Droid
             if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.RecordAudio) != Permission.Granted)
             {
                 ActivityCompat.RequestPermissions(this, new[] { Manifest.Permission.RecordAudio }, 1);
+            }
+        }
+
+        private void StartTranscribeItemBackgroundService()
+        {
+            using (var intent = new Intent(this, typeof(TranscribeItemBackgroundService)))
+            {
+                StartService(intent);
             }
         }
 
