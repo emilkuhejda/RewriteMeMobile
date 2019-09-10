@@ -28,5 +28,8 @@ namespace RewriteMe.DataAccess.Entities
         public DateTime DateUpdated { get; set; }
 
         public bool IsPendingSynchronization { get; set; }
+
+        [OneToOne(CascadeOperations = CascadeOperation.CascadeRead)]
+        public TranscriptAudioSourceEntity TranscriptAudioSource { get; set; }
     }
 }

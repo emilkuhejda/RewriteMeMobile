@@ -1,5 +1,6 @@
 ﻿using System;
 using SQLite;
+using SQLiteNetExtensions.Attributes;
 
 namespace RewriteMe.DataAccess.Entities
 {
@@ -9,6 +10,7 @@ namespace RewriteMe.DataAccess.Entities
         [PrimaryKey]
         public Guid Id { get; set; }
 
+        [ForeignKey(typeof(TranscribeItemEntity))]
         public Guid TranscribeItemId { get; set; }
 
         public byte[] Source { get; set; }
