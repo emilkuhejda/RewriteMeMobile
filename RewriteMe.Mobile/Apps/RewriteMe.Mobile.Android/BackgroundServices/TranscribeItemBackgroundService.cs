@@ -26,12 +26,12 @@ namespace RewriteMe.Mobile.Droid.BackgroundServices
         {
             _cancellationTokenSource = new CancellationTokenSource();
 
-            Task.Run(async () => await RunAsync(startId).ConfigureAwait(false), _cancellationTokenSource.Token);
+            Task.Run(async () => await RunAsync().ConfigureAwait(false), _cancellationTokenSource.Token);
 
             return StartCommandResult.Sticky;
         }
 
-        public async Task RunAsync(int startId)
+        public async Task RunAsync()
         {
             lock (_lockObject)
             {
