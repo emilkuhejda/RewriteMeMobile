@@ -7,10 +7,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface ITranscriptAudioSourceService
     {
-        Task<TranscriptAudioSource> SynchronizeAsync(Guid transcribeItemId, CancellationToken cancellationToken);
+        Task SynchronizeAsync(Guid transcribeItemId, CancellationToken cancellationToken);
 
         Task<TranscriptAudioSource> GetAsync(Guid transcribeItemId);
-
-        Task InsertAsync(TranscriptAudioSource transcriptAudioSource);
     }
 }

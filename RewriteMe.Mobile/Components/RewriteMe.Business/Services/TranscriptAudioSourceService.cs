@@ -21,7 +21,7 @@ namespace RewriteMe.Business.Services
             _transcriptAudioSourceRepository = transcriptAudioSourceRepository;
         }
 
-        public async Task<TranscriptAudioSource> SynchronizeAsync(Guid transcribeItemId, CancellationToken cancellationToken)
+        public async Task SynchronizeAsync(Guid transcribeItemId, CancellationToken cancellationToken)
         {
             var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(transcribeItemId, cancellationToken).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
@@ -35,22 +35,13 @@ namespace RewriteMe.Business.Services
                     Source = source
                 };
 
-                await InsertAsync(audioSource).ConfigureAwait(false);
-
-                return audioSource;
+                await _transcriptAudioSourceRepository.InsertAsync(audioSource).ConfigureAwait(false);
             }
-
-            return null;
         }
 
         public async Task<TranscriptAudioSource> GetAsync(Guid transcribeItemId)
         {
             return await _transcriptAudioSourceRepository.GetAsync(transcribeItemId).ConfigureAwait(false);
-        }
-
-        public async Task InsertAsync(TranscriptAudioSource transcriptAudioSource)
-        {
-            await _transcriptAudioSourceRepository.InsertAsync(transcriptAudioSource).ConfigureAwait(false);
         }
     }
 }

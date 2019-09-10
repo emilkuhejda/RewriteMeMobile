@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Resources.Localization;
@@ -11,15 +12,18 @@ namespace RewriteMe.Mobile.ViewModels
     public class TranscribeItemViewModel : DetailItemViewModel<TranscribeItem>
     {
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
+        private readonly ITranscribeItemManager _transcribeItemManager;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
+            ITranscribeItemManager transcribeItemManager,
             IDialogService dialogService,
             PlayerViewModel playerViewModel,
             TranscribeItem transcribeItem)
             : base(playerViewModel, dialogService, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
+            _transcribeItemManager = transcribeItemManager;
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
@@ -59,22 +63,17 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 var transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
-                var source = transcriptAudioSource?.Source;
-
-                // TODO
-                //if (transcriptAudioSource == null)
-                //{
-                //    var audioSource = await _transcriptAudioSourceService.SynchronizeAsync(DetailItem.Id, _cancellationToken).ConfigureAwait(false);
-                //    source = audioSource?.Source;
-                //}
-
-                if (source == null)
+                if (transcriptAudioSource == null)
                 {
-                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage)).ConfigureAwait(false);
+                    var errorMessage = _transcribeItemManager.IsRunning
+                        ? Loc.Text(TranslationKeys.SynchronizationInProgressErrorMessage)
+                        : Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage);
+
+                    await DialogService.AlertAsync(errorMessage).ConfigureAwait(false);
                     return;
                 }
 
-                PlayerViewModel.Load(source);
+                PlayerViewModel.Load(transcriptAudioSource.Source);
                 PlayerViewModel.Play();
             }
         }

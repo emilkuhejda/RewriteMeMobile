@@ -21,6 +21,9 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IFileItemService _fileItemService;
         private readonly ITranscribeItemManager _transcribeItemManager;
 
+        private double _progress;
+        private string _progressText;
+
         public DetailPageViewModel(
             ITranscribeItemService transcribeItemService,
             ITranscriptAudioSourceService transcriptAudioSourceService,
@@ -38,15 +41,32 @@ namespace RewriteMe.Mobile.ViewModels
             _fileItemService = fileItemService;
             _transcribeItemManager = transcribeItemManager;
 
+            _transcribeItemManager.StateChanged += HandleStateChanged;
             _transcribeItemManager.InitializationProgress += HandleInitializationProgress;
         }
 
         private FileItem FileItem { get; set; }
 
+        public double Progress
+        {
+            get => _progress;
+            set => SetProperty(ref _progress, value);
+        }
+
+        public string ProgressText
+        {
+            get => _progressText;
+            set => SetProperty(ref _progressText, value);
+        }
+
+        public bool IsProgressVisible => _transcribeItemManager.IsRunning;
+
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
             using (new OperationMonitor(OperationScope))
             {
+                InitializeProgressLabel();
+
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     FileItem = navigationParameters.GetValue<FileItem>();
@@ -63,10 +83,16 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        private void InitializeProgressLabel()
+        {
+            ProgressText = Loc.Text(TranslationKeys.Downloading, 0);
+        }
+
         private DetailItemViewModel<TranscribeItem> CreateDetailItemViewModel(TranscribeItem detailItem)
         {
             var viewModel = new TranscribeItemViewModel(
                 _transcriptAudioSourceService,
+                _transcribeItemManager,
                 DialogService,
                 PlayerViewModel,
                 detailItem);
@@ -120,14 +146,23 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        private void HandleStateChanged(object sender, ManagerStateChangedEventArgs e)
+        {
+            InitializeProgressLabel();
+            RaisePropertyChanged(nameof(IsProgressVisible));
+        }
+
         private void HandleInitializationProgress(object sender, ProgressEventArgs e)
         {
+            Progress = e.PercentageDone / 100d;
+            ProgressText = Loc.Text(TranslationKeys.Downloading, e.PercentageDone);
         }
 
         protected override void DisposeInternal()
         {
             base.DisposeInternal();
 
+            _transcribeItemManager.StateChanged -= HandleStateChanged;
             _transcribeItemManager.InitializationProgress -= HandleInitializationProgress;
         }
     }

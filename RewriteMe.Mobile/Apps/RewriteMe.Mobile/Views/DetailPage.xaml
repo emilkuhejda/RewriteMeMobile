@@ -14,13 +14,23 @@
         <Grid>
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
 
-            <views:PlayerView Grid.Row="0" BindingContext="{Binding PlayerViewModel}" />
+            <StackLayout Padding="16,16,16,0" IsVisible="{Binding IsProgressVisible}">
+                <ProgressBar Grid.Row="0"
+                             Progress="{Binding Progress}"
+                             ProgressColor="{StaticResource ColorPrimary}" />
+                <Label HorizontalOptions="End"
+                       Style="{StaticResource LightBoldStyle}"
+                       Text="{Binding ProgressText}" />
+            </StackLayout>
 
-            <Label Grid.Row="1"
+            <views:PlayerView Grid.Row="1" BindingContext="{Binding PlayerViewModel}" />
+
+            <Label Grid.Row="2"
                    FontAttributes="Italic"
                    HorizontalOptions="Center"
                    IsVisible="{Binding NotAvailableData}"
@@ -28,14 +38,14 @@
                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
                    VerticalOptions="Start" />
 
-            <Grid Grid.Row="1" Padding="{StaticResource StandardPadding}">
+            <Grid Grid.Row="3" Padding="{StaticResource StandardPadding}">
                 <ListView HasUnevenRows="True"
                           ItemTemplate="{StaticResource DetailItemsTemplate}"
                           ItemsSource="{Binding DetailItems}"
                           SeparatorVisibility="None" />
             </Grid>
 
-            <controls:ContextActionBar Grid.Row="2" ItemsSource="{Binding NavigationItems}" />
+            <controls:ContextActionBar Grid.Row="4" ItemsSource="{Binding NavigationItems}" />
         </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"

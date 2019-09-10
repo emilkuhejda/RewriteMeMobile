@@ -160,6 +160,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Downloading... {0}%.
+        /// </summary>
+        public static string Downloading {
+            get {
+                return ResourceManager.GetString("Downloading", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Edit profile.
         /// </summary>
         public static string EditProfile {
@@ -709,6 +718,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Synchronization is still in progress. Please, try it later..
+        /// </summary>
+        public static string SynchronizationInProgressErrorMessage {
+            get {
+                return ResourceManager.GetString("SynchronizationInProgressErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 10 Hours.
         /// </summary>
         public static string TenHours {
@@ -727,7 +745,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Transcribe audio source not found. Please, check your internet connection..
+        ///   Looks up a localized string similar to Transcribe audio source was not found. Please, contact us..
         /// </summary>
         public static string TranscribeAudioSourceNotFoundErrorMessage {
             get {
