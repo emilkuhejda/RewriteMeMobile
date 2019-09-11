@@ -29,7 +29,7 @@ namespace RewriteMe.DataAccess.Entities
 
         public bool IsPendingSynchronization { get; set; }
 
-        [OneToOne(CascadeOperations = CascadeOperation.All)]
+        [OneToOne(CascadeOperations = CascadeOperation.CascadeRead)]
         public TranscriptAudioSourceEntity TranscriptAudioSource { get; set; }
     }
 }
