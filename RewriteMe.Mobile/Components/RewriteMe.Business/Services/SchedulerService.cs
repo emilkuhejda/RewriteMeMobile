@@ -43,10 +43,10 @@ namespace RewriteMe.Business.Services
             {
                 await StartInternalAsync().ConfigureAwait(false);
             }
-
-            IsRunning = false;
-
-            _synchronizationService.NotifyBackgroundServices();
+            else
+            {
+                IsRunning = false;
+            }
         }
 
         public void Stop()
@@ -68,31 +68,31 @@ namespace RewriteMe.Business.Services
             _cancellationTokenSource.Dispose();
             _cancellationTokenSource = new CancellationTokenSource();
 
-            var token = _cancellationTokenSource.Token;
-            await Task.Delay(TimeSpan.FromSeconds(TimeoutSeconds)).ConfigureAwait(false);
-
-            if (token.IsCancellationRequested)
-                return;
-
-            var anyWaitingForSynchronization = await _fileItemService.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
-            if (anyWaitingForSynchronization)
+            try
             {
-                try
+                var token = _cancellationTokenSource.Token;
+                await Task.Delay(TimeSpan.FromSeconds(TimeoutSeconds), token).ConfigureAwait(false);
+
+                token.ThrowIfCancellationRequested();
+                var anyWaitingForSynchronization = await _fileItemService.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
+                if (anyWaitingForSynchronization)
                 {
-                    await StartSynchronizationAsync(token).ConfigureAwait(false);
-                }
-                catch (UnauthorizedCallException)
-                {
+                    token.ThrowIfCancellationRequested();
+                    await _synchronizationService.StartAsync(false).ConfigureAwait(false);
                 }
             }
-        }
+            catch (OperationCanceledException)
+            {
+            }
+            catch (UnauthorizedCallException)
+            {
+            }
+            finally
+            {
+                IsRunning = false;
 
-        private async Task StartSynchronizationAsync(CancellationToken token)
-        {
-            if (token.IsCancellationRequested)
-                return;
-
-            await _synchronizationService.StartAsync(false).ConfigureAwait(false);
+                _synchronizationService.NotifyBackgroundServices();
+            }
         }
     }
 }
