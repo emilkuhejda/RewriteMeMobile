@@ -79,6 +79,9 @@ namespace RewriteMe.Business.Services
                 {
                     token.ThrowIfCancellationRequested();
                     await _synchronizationService.StartAsync(false).ConfigureAwait(false);
+
+                    token.ThrowIfCancellationRequested();
+                    IsRunning = false;
                 }
             }
             catch (OperationCanceledException)
@@ -86,12 +89,18 @@ namespace RewriteMe.Business.Services
             }
             catch (UnauthorizedCallException)
             {
+                _cancellationTokenSource.Cancel();
             }
             finally
             {
-                IsRunning = false;
-
-                _synchronizationService.NotifyBackgroundServices();
+                if (!IsRunning && !_cancellationTokenSource.IsCancellationRequested)
+                {
+                    _synchronizationService.NotifyBackgroundServices();
+                }
+                else
+                {
+                    IsRunning = false;
+                }
             }
         }
     }
