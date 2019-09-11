@@ -133,7 +133,7 @@ namespace RewriteMe.Business.Services
             {
                 await _fileItemRepository.UpdateRecognitionStateAsync(fileItemId, RecognitionState.InProgress).ConfigureAwait(false);
 
-                MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronization), nameof(BackgroundServiceType.Synchronization));
+                MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
             }
             else if (httpRequestResult.State == HttpRequestState.Error)
             {

@@ -6,7 +6,7 @@ using RewriteMe.Domain.Interfaces.Services;
 
 namespace RewriteMe.Business.Services
 {
-    public class SchedulerService : ISchedulerService
+    public class SynchronizerService : ISynchronizerService
     {
         private const int TimeoutSeconds = 30;
 
@@ -16,7 +16,7 @@ namespace RewriteMe.Business.Services
 
         private CancellationTokenSource _cancellationTokenSource;
 
-        public SchedulerService(
+        public SynchronizerService(
             IFileItemService fileItemService,
             ISynchronizationService synchronizationService)
         {

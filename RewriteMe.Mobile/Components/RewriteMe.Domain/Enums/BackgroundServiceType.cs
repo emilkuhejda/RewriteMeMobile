@@ -4,6 +4,6 @@
     {
         None,
         TranscribeItem,
-        Synchronization,
+        Synchronizer,
     }
 }

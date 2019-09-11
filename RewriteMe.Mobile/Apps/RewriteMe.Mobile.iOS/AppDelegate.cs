@@ -53,11 +53,11 @@ namespace RewriteMe.Mobile.iOS
 
             MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
                 this,
-                nameof(BackgroundServiceType.TranscribeItem),
+                nameof(BackgroundServiceType.Synchronizer),
                 async message =>
                 {
-                    var transcribeItemBackgroundService = new TranscribeItemBackgroundService();
-                    await transcribeItemBackgroundService.RunAsync().ConfigureAwait(false);
+                    var synchronizerBackgroundService = new SynchronizerBackgroundService();
+                    await synchronizerBackgroundService.RunAsync().ConfigureAwait(false);
                 });
         }
 

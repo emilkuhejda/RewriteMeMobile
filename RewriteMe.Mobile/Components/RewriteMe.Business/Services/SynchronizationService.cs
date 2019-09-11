@@ -97,7 +97,7 @@ namespace RewriteMe.Business.Services
         public void NotifyBackgroundServices()
         {
             MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.TranscribeItem), nameof(BackgroundServiceType.TranscribeItem));
-            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronization), nameof(BackgroundServiceType.Synchronization));
+            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
         }
 
         private void OnInitializationProgress()

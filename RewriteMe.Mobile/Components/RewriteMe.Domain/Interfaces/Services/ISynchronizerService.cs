@@ -2,7 +2,7 @@
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
-    public interface ISchedulerService
+    public interface ISynchronizerService
     {
         Task Start();
 

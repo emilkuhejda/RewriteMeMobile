@@ -72,10 +72,10 @@ namespace RewriteMe.Mobile.Droid
 
             MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
                 this,
-                nameof(BackgroundServiceType.Synchronization),
+                nameof(BackgroundServiceType.Synchronizer),
                 message =>
                 {
-                    using (var intent = new Intent(this, typeof(SynchronizationBackgroundService)))
+                    using (var intent = new Intent(this, typeof(SynchronizerBackgroundService)))
                     {
                         StartService(intent);
                     }

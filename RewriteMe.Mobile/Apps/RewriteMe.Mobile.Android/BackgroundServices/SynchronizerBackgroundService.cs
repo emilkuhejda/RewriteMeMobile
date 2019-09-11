@@ -8,37 +8,37 @@ using RewriteMe.Domain.Interfaces.Services;
 namespace RewriteMe.Mobile.Droid.BackgroundServices
 {
     [Service]
-    public class SynchronizationBackgroundService : Service
+    public class SynchronizerBackgroundService : Service
     {
-        private ISchedulerService _schedulerService;
+        private ISynchronizerService _synchronizerService;
 
         public override IBinder OnBind(Intent intent)
         {
             return null;
         }
 
-        private ISchedulerService SchedulerService
+        private ISynchronizerService SynchronizerService
         {
             get
             {
-                if (_schedulerService != null)
-                    return _schedulerService;
+                if (_synchronizerService != null)
+                    return _synchronizerService;
 
                 var app = (App)Xamarin.Forms.Application.Current;
-                return _schedulerService = app.Container.Resolve<ISchedulerService>();
+                return _synchronizerService = app.Container.Resolve<ISynchronizerService>();
             }
         }
 
         public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
         {
-            Task.Run(async () => await SchedulerService.Start().ConfigureAwait(false));
+            Task.Run(async () => await SynchronizerService.Start().ConfigureAwait(false));
 
             return StartCommandResult.Sticky;
         }
 
         public override void OnDestroy()
         {
-            SchedulerService?.Stop();
+            SynchronizerService?.Stop();
 
             base.OnDestroy();
         }
