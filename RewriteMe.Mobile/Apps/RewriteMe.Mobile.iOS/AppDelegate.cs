@@ -2,6 +2,7 @@
 using System.IO;
 using FFImageLoading.Forms.Platform;
 using Foundation;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.iOS.BackgroundServices;
 using RewriteMe.Mobile.iOS.Configuration;
@@ -41,9 +42,18 @@ namespace RewriteMe.Mobile.iOS
 
         private void WireUpBackgroundServices()
         {
-            MessagingCenter.Subscribe<StartTranscribeItemBackgroundServiceMessage>(
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
                 this,
-                nameof(StartTranscribeItemBackgroundServiceMessage),
+                nameof(BackgroundServiceType.TranscribeItem),
+                async message =>
+                {
+                    var transcribeItemBackgroundService = new TranscribeItemBackgroundService();
+                    await transcribeItemBackgroundService.RunAsync().ConfigureAwait(false);
+                });
+
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
+                this,
+                nameof(BackgroundServiceType.TranscribeItem),
                 async message =>
                 {
                     var transcribeItemBackgroundService = new TranscribeItemBackgroundService();

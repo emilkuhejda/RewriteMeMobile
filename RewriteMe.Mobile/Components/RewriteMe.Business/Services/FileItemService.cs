@@ -5,14 +5,17 @@ using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Messages;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
+using Xamarin.Forms;
 
 namespace RewriteMe.Business.Services
 {
@@ -24,8 +27,6 @@ namespace RewriteMe.Business.Services
         private readonly IFileItemRepository _fileItemRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly ILogger _logger;
-
-        public event EventHandler TranscriptionStarted;
 
         public FileItemService(
             IDeletedFileItemService deletedFileItemService,
@@ -132,7 +133,7 @@ namespace RewriteMe.Business.Services
             {
                 await _fileItemRepository.UpdateRecognitionStateAsync(fileItemId, RecognitionState.InProgress).ConfigureAwait(false);
 
-                OnTranscriptionStarted();
+                MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronization), nameof(BackgroundServiceType.Synchronization));
             }
             else if (httpRequestResult.State == HttpRequestState.Error)
             {
@@ -142,11 +143,6 @@ namespace RewriteMe.Business.Services
             {
                 throw new OfflineRequestException();
             }
-        }
-
-        private void OnTranscriptionStarted()
-        {
-            TranscriptionStarted?.Invoke(this, EventArgs.Empty);
         }
     }
 }

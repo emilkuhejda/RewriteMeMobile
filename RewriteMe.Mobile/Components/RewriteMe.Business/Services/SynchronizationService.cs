@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Messages;
@@ -54,7 +55,7 @@ namespace RewriteMe.Business.Services
             _connectivityService.ConnectivityChanged += HandleConnectivityChanged;
         }
 
-        public async Task StartAsync()
+        public async Task StartAsync(bool notifyServices = true)
         {
             var isAlive = await _rewriteMeWebService.IsAliveAsync().ConfigureAwait(false);
             if (!isAlive)
@@ -86,7 +87,17 @@ namespace RewriteMe.Business.Services
             await Task.WhenAll(tasks).ConfigureAwait(false);
 
             OnSynchronizationCompleted();
-            MessagingCenter.Send(new StartTranscribeItemBackgroundServiceMessage(), nameof(StartTranscribeItemBackgroundServiceMessage));
+
+            if (notifyServices)
+            {
+                NotifyBackgroundServices();
+            }
+        }
+
+        public void NotifyBackgroundServices()
+        {
+            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.TranscribeItem), nameof(BackgroundServiceType.TranscribeItem));
+            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronization), nameof(BackgroundServiceType.Synchronization));
         }
 
         private void OnInitializationProgress()

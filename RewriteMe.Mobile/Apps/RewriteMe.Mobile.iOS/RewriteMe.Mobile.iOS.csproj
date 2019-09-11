@@ -103,6 +103,7 @@
     <Compile Include="..\..\Global\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BackgroundServices\SynchronizationBackgroundService.cs" />
     <Compile Include="BackgroundServices\TranscribeItemBackgroundService.cs" />
     <Compile Include="Configuration\OsxBootstrapper.cs" />
     <Compile Include="ExceptionHandling\ExceptionHandler.cs" />

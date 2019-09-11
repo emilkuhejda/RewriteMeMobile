@@ -10,13 +10,11 @@ using Prism.Ioc;
 using Prism.Navigation;
 using Prism.Unity;
 using RewriteMe.Business.Configuration;
-using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
-using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
@@ -131,12 +129,10 @@ namespace RewriteMe.Mobile
 
         protected override void OnResume()
         {
-            Container.Resolve<ISchedulerService>().Start().FireAndForget();
         }
 
         protected override async void OnSleep()
         {
-            Container.Resolve<ISchedulerService>().Stop();
             await Container.Resolve<IAppDbContextProvider>().CloseAsync().ConfigureAwait(false);
         }
     }

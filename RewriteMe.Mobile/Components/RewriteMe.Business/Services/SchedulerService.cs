@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 
@@ -25,8 +24,6 @@ namespace RewriteMe.Business.Services
             _synchronizationService = synchronizationService;
 
             _cancellationTokenSource = new CancellationTokenSource();
-
-            _fileItemService.TranscriptionStarted += HandleTranscriptionStarted;
         }
 
         public bool IsRunning { get; private set; }
@@ -48,6 +45,8 @@ namespace RewriteMe.Business.Services
             }
 
             IsRunning = false;
+
+            _synchronizationService.NotifyBackgroundServices();
         }
 
         public void Stop()
@@ -81,8 +80,6 @@ namespace RewriteMe.Business.Services
                 try
                 {
                     await StartSynchronizationAsync(token).ConfigureAwait(false);
-
-                    await StartInternalAsync().ConfigureAwait(false);
                 }
                 catch (UnauthorizedCallException)
                 {
@@ -95,12 +92,7 @@ namespace RewriteMe.Business.Services
             if (token.IsCancellationRequested)
                 return;
 
-            await _synchronizationService.StartAsync().ConfigureAwait(false);
-        }
-
-        private void HandleTranscriptionStarted(object sender, EventArgs e)
-        {
-            Start().FireAndForget();
+            await _synchronizationService.StartAsync(false).ConfigureAwait(false);
         }
     }
 }
