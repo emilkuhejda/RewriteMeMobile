@@ -25,14 +25,14 @@ namespace RewriteMe.Mobile.iOS.BackgroundServices
         {
             var taskId = UIApplication.SharedApplication.BeginBackgroundTask(nameof(SynchronizerBackgroundService), OnExpiration);
 
-            await SynchronizerService.Start().ConfigureAwait(false);
+            await SynchronizerService.StartAsync().ConfigureAwait(false);
 
             UIApplication.SharedApplication.EndBackgroundTask(taskId);
         }
 
         private void OnExpiration()
         {
-            SynchronizerService?.Stop();
+            SynchronizerService?.Cancel();
         }
     }
 }

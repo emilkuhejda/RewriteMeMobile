@@ -4,8 +4,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface ISynchronizerService
     {
-        Task Start();
+        Task StartAsync();
 
-        void Stop();
+        void Cancel();
     }
 }

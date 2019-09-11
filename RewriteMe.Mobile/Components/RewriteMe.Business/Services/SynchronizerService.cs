@@ -28,7 +28,7 @@ namespace RewriteMe.Business.Services
 
         public bool IsRunning { get; private set; }
 
-        public async Task Start()
+        public async Task StartAsync()
         {
             lock (_lockObject)
             {
@@ -49,7 +49,7 @@ namespace RewriteMe.Business.Services
             }
         }
 
-        public void Stop()
+        public void Cancel()
         {
             lock (_lockObject)
             {

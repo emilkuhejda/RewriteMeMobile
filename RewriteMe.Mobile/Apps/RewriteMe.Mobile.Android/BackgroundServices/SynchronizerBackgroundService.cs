@@ -31,14 +31,14 @@ namespace RewriteMe.Mobile.Droid.BackgroundServices
 
         public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
         {
-            Task.Run(async () => await SynchronizerService.Start().ConfigureAwait(false));
+            Task.Run(async () => await SynchronizerService.StartAsync().ConfigureAwait(false));
 
             return StartCommandResult.Sticky;
         }
 
         public override void OnDestroy()
         {
-            SynchronizerService?.Stop();
+            SynchronizerService?.Cancel();
 
             base.OnDestroy();
         }
