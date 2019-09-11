@@ -1,11 +1,9 @@
 ﻿using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Http;
+using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Resources.Localization;
 
@@ -14,21 +12,18 @@ namespace RewriteMe.Mobile.ViewModels
     public class TranscribeItemViewModel : DetailItemViewModel<TranscribeItem>
     {
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
-        private readonly IRewriteMeWebService _rewriteMeWebService;
-        private readonly CancellationToken _cancellationToken;
+        private readonly ITranscribeItemManager _transcribeItemManager;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
-            IRewriteMeWebService rewriteMeWebService,
+            ITranscribeItemManager transcribeItemManager,
             IDialogService dialogService,
             PlayerViewModel playerViewModel,
-            TranscribeItem transcribeItem,
-            CancellationToken cancellationToken)
+            TranscribeItem transcribeItem)
             : base(playerViewModel, dialogService, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
-            _rewriteMeWebService = rewriteMeWebService;
-            _cancellationToken = cancellationToken;
+            _transcribeItemManager = transcribeItemManager;
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
@@ -68,33 +63,17 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 var transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
-                var source = transcriptAudioSource?.Source;
-
                 if (transcriptAudioSource == null)
                 {
-                    var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(DetailItem.Id, _cancellationToken).ConfigureAwait(false);
-                    if (httpRequestResult.State == HttpRequestState.Success)
-                    {
-                        source = httpRequestResult.Payload;
+                    var errorMessage = _transcribeItemManager.IsRunning
+                        ? Loc.Text(TranslationKeys.SynchronizationInProgressErrorMessage)
+                        : Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage);
 
-                        var audioSource = new TranscriptAudioSource
-                        {
-                            Id = Guid.NewGuid(),
-                            TranscribeItemId = DetailItem.Id,
-                            Source = source
-                        };
-
-                        await _transcriptAudioSourceService.InsertAsync(audioSource).ConfigureAwait(false);
-                    }
-                }
-
-                if (source == null)
-                {
-                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage)).ConfigureAwait(false);
+                    await DialogService.AlertAsync(errorMessage).ConfigureAwait(false);
                     return;
                 }
 
-                PlayerViewModel.Load(source);
+                PlayerViewModel.Load(transcriptAudioSource.Source);
                 PlayerViewModel.Play();
             }
         }

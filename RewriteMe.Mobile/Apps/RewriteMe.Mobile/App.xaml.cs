@@ -16,6 +16,7 @@ using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
+using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;

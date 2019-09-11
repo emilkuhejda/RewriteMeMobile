@@ -17,19 +17,19 @@ namespace RewriteMe.Business.Services
     public class TranscribeItemService : ITranscribeItemService
     {
         private readonly IInternalValueService _internalValueService;
-        private readonly ITranscribeItemRepository _transcribeItemRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly ITranscribeItemRepository _transcribeItemRepository;
         private readonly ILogger _logger;
 
         public TranscribeItemService(
             IInternalValueService internalValueService,
-            ITranscribeItemRepository transcribeItemRepository,
             IRewriteMeWebService rewriteMeWebService,
+            ITranscribeItemRepository transcribeItemRepository,
             ILoggerFactory loggerFactory)
         {
             _internalValueService = internalValueService;
-            _transcribeItemRepository = transcribeItemRepository;
             _rewriteMeWebService = rewriteMeWebService;
+            _transcribeItemRepository = transcribeItemRepository;
             _logger = loggerFactory.CreateLogger(typeof(TranscribeItemService));
         }
 

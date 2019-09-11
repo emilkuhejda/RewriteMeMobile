@@ -298,7 +298,10 @@
   <data name="UnableToLoadAudioFile" xml:space="preserve">
     <value>Unable to load audio file.</value>
   </data>
-
+  <data name="Downloading" xml:space="preserve">
+    <value>Downloading... {0}%</value>
+  </data>
+  
   <data name="ProfileEditErrorMessage" xml:space="preserve">
     <value>Your data was not changed. Please, try it later.</value>
   </data>
@@ -323,8 +326,11 @@
   <data name="NotEnoughFreeMinutesInSubscriptionErrorMessage" xml:space="preserve">
     <value>Your subscription does not have enough free minutes.</value>
   </data>
+  <data name="SynchronizationInProgressErrorMessage" xml:space="preserve">
+    <value>Synchronization is still in progress. Please, try it later.</value>
+  </data>
   <data name="TranscribeAudioSourceNotFoundErrorMessage" xml:space="preserve">
-    <value>Transcribe audio source not found. Please, check your internet connection.</value>
+    <value>Transcribe audio source was not found. Please, contact us.</value>
   </data>
   <data name="SpeechClientNotInitializedErrorMessage" xml:space="preserve">
     <value>Connection was not established. Please, try it later.</value>

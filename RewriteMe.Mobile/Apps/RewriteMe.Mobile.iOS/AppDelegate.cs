@@ -2,6 +2,8 @@
 using System.IO;
 using FFImageLoading.Forms.Platform;
 using Foundation;
+using RewriteMe.Domain.Messages;
+using RewriteMe.Mobile.iOS.BackgroundServices;
 using RewriteMe.Mobile.iOS.Configuration;
 using RewriteMe.Mobile.iOS.Utils;
 using UIKit;
@@ -32,8 +34,21 @@ namespace RewriteMe.Mobile.iOS
             LoadApplication(_application);
 
             InitializeStatusBarColor();
+            WireUpBackgroundServices();
 
             return base.FinishedLaunching(uiApplication, launchOptions);
+        }
+
+        private void WireUpBackgroundServices()
+        {
+            MessagingCenter.Subscribe<StartTranscribeItemBackgroundServiceMessage>(
+                this,
+                nameof(StartTranscribeItemBackgroundServiceMessage),
+                async message =>
+                {
+                    var transcribeItemBackgroundService = new TranscribeItemBackgroundService();
+                    await transcribeItemBackgroundService.RunAsync().ConfigureAwait(false);
+                });
         }
 
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)

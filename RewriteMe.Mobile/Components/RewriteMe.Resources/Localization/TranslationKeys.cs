@@ -68,6 +68,7 @@
         public static string RemainingTime => "RemainingTime";
         public static string NoAvailableData => "NoAvailableData";
         public static string UnableToLoadAudioFile => "UnableToLoadAudioFile";
+        public static string Downloading => "Downloading";
 
         public static string ProfileEditErrorMessage => "ProfileEditErrorMessage";
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
@@ -77,6 +78,7 @@
         public static string UploadedFileNotSupportedErrorMessage => "UploadedFileNotSupportedErrorMessage";
         public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
         public static string NotEnoughFreeMinutesInSubscriptionErrorMessage => "NotEnoughFreeMinutesInSubscriptionErrorMessage";
+        public static string SynchronizationInProgressErrorMessage => "SynchronizationInProgressErrorMessage";
         public static string TranscribeAudioSourceNotFoundErrorMessage => "TranscribeAudioSourceNotFoundErrorMessage";
         public static string SpeechClientNotInitializedErrorMessage => "SpeechClientNotInitializedErrorMessage";
         public static string SubscriptionWasSuccessfullyPurchased => "SubscriptionWasSuccessfullyPurchased";

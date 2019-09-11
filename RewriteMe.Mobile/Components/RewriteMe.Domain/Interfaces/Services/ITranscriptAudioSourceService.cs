@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Transcription;
 
@@ -6,8 +7,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface ITranscriptAudioSourceService
     {
-        Task<TranscriptAudioSource> GetAsync(Guid transcribeItemId);
+        Task SynchronizeAsync(Guid transcribeItemId, CancellationToken cancellationToken);
 
-        Task InsertAsync(TranscriptAudioSource transcriptAudioSource);
+        Task<TranscriptAudioSource> GetAsync(Guid transcribeItemId);
     }
 }
