@@ -13,6 +13,7 @@ using Microsoft.AppCenter.Push;
 using Microsoft.Identity.Client;
 using Plugin.InAppBilling;
 using RewriteMe.Business.Configuration;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.Droid.BackgroundServices;
 using RewriteMe.Mobile.Droid.Configuration;
@@ -58,12 +59,23 @@ namespace RewriteMe.Mobile.Droid
 
         private void WireUpBackgroundServices()
         {
-            MessagingCenter.Subscribe<StartTranscribeItemBackgroundServiceMessage>(
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
                 this,
-                nameof(StartTranscribeItemBackgroundServiceMessage),
+                nameof(BackgroundServiceType.TranscribeItem),
                 message =>
                 {
                     using (var intent = new Intent(this, typeof(TranscribeItemBackgroundService)))
+                    {
+                        StartService(intent);
+                    }
+                });
+
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
+                this,
+                nameof(BackgroundServiceType.Synchronizer),
+                message =>
+                {
+                    using (var intent = new Intent(this, typeof(SynchronizerBackgroundService)))
                     {
                         StartService(intent);
                     }

@@ -34,7 +34,7 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<IDeletedFileItemService, DeletedFileItemService>();
             containerRegistry.RegisterSingleton<ITranscribeItemService, TranscribeItemService>();
             containerRegistry.RegisterSingleton<ITranscriptAudioSourceService, TranscriptAudioSourceService>();
-            containerRegistry.RegisterSingleton<ISchedulerService, SchedulerService>();
+            containerRegistry.RegisterSingleton<ISynchronizerService, SynchronizerService>();
             containerRegistry.RegisterSingleton<ICleanUpService, CleanUpService>();
             containerRegistry.RegisterSingleton<IConnectivityService, ConnectivityService>();
             containerRegistry.RegisterSingleton<IInformationMessageService, InformationMessageService>();

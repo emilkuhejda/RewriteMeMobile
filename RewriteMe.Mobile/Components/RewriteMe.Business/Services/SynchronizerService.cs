@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 
 namespace RewriteMe.Business.Services
 {
-    public class SchedulerService : ISchedulerService
+    public class SynchronizerService : ISynchronizerService
     {
         private const int TimeoutSeconds = 30;
 
@@ -17,7 +16,7 @@ namespace RewriteMe.Business.Services
 
         private CancellationTokenSource _cancellationTokenSource;
 
-        public SchedulerService(
+        public SynchronizerService(
             IFileItemService fileItemService,
             ISynchronizationService synchronizationService)
         {
@@ -25,13 +24,11 @@ namespace RewriteMe.Business.Services
             _synchronizationService = synchronizationService;
 
             _cancellationTokenSource = new CancellationTokenSource();
-
-            _fileItemService.TranscriptionStarted += HandleTranscriptionStarted;
         }
 
         public bool IsRunning { get; private set; }
 
-        public async Task Start()
+        public async Task StartAsync()
         {
             lock (_lockObject)
             {
@@ -46,11 +43,13 @@ namespace RewriteMe.Business.Services
             {
                 await StartInternalAsync().ConfigureAwait(false);
             }
-
-            IsRunning = false;
+            else
+            {
+                IsRunning = false;
+            }
         }
 
-        public void Stop()
+        public void Cancel()
         {
             lock (_lockObject)
             {
@@ -69,38 +68,40 @@ namespace RewriteMe.Business.Services
             _cancellationTokenSource.Dispose();
             _cancellationTokenSource = new CancellationTokenSource();
 
-            var token = _cancellationTokenSource.Token;
-            await Task.Delay(TimeSpan.FromSeconds(TimeoutSeconds)).ConfigureAwait(false);
-
-            if (token.IsCancellationRequested)
-                return;
-
-            var anyWaitingForSynchronization = await _fileItemService.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
-            if (anyWaitingForSynchronization)
+            try
             {
-                try
-                {
-                    await StartSynchronizationAsync(token).ConfigureAwait(false);
+                var token = _cancellationTokenSource.Token;
+                await Task.Delay(TimeSpan.FromSeconds(TimeoutSeconds), token).ConfigureAwait(false);
 
-                    await StartInternalAsync().ConfigureAwait(false);
-                }
-                catch (UnauthorizedCallException)
+                token.ThrowIfCancellationRequested();
+                var anyWaitingForSynchronization = await _fileItemService.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
+                if (anyWaitingForSynchronization)
                 {
+                    token.ThrowIfCancellationRequested();
+                    await _synchronizationService.StartAsync(false).ConfigureAwait(false);
+
+                    token.ThrowIfCancellationRequested();
+                    IsRunning = false;
                 }
             }
-        }
-
-        private async Task StartSynchronizationAsync(CancellationToken token)
-        {
-            if (token.IsCancellationRequested)
-                return;
-
-            await _synchronizationService.StartAsync().ConfigureAwait(false);
-        }
-
-        private void HandleTranscriptionStarted(object sender, EventArgs e)
-        {
-            Start().FireAndForget();
+            catch (OperationCanceledException)
+            {
+            }
+            catch (UnauthorizedCallException)
+            {
+                _cancellationTokenSource.Cancel();
+            }
+            finally
+            {
+                if (!IsRunning && !_cancellationTokenSource.IsCancellationRequested)
+                {
+                    _synchronizationService.NotifyBackgroundServices();
+                }
+                else
+                {
+                    IsRunning = false;
+                }
+            }
         }
     }
 }

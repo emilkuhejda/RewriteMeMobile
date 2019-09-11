@@ -3,42 +3,42 @@ using Android.App;
 using Android.Content;
 using Android.OS;
 using Prism.Ioc;
-using RewriteMe.Domain.Interfaces.Managers;
+using RewriteMe.Domain.Interfaces.Services;
 
 namespace RewriteMe.Mobile.Droid.BackgroundServices
 {
     [Service]
-    public class TranscribeItemBackgroundService : Service
+    public class SynchronizerBackgroundService : Service
     {
-        private ITranscribeItemManager _transcribeItemManager;
+        private ISynchronizerService _synchronizerService;
 
         public override IBinder OnBind(Intent intent)
         {
             return null;
         }
 
-        private ITranscribeItemManager TranscribeItemManager
+        private ISynchronizerService SynchronizerService
         {
             get
             {
-                if (_transcribeItemManager != null)
-                    return _transcribeItemManager;
+                if (_synchronizerService != null)
+                    return _synchronizerService;
 
                 var app = (App)Xamarin.Forms.Application.Current;
-                return _transcribeItemManager = app.Container.Resolve<ITranscribeItemManager>();
+                return _synchronizerService = app.Container.Resolve<ISynchronizerService>();
             }
         }
 
         public override StartCommandResult OnStartCommand(Intent intent, StartCommandFlags flags, int startId)
         {
-            Task.Run(async () => await TranscribeItemManager.SynchronizationAsync().ConfigureAwait(false));
+            Task.Run(async () => await SynchronizerService.StartAsync().ConfigureAwait(false));
 
             return StartCommandResult.Sticky;
         }
 
         public override void OnDestroy()
         {
-            TranscribeItemManager?.Cancel();
+            SynchronizerService?.Cancel();
 
             base.OnDestroy();
         }

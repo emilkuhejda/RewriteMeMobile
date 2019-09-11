@@ -3,7 +3,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
-using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Services;
@@ -19,14 +18,12 @@ namespace RewriteMe.Mobile.ViewModels
     public class OverviewPageViewModel : OverviewBaseViewModel
     {
         private readonly IFileItemService _fileItemService;
-        private readonly ISchedulerService _schedulerService;
 
         private string _progressText;
         private ObservableCollection<FileItemViewModel> _fileItems;
 
         public OverviewPageViewModel(
             IFileItemService fileItemService,
-            ISchedulerService schedulerService,
             IInformationMessageService informationMessageService,
             ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
@@ -36,7 +33,6 @@ namespace RewriteMe.Mobile.ViewModels
             : base(informationMessageService, synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
-            _schedulerService = schedulerService;
 
             NavigateToCreatePageCommand = new AsyncCommand(ExecuteNavigateToCreatePageCommandAsync);
         }
@@ -60,8 +56,6 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 await InitializeNavigation(CurrentPage.Overview).ConfigureAwait(false);
-
-                _schedulerService.Start().FireAndForget();
 
                 ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
 
