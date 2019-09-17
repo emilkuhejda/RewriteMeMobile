@@ -5,6 +5,7 @@ using Prism.Ioc;
 using RewriteMe.Common;
 using RewriteMe.Domain.Interfaces.ExceptionHandling;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Interfaces.Utils;
 using RewriteMe.Mobile.ExceptionHandling;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Services;
@@ -25,6 +26,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterSingleton<IDialogService, DialogService>();
             containerRegistry.RegisterSingleton<ILanguageService, LanguageService>();
             containerRegistry.RegisterSingleton<IEmailService, EmailService>();
+            containerRegistry.RegisterSingleton<IAuthorizationObserver, AuthorizationObserver>();
             containerRegistry.RegisterSingleton<IAppCenterMetricsService, AppCenterMetricsService>();
             containerRegistry.RegisterSingleton<IExceptionHandlingStrategy, ExceptionHandlingStrategy>();
 

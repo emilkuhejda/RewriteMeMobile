@@ -16,6 +16,8 @@ namespace RewriteMe.Business.Services
 
         private CancellationTokenSource _cancellationTokenSource;
 
+        public event EventHandler UnauthorizedCallOccurred;
+
         public SynchronizerService(
             IFileItemService fileItemService,
             ISynchronizationService synchronizationService)
@@ -90,6 +92,8 @@ namespace RewriteMe.Business.Services
             catch (UnauthorizedCallException)
             {
                 _cancellationTokenSource.Cancel();
+
+                OnUnauthorizedCallOccurred();
             }
             finally
             {
@@ -102,6 +106,11 @@ namespace RewriteMe.Business.Services
                     IsRunning = false;
                 }
             }
+        }
+
+        private void OnUnauthorizedCallOccurred()
+        {
+            UnauthorizedCallOccurred?.Invoke(this, EventArgs.Empty);
         }
     }
 }

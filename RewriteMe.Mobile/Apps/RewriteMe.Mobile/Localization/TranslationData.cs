@@ -9,7 +9,6 @@ namespace RewriteMe.Mobile.Localization
         private readonly string _key;
         private readonly ILocalizer _localizer;
         private readonly Func<string, string> _translateAction;
-        private bool _disposed;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -42,15 +41,10 @@ namespace RewriteMe.Mobile.Localization
 
         protected virtual void Dispose(bool disposing)
         {
-            if (_disposed)
-                return;
-
             if (disposing)
             {
                 _localizer.CultureInfoChanged -= OnLocaleChanged;
             }
-
-            _disposed = true;
         }
     }
 }

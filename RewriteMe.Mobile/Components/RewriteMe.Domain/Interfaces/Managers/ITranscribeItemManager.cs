@@ -10,6 +10,8 @@ namespace RewriteMe.Domain.Interfaces.Managers
 
         event EventHandler<ManagerStateChangedEventArgs> StateChanged;
 
+        event EventHandler UnauthorizedCallOccurred;
+
         bool IsRunning { get; }
 
         Task SynchronizationAsync();
