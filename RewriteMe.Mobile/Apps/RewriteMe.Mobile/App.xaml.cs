@@ -123,7 +123,7 @@ namespace RewriteMe.Mobile
                     }
                     catch (UnauthorizedCallException)
                     {
-                        await Container.Resolve<IAuthorizationObserver>().SignOutAsync().ConfigureAwait(false);
+                        await Container.Resolve<IAuthorizationObserver>().LogOutAsync().ConfigureAwait(false);
                     }
                 };
             }

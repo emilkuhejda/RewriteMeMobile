@@ -38,7 +38,7 @@ namespace RewriteMe.Mobile.Services
             _transcribeItemManager.UnauthorizedCallOccurred += HandleUnauthorizedCallOccurred;
         }
 
-        public async Task SignOutAsync()
+        public async Task LogOutAsync()
         {
             if (_navigationService == null)
                 throw new InvalidOperationException("Navigation service is not initialized.");
@@ -49,7 +49,7 @@ namespace RewriteMe.Mobile.Services
 
         private async void HandleUnauthorizedCallOccurred(object sender, EventArgs e)
         {
-            await SignOutAsync().ConfigureAwait(false);
+            await LogOutAsync().ConfigureAwait(false);
         }
     }
 }

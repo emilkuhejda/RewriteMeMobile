@@ -7,6 +7,6 @@ namespace RewriteMe.Domain.Interfaces.Utils
     {
         void Initialize(INavigationService navigationService);
 
-        Task SignOutAsync();
+        Task LogOutAsync();
     }
 }
