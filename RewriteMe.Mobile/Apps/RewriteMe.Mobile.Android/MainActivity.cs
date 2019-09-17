@@ -59,9 +59,7 @@ namespace RewriteMe.Mobile.Droid
 
         private void WireUpBackgroundServices()
         {
-            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
-                this,
-                nameof(BackgroundServiceType.TranscribeItem),
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem),
                 message =>
                 {
                     using (var intent = new Intent(this, typeof(TranscribeItemBackgroundService)))
@@ -70,14 +68,30 @@ namespace RewriteMe.Mobile.Droid
                     }
                 });
 
-            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
-                this,
-                nameof(BackgroundServiceType.Synchronizer),
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer),
                 message =>
                 {
                     using (var intent = new Intent(this, typeof(SynchronizerBackgroundService)))
                     {
                         StartService(intent);
+                    }
+                });
+
+            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem),
+                message =>
+                {
+                    using (var intent = new Intent(this, typeof(TranscribeItemBackgroundService)))
+                    {
+                        StopService(intent);
+                    }
+                });
+
+            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer),
+                message =>
+                {
+                    using (var intent = new Intent(this, typeof(SynchronizerBackgroundService)))
+                    {
+                        StopService(intent);
                     }
                 });
         }
