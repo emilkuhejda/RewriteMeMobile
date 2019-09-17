@@ -44,18 +44,14 @@ namespace RewriteMe.Mobile.iOS
 
         private void WireUpBackgroundServices()
         {
-            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
-                this,
-                nameof(BackgroundServiceType.TranscribeItem),
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem),
                 async message =>
                 {
                     _transcribeItemBackgroundService = new TranscribeItemBackgroundService();
                     await _transcribeItemBackgroundService.RunAsync().ConfigureAwait(false);
                 });
 
-            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
-                this,
-                nameof(BackgroundServiceType.Synchronizer),
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer),
                 async message =>
                 {
                     _synchronizerBackgroundService = new SynchronizerBackgroundService();
