@@ -42,26 +42,6 @@ namespace RewriteMe.Mobile.iOS
             return base.FinishedLaunching(uiApplication, launchOptions);
         }
 
-        private void WireUpBackgroundServices()
-        {
-            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem),
-                async message =>
-                {
-                    _transcribeItemBackgroundService = new TranscribeItemBackgroundService();
-                    await _transcribeItemBackgroundService.RunAsync().ConfigureAwait(false);
-                });
-
-            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer),
-                async message =>
-                {
-                    _synchronizerBackgroundService = new SynchronizerBackgroundService();
-                    await _synchronizerBackgroundService.RunAsync().ConfigureAwait(false);
-                });
-
-            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem), message => { _transcribeItemBackgroundService.Stop(); });
-            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer), message => { _synchronizerBackgroundService.Stop(); });
-        }
-
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
         {
             byte[] source = null;
@@ -86,6 +66,26 @@ namespace RewriteMe.Mobile.iOS
                     statusBar.BackgroundColor = Colors.Primary;
                 }
             }
+        }
+
+        private void WireUpBackgroundServices()
+        {
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem),
+                async message =>
+                {
+                    _transcribeItemBackgroundService = new TranscribeItemBackgroundService();
+                    await _transcribeItemBackgroundService.RunAsync().ConfigureAwait(false);
+                });
+
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer),
+                async message =>
+                {
+                    _synchronizerBackgroundService = new SynchronizerBackgroundService();
+                    await _synchronizerBackgroundService.RunAsync().ConfigureAwait(false);
+                });
+
+            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem), message => { _transcribeItemBackgroundService.Stop(); });
+            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer), message => { _synchronizerBackgroundService.Stop(); });
         }
     }
 }
