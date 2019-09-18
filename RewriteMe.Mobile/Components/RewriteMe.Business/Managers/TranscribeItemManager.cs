@@ -25,6 +25,7 @@ namespace RewriteMe.Business.Managers
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
         public event EventHandler<ManagerStateChangedEventArgs> StateChanged;
+        public event EventHandler UnauthorizedCallOccurred;
 
         public TranscribeItemManager(
             ITranscriptAudioSourceService transcriptAudioSourceService,
@@ -68,6 +69,8 @@ namespace RewriteMe.Business.Managers
             catch (UnauthorizedCallException)
             {
                 _cancellationTokenSource.Cancel();
+
+                OnUnauthorizedCallOccurred();
             }
             finally
             {
@@ -126,6 +129,11 @@ namespace RewriteMe.Business.Managers
         private void OnStateChanged(bool isRunning)
         {
             StateChanged?.Invoke(this, new ManagerStateChangedEventArgs(isRunning));
+        }
+
+        private void OnUnauthorizedCallOccurred()
+        {
+            UnauthorizedCallOccurred?.Invoke(this, EventArgs.Empty);
         }
     }
 }

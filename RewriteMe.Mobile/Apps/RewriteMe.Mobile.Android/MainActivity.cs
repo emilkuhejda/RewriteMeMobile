@@ -4,7 +4,6 @@ using Android;
 using Android.App;
 using Android.Content;
 using Android.Content.PM;
-using Android.Net;
 using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
@@ -21,6 +20,7 @@ using RewriteMe.Mobile.Droid.Extensions;
 using RewriteMe.Mobile.Droid.Utils;
 using Xamarin.Forms;
 using SystemUri = System.Uri;
+using Uri = Android.Net.Uri;
 
 namespace RewriteMe.Mobile.Droid
 {
@@ -57,31 +57,6 @@ namespace RewriteMe.Mobile.Droid
             WireUpBackgroundServices();
         }
 
-        private void WireUpBackgroundServices()
-        {
-            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
-                this,
-                nameof(BackgroundServiceType.TranscribeItem),
-                message =>
-                {
-                    using (var intent = new Intent(this, typeof(TranscribeItemBackgroundService)))
-                    {
-                        StartService(intent);
-                    }
-                });
-
-            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
-                this,
-                nameof(BackgroundServiceType.Synchronizer),
-                message =>
-                {
-                    using (var intent = new Intent(this, typeof(SynchronizerBackgroundService)))
-                    {
-                        StartService(intent);
-                    }
-                });
-        }
-
         private void InitializeSharedFile()
         {
             if (!(Intent.GetParcelableExtra(ExtraConstants.FileUri) is Uri uri))
@@ -112,6 +87,30 @@ namespace RewriteMe.Mobile.Droid
         {
             base.OnNewIntent(intent);
             Push.CheckLaunchedFromNotification(this, intent);
+        }
+
+        private void WireUpBackgroundServices()
+        {
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem), StartBackgroundService<TranscribeItemBackgroundService>);
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer), StartBackgroundService<SynchronizerBackgroundService>);
+            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem), StopBackgroundService<TranscribeItemBackgroundService>);
+            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer), StopBackgroundService<SynchronizerBackgroundService>);
+        }
+
+        private void StartBackgroundService<T>(StartBackgroundServiceMessage message)
+        {
+            using (var intent = new Intent(this, typeof(T)))
+            {
+                StartService(intent);
+            }
+        }
+
+        private void StopBackgroundService<T>(StopBackgroundServiceMessage message)
+        {
+            using (var intent = new Intent(this, typeof(T)))
+            {
+                StopService(intent);
+            }
         }
     }
 }

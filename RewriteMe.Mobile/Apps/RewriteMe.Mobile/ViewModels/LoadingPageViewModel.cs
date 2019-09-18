@@ -35,6 +35,7 @@ namespace RewriteMe.Mobile.ViewModels
             _connectivityService = connectivityService;
             _rewriteMeWebService = rewriteMeWebService;
 
+            IsSecurePage = false;
             HasTitleBar = false;
             CanGoBack = false;
 

@@ -8,6 +8,7 @@ using Plugin.SecureStorage;
 using RewriteMe.Business.Wrappers;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Configuration;
@@ -15,9 +16,11 @@ using RewriteMe.Domain.Interfaces.Factories;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Messages;
 using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
+using Xamarin.Forms;
 using FormsDevice = Xamarin.Forms.Device;
 
 namespace RewriteMe.Business.Services
@@ -269,9 +272,17 @@ namespace RewriteMe.Business.Services
             _userId = Guid.Empty;
             _accessToken = null;
 
+            NotifyBackgroundServices();
+
             await RemoveLocalAccountsAsync().ConfigureAwait(false);
             await _cleanUpService.CleanUp().ConfigureAwait(false);
             CrossSecureStorage.Current.DeleteKey(AccessTokenKey);
+        }
+
+        public void NotifyBackgroundServices()
+        {
+            MessagingCenter.Send(new StopBackgroundServiceMessage(BackgroundServiceType.TranscribeItem), nameof(BackgroundServiceType.TranscribeItem));
+            MessagingCenter.Send(new StopBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
         }
 
         private async Task RemoveLocalAccountsAsync()

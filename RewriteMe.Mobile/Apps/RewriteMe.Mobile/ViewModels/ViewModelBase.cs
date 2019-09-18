@@ -34,6 +34,7 @@ namespace RewriteMe.Mobile.ViewModels
             Logger = loggerFactory.CreateLogger(GetType());
             OperationScope = new AsyncOperationScope();
 
+            IsSecurePage = true;
             HasTitleBar = true;
 
             NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommandAsync, () => CanGoBack);
@@ -66,6 +67,8 @@ namespace RewriteMe.Mobile.ViewModels
             protected set => SetProperty(ref _canGoBack, value);
         }
 
+        protected bool IsSecurePage { get; set; }
+
         protected bool IsCurrent => ((RewriteMeNavigationPage)Application.Current.MainPage).CurrentPage.BindingContext.GetType() == GetType();
 
         public void OnNavigatedFrom(INavigationParameters parameters)
@@ -76,6 +79,13 @@ namespace RewriteMe.Mobile.ViewModels
         {
             await HandleWebServiceCallAsync(async () =>
             {
+                if (IsSecurePage)
+                {
+                    var isSignedInAsync = await UserSessionService.IsSignedInAsync().ConfigureAwait(false);
+                    if (!isSignedInAsync)
+                        throw new UnauthorizedCallException();
+                }
+
                 await LoadDataAsync(parameters).ConfigureAwait(false);
             }).ConfigureAwait(false);
         }

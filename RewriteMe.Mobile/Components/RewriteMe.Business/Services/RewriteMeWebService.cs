@@ -166,7 +166,7 @@ namespace RewriteMe.Business.Services
         public async Task RefreshTokenIfNeededAsync()
         {
             var accessToken = _userSessionService.AccessToken;
-            var daysToExpire = (accessToken.ExpirationDate - DateTimeOffset.UtcNow).TotalDays;
+            var daysToExpire = accessToken.ExpirationDate.Subtract(DateTimeOffset.UtcNow).TotalDays;
             if (daysToExpire > 30)
                 return;
 
