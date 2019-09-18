@@ -32,6 +32,11 @@ namespace RewriteMe.Mobile.iOS.BackgroundServices
             UIApplication.SharedApplication.EndBackgroundTask(taskId);
         }
 
+        public void Stop()
+        {
+            TranscribeItemManager?.Cancel();
+        }
+
         private void OnExpiration()
         {
             TranscribeItemManager?.Cancel();

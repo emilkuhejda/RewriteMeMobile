@@ -19,6 +19,8 @@ namespace RewriteMe.Mobile.iOS
     public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate
     {
         private App _application;
+        private TranscribeItemBackgroundService _transcribeItemBackgroundService;
+        private SynchronizerBackgroundService _synchronizerBackgroundService;
 
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -38,27 +40,6 @@ namespace RewriteMe.Mobile.iOS
             WireUpBackgroundServices();
 
             return base.FinishedLaunching(uiApplication, launchOptions);
-        }
-
-        private void WireUpBackgroundServices()
-        {
-            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
-                this,
-                nameof(BackgroundServiceType.TranscribeItem),
-                async message =>
-                {
-                    var transcribeItemBackgroundService = new TranscribeItemBackgroundService();
-                    await transcribeItemBackgroundService.RunAsync().ConfigureAwait(false);
-                });
-
-            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(
-                this,
-                nameof(BackgroundServiceType.Synchronizer),
-                async message =>
-                {
-                    var synchronizerBackgroundService = new SynchronizerBackgroundService();
-                    await synchronizerBackgroundService.RunAsync().ConfigureAwait(false);
-                });
         }
 
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
@@ -85,6 +66,26 @@ namespace RewriteMe.Mobile.iOS
                     statusBar.BackgroundColor = Colors.Primary;
                 }
             }
+        }
+
+        private void WireUpBackgroundServices()
+        {
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem),
+                async message =>
+                {
+                    _transcribeItemBackgroundService = new TranscribeItemBackgroundService();
+                    await _transcribeItemBackgroundService.RunAsync().ConfigureAwait(false);
+                });
+
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer),
+                async message =>
+                {
+                    _synchronizerBackgroundService = new SynchronizerBackgroundService();
+                    await _synchronizerBackgroundService.RunAsync().ConfigureAwait(false);
+                });
+
+            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem), message => { _transcribeItemBackgroundService.Stop(); });
+            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer), message => { _synchronizerBackgroundService.Stop(); });
         }
     }
 }

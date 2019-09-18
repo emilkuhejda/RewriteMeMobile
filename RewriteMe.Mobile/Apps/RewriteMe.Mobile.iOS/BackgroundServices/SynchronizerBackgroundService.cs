@@ -30,6 +30,11 @@ namespace RewriteMe.Mobile.iOS.BackgroundServices
             UIApplication.SharedApplication.EndBackgroundTask(taskId);
         }
 
+        public void Stop()
+        {
+            SynchronizerService?.Cancel();
+        }
+
         private void OnExpiration()
         {
             SynchronizerService?.Cancel();

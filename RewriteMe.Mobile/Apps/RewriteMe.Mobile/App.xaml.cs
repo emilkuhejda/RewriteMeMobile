@@ -16,6 +16,7 @@ using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Interfaces.Utils;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
@@ -87,6 +88,8 @@ namespace RewriteMe.Mobile
             };
 
             Task.WaitAll(tasks.Select(x => x()).ToArray());
+
+            Container.Resolve<IAuthorizationObserver>().Initialize(NavigationService);
         }
 
         private void NavigateToPage(INavigationParameters navigationParameters)
@@ -120,6 +123,7 @@ namespace RewriteMe.Mobile
                     }
                     catch (UnauthorizedCallException)
                     {
+                        await Container.Resolve<IAuthorizationObserver>().LogOutAsync().ConfigureAwait(false);
                     }
                 };
             }
