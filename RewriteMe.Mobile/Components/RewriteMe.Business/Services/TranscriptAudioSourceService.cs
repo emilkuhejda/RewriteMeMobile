@@ -21,11 +21,14 @@ namespace RewriteMe.Business.Services
             _transcriptAudioSourceRepository = transcriptAudioSourceRepository;
         }
 
-        public async Task SynchronizeAsync(Guid transcribeItemId, CancellationToken cancellationToken)
+        public async Task<bool> SynchronizeAsync(Guid transcribeItemId, CancellationToken cancellationToken)
         {
             var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(transcribeItemId, cancellationToken).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Offline)
-                return;
+                return false;
+
+            if (httpRequestResult.State == HttpRequestState.Error && httpRequestResult.StatusCode.HasValue && httpRequestResult.StatusCode != 404)
+                return false;
 
             var source = httpRequestResult.Payload ?? Array.Empty<byte>();
             var audioSource = new TranscriptAudioSource
@@ -36,6 +39,7 @@ namespace RewriteMe.Business.Services
             };
 
             await _transcriptAudioSourceRepository.InsertAsync(audioSource).ConfigureAwait(false);
+            return true;
         }
 
         public async Task<TranscriptAudioSource> GetAsync(Guid transcribeItemId)
