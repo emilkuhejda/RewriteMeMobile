@@ -21,32 +21,6 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='contactFormModel'>
-            /// </param>
-            public static Ok CreateContactForm(this IRewriteMeAPI operations, ContactFormModel contactFormModel = default(ContactFormModel))
-            {
-                return operations.CreateContactFormAsync(contactFormModel).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='contactFormModel'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<Ok> CreateContactFormAsync(this IRewriteMeAPI operations, ContactFormModel contactFormModel = default(ContactFormModel), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.CreateContactFormWithHttpMessagesAsync(contactFormModel, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='updatedAfter'>
             /// </param>
             /// <param name='applicationId'>
@@ -205,7 +179,7 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='applicationId'>
             /// </param>
-            public static object UpdateFileItem(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), System.Guid? applicationId = default(System.Guid?))
+            public static object UpdateFileItem(this IRewriteMeAPI operations, System.Guid fileItemId, string name, string language, System.Guid applicationId)
             {
                 return operations.UpdateFileItemAsync(fileItemId, name, language, applicationId).GetAwaiter().GetResult();
             }
@@ -224,7 +198,7 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> UpdateFileItemAsync(this IRewriteMeAPI operations, System.Guid? fileItemId = default(System.Guid?), string name = default(string), string language = default(string), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> UpdateFileItemAsync(this IRewriteMeAPI operations, System.Guid fileItemId, string name, string language, System.Guid applicationId, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.UpdateFileItemWithHttpMessagesAsync(fileItemId, name, language, applicationId, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -856,6 +830,41 @@ namespace RewriteMe.Domain.WebApi
                 {
                     return _result.Body;
                 }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='username'>
+            /// </param>
+            /// <param name='password'>
+            /// </param>
+            /// <param name='userId'>
+            /// </param>
+            /// <param name='role'>
+            /// </param>
+            public static void CreateToken(this IRewriteMeAPI operations, string username, string password, System.Guid userId, int role)
+            {
+                operations.CreateTokenAsync(username, password, userId, role).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='username'>
+            /// </param>
+            /// <param name='password'>
+            /// </param>
+            /// <param name='userId'>
+            /// </param>
+            /// <param name='role'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task CreateTokenAsync(this IRewriteMeAPI operations, string username, string password, System.Guid userId, int role, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.CreateTokenWithHttpMessagesAsync(username, password, userId, role, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

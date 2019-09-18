@@ -6,6 +6,7 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -22,7 +23,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the UpdateUserModel class.
         /// </summary>
-        public UpdateUserModel(string givenName = default(string), string familyName = default(string))
+        public UpdateUserModel(string givenName, string familyName)
         {
             GivenName = givenName;
             FamilyName = familyName;
@@ -44,5 +45,22 @@ namespace RewriteMe.Domain.WebApi.Models
         [JsonProperty(PropertyName = "familyName")]
         public string FamilyName { get; set; }
 
+        /// <summary>
+        /// Validate the object.
+        /// </summary>
+        /// <exception cref="ValidationException">
+        /// Thrown if validation fails
+        /// </exception>
+        public virtual void Validate()
+        {
+            if (GivenName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "GivenName");
+            }
+            if (FamilyName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "FamilyName");
+            }
+        }
     }
 }

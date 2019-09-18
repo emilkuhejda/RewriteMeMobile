@@ -6,6 +6,7 @@
 
 namespace RewriteMe.Domain.WebApi.Models
 {
+    using Microsoft.Rest;
     using Newtonsoft.Json;
     using System.Linq;
 
@@ -22,7 +23,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the SpeechResultModel class.
         /// </summary>
-        public SpeechResultModel(System.Guid id, string totalTime = default(string))
+        public SpeechResultModel(System.Guid id, string totalTime)
         {
             Id = id;
             TotalTime = totalTime;
@@ -47,12 +48,15 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Validate the object.
         /// </summary>
-        /// <exception cref="Microsoft.Rest.ValidationException">
+        /// <exception cref="ValidationException">
         /// Thrown if validation fails
         /// </exception>
         public virtual void Validate()
         {
-            //Nothing to validate
+            if (TotalTime == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "TotalTime");
+            }
         }
     }
 }
