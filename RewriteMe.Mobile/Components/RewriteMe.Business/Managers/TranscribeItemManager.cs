@@ -14,6 +14,8 @@ namespace RewriteMe.Business.Managers
 {
     public class TranscribeItemManager : ITranscribeItemManager
     {
+        private const int TimeoutSeconds = 30;
+
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemRepository _transcribeItemRepository;
         private readonly object _lockObject = new object();

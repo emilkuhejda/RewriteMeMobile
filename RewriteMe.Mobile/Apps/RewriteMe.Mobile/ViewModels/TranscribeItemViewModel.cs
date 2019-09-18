@@ -73,6 +73,12 @@ namespace RewriteMe.Mobile.ViewModels
                     return;
                 }
 
+                if (transcriptAudioSource.Source == null || !transcriptAudioSource.Source.Any())
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage)).ConfigureAwait(false);
+                    return;
+                }
+
                 PlayerViewModel.Load(transcriptAudioSource.Source);
                 PlayerViewModel.Play();
             }
