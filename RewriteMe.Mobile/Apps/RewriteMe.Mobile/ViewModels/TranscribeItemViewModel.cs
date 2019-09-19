@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Managers;
@@ -71,6 +72,15 @@ namespace RewriteMe.Mobile.ViewModels
 
                     await DialogService.AlertAsync(errorMessage).ConfigureAwait(false);
                     return;
+                }
+
+                if (transcriptAudioSource.Source == null || !transcriptAudioSource.Source.Any())
+                {
+                    var isSuccess = await _transcriptAudioSourceService.RefreshAsync(transcriptAudioSource.Id, transcriptAudioSource.TranscribeItemId, default(CancellationToken)).ConfigureAwait(false);
+                    if (isSuccess)
+                    {
+                        transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
+                    }
                 }
 
                 if (transcriptAudioSource.Source == null || !transcriptAudioSource.Source.Any())

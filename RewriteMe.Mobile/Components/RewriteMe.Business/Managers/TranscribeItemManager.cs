@@ -89,7 +89,7 @@ namespace RewriteMe.Business.Managers
                 return;
 
             var transcribeItems = transcribeItemsToUpdate.Select(x => x.Id).ToArray().Split(10);
-            bool success = true;
+            bool isSuccess = true;
             foreach (var transcribeItemIds in transcribeItems)
             {
                 var updateMethods = new List<Func<Task<bool>>>();
@@ -101,10 +101,10 @@ namespace RewriteMe.Business.Managers
                 var tasks = updateMethods.WhenTaskDone(OnInitializationProgress).Select(x => x());
                 var result = await Task.WhenAll(tasks).ConfigureAwait(false);
 
-                success &= result.All(x => x);
+                isSuccess &= result.All(x => x);
             }
 
-            if (!success)
+            if (!isSuccess)
                 return;
 
             await SynchronizationInternalAsync(cancellationToken).ConfigureAwait(false);

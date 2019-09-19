@@ -23,6 +23,11 @@ namespace RewriteMe.Business.Services
 
         public async Task<bool> SynchronizeAsync(Guid transcribeItemId, CancellationToken cancellationToken)
         {
+            return await RefreshAsync(Guid.NewGuid(), transcribeItemId, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<bool> RefreshAsync(Guid audioSourceId, Guid transcribeItemId, CancellationToken cancellationToken)
+        {
             var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(transcribeItemId, cancellationToken).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Offline)
                 return false;
@@ -33,12 +38,12 @@ namespace RewriteMe.Business.Services
             var source = httpRequestResult.Payload ?? Array.Empty<byte>();
             var audioSource = new TranscriptAudioSource
             {
-                Id = Guid.NewGuid(),
+                Id = audioSourceId,
                 TranscribeItemId = transcribeItemId,
                 Source = source
             };
 
-            await _transcriptAudioSourceRepository.InsertAsync(audioSource).ConfigureAwait(false);
+            await _transcriptAudioSourceRepository.InsertOrUpdateAsync(audioSource).ConfigureAwait(false);
             return true;
         }
 
