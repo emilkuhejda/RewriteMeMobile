@@ -17,6 +17,17 @@ namespace RewriteMe.Business.Extensions
             });
         }
 
+        public static IEnumerable<Func<Task<bool>>> WhenTaskDone(this IEnumerable<Func<Task<bool>>> list, Action action)
+        {
+            return list.Select<Func<Task<bool>>, Func<Task<bool>>>(x => async () =>
+            {
+                var result = await x().ConfigureAwait(false);
+                action();
+
+                return result;
+            });
+        }
+
         public static int GetCount(this IEnumerable enumerable)
         {
             var enumerator = enumerable.GetEnumerator();

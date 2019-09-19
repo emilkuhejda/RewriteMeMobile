@@ -1,5 +1,6 @@
 ﻿using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
@@ -20,6 +21,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly IFileItemService _fileItemService;
         private readonly ITranscribeItemManager _transcribeItemManager;
+        private readonly CancellationTokenSource _cancellationTokenSource;
 
         private double _progress;
         private string _progressText;
@@ -43,6 +45,8 @@ namespace RewriteMe.Mobile.ViewModels
 
             _transcribeItemManager.StateChanged += HandleStateChanged;
             _transcribeItemManager.InitializationProgress += HandleInitializationProgress;
+
+            _cancellationTokenSource = new CancellationTokenSource();
         }
 
         private FileItem FileItem { get; set; }
@@ -95,7 +99,8 @@ namespace RewriteMe.Mobile.ViewModels
                 _transcribeItemManager,
                 DialogService,
                 PlayerViewModel,
-                detailItem);
+                detailItem,
+                _cancellationTokenSource.Token);
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
             return viewModel;
@@ -164,6 +169,8 @@ namespace RewriteMe.Mobile.ViewModels
 
             _transcribeItemManager.StateChanged -= HandleStateChanged;
             _transcribeItemManager.InitializationProgress -= HandleInitializationProgress;
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
         }
     }
 }

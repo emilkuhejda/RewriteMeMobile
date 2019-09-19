@@ -21,22 +21,30 @@ namespace RewriteMe.Business.Services
             _transcriptAudioSourceRepository = transcriptAudioSourceRepository;
         }
 
-        public async Task SynchronizeAsync(Guid transcribeItemId, CancellationToken cancellationToken)
+        public async Task<bool> SynchronizeAsync(Guid transcribeItemId, CancellationToken cancellationToken)
+        {
+            return await RefreshAsync(Guid.NewGuid(), transcribeItemId, cancellationToken).ConfigureAwait(false);
+        }
+
+        public async Task<bool> RefreshAsync(Guid audioSourceId, Guid transcribeItemId, CancellationToken cancellationToken)
         {
             var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(transcribeItemId, cancellationToken).ConfigureAwait(false);
-            if (httpRequestResult.State == HttpRequestState.Success)
+            if (httpRequestResult.State == HttpRequestState.Offline)
+                return false;
+
+            if (httpRequestResult.State == HttpRequestState.Error && httpRequestResult.StatusCode.HasValue && httpRequestResult.StatusCode != 404)
+                return false;
+
+            var source = httpRequestResult.Payload ?? Array.Empty<byte>();
+            var audioSource = new TranscriptAudioSource
             {
-                var source = httpRequestResult.Payload;
+                Id = audioSourceId,
+                TranscribeItemId = transcribeItemId,
+                Source = source
+            };
 
-                var audioSource = new TranscriptAudioSource
-                {
-                    Id = Guid.NewGuid(),
-                    TranscribeItemId = transcribeItemId,
-                    Source = source
-                };
-
-                await _transcriptAudioSourceRepository.InsertAsync(audioSource).ConfigureAwait(false);
-            }
+            await _transcriptAudioSourceRepository.InsertOrUpdateAsync(audioSource).ConfigureAwait(false);
+            return true;
         }
 
         public async Task<TranscriptAudioSource> GetAsync(Guid transcribeItemId)
