@@ -89,17 +89,23 @@ namespace RewriteMe.Business.Managers
                 return;
 
             var transcribeItems = transcribeItemsToUpdate.Select(x => x.Id).ToArray().Split(10);
+            bool isSuccess = true;
             foreach (var transcribeItemIds in transcribeItems)
             {
-                var updateMethods = new List<Func<Task>>();
+                var updateMethods = new List<Func<Task<bool>>>();
                 foreach (var transcribeItem in transcribeItemIds)
                 {
                     updateMethods.Add(() => _transcriptAudioSourceService.SynchronizeAsync(transcribeItem, cancellationToken));
                 }
 
                 var tasks = updateMethods.WhenTaskDone(OnInitializationProgress).Select(x => x());
-                await Task.WhenAll(tasks).ConfigureAwait(false);
+                var result = await Task.WhenAll(tasks).ConfigureAwait(false);
+
+                isSuccess &= result.All(x => x);
             }
+
+            if (!isSuccess)
+                return;
 
             await SynchronizationInternalAsync(cancellationToken).ConfigureAwait(false);
         }

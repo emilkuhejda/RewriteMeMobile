@@ -24,9 +24,9 @@ namespace RewriteMe.DataAccess.Repositories
             return entity?.ToTranscriptAudioSource();
         }
 
-        public async Task InsertAsync(TranscriptAudioSource transcriptAudioSource)
+        public async Task InsertOrUpdateAsync(TranscriptAudioSource transcriptAudioSource)
         {
-            await _contextProvider.Context.InsertAsync(transcriptAudioSource.ToTranscriptAudioSourceEntity()).ConfigureAwait(false);
+            await _contextProvider.Context.InsertOrReplaceAsync(transcriptAudioSource.ToTranscriptAudioSourceEntity()).ConfigureAwait(false);
         }
     }
 }

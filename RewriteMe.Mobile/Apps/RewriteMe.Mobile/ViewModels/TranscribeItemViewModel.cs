@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Managers;
@@ -13,17 +14,20 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemManager _transcribeItemManager;
+        private readonly CancellationToken _cancellationToken;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
             ITranscribeItemManager transcribeItemManager,
             IDialogService dialogService,
             PlayerViewModel playerViewModel,
-            TranscribeItem transcribeItem)
+            TranscribeItem transcribeItem,
+            CancellationToken cancellationToken)
             : base(playerViewModel, dialogService, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _transcribeItemManager = transcribeItemManager;
+            _cancellationToken = cancellationToken;
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
@@ -70,6 +74,27 @@ namespace RewriteMe.Mobile.ViewModels
                         : Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage);
 
                     await DialogService.AlertAsync(errorMessage).ConfigureAwait(false);
+                    return;
+                }
+
+                if (_cancellationToken.IsCancellationRequested)
+                    return;
+
+                if (transcriptAudioSource.Source == null || !transcriptAudioSource.Source.Any())
+                {
+                    var isSuccess = await _transcriptAudioSourceService.RefreshAsync(transcriptAudioSource.Id, transcriptAudioSource.TranscribeItemId, _cancellationToken).ConfigureAwait(false);
+                    if (isSuccess)
+                    {
+                        transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
+                    }
+                }
+
+                if (_cancellationToken.IsCancellationRequested)
+                    return;
+
+                if (transcriptAudioSource.Source == null || !transcriptAudioSource.Source.Any())
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage)).ConfigureAwait(false);
                     return;
                 }
 

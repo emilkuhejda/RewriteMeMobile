@@ -8,6 +8,6 @@ namespace RewriteMe.Domain.Interfaces.Repositories
     {
         Task<TranscriptAudioSource> GetAsync(Guid transcribeItemId);
 
-        Task InsertAsync(TranscriptAudioSource transcriptAudioSource);
+        Task InsertOrUpdateAsync(TranscriptAudioSource transcriptAudioSource);
     }
 }
