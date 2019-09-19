@@ -6,7 +6,6 @@ using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.iOS.BackgroundServices;
 using RewriteMe.Mobile.iOS.Configuration;
-using RewriteMe.Mobile.iOS.Utils;
 using UIKit;
 using Xamarin.Forms;
 
@@ -36,7 +35,6 @@ namespace RewriteMe.Mobile.iOS
             _application = new App(bootstrapper);
             LoadApplication(_application);
 
-            InitializeStatusBarColor();
             WireUpBackgroundServices();
 
             return base.FinishedLaunching(uiApplication, launchOptions);
@@ -54,18 +52,6 @@ namespace RewriteMe.Mobile.iOS
             _application.ImportFile(fileName, source);
 
             return true;
-        }
-
-        private void InitializeStatusBarColor()
-        {
-            using (var nsString = new NSString("statusBar"))
-            {
-                var statusBar = UIApplication.SharedApplication.ValueForKey(nsString) as UIView;
-                if (statusBar != null && statusBar.RespondsToSelector(new ObjCRuntime.Selector("setBackgroundColor:")))
-                {
-                    statusBar.BackgroundColor = Colors.Primary;
-                }
-            }
         }
 
         private void WireUpBackgroundServices()

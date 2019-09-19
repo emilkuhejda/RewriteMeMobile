@@ -29,3 +29,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "It is singleton", Scope = "member", Target = "~M:RewriteMe.Mobile.iOS.Logging.NLogLoggerConfiguration.Initialize(System.String)")]
 [assembly: SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "By design", Scope = "type", Target = "~T:RewriteMe.Mobile.iOS.Renderers.RewriteMeEditorRenderer")]
 [assembly: SuppressMessage("Design", "CA1010:Collections should implement generic interface", Justification = "By design", Scope = "type", Target = "~T:RewriteMe.Mobile.iOS.Renderers.RewriteMeEditorRenderer")]
+[assembly: SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "By design", Scope = "type", Target = "~T:RewriteMe.Mobile.iOS.Renderers.BaseNavigationPageRenderer")]
+[assembly: SuppressMessage("Design", "CA1010:Collections should implement generic interface", Justification = "By design", Scope = "type", Target = "~T:RewriteMe.Mobile.iOS.Renderers.BaseNavigationPageRenderer")]
