@@ -14,8 +14,6 @@ namespace RewriteMe.Business.Managers
 {
     public class TranscribeItemManager : ITranscribeItemManager
     {
-        private const int TimeoutSeconds = 30;
-
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemRepository _transcribeItemRepository;
         private readonly object _lockObject = new object();
@@ -103,8 +101,11 @@ namespace RewriteMe.Business.Managers
                 var tasks = updateMethods.WhenTaskDone(OnInitializationProgress).Select(x => x());
                 var result = await Task.WhenAll(tasks).ConfigureAwait(false);
 
-                success = result.All(x => x);
+                success &= result.All(x => x);
             }
+
+            if (!success)
+                return;
 
             await SynchronizationInternalAsync(cancellationToken).ConfigureAwait(false);
         }
