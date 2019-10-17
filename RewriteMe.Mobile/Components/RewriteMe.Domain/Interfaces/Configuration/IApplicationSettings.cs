@@ -11,6 +11,8 @@ namespace RewriteMe.Domain.Interfaces.Configuration
 
         string AppCenterKeys { get; }
 
+        string SyncfusionKey { get; }
+
         string SupportMailAddress { get; }
 
         string DefaultLanguage { get; }

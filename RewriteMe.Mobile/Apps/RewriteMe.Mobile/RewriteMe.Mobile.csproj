@@ -21,7 +21,6 @@
     <None Remove="Resources\Images\Info.svg" />
     <None Remove="Resources\Images\Notification-Active-Disabled.svg" />
     <None Remove="Resources\Images\Notification-Active.svg" />
-    <None Remove="Resources\Images\Notification-Disabled.svg" />
     <None Remove="Resources\Images\Notification-Enabled.svg" />
     <None Remove="Resources\Images\Ok.svg" />
     <None Remove="Resources\Images\Pause-Enabled.svg" />
@@ -41,9 +40,7 @@
     <None Remove="Resources\Images\Stop-Enabled.svg" />
     <None Remove="Resources\Images\PauseRecording.svg" />
     <None Remove="Resources\Images\PlayRecording.svg" />
-    <None Remove="Resources\Images\Overview-Disabled.svg" />
     <None Remove="Resources\Images\Overview-Enabled.svg" />
-    <None Remove="Resources\Images\RecorderOverview-Disabled.svg" />
     <None Remove="Resources\Images\RecorderOverview-Enabled.svg" />
     <None Remove="Resources\Images\Subscription-1.svg" />
     <None Remove="Resources\Images\Subscription-10.svg" />
@@ -58,7 +55,6 @@
     <EmbeddedResource Include="Resources\Images\Info.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Active-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Active.svg" />
-    <EmbeddedResource Include="Resources\Images\Notification-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Ok.svg" />
     <EmbeddedResource Include="Resources\Images\Pause-Enabled.svg" />
@@ -77,9 +73,7 @@
     <EmbeddedResource Include="Resources\Images\Start-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\PauseRecording.svg" />
     <EmbeddedResource Include="Resources\Images\PlayRecording.svg" />
-    <EmbeddedResource Include="Resources\Images\Overview-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Overview-Enabled.svg" />
-    <EmbeddedResource Include="Resources\Images\RecorderOverview-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\RecorderOverview-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Subscription-1.svg" />
     <EmbeddedResource Include="Resources\Images\Subscription-10.svg" />
@@ -91,7 +85,7 @@
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.1.1" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.1.1" />
     <PackageReference Include="Microsoft.AppCenter.Push" Version="2.1.1" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.4">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -101,9 +95,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Acr.DeviceInfo" Version="6.5.0" />
-    <PackageReference Include="Acr.UserDialogs" Version="7.0.30" />
+    <PackageReference Include="Acr.UserDialogs" Version="7.0.32" />
     <PackageReference Include="NLog" Version="4.6.7" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1367" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="17.3.0.17" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xam.Plugin.LatestVersion" Version="1.1.2" />
     <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.3.1" />
@@ -141,6 +136,9 @@
   
   <ItemGroup>
     <EmbeddedResource Update="Controls\DrillDownButton.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\BottomNavigation.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\DetailInfoPage.xaml">

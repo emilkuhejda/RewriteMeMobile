@@ -16,13 +16,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         public RecorderOverviewPageViewModel(
             IRecordedItemService recordedItemService,
-            IInformationMessageService informationMessageService,
             ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(informationMessageService, synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
         }
@@ -37,8 +36,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                await InitializeNavigation(CurrentPage.RecorderOverview).ConfigureAwait(false);
-
                 var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
                 var items = await _recordedItemService.GetAllAsync(userId).ConfigureAwait(false);
                 RecordedItems = items
@@ -48,11 +45,6 @@ namespace RewriteMe.Mobile.ViewModels
 
                 NotAvailableData = !RecordedItems.Any();
             }
-        }
-
-        protected override async Task ExecuteNavigateToRecorderOverviewAsync()
-        {
-            await Task.CompletedTask.ConfigureAwait(false);
         }
     }
 }
