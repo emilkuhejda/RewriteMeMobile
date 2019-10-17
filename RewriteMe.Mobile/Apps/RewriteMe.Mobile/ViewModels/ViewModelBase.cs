@@ -38,7 +38,6 @@ namespace RewriteMe.Mobile.ViewModels
             HasTitleBar = true;
 
             NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommandAsync, () => CanGoBack);
-            NavigateToSettingsCommand = new AsyncCommand(ExecuteNavigateToSettingsCommandAsync);
         }
 
         protected IUserSessionService UserSessionService { get; }
@@ -52,8 +51,6 @@ namespace RewriteMe.Mobile.ViewModels
         public AsyncOperationScope OperationScope { get; }
 
         public ICommand NavigateBackCommand { get; }
-
-        public ICommand NavigateToSettingsCommand { get; }
 
         public bool HasTitleBar
         {
@@ -111,11 +108,6 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteNavigateBackCommandAsync()
         {
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
-        }
-
-        private async Task ExecuteNavigateToSettingsCommandAsync()
-        {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.Settings).ConfigureAwait(false);
         }
 
         public void Dispose()
