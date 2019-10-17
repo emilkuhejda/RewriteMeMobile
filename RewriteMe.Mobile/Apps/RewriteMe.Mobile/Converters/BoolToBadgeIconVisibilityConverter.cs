@@ -5,7 +5,7 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Converters
 {
-    public class BoolToBadgeIconConverter : IValueConverter
+    public class BoolToBadgeIconVisibilityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
