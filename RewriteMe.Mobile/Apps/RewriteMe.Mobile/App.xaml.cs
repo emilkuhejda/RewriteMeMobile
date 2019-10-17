@@ -17,9 +17,11 @@ using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
+using RewriteMe.Mobile.Configuration;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
+using Syncfusion.Licensing;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -27,12 +29,11 @@ namespace RewriteMe.Mobile
 {
     public partial class App : PrismApplication
     {
-        private readonly IApplicationSettings _applicationSettings;
+        private IApplicationSettings _applicationSettings;
 
         public App(IPlatformInitializer platformInitializer)
             : base(platformInitializer)
         {
-            _applicationSettings = Container.Resolve<IApplicationSettings>();
         }
 
         public void ImportFile(string fileName, byte[] source)
@@ -43,7 +44,10 @@ namespace RewriteMe.Mobile
 
         protected override void OnInitialized()
         {
-            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTU4NTQ4QDMxMzcyZTMzMmUzMGNnOFhrcFZscmgwakhmdEtSU1BxTDdpYTdmcU9JRE9xZ1ZvWXkxaFNKZlk9");
+            _applicationSettings = Container.Resolve<IApplicationSettings>();
+
+            SyncfusionLicenseProvider.RegisterLicense(_applicationSettings.SyncfusionKey);
+            Locator.SetContainerProvider(Container);
 
             InitializeComponent();
 

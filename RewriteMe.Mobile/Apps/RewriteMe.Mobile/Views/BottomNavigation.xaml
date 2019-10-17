@@ -1,0 +1,103 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<ContentView x:Class="RewriteMe.Mobile.Views.BottomNavigation"
+             xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:badgeView="clr-namespace:Syncfusion.XForms.BadgeView;assembly=Syncfusion.SfBadgeView.XForms"
+             xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+             xmlns:local="clr-namespace:RewriteMe.Mobile.Configuration;assembly=RewriteMe.Mobile"
+             xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+             xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+             BindingContext="{Binding Source={x:Static local:Locator.BottomNavigation}}">
+    <Grid Padding="5,0,0,5" BackgroundColor="#F2F3F4">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <badgeView:SfBadgeView Grid.Column="0" Margin="5,5,5,5">
+            <badgeView:SfBadgeView.Content>
+                <StackLayout>
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="40"
+                                          HorizontalOptions="Center"
+                                          InputTransparent="True"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Overview-Enabled.svg"
+                                          VerticalOptions="Center" />
+
+                    <Label HorizontalOptions="Center" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.AudioFiles}}" />
+
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToOverviewCommand}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </badgeView:SfBadgeView.Content>
+        </badgeView:SfBadgeView>
+
+        <badgeView:SfBadgeView Grid.Column="1" Margin="5,5,5,5">
+            <badgeView:SfBadgeView.Content>
+                <StackLayout>
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="40"
+                                          HorizontalOptions="Center"
+                                          InputTransparent="True"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.RecorderOverview-Enabled.svg"
+                                          VerticalOptions="Center" />
+
+                    <Label HorizontalOptions="Center" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordedFiles}}" />
+
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToRecorderOverviewCommand}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </badgeView:SfBadgeView.Content>
+        </badgeView:SfBadgeView>
+
+        <badgeView:SfBadgeView Grid.Column="2" Margin="5,5,5,5">
+            <badgeView:SfBadgeView.Content>
+                <StackLayout>
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="40"
+                                          HorizontalOptions="Center"
+                                          InputTransparent="True"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Notification-Enabled.svg"
+                                          VerticalOptions="Center" />
+
+                    <Label HorizontalOptions="Center" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Info}}" />
+
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToInformationMessagesCommand}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </badgeView:SfBadgeView.Content>
+        </badgeView:SfBadgeView>
+
+        <badgeView:SfBadgeView Grid.Column="3" Margin="5,5,5,5">
+            <badgeView:SfBadgeView.Content>
+                <StackLayout>
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="40"
+                                          HorizontalOptions="Center"
+                                          InputTransparent="True"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Settings.svg"
+                                          VerticalOptions="Center" />
+
+                    <Label HorizontalOptions="Center" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Settings}}" />
+
+                    <StackLayout.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding NavigateToSettingsCommand}" />
+                    </StackLayout.GestureRecognizers>
+                </StackLayout>
+            </badgeView:SfBadgeView.Content>
+        </badgeView:SfBadgeView>
+    </Grid>
+</ContentView>

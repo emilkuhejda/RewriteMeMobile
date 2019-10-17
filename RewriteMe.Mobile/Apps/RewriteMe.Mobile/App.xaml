@@ -8,7 +8,8 @@
                         xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                         xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                         xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Autofac.Forms"
-                        xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources">
+                        xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                        xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <prism:PrismApplication.Resources>
         <ResourceDictionary>
             <!--  Paddings  -->
@@ -315,6 +316,7 @@
                         <RowDefinition Height="{Binding HasTitleBar, Mode=OneWay, Converter={StaticResource BoolToNavigationBarRow1HeightConverter}}" />
                         <!--  Content row  -->
                         <RowDefinition Height="*" />
+                        <RowDefinition Height="Auto" />
                     </Grid.RowDefinitions>
 
                     <Grid.ColumnDefinitions>
@@ -427,6 +429,11 @@
                                       Grid.Column="0"
                                       HorizontalOptions="FillAndExpand"
                                       VerticalOptions="FillAndExpand" />
+
+                    <!--  Bottom navigation  -->
+                    <views:BottomNavigation Grid.Row="2"
+                                            HorizontalOptions="FillAndExpand"
+                                            VerticalOptions="FillAndExpand" />
                 </Grid>
             </ControlTemplate>
 
