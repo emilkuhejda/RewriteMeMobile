@@ -8,7 +8,7 @@
              xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
              xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
              BindingContext="{Binding Source={x:Static local:Locator.BottomNavigation}}">
-    <Grid Padding="5,0,0,5" BackgroundColor="#F2F3F4">
+    <Grid Padding="5,0,0,5" BackgroundColor="{StaticResource BottomNavigationBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -77,6 +77,12 @@
                     </StackLayout.GestureRecognizers>
                 </StackLayout>
             </badgeView:SfBadgeView.Content>
+            <badgeView:SfBadgeView.BadgeSettings>
+                <badgeView:BadgeSetting BadgeIcon="Dot"
+                                        BadgePosition="TopRight"
+                                        BadgeType="Success"
+                                        Offset="-20,5" />
+            </badgeView:SfBadgeView.BadgeSettings>
         </badgeView:SfBadgeView>
 
         <badgeView:SfBadgeView Grid.Column="3" Margin="5,5,5,5">
