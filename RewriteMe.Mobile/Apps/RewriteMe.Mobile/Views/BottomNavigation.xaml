@@ -8,7 +8,14 @@
              xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
              xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
              BindingContext="{Binding Source={x:Static local:Locator.BottomNavigation}}">
-    <Grid Padding="5,0,0,5" BackgroundColor="{StaticResource BottomNavigationBackground}">
+    <ContentView.Resources>
+        <Style x:Key="BadgeViewLabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="{StaticResource LittleSize}" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="TextColor" Value="{StaticResource ColorGrey900}" />
+        </Style>
+    </ContentView.Resources>
+    <Grid Padding="5,10,5,10" BackgroundColor="{StaticResource BottomNavigationBackground}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />
@@ -22,13 +29,13 @@
                     <forms:SvgCachedImage Margin="0"
                                           Aspect="AspectFit"
                                           BackgroundColor="Transparent"
-                                          HeightRequest="40"
+                                          HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
                                           Source="resource://RewriteMe.Mobile.Resources.Images.Overview-Enabled.svg"
                                           VerticalOptions="Center" />
 
-                    <Label HorizontalOptions="Center" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.AudioFiles}}" />
+                    <Label Style="{StaticResource BadgeViewLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.AudioFiles}}" />
 
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigateToOverviewCommand}" />
@@ -43,13 +50,13 @@
                     <forms:SvgCachedImage Margin="0"
                                           Aspect="AspectFit"
                                           BackgroundColor="Transparent"
-                                          HeightRequest="40"
+                                          HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
                                           Source="resource://RewriteMe.Mobile.Resources.Images.RecorderOverview-Enabled.svg"
                                           VerticalOptions="Center" />
 
-                    <Label HorizontalOptions="Center" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordedFiles}}" />
+                    <Label Style="{StaticResource BadgeViewLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordedFiles}}" />
 
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigateToRecorderOverviewCommand}" />
@@ -64,13 +71,13 @@
                     <forms:SvgCachedImage Margin="0"
                                           Aspect="AspectFit"
                                           BackgroundColor="Transparent"
-                                          HeightRequest="40"
+                                          HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
                                           Source="resource://RewriteMe.Mobile.Resources.Images.Notification-Enabled.svg"
                                           VerticalOptions="Center" />
 
-                    <Label HorizontalOptions="Center" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Info}}" />
+                    <Label Style="{StaticResource BadgeViewLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Info}}" />
 
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigateToInformationMessagesCommand}" />
@@ -91,13 +98,13 @@
                     <forms:SvgCachedImage Margin="0"
                                           Aspect="AspectFit"
                                           BackgroundColor="Transparent"
-                                          HeightRequest="40"
+                                          HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
                                           Source="resource://RewriteMe.Mobile.Resources.Images.Settings.svg"
                                           VerticalOptions="Center" />
 
-                    <Label HorizontalOptions="Center" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Settings}}" />
+                    <Label Style="{StaticResource BadgeViewLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Settings}}" />
 
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigateToSettingsCommand}" />
