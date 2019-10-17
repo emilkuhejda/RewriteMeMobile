@@ -43,6 +43,8 @@ namespace RewriteMe.Mobile
 
         protected override void OnInitialized()
         {
+            Syncfusion.Licensing.SyncfusionLicenseProvider.RegisterLicense("MTU4NTQ4QDMxMzcyZTMzMmUzMGNnOFhrcFZscmgwakhmdEtSU1BxTDdpYTdmcU9JRE9xZ1ZvWXkxaFNKZlk9");
+
             InitializeComponent();
 
             InitializeServices();
