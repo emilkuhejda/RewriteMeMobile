@@ -1,7 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
+using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
@@ -11,11 +13,19 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class BottomNavigationViewModel : BindableBase
     {
+        private readonly IInformationMessageService _informationMessageService;
         private readonly INavigationService _navigationService;
+        private bool _isUnopenedMessage;
 
-        public BottomNavigationViewModel(INavigationService navigationService)
+        public BottomNavigationViewModel(
+            ISynchronizationService synchronizationService,
+            IInformationMessageService informationMessageService,
+            INavigationService navigationService)
         {
+            _informationMessageService = informationMessageService;
             _navigationService = navigationService;
+
+            synchronizationService.SynchronizationCompleted += HandleSynchronizationCompleted;
 
             NavigateToOverviewCommand = new AsyncCommand(ExecuteNavigateToOverviewCommandAsync, CanExecuteNavigateToOverviewCommand);
             NavigateToRecorderOverviewCommand = new AsyncCommand(ExecuteNavigateToRecorderOverviewCommandAsync, CanExecuteNavigateToRecorderOverviewCommand);
@@ -26,6 +36,12 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         private CurrentPage Page { get; set; }
+
+        public bool IsUnopenedMessage
+        {
+            get => _isUnopenedMessage;
+            set => SetProperty(ref _isUnopenedMessage, value);
+        }
 
         public ICommand NavigateToOverviewCommand { get; }
 
@@ -83,6 +99,11 @@ namespace RewriteMe.Mobile.ViewModels
             Page = CurrentPage.Settings;
 
             await _navigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Settings}").ConfigureAwait(false);
+        }
+
+        private async void HandleSynchronizationCompleted(object sender, EventArgs e)
+        {
+            IsUnopenedMessage = await _informationMessageService.IsUnopenedMessageAsync().ConfigureAwait(false);
         }
 
         private enum CurrentPage

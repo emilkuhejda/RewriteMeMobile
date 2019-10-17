@@ -134,6 +134,7 @@
             <!--  Converters  -->
             <converters:InvertedBoolConverter x:Key="InvertedBoolConverter" />
             <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
+            <converters:BoolToBadgeIconConverter x:Key="BoolToBadgeIconConverter" />
 
             <!--  Styles  -->
             <Style TargetType="Editor">

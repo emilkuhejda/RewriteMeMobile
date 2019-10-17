@@ -78,7 +78,7 @@
                 </StackLayout>
             </badgeView:SfBadgeView.Content>
             <badgeView:SfBadgeView.BadgeSettings>
-                <badgeView:BadgeSetting BadgeIcon="Dot"
+                <badgeView:BadgeSetting BadgeIcon="{Binding IsUnopenedMessage, Converter={StaticResource BoolToBadgeIconConverter}}"
                                         BadgePosition="TopRight"
                                         BadgeType="Success"
                                         Offset="-20,5" />
