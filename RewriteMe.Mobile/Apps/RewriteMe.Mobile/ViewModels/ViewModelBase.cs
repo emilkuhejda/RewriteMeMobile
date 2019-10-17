@@ -18,6 +18,7 @@ namespace RewriteMe.Mobile.ViewModels
     public abstract class ViewModelBase : BindableBase, INavigatedAware, IDisposable
     {
         private bool _hasTitleBar;
+        private bool _hasBottomNavigation;
         private bool _canGoBack;
 
         private bool _disposed;
@@ -56,6 +57,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get => _hasTitleBar;
             protected set => SetProperty(ref _hasTitleBar, value);
+        }
+
+        public bool HasBottomNavigation
+        {
+            get => _hasBottomNavigation;
+            set => SetProperty(ref _hasBottomNavigation, value);
         }
 
         public bool CanGoBack

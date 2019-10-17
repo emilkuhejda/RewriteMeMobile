@@ -26,6 +26,8 @@ namespace RewriteMe.Mobile.ViewModels
             SynchronizationService = synchronizationService;
             SynchronizationService.SynchronizationCompleted += HandleSynchronizationCompleted;
 
+            HasBottomNavigation = true;
+
             NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
             RefreshCommand = new AsyncCommand(ExecuteRefreshCommandAsync);
         }

@@ -435,6 +435,7 @@
                     <!--  Bottom navigation  -->
                     <views:BottomNavigation Grid.Row="2"
                                             HorizontalOptions="FillAndExpand"
+                                            IsVisible="{TemplateBinding BindingContext.HasBottomNavigation}"
                                             VerticalOptions="FillAndExpand" />
                 </Grid>
             </ControlTemplate>

@@ -54,6 +54,7 @@ namespace RewriteMe.Mobile.ViewModels
             _applicationVersionProvider = applicationVersionProvider;
 
             CanGoBack = true;
+            HasBottomNavigation = true;
 
             DeveloperMode = new DeveloperMode();
             DeveloperMode.UnlockedEvent += OnUnlockedEvent;
