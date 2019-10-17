@@ -48,37 +48,28 @@
     </views:BaseNavigationPage.RightNavigationToolbarItems>
 
     <Grid>
-        <Grid>
+        <Grid Grid.Row="0" Padding="{StaticResource StandardPadding}">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
 
-            <Grid Grid.Row="0" Padding="{StaticResource StandardPadding}">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+            <Label Grid.Row="1"
+                   FontAttributes="Italic"
+                   HorizontalOptions="Center"
+                   IsVisible="{Binding NotAvailableData}"
+                   Style="{StaticResource LabelStyle}"
+                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
+                   VerticalOptions="Start" />
 
-                <Label Grid.Row="1"
-                       FontAttributes="Italic"
-                       HorizontalOptions="Center"
-                       IsVisible="{Binding NotAvailableData}"
-                       Style="{StaticResource LabelStyle}"
-                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
-                       VerticalOptions="Start" />
-
-                <ListView Grid.Row="1"
-                          HasUnevenRows="True"
-                          IsPullToRefreshEnabled="True"
-                          IsRefreshing="{Binding IsRefreshing}"
-                          ItemTemplate="{StaticResource InformationMessagesTemplate}"
-                          ItemsSource="{Binding InformationMessages}"
-                          RefreshCommand="{Binding RefreshCommand}"
-                          SeparatorVisibility="None" />
-            </Grid>
-
-            <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
+            <ListView Grid.Row="1"
+                      HasUnevenRows="True"
+                      IsPullToRefreshEnabled="True"
+                      IsRefreshing="{Binding IsRefreshing}"
+                      ItemTemplate="{StaticResource InformationMessagesTemplate}"
+                      ItemsSource="{Binding InformationMessages}"
+                      RefreshCommand="{Binding RefreshCommand}"
+                      SeparatorVisibility="None" />
         </Grid>
 
         <controls:PageActivityIndicator Grid.Row="0"

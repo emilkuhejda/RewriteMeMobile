@@ -21,7 +21,6 @@
     <None Remove="Resources\Images\Info.svg" />
     <None Remove="Resources\Images\Notification-Active-Disabled.svg" />
     <None Remove="Resources\Images\Notification-Active.svg" />
-    <None Remove="Resources\Images\Notification-Disabled.svg" />
     <None Remove="Resources\Images\Notification-Enabled.svg" />
     <None Remove="Resources\Images\Ok.svg" />
     <None Remove="Resources\Images\Pause-Enabled.svg" />
@@ -41,9 +40,7 @@
     <None Remove="Resources\Images\Stop-Enabled.svg" />
     <None Remove="Resources\Images\PauseRecording.svg" />
     <None Remove="Resources\Images\PlayRecording.svg" />
-    <None Remove="Resources\Images\Overview-Disabled.svg" />
     <None Remove="Resources\Images\Overview-Enabled.svg" />
-    <None Remove="Resources\Images\RecorderOverview-Disabled.svg" />
     <None Remove="Resources\Images\RecorderOverview-Enabled.svg" />
     <None Remove="Resources\Images\Subscription-1.svg" />
     <None Remove="Resources\Images\Subscription-10.svg" />
@@ -58,7 +55,6 @@
     <EmbeddedResource Include="Resources\Images\Info.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Active-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Active.svg" />
-    <EmbeddedResource Include="Resources\Images\Notification-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Ok.svg" />
     <EmbeddedResource Include="Resources\Images\Pause-Enabled.svg" />
@@ -77,9 +73,7 @@
     <EmbeddedResource Include="Resources\Images\Start-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\PauseRecording.svg" />
     <EmbeddedResource Include="Resources\Images\PlayRecording.svg" />
-    <EmbeddedResource Include="Resources\Images\Overview-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Overview-Enabled.svg" />
-    <EmbeddedResource Include="Resources\Images\RecorderOverview-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\RecorderOverview-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Subscription-1.svg" />
     <EmbeddedResource Include="Resources\Images\Subscription-10.svg" />

@@ -3,11 +3,14 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
+using RewriteMe.Mobile.Views;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -58,11 +61,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteNavigateToOverviewCommandAsync()
         {
-            Page = CurrentPage.Overview;
-
             var navigationParameters = new NavigationParameters();
             navigationParameters.Add(NavigationConstants.NavigationBack, true);
-            await _navigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
+            await NavigateToAsync($"/{Pages.Navigation}/{Pages.Overview}", CurrentPage.Overview, navigationParameters).ConfigureAwait(false);
         }
 
         private bool CanExecuteNavigateToRecorderOverviewCommand()
@@ -72,9 +73,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteNavigateToRecorderOverviewCommandAsync()
         {
-            Page = CurrentPage.RecorderOverview;
-
-            await _navigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.RecorderOverview}").ConfigureAwait(false);
+            await NavigateToAsync($"/{Pages.Navigation}/{Pages.RecorderOverview}", CurrentPage.RecorderOverview).ConfigureAwait(false);
         }
 
         private bool CanExecuteNavigateToInformationMessagesCommand()
@@ -84,9 +83,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteNavigateToInformationMessagesCommandAsync()
         {
-            Page = CurrentPage.InformationMessages;
-
-            await _navigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.InfoOverview}").ConfigureAwait(false);
+            await NavigateToAsync($"/{Pages.Navigation}/{Pages.InfoOverview}", CurrentPage.InformationMessages).ConfigureAwait(false);
         }
 
         private bool CanExecuteNavigateToSettingsCommand()
@@ -96,9 +93,17 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteNavigateToSettingsCommandAsync()
         {
-            Page = CurrentPage.Settings;
+            await NavigateToAsync($"/{Pages.Navigation}/{Pages.Settings}", CurrentPage.Settings).ConfigureAwait(false);
+        }
 
-            await _navigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Settings}").ConfigureAwait(false);
+        private async Task NavigateToAsync(string name, CurrentPage currentPage, NavigationParameters navigationParameters = null)
+        {
+            var navigationPage = Application.Current.MainPage as RewriteMeNavigationPage;
+            navigationPage?.Pages.ForEach(x => ((ViewModelBase)x.BindingContext).Dispose());
+
+            Page = currentPage;
+
+            await _navigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
         }
 
         private async void HandleSynchronizationCompleted(object sender, EventArgs e)

@@ -10,6 +10,7 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class InfoOverviewPageViewModel : OverviewBaseViewModel
     {
+        private readonly IInformationMessageService _informationMessageService;
         private readonly ILanguageService _languageService;
 
         private ObservableCollection<InformationMessageViewModel> _informationMessages;
@@ -22,8 +23,9 @@ namespace RewriteMe.Mobile.ViewModels
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(informationMessageService, synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
+            _informationMessageService = informationMessageService;
             _languageService = languageService;
         }
 
@@ -37,7 +39,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                await InitializeNavigation(CurrentPage.InformationMessages).ConfigureAwait(false);
                 await InitializeInformationMessageAsync().ConfigureAwait(false);
 
                 NotAvailableData = !InformationMessages.Any();
@@ -46,7 +47,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override async Task RefreshList()
         {
-            var informationMessages = await InformationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
+            var informationMessages = await _informationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
 
             if (IsCurrent)
             {
@@ -66,7 +67,7 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task InitializeInformationMessageAsync()
         {
             var languageInfo = await _languageService.GetLanguageInfo().ConfigureAwait(false);
-            var informationMessages = await InformationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
+            var informationMessages = await _informationMessageService.GetAllForLastWeekAsync().ConfigureAwait(false);
             var viewModels = informationMessages.OrderByDescending(x => x.DatePublished).Select(x => new InformationMessageViewModel(x, languageInfo, NavigationService));
             InformationMessages = new ObservableCollection<InformationMessageViewModel>(viewModels);
         }
