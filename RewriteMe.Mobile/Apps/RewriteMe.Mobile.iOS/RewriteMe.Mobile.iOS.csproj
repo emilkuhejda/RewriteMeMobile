@@ -213,7 +213,7 @@
       <Version>2.1.1</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
-      <Version>2.9.4</Version>
+      <Version>2.9.6</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -227,6 +227,9 @@
       <Version>1.1.118</Version>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView">
+      <Version>17.3.0.17</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugin.LatestVersion">
       <Version>1.1.2</Version>

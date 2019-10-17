@@ -153,6 +153,7 @@ namespace RewriteMe.Business.Services
                     .WithAccount(user)
                     .WithAuthority(authority)
                     .WithParentActivityOrWindow(uiParent)
+                    .WithUseEmbeddedWebView(true)
                     .ExecuteAsync()
                     .ConfigureAwait(false);
 
@@ -204,10 +205,12 @@ namespace RewriteMe.Business.Services
             var user = GetUserByPolicy(accounts, _applicationSettings.PolicyEditProfile);
             try
             {
-                var result = await _publicClientApplication.AcquireTokenInteractive(_applicationSettings.Scopes)
+                var result = await _publicClientApplication
+                    .AcquireTokenInteractive(_applicationSettings.Scopes)
                     .WithAccount(user)
                     .WithAuthority(_applicationSettings.AuthorityEditProfile)
                     .WithParentActivityOrWindow(uiParent)
+                    .WithUseEmbeddedWebView(true)
                     .ExecuteAsync()
                     .ConfigureAwait(false);
 
@@ -241,10 +244,12 @@ namespace RewriteMe.Business.Services
 
             try
             {
-                var result = await _publicClientApplication.AcquireTokenInteractive(_applicationSettings.Scopes)
+                var result = await _publicClientApplication
+                    .AcquireTokenInteractive(_applicationSettings.Scopes)
                     .WithAccount(user)
                     .WithAuthority(_applicationSettings.AuthorityPasswordReset)
                     .WithParentActivityOrWindow(uiParent)
+                    .WithUseEmbeddedWebView(true)
                     .ExecuteAsync()
                     .ConfigureAwait(false);
 

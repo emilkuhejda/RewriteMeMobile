@@ -6,6 +6,7 @@ using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.iOS.BackgroundServices;
 using RewriteMe.Mobile.iOS.Configuration;
+using Syncfusion.XForms.iOS.BadgeView;
 using UIKit;
 using Xamarin.Forms;
 
@@ -30,6 +31,7 @@ namespace RewriteMe.Mobile.iOS
         {
             Forms.Init();
             CachedImageRenderer.Init();
+            SfBadgeViewRenderer.Init();
 
             var bootstrapper = new OsxBootstrapper();
             _application = new App(bootstrapper);

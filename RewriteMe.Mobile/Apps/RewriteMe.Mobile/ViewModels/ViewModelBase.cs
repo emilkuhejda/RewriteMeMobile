@@ -18,6 +18,7 @@ namespace RewriteMe.Mobile.ViewModels
     public abstract class ViewModelBase : BindableBase, INavigatedAware, IDisposable
     {
         private bool _hasTitleBar;
+        private bool _hasBottomNavigation;
         private bool _canGoBack;
 
         private bool _disposed;
@@ -38,7 +39,6 @@ namespace RewriteMe.Mobile.ViewModels
             HasTitleBar = true;
 
             NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommandAsync, () => CanGoBack);
-            NavigateToSettingsCommand = new AsyncCommand(ExecuteNavigateToSettingsCommandAsync);
         }
 
         protected IUserSessionService UserSessionService { get; }
@@ -53,12 +53,16 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand NavigateBackCommand { get; }
 
-        public ICommand NavigateToSettingsCommand { get; }
-
         public bool HasTitleBar
         {
             get => _hasTitleBar;
             protected set => SetProperty(ref _hasTitleBar, value);
+        }
+
+        public bool HasBottomNavigation
+        {
+            get => _hasBottomNavigation;
+            set => SetProperty(ref _hasBottomNavigation, value);
         }
 
         public bool CanGoBack
@@ -111,11 +115,6 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteNavigateBackCommandAsync()
         {
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
-        }
-
-        private async Task ExecuteNavigateToSettingsCommandAsync()
-        {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.Settings).ConfigureAwait(false);
         }
 
         public void Dispose()

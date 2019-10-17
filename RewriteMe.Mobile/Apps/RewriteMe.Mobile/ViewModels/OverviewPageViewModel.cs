@@ -24,13 +24,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         public OverviewPageViewModel(
             IFileItemService fileItemService,
-            IInformationMessageService informationMessageService,
             ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(informationMessageService, synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
 
@@ -55,8 +54,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                await InitializeNavigation(CurrentPage.Overview).ConfigureAwait(false);
-
                 ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
 
                 var isNavigationBack = navigationParameters.GetValue<bool>(NavigationConstants.NavigationBack);
@@ -136,11 +133,6 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteNavigateToCreatePageCommandAsync()
         {
             await NavigationService.NavigateWithoutAnimationAsync(Pages.Create).ConfigureAwait(false);
-        }
-
-        protected override async Task ExecuteNavigateToOverviewAsync()
-        {
-            await Task.CompletedTask.ConfigureAwait(false);
         }
     }
 }

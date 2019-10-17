@@ -19,10 +19,13 @@ namespace RewriteMe.Business.Configuration
         }
 
         public Uri WebApiUri { get; } = new Uri("https://rewrite-me.com/");
+        //public Uri WebApiUri { get; } = new Uri("https://192.168.0.107:45456/");
 
         public Guid ApplicationId { get; private set; }
 
         public string AppCenterKeys { get; } = "ios=0bdf549f-bbd5-4345-8d3a-eef3981cd099;android=7bdd3197-262d-4138-9a8e-b327d453bc93";
+
+        public string SyncfusionKey { get; } = "MTU4NTQ4QDMxMzcyZTMzMmUzMGNnOFhrcFZscmgwakhmdEtSU1BxTDdpYTdmcU9JRE9xZ1ZvWXkxaFNKZlk9";
 
         public string SupportMailAddress => "support@rewrite-me.com";
 
