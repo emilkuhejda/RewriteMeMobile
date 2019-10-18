@@ -82,6 +82,7 @@
             <Color x:Key="PlayerBackground">#D2F9F1</Color>
             <Color x:Key="RecorderResultBackground">#c3d5d5</Color>
             <Color x:Key="BottomNavigationBackground">#F2F3F4</Color>
+            <Color x:Key="DeleteBackground">#DC595F</Color>
 
             <!--  Font Sizes  -->
             <OnPlatform x:Key="LittleSize"
@@ -281,15 +282,6 @@
                 <Setter Property="TextColor" Value="{StaticResource ColorWhite}" />
                 <Setter Property="HorizontalOptions" Value="FillAndExpand" />
                 <Setter Property="VerticalOptions" Value="FillAndExpand" />
-            </Style>
-
-            <Style x:Key="InfoTileBackground" TargetType="Frame">
-                <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
-                <Setter Property="CornerRadius" Value="25" />
-                <Setter Property="Padding" Value="10,2,10,2" />
-                <Setter Property="HeightRequest" Value="20" />
-                <Setter Property="HorizontalOptions" Value="Start" />
-                <Setter Property="VerticalOptions" Value="Center" />
             </Style>
 
             <Style x:Key="PickerStyle" TargetType="Picker">
