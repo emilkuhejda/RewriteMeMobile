@@ -2815,9 +2815,13 @@ namespace RewriteMe.Mobile.Droid
 			global::Com.Syncfusion.Sfbusyindicator.Resource.Styleable.SfBusyIndicator_busyIndicatorTitlePlacement = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfBusyIndicator_busyIndicatorTitlePlacement;
 			global::Com.Syncfusion.Sfbusyindicator.Resource.Styleable.SfBusyIndicator_busyIndicatorViewBoxHeight = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfBusyIndicator_busyIndicatorViewBoxHeight;
 			global::Com.Syncfusion.Sfbusyindicator.Resource.Styleable.SfBusyIndicator_busyIndicatorViewBoxWidth = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfBusyIndicator_busyIndicatorViewBoxWidth;
-			global::Syncfusion.ListView.XForms.Android.Resource.String.ApplicationName = global::RewriteMe.Mobile.Droid.Resource.String.ApplicationName;
-			global::Syncfusion.ListView.XForms.Android.Resource.String.Hello = global::RewriteMe.Mobile.Droid.Resource.String.Hello;
-			global::Syncfusion.ListView.XForms.Android.Resource.String.Load_More = global::RewriteMe.Mobile.Droid.Resource.String.Load_More;
+			global::Syncfusion.XForms.Android.ProgressBar.Resource.Drawable.sfprogressbar_determinate_linear = global::RewriteMe.Mobile.Droid.Resource.Drawable.sfprogressbar_determinate_linear;
+			global::Syncfusion.XForms.Android.ProgressBar.Resource.Drawable.sfprogressbar_indeterminate_circular = global::RewriteMe.Mobile.Droid.Resource.Drawable.sfprogressbar_indeterminate_circular;
+			global::Syncfusion.XForms.Android.ProgressBar.Resource.Drawable.sfprogressbar_indeterminate_linear = global::RewriteMe.Mobile.Droid.Resource.Drawable.sfprogressbar_indeterminate_linear;
+			global::Syncfusion.XForms.Android.ProgressBar.Resource.Id.sfprogressbar_progress = global::RewriteMe.Mobile.Droid.Resource.Id.sfprogressbar_progress;
+			global::Syncfusion.XForms.Android.ProgressBar.Resource.Id.sfprogressbar_secondary_progress = global::RewriteMe.Mobile.Droid.Resource.Id.sfprogressbar_secondary_progress;
+			global::Syncfusion.XForms.Android.ProgressBar.Resource.Id.sfprogressbar_track = global::RewriteMe.Mobile.Droid.Resource.Id.sfprogressbar_track;
+			global::Syncfusion.XForms.Android.ProgressBar.Resource.String.library_name = global::RewriteMe.Mobile.Droid.Resource.String.library_name;
 			global::Xamarin.Essentials.Resource.Attribute.alpha = global::RewriteMe.Mobile.Droid.Resource.Attribute.alpha;
 			global::Xamarin.Essentials.Resource.Attribute.coordinatorLayoutStyle = global::RewriteMe.Mobile.Droid.Resource.Attribute.coordinatorLayoutStyle;
 			global::Xamarin.Essentials.Resource.Attribute.font = global::RewriteMe.Mobile.Droid.Resource.Attribute.font;
@@ -8729,26 +8733,26 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f020072
 			public const int avd_hide_password = 2130837618;
 			
-			// aapt resource value: 0x7f02015f
-			public const int avd_hide_password_1 = 2130837855;
+			// aapt resource value: 0x7f020162
+			public const int avd_hide_password_1 = 2130837858;
 			
-			// aapt resource value: 0x7f020160
-			public const int avd_hide_password_2 = 2130837856;
+			// aapt resource value: 0x7f020163
+			public const int avd_hide_password_2 = 2130837859;
 			
-			// aapt resource value: 0x7f020161
-			public const int avd_hide_password_3 = 2130837857;
+			// aapt resource value: 0x7f020164
+			public const int avd_hide_password_3 = 2130837860;
 			
 			// aapt resource value: 0x7f020073
 			public const int avd_show_password = 2130837619;
 			
-			// aapt resource value: 0x7f020162
-			public const int avd_show_password_1 = 2130837858;
+			// aapt resource value: 0x7f020165
+			public const int avd_show_password_1 = 2130837861;
 			
-			// aapt resource value: 0x7f020163
-			public const int avd_show_password_2 = 2130837859;
+			// aapt resource value: 0x7f020166
+			public const int avd_show_password_2 = 2130837862;
 			
-			// aapt resource value: 0x7f020164
-			public const int avd_show_password_3 = 2130837860;
+			// aapt resource value: 0x7f020167
+			public const int avd_show_password_3 = 2130837863;
 			
 			// aapt resource value: 0x7f020074
 			public const int background_splash = 2130837620;
@@ -9428,11 +9432,11 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f020155
 			public const int notification_icon_background = 2130837845;
 			
-			// aapt resource value: 0x7f02015d
-			public const int notification_template_icon_bg = 2130837853;
+			// aapt resource value: 0x7f020160
+			public const int notification_template_icon_bg = 2130837856;
 			
-			// aapt resource value: 0x7f02015e
-			public const int notification_template_icon_low_bg = 2130837854;
+			// aapt resource value: 0x7f020161
+			public const int notification_template_icon_low_bg = 2130837857;
 			
 			// aapt resource value: 0x7f020156
 			public const int notification_tile_bg = 2130837846;
@@ -9447,13 +9451,22 @@ namespace RewriteMe.Mobile.Droid
 			public const int roundedbgdark = 2130837849;
 			
 			// aapt resource value: 0x7f02015a
-			public const int splashscreen_logo = 2130837850;
+			public const int sfprogressbar_determinate_linear = 2130837850;
 			
 			// aapt resource value: 0x7f02015b
-			public const int tooltip_frame_dark = 2130837851;
+			public const int sfprogressbar_indeterminate_circular = 2130837851;
 			
 			// aapt resource value: 0x7f02015c
-			public const int tooltip_frame_light = 2130837852;
+			public const int sfprogressbar_indeterminate_linear = 2130837852;
+			
+			// aapt resource value: 0x7f02015d
+			public const int splashscreen_logo = 2130837853;
+			
+			// aapt resource value: 0x7f02015e
+			public const int tooltip_frame_dark = 2130837854;
+			
+			// aapt resource value: 0x7f02015f
+			public const int tooltip_frame_light = 2130837855;
 			
 			static Drawable()
 			{
@@ -10104,6 +10117,15 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d004f
 			public const int selected = 2131558479;
 			
+			// aapt resource value: 0x7f0d0113
+			public const int sfprogressbar_progress = 2131558675;
+			
+			// aapt resource value: 0x7f0d0112
+			public const int sfprogressbar_secondary_progress = 2131558674;
+			
+			// aapt resource value: 0x7f0d0111
+			public const int sfprogressbar_track = 2131558673;
+			
 			// aapt resource value: 0x7f0d010b
 			public const int shellcontent_appbar = 2131558667;
 			
@@ -10706,12 +10728,6 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f090058
 			public const int ApplicationName = 2131296344;
 			
-			// aapt resource value: 0x7f090057
-			public const int Hello = 2131296343;
-			
-			// aapt resource value: 0x7f090059
-			public const int Load_More = 2131296345;
-			
 			// aapt resource value: 0x7f090021
 			public const int abc_action_bar_home_description = 2131296289;
 			
@@ -10877,8 +10893,8 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f09004f
 			public const int hide_bottom_view_on_scroll_behavior = 2131296335;
 			
-			// aapt resource value: 0x7f09005a
-			public const int library_name = 2131296346;
+			// aapt resource value: 0x7f090057
+			public const int library_name = 2131296343;
 			
 			// aapt resource value: 0x7f090009
 			public const int mr_button_content_description = 2131296265;

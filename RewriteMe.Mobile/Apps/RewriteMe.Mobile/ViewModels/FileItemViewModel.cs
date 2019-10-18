@@ -24,7 +24,6 @@ namespace RewriteMe.Mobile.ViewModels
             Update(fileItem);
 
             NavigateToDetailPageCommand = new AsyncCommand(ExecuteNavigateToDetailPageCommandAsync);
-            DeleteCommand = new AsyncCommand(ExecuteDeleteCommand);
         }
 
         public FileItem FileItem { get; private set; }
@@ -42,8 +41,6 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         public ICommand NavigateToDetailPageCommand { get; }
-
-        public ICommand DeleteCommand { get; }
 
         public void Update(FileItem fileItem)
         {
@@ -67,11 +64,6 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 await _navigationService.NavigateWithoutAnimationAsync(Pages.Detail, navigationParameters).ConfigureAwait(false);
             }
-        }
-
-        private async Task ExecuteDeleteCommand()
-        {
-            await Task.CompletedTask.ConfigureAwait(false);
         }
     }
 }

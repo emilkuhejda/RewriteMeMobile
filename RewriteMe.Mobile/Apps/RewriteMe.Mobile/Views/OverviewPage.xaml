@@ -5,52 +5,53 @@
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+                          xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
-                          xmlns:xForms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
+                          xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="FileItemsTemplate">
             <ViewCell>
                 <Grid BackgroundColor="{StaticResource ColorWhite}">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
-                    </Grid.GestureRecognizers>
+                    <Grid Padding="20,20,20,20">
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
+                        </Grid.GestureRecognizers>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
 
-                    <StackLayout Grid.Column="0" Padding="0,10,0,10">
-                        <Label HeightRequest="30"
+                        <Label Grid.Column="0"
+                               HeightRequest="30"
                                Style="{StaticResource LabelStyle}"
                                Text="{Binding FileItem.Name}" />
-                        <Frame IsVisible="{Binding IsInProgress}" Style="{StaticResource InfoTileBackground}">
-                            <Label FontAttributes="Italic"
-                                   FontSize="{StaticResource MidMediumSize}"
-                                   Style="{StaticResource LabelStyle}"
-                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.InProgressLabel}}"
-                                   TextColor="{StaticResource ColorWhite}" />
-                        </Frame>
-                    </StackLayout>
 
-                    <forms:SvgCachedImage Grid.Column="1"
-                                          Margin="0"
-                                          Aspect="AspectFit"
-                                          BackgroundColor="Transparent"
-                                          HeightRequest="40"
-                                          HorizontalOptions="End"
-                                          InputTransparent="True"
-                                          IsVisible="{Binding IsCompleted}"
-                                          Source="resource://RewriteMe.Mobile.Resources.Images.Ok.svg"
-                                          VerticalOptions="CenterAndExpand" />
+                        <progressBar:SfStepProgressBar Grid.Column="1"
+                                                       IsVisible="{Binding IsCompleted}"
+                                                       Orientation="Vertical"
+                                                       VerticalOptions="Center">
+                            <progressBar:SfStepProgressBar.CompletedStepStyle>
+                                <progressBar:StepStyle x:TypeArguments="progressBar:CompletedStepState"
+                                                       MarkerContentSize="15"
+                                                       MarkerFillColor="{StaticResource ColorPrimary}"
+                                                       MarkerSize="30" />
+                            </progressBar:SfStepProgressBar.CompletedStepStyle>
+                            <progressBar:StepView Status="Completed" />
+                        </progressBar:SfStepProgressBar>
 
-                    <Grid Grid.Row="0"
-                          Grid.Column="0"
-                          Grid.ColumnSpan="2"
-                          BackgroundColor="{StaticResource ColorPrimary}"
-                          HeightRequest="1"
-                          VerticalOptions="End" />
+                        <xForms:SfBusyIndicator Grid.Column="1"
+                                                AnimationType="Print"
+                                                BackgroundColor="{StaticResource ColorWhite}"
+                                                HeightRequest="40"
+                                                IsVisible="{Binding IsInProgress}"
+                                                TextColor="{StaticResource ColorPrimary}"
+                                                VerticalOptions="Center"
+                                                ViewBoxHeight="40"
+                                                ViewBoxWidth="40"
+                                                WidthRequest="40" />
+                    </Grid>
                 </Grid>
             </ViewCell>
         </DataTemplate>
@@ -60,7 +61,7 @@
         <controls:NavigationToolbarItem Command="{Binding NavigateToRecorderCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
 
-    <Grid Padding="{StaticResource StandardPadding}">
+    <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -74,41 +75,14 @@
                Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
                VerticalOptions="Start" />
 
-        <!--<ListView Grid.Row="1"
+        <ListView Grid.Row="1"
                   HasUnevenRows="True"
                   IsPullToRefreshEnabled="True"
                   IsRefreshing="{Binding IsRefreshing}"
                   ItemTemplate="{StaticResource FileItemsTemplate}"
                   ItemsSource="{Binding FileItems}"
                   RefreshCommand="{Binding RefreshCommand}"
-                  SeparatorVisibility="None" />-->
-
-        <xForms:SfListView Grid.Row="1"
-                           AllowSwiping="True"
-                           ItemSize="80"
-                           ItemTemplate="{StaticResource FileItemsTemplate}"
-                           ItemsSource="{Binding FileItems}">
-            <xForms:SfListView.RightSwipeTemplate>
-                <DataTemplate x:Name="LeftSwipeTemplate">
-                    <Grid BackgroundColor="{StaticResource DeleteBackground}"
-                          HorizontalOptions="Fill"
-                          VerticalOptions="Fill">
-                        <forms:SvgCachedImage Margin="0"
-                                              Aspect="AspectFit"
-                                              BackgroundColor="Transparent"
-                                              HeightRequest="40"
-                                              HorizontalOptions="Center"
-                                              InputTransparent="True"
-                                              Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg"
-                                              VerticalOptions="Center" />
-
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding DeleteCommand}" />
-                        </Grid.GestureRecognizers>
-                    </Grid>
-                </DataTemplate>
-            </xForms:SfListView.RightSwipeTemplate>
-        </xForms:SfListView>
+                  SeparatorVisibility="None" />
 
         <Grid Grid.Row="1"
               Margin="0,0,0,10"
