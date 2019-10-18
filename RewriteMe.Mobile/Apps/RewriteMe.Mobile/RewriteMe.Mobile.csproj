@@ -22,7 +22,7 @@
     <None Remove="Resources\Images\Notification-Active-Disabled.svg" />
     <None Remove="Resources\Images\Notification-Active.svg" />
     <None Remove="Resources\Images\Notification-Enabled.svg" />
-    <None Remove="Resources\Images\Ok.svg" />
+    <None Remove="Resources\Images\Page.svg" />
     <None Remove="Resources\Images\Pause-Enabled.svg" />
     <None Remove="Resources\Images\Play-Enabled.svg" />
     <None Remove="Resources\Images\Record.svg" />
@@ -56,7 +56,7 @@
     <EmbeddedResource Include="Resources\Images\Notification-Active-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Active.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Enabled.svg" />
-    <EmbeddedResource Include="Resources\Images\Ok.svg" />
+    <EmbeddedResource Include="Resources\Images\Page.svg" />
     <EmbeddedResource Include="Resources\Images\Pause-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Play-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Record.svg" />
@@ -100,6 +100,7 @@
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1367" />
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="17.3.0.17" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="17.3.0.17" />
+    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="17.3.0.17" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xam.Plugin.LatestVersion" Version="1.1.2" />
     <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.3.1" />

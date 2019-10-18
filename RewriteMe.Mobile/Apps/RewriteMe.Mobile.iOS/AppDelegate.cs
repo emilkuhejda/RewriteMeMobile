@@ -8,6 +8,7 @@ using RewriteMe.Mobile.iOS.BackgroundServices;
 using RewriteMe.Mobile.iOS.Configuration;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
+using Syncfusion.XForms.iOS.ProgressBar;
 using UIKit;
 using Xamarin.Forms;
 
@@ -33,6 +34,7 @@ namespace RewriteMe.Mobile.iOS
             Forms.Init();
             CachedImageRenderer.Init();
             SfBadgeViewRenderer.Init();
+            SfLinearProgressBarRenderer.Init();
 
             InitializeBusyIndicatorRenderer();
 
