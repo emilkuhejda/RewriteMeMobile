@@ -11,10 +11,10 @@
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="FileItemsTemplate">
             <ViewCell>
-                <Grid BackgroundColor="Gray">
-                    <!--<Grid.GestureRecognizers>
+                <Grid BackgroundColor="{StaticResource ColorWhite}">
+                    <Grid.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
-                    </Grid.GestureRecognizers>-->
+                    </Grid.GestureRecognizers>
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -44,6 +44,13 @@
                                           IsVisible="{Binding IsCompleted}"
                                           Source="resource://RewriteMe.Mobile.Resources.Images.Ok.svg"
                                           VerticalOptions="CenterAndExpand" />
+
+                    <Grid Grid.Row="0"
+                          Grid.Column="0"
+                          Grid.ColumnSpan="2"
+                          BackgroundColor="{StaticResource ColorPrimary}"
+                          HeightRequest="1"
+                          VerticalOptions="End" />
                 </Grid>
             </ViewCell>
         </DataTemplate>
@@ -78,27 +85,29 @@
 
         <xForms:SfListView Grid.Row="1"
                            AllowSwiping="True"
+                           ItemSize="80"
                            ItemTemplate="{StaticResource FileItemsTemplate}"
                            ItemsSource="{Binding FileItems}">
-            <xForms:SfListView.LeftSwipeTemplate>
+            <xForms:SfListView.RightSwipeTemplate>
                 <DataTemplate x:Name="LeftSwipeTemplate">
-                    <Grid>
-                        <Grid Grid.Column="0"
-                              BackgroundColor="#009EDA"
-                              HorizontalOptions="Fill"
-                              VerticalOptions="Fill">
-                            <forms:SvgCachedImage Margin="0"
-                                                  Aspect="AspectFit"
-                                                  BackgroundColor="Transparent"
-                                                  HeightRequest="40"
-                                                  HorizontalOptions="End"
-                                                  InputTransparent="True"
-                                                  Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg"
-                                                  VerticalOptions="CenterAndExpand" />
-                        </Grid>
+                    <Grid BackgroundColor="{StaticResource DeleteBackground}"
+                          HorizontalOptions="Fill"
+                          VerticalOptions="Fill">
+                        <forms:SvgCachedImage Margin="0"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="40"
+                                              HorizontalOptions="Center"
+                                              InputTransparent="True"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg"
+                                              VerticalOptions="Center" />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding DeleteCommand}" />
+                        </Grid.GestureRecognizers>
                     </Grid>
                 </DataTemplate>
-            </xForms:SfListView.LeftSwipeTemplate>
+            </xForms:SfListView.RightSwipeTemplate>
         </xForms:SfListView>
 
         <Grid Grid.Row="1"

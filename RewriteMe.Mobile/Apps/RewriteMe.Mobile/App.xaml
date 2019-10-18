@@ -82,6 +82,7 @@
             <Color x:Key="PlayerBackground">#D2F9F1</Color>
             <Color x:Key="RecorderResultBackground">#c3d5d5</Color>
             <Color x:Key="BottomNavigationBackground">#F2F3F4</Color>
+            <Color x:Key="DeleteBackground">#DC595F</Color>
 
             <!--  Font Sizes  -->
             <OnPlatform x:Key="LittleSize"
