@@ -134,7 +134,9 @@ namespace RewriteMe.Mobile
                 };
             }
 
+#if !DEBUG
             AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Push));
+#endif
         }
 
         protected override void OnResume()
