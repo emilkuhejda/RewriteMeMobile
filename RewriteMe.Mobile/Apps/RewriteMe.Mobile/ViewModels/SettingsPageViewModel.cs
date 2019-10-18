@@ -53,7 +53,7 @@ namespace RewriteMe.Mobile.ViewModels
             _applicationSettings = applicationSettings;
             _applicationVersionProvider = applicationVersionProvider;
 
-            CanGoBack = true;
+            CanGoBack = false;
             HasBottomNavigation = true;
 
             DeveloperMode = new DeveloperMode();

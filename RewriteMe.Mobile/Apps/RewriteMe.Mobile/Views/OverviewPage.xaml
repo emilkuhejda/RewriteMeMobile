@@ -52,56 +52,50 @@
         <controls:NavigationToolbarItem Command="{Binding NavigateToRecorderCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
 
-    <Grid>
-        <Grid Grid.Row="0" Padding="{StaticResource StandardPadding}">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+    <Grid Padding="{StaticResource StandardPadding}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
 
-            <Label Grid.Row="1"
-                   FontAttributes="Italic"
-                   HorizontalOptions="Center"
-                   IsVisible="{Binding NotAvailableData}"
-                   Style="{StaticResource LabelStyle}"
-                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
-                   VerticalOptions="Start" />
+        <Label Grid.Row="1"
+               FontAttributes="Italic"
+               HorizontalOptions="Center"
+               IsVisible="{Binding NotAvailableData}"
+               Style="{StaticResource LabelStyle}"
+               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
+               VerticalOptions="Start" />
 
-            <ListView Grid.Row="1"
-                      HasUnevenRows="True"
-                      IsPullToRefreshEnabled="True"
-                      IsRefreshing="{Binding IsRefreshing}"
-                      ItemTemplate="{StaticResource FileItemsTemplate}"
-                      ItemsSource="{Binding FileItems}"
-                      RefreshCommand="{Binding RefreshCommand}"
-                      SeparatorVisibility="None" />
+        <ListView Grid.Row="1"
+                  HasUnevenRows="True"
+                  IsPullToRefreshEnabled="True"
+                  IsRefreshing="{Binding IsRefreshing}"
+                  ItemTemplate="{StaticResource FileItemsTemplate}"
+                  ItemsSource="{Binding FileItems}"
+                  RefreshCommand="{Binding RefreshCommand}"
+                  SeparatorVisibility="None" />
 
-            <Grid Grid.Row="1"
-                  Margin="0,0,0,10"
-                  Padding="0"
-                  BackgroundColor="Transparent"
-                  ColumnSpacing="0"
-                  HeightRequest="69"
-                  HorizontalOptions="End"
-                  RowSpacing="0"
-                  VerticalOptions="End"
-                  WidthRequest="69">
-                <forms:SvgCachedImage Margin="0"
-                                      Aspect="AspectFit"
-                                      BackgroundColor="Transparent"
-                                      HeightRequest="60"
-                                      HorizontalOptions="CenterAndExpand"
-                                      InputTransparent="True"
-                                      Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg"
-                                      VerticalOptions="CenterAndExpand" />
-                <Grid.GestureRecognizers>
-                    <TapGestureRecognizer Command="{Binding NavigateToCreatePageCommand}" />
-                </Grid.GestureRecognizers>
-            </Grid>
+        <Grid Grid.Row="1"
+              Margin="0,0,0,10"
+              Padding="0"
+              BackgroundColor="Transparent"
+              ColumnSpacing="0"
+              HeightRequest="69"
+              HorizontalOptions="End"
+              RowSpacing="0"
+              VerticalOptions="End"
+              WidthRequest="69">
+            <forms:SvgCachedImage Margin="0"
+                                  Aspect="AspectFit"
+                                  BackgroundColor="Transparent"
+                                  HeightRequest="60"
+                                  HorizontalOptions="CenterAndExpand"
+                                  InputTransparent="True"
+                                  Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg"
+                                  VerticalOptions="CenterAndExpand" />
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding NavigateToCreatePageCommand}" />
+            </Grid.GestureRecognizers>
         </Grid>
-
-        <controls:PageActivityIndicator Grid.Row="0"
-                                        Caption="{Binding ProgressText}"
-                                        IsVisible="{Binding OperationScope.IsBusy}" />
     </Grid>
 </views:BaseNavigationPage>

@@ -7,61 +7,50 @@
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
                           Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Settings}}">
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <controls:AlwaysScrollView>
+        <StackLayout Padding="0" Spacing="0">
+            <!--  Language  -->
+            <controls:DrillDownButton Command="{Binding NavigateToLanguageCommand}"
+                                      ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                      Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
+                <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedLanguage.Title}" />
+            </controls:DrillDownButton>
+            <controls:Divider />
 
-        <controls:AlwaysScrollView>
-            <StackLayout Padding="0" Spacing="0">
-                <!--  Language  -->
-                <controls:DrillDownButton Command="{Binding NavigateToLanguageCommand}"
-                                          ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
-                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
-                    <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedLanguage.Title}" />
-                </controls:DrillDownButton>
-                <controls:Divider />
+            <!--  Application version  -->
+            <controls:DrillDownButton Command="{Binding DeveloperMode.UnlockCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Version}}">
+                <Label Style="{StaticResource LabelStyle}" Text="{Binding ApplicationVersion}" />
+            </controls:DrillDownButton>
+            <controls:Divider />
 
-                <!--  Application version  -->
-                <controls:DrillDownButton Command="{Binding DeveloperMode.UnlockCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Version}}">
-                    <Label Style="{StaticResource LabelStyle}" Text="{Binding ApplicationVersion}" />
-                </controls:DrillDownButton>
-                <controls:Divider />
+            <!--  User profile  -->
+            <controls:DrillDownButton Command="{Binding NavigateToUserSettingsCommand}"
+                                      ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                      Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UserProfile}}">
+                <Label Style="{StaticResource LabelStyle}" Text="{Binding UserName}" />
+            </controls:DrillDownButton>
+            <controls:Divider />
 
-                <!--  User profile  -->
-                <controls:DrillDownButton Command="{Binding NavigateToUserSettingsCommand}"
-                                          ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
-                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UserProfile}}">
-                    <Label Style="{StaticResource LabelStyle}" Text="{Binding UserName}" />
-                </controls:DrillDownButton>
-                <controls:Divider />
+            <!--  Remaining time  -->
+            <controls:DrillDownButton Command="{Binding NavigateToUserSubscriptions}"
+                                      ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                      Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RemainingTime}}">
+                <Label Style="{StaticResource LabelStyle}" Text="{Binding RemainingTime}" />
+            </controls:DrillDownButton>
+            <controls:Divider />
 
-                <!--  Remaining time  -->
-                <controls:DrillDownButton Command="{Binding NavigateToUserSubscriptions}"
-                                          ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
-                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RemainingTime}}">
-                    <Label Style="{StaticResource LabelStyle}" Text="{Binding RemainingTime}" />
-                </controls:DrillDownButton>
-                <controls:Divider />
+            <!--  Contact us  -->
+            <controls:DrillDownButton Command="{Binding NavigateToEmailCommand}"
+                                      ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                      Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ContactUs}}" />
+            <controls:Divider />
 
-                <!--  Contact us  -->
-                <controls:DrillDownButton Command="{Binding NavigateToEmailCommand}"
-                                          ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
-                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ContactUs}}" />
-                <controls:Divider />
-
-                <!--  Developer menu  -->
-                <controls:DrillDownButton Command="{Binding NavigateToDeveloperPageCommand}"
-                                          ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
-                                          IsVisible="{Binding DeveloperMode.Unlocked}"
-                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Developer}}" />
-                <controls:Divider IsVisible="{Binding DeveloperMode.Unlocked}" />
-            </StackLayout>
-        </controls:AlwaysScrollView>
-
-        <controls:PageActivityIndicator Grid.Row="0"
-                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
-                                        IsVisible="{Binding OperationScope.IsBusy}" />
-    </Grid>
+            <!--  Developer menu  -->
+            <controls:DrillDownButton Command="{Binding NavigateToDeveloperPageCommand}"
+                                      ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                      IsVisible="{Binding DeveloperMode.Unlocked}"
+                                      Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Developer}}" />
+            <controls:Divider IsVisible="{Binding DeveloperMode.Unlocked}" />
+        </StackLayout>
+    </controls:AlwaysScrollView>
 </views:BaseNavigationPage>

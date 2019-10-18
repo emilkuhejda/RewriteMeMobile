@@ -10,46 +10,39 @@
         <controls:NavigationToolbarItem Command="{Binding DeleteCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
 
-    <Grid>
-        <Grid RowSpacing="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="Auto" />
-            </Grid.RowDefinitions>
+    <Grid RowSpacing="0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
 
-            <StackLayout Padding="16,16,16,0" IsVisible="{Binding IsProgressVisible}">
-                <ProgressBar Grid.Row="0"
-                             Progress="{Binding Progress}"
-                             ProgressColor="{StaticResource ColorPrimary}" />
-                <Label HorizontalOptions="End"
-                       Style="{StaticResource LightBoldStyle}"
-                       Text="{Binding ProgressText}" />
-            </StackLayout>
+        <StackLayout Padding="16,16,16,0" IsVisible="{Binding IsProgressVisible}">
+            <ProgressBar Progress="{Binding Progress}" ProgressColor="{StaticResource ColorPrimary}" />
+            <Label HorizontalOptions="End"
+                   Style="{StaticResource LightBoldStyle}"
+                   Text="{Binding ProgressText}" />
+        </StackLayout>
 
-            <views:PlayerView Grid.Row="1" BindingContext="{Binding PlayerViewModel}" />
+        <views:PlayerView Grid.Row="1" BindingContext="{Binding PlayerViewModel}" />
 
-            <Label Grid.Row="2"
-                   FontAttributes="Italic"
-                   HorizontalOptions="Center"
-                   IsVisible="{Binding NotAvailableData}"
-                   Style="{StaticResource LabelStyle}"
-                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
-                   VerticalOptions="Start" />
+        <Label Grid.Row="2"
+               FontAttributes="Italic"
+               HorizontalOptions="Center"
+               IsVisible="{Binding NotAvailableData}"
+               Style="{StaticResource LabelStyle}"
+               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
+               VerticalOptions="Start" />
 
-            <Grid Grid.Row="3" Padding="{StaticResource StandardPadding}">
-                <ListView HasUnevenRows="True"
-                          ItemTemplate="{StaticResource DetailItemsTemplate}"
-                          ItemsSource="{Binding DetailItems}"
-                          SeparatorVisibility="None" />
-            </Grid>
-
-            <controls:ContextActionBar Grid.Row="4" ItemsSource="{Binding NavigationItems}" />
+        <Grid Grid.Row="3" Padding="{StaticResource StandardPadding}">
+            <ListView HasUnevenRows="True"
+                      ItemTemplate="{StaticResource DetailItemsTemplate}"
+                      ItemsSource="{Binding DetailItems}"
+                      SeparatorVisibility="None" />
         </Grid>
 
-        <controls:PageActivityIndicator Grid.Row="0"
-                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
-                                        IsVisible="{Binding OperationScope.IsBusy}" />
+        <controls:ContextActionBar Grid.Row="4" ItemsSource="{Binding NavigationItems}" />
     </Grid>
 </views:BaseNavigationPage>

@@ -6,7 +6,8 @@
                           xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
-                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
+                          xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
     <Grid BackgroundColor="{StaticResource WindowBackground}"
           HorizontalOptions="Fill"
           VerticalOptions="Fill">
@@ -33,10 +34,12 @@
               HorizontalOptions="Fill"
               IsVisible="{Binding OperationScope.IsBusy, Mode=OneWay}"
               VerticalOptions="Fill">
-            <controls:PageActivityIndicator BackgroundOpacity="1"
-                                            Caption="{Binding ProgressText}"
-                                            CaptionColor="{StaticResource ColorBlack}"
-                                            IndicatorBackgroundColor="{StaticResource ColorWhite}" />
+            <xForms:SfBusyIndicator Title="{Binding ProgressText}"
+                                    AnimationType="Gear"
+                                    BackgroundColor="{StaticResource ColorWhite}"
+                                    TextColor="{StaticResource ColorPrimary}"
+                                    ViewBoxHeight="80"
+                                    ViewBoxWidth="80" />
         </Grid>
     </Grid>
 </views:BaseNavigationPage>
