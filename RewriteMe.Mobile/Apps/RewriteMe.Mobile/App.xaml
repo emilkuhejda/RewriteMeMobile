@@ -466,17 +466,14 @@
                             </Grid.ColumnDefinitions>
 
                             <StackLayout Grid.Column="0" Orientation="Horizontal">
-                                <!--<controls:PageActivityIndicator BackgroundOpacity="1"
-                                                                HeightRequest="30"
-                                                                IndicatorBackgroundColor="{StaticResource ColorWhite}"
-                                                                IsVisible="{Binding OperationScope.IsBusy}"
-                                                                WidthRequest="30" />-->
-                                <xForms:SfBusyIndicator AnimationType="Rectangle"
+                                <xForms:SfBusyIndicator AnimationType="SingleCircle"
                                                         BackgroundColor="{StaticResource ColorWhite}"
+                                                        HeightRequest="30"
                                                         IsVisible="{Binding OperationScope.IsBusy}"
                                                         TextColor="{StaticResource ColorPrimary}"
                                                         ViewBoxHeight="30"
-                                                        ViewBoxWidth="30" />
+                                                        ViewBoxWidth="30"
+                                                        WidthRequest="30" />
 
                                 <Grid BackgroundColor="Transparent"
                                       HeightRequest="39"
