@@ -2,7 +2,6 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.LoginPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
@@ -39,10 +38,5 @@
                    HorizontalTextAlignment="Center"
                    Text="{Binding LoginFeedback}" />
         </StackLayout>
-
-        <controls:PageActivityIndicator Grid.Row="0"
-                                        Grid.RowSpan="2"
-                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
-                                        IsVisible="{Binding OperationScope.IsBusy}" />
     </Grid>
 </views:BaseNavigationPage>

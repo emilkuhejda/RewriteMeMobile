@@ -19,7 +19,6 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IFileItemService _fileItemService;
 
-        private string _progressText;
         private ObservableCollection<FileItemViewModel> _fileItems;
 
         public OverviewPageViewModel(
@@ -38,12 +37,6 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand NavigateToCreatePageCommand { get; }
 
-        public string ProgressText
-        {
-            get => _progressText;
-            set => SetProperty(ref _progressText, value);
-        }
-
         public ObservableCollection<FileItemViewModel> FileItems
         {
             get => _fileItems;
@@ -54,7 +47,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
+                IndicatorCaption = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
 
                 var isNavigationBack = navigationParameters.GetValue<bool>(NavigationConstants.NavigationBack);
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New && !isNavigationBack)
@@ -110,13 +103,13 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task SynchronizationAsync()
         {
-            ProgressText = Loc.Text(TranslationKeys.LoadingData);
+            IndicatorCaption = Loc.Text(TranslationKeys.LoadingData);
 
             SynchronizationService.InitializationProgress += OnInitializationProgress;
             await SynchronizationService.StartAsync().ConfigureAwait(false);
             SynchronizationService.InitializationProgress -= OnInitializationProgress;
 
-            ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
+            IndicatorCaption = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
         }
 
         private async Task InitializeFileItemsAsync()
@@ -127,7 +120,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void OnInitializationProgress(object sender, ProgressEventArgs e)
         {
-            ProgressText = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
+            IndicatorCaption = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
         }
 
         private async Task ExecuteNavigateToCreatePageCommandAsync()

@@ -3,10 +3,7 @@
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:behaviors="clr-namespace:Prism.Behaviors;assembly=Prism.Forms"
-                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:converters="clr-namespace:RewriteMe.Mobile.Converters;assembly=RewriteMe.Mobile"
-                          xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
-                          xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.Resources>
         <ResourceDictionary>
@@ -38,13 +35,9 @@
 
                             <Label Grid.Column="0"
                                    HorizontalTextAlignment="Start"
-                                   Style="{Binding IsSelected,
-                                                   Mode=OneWay,
-                                                   Converter={StaticResource IsSelectedToStyleConverter}}"
+                                   Style="{Binding IsSelected, Mode=OneWay, Converter={StaticResource IsSelectedToStyleConverter}}"
                                    Text="{Binding Text}"
-                                   TextColor="{Binding IsSelected,
-                                                       Mode=OneWay,
-                                                       Converter={StaticResource IsSelectedToTextColorConverter}}"
+                                   TextColor="{Binding IsSelected, Mode=OneWay, Converter={StaticResource IsSelectedToTextColorConverter}}"
                                    VerticalTextAlignment="Center" />
                         </Grid>
 
@@ -66,18 +59,13 @@
                       IsPullToRefreshEnabled="False"
                       IsVisible="{Binding IsNotBusy}"
                       ItemTemplate="{StaticResource GenericListItemCell}"
-                      ItemsSource="{Binding Items,
-                                            Mode=OneWay}"
+                      ItemsSource="{Binding Items, Mode=OneWay}"
                       SelectedItem="{Binding SelectedItem}"
                       SeparatorVisibility="None">
                 <ListView.Behaviors>
                     <behaviors:EventToCommandBehavior Command="{Binding SelectedItemChangedCommand}" EventName="ItemTapped" />
                 </ListView.Behaviors>
             </ListView>
-
-            <controls:PageActivityIndicator Grid.Row="0"
-                                            Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
-                                            IsVisible="{Binding OperationScope.IsBusy}" />
         </Grid>
     </ContentPage.Content>
 </views:BaseNavigationPage>

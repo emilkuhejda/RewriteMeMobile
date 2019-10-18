@@ -9,7 +9,8 @@
                         xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                         xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Autofac.Forms"
                         xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
-                        xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+                        xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
+                        xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
     <prism:PrismApplication.Resources>
         <ResourceDictionary>
             <!--  Paddings  -->
@@ -437,6 +438,20 @@
                                             HorizontalOptions="FillAndExpand"
                                             IsVisible="{TemplateBinding BindingContext.HasBottomNavigation}"
                                             VerticalOptions="FillAndExpand" />
+
+                    <!--  Activity indicator  -->
+                    <Grid Grid.Row="1"
+                          Grid.RowSpan="2"
+                          IsVisible="{TemplateBinding BindingContext.OperationScope.IsBusy}">
+                        <xForms:SfBusyIndicator Title="{TemplateBinding BindingContext.IndicatorCaption}"
+                                                AnimationType="Gear"
+                                                BackgroundColor="{StaticResource ColorBlack}"
+                                                IsVisible="{TemplateBinding BindingContext.IsDefaultIndicatorVisible}"
+                                                Opacity="0.6"
+                                                TextColor="{StaticResource ColorWhite}"
+                                                ViewBoxHeight="50"
+                                                ViewBoxWidth="50" />
+                    </Grid>
                 </Grid>
             </ControlTemplate>
 
@@ -451,11 +466,14 @@
                             </Grid.ColumnDefinitions>
 
                             <StackLayout Grid.Column="0" Orientation="Horizontal">
-                                <controls:PageActivityIndicator BackgroundOpacity="1"
-                                                                HeightRequest="30"
-                                                                IndicatorBackgroundColor="{StaticResource ColorWhite}"
-                                                                IsVisible="{Binding OperationScope.IsBusy}"
-                                                                WidthRequest="30" />
+                                <xForms:SfBusyIndicator AnimationType="SingleCircle"
+                                                        BackgroundColor="{StaticResource ColorWhite}"
+                                                        HeightRequest="30"
+                                                        IsVisible="{Binding OperationScope.IsBusy}"
+                                                        TextColor="{StaticResource ColorPrimary}"
+                                                        ViewBoxHeight="30"
+                                                        ViewBoxWidth="30"
+                                                        WidthRequest="30" />
 
                                 <Grid BackgroundColor="Transparent"
                                       HeightRequest="39"
