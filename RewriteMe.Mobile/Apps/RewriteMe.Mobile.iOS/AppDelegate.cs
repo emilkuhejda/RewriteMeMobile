@@ -6,6 +6,7 @@ using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.iOS.BackgroundServices;
 using RewriteMe.Mobile.iOS.Configuration;
+using Syncfusion.SfBusyIndicator.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
 using UIKit;
 using Xamarin.Forms;
@@ -32,6 +33,8 @@ namespace RewriteMe.Mobile.iOS
             Forms.Init();
             CachedImageRenderer.Init();
             SfBadgeViewRenderer.Init();
+
+            InitializeBusyIndicatorRenderer();
 
             var bootstrapper = new OsxBootstrapper();
             _application = new App(bootstrapper);
@@ -74,6 +77,11 @@ namespace RewriteMe.Mobile.iOS
 
             MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem), message => { _transcribeItemBackgroundService.Stop(); });
             MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer), message => { _synchronizerBackgroundService.Stop(); });
+        }
+
+        private void InitializeBusyIndicatorRenderer()
+        {
+            using (var busyIndicatorRenderer = new SfBusyIndicatorRenderer()) { }
         }
     }
 }
