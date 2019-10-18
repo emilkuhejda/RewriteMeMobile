@@ -38,6 +38,7 @@ namespace RewriteMe.Mobile.ViewModels
             IsSecurePage = false;
             HasTitleBar = false;
             CanGoBack = false;
+            IsDefaultIndicatorVisible = false;
 
             ReloadCommand = new AsyncCommand(ExecuteReloadCommandAsync);
         }

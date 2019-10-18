@@ -19,6 +19,7 @@ namespace RewriteMe.Mobile.ViewModels
     public abstract class ViewModelBase : BindableBase, INavigatedAware, IDisposable
     {
         private string _indicatorCaption;
+        private bool _isDefaultIndicatorVisible;
         private bool _hasTitleBar;
         private bool _hasBottomNavigation;
         private bool _canGoBack;
@@ -39,6 +40,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             IsSecurePage = true;
             HasTitleBar = true;
+            IsDefaultIndicatorVisible = true;
             IndicatorCaption = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
 
             NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommandAsync, () => CanGoBack);
@@ -60,6 +62,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get => _indicatorCaption;
             set => SetProperty(ref _indicatorCaption, value);
+        }
+
+        public bool IsDefaultIndicatorVisible
+        {
+            get => _isDefaultIndicatorVisible;
+            set => SetProperty(ref _isDefaultIndicatorVisible, value);
         }
 
         public bool HasTitleBar
