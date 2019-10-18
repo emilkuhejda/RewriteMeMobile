@@ -45,6 +45,8 @@ namespace RewriteMe.Mobile.Droid
 
             InitializeSharedFile();
 
+            StatusBarHelper.SetLightStatusBar();
+
             var bootstrapper = new AndroidBootstrapper();
             var application = new App(bootstrapper);
             LoadApplication(application);

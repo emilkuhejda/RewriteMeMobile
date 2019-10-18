@@ -69,7 +69,7 @@
 
             <Color x:Key="WindowBackground">#FFFFFF</Color>
             <Color x:Key="PrimaryTextColor">#616161</Color>
-            <Color x:Key="ColorPrimary">#FF1ABC9C</Color>
+            <Color x:Key="ColorPrimary">#FF5724C6</Color>
             <Color x:Key="ColorPrimaryBright">#FF28E2BC</Color>
             <Color x:Key="ColorPrimaryDark">#FF1DB496</Color>
             <Color x:Key="ApplicationTitleTextColor">#FFFFFF</Color>
@@ -330,7 +330,7 @@
                     <Grid Grid.Row="0"
                           Margin="0"
                           Padding="0"
-                          BackgroundColor="{StaticResource ColorPrimary}"
+                          BackgroundColor="{StaticResource ColorWhite}"
                           BindingContext="{TemplateBinding BindingContext}"
                           ColumnSpacing="0"
                           HorizontalOptions="FillAndExpand"
@@ -380,6 +380,7 @@
                                HorizontalTextAlignment="Center"
                                Style="{StaticResource MainTitleLabelSyle}"
                                Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ApplicationTitle}}"
+                               TextColor="{StaticResource ColorPrimary}"
                                VerticalOptions="FillAndExpand"
                                VerticalTextAlignment="Center" />
 
@@ -425,6 +426,13 @@
                                 </DataTemplate>
                             </controls:StackedList.ItemTemplate>
                         </controls:StackedList>
+
+                        <Grid Grid.Row="0"
+                              Grid.Column="0"
+                              Grid.ColumnSpan="3"
+                              BackgroundColor="{StaticResource ColorPrimary}"
+                              HeightRequest="1"
+                              VerticalOptions="End" />
                     </Grid>
 
                     <!--  Page Content  -->
@@ -440,8 +448,8 @@
                                             VerticalOptions="FillAndExpand" />
 
                     <!--  Activity indicator  -->
-                    <Grid Grid.Row="1"
-                          Grid.RowSpan="2"
+                    <Grid Grid.Row="0"
+                          Grid.RowSpan="3"
                           IsVisible="{TemplateBinding BindingContext.OperationScope.IsBusy}">
                         <xForms:SfBusyIndicator Title="{TemplateBinding BindingContext.IndicatorCaption}"
                                                 AnimationType="Gear"
