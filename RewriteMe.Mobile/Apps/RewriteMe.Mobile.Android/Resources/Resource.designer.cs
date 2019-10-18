@@ -2815,6 +2815,9 @@ namespace RewriteMe.Mobile.Droid
 			global::Com.Syncfusion.Sfbusyindicator.Resource.Styleable.SfBusyIndicator_busyIndicatorTitlePlacement = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfBusyIndicator_busyIndicatorTitlePlacement;
 			global::Com.Syncfusion.Sfbusyindicator.Resource.Styleable.SfBusyIndicator_busyIndicatorViewBoxHeight = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfBusyIndicator_busyIndicatorViewBoxHeight;
 			global::Com.Syncfusion.Sfbusyindicator.Resource.Styleable.SfBusyIndicator_busyIndicatorViewBoxWidth = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfBusyIndicator_busyIndicatorViewBoxWidth;
+			global::Syncfusion.ListView.XForms.Android.Resource.String.ApplicationName = global::RewriteMe.Mobile.Droid.Resource.String.ApplicationName;
+			global::Syncfusion.ListView.XForms.Android.Resource.String.Hello = global::RewriteMe.Mobile.Droid.Resource.String.Hello;
+			global::Syncfusion.ListView.XForms.Android.Resource.String.Load_More = global::RewriteMe.Mobile.Droid.Resource.String.Load_More;
 			global::Xamarin.Essentials.Resource.Attribute.alpha = global::RewriteMe.Mobile.Droid.Resource.Attribute.alpha;
 			global::Xamarin.Essentials.Resource.Attribute.coordinatorLayoutStyle = global::RewriteMe.Mobile.Droid.Resource.Attribute.coordinatorLayoutStyle;
 			global::Xamarin.Essentials.Resource.Attribute.font = global::RewriteMe.Mobile.Droid.Resource.Attribute.font;
@@ -10703,6 +10706,12 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f090058
 			public const int ApplicationName = 2131296344;
 			
+			// aapt resource value: 0x7f090057
+			public const int Hello = 2131296343;
+			
+			// aapt resource value: 0x7f090059
+			public const int Load_More = 2131296345;
+			
 			// aapt resource value: 0x7f090021
 			public const int abc_action_bar_home_description = 2131296289;
 			
@@ -10868,8 +10877,8 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f09004f
 			public const int hide_bottom_view_on_scroll_behavior = 2131296335;
 			
-			// aapt resource value: 0x7f090057
-			public const int library_name = 2131296343;
+			// aapt resource value: 0x7f09005a
+			public const int library_name = 2131296346;
 			
 			// aapt resource value: 0x7f090009
 			public const int mr_button_content_description = 2131296265;

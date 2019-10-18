@@ -6,14 +6,15 @@
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
-                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
+                          xmlns:xForms="clr-namespace:Syncfusion.ListView.XForms;assembly=Syncfusion.SfListView.XForms">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="FileItemsTemplate">
             <ViewCell>
-                <Grid BackgroundColor="White">
-                    <Grid.GestureRecognizers>
+                <Grid BackgroundColor="Gray">
+                    <!--<Grid.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
-                    </Grid.GestureRecognizers>
+                    </Grid.GestureRecognizers>-->
 
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
@@ -66,14 +67,39 @@
                Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
                VerticalOptions="Start" />
 
-        <ListView Grid.Row="1"
+        <!--<ListView Grid.Row="1"
                   HasUnevenRows="True"
                   IsPullToRefreshEnabled="True"
                   IsRefreshing="{Binding IsRefreshing}"
                   ItemTemplate="{StaticResource FileItemsTemplate}"
                   ItemsSource="{Binding FileItems}"
                   RefreshCommand="{Binding RefreshCommand}"
-                  SeparatorVisibility="None" />
+                  SeparatorVisibility="None" />-->
+
+        <xForms:SfListView Grid.Row="1"
+                           AllowSwiping="True"
+                           ItemTemplate="{StaticResource FileItemsTemplate}"
+                           ItemsSource="{Binding FileItems}">
+            <xForms:SfListView.LeftSwipeTemplate>
+                <DataTemplate x:Name="LeftSwipeTemplate">
+                    <Grid>
+                        <Grid Grid.Column="0"
+                              BackgroundColor="#009EDA"
+                              HorizontalOptions="Fill"
+                              VerticalOptions="Fill">
+                            <forms:SvgCachedImage Margin="0"
+                                                  Aspect="AspectFit"
+                                                  BackgroundColor="Transparent"
+                                                  HeightRequest="40"
+                                                  HorizontalOptions="End"
+                                                  InputTransparent="True"
+                                                  Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg"
+                                                  VerticalOptions="CenterAndExpand" />
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </xForms:SfListView.LeftSwipeTemplate>
+        </xForms:SfListView>
 
         <Grid Grid.Row="1"
               Margin="0,0,0,10"
