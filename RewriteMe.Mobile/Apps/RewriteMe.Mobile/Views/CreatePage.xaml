@@ -60,10 +60,5 @@
         </controls:AlwaysScrollView>
 
         <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />
-
-        <controls:PageActivityIndicator Grid.Row="0"
-                                        Grid.RowSpan="2"
-                                        Caption="{Binding ProgressText}"
-                                        IsVisible="{Binding OperationScope.IsBusy}" />
     </Grid>
 </views:BaseNavigationPage>

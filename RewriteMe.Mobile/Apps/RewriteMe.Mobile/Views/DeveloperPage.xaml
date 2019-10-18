@@ -7,51 +7,45 @@
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
                           Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Developer}}">
-    <Grid>
-        <Grid Padding="{StaticResource SmallPadding}">
+    <Grid Padding="{StaticResource SmallPadding}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <WebView Grid.Row="0"
+                 HorizontalOptions="FillAndExpand"
+                 Source="{Binding WebViewSource}"
+                 VerticalOptions="FillAndExpand" />
+
+        <Grid Grid.Row="1">
             <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
 
-            <WebView Grid.Row="0"
-                     HorizontalOptions="FillAndExpand"
-                     Source="{Binding WebViewSource}"
-                     VerticalOptions="FillAndExpand" />
+            <controls:CustomButton Grid.Row="0"
+                                   Grid.Column="0"
+                                   Command="{Binding ClearLogFileCommand}"
+                                   Style="{StaticResource CustomButtonSecondaryStyle}"
+                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Clear}}" />
 
-            <Grid Grid.Row="1">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
+            <controls:CustomButton Grid.Row="1"
+                                   Grid.Column="0"
+                                   Command="{Binding SendLogMailCommand}"
+                                   Style="{StaticResource CustomButtonSecondaryStyle}"
+                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SendEmail}}" />
 
-                <controls:CustomButton Grid.Row="0"
-                                       Grid.Column="0"
-                                       Command="{Binding ClearLogFileCommand}"
-                                       Style="{StaticResource CustomButtonSecondaryStyle}"
-                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Clear}}" />
-
-                <controls:CustomButton Grid.Row="1"
-                                       Grid.Column="0"
-                                       Command="{Binding SendLogMailCommand}"
-                                       Style="{StaticResource CustomButtonSecondaryStyle}"
-                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SendEmail}}" />
-
-                <controls:CustomButton Grid.Row="0"
-                                       Grid.RowSpan="2"
-                                       Grid.Column="1"
-                                       Command="{Binding ReloadLogCommand}"
-                                       Style="{StaticResource CustomButtonPrimaryStyle}"
-                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Reload}}" />
-            </Grid>
+            <controls:CustomButton Grid.Row="0"
+                                   Grid.RowSpan="2"
+                                   Grid.Column="1"
+                                   Command="{Binding ReloadLogCommand}"
+                                   Style="{StaticResource CustomButtonPrimaryStyle}"
+                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Reload}}" />
         </Grid>
-
-        <controls:PageActivityIndicator Grid.Row="0"
-                                        Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ActivityIndicatorCaptionText}}"
-                                        IsVisible="{Binding OperationScope.IsBusy}" />
     </Grid>
 </views:BaseNavigationPage>

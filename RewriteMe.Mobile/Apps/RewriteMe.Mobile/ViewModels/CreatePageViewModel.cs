@@ -30,7 +30,6 @@ namespace RewriteMe.Mobile.ViewModels
         private SupportedLanguage _selectedLanguage;
         private PickedFile _selectedFile;
         private bool _isUploadButtonVisible;
-        private string _progressText;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
 
         public CreatePageViewModel(
@@ -87,12 +86,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get => _isUploadButtonVisible;
             set => SetProperty(ref _isUploadButtonVisible, value);
-        }
-
-        public string ProgressText
-        {
-            get => _progressText;
-            set => SetProperty(ref _progressText, value);
         }
 
         public IEnumerable<ActionBarTileViewModel> NavigationItems
@@ -264,7 +257,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteSendToServer(Func<MediaFile, Task> func)
         {
-            ProgressText = Loc.Text(TranslationKeys.UploadFileItemInfoMessage);
+            IndicatorCaption = Loc.Text(TranslationKeys.UploadFileItemInfoMessage);
 
             using (new OperationMonitor(OperationScope))
             {
@@ -345,7 +338,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void ResetLoadingText()
         {
-            ProgressText = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
+            IndicatorCaption = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
         }
 
         protected override void DisposeInternal()
