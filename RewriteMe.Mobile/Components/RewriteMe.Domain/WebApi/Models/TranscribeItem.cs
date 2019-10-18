@@ -25,7 +25,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the TranscribeItem class.
         /// </summary>
-        public TranscribeItem(System.Guid id, System.Guid fileItemId, IList<RecognitionAlternative> alternatives, string userTranscript, long startTimeTicks, long endTimeTicks, long totalTimeTicks, System.DateTime dateCreated, System.DateTime dateUpdated)
+        public TranscribeItem(System.Guid id, System.Guid fileItemId, IList<RecognitionAlternative> alternatives, string userTranscript, long startTimeTicks, long endTimeTicks, long totalTimeTicks, System.DateTime dateCreatedUtc, System.DateTime dateUpdatedUtc)
         {
             Id = id;
             FileItemId = fileItemId;
@@ -34,8 +34,8 @@ namespace RewriteMe.Domain.WebApi.Models
             StartTimeTicks = startTimeTicks;
             EndTimeTicks = endTimeTicks;
             TotalTimeTicks = totalTimeTicks;
-            DateCreated = dateCreated;
-            DateUpdated = dateUpdated;
+            DateCreatedUtc = dateCreatedUtc;
+            DateUpdatedUtc = dateUpdatedUtc;
             CustomInit();
         }
 
@@ -81,13 +81,13 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "dateCreated")]
-        public System.DateTime DateCreated { get; set; }
+        [JsonProperty(PropertyName = "dateCreatedUtc")]
+        public System.DateTime DateCreatedUtc { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "dateUpdated")]
-        public System.DateTime DateUpdated { get; set; }
+        [JsonProperty(PropertyName = "dateUpdatedUtc")]
+        public System.DateTime DateUpdatedUtc { get; set; }
 
         /// <summary>
         /// Validate the object.

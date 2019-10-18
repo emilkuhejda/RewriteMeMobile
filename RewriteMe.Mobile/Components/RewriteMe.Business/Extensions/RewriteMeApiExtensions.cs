@@ -101,7 +101,7 @@ namespace RewriteMe.Business.Extensions
         public static async Task<FileItem> UploadFileItemAsync(this IRewriteMeAPI operations, MediaFile mediaFile, Guid applicationId, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
         {
             using (var stream = new MemoryStream(mediaFile.Source))
-            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, applicationId, stream, customHeaders, cancellationToken).ConfigureAwait(false))
+            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, DateTime.Now, applicationId, stream, customHeaders, cancellationToken).ConfigureAwait(false))
             {
                 return ParseBody<FileItem>(result);
             }

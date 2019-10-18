@@ -17,8 +17,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 TotalTimeTicks = entity.TotalTime.Ticks,
                 TranscribedTimeTicks = entity.TranscribedTime.Ticks,
                 DateCreated = entity.DateCreated,
-                DateProcessed = entity.DateProcessed,
-                DateUpdated = entity.DateUpdated
+                DateProcessedUtc = entity.DateProcessedUtc,
+                DateUpdatedUtc = entity.DateUpdatedUtc
             };
         }
 
@@ -34,8 +34,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 TotalTime = fileItem.TotalTime,
                 TranscribedTime = fileItem.TranscribedTime,
                 DateCreated = fileItem.DateCreated,
-                DateProcessed = fileItem.DateProcessed,
-                DateUpdated = fileItem.DateUpdated
+                DateProcessedUtc = fileItem.DateProcessedUtc,
+                DateUpdatedUtc = fileItem.DateUpdatedUtc
             };
         }
     }

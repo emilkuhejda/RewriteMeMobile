@@ -744,6 +744,8 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         /// <param name='fileName'>
         /// </param>
+        /// <param name='dateCreated'>
+        /// </param>
         /// <param name='applicationId'>
         /// </param>
         /// <param name='file'>
@@ -763,7 +765,7 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UploadFileItemWithHttpMessagesAsync(string name = default(string), string language = default(string), string fileName = default(string), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UploadFileItemWithHttpMessagesAsync(string name = default(string), string language = default(string), string fileName = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -775,6 +777,7 @@ namespace RewriteMe.Domain.WebApi
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("fileName", fileName);
+                tracingParameters.Add("dateCreated", dateCreated);
                 tracingParameters.Add("applicationId", applicationId);
                 tracingParameters.Add("file", file);
                 tracingParameters.Add("cancellationToken", cancellationToken);
@@ -795,6 +798,10 @@ namespace RewriteMe.Domain.WebApi
             if (fileName != null)
             {
                 _queryParameters.Add(string.Format("fileName={0}", System.Uri.EscapeDataString(fileName)));
+            }
+            if (dateCreated != null)
+            {
+                _queryParameters.Add(string.Format("dateCreated={0}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(dateCreated, SerializationSettings).Trim('"'))));
             }
             if (applicationId != null)
             {

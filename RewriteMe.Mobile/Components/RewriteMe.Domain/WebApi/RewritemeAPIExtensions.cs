@@ -135,13 +135,15 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='fileName'>
             /// </param>
+            /// <param name='dateCreated'>
+            /// </param>
             /// <param name='applicationId'>
             /// </param>
             /// <param name='file'>
             /// </param>
-            public static object UploadFileItem(this IRewriteMeAPI operations, string name = default(string), string language = default(string), string fileName = default(string), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream))
+            public static object UploadFileItem(this IRewriteMeAPI operations, string name = default(string), string language = default(string), string fileName = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream))
             {
-                return operations.UploadFileItemAsync(name, language, fileName, applicationId, file).GetAwaiter().GetResult();
+                return operations.UploadFileItemAsync(name, language, fileName, dateCreated, applicationId, file).GetAwaiter().GetResult();
             }
 
             /// <param name='operations'>
@@ -153,6 +155,8 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='fileName'>
             /// </param>
+            /// <param name='dateCreated'>
+            /// </param>
             /// <param name='applicationId'>
             /// </param>
             /// <param name='file'>
@@ -160,9 +164,9 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> UploadFileItemAsync(this IRewriteMeAPI operations, string name = default(string), string language = default(string), string fileName = default(string), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<object> UploadFileItemAsync(this IRewriteMeAPI operations, string name = default(string), string language = default(string), string fileName = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.UploadFileItemWithHttpMessagesAsync(name, language, fileName, applicationId, file, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.UploadFileItemWithHttpMessagesAsync(name, language, fileName, dateCreated, applicationId, file, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
