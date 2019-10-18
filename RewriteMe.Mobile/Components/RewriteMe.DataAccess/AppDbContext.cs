@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq.Expressions;
+using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.DataAccess.Entities;
 using SQLite;
@@ -11,6 +12,8 @@ namespace RewriteMe.DataAccess
 {
     public class AppDbContext : IAppDbContext
     {
+        private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
+
         public AppDbContext(SQLiteAsyncConnection database)
         {
             Database = database;
@@ -40,7 +43,15 @@ namespace RewriteMe.DataAccess
 
         public async Task RunInTransactionAsync(Action<SQLiteConnection> action)
         {
-            await Database.RunInTransactionAsync(action).ConfigureAwait(false);
+            await _semaphoreSlim.WaitAsync().ConfigureAwait(false);
+            try
+            {
+                await Database.RunInTransactionAsync(action).ConfigureAwait(false);
+            }
+            finally
+            {
+                _semaphoreSlim.Release();
+            }
         }
 
         public async Task<int> GetVersionNumberAsync()
