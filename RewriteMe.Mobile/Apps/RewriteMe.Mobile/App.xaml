@@ -437,6 +437,12 @@
                                             HorizontalOptions="FillAndExpand"
                                             IsVisible="{TemplateBinding BindingContext.HasBottomNavigation}"
                                             VerticalOptions="FillAndExpand" />
+
+                    <!--  Activity indicator  -->
+                    <controls:PageActivityIndicator Grid.Row="1"
+                                                    Grid.RowSpan="2"
+                                                    Caption="{TemplateBinding BindingContext.IndicatorCaption}"
+                                                    IsVisible="{TemplateBinding BindingContext.OperationScope.IsBusy}" />
                 </Grid>
             </ControlTemplate>
 

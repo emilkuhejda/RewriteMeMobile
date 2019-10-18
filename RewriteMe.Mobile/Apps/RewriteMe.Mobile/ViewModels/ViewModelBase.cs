@@ -11,12 +11,14 @@ using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Views;
+using RewriteMe.Resources.Localization;
 using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public abstract class ViewModelBase : BindableBase, INavigatedAware, IDisposable
     {
+        private string _indicatorCaption;
         private bool _hasTitleBar;
         private bool _hasBottomNavigation;
         private bool _canGoBack;
@@ -37,6 +39,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             IsSecurePage = true;
             HasTitleBar = true;
+            IndicatorCaption = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
 
             NavigateBackCommand = new AsyncCommand(ExecuteNavigateBackCommandAsync, () => CanGoBack);
         }
@@ -52,6 +55,12 @@ namespace RewriteMe.Mobile.ViewModels
         public AsyncOperationScope OperationScope { get; }
 
         public ICommand NavigateBackCommand { get; }
+
+        public string IndicatorCaption
+        {
+            get => _indicatorCaption;
+            set => SetProperty(ref _indicatorCaption, value);
+        }
 
         public bool HasTitleBar
         {
