@@ -6,6 +6,7 @@ using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.iOS.BackgroundServices;
 using RewriteMe.Mobile.iOS.Configuration;
+using Syncfusion.ListView.XForms.iOS;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
 using UIKit;
@@ -33,6 +34,7 @@ namespace RewriteMe.Mobile.iOS
             Forms.Init();
             CachedImageRenderer.Init();
             SfBadgeViewRenderer.Init();
+            SfListViewRenderer.Init();
 
             InitializeBusyIndicatorRenderer();
 
