@@ -22,7 +22,7 @@
     <None Remove="Resources\Images\Notification-Active-Disabled.svg" />
     <None Remove="Resources\Images\Notification-Active.svg" />
     <None Remove="Resources\Images\Notification-Enabled.svg" />
-    <None Remove="Resources\Images\Ok.svg" />
+    <None Remove="Resources\Images\Page.svg" />
     <None Remove="Resources\Images\Pause-Enabled.svg" />
     <None Remove="Resources\Images\Play-Enabled.svg" />
     <None Remove="Resources\Images\Record.svg" />
@@ -56,7 +56,7 @@
     <EmbeddedResource Include="Resources\Images\Notification-Active-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Active.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Enabled.svg" />
-    <EmbeddedResource Include="Resources\Images\Ok.svg" />
+    <EmbeddedResource Include="Resources\Images\Page.svg" />
     <EmbeddedResource Include="Resources\Images\Pause-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Play-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Record.svg" />

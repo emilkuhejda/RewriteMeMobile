@@ -19,16 +19,34 @@
                         </Grid.GestureRecognizers>
 
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                             <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
-                        <Label Grid.Column="0"
-                               HeightRequest="30"
-                               Style="{StaticResource LabelStyle}"
-                               Text="{Binding FileItem.Name}" />
+                        <forms:SvgCachedImage Grid.Column="0"
+                                              Margin="0"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="40"
+                                              HorizontalOptions="Center"
+                                              InputTransparent="True"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.Page.svg"
+                                              VerticalOptions="Center" />
 
-                        <progressBar:SfStepProgressBar Grid.Column="1"
+                        <StackLayout Grid.Column="1">
+                            <Label HeightRequest="20"
+                                   Style="{StaticResource LabelStyle}"
+                                   Text="{Binding FileItem.Name}" />
+
+                            <Label FontFamily="{StaticResource FontFamilyQuicksandLight}"
+                                   FontSize="{StaticResource MidMediumSize}"
+                                   HeightRequest="20"
+                                   Style="{StaticResource LabelStyle}"
+                                   Text="{Binding FileItem.DateCreated}" />
+                        </StackLayout>
+
+                        <progressBar:SfStepProgressBar Grid.Column="2"
                                                        IsVisible="{Binding IsCompleted}"
                                                        Orientation="Vertical"
                                                        VerticalOptions="Center">
@@ -41,7 +59,7 @@
                             <progressBar:StepView Status="Completed" />
                         </progressBar:SfStepProgressBar>
 
-                        <xForms:SfBusyIndicator Grid.Column="1"
+                        <xForms:SfBusyIndicator Grid.Column="2"
                                                 AnimationType="Print"
                                                 BackgroundColor="{StaticResource ColorWhite}"
                                                 HeightRequest="40"
