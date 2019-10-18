@@ -448,8 +448,8 @@
                                             VerticalOptions="FillAndExpand" />
 
                     <!--  Activity indicator  -->
-                    <Grid Grid.Row="1"
-                          Grid.RowSpan="2"
+                    <Grid Grid.Row="0"
+                          Grid.RowSpan="3"
                           IsVisible="{TemplateBinding BindingContext.OperationScope.IsBusy}">
                         <xForms:SfBusyIndicator Title="{TemplateBinding BindingContext.IndicatorCaption}"
                                                 AnimationType="Gear"
