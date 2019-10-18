@@ -143,6 +143,7 @@
     <Compile Include="SplashActivity.cs" />
     <Compile Include="Utils\ExtraConstants.cs" />
     <Compile Include="Extensions\UriExtensions.cs" />
+    <Compile Include="Utils\StatusBarHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Global\RewriteMe.CodeAnalysis.ruleset">

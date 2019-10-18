@@ -39,6 +39,7 @@ namespace RewriteMe.Mobile.ViewModels
             HasTitleBar = false;
             CanGoBack = false;
             IsDefaultIndicatorVisible = false;
+            ProgressText = string.Empty;
 
             ReloadCommand = new AsyncCommand(ExecuteReloadCommandAsync);
         }
