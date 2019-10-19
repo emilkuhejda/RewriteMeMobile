@@ -22,7 +22,7 @@
                                 <ResourceDictionary>
                                     <converters:BoolToColorConverter x:Key="IsSelectedToTextColorConverter"
                                                                      FalseValue="{StaticResource PrimaryTextColor}"
-                                                                     TrueValue="{StaticResource ColorPrimaryBright}" />
+                                                                     TrueValue="{StaticResource ColorPrimary}" />
                                     <converters:BoolToStyleConverter x:Key="IsSelectedToStyleConverter"
                                                                      FalseValue="{StaticResource LabelStyle}"
                                                                      TrueValue="{StaticResource LabelBoldStyle}" />

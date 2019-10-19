@@ -70,8 +70,6 @@
             <Color x:Key="WindowBackground">#FFFFFF</Color>
             <Color x:Key="PrimaryTextColor">#616161</Color>
             <Color x:Key="ColorPrimary">#FF5724C6</Color>
-            <Color x:Key="ColorPrimaryBright">#FF28E2BC</Color>
-            <Color x:Key="ColorPrimaryDark">#FF1DB496</Color>
             <Color x:Key="ApplicationTitleTextColor">#FFFFFF</Color>
             <Color x:Key="NavigationBarGray">#D8D8D8</Color>
             <Color x:Key="Divider">#C8C7CC</Color>
@@ -237,8 +235,8 @@
                    TargetType="controls:CustomButton">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
-                <Setter Property="BackgroundColorPressed" Value="{StaticResource ColorPrimaryDark}" />
-                <Setter Property="BorderColorPressed" Value="{StaticResource ColorPrimaryDark}" />
+                <Setter Property="BackgroundColorPressed" Value="{StaticResource ColorPrimary}" />
+                <Setter Property="BorderColorPressed" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Setter Property="TextColor" Value="{StaticResource ColorGrey300}" />
                 <Style.Triggers>
