@@ -108,6 +108,9 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 NavigationItems = CreateNavigation();
 
+                if (navigationParameters.GetNavigationMode() != NavigationMode.New)
+                    return;
+
                 var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
                 if (importedFile?.Source != null && importedFile.Source.Any())
                 {

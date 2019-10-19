@@ -2,9 +2,11 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.TranscribeRecodingPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:comboBox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                          xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.RightNavigationToolbarItems>
         <controls:NavigationToolbarItem Command="{Binding DeleteCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg" />
@@ -23,23 +25,16 @@
                     <RowDefinition Height="Auto" />
                 </Grid.RowDefinitions>
 
-                <StackLayout Grid.Row="0" Padding="{StaticResource StandardPadding}">
-                    <Label FontAttributes="Bold"
-                           HeightRequest="20"
-                           Style="{StaticResource LabelStyle}"
-                           Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}" />
-                    <Editor FontSize="{StaticResource MediumSize}"
-                            Keyboard="Text"
-                            Text="{Binding Name}"
-                            VerticalOptions="Fill" />
-                    <controls:Divider />
+                <StackLayout Padding="{StaticResource StandardPadding}">
+                    <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
+                        <Entry Text="{Binding Name}" />
+                    </textInputLayout:SfTextInputLayout>
 
-                    <controls:DrillDownButton Command="{Binding NavigateToLanguageCommand}"
-                                              ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
-                                              Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
-                        <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedLanguage.Title}" />
-                    </controls:DrillDownButton>
-                    <controls:Divider />
+                    <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
+                        <comboBox:SfComboBox DataSource="{Binding AvailableLanguages}"
+                                             DisplayMemberPath="Title"
+                                             SelectedItem="{Binding SelectedLanguage}" />
+                    </textInputLayout:SfTextInputLayout>
                 </StackLayout>
 
                 <views:PlayerView Grid.Row="1" BindingContext="{Binding PlayerViewModel}" />

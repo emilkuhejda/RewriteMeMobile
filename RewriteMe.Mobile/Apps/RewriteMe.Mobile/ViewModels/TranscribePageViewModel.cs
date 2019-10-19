@@ -31,19 +31,14 @@ namespace RewriteMe.Mobile.ViewModels
 
             using (new OperationMonitor(OperationScope))
             {
-                if (navigationParameters.GetNavigationMode() == NavigationMode.New)
-                {
-                    FileItem = navigationParameters.GetValue<FileItem>();
-                    Name = FileItem.Name;
-                    SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
+                if (navigationParameters.GetNavigationMode() != NavigationMode.New)
+                    return;
 
-                    CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
-                }
-                else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
-                {
-                    var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
-                    HandleSelectionAsync(dropDownListViewModel);
-                }
+                FileItem = navigationParameters.GetValue<FileItem>();
+                Name = FileItem.Name;
+                SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
+
+                CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
             }
         }
 
