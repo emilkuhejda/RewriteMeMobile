@@ -529,20 +529,20 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Recorded files.
-        /// </summary>
-        public static string RecordedFiles {
-            get {
-                return ResourceManager.GetString("RecordedFiles", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Recording only.
         /// </summary>
         public static string RecordingOnly {
             get {
                 return ResourceManager.GetString("RecordingOnly", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Recordings.
+        /// </summary>
+        public static string Recordings {
+            get {
+                return ResourceManager.GetString("Recordings", resourceCulture);
             }
         }
         

@@ -7,6 +7,7 @@ using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.iOS.BackgroundServices;
 using RewriteMe.Mobile.iOS.Configuration;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
+using Syncfusion.SfRadialMenu.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
 using Syncfusion.XForms.iOS.ProgressBar;
 using UIKit;
@@ -33,10 +34,8 @@ namespace RewriteMe.Mobile.iOS
         {
             Forms.Init();
             CachedImageRenderer.Init();
-            SfBadgeViewRenderer.Init();
-            SfLinearProgressBarRenderer.Init();
 
-            InitializeBusyIndicatorRenderer();
+            InitializeSyncfusionControls();
 
             var bootstrapper = new OsxBootstrapper();
             _application = new App(bootstrapper);
@@ -81,8 +80,12 @@ namespace RewriteMe.Mobile.iOS
             MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer), message => { _synchronizerBackgroundService.Stop(); });
         }
 
-        private void InitializeBusyIndicatorRenderer()
+        private void InitializeSyncfusionControls()
         {
+            SfBadgeViewRenderer.Init();
+            SfRadialMenuRenderer.Init();
+            SfLinearProgressBarRenderer.Init();
+
             using (var busyIndicatorRenderer = new SfBusyIndicatorRenderer()) { }
         }
     }

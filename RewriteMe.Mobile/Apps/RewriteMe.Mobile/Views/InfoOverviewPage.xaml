@@ -2,7 +2,6 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.InfoOverviewPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:converters="clr-namespace:RewriteMe.Mobile.Converters;assembly=RewriteMe.Mobile"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
@@ -41,10 +40,6 @@
             </ViewCell>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
-
-    <views:BaseNavigationPage.RightNavigationToolbarItems>
-        <controls:NavigationToolbarItem Command="{Binding NavigateToRecorderCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg" />
-    </views:BaseNavigationPage.RightNavigationToolbarItems>
 
     <Grid Padding="{StaticResource StandardPadding}">
         <Grid.RowDefinitions>

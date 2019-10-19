@@ -57,7 +57,7 @@
         public static string SaveAndTranscribe => "SaveAndTranscribe";
         public static string Transcribe => "Transcribe";
         public static string AudioFiles => "AudioFiles";
-        public static string RecordedFiles => "RecordedFiles";
+        public static string Recordings => "Recordings";
         public static string Info => "Info";
         public static string InProgressLabel => "InProgressLabel";
         public static string OneHour => "OneHour";
