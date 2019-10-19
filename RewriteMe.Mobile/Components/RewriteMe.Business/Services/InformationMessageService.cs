@@ -21,6 +21,8 @@ namespace RewriteMe.Business.Services
         private readonly IInformationMessageRepository _informationMessageRepository;
         private readonly ILogger _logger;
 
+        public event EventHandler MessageOpened;
+
         public InformationMessageService(
             IInternalValueService internalValueService,
             IRewriteMeWebService rewriteMeWebService,
@@ -73,11 +75,13 @@ namespace RewriteMe.Business.Services
 
             if (informationMessage.IsUserSpecific)
             {
-                MarkMessageAsOpenedAsync(informationMessage).FireAndForget();
+                MarkMessageAsOpenedOnServerAsync(informationMessage).FireAndForget();
             }
+
+            OnMessageOpened();
         }
 
-        private async Task MarkMessageAsOpenedAsync(InformationMessage informationMessage)
+        private async Task MarkMessageAsOpenedOnServerAsync(InformationMessage informationMessage)
         {
             var httpRequestResult = await _rewriteMeWebService.MarkMessageAsOpenedAsync(informationMessage.Id).ConfigureAwait(false);
             if (httpRequestResult.State != HttpRequestState.Success)
@@ -107,6 +111,11 @@ namespace RewriteMe.Business.Services
                     await _informationMessageRepository.UpdateAsync(informationMessage).ConfigureAwait(false);
                 }
             }
+        }
+
+        private void OnMessageOpened()
+        {
+            MessageOpened?.Invoke(this, EventArgs.Empty);
         }
     }
 }
