@@ -273,6 +273,18 @@
                 </Style.Triggers>
             </Style>
 
+            <Style x:Key="ShadowButtonStyle" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
+                <Setter Property="BorderColor" Value="{StaticResource ColorGrey500}" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="200" />
+            </Style>
+
             <Style x:Key="ActionButtonStyle" TargetType="Button">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />

@@ -2,6 +2,7 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.LoginPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
@@ -30,9 +31,9 @@
                    LineBreakMode="WordWrap"
                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterToUseApplication}}"
                    WidthRequest="180" />
-            <Button Command="{Binding LoginCommand}"
-                    Style="{StaticResource ActionButtonStyle}"
-                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterOrSignIn}}" />
+            <buttons:SfButton Command="{Binding LoginCommand}"
+                              Style="{StaticResource ShadowButtonStyle}"
+                              Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterOrSignIn}}" />
 
             <Label HorizontalOptions="Center"
                    HorizontalTextAlignment="Center"
