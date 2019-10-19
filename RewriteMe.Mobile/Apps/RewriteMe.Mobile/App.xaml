@@ -77,7 +77,7 @@
             <Color x:Key="ActionBarTileBackgroundColor">#FFFFFF</Color>
             <Color x:Key="ActionBarTileBackgroundColorHover">#E0E0E0</Color>
             <Color x:Key="ActionBarTileBackgroundColorTouch">#BDBDBD</Color>
-            <Color x:Key="PlayerBackground">#D2F9F1</Color>
+            <Color x:Key="PlayerBackground">#F2F3F4</Color>
             <Color x:Key="RecorderResultBackground">#c3d5d5</Color>
             <Color x:Key="BottomNavigationBackground">#F2F3F4</Color>
             <Color x:Key="DeleteBackground">#DC595F</Color>
