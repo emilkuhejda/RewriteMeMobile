@@ -13,7 +13,6 @@ using RewriteMe.Domain.Transcription;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
-using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Mobile.Transcription;
 using RewriteMe.Mobile.Utils;
@@ -46,7 +45,8 @@ namespace RewriteMe.Mobile.ViewModels
             CanGoBack = true;
             IsUploadButtonVisible = true;
 
-            NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
+            AvailableLanguages = SupportedLanguages.All.Where(x => !x.OnlyInAzure).ToList();
+
             UploadFileCommand = new AsyncCommand(ExecuteUploadFileCommandAsync);
 
             ResetLoadingText();
@@ -57,6 +57,8 @@ namespace RewriteMe.Mobile.ViewModels
             get => _name;
             set => SetProperty(ref _name, value);
         }
+
+        public IEnumerable<SupportedLanguage> AvailableLanguages { get; set; }
 
         public SupportedLanguage SelectedLanguage
         {
@@ -98,8 +100,6 @@ namespace RewriteMe.Mobile.ViewModels
 
         private ActionBarTileViewModel SaveAndTranscribeTileItem { get; set; }
 
-        public ICommand NavigateToLanguageCommand { get; }
-
         public ICommand UploadFileCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
@@ -108,44 +108,20 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 NavigationItems = CreateNavigation();
 
-                if (navigationParameters.GetNavigationMode() == NavigationMode.New)
+                var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
+                if (importedFile?.Source != null && importedFile.Source.Any())
                 {
-                    var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
-                    if (importedFile?.Source != null && importedFile.Source.Any())
+                    var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
+                    SelectedFile = new PickedFile
                     {
-                        var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
-                        SelectedFile = new PickedFile
-                        {
-                            FileName = importedFile.FileName,
-                            CanTranscribe = canTranscribe,
-                            Source = importedFile.Source
-                        };
+                        FileName = importedFile.FileName,
+                        CanTranscribe = canTranscribe,
+                        Source = importedFile.Source
+                    };
 
-                        Name = SelectedFile.FileName;
-                        IsUploadButtonVisible = false;
-                    }
+                    Name = SelectedFile.FileName;
+                    IsUploadButtonVisible = false;
                 }
-
-                if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
-                {
-                    var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
-                    HandleSelectionAsync(dropDownListViewModel);
-                }
-            }
-        }
-
-        private void HandleSelectionAsync(DropDownListViewModel dropDownListViewModel)
-        {
-            if (dropDownListViewModel == null)
-                return;
-
-            switch (dropDownListViewModel.Type)
-            {
-                case nameof(SelectedLanguage):
-                    SelectedLanguage = (SupportedLanguage)dropDownListViewModel.Value;
-                    break;
-                default:
-                    throw new NotSupportedException(nameof(SelectedLanguage));
             }
         }
 
@@ -176,23 +152,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             SaveTileItem.IsEnabled = CanExecuteSaveCommand();
             SaveAndTranscribeTileItem.IsEnabled = CanExecuteSaveAndTranscribeCommand();
-        }
-
-        private async Task ExecuteNavigateToLanguageCommandAsync()
-        {
-            var languages = SupportedLanguages.All.Where(x => !x.OnlyInAzure).Select(x => new DropDownListViewModel
-            {
-                Text = x.Title,
-                Value = x,
-                Type = nameof(SelectedLanguage),
-                IsSelected = SelectedLanguage != null && x.Culture == SelectedLanguage.Culture
-            });
-
-            var navigationParameters = new NavigationParameters();
-            var parameters = new DropDownListNavigationParameters(languages);
-            navigationParameters.Add<DropDownListNavigationParameters>(parameters);
-
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.DropDownListPage, navigationParameters).ConfigureAwait(false);
         }
 
         private async Task ExecuteUploadFileCommandAsync()

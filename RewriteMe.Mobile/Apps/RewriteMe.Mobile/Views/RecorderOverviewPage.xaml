@@ -10,7 +10,7 @@
         <DataTemplate x:Key="RecordedItemsTemplate">
             <ViewCell>
                 <Grid BackgroundColor="{StaticResource ColorWhite}">
-                    <Grid Padding="20,20,20,20">
+                    <Grid Padding="{StaticResource StandardPadding}">
                         <Grid.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
                         </Grid.GestureRecognizers>

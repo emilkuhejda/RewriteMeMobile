@@ -9,7 +9,10 @@ using RewriteMe.Mobile.iOS.Configuration;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
 using Syncfusion.SfRadialMenu.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
+using Syncfusion.XForms.iOS.Border;
+using Syncfusion.XForms.iOS.Buttons;
 using Syncfusion.XForms.iOS.ProgressBar;
+using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 using Xamarin.Forms;
 
@@ -40,6 +43,8 @@ namespace RewriteMe.Mobile.iOS
             var bootstrapper = new OsxBootstrapper();
             _application = new App(bootstrapper);
             LoadApplication(_application);
+
+            InitializeControls();
 
             WireUpBackgroundServices();
 
@@ -84,9 +89,16 @@ namespace RewriteMe.Mobile.iOS
         {
             SfBadgeViewRenderer.Init();
             SfRadialMenuRenderer.Init();
+            SfTextInputLayoutRenderer.Init();
             SfLinearProgressBarRenderer.Init();
 
             using (var busyIndicatorRenderer = new SfBusyIndicatorRenderer()) { }
+        }
+
+        private void InitializeControls()
+        {
+            SfBorderRenderer.Init();
+            SfButtonRenderer.Init();
         }
     }
 }
