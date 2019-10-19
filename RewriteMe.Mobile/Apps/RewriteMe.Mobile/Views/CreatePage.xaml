@@ -21,7 +21,9 @@
                 </textInputLayout:SfTextInputLayout>
 
                 <textInputLayout:SfTextInputLayout Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
-                    <comboBox:SfComboBox ComboBoxSource="{Binding AvailableLanguages}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedLanguage}" />
+                    <comboBox:SfComboBox DataSource="{Binding AvailableLanguages}"
+                                         DisplayMemberPath="Title"
+                                         SelectedItem="{Binding SelectedLanguage}" />
                 </textInputLayout:SfTextInputLayout>
             </StackLayout>
 
