@@ -20,7 +20,7 @@
                     <Entry Text="{Binding Name}" />
                 </textInputLayout:SfTextInputLayout>
 
-                <textInputLayout:SfTextInputLayout Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
                     <comboBox:SfComboBox DataSource="{Binding AvailableLanguages}"
                                          DisplayMemberPath="Title"
                                          SelectedItem="{Binding SelectedLanguage}" />
