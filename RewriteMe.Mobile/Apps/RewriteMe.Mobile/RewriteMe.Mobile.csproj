@@ -103,6 +103,7 @@
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.3.0.17" />
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="17.3.0.17" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="17.3.0.17" />
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox" Version="17.3.0.17" />
     <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="17.3.0.17" />
     <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu" Version="17.3.0.17" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
@@ -126,6 +127,9 @@
   </ItemGroup>
   
   <ItemGroup>
+    <Reference Include="Syncfusion.SfComboBox.XForms.iOS">
+      <HintPath>C:\Users\kuem\.nuget\packages\syncfusion.xamarin.sfcombobox\17.3.0.17\lib\Xamarin.iOS10\Syncfusion.SfComboBox.XForms.iOS.dll</HintPath>
+    </Reference>
     <Reference Include="Xamarin.Forms.Core">
       <HintPath>C:\Users\Miko\.nuget\packages\xamarin.forms\3.2.0.839982\lib\netstandard1.0\Xamarin.Forms.Core.dll</HintPath>
     </Reference>

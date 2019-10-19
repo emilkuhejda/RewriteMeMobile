@@ -95,6 +95,9 @@
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
       <Version>17.3.0.17</Version>
     </PackageReference>
+    <PackageReference Include="Syncfusion.Xamarin.SfComboBox">
+      <Version>17.3.0.17</Version>
+    </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfProgressBar">
       <Version>17.3.0.17</Version>
     </PackageReference>

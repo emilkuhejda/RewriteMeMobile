@@ -2,8 +2,8 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.CreatePage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:comboBox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
-                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
@@ -15,21 +15,15 @@
         </Grid.RowDefinitions>
 
         <controls:AlwaysScrollView Grid.Row="0" Padding="{StaticResource StandardPadding}">
-            <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
-                <Entry Text="{Binding Name}" />
-            </textInputLayout:SfTextInputLayout>
+            <StackLayout>
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
+                    <Entry Text="{Binding Name}" />
+                </textInputLayout:SfTextInputLayout>
 
-          <textInputLayout:SfTextInputLayout Hint="Country">
-              <autocomplete:SfAutoComplete  AutoCompleteMode="SuggestAppend">
-                  <autocomplete:SfAutoComplete.AutoCompleteSource>
-                      <ListCollection:List x:TypeArguments="x:String">
-                          <x:String> United Kingdom </x:String>
-                          <x:String> United States </x:String>
-                          <x:String> United Republic of Tanzania </x:String>
-                      </ListCollection:List>
-                  </autocomplete:SfAutoComplete.AutoCompleteSource>
-              </autocomplete:SfAutoComplete>
-          </textInputLayout:SfTextInputLayout>
+                <textInputLayout:SfTextInputLayout Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
+                    <comboBox:SfComboBox ComboBoxSource="{Binding AvailableLanguages}" DisplayMemberPath="Title" SelectedItem="{Binding SelectedLanguage}" />
+                </textInputLayout:SfTextInputLayout>
+            </StackLayout>
 
             <!--<Grid>
                 <Grid.RowDefinitions>

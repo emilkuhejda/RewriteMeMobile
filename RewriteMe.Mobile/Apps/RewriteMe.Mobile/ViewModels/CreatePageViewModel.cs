@@ -46,6 +46,8 @@ namespace RewriteMe.Mobile.ViewModels
             CanGoBack = true;
             IsUploadButtonVisible = true;
 
+            AvailableLanguages = SupportedLanguages.All.Where(x => !x.OnlyInAzure).ToList();
+
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
             UploadFileCommand = new AsyncCommand(ExecuteUploadFileCommandAsync);
 
@@ -57,6 +59,8 @@ namespace RewriteMe.Mobile.ViewModels
             get => _name;
             set => SetProperty(ref _name, value);
         }
+
+        public IEnumerable<SupportedLanguage> AvailableLanguages { get; set; }
 
         public SupportedLanguage SelectedLanguage
         {
