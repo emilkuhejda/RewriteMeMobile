@@ -5,7 +5,6 @@
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
-                          xmlns:radialMenu="clr-namespace:Syncfusion.SfRadialMenu.XForms;assembly=Syncfusion.SfRadialMenu.XForms"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
                           xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
@@ -98,72 +97,15 @@
                   RefreshCommand="{Binding RefreshCommand}"
                   SeparatorVisibility="None" />
 
-        <Grid Grid.Row="1"
-              Padding="0"
-              BackgroundColor="Transparent"
-              ColumnSpacing="0"
-              HeightRequest="200"
-              HorizontalOptions="End"
-              RowSpacing="0"
-              VerticalOptions="End"
-              WidthRequest="200">
-            <radialMenu:SfRadialMenu CenterButtonBackgroundColor="{StaticResource ColorPrimary}"
-                                     LayoutType="Custom"
-                                     Point="50,50"
-                                     VisibleSegmentsCount="7">
-                <radialMenu:SfRadialMenu.CenterButtonView>
-                    <Grid>
-                        <forms:SvgCachedImage Margin="0"
-                                              Aspect="AspectFit"
-                                              BackgroundColor="Transparent"
-                                              HeightRequest="40"
-                                              HorizontalOptions="Center"
-                                              InputTransparent="True"
-                                              Source="resource://RewriteMe.Mobile.Resources.Images.Menu.svg"
-                                              VerticalOptions="Center" />
-                    </Grid>
-                </radialMenu:SfRadialMenu.CenterButtonView>
-
-                <radialMenu:SfRadialMenu.Items>
-                    <radialMenu:SfRadialMenuItem>
-                        <radialMenu:SfRadialMenuItem.View>
-                            <Grid>
-                                <forms:SvgCachedImage Margin="0"
-                                                      Aspect="AspectFit"
-                                                      BackgroundColor="Transparent"
-                                                      HeightRequest="40"
-                                                      HorizontalOptions="CenterAndExpand"
-                                                      InputTransparent="True"
-                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg"
-                                                      VerticalOptions="CenterAndExpand" />
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding NavigateToCreatePageCommand}" />
-                                </Grid.GestureRecognizers>
-                            </Grid>
-                        </radialMenu:SfRadialMenuItem.View>
-                    </radialMenu:SfRadialMenuItem>
-
-                    <radialMenu:SfRadialMenuItem>
-                        <radialMenu:SfRadialMenuItem.View>
-                            <Grid>
-                                <forms:SvgCachedImage Margin="0"
-                                                      Aspect="AspectFit"
-                                                      BackgroundColor="Transparent"
-                                                      HeightRequest="40"
-                                                      HorizontalOptions="CenterAndExpand"
-                                                      InputTransparent="True"
-                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg"
-                                                      VerticalOptions="CenterAndExpand" />
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding NavigateToRecorderCommand}" />
-                                </Grid.GestureRecognizers>
-                            </Grid>
-                        </radialMenu:SfRadialMenuItem.View>
-                    </radialMenu:SfRadialMenuItem>
-                </radialMenu:SfRadialMenu.Items>
-            </radialMenu:SfRadialMenu>
-        </Grid>
+        <views:RadialNavigationMenuView Grid.Row="1"
+                                        Padding="0"
+                                        BackgroundColor="Transparent"
+                                        BindingContext="{Binding NavigationMenu}"
+                                        ColumnSpacing="0"
+                                        HeightRequest="200"
+                                        HorizontalOptions="End"
+                                        RowSpacing="0"
+                                        VerticalOptions="End"
+                                        WidthRequest="200" />
     </Grid>
 </views:BaseNavigationPage>

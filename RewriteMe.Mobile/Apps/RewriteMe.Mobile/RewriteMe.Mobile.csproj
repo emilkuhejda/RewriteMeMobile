@@ -137,6 +137,9 @@
     <Compile Update="Views\InfoOverviewPage.xaml.cs">
       <DependentUpon>InfoOverviewPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\RadialNavigationMenuView.xaml.cs">
+      <DependentUpon>RadialNavigationMenuView.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   
   <ItemGroup>
@@ -150,6 +153,9 @@
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\InfoOverviewPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\RadialNavigationMenuView.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TranscribeRecodingPage.xaml">

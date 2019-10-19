@@ -64,5 +64,16 @@
                   ItemsSource="{Binding RecordedItems}"
                   RefreshCommand="{Binding RefreshCommand}"
                   SeparatorVisibility="None" />
+
+        <views:RadialNavigationMenuView Grid.Row="1"
+                                        Padding="0"
+                                        BackgroundColor="Transparent"
+                                        BindingContext="{Binding NavigationMenu}"
+                                        ColumnSpacing="0"
+                                        HeightRequest="200"
+                                        HorizontalOptions="End"
+                                        RowSpacing="0"
+                                        VerticalOptions="End"
+                                        WidthRequest="200" />
     </Grid>
 </views:BaseNavigationPage>

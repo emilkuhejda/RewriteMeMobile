@@ -5,8 +5,6 @@ using Prism.Navigation;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
-using RewriteMe.Mobile.Extensions;
-using RewriteMe.Mobile.Navigation;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -28,11 +26,14 @@ namespace RewriteMe.Mobile.ViewModels
 
             HasBottomNavigation = true;
 
-            NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
+            NavigationMenu = new RadialNavigationMenuViewModel(navigationService);
+
             RefreshCommand = new AsyncCommand(ExecuteRefreshCommandAsync);
         }
 
         protected ISynchronizationService SynchronizationService { get; }
+
+        public RadialNavigationMenuViewModel NavigationMenu { get; }
 
         public bool NotAvailableData
         {
@@ -46,14 +47,7 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _isRefreshing, value);
         }
 
-        public ICommand NavigateToRecorderCommand { get; }
-
         public ICommand RefreshCommand { get; }
-
-        private async Task ExecuteNavigateToRecorderCommandAsync()
-        {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.Recorder).ConfigureAwait(false);
-        }
 
         private async Task ExecuteRefreshCommandAsync()
         {

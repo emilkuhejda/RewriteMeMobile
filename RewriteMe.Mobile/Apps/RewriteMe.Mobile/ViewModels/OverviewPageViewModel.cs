@@ -1,13 +1,11 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
-using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
@@ -31,11 +29,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
-
-            NavigateToCreatePageCommand = new AsyncCommand(ExecuteNavigateToCreatePageCommandAsync);
         }
-
-        public ICommand NavigateToCreatePageCommand { get; }
 
         public ObservableCollection<FileItemViewModel> FileItems
         {
@@ -121,11 +115,6 @@ namespace RewriteMe.Mobile.ViewModels
         private void OnInitializationProgress(object sender, ProgressEventArgs e)
         {
             IndicatorCaption = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
-        }
-
-        private async Task ExecuteNavigateToCreatePageCommandAsync()
-        {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.Create).ConfigureAwait(false);
         }
     }
 }
