@@ -2,10 +2,10 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.OverviewPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
+                          xmlns:radialMenu="clr-namespace:Syncfusion.SfRadialMenu.XForms;assembly=Syncfusion.SfRadialMenu.XForms"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
                           xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
@@ -75,10 +75,6 @@
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
-    <views:BaseNavigationPage.RightNavigationToolbarItems>
-        <controls:NavigationToolbarItem Command="{Binding NavigateToRecorderCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg" />
-    </views:BaseNavigationPage.RightNavigationToolbarItems>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -107,22 +103,65 @@
               Padding="0"
               BackgroundColor="Transparent"
               ColumnSpacing="0"
-              HeightRequest="69"
               HorizontalOptions="End"
               RowSpacing="0"
-              VerticalOptions="End"
-              WidthRequest="69">
-            <forms:SvgCachedImage Margin="0"
-                                  Aspect="AspectFit"
-                                  BackgroundColor="Transparent"
-                                  HeightRequest="60"
-                                  HorizontalOptions="CenterAndExpand"
-                                  InputTransparent="True"
-                                  Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg"
-                                  VerticalOptions="CenterAndExpand" />
-            <Grid.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateToCreatePageCommand}" />
-            </Grid.GestureRecognizers>
+              VerticalOptions="End">
+            <radialMenu:SfRadialMenu CenterButtonBackgroundColor="{StaticResource ColorPrimary}"
+                                     LayoutType="Custom"
+                                     VisibleSegmentsCount="7">
+                <radialMenu:SfRadialMenu.CenterButtonView>
+                    <Grid>
+                        <forms:SvgCachedImage Margin="0"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="40"
+                                              HorizontalOptions="Center"
+                                              InputTransparent="True"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.Menu.svg"
+                                              VerticalOptions="Center" />
+                    </Grid>
+                </radialMenu:SfRadialMenu.CenterButtonView>
+
+                <radialMenu:SfRadialMenu.Items>
+                    <radialMenu:SfRadialMenuItem>
+                        <radialMenu:SfRadialMenuItem.View>
+                            <Grid>
+                                <forms:SvgCachedImage Margin="0"
+                                                      Aspect="AspectFit"
+                                                      BackgroundColor="Transparent"
+                                                      HeightRequest="40"
+                                                      HorizontalOptions="CenterAndExpand"
+                                                      InputTransparent="True"
+                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg"
+                                                      VerticalOptions="CenterAndExpand" />
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigateToCreatePageCommand}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </radialMenu:SfRadialMenuItem.View>
+                    </radialMenu:SfRadialMenuItem>
+
+                    <radialMenu:SfRadialMenuItem>
+                        <radialMenu:SfRadialMenuItem.View>
+                            <Grid>
+                                <forms:SvgCachedImage Margin="0"
+                                                      Aspect="AspectFit"
+                                                      BackgroundColor="Transparent"
+                                                      HeightRequest="40"
+                                                      HorizontalOptions="CenterAndExpand"
+                                                      InputTransparent="True"
+                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg"
+                                                      VerticalOptions="CenterAndExpand" />
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigateToRecorderCommand}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </radialMenu:SfRadialMenuItem.View>
+                    </radialMenu:SfRadialMenuItem>
+                </radialMenu:SfRadialMenu.Items>
+            </radialMenu:SfRadialMenu>
         </Grid>
     </Grid>
 </views:BaseNavigationPage>

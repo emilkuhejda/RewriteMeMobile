@@ -19,6 +19,7 @@
     <None Remove="Resources\Images\Delete.svg" />
     <None Remove="Resources\Images\Forward.svg" />
     <None Remove="Resources\Images\Info.svg" />
+    <None Remove="Resources\Images\Menu.svg" />
     <None Remove="Resources\Images\Notification-Active-Disabled.svg" />
     <None Remove="Resources\Images\Notification-Active.svg" />
     <None Remove="Resources\Images\Notification-Enabled.svg" />
@@ -53,6 +54,7 @@
     <EmbeddedResource Include="Resources\Images\Delete.svg" />
     <EmbeddedResource Include="Resources\Images\Forward.svg" />
     <EmbeddedResource Include="Resources\Images\Info.svg" />
+    <EmbeddedResource Include="Resources\Images\Menu.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Active-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Active.svg" />
     <EmbeddedResource Include="Resources\Images\Notification-Enabled.svg" />
