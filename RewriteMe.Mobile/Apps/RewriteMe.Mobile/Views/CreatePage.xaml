@@ -2,6 +2,7 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.CreatePage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:comboBox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
@@ -20,14 +21,34 @@
                     <Entry Text="{Binding Name}" />
                 </textInputLayout:SfTextInputLayout>
 
-                <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
+                <textInputLayout:SfTextInputLayout Margin="0,0,0,20"
+                                                   ContainerType="Outlined"
+                                                   Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
                     <comboBox:SfComboBox DataSource="{Binding AvailableLanguages}"
                                          DisplayMemberPath="Title"
                                          SelectedItem="{Binding SelectedLanguage}" />
                 </textInputLayout:SfTextInputLayout>
+
+                <Label Margin="0,0,0,20"
+                       IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}"
+                       Style="{StaticResource LabelStyle}"
+                       Text="{Binding SelectedFile.FileName}" />
+
+                <buttons:SfButton BackgroundColor="{StaticResource ColorPrimary}"
+                                  BorderColor="{StaticResource ColorGrey500}"
+                                  BorderWidth="1"
+                                  Command="{Binding UploadFileCommand}"
+                                  CornerRadius="25"
+                                  HasShadow="True"
+                                  HeightRequest="50"
+                                  HorizontalOptions="Center"
+                                  Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}"
+                                  VerticalOptions="Center"
+                                  WidthRequest="200" />
             </StackLayout>
 
             <!--<Grid>
+            #538EEC
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*" />
                     <RowDefinition Height="Auto" />
