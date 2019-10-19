@@ -10,6 +10,7 @@ using Syncfusion.SfBusyIndicator.XForms.iOS;
 using Syncfusion.SfRadialMenu.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
 using Syncfusion.XForms.iOS.ProgressBar;
+using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 using Xamarin.Forms;
 
@@ -84,6 +85,7 @@ namespace RewriteMe.Mobile.iOS
         {
             SfBadgeViewRenderer.Init();
             SfRadialMenuRenderer.Init();
+            SfTextInputLayoutRenderer.Init();
             SfLinearProgressBarRenderer.Init();
 
             using (var busyIndicatorRenderer = new SfBusyIndicatorRenderer()) { }
