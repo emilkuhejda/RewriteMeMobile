@@ -99,15 +99,17 @@
                   SeparatorVisibility="None" />
 
         <Grid Grid.Row="1"
-              Margin="0,0,0,10"
               Padding="0"
               BackgroundColor="Transparent"
               ColumnSpacing="0"
+              HeightRequest="200"
               HorizontalOptions="End"
               RowSpacing="0"
-              VerticalOptions="End">
+              VerticalOptions="End"
+              WidthRequest="200">
             <radialMenu:SfRadialMenu CenterButtonBackgroundColor="{StaticResource ColorPrimary}"
                                      LayoutType="Custom"
+                                     Point="50,50"
                                      VisibleSegmentsCount="7">
                 <radialMenu:SfRadialMenu.CenterButtonView>
                     <Grid>
