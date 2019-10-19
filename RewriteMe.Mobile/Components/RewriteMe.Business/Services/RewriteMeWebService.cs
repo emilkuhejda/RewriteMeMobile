@@ -106,7 +106,7 @@ namespace RewriteMe.Business.Services
         public async Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UploadFileItemAsync(mediaFile, ApplicationSettings.ApplicationId, customHeaders, cancellationToken)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UploadFileItemAsync(mediaFile, DateTime.Now, ApplicationSettings.ApplicationId, customHeaders, cancellationToken)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language)

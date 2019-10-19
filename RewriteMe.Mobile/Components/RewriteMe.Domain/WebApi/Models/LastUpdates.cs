@@ -22,13 +22,13 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the LastUpdates class.
         /// </summary>
-        public LastUpdates(System.DateTime fileItem, System.DateTime deletedFileItem, System.DateTime transcribeItem, System.DateTime userSubscription, System.DateTime informationMessage)
+        public LastUpdates(System.DateTime fileItemUtc, System.DateTime deletedFileItemUtc, System.DateTime transcribeItemUtc, System.DateTime userSubscriptionUtc, System.DateTime informationMessageUtc)
         {
-            FileItem = fileItem;
-            DeletedFileItem = deletedFileItem;
-            TranscribeItem = transcribeItem;
-            UserSubscription = userSubscription;
-            InformationMessage = informationMessage;
+            FileItemUtc = fileItemUtc;
+            DeletedFileItemUtc = deletedFileItemUtc;
+            TranscribeItemUtc = transcribeItemUtc;
+            UserSubscriptionUtc = userSubscriptionUtc;
+            InformationMessageUtc = informationMessageUtc;
             CustomInit();
         }
 
@@ -39,28 +39,28 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "fileItem")]
-        public System.DateTime FileItem { get; set; }
+        [JsonProperty(PropertyName = "fileItemUtc")]
+        public System.DateTime FileItemUtc { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "deletedFileItem")]
-        public System.DateTime DeletedFileItem { get; set; }
+        [JsonProperty(PropertyName = "deletedFileItemUtc")]
+        public System.DateTime DeletedFileItemUtc { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "transcribeItem")]
-        public System.DateTime TranscribeItem { get; set; }
+        [JsonProperty(PropertyName = "transcribeItemUtc")]
+        public System.DateTime TranscribeItemUtc { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "userSubscription")]
-        public System.DateTime UserSubscription { get; set; }
+        [JsonProperty(PropertyName = "userSubscriptionUtc")]
+        public System.DateTime UserSubscriptionUtc { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "informationMessage")]
-        public System.DateTime InformationMessage { get; set; }
+        [JsonProperty(PropertyName = "informationMessageUtc")]
+        public System.DateTime InformationMessageUtc { get; set; }
 
         /// <summary>
         /// Validate the object.

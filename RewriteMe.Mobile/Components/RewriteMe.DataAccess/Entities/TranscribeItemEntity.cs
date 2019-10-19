@@ -23,9 +23,9 @@ namespace RewriteMe.DataAccess.Entities
 
         public TimeSpan TotalTime { get; set; }
 
-        public DateTime DateCreated { get; set; }
+        public DateTime DateCreatedUtc { get; set; }
 
-        public DateTime DateUpdated { get; set; }
+        public DateTime DateUpdatedUtc { get; set; }
 
         public bool IsPendingSynchronization { get; set; }
 

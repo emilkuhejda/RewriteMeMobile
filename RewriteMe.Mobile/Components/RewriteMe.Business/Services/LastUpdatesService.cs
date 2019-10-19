@@ -38,7 +38,7 @@ namespace RewriteMe.Business.Services
             if (!_isInitialized)
                 throw new InvalidOperationException("Service is not initialized");
 
-            return _lastUpdates?.FileItem ?? DateTime.MinValue;
+            return _lastUpdates?.FileItemUtc ?? DateTime.MinValue;
         }
 
         public DateTime GetDeletedFileItemLastUpdate()
@@ -46,7 +46,7 @@ namespace RewriteMe.Business.Services
             if (!_isInitialized)
                 throw new InvalidOperationException("Service is not initialized");
 
-            return _lastUpdates?.DeletedFileItem ?? DateTime.MinValue;
+            return _lastUpdates?.DeletedFileItemUtc ?? DateTime.MinValue;
         }
 
         public DateTime GetTranscribeItemLastUpdate()
@@ -54,7 +54,7 @@ namespace RewriteMe.Business.Services
             if (!_isInitialized)
                 throw new InvalidOperationException("Service is not initialized");
 
-            return _lastUpdates?.TranscribeItem ?? DateTime.MinValue;
+            return _lastUpdates?.TranscribeItemUtc ?? DateTime.MinValue;
         }
 
         public DateTime GetUserSubscriptionLastUpdate()
@@ -62,7 +62,7 @@ namespace RewriteMe.Business.Services
             if (!_isInitialized)
                 throw new InvalidOperationException("Service is not initialized");
 
-            return _lastUpdates?.UserSubscription ?? DateTime.MinValue;
+            return _lastUpdates?.UserSubscriptionUtc ?? DateTime.MinValue;
         }
 
         public DateTime GetInformationMessageLastUpdate()
@@ -70,7 +70,7 @@ namespace RewriteMe.Business.Services
             if (!_isInitialized)
                 throw new InvalidOperationException("Service is not initialized");
 
-            return _lastUpdates?.InformationMessage ?? DateTime.MinValue;
+            return _lastUpdates?.InformationMessageUtc ?? DateTime.MinValue;
         }
     }
 }

@@ -23,7 +23,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the FileItem class.
         /// </summary>
-        public FileItem(System.Guid id, string name, string fileName, string language, string recognitionStateString, long totalTimeTicks, long transcribedTimeTicks, System.DateTime dateCreated, System.DateTime dateUpdated, bool isDeleted, System.DateTime? dateProcessed = default(System.DateTime?))
+        public FileItem(System.Guid id, string name, string fileName, string language, string recognitionStateString, long totalTimeTicks, long transcribedTimeTicks, System.DateTime dateCreated, System.DateTime dateUpdatedUtc, bool isDeleted, System.DateTime? dateProcessedUtc = default(System.DateTime?))
         {
             Id = id;
             Name = name;
@@ -33,8 +33,8 @@ namespace RewriteMe.Domain.WebApi.Models
             TotalTimeTicks = totalTimeTicks;
             TranscribedTimeTicks = transcribedTimeTicks;
             DateCreated = dateCreated;
-            DateProcessed = dateProcessed;
-            DateUpdated = dateUpdated;
+            DateProcessedUtc = dateProcessedUtc;
+            DateUpdatedUtc = dateUpdatedUtc;
             IsDeleted = isDeleted;
             CustomInit();
         }
@@ -86,13 +86,13 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "dateProcessed")]
-        public System.DateTime? DateProcessed { get; set; }
+        [JsonProperty(PropertyName = "dateProcessedUtc")]
+        public System.DateTime? DateProcessedUtc { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "dateUpdated")]
-        public System.DateTime DateUpdated { get; set; }
+        [JsonProperty(PropertyName = "dateUpdatedUtc")]
+        public System.DateTime DateUpdatedUtc { get; set; }
 
         /// <summary>
         /// </summary>

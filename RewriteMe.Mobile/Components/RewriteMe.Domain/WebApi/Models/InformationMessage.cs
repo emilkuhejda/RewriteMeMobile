@@ -24,13 +24,13 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the InformationMessage class.
         /// </summary>
-        public InformationMessage(System.Guid id, bool isUserSpecific, bool wasOpened, System.DateTime dateUpdated, System.DateTime datePublished, IList<LanguageVersion> languageVersions = default(IList<LanguageVersion>))
+        public InformationMessage(System.Guid id, bool isUserSpecific, bool wasOpened, System.DateTime dateUpdatedUtc, System.DateTime datePublishedUtc, IList<LanguageVersion> languageVersions = default(IList<LanguageVersion>))
         {
             Id = id;
             IsUserSpecific = isUserSpecific;
             WasOpened = wasOpened;
-            DateUpdated = dateUpdated;
-            DatePublished = datePublished;
+            DateUpdatedUtc = dateUpdatedUtc;
+            DatePublishedUtc = datePublishedUtc;
             LanguageVersions = languageVersions;
             CustomInit();
         }
@@ -57,13 +57,13 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "dateUpdated")]
-        public System.DateTime DateUpdated { get; set; }
+        [JsonProperty(PropertyName = "dateUpdatedUtc")]
+        public System.DateTime DateUpdatedUtc { get; set; }
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "datePublished")]
-        public System.DateTime DatePublished { get; set; }
+        [JsonProperty(PropertyName = "datePublishedUtc")]
+        public System.DateTime DatePublishedUtc { get; set; }
 
         /// <summary>
         /// </summary>
