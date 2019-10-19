@@ -34,9 +34,17 @@
                        Style="{StaticResource LabelStyle}"
                        Text="{Binding SelectedFile.FileName}" />
 
-                <buttons:SfButton Command="{Binding UploadFileCommand}"
-                                  Style="{StaticResource ShadowButtonStyle}"
-                                  Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}" />
+                <buttons:SfButton BackgroundColor="{StaticResource ColorPrimary}"
+                                  BorderColor="{StaticResource ColorGrey500}"
+                                  BorderWidth="1"
+                                  Command="{Binding UploadFileCommand}"
+                                  CornerRadius="25"
+                                  HasShadow="True"
+                                  HeightRequest="50"
+                                  HorizontalOptions="Center"
+                                  Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}"
+                                  VerticalOptions="Center"
+                                  WidthRequest="200" />
             </StackLayout>
         </controls:AlwaysScrollView>
 
