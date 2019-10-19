@@ -37,21 +37,16 @@ namespace RewriteMe.Mobile.ViewModels
 
             using (new OperationMonitor(OperationScope))
             {
-                if (navigationParameters.GetNavigationMode() == NavigationMode.New)
-                {
-                    RecordedItem = navigationParameters.GetValue<RecordedItem>();
-                    Name = RecordedItem.FileName;
+                if (navigationParameters.GetNavigationMode() != NavigationMode.New)
+                    return;
 
-                    var filePath = _recordedItemService.GetAudioPath(RecordedItem);
-                    CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
+                RecordedItem = navigationParameters.GetValue<RecordedItem>();
+                Name = RecordedItem.FileName;
 
-                    PlayerViewModel.Load(File.ReadAllBytes(filePath));
-                }
-                else if (navigationParameters.GetNavigationMode() == NavigationMode.Back)
-                {
-                    var dropDownListViewModel = navigationParameters.GetValue<DropDownListViewModel>();
-                    HandleSelectionAsync(dropDownListViewModel);
-                }
+                var filePath = _recordedItemService.GetAudioPath(RecordedItem);
+                CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
+
+                PlayerViewModel.Load(File.ReadAllBytes(filePath));
 
                 await Task.CompletedTask.ConfigureAwait(false);
             }
