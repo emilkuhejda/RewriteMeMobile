@@ -22,9 +22,9 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the Ok class.
         /// </summary>
-        public Ok(System.DateTime dateTime)
+        public Ok(System.DateTime dateTimeUtc)
         {
-            DateTime = dateTime;
+            DateTimeUtc = dateTimeUtc;
             CustomInit();
         }
 
@@ -35,8 +35,8 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "dateTime")]
-        public System.DateTime DateTime { get; private set; }
+        [JsonProperty(PropertyName = "dateTimeUtc")]
+        public System.DateTime DateTimeUtc { get; private set; }
 
         /// <summary>
         /// Validate the object.

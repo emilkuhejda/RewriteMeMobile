@@ -13,8 +13,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = entity.Id,
                 IsUserSpecific = entity.IsUserSpecific,
                 WasOpened = entity.WasOpened,
-                DateUpdated = entity.DateUpdated,
-                DatePublished = entity.DatePublished,
+                DateUpdatedUtc = entity.DateUpdatedUtc,
+                DatePublishedUtc = entity.DatePublishedUtc,
                 IsPendingSynchronization = entity.IsPendingSynchronization,
                 LanguageVersions = entity.LanguageVersions?.Select(x => x.ToLanguageVersion()).ToList()
             };
@@ -27,8 +27,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = informationMessage.Id,
                 IsUserSpecific = informationMessage.IsUserSpecific,
                 WasOpened = informationMessage.WasOpened,
-                DateUpdated = informationMessage.DateUpdated,
-                DatePublished = informationMessage.DatePublished,
+                DateUpdatedUtc = informationMessage.DateUpdatedUtc,
+                DatePublishedUtc = informationMessage.DatePublishedUtc,
                 IsPendingSynchronization = informationMessage.IsPendingSynchronization,
                 LanguageVersions = informationMessage.LanguageVersions?.Select(x => x.ToLanguageVersionEntity()).ToArray()
             };

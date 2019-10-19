@@ -115,7 +115,7 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task InitializeFileItemsAsync()
         {
             var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
-            FileItems = new ObservableCollection<FileItemViewModel>(fileItems.OrderByDescending(x => x.DateUpdated).Select(x => new FileItemViewModel(x, NavigationService)));
+            FileItems = new ObservableCollection<FileItemViewModel>(fileItems.OrderByDescending(x => x.DateUpdatedUtc).Select(x => new FileItemViewModel(x, NavigationService)));
         }
 
         private void OnInitializationProgress(object sender, ProgressEventArgs e)

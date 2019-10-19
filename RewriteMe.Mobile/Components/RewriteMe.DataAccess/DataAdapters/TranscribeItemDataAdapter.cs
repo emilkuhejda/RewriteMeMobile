@@ -18,8 +18,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 StartTimeTicks = entity.StartTime.Ticks,
                 EndTimeTicks = entity.EndTime.Ticks,
                 TotalTimeTicks = entity.TotalTime.Ticks,
-                DateCreated = entity.DateCreated,
-                DateUpdated = entity.DateUpdated,
+                DateCreatedUtc = entity.DateCreatedUtc,
+                DateUpdatedUtc = entity.DateUpdatedUtc,
                 IsPendingSynchronization = entity.IsPendingSynchronization
             };
         }
@@ -35,8 +35,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 StartTime = transcribeItem.StartTime,
                 EndTime = transcribeItem.EndTime,
                 TotalTime = transcribeItem.TotalTime,
-                DateCreated = transcribeItem.DateCreated,
-                DateUpdated = transcribeItem.DateCreated,
+                DateCreatedUtc = transcribeItem.DateCreatedUtc,
+                DateUpdatedUtc = transcribeItem.DateCreatedUtc,
                 IsPendingSynchronization = transcribeItem.IsPendingSynchronization
             };
         }
