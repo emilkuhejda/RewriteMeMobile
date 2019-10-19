@@ -14,10 +14,22 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <controls:AlwaysScrollView Grid.Row="0">
-            <textInputLayout:SfTextInputLayout Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
-                <Entry />
+        <controls:AlwaysScrollView Grid.Row="0" Padding="{StaticResource StandardPadding}">
+            <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
+                <Entry Text="{Binding Name}" />
             </textInputLayout:SfTextInputLayout>
+
+          <textInputLayout:SfTextInputLayout Hint="Country">
+              <autocomplete:SfAutoComplete  AutoCompleteMode="SuggestAppend">
+                  <autocomplete:SfAutoComplete.AutoCompleteSource>
+                      <ListCollection:List x:TypeArguments="x:String">
+                          <x:String> United Kingdom </x:String>
+                          <x:String> United States </x:String>
+                          <x:String> United Republic of Tanzania </x:String>
+                      </ListCollection:List>
+                  </autocomplete:SfAutoComplete.AutoCompleteSource>
+              </autocomplete:SfAutoComplete>
+          </textInputLayout:SfTextInputLayout>
 
             <!--<Grid>
                 <Grid.RowDefinitions>
