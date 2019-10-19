@@ -2,9 +2,11 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.RecorderPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:comboBox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                          xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <Grid>
         <Grid.RowDefinitions>
@@ -13,7 +15,7 @@
         </Grid.RowDefinitions>
 
         <ScrollView Grid.Row="0" Margin="20,20,20,0">
-            <Grid Padding="10,10,10,10" BackgroundColor="{StaticResource RecorderResultBackground}">
+            <Grid Padding="10,10,10,10">
                 <Label HorizontalOptions="CenterAndExpand"
                        LineBreakMode="WordWrap"
                        Text="{Binding Text}"
@@ -22,27 +24,32 @@
         </ScrollView>
 
         <StackLayout Grid.Row="1" Margin="20,0,20,0">
-            <StackLayout Orientation="Horizontal">
-                <CheckBox Margin="0,0,10,0"
-                          IsChecked="{Binding IsRecordingOnly}"
-                          IsEnabled="{Binding IsRecording, Converter={StaticResource InvertedBoolConverter}}" />
-                <Label Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}">
-                    <Label.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding RecordingOnlyClickCommand}" />
-                    </Label.GestureRecognizers>
-                </Label>
-            </StackLayout>
+            <textInputLayout:SfTextInputLayout ContainerType="Outlined">
+                <StackLayout Orientation="Vertical">
+                    <StackLayout Orientation="Horizontal">
+                        <CheckBox Margin="0,0,10,0"
+                                  IsChecked="{Binding IsRecordingOnly}"
+                                  IsEnabled="{Binding IsRecording, Converter={StaticResource InvertedBoolConverter}}" />
+                        <Label Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding RecordingOnlyClickCommand}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
 
-            <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Languages}}"
-                    IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}"
-                    ItemDisplayBinding="{Binding Title}"
-                    ItemsSource="{Binding Languages}"
-                    SelectedItem="{Binding SelectedLanguage}"
-                    Style="{StaticResource PickerStyle}" />
+                    <Label Margin="10,0,0,0"
+                           HorizontalOptions="Start"
+                           IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}"
+                           Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.FiveMinutesOnly}}" />
+                </StackLayout>
+            </textInputLayout:SfTextInputLayout>
 
-            <Label HorizontalOptions="Start"
-                   IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}"
-                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EnglishOnlyAndFiveMinutesOnly}}" />
+            <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Languages}}">
+                <comboBox:SfComboBox DataSource="{Binding Languages}"
+                                     DisplayMemberPath="Title"
+                                     IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}"
+                                     SelectedItem="{Binding SelectedLanguage}" />
+            </textInputLayout:SfTextInputLayout>
 
             <Grid>
                 <Grid.ColumnDefinitions>

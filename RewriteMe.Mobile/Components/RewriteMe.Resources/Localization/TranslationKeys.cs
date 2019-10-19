@@ -64,7 +64,7 @@
         public static string TenHours => "TenHours";
         public static string PromptDeleteFileItemMessage => "PromptDeleteFileItemMessage";
         public static string RecordingOnly => "RecordingOnly";
-        public static string EnglishOnlyAndFiveMinutesOnly => "EnglishOnlyAndFiveMinutesOnly";
+        public static string FiveMinutesOnly => "FiveMinutesOnly";
         public static string RemainingTime => "RemainingTime";
         public static string NoAvailableData => "NoAvailableData";
         public static string UnableToLoadAudioFile => "UnableToLoadAudioFile";
