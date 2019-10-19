@@ -37,13 +37,13 @@
                         <StackLayout Grid.Column="1">
                             <Label HeightRequest="20"
                                    Style="{StaticResource LabelStyle}"
-                                   Text="{Binding FileItem.Name}" />
+                                   Text="{Binding FileName}" />
 
                             <Label FontFamily="{StaticResource FontFamilyQuicksandLight}"
                                    FontSize="{StaticResource MidMediumSize}"
                                    HeightRequest="20"
                                    Style="{StaticResource LabelStyle}"
-                                   Text="{Binding FileItem.DateCreated}" />
+                                   Text="{Binding DateCreated}" />
                         </StackLayout>
 
                         <progressBar:SfStepProgressBar Grid.Column="2"

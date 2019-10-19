@@ -28,6 +28,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         public FileItem FileItem { get; private set; }
 
+        public string FileName => FileItem.Name;
+
+        public string DateCreated => FileItem.DateCreated.ToString("g");
+
         public bool IsInProgress
         {
             get => _isInProgress;
