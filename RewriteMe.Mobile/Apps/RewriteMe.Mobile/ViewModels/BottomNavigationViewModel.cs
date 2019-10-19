@@ -28,6 +28,7 @@ namespace RewriteMe.Mobile.ViewModels
             _informationMessageService = informationMessageService;
             _navigationService = navigationService;
 
+            informationMessageService.MessageOpened += HandleMessageOpened;
             synchronizationService.SynchronizationCompleted += HandleSynchronizationCompleted;
 
             NavigateToOverviewCommand = new AsyncCommand(ExecuteNavigateToOverviewCommandAsync, CanExecuteNavigateToOverviewCommand);
@@ -104,6 +105,11 @@ namespace RewriteMe.Mobile.ViewModels
             Page = currentPage;
 
             await _navigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
+        }
+
+        private async void HandleMessageOpened(object sender, EventArgs e)
+        {
+            IsUnopenedMessage = await _informationMessageService.IsUnopenedMessageAsync().ConfigureAwait(false);
         }
 
         private async void HandleSynchronizationCompleted(object sender, EventArgs e)
