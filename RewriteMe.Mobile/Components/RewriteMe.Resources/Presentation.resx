@@ -286,8 +286,8 @@
   <data name="RecordingOnly" xml:space="preserve">
     <value>Recording only</value>
   </data>
-  <data name="EnglishOnlyAndFiveMinutesOnly" xml:space="preserve">
-    <value>English only and 5 minutes maximum</value>
+  <data name="FiveMinutesOnly" xml:space="preserve">
+    <value>5 minutes maximum</value>
   </data>
   <data name="RemainingTime" xml:space="preserve">
     <value>Remaining time</value>

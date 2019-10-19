@@ -196,11 +196,11 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to English only and 5 minutes maximum.
+        ///   Looks up a localized string similar to 5 minutes maximum.
         /// </summary>
-        public static string EnglishOnlyAndFiveMinutesOnly {
+        public static string FiveMinutesOnly {
             get {
-                return ResourceManager.GetString("EnglishOnlyAndFiveMinutesOnly", resourceCulture);
+                return ResourceManager.GetString("FiveMinutesOnly", resourceCulture);
             }
         }
         
