@@ -100,6 +100,7 @@
     <PackageReference Include="Acr.UserDialogs" Version="7.0.32" />
     <PackageReference Include="NLog" Version="4.6.7" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1367" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.3.0.17" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.3.0.17" />
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="17.3.0.17" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="17.3.0.17" />
