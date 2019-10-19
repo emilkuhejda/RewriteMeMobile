@@ -56,7 +56,7 @@
                                           Source="resource://RewriteMe.Mobile.Resources.Images.RecorderOverview-Enabled.svg"
                                           VerticalOptions="Center" />
 
-                    <Label Style="{StaticResource BadgeViewLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordedFiles}}" />
+                    <Label Style="{StaticResource BadgeViewLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Recordings}}" />
 
                     <StackLayout.GestureRecognizers>
                         <TapGestureRecognizer Command="{Binding NavigateToRecorderOverviewCommand}" />
