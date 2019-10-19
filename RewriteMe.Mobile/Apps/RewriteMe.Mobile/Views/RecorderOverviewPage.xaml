@@ -18,20 +18,21 @@
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
                         </Grid.ColumnDefinitions>
 
                         <forms:SvgCachedImage Grid.Column="0"
                                               Margin="0"
                                               Aspect="AspectFit"
                                               BackgroundColor="Transparent"
-                                              HeightRequest="40"
+                                              HeightRequest="50"
                                               HorizontalOptions="Center"
                                               InputTransparent="True"
                                               Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
                                               VerticalOptions="Center" />
 
-                        <StackLayout Grid.Column="1">
+                        <StackLayout Grid.Column="1"
+                                     Margin="10,0,0,0"
+                                     VerticalOptions="Center">
                             <Label HeightRequest="20"
                                    Style="{StaticResource LabelStyle}"
                                    Text="{Binding Title}" />
