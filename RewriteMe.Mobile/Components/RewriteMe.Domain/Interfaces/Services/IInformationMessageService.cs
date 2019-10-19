@@ -7,6 +7,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IInformationMessageService
     {
+        event EventHandler MessageOpened;
+
         Task SynchronizationAsync(DateTime applicationUpdateDate);
 
         Task<IEnumerable<InformationMessage>> GetAllForLastWeekAsync();
