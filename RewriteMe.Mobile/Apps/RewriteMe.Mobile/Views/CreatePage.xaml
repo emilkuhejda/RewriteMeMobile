@@ -2,10 +2,12 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.CreatePage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+                          xmlns:comboBox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
-                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                          xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <Grid>
         <Grid.RowDefinitions>
@@ -13,50 +15,37 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <controls:AlwaysScrollView Grid.Row="0">
-            <Grid>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                </Grid.RowDefinitions>
+        <controls:AlwaysScrollView Grid.Row="0" Padding="{StaticResource StandardPadding}">
+            <StackLayout>
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
+                    <Entry Text="{Binding Name}" />
+                </textInputLayout:SfTextInputLayout>
 
-                <StackLayout Grid.Row="0" Padding="{StaticResource StandardPadding}">
-                    <Label Style="{StaticResource LabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}" />
-                    <Editor FontSize="{StaticResource MediumSize}"
-                            Keyboard="Text"
-                            Text="{Binding Name}"
-                            VerticalOptions="Fill" />
+                <textInputLayout:SfTextInputLayout Margin="0,0,0,20"
+                                                   ContainerType="Outlined"
+                                                   Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
+                    <comboBox:SfComboBox DataSource="{Binding AvailableLanguages}"
+                                         DisplayMemberPath="Title"
+                                         SelectedItem="{Binding SelectedLanguage}" />
+                </textInputLayout:SfTextInputLayout>
 
-                    <controls:DrillDownButton Command="{Binding NavigateToLanguageCommand}"
-                                              ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
-                                              Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
-                        <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedLanguage.Title}" />
-                    </controls:DrillDownButton>
-                    <controls:Divider />
+                <Label Margin="0,0,0,20"
+                       IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}"
+                       Style="{StaticResource LabelStyle}"
+                       Text="{Binding SelectedFile.FileName}" />
 
-                    <StackLayout IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}">
-                        <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedFile.FileName}" />
-                        <controls:Divider />
-                    </StackLayout>
-                </StackLayout>
-
-                <Grid Grid.Row="1"
-                      Margin="20,0,20,20"
-                      HorizontalOptions="Center"
-                      IsVisible="{Binding IsUploadButtonVisible}">
-                    <forms:SvgCachedImage Margin="0"
-                                          Aspect="AspectFit"
-                                          BackgroundColor="Transparent"
-                                          HeightRequest="50"
-                                          InputTransparent="True"
-                                          Source="resource://RewriteMe.Mobile.Resources.Images.Upload.svg"
-                                          VerticalOptions="CenterAndExpand" />
-
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding UploadFileCommand}" />
-                    </Grid.GestureRecognizers>
-                </Grid>
-            </Grid>
+                <buttons:SfButton BackgroundColor="{StaticResource ColorPrimary}"
+                                  BorderColor="{StaticResource ColorGrey500}"
+                                  BorderWidth="1"
+                                  Command="{Binding UploadFileCommand}"
+                                  CornerRadius="25"
+                                  HasShadow="True"
+                                  HeightRequest="50"
+                                  HorizontalOptions="Center"
+                                  Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}"
+                                  VerticalOptions="Center"
+                                  WidthRequest="200" />
+            </StackLayout>
         </controls:AlwaysScrollView>
 
         <controls:ContextActionBar Grid.Row="1" ItemsSource="{Binding NavigationItems}" />

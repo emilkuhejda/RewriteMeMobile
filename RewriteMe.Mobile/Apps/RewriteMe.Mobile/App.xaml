@@ -16,7 +16,7 @@
             <!--  Paddings  -->
             <x:Double x:Key="SmallSpacing">4</x:Double>
             <x:Double x:Key="MediumSpacing">8</x:Double>
-            <x:Double x:Key="StandardSpacing">16</x:Double>
+            <x:Double x:Key="StandardSpacing">20</x:Double>
 
             <Thickness x:Key="SmallPadding">4</Thickness>
             <Thickness x:Key="MediumPadding">8</Thickness>
@@ -271,17 +271,6 @@
                         <Setter Property="BorderColor" Value="{StaticResource ColorGrey300}" />
                     </Trigger>
                 </Style.Triggers>
-            </Style>
-
-            <Style x:Key="ActionButtonStyle" TargetType="Button">
-                <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
-                <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
-                <Setter Property="CornerRadius" Value="30" />
-                <Setter Property="FontAttributes" Value="Bold" />
-                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandBold}" />
-                <Setter Property="TextColor" Value="{StaticResource ColorWhite}" />
-                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
-                <Setter Property="VerticalOptions" Value="FillAndExpand" />
             </Style>
 
             <Style x:Key="InfoTileBackground" TargetType="Frame">
