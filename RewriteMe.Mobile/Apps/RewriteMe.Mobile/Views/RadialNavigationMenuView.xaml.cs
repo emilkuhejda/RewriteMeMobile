@@ -3,9 +3,9 @@
 namespace RewriteMe.Mobile.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
-    public partial class PlayerView
+    public partial class RadialNavigationMenuView
     {
-        public PlayerView()
+        public RadialNavigationMenuView()
         {
             InitializeComponent();
         }

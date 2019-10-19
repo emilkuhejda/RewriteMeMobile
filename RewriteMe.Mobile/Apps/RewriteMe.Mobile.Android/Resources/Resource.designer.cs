@@ -2822,6 +2822,64 @@ namespace RewriteMe.Mobile.Droid
 			global::Syncfusion.XForms.Android.ProgressBar.Resource.Id.sfprogressbar_secondary_progress = global::RewriteMe.Mobile.Droid.Resource.Id.sfprogressbar_secondary_progress;
 			global::Syncfusion.XForms.Android.ProgressBar.Resource.Id.sfprogressbar_track = global::RewriteMe.Mobile.Droid.Resource.Id.sfprogressbar_track;
 			global::Syncfusion.XForms.Android.ProgressBar.Resource.String.library_name = global::RewriteMe.Mobile.Droid.Resource.String.library_name;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialAnimationDuration = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialAnimationDuration;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonBackText = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonBackText;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonBackTextColor = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonBackTextColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonBackTextSize = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonBackTextSize;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonBackground = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonBackground;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonBorderColor = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonBorderColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonBorderThickness = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonBorderThickness;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonPlacement = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonPlacement;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonRadius = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonRadius;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonText = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonText;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonTextColor = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonTextColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialCenterButtonTextSize = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialCenterButtonTextSize;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialEnableCenterButtonAnimation = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialEnableCenterButtonAnimation;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialEnableRotation = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialEnableRotation;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialIsDragEnabled = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialIsDragEnabled;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialIsOpen = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialIsOpen;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialLayoutType = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialLayoutType;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialOuterRimColor = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialOuterRimColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialOuterRimThickness = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialOuterRimThickness;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialRimActiveColor = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialRimActiveColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialRimColor = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialRimColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialRimRadius = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialRimRadius;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialSelectionColor = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialSelectionColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialSeparatorColor = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialSeparatorColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialSeparatorThickness = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialSeparatorThickness;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Attribute.radialVisibleSegmentsCount = global::RewriteMe.Mobile.Droid.Resource.Attribute.radialVisibleSegmentsCount;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Id.Center = global::RewriteMe.Mobile.Droid.Resource.Id.Center;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Id.Custom = global::RewriteMe.Mobile.Droid.Resource.Id.Custom;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Id.Default = global::RewriteMe.Mobile.Droid.Resource.Id.Default;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Id.TopLeft = global::RewriteMe.Mobile.Droid.Resource.Id.TopLeft;
+			global::Syncfusion.SfRadialMenu.Android.Resource.String.library_name = global::RewriteMe.Mobile.Droid.Resource.String.library_name;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialAnimationDuration = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialAnimationDuration;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonBackText = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonBackText;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonBackTextColor = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonBackTextColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonBackTextSize = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonBackTextSize;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonBackground = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonBackground;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonBorderColor = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonBorderColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonBorderThickness = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonBorderThickness;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonPlacement = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonPlacement;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonRadius = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonRadius;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonText = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonText;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonTextColor = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonTextColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialCenterButtonTextSize = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialCenterButtonTextSize;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialEnableCenterButtonAnimation = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialEnableCenterButtonAnimation;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialEnableRotation = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialEnableRotation;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialIsDragEnabled = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialIsDragEnabled;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialIsOpen = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialIsOpen;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialLayoutType = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialLayoutType;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialOuterRimColor = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialOuterRimColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialOuterRimThickness = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialOuterRimThickness;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialRimActiveColor = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialRimActiveColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialRimColor = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialRimColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialRimRadius = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialRimRadius;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialSelectionColor = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialSelectionColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialSeparatorColor = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialSeparatorColor;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialSeparatorThickness = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialSeparatorThickness;
+			global::Syncfusion.SfRadialMenu.Android.Resource.Styleable.SfRadialMenu_radialVisibleSegmentsCount = global::RewriteMe.Mobile.Droid.Resource.Styleable.SfRadialMenu_radialVisibleSegmentsCount;
 			global::Xamarin.Essentials.Resource.Attribute.alpha = global::RewriteMe.Mobile.Droid.Resource.Attribute.alpha;
 			global::Xamarin.Essentials.Resource.Attribute.coordinatorLayoutStyle = global::RewriteMe.Mobile.Droid.Resource.Attribute.coordinatorLayoutStyle;
 			global::Xamarin.Essentials.Resource.Attribute.font = global::RewriteMe.Mobile.Droid.Resource.Attribute.font;
@@ -5795,41 +5853,41 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f010094
 			public const int activityChooserViewStyle = 2130772116;
 			
-			// aapt resource value: 0x7f0101f7
-			public const int ahBarColor = 2130772471;
+			// aapt resource value: 0x7f010211
+			public const int ahBarColor = 2130772497;
 			
-			// aapt resource value: 0x7f0101ff
-			public const int ahBarLength = 2130772479;
+			// aapt resource value: 0x7f010219
+			public const int ahBarLength = 2130772505;
 			
-			// aapt resource value: 0x7f0101fe
-			public const int ahBarWidth = 2130772478;
+			// aapt resource value: 0x7f010218
+			public const int ahBarWidth = 2130772504;
 			
-			// aapt resource value: 0x7f0101fc
-			public const int ahCircleColor = 2130772476;
+			// aapt resource value: 0x7f010216
+			public const int ahCircleColor = 2130772502;
 			
-			// aapt resource value: 0x7f0101fb
-			public const int ahDelayMillis = 2130772475;
+			// aapt resource value: 0x7f010215
+			public const int ahDelayMillis = 2130772501;
 			
-			// aapt resource value: 0x7f0101fd
-			public const int ahRadius = 2130772477;
+			// aapt resource value: 0x7f010217
+			public const int ahRadius = 2130772503;
 			
-			// aapt resource value: 0x7f0101f8
-			public const int ahRimColor = 2130772472;
+			// aapt resource value: 0x7f010212
+			public const int ahRimColor = 2130772498;
 			
-			// aapt resource value: 0x7f0101f9
-			public const int ahRimWidth = 2130772473;
+			// aapt resource value: 0x7f010213
+			public const int ahRimWidth = 2130772499;
 			
-			// aapt resource value: 0x7f0101fa
-			public const int ahSpinSpeed = 2130772474;
+			// aapt resource value: 0x7f010214
+			public const int ahSpinSpeed = 2130772500;
 			
-			// aapt resource value: 0x7f0101f4
-			public const int ahText = 2130772468;
+			// aapt resource value: 0x7f01020e
+			public const int ahText = 2130772494;
 			
-			// aapt resource value: 0x7f0101f5
-			public const int ahTextColor = 2130772469;
+			// aapt resource value: 0x7f01020f
+			public const int ahTextColor = 2130772495;
 			
-			// aapt resource value: 0x7f0101f6
-			public const int ahTextSize = 2130772470;
+			// aapt resource value: 0x7f010210
+			public const int ahTextSize = 2130772496;
 			
 			// aapt resource value: 0x7f0100b9
 			public const int alertDialogButtonGroupStyle = 2130772153;
@@ -5957,32 +6015,32 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0101d3
 			public const int boxStrokeWidth = 2130772435;
 			
-			// aapt resource value: 0x7f0101eb
-			public const int busyIndicatorAnimationTypes = 2130772459;
+			// aapt resource value: 0x7f010205
+			public const int busyIndicatorAnimationTypes = 2130772485;
 			
-			// aapt resource value: 0x7f0101f3
-			public const int busyIndicatorIsBusy = 2130772467;
+			// aapt resource value: 0x7f01020d
+			public const int busyIndicatorIsBusy = 2130772493;
 			
-			// aapt resource value: 0x7f0101f1
-			public const int busyIndicatorSecondaryColor = 2130772465;
+			// aapt resource value: 0x7f01020b
+			public const int busyIndicatorSecondaryColor = 2130772491;
 			
-			// aapt resource value: 0x7f0101ec
-			public const int busyIndicatorTextColor = 2130772460;
+			// aapt resource value: 0x7f010206
+			public const int busyIndicatorTextColor = 2130772486;
 			
-			// aapt resource value: 0x7f0101f0
-			public const int busyIndicatorTextSize = 2130772464;
+			// aapt resource value: 0x7f01020a
+			public const int busyIndicatorTextSize = 2130772490;
 			
-			// aapt resource value: 0x7f0101ef
-			public const int busyIndicatorTitle = 2130772463;
+			// aapt resource value: 0x7f010209
+			public const int busyIndicatorTitle = 2130772489;
 			
-			// aapt resource value: 0x7f0101f2
-			public const int busyIndicatorTitlePlacement = 2130772466;
+			// aapt resource value: 0x7f01020c
+			public const int busyIndicatorTitlePlacement = 2130772492;
 			
-			// aapt resource value: 0x7f0101ed
-			public const int busyIndicatorViewBoxHeight = 2130772461;
+			// aapt resource value: 0x7f010207
+			public const int busyIndicatorViewBoxHeight = 2130772487;
 			
-			// aapt resource value: 0x7f0101ee
-			public const int busyIndicatorViewBoxWidth = 2130772462;
+			// aapt resource value: 0x7f010208
+			public const int busyIndicatorViewBoxWidth = 2130772488;
 			
 			// aapt resource value: 0x7f01008e
 			public const int buttonBarButtonStyle = 2130772110;
@@ -6781,6 +6839,84 @@ namespace RewriteMe.Mobile.Droid
 			
 			// aapt resource value: 0x7f0100f2
 			public const int queryHint = 2130772210;
+			
+			// aapt resource value: 0x7f0101f2
+			public const int radialAnimationDuration = 2130772466;
+			
+			// aapt resource value: 0x7f0101f6
+			public const int radialCenterButtonBackText = 2130772470;
+			
+			// aapt resource value: 0x7f0101f8
+			public const int radialCenterButtonBackTextColor = 2130772472;
+			
+			// aapt resource value: 0x7f0101f7
+			public const int radialCenterButtonBackTextSize = 2130772471;
+			
+			// aapt resource value: 0x7f010203
+			public const int radialCenterButtonBackground = 2130772483;
+			
+			// aapt resource value: 0x7f0101fe
+			public const int radialCenterButtonBorderColor = 2130772478;
+			
+			// aapt resource value: 0x7f0101f9
+			public const int radialCenterButtonBorderThickness = 2130772473;
+			
+			// aapt resource value: 0x7f0101eb
+			public const int radialCenterButtonPlacement = 2130772459;
+			
+			// aapt resource value: 0x7f0101f3
+			public const int radialCenterButtonRadius = 2130772467;
+			
+			// aapt resource value: 0x7f0101f4
+			public const int radialCenterButtonText = 2130772468;
+			
+			// aapt resource value: 0x7f0101fd
+			public const int radialCenterButtonTextColor = 2130772477;
+			
+			// aapt resource value: 0x7f0101f5
+			public const int radialCenterButtonTextSize = 2130772469;
+			
+			// aapt resource value: 0x7f0101f0
+			public const int radialEnableCenterButtonAnimation = 2130772464;
+			
+			// aapt resource value: 0x7f0101ee
+			public const int radialEnableRotation = 2130772462;
+			
+			// aapt resource value: 0x7f0101ef
+			public const int radialIsDragEnabled = 2130772463;
+			
+			// aapt resource value: 0x7f0101ed
+			public const int radialIsOpen = 2130772461;
+			
+			// aapt resource value: 0x7f0101ec
+			public const int radialLayoutType = 2130772460;
+			
+			// aapt resource value: 0x7f010200
+			public const int radialOuterRimColor = 2130772480;
+			
+			// aapt resource value: 0x7f0101fa
+			public const int radialOuterRimThickness = 2130772474;
+			
+			// aapt resource value: 0x7f0101ff
+			public const int radialRimActiveColor = 2130772479;
+			
+			// aapt resource value: 0x7f0101fc
+			public const int radialRimColor = 2130772476;
+			
+			// aapt resource value: 0x7f0101fb
+			public const int radialRimRadius = 2130772475;
+			
+			// aapt resource value: 0x7f010202
+			public const int radialSelectionColor = 2130772482;
+			
+			// aapt resource value: 0x7f010201
+			public const int radialSeparatorColor = 2130772481;
+			
+			// aapt resource value: 0x7f010204
+			public const int radialSeparatorThickness = 2130772484;
+			
+			// aapt resource value: 0x7f0101f1
+			public const int radialVisibleSegmentsCount = 2130772465;
 			
 			// aapt resource value: 0x7f0100c6
 			public const int radioButtonStyle = 2130772166;
@@ -9487,6 +9623,15 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d003a
 			public const int CTRL = 2131558458;
 			
+			// aapt resource value: 0x7f0d0069
+			public const int Center = 2131558505;
+			
+			// aapt resource value: 0x7f0d006b
+			public const int Custom = 2131558507;
+			
+			// aapt resource value: 0x7f0d006c
+			public const int Default = 2131558508;
+			
 			// aapt resource value: 0x7f0d003b
 			public const int FUNCTION = 2131558459;
 			
@@ -9499,41 +9644,44 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d003e
 			public const int SYM = 2131558462;
 			
-			// aapt resource value: 0x7f0d00f7
-			public const int action0 = 2131558647;
+			// aapt resource value: 0x7f0d006a
+			public const int TopLeft = 2131558506;
 			
-			// aapt resource value: 0x7f0d009c
-			public const int action_bar = 2131558556;
+			// aapt resource value: 0x7f0d00fb
+			public const int action0 = 2131558651;
+			
+			// aapt resource value: 0x7f0d00a0
+			public const int action_bar = 2131558560;
 			
 			// aapt resource value: 0x7f0d0001
 			public const int action_bar_activity_content = 2131558401;
 			
-			// aapt resource value: 0x7f0d009b
-			public const int action_bar_container = 2131558555;
+			// aapt resource value: 0x7f0d009f
+			public const int action_bar_container = 2131558559;
 			
-			// aapt resource value: 0x7f0d0097
-			public const int action_bar_root = 2131558551;
+			// aapt resource value: 0x7f0d009b
+			public const int action_bar_root = 2131558555;
 			
 			// aapt resource value: 0x7f0d0002
 			public const int action_bar_spinner = 2131558402;
 			
-			// aapt resource value: 0x7f0d0079
-			public const int action_bar_subtitle = 2131558521;
+			// aapt resource value: 0x7f0d007d
+			public const int action_bar_subtitle = 2131558525;
 			
-			// aapt resource value: 0x7f0d0078
-			public const int action_bar_title = 2131558520;
+			// aapt resource value: 0x7f0d007c
+			public const int action_bar_title = 2131558524;
 			
-			// aapt resource value: 0x7f0d00f4
-			public const int action_container = 2131558644;
+			// aapt resource value: 0x7f0d00f8
+			public const int action_container = 2131558648;
 			
-			// aapt resource value: 0x7f0d009d
-			public const int action_context_bar = 2131558557;
+			// aapt resource value: 0x7f0d00a1
+			public const int action_context_bar = 2131558561;
 			
-			// aapt resource value: 0x7f0d00fb
-			public const int action_divider = 2131558651;
+			// aapt resource value: 0x7f0d00ff
+			public const int action_divider = 2131558655;
 			
-			// aapt resource value: 0x7f0d00f5
-			public const int action_image = 2131558645;
+			// aapt resource value: 0x7f0d00f9
+			public const int action_image = 2131558649;
 			
 			// aapt resource value: 0x7f0d0003
 			public const int action_menu_divider = 2131558403;
@@ -9541,29 +9689,29 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0004
 			public const int action_menu_presenter = 2131558404;
 			
-			// aapt resource value: 0x7f0d0099
-			public const int action_mode_bar = 2131558553;
+			// aapt resource value: 0x7f0d009d
+			public const int action_mode_bar = 2131558557;
 			
-			// aapt resource value: 0x7f0d0098
-			public const int action_mode_bar_stub = 2131558552;
+			// aapt resource value: 0x7f0d009c
+			public const int action_mode_bar_stub = 2131558556;
 			
-			// aapt resource value: 0x7f0d007a
-			public const int action_mode_close_button = 2131558522;
+			// aapt resource value: 0x7f0d007e
+			public const int action_mode_close_button = 2131558526;
 			
-			// aapt resource value: 0x7f0d00f6
-			public const int action_text = 2131558646;
+			// aapt resource value: 0x7f0d00fa
+			public const int action_text = 2131558650;
 			
-			// aapt resource value: 0x7f0d0104
-			public const int actions = 2131558660;
+			// aapt resource value: 0x7f0d0108
+			public const int actions = 2131558664;
 			
-			// aapt resource value: 0x7f0d007b
-			public const int activity_chooser_view_content = 2131558523;
+			// aapt resource value: 0x7f0d007f
+			public const int activity_chooser_view_content = 2131558527;
 			
 			// aapt resource value: 0x7f0d002e
 			public const int add = 2131558446;
 			
-			// aapt resource value: 0x7f0d008e
-			public const int alertTitle = 2131558542;
+			// aapt resource value: 0x7f0d0092
+			public const int alertTitle = 2131558546;
 			
 			// aapt resource value: 0x7f0d0064
 			public const int all = 2131558500;
@@ -9577,11 +9725,11 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d004d
 			public const int auto = 2131558477;
 			
-			// aapt resource value: 0x7f0d0069
-			public const int ball = 2131558505;
+			// aapt resource value: 0x7f0d006d
+			public const int ball = 2131558509;
 			
-			// aapt resource value: 0x7f0d006a
-			public const int battery = 2131558506;
+			// aapt resource value: 0x7f0d006e
+			public const int battery = 2131558510;
 			
 			// aapt resource value: 0x7f0d0036
 			public const int beginning = 2131558454;
@@ -9592,35 +9740,35 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0044
 			public const int bottom = 2131558468;
 			
-			// aapt resource value: 0x7f0d00ac
-			public const int bottomtab_navarea = 2131558572;
-			
-			// aapt resource value: 0x7f0d00ad
-			public const int bottomtab_tabbar = 2131558573;
-			
-			// aapt resource value: 0x7f0d006b
-			public const int box = 2131558507;
-			
-			// aapt resource value: 0x7f0d00af
-			public const int browser_actions_header_text = 2131558575;
+			// aapt resource value: 0x7f0d00b0
+			public const int bottomtab_navarea = 2131558576;
 			
 			// aapt resource value: 0x7f0d00b1
-			public const int browser_actions_menu_item_icon = 2131558577;
+			public const int bottomtab_tabbar = 2131558577;
+			
+			// aapt resource value: 0x7f0d006f
+			public const int box = 2131558511;
+			
+			// aapt resource value: 0x7f0d00b3
+			public const int browser_actions_header_text = 2131558579;
+			
+			// aapt resource value: 0x7f0d00b5
+			public const int browser_actions_menu_item_icon = 2131558581;
+			
+			// aapt resource value: 0x7f0d00b6
+			public const int browser_actions_menu_item_text = 2131558582;
+			
+			// aapt resource value: 0x7f0d00b4
+			public const int browser_actions_menu_items = 2131558580;
 			
 			// aapt resource value: 0x7f0d00b2
-			public const int browser_actions_menu_item_text = 2131558578;
+			public const int browser_actions_menu_view = 2131558578;
 			
-			// aapt resource value: 0x7f0d00b0
-			public const int browser_actions_menu_items = 2131558576;
+			// aapt resource value: 0x7f0d0085
+			public const int buttonPanel = 2131558533;
 			
-			// aapt resource value: 0x7f0d00ae
-			public const int browser_actions_menu_view = 2131558574;
-			
-			// aapt resource value: 0x7f0d0081
-			public const int buttonPanel = 2131558529;
-			
-			// aapt resource value: 0x7f0d00f8
-			public const int cancel_action = 2131558648;
+			// aapt resource value: 0x7f0d00fc
+			public const int cancel_action = 2131558652;
 			
 			// aapt resource value: 0x7f0d004c
 			public const int center = 2131558476;
@@ -9631,11 +9779,11 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0052
 			public const int center_vertical = 2131558482;
 			
-			// aapt resource value: 0x7f0d0095
-			public const int checkbox = 2131558549;
+			// aapt resource value: 0x7f0d0099
+			public const int checkbox = 2131558553;
 			
-			// aapt resource value: 0x7f0d0100
-			public const int chronometer = 2131558656;
+			// aapt resource value: 0x7f0d0104
+			public const int chronometer = 2131558660;
 			
 			// aapt resource value: 0x7f0d0061
 			public const int clip_horizontal = 2131558497;
@@ -9646,62 +9794,62 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0040
 			public const int collapseActionView = 2131558464;
 			
-			// aapt resource value: 0x7f0d00b5
-			public const int container = 2131558581;
+			// aapt resource value: 0x7f0d00b9
+			public const int container = 2131558585;
 			
-			// aapt resource value: 0x7f0d0091
-			public const int content = 2131558545;
+			// aapt resource value: 0x7f0d0095
+			public const int content = 2131558549;
 			
-			// aapt resource value: 0x7f0d0084
-			public const int contentPanel = 2131558532;
-			
-			// aapt resource value: 0x7f0d00b6
-			public const int coordinator = 2131558582;
-			
-			// aapt resource value: 0x7f0d008b
-			public const int custom = 2131558539;
-			
-			// aapt resource value: 0x7f0d008a
-			public const int customPanel = 2131558538;
-			
-			// aapt resource value: 0x7f0d009a
-			public const int decor_content_parent = 2131558554;
-			
-			// aapt resource value: 0x7f0d007e
-			public const int default_activity_button = 2131558526;
-			
-			// aapt resource value: 0x7f0d00b8
-			public const int design_bottom_sheet = 2131558584;
-			
-			// aapt resource value: 0x7f0d00bd
-			public const int design_menu_item_action_area = 2131558589;
-			
-			// aapt resource value: 0x7f0d00bc
-			public const int design_menu_item_action_area_stub = 2131558588;
-			
-			// aapt resource value: 0x7f0d00bb
-			public const int design_menu_item_text = 2131558587;
+			// aapt resource value: 0x7f0d0088
+			public const int contentPanel = 2131558536;
 			
 			// aapt resource value: 0x7f0d00ba
-			public const int design_navigation_view = 2131558586;
+			public const int coordinator = 2131558586;
+			
+			// aapt resource value: 0x7f0d008f
+			public const int custom = 2131558543;
+			
+			// aapt resource value: 0x7f0d008e
+			public const int customPanel = 2131558542;
+			
+			// aapt resource value: 0x7f0d009e
+			public const int decor_content_parent = 2131558558;
+			
+			// aapt resource value: 0x7f0d0082
+			public const int default_activity_button = 2131558530;
+			
+			// aapt resource value: 0x7f0d00bc
+			public const int design_bottom_sheet = 2131558588;
+			
+			// aapt resource value: 0x7f0d00c1
+			public const int design_menu_item_action_area = 2131558593;
+			
+			// aapt resource value: 0x7f0d00c0
+			public const int design_menu_item_action_area_stub = 2131558592;
+			
+			// aapt resource value: 0x7f0d00bf
+			public const int design_menu_item_text = 2131558591;
+			
+			// aapt resource value: 0x7f0d00be
+			public const int design_navigation_view = 2131558590;
 			
 			// aapt resource value: 0x7f0d0027
 			public const int disableHome = 2131558439;
 			
-			// aapt resource value: 0x7f0d006c
-			public const int doubleCircle = 2131558508;
+			// aapt resource value: 0x7f0d0070
+			public const int doubleCircle = 2131558512;
 			
-			// aapt resource value: 0x7f0d006d
-			public const int ecg = 2131558509;
+			// aapt resource value: 0x7f0d0071
+			public const int ecg = 2131558513;
 			
-			// aapt resource value: 0x7f0d009e
-			public const int edit_query = 2131558558;
+			// aapt resource value: 0x7f0d00a2
+			public const int edit_query = 2131558562;
 			
 			// aapt resource value: 0x7f0d0037
 			public const int end = 2131558455;
 			
-			// aapt resource value: 0x7f0d0106
-			public const int end_padder = 2131558662;
+			// aapt resource value: 0x7f0d010a
+			public const int end_padder = 2131558666;
 			
 			// aapt resource value: 0x7f0d0046
 			public const int enterAlways = 2131558470;
@@ -9712,11 +9860,11 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0048
 			public const int exitUntilCollapsed = 2131558472;
 			
-			// aapt resource value: 0x7f0d007c
-			public const int expand_activities_button = 2131558524;
+			// aapt resource value: 0x7f0d0080
+			public const int expand_activities_button = 2131558528;
 			
-			// aapt resource value: 0x7f0d0094
-			public const int expanded_menu = 2131558548;
+			// aapt resource value: 0x7f0d0098
+			public const int expanded_menu = 2131558552;
 			
 			// aapt resource value: 0x7f0d005e
 			public const int fill = 2131558494;
@@ -9733,26 +9881,26 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d005c
 			public const int @fixed = 2131558492;
 			
-			// aapt resource value: 0x7f0d00bf
-			public const int flyoutcontent_appbar = 2131558591;
+			// aapt resource value: 0x7f0d00c3
+			public const int flyoutcontent_appbar = 2131558595;
 			
-			// aapt resource value: 0x7f0d00c0
-			public const int flyoutcontent_recycler = 2131558592;
+			// aapt resource value: 0x7f0d00c4
+			public const int flyoutcontent_recycler = 2131558596;
 			
 			// aapt resource value: 0x7f0d0067
 			public const int forever = 2131558503;
 			
-			// aapt resource value: 0x7f0d006e
-			public const int gearBox = 2131558510;
+			// aapt resource value: 0x7f0d0072
+			public const int gearBox = 2131558514;
 			
 			// aapt resource value: 0x7f0d000a
 			public const int ghost_view = 2131558410;
 			
-			// aapt resource value: 0x7f0d006f
-			public const int globe = 2131558511;
+			// aapt resource value: 0x7f0d0073
+			public const int globe = 2131558515;
 			
-			// aapt resource value: 0x7f0d0090
-			public const int group_divider = 2131558544;
+			// aapt resource value: 0x7f0d0094
+			public const int group_divider = 2131558548;
 			
 			// aapt resource value: 0x7f0d0005
 			public const int home = 2131558405;
@@ -9760,23 +9908,23 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0028
 			public const int homeAsUp = 2131558440;
 			
-			// aapt resource value: 0x7f0d0070
-			public const int horizontalPulsingBox = 2131558512;
+			// aapt resource value: 0x7f0d0074
+			public const int horizontalPulsingBox = 2131558516;
 			
-			// aapt resource value: 0x7f0d0080
-			public const int icon = 2131558528;
+			// aapt resource value: 0x7f0d0084
+			public const int icon = 2131558532;
 			
-			// aapt resource value: 0x7f0d0105
-			public const int icon_group = 2131558661;
+			// aapt resource value: 0x7f0d0109
+			public const int icon_group = 2131558665;
 			
 			// aapt resource value: 0x7f0d0041
 			public const int ifRoom = 2131558465;
 			
-			// aapt resource value: 0x7f0d007d
-			public const int image = 2131558525;
+			// aapt resource value: 0x7f0d0081
+			public const int image = 2131558529;
 			
-			// aapt resource value: 0x7f0d0101
-			public const int info = 2131558657;
+			// aapt resource value: 0x7f0d0105
+			public const int info = 2131558661;
 			
 			// aapt resource value: 0x7f0d0068
 			public const int italic = 2131558504;
@@ -9787,8 +9935,8 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d004e
 			public const int labeled = 2131558478;
 			
-			// aapt resource value: 0x7f0d00b4
-			public const int largeLabel = 2131558580;
+			// aapt resource value: 0x7f0d00b8
+			public const int largeLabel = 2131558584;
 			
 			// aapt resource value: 0x7f0d0054
 			public const int left = 2131558484;
@@ -9802,38 +9950,38 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0024
 			public const int listMode = 2131558436;
 			
-			// aapt resource value: 0x7f0d007f
-			public const int list_item = 2131558527;
+			// aapt resource value: 0x7f0d0083
+			public const int list_item = 2131558531;
 			
-			// aapt resource value: 0x7f0d00c3
-			public const int loadingImage = 2131558595;
+			// aapt resource value: 0x7f0d00c7
+			public const int loadingImage = 2131558599;
 			
-			// aapt resource value: 0x7f0d00c1
-			public const int loadingProgressBar = 2131558593;
+			// aapt resource value: 0x7f0d00c5
+			public const int loadingProgressBar = 2131558597;
 			
-			// aapt resource value: 0x7f0d00c4
-			public const int loadingProgressWheel = 2131558596;
+			// aapt resource value: 0x7f0d00c8
+			public const int loadingProgressWheel = 2131558600;
 			
-			// aapt resource value: 0x7f0d0107
-			public const int main_appbar = 2131558663;
+			// aapt resource value: 0x7f0d010b
+			public const int main_appbar = 2131558667;
 			
-			// aapt resource value: 0x7f0d0109
-			public const int main_tablayout = 2131558665;
+			// aapt resource value: 0x7f0d010d
+			public const int main_tablayout = 2131558669;
 			
-			// aapt resource value: 0x7f0d0108
-			public const int main_toolbar = 2131558664;
+			// aapt resource value: 0x7f0d010c
+			public const int main_toolbar = 2131558668;
 			
-			// aapt resource value: 0x7f0d010a
-			public const int main_viewpager = 2131558666;
+			// aapt resource value: 0x7f0d010e
+			public const int main_viewpager = 2131558670;
 			
-			// aapt resource value: 0x7f0d0110
-			public const int masked = 2131558672;
+			// aapt resource value: 0x7f0d0114
+			public const int masked = 2131558676;
 			
-			// aapt resource value: 0x7f0d00fa
-			public const int media_actions = 2131558650;
+			// aapt resource value: 0x7f0d00fe
+			public const int media_actions = 2131558654;
 			
-			// aapt resource value: 0x7f0d00ab
-			public const int message = 2131558571;
+			// aapt resource value: 0x7f0d00af
+			public const int message = 2131558575;
 			
 			// aapt resource value: 0x7f0d0038
 			public const int middle = 2131558456;
@@ -9841,146 +9989,146 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0059
 			public const int mini = 2131558489;
 			
-			// aapt resource value: 0x7f0d0071
-			public const int movieTimer = 2131558513;
-			
-			// aapt resource value: 0x7f0d00e1
-			public const int mr_art = 2131558625;
-			
-			// aapt resource value: 0x7f0d00d2
-			public const int mr_cast_checkbox = 2131558610;
-			
-			// aapt resource value: 0x7f0d00cb
-			public const int mr_cast_close_button = 2131558603;
-			
-			// aapt resource value: 0x7f0d00c6
-			public const int mr_cast_group_icon = 2131558598;
-			
-			// aapt resource value: 0x7f0d00c7
-			public const int mr_cast_group_name = 2131558599;
-			
-			// aapt resource value: 0x7f0d00c5
-			public const int mr_cast_list = 2131558597;
-			
-			// aapt resource value: 0x7f0d00ca
-			public const int mr_cast_meta = 2131558602;
-			
-			// aapt resource value: 0x7f0d00cc
-			public const int mr_cast_meta_art = 2131558604;
-			
-			// aapt resource value: 0x7f0d00ce
-			public const int mr_cast_meta_subtitle = 2131558606;
-			
-			// aapt resource value: 0x7f0d00cd
-			public const int mr_cast_meta_title = 2131558605;
-			
-			// aapt resource value: 0x7f0d00d0
-			public const int mr_cast_route_icon = 2131558608;
-			
-			// aapt resource value: 0x7f0d00d1
-			public const int mr_cast_route_name = 2131558609;
-			
-			// aapt resource value: 0x7f0d00cf
-			public const int mr_cast_stop_button = 2131558607;
-			
-			// aapt resource value: 0x7f0d00d3
-			public const int mr_cast_volume_layout = 2131558611;
-			
-			// aapt resource value: 0x7f0d00d4
-			public const int mr_cast_volume_slider = 2131558612;
-			
-			// aapt resource value: 0x7f0d00d6
-			public const int mr_chooser_list = 2131558614;
-			
-			// aapt resource value: 0x7f0d00d9
-			public const int mr_chooser_route_desc = 2131558617;
-			
-			// aapt resource value: 0x7f0d00d7
-			public const int mr_chooser_route_icon = 2131558615;
-			
-			// aapt resource value: 0x7f0d00d8
-			public const int mr_chooser_route_name = 2131558616;
-			
-			// aapt resource value: 0x7f0d00d5
-			public const int mr_chooser_title = 2131558613;
-			
-			// aapt resource value: 0x7f0d00de
-			public const int mr_close = 2131558622;
-			
-			// aapt resource value: 0x7f0d00e4
-			public const int mr_control_divider = 2131558628;
-			
-			// aapt resource value: 0x7f0d00ef
-			public const int mr_control_playback_ctrl = 2131558639;
-			
-			// aapt resource value: 0x7f0d00f2
-			public const int mr_control_subtitle = 2131558642;
-			
-			// aapt resource value: 0x7f0d00f1
-			public const int mr_control_title = 2131558641;
-			
-			// aapt resource value: 0x7f0d00f0
-			public const int mr_control_title_container = 2131558640;
-			
-			// aapt resource value: 0x7f0d00df
-			public const int mr_custom_control = 2131558623;
-			
-			// aapt resource value: 0x7f0d00e0
-			public const int mr_default_control = 2131558624;
-			
-			// aapt resource value: 0x7f0d00db
-			public const int mr_dialog_area = 2131558619;
-			
-			// aapt resource value: 0x7f0d00ea
-			public const int mr_dialog_header_name = 2131558634;
-			
-			// aapt resource value: 0x7f0d00da
-			public const int mr_expandable_area = 2131558618;
-			
-			// aapt resource value: 0x7f0d00f3
-			public const int mr_group_expand_collapse = 2131558643;
-			
-			// aapt resource value: 0x7f0d00c8
-			public const int mr_group_volume_route_name = 2131558600;
-			
-			// aapt resource value: 0x7f0d00c9
-			public const int mr_group_volume_slider = 2131558601;
-			
-			// aapt resource value: 0x7f0d00e2
-			public const int mr_media_main_control = 2131558626;
-			
-			// aapt resource value: 0x7f0d00dd
-			public const int mr_name = 2131558621;
-			
-			// aapt resource value: 0x7f0d00eb
-			public const int mr_picker_close_button = 2131558635;
-			
-			// aapt resource value: 0x7f0d00ec
-			public const int mr_picker_list = 2131558636;
-			
-			// aapt resource value: 0x7f0d00ed
-			public const int mr_picker_route_icon = 2131558637;
-			
-			// aapt resource value: 0x7f0d00ee
-			public const int mr_picker_route_name = 2131558638;
-			
-			// aapt resource value: 0x7f0d00e3
-			public const int mr_playback_control = 2131558627;
-			
-			// aapt resource value: 0x7f0d00dc
-			public const int mr_title_bar = 2131558620;
+			// aapt resource value: 0x7f0d0075
+			public const int movieTimer = 2131558517;
 			
 			// aapt resource value: 0x7f0d00e5
-			public const int mr_volume_control = 2131558629;
+			public const int mr_art = 2131558629;
 			
-			// aapt resource value: 0x7f0d00e6
-			public const int mr_volume_group_list = 2131558630;
+			// aapt resource value: 0x7f0d00d6
+			public const int mr_cast_checkbox = 2131558614;
+			
+			// aapt resource value: 0x7f0d00cf
+			public const int mr_cast_close_button = 2131558607;
+			
+			// aapt resource value: 0x7f0d00ca
+			public const int mr_cast_group_icon = 2131558602;
+			
+			// aapt resource value: 0x7f0d00cb
+			public const int mr_cast_group_name = 2131558603;
+			
+			// aapt resource value: 0x7f0d00c9
+			public const int mr_cast_list = 2131558601;
+			
+			// aapt resource value: 0x7f0d00ce
+			public const int mr_cast_meta = 2131558606;
+			
+			// aapt resource value: 0x7f0d00d0
+			public const int mr_cast_meta_art = 2131558608;
+			
+			// aapt resource value: 0x7f0d00d2
+			public const int mr_cast_meta_subtitle = 2131558610;
+			
+			// aapt resource value: 0x7f0d00d1
+			public const int mr_cast_meta_title = 2131558609;
+			
+			// aapt resource value: 0x7f0d00d4
+			public const int mr_cast_route_icon = 2131558612;
+			
+			// aapt resource value: 0x7f0d00d5
+			public const int mr_cast_route_name = 2131558613;
+			
+			// aapt resource value: 0x7f0d00d3
+			public const int mr_cast_stop_button = 2131558611;
+			
+			// aapt resource value: 0x7f0d00d7
+			public const int mr_cast_volume_layout = 2131558615;
+			
+			// aapt resource value: 0x7f0d00d8
+			public const int mr_cast_volume_slider = 2131558616;
+			
+			// aapt resource value: 0x7f0d00da
+			public const int mr_chooser_list = 2131558618;
+			
+			// aapt resource value: 0x7f0d00dd
+			public const int mr_chooser_route_desc = 2131558621;
+			
+			// aapt resource value: 0x7f0d00db
+			public const int mr_chooser_route_icon = 2131558619;
+			
+			// aapt resource value: 0x7f0d00dc
+			public const int mr_chooser_route_name = 2131558620;
+			
+			// aapt resource value: 0x7f0d00d9
+			public const int mr_chooser_title = 2131558617;
+			
+			// aapt resource value: 0x7f0d00e2
+			public const int mr_close = 2131558626;
 			
 			// aapt resource value: 0x7f0d00e8
-			public const int mr_volume_item_icon = 2131558632;
+			public const int mr_control_divider = 2131558632;
+			
+			// aapt resource value: 0x7f0d00f3
+			public const int mr_control_playback_ctrl = 2131558643;
+			
+			// aapt resource value: 0x7f0d00f6
+			public const int mr_control_subtitle = 2131558646;
+			
+			// aapt resource value: 0x7f0d00f5
+			public const int mr_control_title = 2131558645;
+			
+			// aapt resource value: 0x7f0d00f4
+			public const int mr_control_title_container = 2131558644;
+			
+			// aapt resource value: 0x7f0d00e3
+			public const int mr_custom_control = 2131558627;
+			
+			// aapt resource value: 0x7f0d00e4
+			public const int mr_default_control = 2131558628;
+			
+			// aapt resource value: 0x7f0d00df
+			public const int mr_dialog_area = 2131558623;
+			
+			// aapt resource value: 0x7f0d00ee
+			public const int mr_dialog_header_name = 2131558638;
+			
+			// aapt resource value: 0x7f0d00de
+			public const int mr_expandable_area = 2131558622;
+			
+			// aapt resource value: 0x7f0d00f7
+			public const int mr_group_expand_collapse = 2131558647;
+			
+			// aapt resource value: 0x7f0d00cc
+			public const int mr_group_volume_route_name = 2131558604;
+			
+			// aapt resource value: 0x7f0d00cd
+			public const int mr_group_volume_slider = 2131558605;
+			
+			// aapt resource value: 0x7f0d00e6
+			public const int mr_media_main_control = 2131558630;
+			
+			// aapt resource value: 0x7f0d00e1
+			public const int mr_name = 2131558625;
+			
+			// aapt resource value: 0x7f0d00ef
+			public const int mr_picker_close_button = 2131558639;
+			
+			// aapt resource value: 0x7f0d00f0
+			public const int mr_picker_list = 2131558640;
+			
+			// aapt resource value: 0x7f0d00f1
+			public const int mr_picker_route_icon = 2131558641;
+			
+			// aapt resource value: 0x7f0d00f2
+			public const int mr_picker_route_name = 2131558642;
+			
+			// aapt resource value: 0x7f0d00e7
+			public const int mr_playback_control = 2131558631;
+			
+			// aapt resource value: 0x7f0d00e0
+			public const int mr_title_bar = 2131558624;
 			
 			// aapt resource value: 0x7f0d00e9
-			public const int mr_volume_slider = 2131558633;
+			public const int mr_volume_control = 2131558633;
+			
+			// aapt resource value: 0x7f0d00ea
+			public const int mr_volume_group_list = 2131558634;
+			
+			// aapt resource value: 0x7f0d00ec
+			public const int mr_volume_item_icon = 2131558636;
+			
+			// aapt resource value: 0x7f0d00ed
+			public const int mr_volume_slider = 2131558637;
 			
 			// aapt resource value: 0x7f0d0014
 			public const int mtrl_child_content_container = 2131558420;
@@ -9991,8 +10139,8 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d002f
 			public const int multiply = 2131558447;
 			
-			// aapt resource value: 0x7f0d00b9
-			public const int navigation_header_container = 2131558585;
+			// aapt resource value: 0x7f0d00bd
+			public const int navigation_header_container = 2131558589;
 			
 			// aapt resource value: 0x7f0d0042
 			public const int never = 2131558466;
@@ -10003,14 +10151,14 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0025
 			public const int normal = 2131558437;
 			
-			// aapt resource value: 0x7f0d0103
-			public const int notification_background = 2131558659;
+			// aapt resource value: 0x7f0d0107
+			public const int notification_background = 2131558663;
 			
-			// aapt resource value: 0x7f0d00fd
-			public const int notification_main_column = 2131558653;
+			// aapt resource value: 0x7f0d0101
+			public const int notification_main_column = 2131558657;
 			
-			// aapt resource value: 0x7f0d00fc
-			public const int notification_main_column_container = 2131558652;
+			// aapt resource value: 0x7f0d0100
+			public const int notification_main_column_container = 2131558656;
 			
 			// aapt resource value: 0x7f0d0060
 			public const int outline = 2131558496;
@@ -10018,8 +10166,8 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0057
 			public const int parallax = 2131558487;
 			
-			// aapt resource value: 0x7f0d0083
-			public const int parentPanel = 2131558531;
+			// aapt resource value: 0x7f0d0087
+			public const int parentPanel = 2131558535;
 			
 			// aapt resource value: 0x7f0d000b
 			public const int parent_matrix = 2131558411;
@@ -10027,8 +10175,8 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0058
 			public const int pin = 2131558488;
 			
-			// aapt resource value: 0x7f0d0072
-			public const int print = 2131558514;
+			// aapt resource value: 0x7f0d0076
+			public const int print = 2131558518;
 			
 			// aapt resource value: 0x7f0d0006
 			public const int progress_circular = 2131558406;
@@ -10036,23 +10184,23 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0007
 			public const int progress_horizontal = 2131558407;
 			
-			// aapt resource value: 0x7f0d0096
-			public const int radio = 2131558550;
+			// aapt resource value: 0x7f0d009a
+			public const int radio = 2131558554;
 			
-			// aapt resource value: 0x7f0d0073
-			public const int rectangle = 2131558515;
+			// aapt resource value: 0x7f0d0077
+			public const int rectangle = 2131558519;
 			
 			// aapt resource value: 0x7f0d0055
 			public const int right = 2131558485;
 			
+			// aapt resource value: 0x7f0d0106
+			public const int right_icon = 2131558662;
+			
 			// aapt resource value: 0x7f0d0102
-			public const int right_icon = 2131558658;
+			public const int right_side = 2131558658;
 			
-			// aapt resource value: 0x7f0d00fe
-			public const int right_side = 2131558654;
-			
-			// aapt resource value: 0x7f0d0074
-			public const int rollingBall = 2131558516;
+			// aapt resource value: 0x7f0d0078
+			public const int rollingBall = 2131558520;
 			
 			// aapt resource value: 0x7f0d000c
 			public const int save_image_matrix = 2131558412;
@@ -10069,71 +10217,71 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0049
 			public const int scroll = 2131558473;
 			
+			// aapt resource value: 0x7f0d008d
+			public const int scrollIndicatorDown = 2131558541;
+			
 			// aapt resource value: 0x7f0d0089
-			public const int scrollIndicatorDown = 2131558537;
+			public const int scrollIndicatorUp = 2131558537;
 			
-			// aapt resource value: 0x7f0d0085
-			public const int scrollIndicatorUp = 2131558533;
-			
-			// aapt resource value: 0x7f0d0086
-			public const int scrollView = 2131558534;
+			// aapt resource value: 0x7f0d008a
+			public const int scrollView = 2131558538;
 			
 			// aapt resource value: 0x7f0d005d
 			public const int scrollable = 2131558493;
 			
-			// aapt resource value: 0x7f0d00a0
-			public const int search_badge = 2131558560;
-			
-			// aapt resource value: 0x7f0d009f
-			public const int search_bar = 2131558559;
-			
-			// aapt resource value: 0x7f0d00a1
-			public const int search_button = 2131558561;
-			
-			// aapt resource value: 0x7f0d00a6
-			public const int search_close_btn = 2131558566;
-			
-			// aapt resource value: 0x7f0d00a2
-			public const int search_edit_frame = 2131558562;
-			
-			// aapt resource value: 0x7f0d00a8
-			public const int search_go_btn = 2131558568;
+			// aapt resource value: 0x7f0d00a4
+			public const int search_badge = 2131558564;
 			
 			// aapt resource value: 0x7f0d00a3
-			public const int search_mag_icon = 2131558563;
-			
-			// aapt resource value: 0x7f0d00a4
-			public const int search_plate = 2131558564;
+			public const int search_bar = 2131558563;
 			
 			// aapt resource value: 0x7f0d00a5
-			public const int search_src_text = 2131558565;
-			
-			// aapt resource value: 0x7f0d00a9
-			public const int search_voice_btn = 2131558569;
+			public const int search_button = 2131558565;
 			
 			// aapt resource value: 0x7f0d00aa
-			public const int select_dialog_listview = 2131558570;
+			public const int search_close_btn = 2131558570;
+			
+			// aapt resource value: 0x7f0d00a6
+			public const int search_edit_frame = 2131558566;
+			
+			// aapt resource value: 0x7f0d00ac
+			public const int search_go_btn = 2131558572;
+			
+			// aapt resource value: 0x7f0d00a7
+			public const int search_mag_icon = 2131558567;
+			
+			// aapt resource value: 0x7f0d00a8
+			public const int search_plate = 2131558568;
+			
+			// aapt resource value: 0x7f0d00a9
+			public const int search_src_text = 2131558569;
+			
+			// aapt resource value: 0x7f0d00ad
+			public const int search_voice_btn = 2131558573;
+			
+			// aapt resource value: 0x7f0d00ae
+			public const int select_dialog_listview = 2131558574;
 			
 			// aapt resource value: 0x7f0d004f
 			public const int selected = 2131558479;
 			
-			// aapt resource value: 0x7f0d0113
-			public const int sfprogressbar_progress = 2131558675;
+			// aapt resource value: 0x7f0d0117
+			public const int sfprogressbar_progress = 2131558679;
 			
-			// aapt resource value: 0x7f0d0112
-			public const int sfprogressbar_secondary_progress = 2131558674;
+			// aapt resource value: 0x7f0d0116
+			public const int sfprogressbar_secondary_progress = 2131558678;
 			
-			// aapt resource value: 0x7f0d0111
-			public const int sfprogressbar_track = 2131558673;
+			// aapt resource value: 0x7f0d0115
+			public const int sfprogressbar_track = 2131558677;
 			
-			// aapt resource value: 0x7f0d010b
-			public const int shellcontent_appbar = 2131558667;
+			// aapt resource value: 0x7f0d010f
+			public const int shellcontent_appbar = 2131558671;
 			
-			// aapt resource value: 0x7f0d010c
-			public const int shellcontent_toolbar = 2131558668;
+			// aapt resource value: 0x7f0d0110
+			public const int shellcontent_toolbar = 2131558672;
 			
-			// aapt resource value: 0x7f0d0092
-			public const int shortcut = 2131558546;
+			// aapt resource value: 0x7f0d0096
+			public const int shortcut = 2131558550;
 			
 			// aapt resource value: 0x7f0d002a
 			public const int showCustom = 2131558442;
@@ -10144,17 +10292,17 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d002c
 			public const int showTitle = 2131558444;
 			
-			// aapt resource value: 0x7f0d0075
-			public const int singleCircle = 2131558517;
+			// aapt resource value: 0x7f0d0079
+			public const int singleCircle = 2131558521;
 			
-			// aapt resource value: 0x7f0d0076
-			public const int slicedCircle = 2131558518;
+			// aapt resource value: 0x7f0d007a
+			public const int slicedCircle = 2131558522;
 			
-			// aapt resource value: 0x7f0d010d
-			public const int sliding_tabs = 2131558669;
+			// aapt resource value: 0x7f0d0111
+			public const int sliding_tabs = 2131558673;
 			
-			// aapt resource value: 0x7f0d00b3
-			public const int smallLabel = 2131558579;
+			// aapt resource value: 0x7f0d00b7
+			public const int smallLabel = 2131558583;
 			
 			// aapt resource value: 0x7f0d0016
 			public const int snackbar_action = 2131558422;
@@ -10168,8 +10316,8 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d004b
 			public const int snapMargins = 2131558475;
 			
-			// aapt resource value: 0x7f0d0082
-			public const int spacer = 2131558530;
+			// aapt resource value: 0x7f0d0086
+			public const int spacer = 2131558534;
 			
 			// aapt resource value: 0x7f0d0008
 			public const int split_action_bar = 2131558408;
@@ -10186,17 +10334,17 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0056
 			public const int start = 2131558486;
 			
-			// aapt resource value: 0x7f0d00f9
-			public const int status_bar_latest_event_content = 2131558649;
+			// aapt resource value: 0x7f0d00fd
+			public const int status_bar_latest_event_content = 2131558653;
 			
 			// aapt resource value: 0x7f0d005b
 			public const int stretch = 2131558491;
 			
-			// aapt resource value: 0x7f0d0093
-			public const int submenuarrow = 2131558547;
+			// aapt resource value: 0x7f0d0097
+			public const int submenuarrow = 2131558551;
 			
-			// aapt resource value: 0x7f0d00a7
-			public const int submit_area = 2131558567;
+			// aapt resource value: 0x7f0d00ab
+			public const int submit_area = 2131558571;
 			
 			// aapt resource value: 0x7f0d0026
 			public const int tabMode = 2131558438;
@@ -10216,20 +10364,20 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0022
 			public const int text2 = 2131558434;
 			
-			// aapt resource value: 0x7f0d0088
-			public const int textSpacerNoButtons = 2131558536;
+			// aapt resource value: 0x7f0d008c
+			public const int textSpacerNoButtons = 2131558540;
 			
-			// aapt resource value: 0x7f0d0087
-			public const int textSpacerNoTitle = 2131558535;
+			// aapt resource value: 0x7f0d008b
+			public const int textSpacerNoTitle = 2131558539;
 			
 			// aapt resource value: 0x7f0d005a
 			public const int textStart = 2131558490;
 			
-			// aapt resource value: 0x7f0d00c2
-			public const int textViewStatus = 2131558594;
+			// aapt resource value: 0x7f0d00c6
+			public const int textViewStatus = 2131558598;
 			
-			// aapt resource value: 0x7f0d00be
-			public const int text_input_password_toggle = 2131558590;
+			// aapt resource value: 0x7f0d00c2
+			public const int text_input_password_toggle = 2131558594;
 			
 			// aapt resource value: 0x7f0d0018
 			public const int textinput_counter = 2131558424;
@@ -10240,29 +10388,29 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d001a
 			public const int textinput_helper_text = 2131558426;
 			
-			// aapt resource value: 0x7f0d00ff
-			public const int time = 2131558655;
+			// aapt resource value: 0x7f0d0103
+			public const int time = 2131558659;
 			
 			// aapt resource value: 0x7f0d0023
 			public const int title = 2131558435;
 			
-			// aapt resource value: 0x7f0d008f
-			public const int titleDividerNoCustom = 2131558543;
+			// aapt resource value: 0x7f0d0093
+			public const int titleDividerNoCustom = 2131558547;
 			
-			// aapt resource value: 0x7f0d008d
-			public const int title_template = 2131558541;
+			// aapt resource value: 0x7f0d0091
+			public const int title_template = 2131558545;
 			
-			// aapt resource value: 0x7f0d010e
-			public const int toolbar = 2131558670;
+			// aapt resource value: 0x7f0d0112
+			public const int toolbar = 2131558674;
 			
 			// aapt resource value: 0x7f0d0045
 			public const int top = 2131558469;
 			
-			// aapt resource value: 0x7f0d008c
-			public const int topPanel = 2131558540;
+			// aapt resource value: 0x7f0d0090
+			public const int topPanel = 2131558544;
 			
-			// aapt resource value: 0x7f0d00b7
-			public const int touch_outside = 2131558583;
+			// aapt resource value: 0x7f0d00bb
+			public const int touch_outside = 2131558587;
 			
 			// aapt resource value: 0x7f0d000f
 			public const int transition_current_scene = 2131558415;
@@ -10294,11 +10442,11 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d001b
 			public const int view_offset_helper = 2131558427;
 			
-			// aapt resource value: 0x7f0d010f
-			public const int visible = 2131558671;
+			// aapt resource value: 0x7f0d0113
+			public const int visible = 2131558675;
 			
-			// aapt resource value: 0x7f0d00e7
-			public const int volume_item_container = 2131558631;
+			// aapt resource value: 0x7f0d00eb
+			public const int volume_item_container = 2131558635;
 			
 			// aapt resource value: 0x7f0d0043
 			public const int withText = 2131558467;
@@ -10306,8 +10454,8 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0d0035
 			public const int wrap_content = 2131558453;
 			
-			// aapt resource value: 0x7f0d0077
-			public const int zoomingTarget = 2131558519;
+			// aapt resource value: 0x7f0d007b
+			public const int zoomingTarget = 2131558523;
 			
 			static Id()
 			{
@@ -14725,18 +14873,18 @@ namespace RewriteMe.Mobile.Droid
 			public const int PopupWindowBackgroundState_state_above_anchor = 0;
 			
 			public static int[] ProgressWheel = new int[] {
-					2130772468,
-					2130772469,
-					2130772470,
-					2130772471,
-					2130772472,
-					2130772473,
-					2130772474,
-					2130772475,
-					2130772476,
-					2130772477,
-					2130772478,
-					2130772479};
+					2130772494,
+					2130772495,
+					2130772496,
+					2130772497,
+					2130772498,
+					2130772499,
+					2130772500,
+					2130772501,
+					2130772502,
+					2130772503,
+					2130772504,
+					2130772505};
 			
 			// aapt resource value: 3
 			public const int ProgressWheel_ahBarColor = 3;
@@ -14913,15 +15061,15 @@ namespace RewriteMe.Mobile.Droid
 			public const int SearchView_voiceIcon = 12;
 			
 			public static int[] SfBusyIndicator = new int[] {
-					2130772459,
-					2130772460,
-					2130772461,
-					2130772462,
-					2130772463,
-					2130772464,
-					2130772465,
-					2130772466,
-					2130772467};
+					2130772485,
+					2130772486,
+					2130772487,
+					2130772488,
+					2130772489,
+					2130772490,
+					2130772491,
+					2130772492,
+					2130772493};
 			
 			// aapt resource value: 0
 			public const int SfBusyIndicator_busyIndicatorAnimationTypes = 0;
@@ -14949,6 +15097,112 @@ namespace RewriteMe.Mobile.Droid
 			
 			// aapt resource value: 3
 			public const int SfBusyIndicator_busyIndicatorViewBoxWidth = 3;
+			
+			public static int[] SfRadialMenu = new int[] {
+					2130772459,
+					2130772460,
+					2130772461,
+					2130772462,
+					2130772463,
+					2130772464,
+					2130772465,
+					2130772466,
+					2130772467,
+					2130772468,
+					2130772469,
+					2130772470,
+					2130772471,
+					2130772472,
+					2130772473,
+					2130772474,
+					2130772475,
+					2130772476,
+					2130772477,
+					2130772478,
+					2130772479,
+					2130772480,
+					2130772481,
+					2130772482,
+					2130772483,
+					2130772484};
+			
+			// aapt resource value: 7
+			public const int SfRadialMenu_radialAnimationDuration = 7;
+			
+			// aapt resource value: 11
+			public const int SfRadialMenu_radialCenterButtonBackText = 11;
+			
+			// aapt resource value: 13
+			public const int SfRadialMenu_radialCenterButtonBackTextColor = 13;
+			
+			// aapt resource value: 12
+			public const int SfRadialMenu_radialCenterButtonBackTextSize = 12;
+			
+			// aapt resource value: 24
+			public const int SfRadialMenu_radialCenterButtonBackground = 24;
+			
+			// aapt resource value: 19
+			public const int SfRadialMenu_radialCenterButtonBorderColor = 19;
+			
+			// aapt resource value: 14
+			public const int SfRadialMenu_radialCenterButtonBorderThickness = 14;
+			
+			// aapt resource value: 0
+			public const int SfRadialMenu_radialCenterButtonPlacement = 0;
+			
+			// aapt resource value: 8
+			public const int SfRadialMenu_radialCenterButtonRadius = 8;
+			
+			// aapt resource value: 9
+			public const int SfRadialMenu_radialCenterButtonText = 9;
+			
+			// aapt resource value: 18
+			public const int SfRadialMenu_radialCenterButtonTextColor = 18;
+			
+			// aapt resource value: 10
+			public const int SfRadialMenu_radialCenterButtonTextSize = 10;
+			
+			// aapt resource value: 5
+			public const int SfRadialMenu_radialEnableCenterButtonAnimation = 5;
+			
+			// aapt resource value: 3
+			public const int SfRadialMenu_radialEnableRotation = 3;
+			
+			// aapt resource value: 4
+			public const int SfRadialMenu_radialIsDragEnabled = 4;
+			
+			// aapt resource value: 2
+			public const int SfRadialMenu_radialIsOpen = 2;
+			
+			// aapt resource value: 1
+			public const int SfRadialMenu_radialLayoutType = 1;
+			
+			// aapt resource value: 21
+			public const int SfRadialMenu_radialOuterRimColor = 21;
+			
+			// aapt resource value: 15
+			public const int SfRadialMenu_radialOuterRimThickness = 15;
+			
+			// aapt resource value: 20
+			public const int SfRadialMenu_radialRimActiveColor = 20;
+			
+			// aapt resource value: 17
+			public const int SfRadialMenu_radialRimColor = 17;
+			
+			// aapt resource value: 16
+			public const int SfRadialMenu_radialRimRadius = 16;
+			
+			// aapt resource value: 23
+			public const int SfRadialMenu_radialSelectionColor = 23;
+			
+			// aapt resource value: 22
+			public const int SfRadialMenu_radialSeparatorColor = 22;
+			
+			// aapt resource value: 25
+			public const int SfRadialMenu_radialSeparatorThickness = 25;
+			
+			// aapt resource value: 6
+			public const int SfRadialMenu_radialVisibleSegmentsCount = 6;
 			
 			public static int[] Snackbar = new int[] {
 					2130772382,

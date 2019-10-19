@@ -1,0 +1,64 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Grid x:Class="RewriteMe.Mobile.Views.RadialNavigationMenuView"
+      xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+      xmlns:xForms="clr-namespace:Syncfusion.SfRadialMenu.XForms;assembly=Syncfusion.SfRadialMenu.XForms">
+    <xForms:SfRadialMenu CenterButtonBackgroundColor="{StaticResource ColorPrimary}"
+                         LayoutType="Custom"
+                         Point="50,50"
+                         VisibleSegmentsCount="7">
+        <xForms:SfRadialMenu.CenterButtonView>
+            <Grid>
+                <forms:SvgCachedImage Margin="0"
+                                      Aspect="AspectFit"
+                                      BackgroundColor="Transparent"
+                                      HeightRequest="40"
+                                      HorizontalOptions="Center"
+                                      InputTransparent="True"
+                                      Source="resource://RewriteMe.Mobile.Resources.Images.Menu.svg"
+                                      VerticalOptions="Center" />
+            </Grid>
+        </xForms:SfRadialMenu.CenterButtonView>
+
+        <xForms:SfRadialMenu.Items>
+            <xForms:SfRadialMenuItem>
+                <xForms:SfRadialMenuItem.View>
+                    <Grid>
+                        <forms:SvgCachedImage Margin="0"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="40"
+                                              HorizontalOptions="CenterAndExpand"
+                                              InputTransparent="True"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg"
+                                              VerticalOptions="CenterAndExpand" />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToCreatePageCommand}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </xForms:SfRadialMenuItem.View>
+            </xForms:SfRadialMenuItem>
+
+            <xForms:SfRadialMenuItem>
+                <xForms:SfRadialMenuItem.View>
+                    <Grid>
+                        <forms:SvgCachedImage Margin="0"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="40"
+                                              HorizontalOptions="CenterAndExpand"
+                                              InputTransparent="True"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg"
+                                              VerticalOptions="CenterAndExpand" />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToRecorderCommand}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </xForms:SfRadialMenuItem.View>
+            </xForms:SfRadialMenuItem>
+        </xForms:SfRadialMenu.Items>
+    </xForms:SfRadialMenu>
+</Grid>

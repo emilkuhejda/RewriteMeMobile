@@ -2,7 +2,6 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.OverviewPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
@@ -37,13 +36,13 @@
                         <StackLayout Grid.Column="1">
                             <Label HeightRequest="20"
                                    Style="{StaticResource LabelStyle}"
-                                   Text="{Binding FileItem.Name}" />
+                                   Text="{Binding FileName}" />
 
                             <Label FontFamily="{StaticResource FontFamilyQuicksandLight}"
                                    FontSize="{StaticResource MidMediumSize}"
                                    HeightRequest="20"
                                    Style="{StaticResource LabelStyle}"
-                                   Text="{Binding FileItem.DateCreated}" />
+                                   Text="{Binding DateCreated}" />
                         </StackLayout>
 
                         <progressBar:SfStepProgressBar Grid.Column="2"
@@ -75,10 +74,6 @@
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
-    <views:BaseNavigationPage.RightNavigationToolbarItems>
-        <controls:NavigationToolbarItem Command="{Binding NavigateToRecorderCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Record.svg" />
-    </views:BaseNavigationPage.RightNavigationToolbarItems>
-
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -102,27 +97,15 @@
                   RefreshCommand="{Binding RefreshCommand}"
                   SeparatorVisibility="None" />
 
-        <Grid Grid.Row="1"
-              Margin="0,0,0,10"
-              Padding="0"
-              BackgroundColor="Transparent"
-              ColumnSpacing="0"
-              HeightRequest="69"
-              HorizontalOptions="End"
-              RowSpacing="0"
-              VerticalOptions="End"
-              WidthRequest="69">
-            <forms:SvgCachedImage Margin="0"
-                                  Aspect="AspectFit"
-                                  BackgroundColor="Transparent"
-                                  HeightRequest="60"
-                                  HorizontalOptions="CenterAndExpand"
-                                  InputTransparent="True"
-                                  Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg"
-                                  VerticalOptions="CenterAndExpand" />
-            <Grid.GestureRecognizers>
-                <TapGestureRecognizer Command="{Binding NavigateToCreatePageCommand}" />
-            </Grid.GestureRecognizers>
-        </Grid>
+        <views:RadialNavigationMenuView Grid.Row="1"
+                                        Padding="0"
+                                        BackgroundColor="Transparent"
+                                        BindingContext="{Binding NavigationMenu}"
+                                        ColumnSpacing="0"
+                                        HeightRequest="200"
+                                        HorizontalOptions="End"
+                                        RowSpacing="0"
+                                        VerticalOptions="End"
+                                        WidthRequest="200" />
     </Grid>
 </views:BaseNavigationPage>

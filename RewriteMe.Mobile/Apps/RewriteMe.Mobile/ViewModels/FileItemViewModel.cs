@@ -7,6 +7,7 @@ using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
+using RewriteMe.Resources.Utils;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -27,6 +28,10 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         public FileItem FileItem { get; private set; }
+
+        public string FileName => FileItem.Name;
+
+        public string DateCreated => FileItem.DateCreated.ToString(Constants.TimeFormat);
 
         public bool IsInProgress
         {
