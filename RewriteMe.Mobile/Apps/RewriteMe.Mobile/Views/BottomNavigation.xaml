@@ -32,7 +32,7 @@
                                           HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
-                                          Source="resource://RewriteMe.Mobile.Resources.Images.Overview-Enabled.svg"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Overview.svg"
                                           VerticalOptions="Center" />
 
                     <Label Style="{StaticResource BadgeViewLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.AudioFiles}}" />
@@ -53,7 +53,7 @@
                                           HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
-                                          Source="resource://RewriteMe.Mobile.Resources.Images.RecorderOverview-Enabled.svg"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.RecorderOverview.svg"
                                           VerticalOptions="Center" />
 
                     <Label Style="{StaticResource BadgeViewLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Recordings}}" />
@@ -74,7 +74,7 @@
                                           HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
-                                          Source="resource://RewriteMe.Mobile.Resources.Images.Notification-Enabled.svg"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Notifications.svg"
                                           VerticalOptions="Center" />
 
                     <Label Style="{StaticResource BadgeViewLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Info}}" />
