@@ -5,9 +5,11 @@
       xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
       xmlns:xForms="clr-namespace:Syncfusion.SfRadialMenu.XForms;assembly=Syncfusion.SfRadialMenu.XForms">
     <xForms:SfRadialMenu CenterButtonBackgroundColor="{StaticResource ColorPrimary}"
+                         CenterButtonRadius="32"
                          IsDragEnabled="False"
                          LayoutType="Custom"
                          Point="50,50"
+                         SelectionColor="{StaticResource RadialMenuSelectionColor}"
                          VisibleSegmentsCount="4">
         <xForms:SfRadialMenu.CenterButtonView>
             <Grid>
