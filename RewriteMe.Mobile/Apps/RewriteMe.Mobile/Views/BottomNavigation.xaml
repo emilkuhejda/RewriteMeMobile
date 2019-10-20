@@ -15,7 +15,7 @@
             <Setter Property="TextColor" Value="{StaticResource ColorGrey900}" />
         </Style>
     </ContentView.Resources>
-    <Grid Padding="5,10,5,10" BackgroundColor="{StaticResource BottomNavigationBackground}">
+    <Grid Padding="5,10,5,10" BackgroundColor="{StaticResource GreyBackgroundColor}">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="*" />

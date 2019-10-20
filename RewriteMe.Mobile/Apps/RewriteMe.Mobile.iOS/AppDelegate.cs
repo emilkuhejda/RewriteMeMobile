@@ -11,6 +11,7 @@ using Syncfusion.SfRadialMenu.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
 using Syncfusion.XForms.iOS.Border;
 using Syncfusion.XForms.iOS.Buttons;
+using Syncfusion.XForms.iOS.ComboBox;
 using Syncfusion.XForms.iOS.ProgressBar;
 using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
@@ -43,8 +44,6 @@ namespace RewriteMe.Mobile.iOS
             var bootstrapper = new OsxBootstrapper();
             _application = new App(bootstrapper);
             LoadApplication(_application);
-
-            InitializeControls();
 
             WireUpBackgroundServices();
 
@@ -87,18 +86,15 @@ namespace RewriteMe.Mobile.iOS
 
         private void InitializeSyncfusionControls()
         {
+            SfBorderRenderer.Init();
+            SfButtonRenderer.Init();
             SfBadgeViewRenderer.Init();
             SfRadialMenuRenderer.Init();
             SfTextInputLayoutRenderer.Init();
             SfLinearProgressBarRenderer.Init();
 
             using (var busyIndicatorRenderer = new SfBusyIndicatorRenderer()) { }
-        }
-
-        private void InitializeControls()
-        {
-            SfBorderRenderer.Init();
-            SfButtonRenderer.Init();
+            using (var comboBoxRenderer = new SfComboBoxRenderer()) { }
         }
     }
 }

@@ -77,9 +77,10 @@
             <Color x:Key="ActionBarTileBackgroundColor">#FFFFFF</Color>
             <Color x:Key="ActionBarTileBackgroundColorHover">#E0E0E0</Color>
             <Color x:Key="ActionBarTileBackgroundColorTouch">#BDBDBD</Color>
+            <Color x:Key="GreyBackgroundColor">#F2F3F4</Color>
             <Color x:Key="PlayerBackground">#F2F3F4</Color>
-            <Color x:Key="BottomNavigationBackground">#F2F3F4</Color>
             <Color x:Key="DeleteBackground">#DC595F</Color>
+            <Color x:Key="RadialMenuSelectionColor">#C7C4C7</Color>
 
             <!--  Font Sizes  -->
             <OnPlatform x:Key="LittleSize"
@@ -290,6 +291,7 @@
                 <Grid x:Name="MainHeaderGrid"
                       Margin="0"
                       Padding="0"
+                      BackgroundColor="{StaticResource ColorWhite}"
                       BindingContext="{TemplateBinding BindingContext}"
                       ColumnSpacing="0"
                       HorizontalOptions="FillAndExpand"
