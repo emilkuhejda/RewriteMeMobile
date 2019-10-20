@@ -12,7 +12,7 @@ namespace RewriteMe.DataAccess
 {
     public class AppDbContext : IAppDbContext
     {
-        private readonly SemaphoreSlim _semaphoreSlim = new SemaphoreSlim(1, 1);
+        private static readonly SemaphoreSlim SemaphoreSlim = new SemaphoreSlim(1, 1);
 
         public AppDbContext(SQLiteAsyncConnection database)
         {
@@ -43,14 +43,14 @@ namespace RewriteMe.DataAccess
 
         public async Task RunInTransactionAsync(Action<SQLiteConnection> action)
         {
-            await _semaphoreSlim.WaitAsync().ConfigureAwait(false);
+            await SemaphoreSlim.WaitAsync().ConfigureAwait(true);
             try
             {
-                await Database.RunInTransactionAsync(action).ConfigureAwait(false);
+                await Database.RunInTransactionAsync(action).ConfigureAwait(true);
             }
             finally
             {
-                _semaphoreSlim.Release();
+                SemaphoreSlim.Release();
             }
         }
 
