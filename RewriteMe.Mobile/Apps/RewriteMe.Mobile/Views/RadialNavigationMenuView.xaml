@@ -9,6 +9,7 @@
                          IsDragEnabled="False"
                          LayoutType="Custom"
                          Point="50,50"
+                         SelectionColor="{StaticResource RadialMenuSelectionColor}"
                          VisibleSegmentsCount="4">
         <xForms:SfRadialMenu.CenterButtonView>
             <Grid>

@@ -80,6 +80,7 @@
             <Color x:Key="PlayerBackground">#F2F3F4</Color>
             <Color x:Key="BottomNavigationBackground">#F2F3F4</Color>
             <Color x:Key="DeleteBackground">#DC595F</Color>
+            <Color x:Key="RadialMenuSelectionColor">#C7C4C7</Color>
 
             <!--  Font Sizes  -->
             <OnPlatform x:Key="LittleSize"
