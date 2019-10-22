@@ -70,6 +70,7 @@
         public static string UnableToLoadAudioFile => "UnableToLoadAudioFile";
         public static string Downloading => "Downloading";
 
+        public static string InvalidAudioFileErrorMessage => "InvalidAudioFileErrorMessage";
         public static string ProfileEditErrorMessage => "ProfileEditErrorMessage";
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
         public static string OfflineErrorMessage => "OfflineErrorMessage";
