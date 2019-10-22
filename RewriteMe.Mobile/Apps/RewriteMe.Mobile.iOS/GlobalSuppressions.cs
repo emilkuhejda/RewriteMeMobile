@@ -31,3 +31,5 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Design", "CA1010:Collections should implement generic interface", Justification = "By design", Scope = "type", Target = "~T:RewriteMe.Mobile.iOS.Renderers.RewriteMeEditorRenderer")]
 [assembly: SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "By design", Scope = "type", Target = "~T:RewriteMe.Mobile.iOS.Renderers.BaseNavigationPageRenderer")]
 [assembly: SuppressMessage("Design", "CA1010:Collections should implement generic interface", Justification = "By design", Scope = "type", Target = "~T:RewriteMe.Mobile.iOS.Renderers.BaseNavigationPageRenderer")]
+[assembly: SuppressMessage("Design", "CA1010:Collections should implement generic interface", Justification = "By design", Scope = "type", Target = "~T:RewriteMe.Mobile.iOS.Renderers.RewriteMeWebViewRenderer")]
+[assembly: SuppressMessage("Naming", "CA1710:Identifiers should have correct suffix", Justification = "By design", Scope = "type", Target = "~T:RewriteMe.Mobile.iOS.Renderers.RewriteMeWebViewRenderer")]

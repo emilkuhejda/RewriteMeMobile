@@ -2,6 +2,7 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.DetailInfoPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <StackLayout Padding="{StaticResource StandardPadding}">
         <Label FontSize="{StaticResource LargerSize}"
@@ -9,8 +10,8 @@
                Style="{StaticResource LabelBoldStyle}"
                Text="{Binding Title}" />
 
-        <WebView HorizontalOptions="FillAndExpand"
-                 Source="{Binding Description}"
-                 VerticalOptions="FillAndExpand" />
+        <controls:RewriteMeWebView HorizontalOptions="FillAndExpand"
+                                   Source="{Binding Description}"
+                                   VerticalOptions="FillAndExpand" />
     </StackLayout>
 </views:BaseNavigationPage>
