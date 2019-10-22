@@ -21,7 +21,6 @@
         <controls:AlwaysScrollView Grid.Row="0" Padding="{StaticResource StandardPadding}">
             <StackLayout>
                 <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
-                    <!--<Entry Text="{Binding Name}" />-->
                     <Label Style="{StaticResource LabelStyle}" Text="{Binding Name}" />
                 </textInputLayout:SfTextInputLayout>
 
