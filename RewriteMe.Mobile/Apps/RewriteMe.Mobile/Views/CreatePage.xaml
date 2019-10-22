@@ -40,6 +40,7 @@
                                   HasShadow="True"
                                   HeightRequest="50"
                                   HorizontalOptions="Center"
+                                  IsVisible="{Binding SelectedFile, Converter={StaticResource NullToTrueBoolConverter}}"
                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}"
                                   VerticalOptions="Center"
                                   WidthRequest="200" />
