@@ -44,10 +44,11 @@
                 </StackLayout>
             </textInputLayout:SfTextInputLayout>
 
-            <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Languages}}">
+            <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                               Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Languages}}"
+                                               IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}">
                 <comboBox:SfComboBox DataSource="{Binding Languages}"
                                      DisplayMemberPath="Title"
-                                     IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}"
                                      SelectedItem="{Binding SelectedLanguage}" />
             </textInputLayout:SfTextInputLayout>
 
