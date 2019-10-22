@@ -2,7 +2,6 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.RecorderPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:comboBox="clr-namespace:Syncfusion.XForms.ComboBox;assembly=Syncfusion.SfComboBox.XForms"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
@@ -45,11 +44,11 @@
             </textInputLayout:SfTextInputLayout>
 
             <textInputLayout:SfTextInputLayout ContainerType="Outlined"
-                                               Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Languages}}"
                                                IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}">
-                <comboBox:SfComboBox DataSource="{Binding Languages}"
-                                     DisplayMemberPath="Title"
-                                     SelectedItem="{Binding SelectedLanguage}" />
+                <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                        ItemDisplayBinding="{Binding Title}"
+                        ItemsSource="{Binding Languages}"
+                        SelectedItem="{Binding SelectedLanguage}"/>
             </textInputLayout:SfTextInputLayout>
 
             <Grid>
