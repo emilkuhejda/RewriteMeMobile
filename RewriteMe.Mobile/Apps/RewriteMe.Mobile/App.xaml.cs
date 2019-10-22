@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AppCenter;
-using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Push;
 using Prism;
 using Prism.Ioc;
@@ -22,6 +21,7 @@ using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
 using Syncfusion.Licensing;
+using Unity;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -55,6 +55,12 @@ namespace RewriteMe.Mobile
 
             var navigationParameters = InitializeNavigationParameters();
             NavigateToPage(navigationParameters);
+        }
+
+        protected override IContainerExtension CreateContainerExtension()
+        {
+            var container = new UnityContainer().AddExtension(new ForceActivation());
+            return new UnityContainerExtension(container);
         }
 
         private INavigationParameters InitializeNavigationParameters()
