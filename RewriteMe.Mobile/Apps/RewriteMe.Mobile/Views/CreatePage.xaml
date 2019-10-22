@@ -3,6 +3,7 @@
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
@@ -44,6 +45,22 @@
                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}"
                                   VerticalOptions="Center"
                                   WidthRequest="200" />
+
+                <Grid>
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="50"
+                                          HorizontalOptions="Center"
+                                          InputTransparent="True"
+                                          IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Clear.svg"
+                                          VerticalOptions="Center" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClearSelectedFileCommand}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
             </StackLayout>
         </controls:AlwaysScrollView>
 
