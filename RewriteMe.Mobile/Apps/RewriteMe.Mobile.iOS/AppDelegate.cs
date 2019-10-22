@@ -11,7 +11,6 @@ using Syncfusion.SfRadialMenu.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
 using Syncfusion.XForms.iOS.Border;
 using Syncfusion.XForms.iOS.Buttons;
-using Syncfusion.XForms.iOS.ComboBox;
 using Syncfusion.XForms.iOS.ProgressBar;
 using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
@@ -94,7 +93,6 @@ namespace RewriteMe.Mobile.iOS
             SfLinearProgressBarRenderer.Init();
 
             using (var busyIndicatorRenderer = new SfBusyIndicatorRenderer()) { }
-            using (var comboBoxRenderer = new SfComboBoxRenderer()) { }
         }
     }
 }

@@ -302,6 +302,9 @@
     <value>Downloading... {0}%</value>
   </data>
   
+  <data name="InvalidAudioFileErrorMessage" xml:space="preserve">
+    <value>Audio file is invalid.</value>
+  </data>
   <data name="ProfileEditErrorMessage" xml:space="preserve">
     <value>Your data was not changed. Please, try it later.</value>
   </data>
