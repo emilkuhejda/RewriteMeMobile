@@ -13,10 +13,10 @@
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <WebView Grid.Row="0"
-                 HorizontalOptions="FillAndExpand"
-                 Source="{Binding WebViewSource}"
-                 VerticalOptions="FillAndExpand" />
+        <controls:RewriteMeWebView Grid.Row="0"
+                                   HorizontalOptions="FillAndExpand"
+                                   Source="{Binding WebViewSource}"
+                                   VerticalOptions="FillAndExpand" />
 
         <Grid Grid.Row="1">
             <Grid.RowDefinitions>

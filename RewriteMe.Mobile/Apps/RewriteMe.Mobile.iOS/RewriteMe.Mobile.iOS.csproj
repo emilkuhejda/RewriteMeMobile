@@ -124,6 +124,7 @@
     <Compile Include="Renderers\BaseNavigationPageRenderer.cs" />
     <Compile Include="Renderers\NoBarsScrollViewerRenderer.cs" />
     <Compile Include="Renderers\RewriteMeEditorRenderer.cs" />
+    <Compile Include="Renderers\RewriteMeWebViewRenderer.cs" />
     <Compile Include="Services\MediaService.cs" />
     <None Include="..\..\Global\RewriteMe.CodeAnalysis.ruleset">
       <Link>Properties\RewriteMe.CodeAnalysis.ruleset</Link>
