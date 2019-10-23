@@ -72,7 +72,7 @@
             <Color x:Key="ColorPrimary">#FF5724C6</Color>
             <Color x:Key="ApplicationTitleTextColor">#FFFFFF</Color>
             <Color x:Key="NavigationBarGray">#D8D8D8</Color>
-            <Color x:Key="Divider">#C8C7CC</Color>
+            <Color x:Key="Divider">#EEEEEE</Color>
             <Color x:Key="ActionBarBorderColor">#BDBDBD</Color>
             <Color x:Key="ActionBarTileBackgroundColor">#FFFFFF</Color>
             <Color x:Key="ActionBarTileBackgroundColorHover">#E0E0E0</Color>
