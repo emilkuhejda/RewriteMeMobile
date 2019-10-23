@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Plugin.FilePicker;
+using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
@@ -48,6 +49,7 @@ namespace RewriteMe.Mobile.ViewModels
             AvailableLanguages = SupportedLanguages.All.Where(x => !x.OnlyInAzure).ToList();
 
             UploadFileCommand = new AsyncCommand(ExecuteUploadFileCommandAsync);
+            ClearSelectedFileCommand = new DelegateCommand(ExecuteClearSelectedFileCommand);
 
             ResetLoadingText();
         }
@@ -101,6 +103,8 @@ namespace RewriteMe.Mobile.ViewModels
         private ActionBarTileViewModel SaveAndTranscribeTileItem { get; set; }
 
         public ICommand UploadFileCommand { get; }
+
+        public ICommand ClearSelectedFileCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
@@ -160,6 +164,11 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteUploadFileCommandAsync()
         {
             await ThreadHelper.InvokeOnUiThread(async () => await PickFileAsync().ConfigureAwait(false)).ConfigureAwait(false);
+        }
+
+        private void ExecuteClearSelectedFileCommand()
+        {
+            SelectedFile = null;
         }
 
         private async Task PickFileAsync()

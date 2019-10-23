@@ -4,6 +4,7 @@
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
@@ -24,7 +25,7 @@
                     <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
                             ItemDisplayBinding="{Binding Title}"
                             ItemsSource="{Binding AvailableLanguages}"
-                            SelectedItem="{Binding SelectedLanguage}"/>
+                            SelectedItem="{Binding SelectedLanguage}" />
                 </textInputLayout:SfTextInputLayout>
 
                 <Label Margin="0,0,0,20"
@@ -40,9 +41,26 @@
                                   HasShadow="True"
                                   HeightRequest="50"
                                   HorizontalOptions="Center"
+                                  IsVisible="{Binding SelectedFile, Converter={StaticResource NullToTrueBoolConverter}}"
                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}"
                                   VerticalOptions="Center"
                                   WidthRequest="200" />
+
+                <Grid>
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="70"
+                                          HorizontalOptions="Center"
+                                          InputTransparent="True"
+                                          IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Clear.svg"
+                                          VerticalOptions="Center" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding ClearSelectedFileCommand}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
             </StackLayout>
         </controls:AlwaysScrollView>
 
