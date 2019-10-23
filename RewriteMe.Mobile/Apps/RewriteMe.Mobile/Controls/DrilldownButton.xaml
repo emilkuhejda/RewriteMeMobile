@@ -24,7 +24,6 @@
                 <Grid BackgroundColor="{Binding BackgroundColor, Source={x:Reference Control}}" IsEnabled="{Binding IsEnabled, Source={x:Reference Control}}">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="1" />
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="25" />
                     </Grid.ColumnDefinitions>
@@ -42,31 +41,24 @@
                            VerticalOptions="CenterAndExpand"
                            VerticalTextAlignment="Center" />
 
-                    <BoxView Grid.Row="0"
-                             Grid.Column="1"
-                             BackgroundColor="{DynamicResource Divider}"
-                             HorizontalOptions="End"
-                             IsVisible="{Binding Content, Source={x:Reference ContentPresenter}, Mode=OneWay, Converter={StaticResource NullToBoolConverter}}"
-                             VerticalOptions="FillAndExpand"
-                             WidthRequest="1" />
-
                     <Frame x:Name="ContentPresenter"
-                           Grid.Column="2"
+                           Grid.Column="1"
                            Margin="0"
                            Padding="0"
                            BackgroundColor="Transparent"
                            CornerRadius="0"
-                           HasShadow="False" />
+                           HasShadow="False"
+                           HorizontalOptions="End" />
 
-                    <forms:SvgCachedImage Grid.Column="3"
-                                          HeightRequest="24"
+                    <forms:SvgCachedImage Grid.Column="2"
+                                          HeightRequest="16"
                                           HorizontalOptions="EndAndExpand"
                                           IsVisible="{Binding IsBusy, Source={x:Reference Control}, Mode=OneWay, Converter={StaticResource InvertedBoolConverter}}"
                                           Source="{Binding ImageSource, Source={x:Reference Control}, Mode=OneWay}"
                                           VerticalOptions="CenterAndExpand"
-                                          WidthRequest="24" />
+                                          WidthRequest="16" />
 
-                    <ActivityIndicator Grid.Column="2"
+                    <ActivityIndicator Grid.Column="1"
                                        Grid.ColumnSpan="2"
                                        HorizontalOptions="EndAndExpand"
                                        IsRunning="{Binding IsBusy, Source={x:Reference Control}, Mode=OneWay}"
