@@ -16,6 +16,7 @@
   <ItemGroup>
     <None Remove="Resources\Images\Add.svg" />
     <None Remove="Resources\Images\Back.svg" />
+    <None Remove="Resources\Images\Clear.svg" />
     <None Remove="Resources\Images\Delete.svg" />
     <None Remove="Resources\Images\Forward.svg" />
     <None Remove="Resources\Images\Info.svg" />
@@ -48,6 +49,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Resources\Images\Add.svg" />
     <EmbeddedResource Include="Resources\Images\Back.svg" />
+    <EmbeddedResource Include="Resources\Images\Clear.svg" />
     <EmbeddedResource Include="Resources\Images\Delete.svg" />
     <EmbeddedResource Include="Resources\Images\Forward.svg" />
     <EmbeddedResource Include="Resources\Images\Info.svg" />
