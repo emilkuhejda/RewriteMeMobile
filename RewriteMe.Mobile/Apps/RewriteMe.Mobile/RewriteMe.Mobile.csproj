@@ -16,6 +16,7 @@
   <ItemGroup>
     <None Remove="Resources\Images\Add.svg" />
     <None Remove="Resources\Images\Back.svg" />
+    <None Remove="Resources\Images\Clear.svg" />
     <None Remove="Resources\Images\Delete.svg" />
     <None Remove="Resources\Images\Forward.svg" />
     <None Remove="Resources\Images\Info.svg" />
@@ -43,12 +44,12 @@
     <None Remove="Resources\Images\PlayRecording.svg" />
     <None Remove="Resources\Images\Subscription-1.svg" />
     <None Remove="Resources\Images\Subscription-10.svg" />
-    <None Remove="Resources\Images\Clear.svg" />
   </ItemGroup>
 
   <ItemGroup>
     <EmbeddedResource Include="Resources\Images\Add.svg" />
     <EmbeddedResource Include="Resources\Images\Back.svg" />
+    <EmbeddedResource Include="Resources\Images\Clear.svg" />
     <EmbeddedResource Include="Resources\Images\Delete.svg" />
     <EmbeddedResource Include="Resources\Images\Forward.svg" />
     <EmbeddedResource Include="Resources\Images\Info.svg" />
@@ -75,7 +76,6 @@
     <EmbeddedResource Include="Resources\Images\RecorderOverview.svg" />
     <EmbeddedResource Include="Resources\Images\Subscription-1.svg" />
     <EmbeddedResource Include="Resources\Images\Subscription-10.svg" />
-    <EmbeddedResource Include="Resources\Images\Clear.svg" />
   </ItemGroup>
   
   <ItemGroup>
