@@ -9,7 +9,7 @@
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="InformationMessagesTemplate">
-            <Grid BackgroundColor="White">
+            <Grid Padding="0,0,0,20" BackgroundColor="White">
                 <Grid.Resources>
                     <ResourceDictionary>
                         <converters:BoolToStyleConverter x:Key="WasOpenedToLabelStyleConverter"
@@ -39,7 +39,7 @@
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
-    <Grid Padding="{StaticResource StandardPadding}">
+    <Grid Padding="16,16,16,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

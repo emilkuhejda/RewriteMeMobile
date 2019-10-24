@@ -8,47 +8,45 @@
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="RecordedItemsTemplate">
-            <Grid BackgroundColor="{StaticResource ColorWhite}">
-                <Grid Padding="{StaticResource StandardPadding}">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
-                    </Grid.GestureRecognizers>
+            <Grid Padding="0,0,0,20" BackgroundColor="{StaticResource ColorWhite}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
+                </Grid.GestureRecognizers>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
 
-                    <forms:SvgCachedImage Grid.Column="0"
-                                          Margin="0"
-                                          Aspect="AspectFit"
-                                          BackgroundColor="Transparent"
-                                          HeightRequest="50"
-                                          HorizontalOptions="Center"
-                                          InputTransparent="True"
-                                          Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
-                                          VerticalOptions="Center" />
+                <forms:SvgCachedImage Grid.Column="0"
+                                      Margin="0"
+                                      Aspect="AspectFit"
+                                      BackgroundColor="Transparent"
+                                      HeightRequest="50"
+                                      HorizontalOptions="Center"
+                                      InputTransparent="True"
+                                      Source="resource://RewriteMe.Mobile.Resources.Images.PlayRecording.svg"
+                                      VerticalOptions="Center" />
 
-                    <StackLayout Grid.Column="1"
-                                 Margin="10,0,0,0"
-                                 VerticalOptions="Center">
-                        <Label HeightRequest="20"
+                <StackLayout Grid.Column="1"
+                             Margin="10,0,0,0"
+                             VerticalOptions="Center">
+                    <Label HeightRequest="22"
+                           Style="{StaticResource LabelStyle}"
+                           Text="{Binding Title}" />
+                    <Frame IsVisible="{Binding IsRecordingOnly}" Style="{StaticResource InfoTileBackground}">
+                        <Label FontAttributes="Italic"
+                               FontSize="{StaticResource MidMediumSize}"
                                Style="{StaticResource LabelStyle}"
-                               Text="{Binding Title}" />
-                        <Frame IsVisible="{Binding IsRecordingOnly}" Style="{StaticResource InfoTileBackground}">
-                            <Label FontAttributes="Italic"
-                                   FontSize="{StaticResource MidMediumSize}"
-                                   Style="{StaticResource LabelStyle}"
-                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}"
-                                   TextColor="{StaticResource ColorWhite}" />
-                        </Frame>
-                    </StackLayout>
-                </Grid>
+                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RecordingOnly}}"
+                               TextColor="{StaticResource ColorWhite}" />
+                    </Frame>
+                </StackLayout>
             </Grid>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
-    <Grid>
+    <Grid Padding="16,16,16,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />

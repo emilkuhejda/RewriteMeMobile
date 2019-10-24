@@ -10,69 +10,67 @@
                           xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="FileItemsTemplate">
-            <Grid BackgroundColor="{StaticResource ColorWhite}">
-                <Grid Padding="{StaticResource StandardPadding}">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
-                    </Grid.GestureRecognizers>
+            <Grid Padding="0,0,0,20" BackgroundColor="{StaticResource ColorWhite}">
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
+                </Grid.GestureRecognizers>
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-                    <forms:SvgCachedImage Grid.Column="0"
-                                          Margin="0"
-                                          Aspect="AspectFit"
-                                          BackgroundColor="Transparent"
-                                          HeightRequest="40"
-                                          HorizontalOptions="Center"
-                                          InputTransparent="True"
-                                          Source="resource://RewriteMe.Mobile.Resources.Images.Page.svg"
-                                          VerticalOptions="Center" />
+                <forms:SvgCachedImage Grid.Column="0"
+                                      Margin="0"
+                                      Aspect="AspectFit"
+                                      BackgroundColor="Transparent"
+                                      HeightRequest="40"
+                                      HorizontalOptions="Center"
+                                      InputTransparent="True"
+                                      Source="resource://RewriteMe.Mobile.Resources.Images.Page.svg"
+                                      VerticalOptions="Center" />
 
-                    <StackLayout Grid.Column="1">
-                        <Label HeightRequest="20"
-                               Style="{StaticResource LabelStyle}"
-                               Text="{Binding FileName}" />
+                <StackLayout Grid.Column="1">
+                    <Label HeightRequest="22"
+                           Style="{StaticResource LabelStyle}"
+                           Text="{Binding FileName}" />
 
-                        <Label FontFamily="{StaticResource FontFamilyQuicksandLight}"
-                               FontSize="{StaticResource MidMediumSize}"
-                               HeightRequest="20"
-                               Style="{StaticResource LabelStyle}"
-                               Text="{Binding DateCreated}" />
-                    </StackLayout>
+                    <Label FontFamily="{StaticResource FontFamilyQuicksandLight}"
+                           FontSize="{StaticResource MidMediumSize}"
+                           HeightRequest="20"
+                           Style="{StaticResource LabelStyle}"
+                           Text="{Binding DateCreated}" />
+                </StackLayout>
 
-                    <progressBar:SfStepProgressBar Grid.Column="2"
-                                                   IsVisible="{Binding IsCompleted}"
-                                                   Orientation="Vertical"
-                                                   VerticalOptions="Center">
-                        <progressBar:SfStepProgressBar.CompletedStepStyle>
-                            <progressBar:StepStyle x:TypeArguments="progressBar:CompletedStepState"
-                                                   MarkerContentSize="15"
-                                                   MarkerFillColor="{StaticResource ColorPrimary}"
-                                                   MarkerSize="30" />
-                        </progressBar:SfStepProgressBar.CompletedStepStyle>
-                        <progressBar:StepView Status="Completed" />
-                    </progressBar:SfStepProgressBar>
+                <progressBar:SfStepProgressBar Grid.Column="2"
+                                               IsVisible="{Binding IsCompleted}"
+                                               Orientation="Vertical"
+                                               VerticalOptions="Center">
+                    <progressBar:SfStepProgressBar.CompletedStepStyle>
+                        <progressBar:StepStyle x:TypeArguments="progressBar:CompletedStepState"
+                                               MarkerContentSize="15"
+                                               MarkerFillColor="{StaticResource ColorPrimary}"
+                                               MarkerSize="30" />
+                    </progressBar:SfStepProgressBar.CompletedStepStyle>
+                    <progressBar:StepView Status="Completed" />
+                </progressBar:SfStepProgressBar>
 
-                    <xForms:SfBusyIndicator Grid.Column="2"
-                                            AnimationType="Print"
-                                            BackgroundColor="{StaticResource ColorWhite}"
-                                            HeightRequest="40"
-                                            IsVisible="{Binding IsInProgress}"
-                                            TextColor="{StaticResource ColorPrimary}"
-                                            VerticalOptions="Center"
-                                            ViewBoxHeight="40"
-                                            ViewBoxWidth="40"
-                                            WidthRequest="40" />
-                </Grid>
+                <xForms:SfBusyIndicator Grid.Column="2"
+                                        AnimationType="Print"
+                                        BackgroundColor="{StaticResource ColorWhite}"
+                                        HeightRequest="40"
+                                        IsVisible="{Binding IsInProgress}"
+                                        TextColor="{StaticResource ColorPrimary}"
+                                        VerticalOptions="Center"
+                                        ViewBoxHeight="40"
+                                        ViewBoxWidth="40"
+                                        WidthRequest="40" />
             </Grid>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
-    <Grid>
+    <Grid Padding="16,16,16,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
