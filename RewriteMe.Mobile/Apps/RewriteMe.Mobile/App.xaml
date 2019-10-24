@@ -456,75 +456,73 @@
 
             <!--  Data Templates  -->
             <DataTemplate x:Key="DetailItemsTemplate">
-                <ViewCell>
-                    <StackLayout>
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="*" />
-                            </Grid.ColumnDefinitions>
+                <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                            <StackLayout Grid.Column="0" Orientation="Horizontal">
-                                <xForms:SfBusyIndicator AnimationType="SingleCircle"
-                                                        BackgroundColor="{StaticResource ColorWhite}"
-                                                        HeightRequest="30"
-                                                        IsVisible="{Binding OperationScope.IsBusy}"
-                                                        TextColor="{StaticResource ColorPrimary}"
-                                                        ViewBoxHeight="30"
-                                                        ViewBoxWidth="30"
-                                                        WidthRequest="30" />
+                        <StackLayout Grid.Column="0" Orientation="Horizontal">
+                            <xForms:SfBusyIndicator AnimationType="SingleCircle"
+                                                    BackgroundColor="{StaticResource ColorWhite}"
+                                                    HeightRequest="30"
+                                                    IsVisible="{Binding OperationScope.IsBusy}"
+                                                    TextColor="{StaticResource ColorPrimary}"
+                                                    ViewBoxHeight="30"
+                                                    ViewBoxWidth="30"
+                                                    WidthRequest="30" />
 
-                                <Grid BackgroundColor="Transparent"
-                                      HeightRequest="39"
-                                      HorizontalOptions="Start"
-                                      IsVisible="{Binding OperationScope.IsBusy, Converter={StaticResource InvertedBoolConverter}}"
-                                      WidthRequest="39">
-                                    <forms:SvgCachedImage Margin="0"
-                                                          Aspect="AspectFit"
-                                                          BackgroundColor="Transparent"
-                                                          HeightRequest="30"
-                                                          InputTransparent="True"
-                                                          Source="resource://RewriteMe.Mobile.Resources.Images.Play-Enabled.svg"
-                                                          VerticalOptions="CenterAndExpand" />
+                            <Grid BackgroundColor="Transparent"
+                                  HeightRequest="39"
+                                  HorizontalOptions="Start"
+                                  IsVisible="{Binding OperationScope.IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                                  WidthRequest="39">
+                                <forms:SvgCachedImage Margin="0"
+                                                      Aspect="AspectFit"
+                                                      BackgroundColor="Transparent"
+                                                      HeightRequest="30"
+                                                      InputTransparent="True"
+                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Play-Enabled.svg"
+                                                      VerticalOptions="CenterAndExpand" />
 
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding PlayCommand}" />
-                                    </Grid.GestureRecognizers>
-                                </Grid>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding PlayCommand}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
 
-                                <Grid Margin="0,0,0,0"
-                                      BackgroundColor="Transparent"
-                                      HeightRequest="39"
-                                      HorizontalOptions="Start"
-                                      IsVisible="{Binding IsReloadCommandVisible}"
-                                      WidthRequest="39">
-                                    <forms:SvgCachedImage Margin="0"
-                                                          Aspect="AspectFit"
-                                                          BackgroundColor="Transparent"
-                                                          HeightRequest="30"
-                                                          InputTransparent="True"
-                                                          Source="resource://RewriteMe.Mobile.Resources.Images.Reload.svg"
-                                                          VerticalOptions="CenterAndExpand" />
+                            <Grid Margin="0,0,0,0"
+                                  BackgroundColor="Transparent"
+                                  HeightRequest="39"
+                                  HorizontalOptions="Start"
+                                  IsVisible="{Binding IsReloadCommandVisible}"
+                                  WidthRequest="39">
+                                <forms:SvgCachedImage Margin="0"
+                                                      Aspect="AspectFit"
+                                                      BackgroundColor="Transparent"
+                                                      HeightRequest="30"
+                                                      InputTransparent="True"
+                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Reload.svg"
+                                                      VerticalOptions="CenterAndExpand" />
 
-                                    <Grid.GestureRecognizers>
-                                        <TapGestureRecognizer Command="{Binding ReloadCommand}" />
-                                    </Grid.GestureRecognizers>
-                                </Grid>
-                            </StackLayout>
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding ReloadCommand}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+                        </StackLayout>
 
-                            <Label Grid.Column="1"
-                                   HorizontalOptions="End"
-                                   Style="{StaticResource LabelStyle}"
-                                   Text="{Binding Time}" />
-                        </Grid>
+                        <Label Grid.Column="1"
+                               HorizontalOptions="End"
+                               Style="{StaticResource LabelStyle}"
+                               Text="{Binding Time}" />
+                    </Grid>
 
-                        <Editor AutoSize="TextChanges"
-                                FontSize="{StaticResource MediumSize}"
-                                Keyboard="Text"
-                                Text="{Binding Transcript}"
-                                VerticalOptions="Fill" />
-                    </StackLayout>
-                </ViewCell>
+                    <Editor AutoSize="TextChanges"
+                            FontSize="{StaticResource MediumSize}"
+                            Keyboard="Text"
+                            Text="{Binding Transcript}"
+                            VerticalOptions="Fill" />
+                </StackLayout>
             </DataTemplate>
 
             <DataTemplate x:Key="ContextActionBarTileCellTemplate">
