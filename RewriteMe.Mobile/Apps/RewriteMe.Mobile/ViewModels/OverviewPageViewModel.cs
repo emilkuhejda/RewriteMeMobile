@@ -56,6 +56,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 await InitializeFileItemsAsync().ConfigureAwait(false);
+                FileItems.Clear();
                 NotAvailableData = !FileItems.Any();
             }
         }

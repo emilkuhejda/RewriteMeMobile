@@ -76,20 +76,66 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Label Grid.Row="1"
-               FontAttributes="Italic"
-               HorizontalOptions="Center"
-               IsVisible="{Binding NotAvailableData}"
-               Style="{StaticResource LabelStyle}"
-               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
-               VerticalOptions="Start" />
-
         <RefreshView Grid.Row="1"
                      Command="{Binding RefreshCommand}"
                      IsRefreshing="{Binding IsRefreshing}">
-            <CollectionView ItemTemplate="{StaticResource FileItemsTemplate}"
-                            ItemsSource="{Binding FileItems}"
-                            VerticalScrollBarVisibility="Never" />
+            <CollectionView ItemTemplate="{StaticResource FileItemsTemplate}" ItemsSource="{Binding FileItems}">
+                <CollectionView.EmptyView>
+                    <Grid VerticalOptions="Start">
+                        <Frame Margin="0,0,0,0"
+                               Padding="0,0,0,0"
+                               BackgroundColor="{StaticResource ColorGrey100}"
+                               CornerRadius="15"
+                               HasShadow="True"
+                               HeightRequest="200"
+                               IsClippedToBounds="True"
+                               VerticalOptions="Start">
+                            <StackLayout HorizontalOptions="FillAndExpand" Orientation="Horizontal">
+                                <BoxView WidthRequest="7" Color="{StaticResource ColorPrimary}" />
+
+                                <Frame Margin="0,0,0,0"
+                                       BackgroundColor="{StaticResource ColorGrey100}"
+                                       HasShadow="False"
+                                       HorizontalOptions="StartAndExpand">
+                                    <Grid Padding="0,0,0,0"
+                                          BackgroundColor="Transparent"
+                                          HorizontalOptions="FillAndExpand"
+                                          VerticalOptions="CenterAndExpand">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <forms:SvgCachedImage Grid.Column="0"
+                                                              Margin="0"
+                                                              Aspect="AspectFit"
+                                                              BackgroundColor="Transparent"
+                                                              HeightRequest="40"
+                                                              HorizontalOptions="Center"
+                                                              InputTransparent="True"
+                                                              Source="resource://RewriteMe.Mobile.Resources.Images.Page.svg"
+                                                              VerticalOptions="Center" />
+
+                                        <StackLayout Grid.Column="1" Orientation="Vertical">
+                                            <Label LineBreakMode="WordWrap" Text="Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s" />
+                                            <Grid HorizontalOptions="End">
+                                                <forms:SvgCachedImage Margin="0"
+                                                                      Aspect="AspectFit"
+                                                                      BackgroundColor="Transparent"
+                                                                      HeightRequest="40"
+                                                                      HorizontalOptions="End"
+                                                                      InputTransparent="True"
+                                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Add.svg"
+                                                                      VerticalOptions="Center" />
+                                            </Grid>
+                                        </StackLayout>
+                                    </Grid>
+                                </Frame>
+                            </StackLayout>
+                        </Frame>
+                    </Grid>
+                </CollectionView.EmptyView>
+            </CollectionView>
         </RefreshView>
 
         <views:RadialNavigationMenuView Grid.Row="1"
