@@ -9,39 +9,37 @@
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="InformationMessagesTemplate">
-            <ViewCell>
-                <Grid BackgroundColor="White">
-                    <Grid.Resources>
-                        <ResourceDictionary>
-                            <converters:BoolToStyleConverter x:Key="WasOpenedToLabelStyleConverter"
-                                                             FalseValue="{StaticResource LabelBoldStyle}"
-                                                             TrueValue="{StaticResource LabelStyle}" />
-                        </ResourceDictionary>
-                    </Grid.Resources>
+            <Grid Padding="0,0,0,20" BackgroundColor="White">
+                <Grid.Resources>
+                    <ResourceDictionary>
+                        <converters:BoolToStyleConverter x:Key="WasOpenedToLabelStyleConverter"
+                                                         FalseValue="{StaticResource LabelBoldStyle}"
+                                                         TrueValue="{StaticResource LabelStyle}" />
+                    </ResourceDictionary>
+                </Grid.Resources>
 
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
-                    </Grid.GestureRecognizers>
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding NavigateToDetailPageCommand}" />
+                </Grid.GestureRecognizers>
 
-                    <StackLayout Orientation="Horizontal">
-                        <forms:SvgCachedImage Margin="0,5,10,5"
-                                              Aspect="AspectFit"
-                                              BackgroundColor="Transparent"
-                                              HeightRequest="40"
-                                              InputTransparent="True"
-                                              Source="resource://RewriteMe.Mobile.Resources.Images.Info.svg"
-                                              VerticalOptions="CenterAndExpand" />
+                <StackLayout Orientation="Horizontal">
+                    <forms:SvgCachedImage Margin="0,5,10,5"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="40"
+                                          InputTransparent="True"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Info.svg"
+                                          VerticalOptions="CenterAndExpand" />
 
-                        <Label Style="{Binding WasOpened, Mode=OneWay, Converter={StaticResource WasOpenedToLabelStyleConverter}}"
-                               Text="{Binding Title}"
-                               VerticalOptions="Center" />
-                    </StackLayout>
-                </Grid>
-            </ViewCell>
+                    <Label Style="{Binding WasOpened, Mode=OneWay, Converter={StaticResource WasOpenedToLabelStyleConverter}}"
+                           Text="{Binding Title}"
+                           VerticalOptions="Center" />
+                </StackLayout>
+            </Grid>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
-    <Grid Padding="{StaticResource StandardPadding}">
+    <Grid Padding="16,16,16,0">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -55,13 +53,10 @@
                Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
                VerticalOptions="Start" />
 
-        <ListView Grid.Row="1"
-                  HasUnevenRows="True"
-                  IsPullToRefreshEnabled="True"
-                  IsRefreshing="{Binding IsRefreshing}"
-                  ItemTemplate="{StaticResource InformationMessagesTemplate}"
-                  ItemsSource="{Binding InformationMessages}"
-                  RefreshCommand="{Binding RefreshCommand}"
-                  SeparatorVisibility="None" />
+        <RefreshView Grid.Row="1"
+                     Command="{Binding RefreshCommand}"
+                     IsRefreshing="{Binding IsRefreshing}">
+            <CollectionView ItemTemplate="{StaticResource InformationMessagesTemplate}" ItemsSource="{Binding InformationMessages}" />
+        </RefreshView>
     </Grid>
 </views:BaseNavigationPage>
