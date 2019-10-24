@@ -13,13 +13,13 @@
             <controls:DrillDownButton Command="{Binding NavigateToLanguageCommand}"
                                       ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
-                <Label Style="{StaticResource LabelStyle}" Text="{Binding SelectedLanguage.Title}" />
+                <Label Style="{StaticResource DrillDownItemLabelStyle}" Text="{Binding SelectedLanguage.Title}" />
             </controls:DrillDownButton>
             <controls:Divider />
 
             <!--  Application version  -->
             <controls:DrillDownButton Command="{Binding DeveloperMode.UnlockCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Version}}">
-                <Label Style="{StaticResource LabelStyle}" Text="{Binding ApplicationVersion}" />
+                <Label Style="{StaticResource DrillDownItemLabelStyle}" Text="{Binding ApplicationVersion}" />
             </controls:DrillDownButton>
             <controls:Divider />
 
@@ -27,7 +27,7 @@
             <controls:DrillDownButton Command="{Binding NavigateToUserSettingsCommand}"
                                       ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UserProfile}}">
-                <Label Style="{StaticResource LabelStyle}" Text="{Binding UserName}" />
+                <Label Style="{StaticResource DrillDownItemLabelStyle}" Text="{Binding UserName}" />
             </controls:DrillDownButton>
             <controls:Divider />
 
@@ -35,7 +35,7 @@
             <controls:DrillDownButton Command="{Binding NavigateToUserSubscriptions}"
                                       ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RemainingTime}}">
-                <Label Style="{StaticResource LabelStyle}" Text="{Binding RemainingTime}" />
+                <Label Style="{StaticResource DrillDownItemLabelStyle}" Text="{Binding RemainingTime}" />
             </controls:DrillDownButton>
             <controls:Divider />
 

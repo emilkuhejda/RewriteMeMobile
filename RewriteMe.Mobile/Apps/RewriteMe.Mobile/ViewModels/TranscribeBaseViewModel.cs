@@ -38,6 +38,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected IFileItemService FileItemService { get; }
 
+        protected bool AudioFileIsInvalid { get; set; }
+
         protected bool CanTranscribe
         {
             get => _canTranscribe;
@@ -113,7 +115,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteTranscribeCommand()
         {
-            return CanTranscribe && _selectedLanguage != null;
+            return !AudioFileIsInvalid && CanTranscribe && _selectedLanguage != null;
         }
 
         private async Task ExecuteTranscribeCommandAsync()

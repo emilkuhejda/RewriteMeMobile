@@ -9,27 +9,25 @@
                           Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="ProductsTemplate">
-            <ViewCell>
-                <StackLayout Margin="20,0,20,20">
-                    <Grid HorizontalOptions="Center">
-                        <forms:SvgCachedImage Margin="0"
-                                              Aspect="AspectFit"
-                                              BackgroundColor="Transparent"
-                                              HeightRequest="50"
-                                              InputTransparent="True"
-                                              Source="{Binding IconKey}"
-                                              VerticalOptions="CenterAndExpand" />
+            <StackLayout Margin="20,0,20,20">
+                <Grid HorizontalOptions="Center">
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="50"
+                                          InputTransparent="True"
+                                          Source="{Binding IconKey}"
+                                          VerticalOptions="CenterAndExpand" />
 
-                        <Grid.GestureRecognizers>
-                            <TapGestureRecognizer Command="{Binding BuyCommand}" />
-                        </Grid.GestureRecognizers>
-                    </Grid>
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding BuyCommand}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
 
-                    <Label HorizontalTextAlignment="Center"
-                           LineBreakMode="WordWrap"
-                           Text="{Binding Description}" />
-                </StackLayout>
-            </ViewCell>
+                <Label HorizontalTextAlignment="Center"
+                       LineBreakMode="WordWrap"
+                       Text="{Binding Description}" />
+            </StackLayout>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
@@ -39,10 +37,8 @@
                HorizontalTextAlignment="Center"
                Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}" />
 
-        <ListView HasUnevenRows="True"
-                  ItemTemplate="{StaticResource ProductsTemplate}"
-                  ItemsSource="{Binding Products}"
-                  SeparatorVisibility="None"
-                  VerticalOptions="Start" />
+        <CollectionView ItemTemplate="{StaticResource ProductsTemplate}"
+                        ItemsSource="{Binding Products}"
+                        VerticalOptions="Start" />
     </StackLayout>
 </views:BaseNavigationPage>

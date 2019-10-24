@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Prism.Navigation;
@@ -44,9 +45,20 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = RecordedItem.FileName;
 
                 var filePath = _recordedItemService.GetAudioPath(RecordedItem);
+                var source = File.ReadAllBytes(filePath);
+                if (!File.Exists(filePath) || !source.Any())
+                {
+                    AudioFileIsInvalid = true;
+                    await DialogService.AlertAsync(
+                        Loc.Text(TranslationKeys.InvalidAudioFileErrorMessage),
+                        null,
+                        Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+                    return;
+                }
+
                 CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
 
-                PlayerViewModel.Load(File.ReadAllBytes(filePath));
+                PlayerViewModel.Load(source);
 
                 await Task.CompletedTask.ConfigureAwait(false);
             }
