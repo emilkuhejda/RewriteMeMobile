@@ -3,9 +3,10 @@
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:converters="clr-namespace:RewriteMe.Mobile.Converters;assembly=RewriteMe.Mobile"
-                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                          xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                          xmlns:svgForms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="InformationMessagesTemplate">
@@ -23,13 +24,13 @@
                 </Grid.GestureRecognizers>
 
                 <StackLayout Orientation="Horizontal">
-                    <forms:SvgCachedImage Margin="0,5,10,5"
-                                          Aspect="AspectFit"
-                                          BackgroundColor="Transparent"
-                                          HeightRequest="40"
-                                          InputTransparent="True"
-                                          Source="resource://RewriteMe.Mobile.Resources.Images.Info.svg"
-                                          VerticalOptions="CenterAndExpand" />
+                    <svgForms:SvgCachedImage Margin="0,5,10,5"
+                                             Aspect="AspectFit"
+                                             BackgroundColor="Transparent"
+                                             HeightRequest="40"
+                                             InputTransparent="True"
+                                             Source="resource://RewriteMe.Mobile.Resources.Images.Info.svg"
+                                             VerticalOptions="CenterAndExpand" />
 
                     <Label Style="{Binding WasOpened, Mode=OneWay, Converter={StaticResource WasOpenedToLabelStyleConverter}}"
                            Text="{Binding Title}"
@@ -46,12 +47,16 @@
             <CollectionView ItemTemplate="{StaticResource InformationMessagesTemplate}" ItemsSource="{Binding InformationMessages}">
                 <CollectionView.EmptyView>
                     <Grid>
-                        <Label FontAttributes="Italic"
-                               HorizontalOptions="Center"
-                               IsVisible="{Binding NotAvailableData}"
-                               Style="{StaticResource LabelStyle}"
-                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
-                               VerticalOptions="Start" />
+                        <StackLayout HorizontalOptions="Center" Orientation="Vertical">
+                            <forms:CachedImage Margin="0,20,0,20"
+                                               Aspect="AspectFit"
+                                               HeightRequest="150"
+                                               HorizontalOptions="Center"
+                                               Source="resource://RewriteMe.Mobile.Resources.Images.NoAvailableData.png"
+                                               VerticalOptions="End" />
+
+                            <Label Style="{StaticResource NoItemsLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}" />
+                        </StackLayout>
                     </Grid>
                 </CollectionView.EmptyView>
             </CollectionView>

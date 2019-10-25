@@ -22,6 +22,7 @@
     <None Remove="Resources\Images\Forward.svg" />
     <None Remove="Resources\Images\Info.svg" />
     <None Remove="Resources\Images\Menu.svg" />
+    <None Remove="Resources\Images\NoAvailableData.png" />
     <None Remove="Resources\Images\Notifications.svg" />
     <None Remove="Resources\Images\Overview.svg" />
     <None Remove="Resources\Images\Page.svg" />
@@ -56,6 +57,7 @@
     <EmbeddedResource Include="Resources\Images\Forward.svg" />
     <EmbeddedResource Include="Resources\Images\Info.svg" />
     <EmbeddedResource Include="Resources\Images\Menu.svg" />
+    <EmbeddedResource Include="Resources\Images\NoAvailableData.png" />
     <EmbeddedResource Include="Resources\Images\Notifications.svg" />
     <EmbeddedResource Include="Resources\Images\Page.svg" />
     <EmbeddedResource Include="Resources\Images\Pause-Enabled.svg" />
