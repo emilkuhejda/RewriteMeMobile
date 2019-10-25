@@ -40,23 +40,21 @@
     </views:BaseNavigationPage.Resources>
 
     <Grid Padding="16,16,16,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Label Grid.Row="1"
-               FontAttributes="Italic"
-               HorizontalOptions="Center"
-               IsVisible="{Binding NotAvailableData}"
-               Style="{StaticResource LabelStyle}"
-               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
-               VerticalOptions="Start" />
-
-        <RefreshView Grid.Row="1"
+        <RefreshView Grid.Row="0"
                      Command="{Binding RefreshCommand}"
                      IsRefreshing="{Binding IsRefreshing}">
-            <CollectionView ItemTemplate="{StaticResource InformationMessagesTemplate}" ItemsSource="{Binding InformationMessages}" />
+            <CollectionView ItemTemplate="{StaticResource InformationMessagesTemplate}" ItemsSource="{Binding InformationMessages}">
+                <CollectionView.EmptyView>
+                    <Grid>
+                        <Label FontAttributes="Italic"
+                               HorizontalOptions="Center"
+                               IsVisible="{Binding NotAvailableData}"
+                               Style="{StaticResource LabelStyle}"
+                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
+                               VerticalOptions="Start" />
+                    </Grid>
+                </CollectionView.EmptyView>
+            </CollectionView>
         </RefreshView>
     </Grid>
 </views:BaseNavigationPage>

@@ -1,10 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Commands;
+using RewriteMe.Mobile.Extensions;
+using RewriteMe.Mobile.Navigation;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -24,7 +28,11 @@ namespace RewriteMe.Mobile.ViewModels
             : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
+
+            RecordCommand = new AsyncCommand(ExecuteRecordCommandAsync);
         }
+
+        public ICommand RecordCommand { get; }
 
         public IEnumerable<RecordedItemViewModel> RecordedItems
         {
@@ -42,9 +50,12 @@ namespace RewriteMe.Mobile.ViewModels
                     .OrderByDescending(x => x.DateCreated)
                     .Select(x => new RecordedItemViewModel(x, NavigationService))
                     .ToList();
-
-                NotAvailableData = !RecordedItems.Any();
             }
+        }
+
+        private async Task ExecuteRecordCommandAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.Recorder).ConfigureAwait(false);
         }
     }
 }
