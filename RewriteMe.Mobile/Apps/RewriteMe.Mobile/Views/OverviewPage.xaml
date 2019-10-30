@@ -2,10 +2,12 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.OverviewPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                          xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
+                          xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                          xmlns:svgForms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
                           xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
     <views:BaseNavigationPage.Resources>
@@ -21,15 +23,15 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
-                <forms:SvgCachedImage Grid.Column="0"
-                                      Margin="0"
-                                      Aspect="AspectFit"
-                                      BackgroundColor="Transparent"
-                                      HeightRequest="40"
-                                      HorizontalOptions="Center"
-                                      InputTransparent="True"
-                                      Source="resource://RewriteMe.Mobile.Resources.Images.Page.svg"
-                                      VerticalOptions="Center" />
+                <svgForms:SvgCachedImage Grid.Column="0"
+                                         Margin="0"
+                                         Aspect="AspectFit"
+                                         BackgroundColor="Transparent"
+                                         HeightRequest="40"
+                                         HorizontalOptions="Center"
+                                         InputTransparent="True"
+                                         Source="resource://RewriteMe.Mobile.Resources.Images.Page.svg"
+                                         VerticalOptions="Center" />
 
                 <StackLayout Grid.Column="1">
                     <Label HeightRequest="22"
@@ -71,28 +73,30 @@
     </views:BaseNavigationPage.Resources>
 
     <Grid Padding="16,16,16,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Label Grid.Row="1"
-               FontAttributes="Italic"
-               HorizontalOptions="Center"
-               IsVisible="{Binding NotAvailableData}"
-               Style="{StaticResource LabelStyle}"
-               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
-               VerticalOptions="Start" />
-
-        <RefreshView Grid.Row="1"
+        <RefreshView Grid.Row="0"
                      Command="{Binding RefreshCommand}"
                      IsRefreshing="{Binding IsRefreshing}">
-            <CollectionView ItemTemplate="{StaticResource FileItemsTemplate}"
-                            ItemsSource="{Binding FileItems}"
-                            VerticalScrollBarVisibility="Never" />
+            <CollectionView ItemTemplate="{StaticResource FileItemsTemplate}" ItemsSource="{Binding FileItems}">
+                <CollectionView.EmptyView>
+                    <StackLayout HorizontalOptions="Center" Orientation="Vertical">
+                        <forms:CachedImage Margin="0,20,0,20"
+                                           Aspect="AspectFit"
+                                           HeightRequest="150"
+                                           HorizontalOptions="Center"
+                                           Source="resource://RewriteMe.Mobile.Resources.Images.EmptyList.png"
+                                           VerticalOptions="End" />
+
+                        <Label Style="{StaticResource NoItemsLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoFilesMessage}}" />
+
+                        <buttons:SfButton Command="{Binding CreateCommand}"
+                                          Style="{StaticResource SfButtonStyle}"
+                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Create}}" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
         </RefreshView>
 
-        <views:RadialNavigationMenuView Grid.Row="1"
+        <views:RadialNavigationMenuView Grid.Row="0"
                                         Padding="0"
                                         BackgroundColor="Transparent"
                                         BindingContext="{Binding NavigationMenu}"

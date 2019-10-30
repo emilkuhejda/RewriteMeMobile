@@ -40,8 +40,6 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 await InitializeInformationMessageAsync().ConfigureAwait(false);
-
-                NotAvailableData = !InformationMessages.Any();
             }
         }
 

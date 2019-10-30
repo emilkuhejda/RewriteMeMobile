@@ -2,7 +2,9 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.RecorderOverviewPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
+                          xmlns:forms1="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
@@ -47,26 +49,30 @@
     </views:BaseNavigationPage.Resources>
 
     <Grid Padding="16,16,16,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-        </Grid.RowDefinitions>
-
-        <Label Grid.Row="1"
-               FontAttributes="Italic"
-               HorizontalOptions="Center"
-               IsVisible="{Binding NotAvailableData}"
-               Style="{StaticResource LabelStyle}"
-               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
-               VerticalOptions="Start" />
-
-        <RefreshView Grid.Row="1"
+        <RefreshView Grid.Row="0"
                      Command="{Binding RefreshCommand}"
                      IsRefreshing="{Binding IsRefreshing}">
-            <CollectionView ItemTemplate="{StaticResource RecordedItemsTemplate}" ItemsSource="{Binding RecordedItems}" />
+            <CollectionView ItemTemplate="{StaticResource RecordedItemsTemplate}" ItemsSource="{Binding RecordedItems}">
+                <CollectionView.EmptyView>
+                    <StackLayout HorizontalOptions="Center" Orientation="Vertical">
+                        <forms1:CachedImage Margin="0,20,0,20"
+                                            Aspect="AspectFit"
+                                            HeightRequest="150"
+                                            HorizontalOptions="Center"
+                                            Source="resource://RewriteMe.Mobile.Resources.Images.EmptyList.png"
+                                            VerticalOptions="End" />
+
+                        <Label Style="{StaticResource NoItemsLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoRecordingsMessage}}" />
+
+                        <buttons:SfButton Command="{Binding RecordCommand}"
+                                          Style="{StaticResource SfButtonStyle}"
+                                          Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Record}}" />
+                    </StackLayout>
+                </CollectionView.EmptyView>
+            </CollectionView>
         </RefreshView>
 
-        <views:RadialNavigationMenuView Grid.Row="1"
+        <views:RadialNavigationMenuView Grid.Row="0"
                                         Padding="0"
                                         BackgroundColor="Transparent"
                                         BindingContext="{Binding NavigationMenu}"

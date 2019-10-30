@@ -32,17 +32,9 @@
                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterToUseApplication}}"
                    WidthRequest="180" />
 
-            <buttons:SfButton BackgroundColor="{StaticResource ColorPrimary}"
-                              BorderColor="{StaticResource ColorGrey500}"
-                              BorderWidth="1"
-                              Command="{Binding LoginCommand}"
-                              CornerRadius="25"
-                              HasShadow="True"
-                              HeightRequest="50"
-                              HorizontalOptions="Center"
-                              Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterOrSignIn}}"
-                              VerticalOptions="Center"
-                              WidthRequest="200" />
+            <buttons:SfButton Command="{Binding LoginCommand}"
+                              Style="{StaticResource SfButtonStyle}"
+                              Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RegisterOrSignIn}}" />
 
             <Label HorizontalOptions="Center"
                    HorizontalTextAlignment="Center"

@@ -2,6 +2,7 @@
 <prism:PrismApplication x:Class="RewriteMe.Mobile.App"
                         xmlns="http://xamarin.com/schemas/2014/forms"
                         xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                        xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                         xmlns:cells="clr-namespace:RewriteMe.Mobile.Controls.Cells;assembly=RewriteMe.Mobile"
                         xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                         xmlns:converters="clr-namespace:RewriteMe.Mobile.Converters;assembly=RewriteMe.Mobile"
@@ -181,6 +182,14 @@
                 <Setter Property="HeightRequest" Value="48" />
             </Style>
 
+            <Style x:Key="NoItemsLabelStyle"
+                   BasedOn="{StaticResource LabelStyle}"
+                   TargetType="Label">
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandMedium}" />
+                <Setter Property="FontSize" Value="{StaticResource LargeSize}" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+            </Style>
+
             <Style x:Key="DrillDownItemLabelStyle"
                    BasedOn="{StaticResource LabelStyle}"
                    TargetType="Label">
@@ -245,7 +254,6 @@
                 <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="BackgroundColorPressed" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="BorderColorPressed" Value="{StaticResource ColorPrimary}" />
-                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Setter Property="TextColor" Value="{StaticResource ColorGrey300}" />
                 <Style.Triggers>
                     <Trigger TargetType="Button" Property="IsEnabled" Value="True">
@@ -266,7 +274,6 @@
                 <Setter Property="BackgroundColorPressed" Value="{StaticResource WindowBackground}" />
                 <Setter Property="BorderColor" Value="{StaticResource ColorPrimary}" />
                 <Setter Property="BorderColorPressed" Value="{StaticResource ColorPrimary}" />
-                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
                 <Style.Triggers>
                     <Trigger TargetType="Button" Property="IsEnabled" Value="True">
                         <Setter Property="BackgroundColor" Value="{StaticResource ColorWhite}" />
@@ -286,6 +293,18 @@
                 <Setter Property="HeightRequest" Value="20" />
                 <Setter Property="HorizontalOptions" Value="Start" />
                 <Setter Property="VerticalOptions" Value="Center" />
+            </Style>
+
+            <Style x:Key="SfButtonStyle" TargetType="buttons:SfButton">
+                <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
+                <Setter Property="BorderColor" Value="{StaticResource ColorGrey500}" />
+                <Setter Property="BorderWidth" Value="1" />
+                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="HasShadow" Value="True" />
+                <Setter Property="HeightRequest" Value="50" />
+                <Setter Property="HorizontalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="WidthRequest" Value="200" />
             </Style>
 
             <!--  Navigation Bar  -->
