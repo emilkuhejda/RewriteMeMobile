@@ -295,6 +295,9 @@
   <data name="NoAvailableData" xml:space="preserve">
     <value>No available data</value>
   </data>
+  <data name="NoAvailableMessages" xml:space="preserve">
+    <value>No available messages</value>
+  </data>
   <data name="UnableToLoadAudioFile" xml:space="preserve">
     <value>Unable to load audio file.</value>
   </data>

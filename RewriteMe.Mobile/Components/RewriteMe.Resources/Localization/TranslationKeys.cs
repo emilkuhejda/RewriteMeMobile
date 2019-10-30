@@ -67,6 +67,7 @@
         public static string FiveMinutesOnly => "FiveMinutesOnly";
         public static string RemainingTime => "RemainingTime";
         public static string NoAvailableData => "NoAvailableData";
+        public static string NoAvailableMessages => "NoAvailableMessages";
         public static string UnableToLoadAudioFile => "UnableToLoadAudioFile";
         public static string Downloading => "Downloading";
         public static string Create => "Create";

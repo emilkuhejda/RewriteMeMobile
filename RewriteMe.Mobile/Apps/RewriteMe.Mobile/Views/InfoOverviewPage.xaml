@@ -55,7 +55,7 @@
                                                Source="resource://RewriteMe.Mobile.Resources.Images.NoAvailableData.png"
                                                VerticalOptions="End" />
 
-                            <Label Style="{StaticResource NoItemsLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}" />
+                            <Label Style="{StaticResource NoItemsLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableMessages}}" />
                         </StackLayout>
                     </Grid>
                 </CollectionView.EmptyView>

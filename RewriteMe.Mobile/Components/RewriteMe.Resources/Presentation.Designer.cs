@@ -448,6 +448,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to No available messages.
+        /// </summary>
+        public static string NoAvailableMessages {
+            get {
+                return ResourceManager.GetString("NoAvailableMessages", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Any files yet?.
         /// </summary>
         public static string NoFilesMessage {
