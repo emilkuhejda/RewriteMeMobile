@@ -1,11 +1,13 @@
 ﻿using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
@@ -29,7 +31,11 @@ namespace RewriteMe.Mobile.ViewModels
             : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
+
+            CreateCommand = new AsyncCommand(ExecuteCreateCommandAsync);
         }
+
+        public ICommand CreateCommand { get; }
 
         public ObservableCollection<FileItemViewModel> FileItems
         {
@@ -56,7 +62,6 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 await InitializeFileItemsAsync().ConfigureAwait(false);
-                NotAvailableData = !FileItems.Any();
             }
         }
 
@@ -110,6 +115,11 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
             FileItems = new ObservableCollection<FileItemViewModel>(fileItems.OrderByDescending(x => x.DateUpdatedUtc).Select(x => new FileItemViewModel(x, NavigationService)));
+        }
+
+        private async Task ExecuteCreateCommandAsync()
+        {
+            await NavigationService.NavigateWithoutAnimationAsync(Pages.Create).ConfigureAwait(false);
         }
 
         private void OnInitializationProgress(object sender, ProgressEventArgs e)

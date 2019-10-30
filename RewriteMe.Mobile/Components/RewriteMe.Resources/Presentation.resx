@@ -295,11 +295,26 @@
   <data name="NoAvailableData" xml:space="preserve">
     <value>No available data</value>
   </data>
+  <data name="NoAvailableMessages" xml:space="preserve">
+    <value>No available messages</value>
+  </data>
   <data name="UnableToLoadAudioFile" xml:space="preserve">
     <value>Unable to load audio file.</value>
   </data>
   <data name="Downloading" xml:space="preserve">
     <value>Downloading... {0}%</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="Record" xml:space="preserve">
+    <value>Record</value>
+  </data>
+  <data name="NoFilesMessage" xml:space="preserve">
+    <value>Any files yet?</value>
+  </data>
+  <data name="NoRecordingsMessage" xml:space="preserve">
+    <value>Any recordings yet?</value>
   </data>
   
   <data name="InvalidAudioFileErrorMessage" xml:space="preserve">

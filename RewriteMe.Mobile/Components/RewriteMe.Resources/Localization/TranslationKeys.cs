@@ -67,8 +67,13 @@
         public static string FiveMinutesOnly => "FiveMinutesOnly";
         public static string RemainingTime => "RemainingTime";
         public static string NoAvailableData => "NoAvailableData";
+        public static string NoAvailableMessages => "NoAvailableMessages";
         public static string UnableToLoadAudioFile => "UnableToLoadAudioFile";
         public static string Downloading => "Downloading";
+        public static string Create => "Create";
+        public static string Record => "Record";
+        public static string NoFilesMessage => "NoFilesMessage";
+        public static string NoRecordingsMessage => "NoRecordingsMessage";
 
         public static string InvalidAudioFileErrorMessage => "InvalidAudioFileErrorMessage";
         public static string ProfileEditErrorMessage => "ProfileEditErrorMessage";

@@ -33,18 +33,10 @@
                        Style="{StaticResource LabelStyle}"
                        Text="{Binding SelectedFile.FileName}" />
 
-                <buttons:SfButton BackgroundColor="{StaticResource ColorPrimary}"
-                                  BorderColor="{StaticResource ColorGrey500}"
-                                  BorderWidth="1"
-                                  Command="{Binding UploadFileCommand}"
-                                  CornerRadius="25"
-                                  HasShadow="True"
-                                  HeightRequest="50"
-                                  HorizontalOptions="Center"
+                <buttons:SfButton Command="{Binding UploadFileCommand}"
                                   IsVisible="{Binding SelectedFile, Converter={StaticResource NullToTrueBoolConverter}}"
-                                  Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}"
-                                  VerticalOptions="Center"
-                                  WidthRequest="200" />
+                                  Style="{StaticResource SfButtonStyle}"
+                                  Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}" />
 
                 <Grid>
                     <forms:SvgCachedImage Margin="0"
