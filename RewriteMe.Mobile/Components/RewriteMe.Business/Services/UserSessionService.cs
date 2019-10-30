@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AppCenter;
+using Microsoft.AppCenter.Push;
 using Microsoft.Identity.Client;
 using Plugin.SecureStorage;
 using RewriteMe.Business.Wrappers;
@@ -281,6 +282,8 @@ namespace RewriteMe.Business.Services
 
             await RemoveLocalAccountsAsync().ConfigureAwait(false);
             await _cleanUpService.CleanUp().ConfigureAwait(false);
+            await Push.SetEnabledAsync(false).ConfigureAwait(false);
+
             CrossSecureStorage.Current.DeleteKey(AccessTokenKey);
         }
 
