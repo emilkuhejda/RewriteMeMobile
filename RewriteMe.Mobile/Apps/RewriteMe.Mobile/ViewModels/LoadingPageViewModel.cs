@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Microsoft.AppCenter.Push;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
@@ -48,6 +49,10 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                var isPushEnabled = await Push.IsEnabledAsync().ConfigureAwait(false);
+                if (!isPushEnabled)
+                    await Push.SetEnabledAsync(true).ConfigureAwait(false);
+
                 ProgressText = Loc.Text(TranslationKeys.LoadingData);
 
                 if (!_connectivityService.IsConnected)
