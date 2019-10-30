@@ -84,8 +84,8 @@
   
   <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter" Version="2.5.0" />
-    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.1.1" />
-    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.1.1" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.5.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.5.0" />
     <PackageReference Include="Microsoft.AppCenter.Push" Version="2.5.0" />
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
       <PrivateAssets>all</PrivateAssets>
