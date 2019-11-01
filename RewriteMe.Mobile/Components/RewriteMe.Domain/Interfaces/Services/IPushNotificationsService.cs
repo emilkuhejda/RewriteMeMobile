@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
@@ -7,5 +8,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<bool> IsEnabledAsync();
 
         Task SetEnabledAsync(bool enabled);
+
+        Task<Guid?> GetInstallIdAsync();
     }
 }
