@@ -9,25 +9,35 @@
                           Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="ProductsTemplate">
-            <StackLayout Margin="20,0,20,20">
-                <Grid HorizontalOptions="Center">
-                    <forms:SvgCachedImage Margin="0"
-                                          Aspect="AspectFit"
-                                          BackgroundColor="Transparent"
-                                          HeightRequest="50"
-                                          InputTransparent="True"
-                                          Source="{Binding IconKey}"
-                                          VerticalOptions="CenterAndExpand" />
+            <Grid Padding="10,10,10,10"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center">
+                <Frame BorderColor="{StaticResource ColorPrimary}"
+                       CornerRadius="5"
+                       HasShadow="True"
+                       HorizontalOptions="Center"
+                       WidthRequest="150">
+                    <StackLayout Margin="20,0,20,20">
+                        <Grid HorizontalOptions="Center">
+                            <forms:SvgCachedImage Margin="0"
+                                                  Aspect="AspectFit"
+                                                  BackgroundColor="Transparent"
+                                                  HeightRequest="50"
+                                                  InputTransparent="True"
+                                                  Source="{Binding IconKey}"
+                                                  VerticalOptions="CenterAndExpand" />
 
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding BuyCommand}" />
-                    </Grid.GestureRecognizers>
-                </Grid>
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding BuyCommand}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
 
-                <Label HorizontalTextAlignment="Center"
-                       LineBreakMode="WordWrap"
-                       Text="{Binding Description}" />
-            </StackLayout>
+                        <Label HorizontalTextAlignment="Center"
+                               LineBreakMode="WordWrap"
+                               Text="{Binding Description}" />
+                    </StackLayout>
+                </Frame>
+            </Grid>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
