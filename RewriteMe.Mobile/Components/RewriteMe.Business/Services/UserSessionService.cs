@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AppCenter;
 using Microsoft.Identity.Client;
 using Plugin.SecureStorage;
 using RewriteMe.Business.Wrappers;
@@ -367,7 +366,7 @@ namespace RewriteMe.Business.Services
             if (accessToken == null)
                 throw new ArgumentNullException(nameof(accessToken));
 
-            var installationId = await AppCenter.GetInstallIdAsync().ConfigureAwait(false) ?? Guid.Empty;
+            var installationId = await _pushNotificationsService.GetInstallIdAsync().ConfigureAwait(false) ?? Guid.Empty;
             var language = await _languageService.GetLanguageName().ConfigureAwait(false);
             var registrationDeviceModel = new RegistrationDeviceModel
             {
