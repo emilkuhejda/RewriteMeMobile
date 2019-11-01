@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.AppCenter.Push;
 using Prism;
@@ -142,7 +143,7 @@ namespace RewriteMe.Mobile
             }
 
 #if !DEBUG
-            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Push));
+            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Analytics), typeof(Push));
 #else
             AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Push));
 #endif

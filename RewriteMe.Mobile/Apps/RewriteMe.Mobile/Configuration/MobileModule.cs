@@ -31,6 +31,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterSingleton<IEmailService, EmailService>();
             containerRegistry.RegisterSingleton<IAuthorizationObserver, AuthorizationObserver>();
             containerRegistry.RegisterSingleton<IAppCenterMetricsService, AppCenterMetricsService>();
+            containerRegistry.RegisterSingleton<IPushNotificationsService, PushNotificationsService>();
             containerRegistry.RegisterSingleton<IExceptionHandlingStrategy, ExceptionHandlingStrategy>();
 
             RegisterViewModels(containerRegistry);

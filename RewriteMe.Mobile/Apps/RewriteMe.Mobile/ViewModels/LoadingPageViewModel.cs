@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.AppCenter.Push;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
@@ -20,12 +19,14 @@ namespace RewriteMe.Mobile.ViewModels
     public class LoadingPageViewModel : ViewModelBase
     {
         private readonly IConnectivityService _connectivityService;
+        private readonly IPushNotificationsService _pushNotificationsService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
 
         private string _progressText;
 
         public LoadingPageViewModel(
             IConnectivityService connectivityService,
+            IPushNotificationsService pushNotificationsService,
             IRewriteMeWebService rewriteMeWebService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -34,6 +35,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _connectivityService = connectivityService;
+            _pushNotificationsService = pushNotificationsService;
             _rewriteMeWebService = rewriteMeWebService;
 
             IsSecurePage = false;
@@ -49,9 +51,9 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                var isPushEnabled = await Push.IsEnabledAsync().ConfigureAwait(false);
+                var isPushEnabled = await _pushNotificationsService.IsEnabledAsync().ConfigureAwait(false);
                 if (!isPushEnabled)
-                    await Push.SetEnabledAsync(true).ConfigureAwait(false);
+                    await _pushNotificationsService.SetEnabledAsync(true).ConfigureAwait(false);
 
                 ProgressText = Loc.Text(TranslationKeys.LoadingData);
 
