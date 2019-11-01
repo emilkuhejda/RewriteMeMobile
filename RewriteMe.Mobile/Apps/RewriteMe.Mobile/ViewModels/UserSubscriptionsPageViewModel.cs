@@ -25,6 +25,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IBillingPurchaseService _billingPurchaseService;
+        private readonly IAppCenterMetricsService _appCenterMetricsService;
         private readonly IEmailService _emailService;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IApplicationVersionProvider _applicationVersionProvider;
@@ -34,6 +35,7 @@ namespace RewriteMe.Mobile.ViewModels
         public UserSubscriptionsPageViewModel(
             IUserSubscriptionService userSubscriptionService,
             IBillingPurchaseService billingPurchaseService,
+            IAppCenterMetricsService appCenterMetricsService,
             IEmailService emailService,
             IApplicationSettings applicationSettings,
             IApplicationVersionProvider applicationVersionProvider,
@@ -45,6 +47,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _userSubscriptionService = userSubscriptionService;
             _billingPurchaseService = billingPurchaseService;
+            _appCenterMetricsService = appCenterMetricsService;
             _emailService = emailService;
             _applicationSettings = applicationSettings;
             _applicationVersionProvider = applicationVersionProvider;
@@ -121,6 +124,7 @@ namespace RewriteMe.Mobile.ViewModels
                 return;
 
             Logger.Info("Subscription was successfully purchased and registered.");
+            await TrackEvent(productId).ConfigureAwait(false);
             await DialogService.AlertAsync(Loc.Text(TranslationKeys.SubscriptionWasSuccessfullyPurchased)).ConfigureAwait(false);
         }
 
@@ -182,6 +186,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (PurchaseWasNotProcessedException ex)
             {
+                TrackException(ex);
                 Logger.Error("Product '{productId}' was not purchased.");
                 Logger.Error(ExceptionFormatter.FormatException(ex));
 
@@ -189,6 +194,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (InAppBillingNotSupportedException ex)
             {
+                TrackException(ex);
                 Logger.Error("In-App Purchases is not supported in the device.");
                 Logger.Error(ExceptionFormatter.FormatException(ex));
 
@@ -196,6 +202,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (AppStoreNotConnectedException ex)
             {
+                TrackException(ex);
                 Logger.Error("App store is not connected.");
                 Logger.Error(ExceptionFormatter.FormatException(ex));
 
@@ -203,6 +210,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (EmptyPurchaseTokenException ex)
             {
+                TrackException(ex);
                 Logger.Error("Purchase token is empty.");
                 Logger.Error(ExceptionFormatter.FormatException(ex));
 
@@ -218,6 +226,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (RegistrationPurchaseBillingException ex)
             {
+                TrackException(ex);
                 Logger.Error("Exception during registration of purchase billing.");
                 Logger.Error(ExceptionFormatter.FormatException(ex));
 
@@ -236,6 +245,7 @@ namespace RewriteMe.Mobile.ViewModels
                 if (ex.PurchaseError == PurchaseError.UserCancelled)
                     return false;
 
+                TrackException(ex);
                 Logger.Error("Exception during purchasing process.");
                 Logger.Error(ExceptionFormatter.FormatException(ex));
 
@@ -260,6 +270,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (Exception ex)
             {
+                TrackException(ex);
                 Logger.Error("Exception during purchasing process.");
                 Logger.Error(ExceptionFormatter.FormatException(ex));
 
@@ -327,6 +338,22 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.EmailIsNotSupported)).ConfigureAwait(false);
             }
+        }
+
+        private async Task TrackEvent(string productId)
+        {
+            var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
+            var properties = new Dictionary<string, string> {
+                { "User ID", userId.ToString() },
+                { "Product ID", productId }
+            };
+
+            _appCenterMetricsService.TrackEvent("Purchase subscription", properties);
+        }
+
+        private void TrackException(Exception ex)
+        {
+            _appCenterMetricsService.TrackException(ex);
         }
     }
 }
