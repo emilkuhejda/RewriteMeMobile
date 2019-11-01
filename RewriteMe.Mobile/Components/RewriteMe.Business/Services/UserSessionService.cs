@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AppCenter;
-using Microsoft.AppCenter.Push;
 using Microsoft.Identity.Client;
 using Plugin.SecureStorage;
 using RewriteMe.Business.Wrappers;
@@ -34,6 +33,7 @@ namespace RewriteMe.Business.Services
         private readonly IRegistrationUserWebService _registrationUserWebService;
         private readonly ICleanUpService _cleanUpService;
         private readonly IAppCenterMetricsService _appCenterMetricsService;
+        private readonly IPushNotificationsService _pushNotificationsService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
         private readonly IApplicationVersionProvider _applicationVersionProvider;
@@ -51,6 +51,7 @@ namespace RewriteMe.Business.Services
             IRegistrationUserWebService registrationUserWebService,
             ICleanUpService cleanUpService,
             IAppCenterMetricsService appCenterMetricsService,
+            IPushNotificationsService pushNotificationsService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
             IApplicationVersionProvider applicationVersionProvider,
@@ -63,6 +64,7 @@ namespace RewriteMe.Business.Services
             _registrationUserWebService = registrationUserWebService;
             _cleanUpService = cleanUpService;
             _appCenterMetricsService = appCenterMetricsService;
+            _pushNotificationsService = pushNotificationsService;
             _identityUiParentProvider = identityUiParentProvider;
             _applicationVersionProvider = applicationVersionProvider;
             _applicationSettings = applicationSettings;
@@ -282,7 +284,7 @@ namespace RewriteMe.Business.Services
 
             await RemoveLocalAccountsAsync().ConfigureAwait(false);
             await _cleanUpService.CleanUp().ConfigureAwait(false);
-            await Push.SetEnabledAsync(false).ConfigureAwait(false);
+            await _pushNotificationsService.SetEnabledAsync(false).ConfigureAwait(false);
 
             CrossSecureStorage.Current.DeleteKey(AccessTokenKey);
         }
