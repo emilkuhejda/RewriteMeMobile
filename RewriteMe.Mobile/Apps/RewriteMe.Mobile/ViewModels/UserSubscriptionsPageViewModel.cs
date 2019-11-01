@@ -31,6 +31,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IApplicationVersionProvider _applicationVersionProvider;
 
         private IList<SubscriptionProductViewModel> _products;
+        private string _remainingTime;
 
         public UserSubscriptionsPageViewModel(
             IUserSubscriptionService userSubscriptionService,
@@ -61,12 +62,22 @@ namespace RewriteMe.Mobile.ViewModels
             private set => SetProperty(ref _products, value);
         }
 
+        public string RemainingTime
+        {
+            get => _remainingTime;
+            set => SetProperty(ref _remainingTime, value);
+        }
+
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
             using (new OperationMonitor(OperationScope))
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
+                    var remainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
+                    var sign = remainingTime.Ticks < 0 ? "-" : string.Empty;
+                    RemainingTime = $"{sign}{remainingTime:hh\\:mm\\:ss}";
+
                     await InitializeProductsAsync().ConfigureAwait(false);
                 }
             }

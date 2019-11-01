@@ -32,6 +32,26 @@
     </views:BaseNavigationPage.Resources>
 
     <StackLayout Margin="{StaticResource StandardPadding}" Padding="{StaticResource StandardPadding}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0"
+                   Margin="0,0,0,20"
+                   HorizontalOptions="Start"
+                   Style="{StaticResource LabelStyle}"
+                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RemainingTime}}" />
+
+            <Label Grid.Column="1"
+                   Margin="0,0,0,20"
+                   HorizontalOptions="End"
+                   Style="{StaticResource LabelStyle}"
+                   Text="{Binding RemainingTime}"
+                   TextColor="{StaticResource ColorGrey500}" />
+        </Grid>
+
         <Label Margin="0,0,0,20"
                FontSize="{StaticResource LargeSize}"
                HorizontalTextAlignment="Center"
