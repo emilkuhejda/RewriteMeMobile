@@ -25,6 +25,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IBillingPurchaseService _billingPurchaseService;
+        private readonly IConnectivityService _connectivityService;
         private readonly IAppCenterMetricsService _appCenterMetricsService;
         private readonly IEmailService _emailService;
         private readonly IApplicationSettings _applicationSettings;
@@ -36,6 +37,7 @@ namespace RewriteMe.Mobile.ViewModels
         public UserSubscriptionsPageViewModel(
             IUserSubscriptionService userSubscriptionService,
             IBillingPurchaseService billingPurchaseService,
+            IConnectivityService connectivityService,
             IAppCenterMetricsService appCenterMetricsService,
             IEmailService emailService,
             IApplicationSettings applicationSettings,
@@ -48,6 +50,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _userSubscriptionService = userSubscriptionService;
             _billingPurchaseService = billingPurchaseService;
+            _connectivityService = connectivityService;
             _appCenterMetricsService = appCenterMetricsService;
             _emailService = emailService;
             _applicationSettings = applicationSettings;
@@ -85,6 +88,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task InitializeProductsAsync()
         {
+            if (!_connectivityService.IsConnected)
+                return;
+
             try
             {
                 if (!CrossInAppBilling.IsSupported)
