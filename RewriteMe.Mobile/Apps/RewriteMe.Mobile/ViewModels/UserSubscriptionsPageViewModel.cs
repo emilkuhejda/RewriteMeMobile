@@ -113,8 +113,9 @@ namespace RewriteMe.Mobile.ViewModels
 
                     var subscriptionProductViewModel = new SubscriptionProductViewModel(appBillingProduct.ProductId, OnBuyAction)
                     {
-                        Description = $"{subscription.Text} - {appBillingProduct.LocalizedPrice}",
-                        IconKey = subscription.IconKey
+                        Title = subscription.Text,
+                        Price = appBillingProduct.LocalizedPrice,
+                        Description = subscription.Description
                     };
 
                     products.Add(subscriptionProductViewModel);

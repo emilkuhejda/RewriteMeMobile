@@ -40,7 +40,6 @@
         public static string SignOut => "SignOut";
         public static string Version => "Version";
         public static string ContactUs => "ContactUs";
-        public static string Subscriptions => "Subscriptions";
         public static string Developer => "Developer";
         public static string Clear => "Clear";
         public static string Reload => "Reload";
@@ -62,10 +61,12 @@
         public static string InProgressLabel => "InProgressLabel";
         public static string OneHour => "OneHour";
         public static string TenHours => "TenHours";
+        public static string DescriptionTenHours => "DescriptionTenHours";
         public static string PromptDeleteFileItemMessage => "PromptDeleteFileItemMessage";
         public static string RecordingOnly => "RecordingOnly";
         public static string FiveMinutesOnly => "FiveMinutesOnly";
         public static string RemainingTime => "RemainingTime";
+        public static string BuyMoreTime => "BuyMoreTime";
         public static string NoAvailableData => "NoAvailableData";
         public static string NoAvailableMessages => "NoAvailableMessages";
         public static string UnableToLoadAudioFile => "UnableToLoadAudioFile";

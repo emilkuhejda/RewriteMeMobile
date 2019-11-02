@@ -2,11 +2,9 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.UserSubscriptionsPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
-                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
-                          Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}">
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="ProductsTemplate">
             <Grid Padding="10,10,10,10"
@@ -17,25 +15,31 @@
                        HasShadow="True"
                        HorizontalOptions="Center"
                        WidthRequest="150">
-                    <StackLayout Margin="20,0,20,20">
-                        <Grid HorizontalOptions="Center">
-                            <forms:SvgCachedImage Margin="0"
-                                                  Aspect="AspectFit"
-                                                  BackgroundColor="Transparent"
-                                                  HeightRequest="50"
-                                                  InputTransparent="True"
-                                                  Source="{Binding IconKey}"
-                                                  VerticalOptions="CenterAndExpand" />
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                            <Grid.GestureRecognizers>
-                                <TapGestureRecognizer Command="{Binding BuyCommand}" />
-                            </Grid.GestureRecognizers>
-                        </Grid>
+                        <Label Grid.Row="0"
+                               HorizontalTextAlignment="Center"
+                               Text="{Binding Title}"
+                               FontFamily="{StaticResource FontFamilyQuicksandBold}"
+                               FontSize="{StaticResource LargerSize}" />
 
-                        <Label HorizontalTextAlignment="Center"
-                               LineBreakMode="WordWrap"
+                        <Label Grid.Row="1"
+                               HorizontalTextAlignment="Center"
+                               Text="{Binding Price}"
+                               FontAttributes="Bold"
+                               FontSize="{StaticResource BigSize}" />
+
+                        <Label Grid.Row="2"
+                               HorizontalTextAlignment="Center"
+                               FontSize="{StaticResource MediumSize}"
+                               TextColor="{StaticResource ColorGrey400}"
                                Text="{Binding Description}" />
-                    </StackLayout>
+                    </Grid>
                 </Frame>
             </Grid>
         </DataTemplate>
@@ -65,7 +69,8 @@
         <Label Margin="0,0,0,20"
                FontSize="{StaticResource LargeSize}"
                HorizontalTextAlignment="Center"
-               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}" />
+               FontFamily="{StaticResource FontFamilyQuicksandBold}"
+               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.BuyMoreTime}}" />
 
         <CollectionView ItemTemplate="{StaticResource ProductsTemplate}"
                         ItemsSource="{Binding Products}"

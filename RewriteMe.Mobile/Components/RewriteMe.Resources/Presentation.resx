@@ -211,9 +211,6 @@
   <data name="ContactUs" xml:space="preserve">
     <value>Contact us</value>
   </data>
-  <data name="Subscriptions" xml:space="preserve">
-    <value>Subscriptions</value>
-  </data>
   <data name="Developer" xml:space="preserve">
     <value>Developer</value>
   </data>
@@ -280,6 +277,9 @@
   <data name="TenHours" xml:space="preserve">
     <value>10 Hours</value>
   </data>
+  <data name="DescriptionTenHours" xml:space="preserve">
+    <value>Save 10€</value>
+  </data>
   <data name="PromptDeleteFileItemMessage" xml:space="preserve">
     <value>Do you really want to delete file '{0}'?</value>
   </data>
@@ -291,6 +291,9 @@
   </data>
   <data name="RemainingTime" xml:space="preserve">
     <value>Remaining time</value>
+  </data>
+  <data name="BuyMoreTime" xml:space="preserve">
+    <value>Buy more time</value>
   </data>
   <data name="NoAvailableData" xml:space="preserve">
     <value>No available data</value>
