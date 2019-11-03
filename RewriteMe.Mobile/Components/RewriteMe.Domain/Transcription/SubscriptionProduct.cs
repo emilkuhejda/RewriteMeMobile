@@ -2,17 +2,22 @@
 {
     public class SubscriptionProduct
     {
-        public SubscriptionProduct(string productId, string text, string iconKey)
+        public SubscriptionProduct(string productId, string text)
+            : this(productId, text, string.Empty)
+        {
+        }
+
+        public SubscriptionProduct(string productId, string text, string description)
         {
             ProductId = productId;
             Text = text;
-            IconKey = iconKey;
+            Description = description;
         }
 
         public string ProductId { get; }
 
         public string Text { get; }
 
-        public string IconKey { get; }
+        public string Description { get; }
     }
 }

@@ -17,7 +17,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         public string ProductId { get; }
 
-        public string IconKey { get; set; }
+        public string Title { get; set; }
+
+        public string Price { get; set; }
 
         public string Description { get; set; }
 

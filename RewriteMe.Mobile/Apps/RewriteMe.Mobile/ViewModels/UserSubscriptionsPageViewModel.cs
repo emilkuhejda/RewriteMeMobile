@@ -25,16 +25,19 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IBillingPurchaseService _billingPurchaseService;
+        private readonly IConnectivityService _connectivityService;
         private readonly IAppCenterMetricsService _appCenterMetricsService;
         private readonly IEmailService _emailService;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IApplicationVersionProvider _applicationVersionProvider;
 
         private IList<SubscriptionProductViewModel> _products;
+        private string _remainingTime;
 
         public UserSubscriptionsPageViewModel(
             IUserSubscriptionService userSubscriptionService,
             IBillingPurchaseService billingPurchaseService,
+            IConnectivityService connectivityService,
             IAppCenterMetricsService appCenterMetricsService,
             IEmailService emailService,
             IApplicationSettings applicationSettings,
@@ -47,6 +50,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _userSubscriptionService = userSubscriptionService;
             _billingPurchaseService = billingPurchaseService;
+            _connectivityService = connectivityService;
             _appCenterMetricsService = appCenterMetricsService;
             _emailService = emailService;
             _applicationSettings = applicationSettings;
@@ -61,12 +65,22 @@ namespace RewriteMe.Mobile.ViewModels
             private set => SetProperty(ref _products, value);
         }
 
+        public string RemainingTime
+        {
+            get => _remainingTime;
+            set => SetProperty(ref _remainingTime, value);
+        }
+
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
             using (new OperationMonitor(OperationScope))
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
+                    var remainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
+                    var sign = remainingTime.Ticks < 0 ? "-" : string.Empty;
+                    RemainingTime = $"{sign}{remainingTime:hh\\:mm\\:ss}";
+
                     await InitializeProductsAsync().ConfigureAwait(false);
                 }
             }
@@ -74,6 +88,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task InitializeProductsAsync()
         {
+            if (!_connectivityService.IsConnected)
+                return;
+
             try
             {
                 if (!CrossInAppBilling.IsSupported)
@@ -102,8 +119,9 @@ namespace RewriteMe.Mobile.ViewModels
 
                     var subscriptionProductViewModel = new SubscriptionProductViewModel(appBillingProduct.ProductId, OnBuyAction)
                     {
-                        Description = $"{subscription.Text} - {appBillingProduct.LocalizedPrice}",
-                        IconKey = subscription.IconKey
+                        Title = subscription.Text,
+                        Price = appBillingProduct.LocalizedPrice,
+                        Description = subscription.Description
                     };
 
                     products.Add(subscriptionProductViewModel);
