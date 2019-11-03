@@ -7,13 +7,12 @@ namespace RewriteMe.Mobile.Transcription
     {
         public static SubscriptionProduct ProductBasic { get; } = new SubscriptionProduct(
             "product.subscription.basic",
-            Loc.Text(TranslationKeys.OneHour),
-            "resource://RewriteMe.Mobile.Resources.Images.Subscription-1.svg");
+            Loc.Text(TranslationKeys.OneHour));
 
         public static SubscriptionProduct ProductAdvanced { get; } = new SubscriptionProduct(
             "product.subscription.advanced",
             Loc.Text(TranslationKeys.TenHours),
-            "resource://RewriteMe.Mobile.Resources.Images.Subscription-10.svg");
+            Loc.Text(TranslationKeys.DescriptionTenHours));
 
         public static SubscriptionProduct[] All { get; } = { ProductBasic, ProductAdvanced };
     }

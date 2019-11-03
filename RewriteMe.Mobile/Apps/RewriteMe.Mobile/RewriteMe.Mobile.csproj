@@ -44,8 +44,6 @@
     <None Remove="Resources\Images\Stop-Enabled.svg" />
     <None Remove="Resources\Images\PauseRecording.svg" />
     <None Remove="Resources\Images\PlayRecording.svg" />
-    <None Remove="Resources\Images\Subscription-1.svg" />
-    <None Remove="Resources\Images\Subscription-10.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -78,8 +76,6 @@
     <EmbeddedResource Include="Resources\Images\PlayRecording.svg" />
     <EmbeddedResource Include="Resources\Images\Overview.svg" />
     <EmbeddedResource Include="Resources\Images\RecorderOverview.svg" />
-    <EmbeddedResource Include="Resources\Images\Subscription-1.svg" />
-    <EmbeddedResource Include="Resources\Images\Subscription-10.svg" />
   </ItemGroup>
   
   <ItemGroup>

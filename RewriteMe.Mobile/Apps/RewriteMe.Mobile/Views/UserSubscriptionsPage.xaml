@@ -2,40 +2,75 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.UserSubscriptionsPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
-                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
-                          Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}">
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
     <views:BaseNavigationPage.Resources>
         <DataTemplate x:Key="ProductsTemplate">
-            <StackLayout Margin="20,0,20,20">
-                <Grid HorizontalOptions="Center">
-                    <forms:SvgCachedImage Margin="0"
-                                          Aspect="AspectFit"
-                                          BackgroundColor="Transparent"
-                                          HeightRequest="50"
-                                          InputTransparent="True"
-                                          Source="{Binding IconKey}"
-                                          VerticalOptions="CenterAndExpand" />
+            <Grid Padding="10,10,10,10"
+                  HorizontalOptions="Center"
+                  VerticalOptions="Center">
+                <Frame BorderColor="{StaticResource ColorPrimary}"
+                       CornerRadius="5"
+                       HasShadow="True"
+                       HorizontalOptions="Center"
+                       WidthRequest="150">
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding BuyCommand}" />
-                    </Grid.GestureRecognizers>
-                </Grid>
+                        <Label Grid.Row="0"
+                               FontFamily="{StaticResource FontFamilyQuicksandBold}"
+                               FontSize="{StaticResource LargerSize}"
+                               HorizontalTextAlignment="Center"
+                               Text="{Binding Title}" />
 
-                <Label HorizontalTextAlignment="Center"
-                       LineBreakMode="WordWrap"
-                       Text="{Binding Description}" />
-            </StackLayout>
+                        <Label Grid.Row="1"
+                               FontAttributes="Bold"
+                               FontSize="{StaticResource BigSize}"
+                               HorizontalTextAlignment="Center"
+                               Text="{Binding Price}" />
+
+                        <Label Grid.Row="2"
+                               FontSize="{StaticResource MediumSize}"
+                               HorizontalTextAlignment="Center"
+                               Text="{Binding Description}"
+                               TextColor="{StaticResource ColorGrey400}" />
+                    </Grid>
+                </Frame>
+            </Grid>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
 
     <StackLayout Margin="{StaticResource StandardPadding}" Padding="{StaticResource StandardPadding}">
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Label Grid.Column="0"
+                   Margin="0,0,0,20"
+                   HorizontalOptions="Start"
+                   Style="{StaticResource LabelStyle}"
+                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RemainingTime}}" />
+
+            <Label Grid.Column="1"
+                   Margin="0,0,0,20"
+                   HorizontalOptions="End"
+                   Style="{StaticResource LabelStyle}"
+                   Text="{Binding RemainingTime}"
+                   TextColor="{StaticResource ColorGrey500}" />
+        </Grid>
+
         <Label Margin="0,0,0,20"
+               FontFamily="{StaticResource FontFamilyQuicksandBold}"
                FontSize="{StaticResource LargeSize}"
                HorizontalTextAlignment="Center"
-               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Subscriptions}}" />
+               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.BuyMoreTime}}" />
 
         <CollectionView ItemTemplate="{StaticResource ProductsTemplate}"
                         ItemsSource="{Binding Products}"
