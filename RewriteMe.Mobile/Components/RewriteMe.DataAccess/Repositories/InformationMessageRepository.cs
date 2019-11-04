@@ -47,9 +47,13 @@ namespace RewriteMe.DataAccess.Repositories
             }).ConfigureAwait(false);
         }
 
-        public async Task<bool> IsUnopenedMessageAsync()
+        public async Task<bool> IsUnopenedMessageAsync(DateTime minimumDateTime)
         {
-            var informationMessageEntity = await _contextProvider.Context.InformationMessages.CountAsync(x => !x.WasOpened).ConfigureAwait(false);
+            var informationMessageEntity = await _contextProvider.Context
+                .InformationMessages
+                .CountAsync(x => !x.WasOpened && x.DatePublishedUtc >= minimumDateTime)
+                .ConfigureAwait(false);
+
             return informationMessageEntity > 0;
         }
 
