@@ -18,7 +18,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IInformationMessageService _informationMessageService;
         private readonly INavigationService _navigationService;
-        private bool _isUnopenedMessage;
+        private bool _hasUnopenedMessages;
 
         public BottomNavigationViewModel(
             ISynchronizationService synchronizationService,
@@ -41,10 +41,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         private CurrentPage Page { get; set; }
 
-        public bool IsUnopenedMessage
+        public bool HasUnopenedMessages
         {
-            get => _isUnopenedMessage;
-            set => SetProperty(ref _isUnopenedMessage, value);
+            get => _hasUnopenedMessages;
+            set => SetProperty(ref _hasUnopenedMessages, value);
         }
 
         public ICommand NavigateToOverviewCommand { get; }
@@ -109,12 +109,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async void HandleMessageOpened(object sender, EventArgs e)
         {
-            IsUnopenedMessage = await _informationMessageService.IsUnopenedMessageAsync().ConfigureAwait(false);
+            HasUnopenedMessages = await _informationMessageService.HasUnopenedMessagesForLastWeekAsync().ConfigureAwait(false);
         }
 
         private async void HandleSynchronizationCompleted(object sender, EventArgs e)
         {
-            IsUnopenedMessage = await _informationMessageService.IsUnopenedMessageAsync().ConfigureAwait(false);
+            HasUnopenedMessages = await _informationMessageService.HasUnopenedMessagesForLastWeekAsync().ConfigureAwait(false);
         }
 
         private enum CurrentPage

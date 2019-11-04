@@ -13,7 +13,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<IEnumerable<InformationMessage>> GetAllForLastWeekAsync();
 
-        Task<bool> IsUnopenedMessageAsync();
+        Task<bool> HasUnopenedMessagesForLastWeekAsync();
 
         Task MarkAsOpenedAsync(InformationMessage informationMessage);
 
