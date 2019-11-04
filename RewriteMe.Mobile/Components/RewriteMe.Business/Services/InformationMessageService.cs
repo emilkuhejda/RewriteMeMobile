@@ -63,10 +63,10 @@ namespace RewriteMe.Business.Services
             return await _informationMessageRepository.GetAllAsync(minimumDateTime).ConfigureAwait(false);
         }
 
-        public async Task<bool> IsUnopenedMessageAsync()
+        public async Task<bool> HasUnopenedMessagesAsync()
         {
             var minimumDateTime = DateTime.UtcNow.AddDays(DaysToDisplay);
-            return await _informationMessageRepository.IsUnopenedMessageAsync(minimumDateTime).ConfigureAwait(false);
+            return await _informationMessageRepository.HasUnopenedMessagesAsync(minimumDateTime).ConfigureAwait(false);
         }
 
         public async Task MarkAsOpenedAsync(InformationMessage informationMessage)

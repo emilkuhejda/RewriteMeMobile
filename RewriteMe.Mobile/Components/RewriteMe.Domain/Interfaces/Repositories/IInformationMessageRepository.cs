@@ -11,7 +11,7 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task InsertOrReplaceAllAsync(IEnumerable<InformationMessage> informationMessages);
 
-        Task<bool> IsUnopenedMessageAsync(DateTime minimumDateTime);
+        Task<bool> HasUnopenedMessagesAsync(DateTime minimumDateTime);
 
         Task UpdateAsync(InformationMessage informationMessage);
 
