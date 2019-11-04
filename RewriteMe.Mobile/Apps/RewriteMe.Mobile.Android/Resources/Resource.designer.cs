@@ -12194,15 +12194,6 @@ namespace RewriteMe.Mobile.Droid
 			// aapt resource value: 0x7f0c00d2
 			public const int Platform_Widget_AppCompat_Spinner = 2131493074;
 			
-			// aapt resource value: 0x7f0c0200
-			public const int RewriteMeTheme = 2131493376;
-			
-			// aapt resource value: 0x7f0c0203
-			public const int RewriteMeTheme_ActionBar = 2131493379;
-			
-			// aapt resource value: 0x7f0c0201
-			public const int RewriteMeTheme_Base = 2131493377;
-			
 			// aapt resource value: 0x7f0c001c
 			public const int RtlOverlay_DialogWindowTitle_AppCompat = 2131492892;
 			
@@ -12739,6 +12730,15 @@ namespace RewriteMe.Mobile.Droid
 			
 			// aapt resource value: 0x7f0c0009
 			public const int ThemeOverlay_MediaRouter_Light = 2131492873;
+			
+			// aapt resource value: 0x7f0c0200
+			public const int VoicipherTheme = 2131493376;
+			
+			// aapt resource value: 0x7f0c0203
+			public const int VoicipherTheme_ActionBar = 2131493379;
+			
+			// aapt resource value: 0x7f0c0201
+			public const int VoicipherTheme_Base = 2131493377;
 			
 			// aapt resource value: 0x7f0c011a
 			public const int Widget_AppCompat_ActionBar = 2131493146;
