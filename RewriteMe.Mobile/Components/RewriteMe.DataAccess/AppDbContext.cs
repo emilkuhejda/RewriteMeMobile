@@ -104,6 +104,11 @@ namespace RewriteMe.DataAccess
             await Database.UpdateAllAsync(items).ConfigureAwait(false);
         }
 
+        public async Task DeleteAllIdsAsync<T>(IEnumerable<object> primaryKey)
+        {
+            await Database.DeleteAllIdsAsync<T>(primaryKey).ConfigureAwait(false);
+        }
+
         public async Task DeleteAsync<T>(object primaryKey) where T : new()
         {
             await Database.DeleteAsync<T>(primaryKey).ConfigureAwait(false);

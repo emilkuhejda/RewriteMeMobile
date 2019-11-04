@@ -29,6 +29,20 @@ namespace RewriteMe.DataAccess.Repositories
             return entities?.Select(x => x.ToInformationMessage());
         }
 
+        public async Task DeleteAsync(DateTime minimumDateTime)
+        {
+            var entities = await _contextProvider.Context.InformationMessages
+                .Where(x => x.DatePublishedUtc < minimumDateTime)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            if (entities.Any())
+            {
+                var ids = entities.Select(x => (object)x.Id);
+                await _contextProvider.Context.DeleteAllIdsAsync<InformationMessageEntity>(ids).ConfigureAwait(false);
+            }
+        }
+
         public async Task InsertOrReplaceAllAsync(IEnumerable<InformationMessage> informationMessages)
         {
             var informationMessageEntities = informationMessages.Select(x => x.ToInformationMessageEntity()).ToList();
