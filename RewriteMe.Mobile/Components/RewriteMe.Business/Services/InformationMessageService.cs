@@ -16,6 +16,8 @@ namespace RewriteMe.Business.Services
 {
     public class InformationMessageService : IInformationMessageService
     {
+        private const int DaysToDisplay = 7;
+
         private readonly IInternalValueService _internalValueService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IInformationMessageRepository _informationMessageRepository;
@@ -57,13 +59,17 @@ namespace RewriteMe.Business.Services
 
         public async Task<IEnumerable<InformationMessage>> GetAllForLastWeekAsync()
         {
-            var minimumDateTime = DateTime.UtcNow.AddDays(-7);
-            return await _informationMessageRepository.GetAllAsync(minimumDateTime).ConfigureAwait(false);
+            var minimumDateTime = DateTime.UtcNow.AddDays(DaysToDisplay);
+            var informationMessages = await _informationMessageRepository.GetAllAsync(minimumDateTime).ConfigureAwait(false);
+
+            await _informationMessageRepository.DeleteAllAsync(minimumDateTime).ConfigureAwait(false);
+            return informationMessages;
         }
 
-        public async Task<bool> IsUnopenedMessageAsync()
+        public async Task<bool> HasUnopenedMessagesForLastWeekAsync()
         {
-            return await _informationMessageRepository.IsUnopenedMessageAsync().ConfigureAwait(false);
+            var minimumDateTime = DateTime.UtcNow.AddDays(DaysToDisplay);
+            return await _informationMessageRepository.HasUnopenedMessagesAsync(minimumDateTime).ConfigureAwait(false);
         }
 
         public async Task MarkAsOpenedAsync(InformationMessage informationMessage)

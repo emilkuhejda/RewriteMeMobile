@@ -52,6 +52,8 @@ namespace RewriteMe.DataAccess
 
         Task UpdateAllAsync(IEnumerable items);
 
+        Task DeleteAllIdsAsync<T>(IEnumerable<object> primaryKey);
+
         Task DeleteAsync<T>(object primaryKey) where T : new();
 
         Task DeleteWithChildrenAsync<T>(object primaryKey) where T : new();
