@@ -109,12 +109,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async void HandleMessageOpened(object sender, EventArgs e)
         {
-            HasUnopenedMessages = await _informationMessageService.HasUnopenedMessagesAsync().ConfigureAwait(false);
+            HasUnopenedMessages = await _informationMessageService.HasUnopenedMessagesForLastWeekAsync().ConfigureAwait(false);
         }
 
         private async void HandleSynchronizationCompleted(object sender, EventArgs e)
         {
-            HasUnopenedMessages = await _informationMessageService.HasUnopenedMessagesAsync().ConfigureAwait(false);
+            HasUnopenedMessages = await _informationMessageService.HasUnopenedMessagesForLastWeekAsync().ConfigureAwait(false);
         }
 
         private enum CurrentPage
