@@ -29,7 +29,7 @@ namespace RewriteMe.DataAccess.Repositories
             return entities?.Select(x => x.ToInformationMessage());
         }
 
-        public async Task DeleteAsync(DateTime minimumDateTime)
+        public async Task DeleteAllAsync(DateTime minimumDateTime)
         {
             var entities = await _contextProvider.Context.InformationMessages
                 .Where(x => x.DatePublishedUtc < minimumDateTime)

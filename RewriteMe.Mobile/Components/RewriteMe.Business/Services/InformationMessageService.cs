@@ -62,7 +62,7 @@ namespace RewriteMe.Business.Services
             var minimumDateTime = DateTime.UtcNow.AddDays(DaysToDisplay);
             var informationMessages = await _informationMessageRepository.GetAllAsync(minimumDateTime).ConfigureAwait(false);
 
-            await _informationMessageRepository.DeleteAsync(minimumDateTime).ConfigureAwait(false);
+            await _informationMessageRepository.DeleteAllAsync(minimumDateTime).ConfigureAwait(false);
             return informationMessages;
         }
 

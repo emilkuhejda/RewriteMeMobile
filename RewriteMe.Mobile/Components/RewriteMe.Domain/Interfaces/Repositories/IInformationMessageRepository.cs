@@ -9,7 +9,7 @@ namespace RewriteMe.Domain.Interfaces.Repositories
     {
         Task<IEnumerable<InformationMessage>> GetAllAsync(DateTime minimumDateTime);
 
-        Task DeleteAsync(DateTime minimumDateTime);
+        Task DeleteAllAsync(DateTime minimumDateTime);
 
         Task InsertOrReplaceAllAsync(IEnumerable<InformationMessage> informationMessages);
 
