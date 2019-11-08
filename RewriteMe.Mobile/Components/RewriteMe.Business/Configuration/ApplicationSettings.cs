@@ -8,7 +8,9 @@ namespace RewriteMe.Business.Configuration
 {
     public class ApplicationSettings : IApplicationSettings
     {
-        private const string Tenant = "rewriteme.onmicrosoft.com";
+        private const string OsxAppCenterKey = "0bdf549f-bbd5-4345-8d3a-eef3981cd099";
+        private const string AndroidAppCenterKey = "7bdd3197-262d-4138-9a8e-b327d453bc93";
+        private const string Tenant = "voicipher.onmicrosoft.com";
         private static readonly string AuthorityBase = $"https://login.microsoftonline.com/tfp/{Tenant}/";
 
         private readonly IInternalValueService _internalValueService;
@@ -18,11 +20,11 @@ namespace RewriteMe.Business.Configuration
             _internalValueService = internalValueService;
         }
 
-        public Uri WebApiUri { get; } = new Uri("https://rewrite-me.com/");
+        public Uri WebApiUri { get; } = new Uri("https://192.168.0.107:45456/");
 
         public Guid ApplicationId { get; private set; }
 
-        public string AppCenterKeys { get; } = "ios=0bdf549f-bbd5-4345-8d3a-eef3981cd099;android=7bdd3197-262d-4138-9a8e-b327d453bc93";
+        public string AppCenterKeys { get; } = $"ios={OsxAppCenterKey};android={AndroidAppCenterKey}";
 
         public string SyncfusionKey { get; } = "MTU4NTQ4QDMxMzcyZTMzMmUzMGNnOFhrcFZscmgwakhmdEtSU1BxTDdpYTdmcU9JRE9xZ1ZvWXkxaFNKZlk9";
 
@@ -30,19 +32,19 @@ namespace RewriteMe.Business.Configuration
 
         public string DefaultLanguage { get; } = "en";
 
-        public string ClientId => "94983a85-6f54-4940-849e-55eaeb1d89dd";
+        public string ClientId => "3f16cd47-52fe-44e6-96b3-131e1e57b09c";
 
-        public string RedirectUri => "msal94983a85-6f54-4940-849e-55eaeb1d89dd://auth";
+        public string RedirectUri => "msal3f16cd47-52fe-44e6-96b3-131e1e57b09c://auth";
 
         public string[] Scopes => new[] { "" };
 
-        public string PolicySignUpSignIn => "B2C_1_RewriteMe_SignUp_SignIn";
+        public string PolicySignUpSignIn => "B2C_1_Voicipher_SignUp_SignIn";
 
-        public string PolicySignIn => "B2C_1_RewriteMe_SignIn";
+        public string PolicySignIn => "B2C_1_Voicipher_SignIn";
 
-        public string PolicyEditProfile => "B2C_1_RewriteMe_Edit";
+        public string PolicyEditProfile => "B2C_1_Voicipher_Edit";
 
-        public string PolicyResetPassword => "B2C_1_RewriteMe_Password_Reset";
+        public string PolicyResetPassword => "B2C_1_Voicipher_Password_Reset";
 
         public string AuthoritySignUpSignIn => $"{AuthorityBase}{PolicySignUpSignIn}";
 

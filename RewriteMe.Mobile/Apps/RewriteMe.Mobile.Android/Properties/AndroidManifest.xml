@@ -14,7 +14,7 @@
 				<action android:name="android.intent.action.VIEW" />
 				<category android:name="android.intent.category.DEFAULT" />
 				<category android:name="android.intent.category.BROWSABLE" />
-				<data android:scheme="msal94983a85-6f54-4940-849e-55eaeb1d89dd" android:host="auth" />
+				<data android:scheme="msal3f16cd47-52fe-44e6-96b3-131e1e57b09c" android:host="auth" />
 			</intent-filter>
 		</activity>
 		<receiver android:name="com.google.firebase.iid.FirebaseInstanceIdInternalReceiver" android:exported="false" />
