@@ -8,8 +8,8 @@ namespace RewriteMe.Business.Configuration
 {
     public class ApplicationSettings : IApplicationSettings
     {
-        private const string OsxAppCenterKey = "0bdf549f-bbd5-4345-8d3a-eef3981cd099";
-        private const string AndroidAppCenterKey = "7bdd3197-262d-4138-9a8e-b327d453bc93";
+        private const string OsxAppCenterKey = "38ccf01c-fc36-4b94-a5c2-743c02852b23";
+        private const string AndroidAppCenterKey = "a888ddaf-c5e2-4461-ae7e-0d896cf022df";
         private const string Tenant = "voicipher.onmicrosoft.com";
         private static readonly string AuthorityBase = $"https://login.microsoftonline.com/tfp/{Tenant}/";
 
