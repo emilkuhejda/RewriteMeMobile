@@ -9,9 +9,11 @@ namespace RewriteMe.Domain.Interfaces.Repositories
     {
         Task<IEnumerable<InformationMessage>> GetAllAsync(DateTime minimumDateTime);
 
+        Task DeleteAllAsync(DateTime minimumDateTime);
+
         Task InsertOrReplaceAllAsync(IEnumerable<InformationMessage> informationMessages);
 
-        Task<bool> IsUnopenedMessageAsync();
+        Task<bool> HasUnopenedMessagesAsync(DateTime minimumDateTime);
 
         Task UpdateAsync(InformationMessage informationMessage);
 
