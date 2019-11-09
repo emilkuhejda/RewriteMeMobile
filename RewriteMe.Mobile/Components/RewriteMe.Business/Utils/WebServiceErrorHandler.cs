@@ -43,11 +43,17 @@ namespace RewriteMe.Business.Utils
                 _logger.Info($"Web service request for type '{targetTypeName}' finished.");
                 return new HttpRequestResult<T>(HttpRequestState.Success, (int)HttpStatusCode.OK, payload);
             }
-            catch (UnauthorizedCallException ex)
+            catch (UnauthorizedCallException exception)
             {
                 _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '401'.");
-                _logger.Error(ExceptionFormatter.FormatException(ex));
+                _logger.Error(ExceptionFormatter.FormatException(exception));
                 throw;
+            }
+            catch (InternalServerErrorException exception)
+            {
+                _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '500'.");
+                _logger.Error(ExceptionFormatter.FormatException(exception));
+                return new HttpRequestResult<T>(HttpRequestState.Error, (int)HttpStatusCode.InternalServerError);
             }
             catch (ProblemDetailsException exception)
             {
