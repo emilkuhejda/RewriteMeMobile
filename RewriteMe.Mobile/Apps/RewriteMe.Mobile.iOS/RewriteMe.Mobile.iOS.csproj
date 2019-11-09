@@ -44,7 +44,7 @@
     <MtouchArch>x86_64</MtouchArch>
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Distribution: Emil Kuhejda (SCV68T2D3A)</CodesignKey>
-    <CodesignProvision>RewriteMe profile</CodesignProvision>
+    <CodesignProvision>Voicipher distribution profile</CodesignProvision>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhone' ">
@@ -72,7 +72,7 @@
     <ConsolePause>false</ConsolePause>
     <CodesignKey>iPhone Distribution: Emil Kuhejda (SCV68T2D3A)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>RewriteMe profile</CodesignProvision>
+    <CodesignProvision>Voicipher distribution profile</CodesignProvision>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Ad-Hoc|iPhone' ">
     <DebugType>none</DebugType>
