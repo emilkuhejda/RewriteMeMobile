@@ -208,6 +208,9 @@ namespace RewriteMe.Business.Extensions
             if (httpOperationResponse.Response.StatusCode == HttpStatusCode.Unauthorized)
                 throw new UnauthorizedCallException();
 
+            if (httpOperationResponse.Response.StatusCode == HttpStatusCode.InternalServerError)
+                throw new InternalServerErrorException();
+
             if (httpOperationResponse.Body is ProblemDetails problemDetails)
                 throw new ProblemDetailsException(problemDetails);
 
