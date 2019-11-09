@@ -149,7 +149,7 @@
   </data>
 
   <data name="ApplicationTitle" xml:space="preserve">
-    <value>RewriteMe</value>
+    <value>Voicipher</value>
   </data>
   <data name="ActivityIndicatorCaptionText" xml:space="preserve">
     <value>Loading...</value>
@@ -173,7 +173,7 @@
     <value>User registration failed</value>
   </data>
   <data name="RegisterToUseApplication" xml:space="preserve">
-    <value>Please register to use RewriteMe</value>
+    <value>Please register to use Voicipher</value>
   </data>
   <data name="UserRegistration" xml:space="preserve">
     <value>User registration</value>
@@ -239,7 +239,7 @@
     <value>E-mail is not supported on this device</value>
   </data>
   <data name="ApplicationTitleLog" xml:space="preserve">
-    <value>RewriteMe - Log</value>
+    <value>Voicipher - Log</value>
   </data>
   <data name="Name" xml:space="preserve">
     <value>Name</value>
