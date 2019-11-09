@@ -11227,8 +11227,8 @@ namespace RewriteMe.Mobile.Droid
 		public partial class String
 		{
 			
-			// aapt resource value: 0x7f0a0069
-			public const int ApplicationName = 2131361897;
+			// aapt resource value: 0x7f0a006a
+			public const int ApplicationName = 2131361898;
 			
 			// aapt resource value: 0x7f0a002b
 			public const int abc_action_bar_home_description = 2131361835;
@@ -11538,6 +11538,9 @@ namespace RewriteMe.Mobile.Droid
 			
 			// aapt resource value: 0x7f0a005f
 			public const int path_password_strike_through = 2131361887;
+			
+			// aapt resource value: 0x7f0a0069
+			public const int project_id = 2131361897;
 			
 			// aapt resource value: 0x7f0a0046
 			public const int search_menu_title = 2131361862;
