@@ -94,7 +94,7 @@
     </PackageReference>
     <PackageReference Include="Acr.DeviceInfo" Version="6.5.0" />
     <PackageReference Include="Acr.UserDialogs" Version="7.0.35" />
-    <PackageReference Include="NLog" Version="4.6.7" />
+    <PackageReference Include="NLog" Version="4.6.8" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1367" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.3.0.21" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.3.0.21" />
