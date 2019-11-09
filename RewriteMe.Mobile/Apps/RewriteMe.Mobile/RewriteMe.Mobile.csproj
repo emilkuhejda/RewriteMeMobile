@@ -83,7 +83,7 @@
     <PackageReference Include="Microsoft.AppCenter.Analytics" Version="2.5.0" />
     <PackageReference Include="Microsoft.AppCenter.Crashes" Version="2.5.0" />
     <PackageReference Include="Microsoft.AppCenter.Push" Version="2.5.0" />
-    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.6">
+    <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers" Version="2.9.7">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
@@ -94,14 +94,14 @@
     </PackageReference>
     <PackageReference Include="Acr.DeviceInfo" Version="6.5.0" />
     <PackageReference Include="Acr.UserDialogs" Version="7.0.35" />
-    <PackageReference Include="NLog" Version="4.6.7" />
+    <PackageReference Include="NLog" Version="4.6.8" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1367" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.3.0.21" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.3.0.21" />
-    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="17.3.0.21" />
-    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="17.3.0.21" />
-    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="17.3.0.21" />
-    <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu" Version="17.3.0.21" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.3.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.3.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="17.3.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="17.3.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="17.3.0.26" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu" Version="17.3.0.26" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xam.Plugin.LatestVersion" Version="1.1.2" />
     <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.3.1" />
