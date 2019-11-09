@@ -7,29 +7,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Apps", "Apps", "{E7E57EF0-B
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Mobile.Android", "Apps\RewriteMe.Mobile.Android\RewriteMe.Mobile.Android.csproj", "{3EF795BA-CD86-4E97-8C74-1A23DA526256}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Mobile", "Apps\RewriteMe.Mobile\RewriteMe.Mobile.csproj", "{33FC372F-B17A-4E0B-8176-867D01C399FB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Mobile", "Apps\RewriteMe.Mobile\RewriteMe.Mobile.csproj", "{33FC372F-B17A-4E0B-8176-867D01C399FB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Mobile.iOS", "Apps\RewriteMe.Mobile.iOS\RewriteMe.Mobile.iOS.csproj", "{94875BDE-83DA-4D22-8D11-3774B892AAAD}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Components", "Components", "{6943FBF5-45EE-47B0-B876-E9D6D1D396D6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Business", "Components\RewriteMe.Business\RewriteMe.Business.csproj", "{0C0379FC-7A0D-481A-A99E-45B1F054017D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Business", "Components\RewriteMe.Business\RewriteMe.Business.csproj", "{0C0379FC-7A0D-481A-A99E-45B1F054017D}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Common", "Components\RewriteMe.Common\RewriteMe.Common.csproj", "{80E67D24-8D03-4164-B39D-A7CE041D8A68}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.DataAccess", "Components\RewriteMe.DataAccess\RewriteMe.DataAccess.csproj", "{81434F81-B2D0-405B-9DFB-5DD268E7A7CD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Domain", "Components\RewriteMe.Domain\RewriteMe.Domain.csproj", "{348412EC-A4F4-4C5C-852A-FB0EEF53E867}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Domain", "Components\RewriteMe.Domain\RewriteMe.Domain.csproj", "{348412EC-A4F4-4C5C-852A-FB0EEF53E867}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_global", "_global", "{A90414C9-A9E0-4498-A485-50ADE2AB779E}"
 	ProjectSection(SolutionItems) = preProject
 		Global\AssemblyInfo.cs = Global\AssemblyInfo.cs
-		Global\RewriteMe.CodeAnalysis.ruleset = Global\RewriteMe.CodeAnalysis.ruleset
+		Global\Voicipher.CodeAnalysis.ruleset = Global\Voicipher.CodeAnalysis.ruleset
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Resources", "Components\RewriteMe.Resources\RewriteMe.Resources.csproj", "{DDCFB92A-B5DA-45CA-99F3-B868BAC6C33A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RewriteMe.Logging", "Components\RewriteMe.Logging\RewriteMe.Logging.csproj", "{C14D362E-F2D5-48C2-8FDC-061DDA47C17E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RewriteMe.Logging", "Components\RewriteMe.Logging\RewriteMe.Logging.csproj", "{C14D362E-F2D5-48C2-8FDC-061DDA47C17E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
