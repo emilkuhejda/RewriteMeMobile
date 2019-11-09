@@ -6,10 +6,6 @@
 	<array>
 		<string>$(AppIdentifierPrefix)com.microsoft.adalcache</string>
 	</array>
-	<key>com.apple.developer.icloud-container-identifiers</key>
-	<array>
-		<string>iCloud.com.RewriteMe.Mobile</string>
-	</array>
 	<key>com.apple.developer.ubiquity-kvstore-identifier</key>
 	<string>$(AppIdentifierPrefix)$(CFBundleIdentifier)</string>
 	<key>com.apple.developer.icloud-services</key>
@@ -19,6 +15,10 @@
 	<key>com.apple.developer.icloud-container-environment</key>
 	<array>
 		<string>Production</string>
+	</array>
+	<key>com.apple.developer.icloud-container-identifiers</key>
+	<array>
+		<string>iCloud.com.voicipher.mobile</string>
 	</array>
 </dict>
 </plist>
