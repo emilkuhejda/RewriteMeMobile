@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <CodeAnalysisRuleSet>..\..\Global\RewriteMe.CodeAnalysis.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\Global\Voicipher.CodeAnalysis.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   
   <ItemGroup>
