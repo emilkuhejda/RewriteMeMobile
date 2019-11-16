@@ -4,7 +4,7 @@ using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.Domain.Interfaces.Factories
 {
-    public class RewriteMeApiClient : RewriteMeAPI, IApiClient
+    public class RewriteMeApiClient : VoicipherAPI, IApiClient
     {
         public RewriteMeApiClient(Uri baseUri)
             : base(baseUri)
