@@ -73,11 +73,9 @@ namespace RewriteMe.Business.Services
             {
                 UpdateFileItemsAsync,
                 DeletedFileItemsSynchronizationAsync,
-                DeletedFileItemsTotalTimeSynchronizationAsync,
                 UpdateTranscribeItemsAsync,
                 UpdateUserSubscriptionAsync,
-                UpdateInformationMessageAsync,
-                UpdateRecognizedTimeAsync
+                UpdateInformationMessageAsync
             };
 
             _totalResourceInitializationTasks = updateMethods.Count;
@@ -135,11 +133,6 @@ namespace RewriteMe.Business.Services
             await _deletedFileItemService.SynchronizationAsync(applicationDeletedFileItemUpdateDate, lastFileItemSynchronization).ConfigureAwait(false);
         }
 
-        private async Task DeletedFileItemsTotalTimeSynchronizationAsync()
-        {
-            await _deletedFileItemService.TotalTimeSynchronizationAsync().ConfigureAwait(false);
-        }
-
         private async Task UpdateTranscribeItemsAsync()
         {
             var applicationTranscribeItemUpdateDate = _lastUpdatesService.GetTranscribeItemLastUpdate();
@@ -159,11 +152,6 @@ namespace RewriteMe.Business.Services
             var applicationInformationMessageUpdateDate = _lastUpdatesService.GetInformationMessageLastUpdate();
 
             await _informationMessageService.SynchronizationAsync(applicationInformationMessageUpdateDate).ConfigureAwait(false);
-        }
-
-        private async Task UpdateRecognizedTimeAsync()
-        {
-            await _userSubscriptionSynchronizationService.RecognizedTimeSynchronizationAsync().ConfigureAwait(false);
         }
 
         private void OnSynchronizationCompleted()

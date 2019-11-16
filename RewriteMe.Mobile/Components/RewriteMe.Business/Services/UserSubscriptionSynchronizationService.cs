@@ -46,16 +46,5 @@ namespace RewriteMe.Business.Services
                 }
             }
         }
-
-        public async Task RecognizedTimeSynchronizationAsync()
-        {
-            var httpRequestResult = await _rewriteMeWebService.GetRecognizedTimeAsync().ConfigureAwait(false);
-            if (httpRequestResult.State == HttpRequestState.Success)
-            {
-                await _internalValueService
-                    .UpdateValueAsync(InternalValues.RecognizedTimeTicks, httpRequestResult.Payload.TotalTime.Ticks)
-                    .ConfigureAwait(false);
-            }
-        }
     }
 }

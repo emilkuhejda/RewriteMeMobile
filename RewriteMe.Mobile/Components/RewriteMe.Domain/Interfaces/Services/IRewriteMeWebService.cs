@@ -19,8 +19,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<IEnumerable<Guid>>> GetDeletedFileItemIdsAsync(DateTime updatedAfter);
 
-        Task<HttpRequestResult<TimeSpanWrapper>> GetDeletedFileItemsTotalTimeAsync();
-
         Task<HttpRequestResult<TimeSpanWrapper>> DeleteFileItemAsync(Guid fileItemId);
 
         Task<HttpRequestResult<Ok>> DeleteAllFileItemsAsync(IList<DeletedFileItem> fileItems);
@@ -50,8 +48,6 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<HttpRequestResult<InformationMessage>> MarkMessageAsOpenedAsync(Guid informationMessageId);
 
         Task<HttpRequestResult<Ok>> MarkMessagesAsOpenedAsync(IEnumerable<Guid?> ids);
-
-        Task<HttpRequestResult<RecognizedTime>> GetRecognizedTimeAsync();
 
         Task RefreshTokenIfNeededAsync();
     }

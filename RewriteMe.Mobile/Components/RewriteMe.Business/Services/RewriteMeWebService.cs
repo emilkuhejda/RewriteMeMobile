@@ -61,12 +61,6 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetDeletedFileItemIdsAsync(ApplicationSettings.WebApiVersion, updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<TimeSpanWrapper>> GetDeletedFileItemsTotalTimeAsync()
-        {
-            var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetDeletedFileItemsTotalTimeAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
-        }
-
         public async Task<HttpRequestResult<TimeSpanWrapper>> DeleteFileItemAsync(Guid fileItemId)
         {
             var customHeaders = GetAuthHeaders();
@@ -155,12 +149,6 @@ namespace RewriteMe.Business.Services
         {
             var customHeaders = GetAuthHeaders();
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.MarkMessagesAsOpenedAsync(ApplicationSettings.WebApiVersion, ids, customHeaders)).ConfigureAwait(false);
-        }
-
-        public async Task<HttpRequestResult<RecognizedTime>> GetRecognizedTimeAsync()
-        {
-            var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetRecognizedTimeAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task RefreshTokenIfNeededAsync()

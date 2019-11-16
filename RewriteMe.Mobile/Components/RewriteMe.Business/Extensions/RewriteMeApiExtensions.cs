@@ -41,14 +41,6 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<TimeSpanWrapper> GetDeletedFileItemsTotalTimeAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
-        {
-            using (var result = await operations.GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
-            {
-                return ParseBody<TimeSpanWrapper>(result);
-            }
-        }
-
         public static async Task<TimeSpanWrapper> DeleteFileItemAsync(this IVoicipherAPI operations, string version, Guid fileItemId, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.DeleteFileItemWithHttpMessagesAsync(version, fileItemId, applicationId, customHeaders).ConfigureAwait(false))
@@ -168,14 +160,6 @@ namespace RewriteMe.Business.Extensions
             using (var result = await operations.MarkMessagesAsOpenedWithHttpMessagesAsync(version, ids.ToList(), customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
-            }
-        }
-
-        public static async Task<RecognizedTime> GetRecognizedTimeAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
-        {
-            using (var result = await operations.GetRecognizedTimeWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
-            {
-                return ParseBody<RecognizedTime>(result);
             }
         }
 

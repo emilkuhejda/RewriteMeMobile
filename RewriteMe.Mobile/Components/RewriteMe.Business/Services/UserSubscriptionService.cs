@@ -14,6 +14,14 @@ namespace RewriteMe.Business.Services
             _internalValueService = internalValueService;
         }
 
+        public async Task SubtractTimeAsync(TimeSpan time)
+        {
+            var remainingTimeTicks = await _internalValueService.GetValueAsync(InternalValues.RemainingTimeTicks).ConfigureAwait(false);
+            var currentTicks = remainingTimeTicks - time.Ticks;
+
+            await UpdateRemainingTimeAsync(TimeSpan.FromTicks(currentTicks)).ConfigureAwait(false);
+        }
+
         public async Task UpdateRemainingTimeAsync(TimeSpan remainingTime)
         {
             await _internalValueService.UpdateValueAsync(InternalValues.RemainingTimeTicks, remainingTime.Ticks).ConfigureAwait(false);

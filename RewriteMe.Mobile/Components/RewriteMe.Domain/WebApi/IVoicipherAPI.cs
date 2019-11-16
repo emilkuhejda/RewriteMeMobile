@@ -63,16 +63,6 @@ namespace RewriteMe.Domain.WebApi
         /// </param>
         Task<HttpOperationResponse<object>> GetDeletedFileItemIdsWithHttpMessagesAsync(string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
-        /// <param name='version'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<object>> GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
         /// <param name='fileItemId'>
         /// </param>
         /// <param name='version'>
@@ -245,16 +235,6 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='version'>
         /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse<object>> GetRecognizedTimeWithHttpMessagesAsync(string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <param name='version'>
-        /// </param>
         /// <param name='updatedAfter'>
         /// </param>
         /// <param name='applicationId'>
@@ -410,24 +390,6 @@ namespace RewriteMe.Domain.WebApi
         /// The cancellation token.
         /// </param>
         Task<HttpOperationResponse<object>> RefreshTokenWithHttpMessagesAsync(string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-
-        /// <param name='version'>
-        /// </param>
-        /// <param name='username'>
-        /// </param>
-        /// <param name='password'>
-        /// </param>
-        /// <param name='userId'>
-        /// </param>
-        /// <param name='role'>
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<HttpOperationResponse> CreateTokenWithHttpMessagesAsync(string version, string username, string password, System.Guid userId, int role, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
     }
 }
