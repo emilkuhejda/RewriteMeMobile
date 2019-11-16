@@ -33,7 +33,7 @@ namespace RewriteMe.Business.Services
             var timeout = TimeSpan.FromSeconds(5);
             var client = RewriteMeApiClientFactory.CreateSingleClient(ApplicationSettings.WebApiUri, timeout);
 
-            var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => client.IsAliveWithHttpMessagesAsync()).ConfigureAwait(false);
+            var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => client.IsAliveWithHttpMessagesAsync(ApplicationSettings.WebApiVersion)).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 var result = httpRequestResult.Payload?.Body;
@@ -46,121 +46,121 @@ namespace RewriteMe.Business.Services
         public async Task<HttpRequestResult<LastUpdates>> GetLastUpdatesAsync()
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetLastUpdatesAsync(customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetLastUpdatesAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<IEnumerable<FileItem>>> GetFileItemsAsync(DateTime updatedAfter)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetFileItemsAsync(updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetFileItemsAsync(ApplicationSettings.WebApiVersion, updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<IEnumerable<Guid>>> GetDeletedFileItemIdsAsync(DateTime updatedAfter)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetDeletedFileItemIdsAsync(updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetDeletedFileItemIdsAsync(ApplicationSettings.WebApiVersion, updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<TimeSpanWrapper>> GetDeletedFileItemsTotalTimeAsync()
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetDeletedFileItemsTotalTimeAsync(customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetDeletedFileItemsTotalTimeAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<TimeSpanWrapper>> DeleteFileItemAsync(Guid fileItemId)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.DeleteFileItemAsync(fileItemId, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.DeleteFileItemAsync(ApplicationSettings.WebApiVersion, fileItemId, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<Ok>> DeleteAllFileItemsAsync(IList<DeletedFileItem> fileItems)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.DeleteAllFileItemsAsync(fileItems, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.DeleteAllFileItemsAsync(ApplicationSettings.WebApiVersion, fileItems, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<IEnumerable<TranscribeItem>>> GetTranscribeItemsAllAsync(DateTime updatedAfter)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetTranscribeItemsAllAsync(updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetTranscribeItemsAllAsync(ApplicationSettings.WebApiVersion, updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<IEnumerable<UserSubscription>>> GetUserSubscriptionsAsync(DateTime updatedAfter)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetUserSubscriptionsAsync(updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetUserSubscriptionsAsync(ApplicationSettings.WebApiVersion, updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<UserSubscription>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateUserSubscriptionAsync(billingPurchase, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateUserSubscriptionAsync(ApplicationSettings.WebApiVersion, billingPurchase, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<SpeechConfiguration>> GetSpeechConfigurationAsync()
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetSpeechConfigurationAsync(customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetSpeechConfigurationAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UploadFileItemAsync(mediaFile, DateTime.Now, ApplicationSettings.ApplicationId, customHeaders, cancellationToken)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UploadFileItemAsync(ApplicationSettings.WebApiVersion, mediaFile, DateTime.Now, ApplicationSettings.ApplicationId, customHeaders, cancellationToken)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.TranscribeFileItemAsync(fileItemId, language, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.TranscribeFileItemAsync(ApplicationSettings.WebApiVersion, fileItemId, language, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<byte[]>> GetTranscribeAudioSourceAsync(Guid transcribeItemId, CancellationToken cancellationToken)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetTranscribeAudioSourceAsync(transcribeItemId, customHeaders, cancellationToken)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetTranscribeAudioSourceAsync(ApplicationSettings.WebApiVersion, transcribeItemId, customHeaders, cancellationToken)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<Ok>> UpdateUserTranscriptAsync(Guid transcribeItemId, string transcript)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UpdateUserTranscriptAsync(transcribeItemId, transcript, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UpdateUserTranscriptAsync(ApplicationSettings.WebApiVersion, transcribeItemId, transcript, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<Ok>> CreateSpeechResultAsync(Guid speechResultId, Guid recognizedAudioSampleId, string displayText)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateSpeechResultAsync(speechResultId, recognizedAudioSampleId, displayText, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateSpeechResultAsync(ApplicationSettings.WebApiVersion, speechResultId, recognizedAudioSampleId, displayText, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<Ok>> UpdateSpeechResultsAsync(IList<SpeechResultModel> speechResults)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UpdateSpeechResultsAsync(speechResults, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UpdateSpeechResultsAsync(ApplicationSettings.WebApiVersion, speechResults, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<IEnumerable<InformationMessage>>> GetInformationMessagesAsync(DateTime updatedAfter)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetInformationMessagesAsync(updatedAfter, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetInformationMessagesAsync(ApplicationSettings.WebApiVersion, updatedAfter, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<InformationMessage>> MarkMessageAsOpenedAsync(Guid informationMessageId)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.MarkMessageAsOpenedAsync(informationMessageId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.MarkMessageAsOpenedAsync(ApplicationSettings.WebApiVersion, informationMessageId, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<Ok>> MarkMessagesAsOpenedAsync(IEnumerable<Guid?> ids)
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.MarkMessagesAsOpenedAsync(ids, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.MarkMessagesAsOpenedAsync(ApplicationSettings.WebApiVersion, ids, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<RecognizedTime>> GetRecognizedTimeAsync()
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetRecognizedTimeAsync(customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetRecognizedTimeAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task RefreshTokenIfNeededAsync()
@@ -171,7 +171,7 @@ namespace RewriteMe.Business.Services
                 return;
 
             var customHeaders = GetAuthHeaders();
-            var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => Client.RefreshTokenAsync(customHeaders)).ConfigureAwait(false);
+            var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => Client.RefreshTokenAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 _userSessionService.SetToken(httpRequestResult.Payload);

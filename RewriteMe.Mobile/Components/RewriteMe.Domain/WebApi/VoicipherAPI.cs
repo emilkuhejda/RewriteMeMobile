@@ -19,7 +19,7 @@ namespace RewriteMe.Domain.WebApi
     using System.Threading;
     using System.Threading.Tasks;
 
-    public partial class RewriteMeAPI : ServiceClient<RewriteMeAPI>, IRewriteMeAPI
+    public partial class VoicipherAPI : ServiceClient<VoicipherAPI>, IVoicipherAPI
     {
         /// <summary>
         /// The base URI of the service.
@@ -37,31 +37,31 @@ namespace RewriteMe.Domain.WebApi
         public JsonSerializerSettings DeserializationSettings { get; private set; }
 
         /// <summary>
-        /// Initializes a new instance of the RewriteMeAPI class.
+        /// Initializes a new instance of the VoicipherAPI class.
         /// </summary>
         /// <param name='httpClient'>
         /// HttpClient to be used
         /// </param>
         /// <param name='disposeHttpClient'>
-        /// True: will dispose the provided httpClient on calling RewriteMeAPI.Dispose(). False: will not dispose provided httpClient</param>
-        public RewriteMeAPI(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
+        /// True: will dispose the provided httpClient on calling VoicipherAPI.Dispose(). False: will not dispose provided httpClient</param>
+        public VoicipherAPI(HttpClient httpClient, bool disposeHttpClient) : base(httpClient, disposeHttpClient)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewriteMeAPI class.
+        /// Initializes a new instance of the VoicipherAPI class.
         /// </summary>
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public RewriteMeAPI(params DelegatingHandler[] handlers) : base(handlers)
+        public VoicipherAPI(params DelegatingHandler[] handlers) : base(handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewriteMeAPI class.
+        /// Initializes a new instance of the VoicipherAPI class.
         /// </summary>
         /// <param name='rootHandler'>
         /// Optional. The http client handler used to handle http transport.
@@ -69,13 +69,13 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='handlers'>
         /// Optional. The delegating handlers to add to the http client pipeline.
         /// </param>
-        public RewriteMeAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
+        public VoicipherAPI(HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : base(rootHandler, handlers)
         {
             Initialize();
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewriteMeAPI class.
+        /// Initializes a new instance of the VoicipherAPI class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -86,7 +86,7 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public RewriteMeAPI(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
+        public VoicipherAPI(System.Uri baseUri, params DelegatingHandler[] handlers) : this(handlers)
         {
             if (baseUri == null)
             {
@@ -96,7 +96,7 @@ namespace RewriteMe.Domain.WebApi
         }
 
         /// <summary>
-        /// Initializes a new instance of the RewriteMeAPI class.
+        /// Initializes a new instance of the VoicipherAPI class.
         /// </summary>
         /// <param name='baseUri'>
         /// Optional. The base URI of the service.
@@ -110,7 +110,7 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="System.ArgumentNullException">
         /// Thrown when a required parameter is null
         /// </exception>
-        public RewriteMeAPI(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
+        public VoicipherAPI(System.Uri baseUri, HttpClientHandler rootHandler, params DelegatingHandler[] handlers) : this(rootHandler, handlers)
         {
             if (baseUri == null)
             {
@@ -156,6 +156,8 @@ namespace RewriteMe.Domain.WebApi
             };
             CustomInitialize();
         }
+        /// <param name='version'>
+        /// </param>
         /// <param name='updatedAfter'>
         /// </param>
         /// <param name='applicationId'>
@@ -172,11 +174,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetFileItemsWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetFileItemsWithHttpMessagesAsync(string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -186,12 +198,14 @@ namespace RewriteMe.Domain.WebApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("updatedAfter", updatedAfter);
                 tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetFileItems", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/files").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (updatedAfter != null)
             {
@@ -310,6 +324,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='updatedAfter'>
         /// </param>
         /// <param name='applicationId'>
@@ -326,11 +342,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetDeletedFileItemIdsWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetDeletedFileItemIdsWithHttpMessagesAsync(string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -340,12 +366,14 @@ namespace RewriteMe.Domain.WebApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("updatedAfter", updatedAfter);
                 tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetDeletedFileItemIds", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files/deleted").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/files/deleted").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (updatedAfter != null)
             {
@@ -464,6 +492,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -476,11 +506,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -488,12 +528,14 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetDeletedFileItemsTotalTime", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files/deleted-total-time").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/files/deleted-total-time").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -601,6 +643,8 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='fileItemId'>
         /// </param>
+        /// <param name='version'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -613,11 +657,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetFileItemWithHttpMessagesAsync(System.Guid fileItemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetFileItemWithHttpMessagesAsync(System.Guid fileItemId, string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -626,13 +680,15 @@ namespace RewriteMe.Domain.WebApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fileItemId", fileItemId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetFileItem", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files/{fileItemId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/files/{fileItemId}").ToString();
             _url = _url.Replace("{fileItemId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(fileItemId, SerializationSettings).Trim('"')));
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -738,6 +794,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='name'>
         /// </param>
         /// <param name='language'>
@@ -762,11 +820,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UploadFileItemWithHttpMessagesAsync(string name = default(string), string language = default(string), string fileName = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UploadFileItemWithHttpMessagesAsync(string version, string name = default(string), string language = default(string), string fileName = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -779,13 +847,15 @@ namespace RewriteMe.Domain.WebApi
                 tracingParameters.Add("fileName", fileName);
                 tracingParameters.Add("dateCreated", dateCreated);
                 tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("file", file);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UploadFileItem", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files/upload").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/files/upload").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (name != null)
             {
@@ -994,6 +1064,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='fileItemId'>
         /// </param>
         /// <param name='name'>
@@ -1023,8 +1095,12 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(System.Guid fileItemId, string name, string language, System.Guid applicationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(string version, System.Guid fileItemId, string name, string language, System.Guid applicationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             if (name == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "name");
@@ -1040,6 +1116,7 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("fileItemId", fileItemId);
                 tracingParameters.Add("name", name);
                 tracingParameters.Add("language", language);
@@ -1049,7 +1126,8 @@ namespace RewriteMe.Domain.WebApi
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files/update").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/files/update").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -1195,6 +1273,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='fileItemId'>
         /// </param>
         /// <param name='applicationId'>
@@ -1211,11 +1291,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> DeleteFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> DeleteFileItemWithHttpMessagesAsync(string version, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1225,12 +1315,14 @@ namespace RewriteMe.Domain.WebApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fileItemId", fileItemId);
                 tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteFileItem", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files/delete").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/files/delete").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (fileItemId != null)
             {
@@ -1349,6 +1441,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='fileItems'>
         /// </param>
         /// <param name='applicationId'>
@@ -1365,10 +1459,16 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> DeleteAllFileItemsWithHttpMessagesAsync(IList<DeletedFileItemModel> fileItems = default(IList<DeletedFileItemModel>), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> DeleteAllFileItemsWithHttpMessagesAsync(string version, IList<DeletedFileItemModel> fileItems = default(IList<DeletedFileItemModel>), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (fileItems != null)
             {
@@ -1380,6 +1480,10 @@ namespace RewriteMe.Domain.WebApi
                     }
                 }
             }
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1389,12 +1493,14 @@ namespace RewriteMe.Domain.WebApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("fileItems", fileItems);
                 tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteAllFileItems", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files/delete-all").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/files/delete-all").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (applicationId != null)
             {
@@ -1515,6 +1621,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='fileItemId'>
         /// </param>
         /// <param name='language'>
@@ -1533,11 +1641,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> TranscribeFileItemWithHttpMessagesAsync(System.Guid? fileItemId = default(System.Guid?), string language = default(string), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> TranscribeFileItemWithHttpMessagesAsync(string version, System.Guid? fileItemId = default(System.Guid?), string language = default(string), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1548,12 +1666,14 @@ namespace RewriteMe.Domain.WebApi
                 tracingParameters.Add("fileItemId", fileItemId);
                 tracingParameters.Add("language", language);
                 tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "TranscribeFileItem", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/files/transcribe").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/files/transcribe").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (fileItemId != null)
             {
@@ -1730,6 +1850,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='updatedAfter'>
         /// </param>
         /// <param name='customHeaders'>
@@ -1744,11 +1866,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetInformationMessagesWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetInformationMessagesWithHttpMessagesAsync(string version, System.DateTime? updatedAfter = default(System.DateTime?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1757,12 +1889,14 @@ namespace RewriteMe.Domain.WebApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("updatedAfter", updatedAfter);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetInformationMessages", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/information-messages").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/information-messages").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (updatedAfter != null)
             {
@@ -1877,6 +2011,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='informationMessageId'>
         /// </param>
         /// <param name='customHeaders'>
@@ -1891,11 +2027,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> MarkMessageAsOpenedWithHttpMessagesAsync(System.Guid? informationMessageId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> MarkMessageAsOpenedWithHttpMessagesAsync(string version, System.Guid? informationMessageId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -1904,12 +2050,14 @@ namespace RewriteMe.Domain.WebApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("informationMessageId", informationMessageId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "MarkMessageAsOpened", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/information-messages/mark-as-opened").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/information-messages/mark-as-opened").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (informationMessageId != null)
             {
@@ -2042,6 +2190,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='ids'>
         /// </param>
         /// <param name='customHeaders'>
@@ -2056,11 +2206,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> MarkMessagesAsOpenedWithHttpMessagesAsync(IList<System.Guid?> ids = default(IList<System.Guid?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> MarkMessagesAsOpenedWithHttpMessagesAsync(string version, IList<System.Guid?> ids = default(IList<System.Guid?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2069,12 +2229,14 @@ namespace RewriteMe.Domain.WebApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("ids", ids);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "MarkMessagesAsOpened", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/information-messages/mark-messages-as-opened").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/information-messages/mark-messages-as-opened").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2186,6 +2348,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2198,11 +2362,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetLastUpdatesWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetLastUpdatesWithHttpMessagesAsync(string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2210,12 +2384,14 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetLastUpdates", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/last-updates").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/last-updates").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2321,6 +2497,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='speechResultId'>
         /// </param>
         /// <param name='recognizedAudioSampleId'>
@@ -2339,11 +2517,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> CreateSpeechResultWithHttpMessagesAsync(System.Guid speechResultId, System.Guid recognizedAudioSampleId, string displayText = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> CreateSpeechResultWithHttpMessagesAsync(string version, System.Guid speechResultId, System.Guid recognizedAudioSampleId, string displayText = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2351,6 +2539,7 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("speechResultId", speechResultId);
                 tracingParameters.Add("recognizedAudioSampleId", recognizedAudioSampleId);
                 tracingParameters.Add("displayText", displayText);
@@ -2359,7 +2548,8 @@ namespace RewriteMe.Domain.WebApi
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/speech-results/create").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/speech-results/create").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2482,6 +2672,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='speechResultModels'>
         /// </param>
         /// <param name='customHeaders'>
@@ -2496,10 +2688,16 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateSpeechResultsWithHttpMessagesAsync(IList<SpeechResultModel> speechResultModels = default(IList<SpeechResultModel>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UpdateSpeechResultsWithHttpMessagesAsync(string version, IList<SpeechResultModel> speechResultModels = default(IList<SpeechResultModel>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (speechResultModels != null)
             {
@@ -2511,6 +2709,10 @@ namespace RewriteMe.Domain.WebApi
                     }
                 }
             }
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2519,12 +2721,14 @@ namespace RewriteMe.Domain.WebApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("speechResultModels", speechResultModels);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateSpeechResults", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/speech-results/update").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/speech-results/update").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2636,6 +2840,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -2648,11 +2854,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetRecognizedTimeWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetRecognizedTimeWithHttpMessagesAsync(string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2660,12 +2876,14 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetRecognizedTime", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/speech-results/recognized-time").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/speech-results/recognized-time").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -2771,145 +2989,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
-        /// <param name='fileItemId'>
+        /// <param name='version'>
         /// </param>
-        /// <param name='customHeaders'>
-        /// Headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="HttpOperationException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <return>
-        /// A response object containing the response body and response headers.
-        /// </return>
-        public async Task<HttpOperationResponse<object>> GetTranscribeItemsWithHttpMessagesAsync(System.Guid fileItemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
-        {
-            // Tracing
-            bool _shouldTrace = ServiceClientTracing.IsEnabled;
-            string _invocationId = null;
-            if (_shouldTrace)
-            {
-                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
-                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("fileItemId", fileItemId);
-                tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "GetTranscribeItems", tracingParameters);
-            }
-            // Construct URL
-            var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/transcribe-items/{fileItemId}").ToString();
-            _url = _url.Replace("{fileItemId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(fileItemId, SerializationSettings).Trim('"')));
-            // Create HTTP transport objects
-            var _httpRequest = new HttpRequestMessage();
-            HttpResponseMessage _httpResponse = null;
-            _httpRequest.Method = new HttpMethod("GET");
-            _httpRequest.RequestUri = new System.Uri(_url);
-            // Set Headers
-
-
-            if (customHeaders != null)
-            {
-                foreach(var _header in customHeaders)
-                {
-                    if (_httpRequest.Headers.Contains(_header.Key))
-                    {
-                        _httpRequest.Headers.Remove(_header.Key);
-                    }
-                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
-                }
-            }
-
-            // Serialize Request
-            string _requestContent = null;
-            // Send Request
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
-            }
-            cancellationToken.ThrowIfCancellationRequested();
-            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
-            }
-            HttpStatusCode _statusCode = _httpResponse.StatusCode;
-            cancellationToken.ThrowIfCancellationRequested();
-            string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 401 && (int)_statusCode != 500)
-            {
-                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
-                if (_httpResponse.Content != null) {
-                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                }
-                else {
-                    _responseContent = string.Empty;
-                }
-                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
-                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
-                if (_shouldTrace)
-                {
-                    ServiceClientTracing.Error(_invocationId, ex);
-                }
-                _httpRequest.Dispose();
-                if (_httpResponse != null)
-                {
-                    _httpResponse.Dispose();
-                }
-                throw ex;
-            }
-            // Create Result
-            var _result = new HttpOperationResponse<object>();
-            _result.Request = _httpRequest;
-            _result.Response = _httpResponse;
-            // Deserialize Response
-            if ((int)_statusCode == 200)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<IList<TranscribeItem>>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            // Deserialize Response
-            if ((int)_statusCode == 401)
-            {
-                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
-                try
-                {
-                    _result.Body = SafeJsonConvert.DeserializeObject<ProblemDetails>(_responseContent, DeserializationSettings);
-                }
-                catch (JsonException ex)
-                {
-                    _httpRequest.Dispose();
-                    if (_httpResponse != null)
-                    {
-                        _httpResponse.Dispose();
-                    }
-                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
-                }
-            }
-            if (_shouldTrace)
-            {
-                ServiceClientTracing.Exit(_invocationId, _result);
-            }
-            return _result;
-        }
-
         /// <param name='updatedAfter'>
         /// </param>
         /// <param name='applicationId'>
@@ -2926,11 +3007,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetTranscribeItemsAllWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetTranscribeItemsAllWithHttpMessagesAsync(string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -2940,12 +3031,14 @@ namespace RewriteMe.Domain.WebApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("updatedAfter", updatedAfter);
                 tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetTranscribeItemsAll", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/transcribe-items-all").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/transcribe-items").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (updatedAfter != null)
             {
@@ -3064,7 +3157,9 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
-        /// <param name='transcribeItemId'>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='version'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3078,11 +3173,174 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetTranscribeAudioSourceWithHttpMessagesAsync(System.Guid transcribeItemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetTranscribeItemsWithHttpMessagesAsync(System.Guid fileItemId, string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
+            // Tracing
+            bool _shouldTrace = ServiceClientTracing.IsEnabled;
+            string _invocationId = null;
+            if (_shouldTrace)
+            {
+                _invocationId = ServiceClientTracing.NextInvocationId.ToString();
+                Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("fileItemId", fileItemId);
+                tracingParameters.Add("version", version);
+                tracingParameters.Add("cancellationToken", cancellationToken);
+                ServiceClientTracing.Enter(_invocationId, this, "GetTranscribeItems", tracingParameters);
+            }
+            // Construct URL
+            var _baseUrl = BaseUri.AbsoluteUri;
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/transcribe-items/{fileItemId}").ToString();
+            _url = _url.Replace("{fileItemId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(fileItemId, SerializationSettings).Trim('"')));
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
+            // Create HTTP transport objects
+            var _httpRequest = new HttpRequestMessage();
+            HttpResponseMessage _httpResponse = null;
+            _httpRequest.Method = new HttpMethod("GET");
+            _httpRequest.RequestUri = new System.Uri(_url);
+            // Set Headers
+
+
+            if (customHeaders != null)
+            {
+                foreach(var _header in customHeaders)
+                {
+                    if (_httpRequest.Headers.Contains(_header.Key))
+                    {
+                        _httpRequest.Headers.Remove(_header.Key);
+                    }
+                    _httpRequest.Headers.TryAddWithoutValidation(_header.Key, _header.Value);
+                }
+            }
+
+            // Serialize Request
+            string _requestContent = null;
+            // Send Request
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.SendRequest(_invocationId, _httpRequest);
+            }
+            cancellationToken.ThrowIfCancellationRequested();
+            _httpResponse = await HttpClient.SendAsync(_httpRequest, cancellationToken).ConfigureAwait(false);
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.ReceiveResponse(_invocationId, _httpResponse);
+            }
+            HttpStatusCode _statusCode = _httpResponse.StatusCode;
+            cancellationToken.ThrowIfCancellationRequested();
+            string _responseContent = null;
+            if ((int)_statusCode != 200 && (int)_statusCode != 401 && (int)_statusCode != 500)
+            {
+                var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
+                if (_httpResponse.Content != null) {
+                    _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                }
+                else {
+                    _responseContent = string.Empty;
+                }
+                ex.Request = new HttpRequestMessageWrapper(_httpRequest, _requestContent);
+                ex.Response = new HttpResponseMessageWrapper(_httpResponse, _responseContent);
+                if (_shouldTrace)
+                {
+                    ServiceClientTracing.Error(_invocationId, ex);
+                }
+                _httpRequest.Dispose();
+                if (_httpResponse != null)
+                {
+                    _httpResponse.Dispose();
+                }
+                throw ex;
+            }
+            // Create Result
+            var _result = new HttpOperationResponse<object>();
+            _result.Request = _httpRequest;
+            _result.Response = _httpResponse;
+            // Deserialize Response
+            if ((int)_statusCode == 200)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<IList<TranscribeItem>>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            // Deserialize Response
+            if ((int)_statusCode == 401)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ProblemDetails>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
+            if (_shouldTrace)
+            {
+                ServiceClientTracing.Exit(_invocationId, _result);
+            }
+            return _result;
+        }
+
+        /// <param name='transcribeItemId'>
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='customHeaders'>
+        /// Headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        /// <exception cref="HttpOperationException">
+        /// Thrown when the operation returned an invalid status code
+        /// </exception>
+        /// <exception cref="SerializationException">
+        /// Thrown when unable to deserialize the response
+        /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <return>
+        /// A response object containing the response body and response headers.
+        /// </return>
+        public async Task<HttpOperationResponse<object>> GetTranscribeAudioSourceWithHttpMessagesAsync(System.Guid transcribeItemId, string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3091,13 +3349,15 @@ namespace RewriteMe.Domain.WebApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("transcribeItemId", transcribeItemId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetTranscribeAudioSource", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/transcribe-items/audio/{transcribeItemId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/transcribe-items/audio/{transcribeItemId}").ToString();
             _url = _url.Replace("{transcribeItemId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(transcribeItemId, SerializationSettings).Trim('"')));
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3223,6 +3483,8 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='transcribeItemId'>
         /// </param>
+        /// <param name='version'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -3235,11 +3497,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<ProblemDetails>> GetTranscribeAudioSourceStreamWithHttpMessagesAsync(System.Guid transcribeItemId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<ProblemDetails>> GetTranscribeAudioSourceStreamWithHttpMessagesAsync(System.Guid transcribeItemId, string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3248,13 +3520,15 @@ namespace RewriteMe.Domain.WebApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("transcribeItemId", transcribeItemId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetTranscribeAudioSourceStream", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/transcribe-items/audio-stream/{transcribeItemId}").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/transcribe-items/audio-stream/{transcribeItemId}").ToString();
             _url = _url.Replace("{transcribeItemId}", System.Uri.EscapeDataString(SafeJsonConvert.SerializeObject(transcribeItemId, SerializationSettings).Trim('"')));
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3360,6 +3634,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='transcribeItemId'>
         /// </param>
         /// <param name='applicationId'>
@@ -3387,8 +3663,12 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateUserTranscriptWithHttpMessagesAsync(System.Guid transcribeItemId, System.Guid applicationId, string transcript, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UpdateUserTranscriptWithHttpMessagesAsync(string version, System.Guid transcribeItemId, System.Guid applicationId, string transcript, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             if (transcript == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "transcript");
@@ -3400,6 +3680,7 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("transcribeItemId", transcribeItemId);
                 tracingParameters.Add("applicationId", applicationId);
                 tracingParameters.Add("transcript", transcript);
@@ -3408,7 +3689,8 @@ namespace RewriteMe.Domain.WebApi
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/transcribe-items/update-transcript").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/transcribe-items/update-transcript").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3531,6 +3813,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='updateUserModel'>
         /// </param>
         /// <param name='customHeaders'>
@@ -3545,14 +3829,24 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateUserWithHttpMessagesAsync(UpdateUserModel updateUserModel = default(UpdateUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UpdateUserWithHttpMessagesAsync(string version, UpdateUserModel updateUserModel = default(UpdateUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (updateUserModel != null)
             {
                 updateUserModel.Validate();
+            }
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3562,12 +3856,14 @@ namespace RewriteMe.Domain.WebApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("updateUserModel", updateUserModel);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateUser", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/users/update").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/users/update").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3697,6 +3993,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='registrationUserModel'>
         /// </param>
         /// <param name='customHeaders'>
@@ -3711,14 +4009,24 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> RegisterUserWithHttpMessagesAsync(RegistrationUserModel registrationUserModel = default(RegistrationUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> RegisterUserWithHttpMessagesAsync(string version, RegistrationUserModel registrationUserModel = default(RegistrationUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (registrationUserModel != null)
             {
                 registrationUserModel.Validate();
+            }
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3728,12 +4036,14 @@ namespace RewriteMe.Domain.WebApi
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("registrationUserModel", registrationUserModel);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RegisterUser", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/b2c/users/register").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/b2c/v{version}/users/register").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -3845,6 +4155,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='installationId'>
         /// </param>
         /// <param name='language'>
@@ -3861,11 +4173,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateLanguageWithHttpMessagesAsync(System.Guid? installationId = default(System.Guid?), int? language = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UpdateLanguageWithHttpMessagesAsync(string version, System.Guid? installationId = default(System.Guid?), int? language = default(int?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -3875,12 +4197,14 @@ namespace RewriteMe.Domain.WebApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("installationId", installationId);
                 tracingParameters.Add("language", language);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateLanguage", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/users/update-language").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/users/update-language").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (installationId != null)
             {
@@ -4017,6 +4341,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='updatedAfter'>
         /// </param>
         /// <param name='applicationId'>
@@ -4033,11 +4359,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetUserSubscriptionsWithHttpMessagesAsync(System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetUserSubscriptionsWithHttpMessagesAsync(string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4047,12 +4383,14 @@ namespace RewriteMe.Domain.WebApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("updatedAfter", updatedAfter);
                 tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetUserSubscriptions", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/subscriptions").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/subscriptions").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (updatedAfter != null)
             {
@@ -4171,6 +4509,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='billingPurchase'>
         /// </param>
         /// <param name='applicationId'>
@@ -4187,11 +4527,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> CreateUserSubscriptionWithHttpMessagesAsync(BillingPurchase billingPurchase = default(BillingPurchase), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> CreateUserSubscriptionWithHttpMessagesAsync(string version, BillingPurchase billingPurchase = default(BillingPurchase), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4201,12 +4551,14 @@ namespace RewriteMe.Domain.WebApi
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("billingPurchase", billingPurchase);
                 tracingParameters.Add("applicationId", applicationId);
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateUserSubscription", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/subscriptions/create").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/subscriptions/create").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             List<string> _queryParameters = new List<string>();
             if (applicationId != null)
             {
@@ -4363,6 +4715,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -4375,11 +4729,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> GetSpeechConfigurationWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> GetSpeechConfigurationWithHttpMessagesAsync(string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4387,12 +4751,14 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "GetSpeechConfiguration", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/subscriptions/speech-configuration").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/subscriptions/speech-configuration").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -4498,6 +4864,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -4510,11 +4878,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<bool?>> IsAliveWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<bool?>> IsAliveWithHttpMessagesAsync(string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4522,12 +4900,14 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "IsAlive", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/is-alive").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/utils/is-alive").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -4615,6 +4995,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -4627,11 +5009,21 @@ namespace RewriteMe.Domain.WebApi
         /// <exception cref="SerializationException">
         /// Thrown when unable to deserialize the response
         /// </exception>
+        /// <exception cref="ValidationException">
+        /// Thrown when a required parameter is null
+        /// </exception>
+        /// <exception cref="System.ArgumentNullException">
+        /// Thrown when a required parameter is null
+        /// </exception>
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> RefreshTokenWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> RefreshTokenWithHttpMessagesAsync(string version, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
             string _invocationId = null;
@@ -4639,12 +5031,14 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RefreshToken", tracingParameters);
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/refresh-token").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/utils/refresh-token").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;
@@ -4750,6 +5144,8 @@ namespace RewriteMe.Domain.WebApi
             return _result;
         }
 
+        /// <param name='version'>
+        /// </param>
         /// <param name='username'>
         /// </param>
         /// <param name='password'>
@@ -4776,8 +5172,12 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse> CreateTokenWithHttpMessagesAsync(string username, string password, System.Guid userId, int role, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse> CreateTokenWithHttpMessagesAsync(string version, string username, string password, System.Guid userId, int role, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
+            if (version == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
             if (username == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "username");
@@ -4793,6 +5193,7 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
+                tracingParameters.Add("version", version);
                 tracingParameters.Add("username", username);
                 tracingParameters.Add("password", password);
                 tracingParameters.Add("userId", userId);
@@ -4802,7 +5203,8 @@ namespace RewriteMe.Domain.WebApi
             }
             // Construct URL
             var _baseUrl = BaseUri.AbsoluteUri;
-            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/generate-token").ToString();
+            var _url = new System.Uri(new System.Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "api/v{version}/utils/generate-token").ToString();
+            _url = _url.Replace("{version}", System.Uri.EscapeDataString(version));
             // Create HTTP transport objects
             var _httpRequest = new HttpRequestMessage();
             HttpResponseMessage _httpResponse = null;

@@ -7,7 +7,7 @@ namespace RewriteMe.Business.Services
 {
     public abstract class WebServiceBase
     {
-        private IRewriteMeAPI _client;
+        private IVoicipherAPI _client;
 
         protected WebServiceBase(
             IRewriteMeApiClientFactory rewriteMeApiClientFactory,
@@ -19,7 +19,7 @@ namespace RewriteMe.Business.Services
             ApplicationSettings = applicationSettings;
         }
 
-        protected IRewriteMeAPI Client => _client ?? (_client = RewriteMeApiClientFactory.CreateClient(ApplicationSettings.WebApiUri));
+        protected IVoicipherAPI Client => _client ?? (_client = RewriteMeApiClientFactory.CreateClient(ApplicationSettings.WebApiUri));
 
         protected IRewriteMeApiClientFactory RewriteMeApiClientFactory { get; }
 
