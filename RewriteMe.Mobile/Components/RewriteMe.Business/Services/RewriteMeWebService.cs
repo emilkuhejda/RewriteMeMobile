@@ -79,13 +79,13 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetTranscribeItemsAllAsync(ApplicationSettings.WebApiVersion, updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<RemainingTime>> GetUserSubscriptionRemainingTimeAsync()
+        public async Task<HttpRequestResult<TimeSpanWrapper>> GetUserSubscriptionRemainingTimeAsync()
         {
             var customHeaders = GetAuthHeaders();
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetUserSubscriptionRemainingTimeAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<RemainingTime>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase)
+        public async Task<HttpRequestResult<TimeSpanWrapper>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase)
         {
             var customHeaders = GetAuthHeaders();
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateUserSubscriptionAsync(ApplicationSettings.WebApiVersion, billingPurchase, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);

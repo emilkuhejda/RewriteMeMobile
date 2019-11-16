@@ -25,9 +25,9 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<IEnumerable<TranscribeItem>>> GetTranscribeItemsAllAsync(DateTime updatedAfter);
 
-        Task<HttpRequestResult<RemainingTime>> GetUserSubscriptionRemainingTimeAsync();
+        Task<HttpRequestResult<TimeSpanWrapper>> GetUserSubscriptionRemainingTimeAsync();
 
-        Task<HttpRequestResult<RemainingTime>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase);
+        Task<HttpRequestResult<TimeSpanWrapper>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase);
 
         Task<HttpRequestResult<SpeechConfiguration>> GetSpeechConfigurationAsync();
 
