@@ -20,9 +20,11 @@ namespace RewriteMe.Business.Configuration
             _internalValueService = internalValueService;
         }
 
+        public Guid ApplicationId { get; private set; }
+
         public Uri WebApiUri { get; } = new Uri("https://rewrite-me.com/");
 
-        public Guid ApplicationId { get; private set; }
+        public string WebApiVersion { get; } = "1";
 
         public string AppCenterKeys { get; } = $"ios={OsxAppCenterKey};android={AndroidAppCenterKey}";
 
