@@ -35,10 +35,10 @@ namespace RewriteMe.Business.Services
         private readonly IPushNotificationsService _pushNotificationsService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
+        private readonly IInternalValueService _internalValueService;
         private readonly IApplicationVersionProvider _applicationVersionProvider;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IUserSessionRepository _userSessionRepository;
-        private readonly IUserSubscriptionRepository _userSubscriptionRepository;
         private readonly ILogger _logger;
         private readonly object _lockObject = new object();
 
@@ -53,10 +53,10 @@ namespace RewriteMe.Business.Services
             IPushNotificationsService pushNotificationsService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
+            IInternalValueService internalValueService,
             IApplicationVersionProvider applicationVersionProvider,
             IApplicationSettings applicationSettings,
             IUserSessionRepository userSessionRepository,
-            IUserSubscriptionRepository userSubscriptionRepository,
             ILoggerFactory loggerFactory)
         {
             _languageService = languageService;
@@ -65,10 +65,10 @@ namespace RewriteMe.Business.Services
             _appCenterMetricsService = appCenterMetricsService;
             _pushNotificationsService = pushNotificationsService;
             _identityUiParentProvider = identityUiParentProvider;
+            _internalValueService = internalValueService;
             _applicationVersionProvider = applicationVersionProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
-            _userSubscriptionRepository = userSubscriptionRepository;
             _logger = loggerFactory.CreateLogger(typeof(UserSessionService));
 
             _publicClientApplication = publicClientApplicationFactory.CreatePublicClientApplication(
@@ -392,7 +392,7 @@ namespace RewriteMe.Business.Services
 
             SetToken(httpRequestResult.Payload.Token);
 
-            await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload.UserSubscription).ConfigureAwait(false);
+            await _internalValueService.UpdateValueAsync(InternalValues.RemainingTimeTicks, httpRequestResult.Payload.RemainingTime.TimeTicks).ConfigureAwait(false);
         }
 
         private async Task UpdateUserAsync(B2CAccessToken accessToken)

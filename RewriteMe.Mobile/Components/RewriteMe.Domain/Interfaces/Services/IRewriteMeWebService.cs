@@ -29,7 +29,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<RemainingTime>> GetUserSubscriptionRemainingTimeAsync();
 
-        Task<HttpRequestResult<UserSubscription>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase);
+        Task<HttpRequestResult<RemainingTime>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase);
 
         Task<HttpRequestResult<SpeechConfiguration>> GetSpeechConfigurationAsync();
 

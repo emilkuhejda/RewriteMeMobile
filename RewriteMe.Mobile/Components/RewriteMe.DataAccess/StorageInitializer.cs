@@ -35,8 +35,7 @@ namespace RewriteMe.DataAccess
                 typeof(RecordedItemEntity),
                 typeof(TranscribeItemEntity),
                 typeof(TranscriptAudioSourceEntity),
-                typeof(UserSessionEntity),
-                typeof(UserSubscriptionEntity)
+                typeof(UserSessionEntity)
             };
 
             var versionNumber = await _contextProvider.Context.GetVersionNumberAsync().ConfigureAwait(false);

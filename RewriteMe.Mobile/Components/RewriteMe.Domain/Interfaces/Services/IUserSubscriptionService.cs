@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
@@ -10,7 +9,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task RecognizedTimeSynchronizationAsync();
 
-        Task AddAsync(UserSubscription userSubscription);
+        Task UpdateRemainingTimeAsync(TimeSpan remainingTime);
 
         Task<TimeSpan> GetRemainingTimeAsync();
     }

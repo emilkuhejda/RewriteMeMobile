@@ -4474,7 +4474,7 @@ namespace RewriteMe.Domain.WebApi
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<UserSubscription>(_responseContent, DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<RemainingTime>(_responseContent, DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

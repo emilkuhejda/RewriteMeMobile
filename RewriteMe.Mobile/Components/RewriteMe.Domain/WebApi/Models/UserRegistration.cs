@@ -23,11 +23,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the UserRegistration class.
         /// </summary>
-        public UserRegistration(string token, Identity identity = default(Identity), UserSubscription userSubscription = default(UserSubscription))
+        public UserRegistration(string token, Identity identity = default(Identity), RemainingTime remainingTime = default(RemainingTime))
         {
             Token = token;
             Identity = identity;
-            UserSubscription = userSubscription;
+            RemainingTime = remainingTime;
             CustomInit();
         }
 
@@ -48,8 +48,8 @@ namespace RewriteMe.Domain.WebApi.Models
 
         /// <summary>
         /// </summary>
-        [JsonProperty(PropertyName = "userSubscription")]
-        public UserSubscription UserSubscription { get; set; }
+        [JsonProperty(PropertyName = "remainingTime")]
+        public RemainingTime RemainingTime { get; set; }
 
         /// <summary>
         /// Validate the object.
@@ -67,9 +67,9 @@ namespace RewriteMe.Domain.WebApi.Models
             {
                 Identity.Validate();
             }
-            if (UserSubscription != null)
+            if (RemainingTime != null)
             {
-                UserSubscription.Validate();
+                RemainingTime.Validate();
             }
         }
     }

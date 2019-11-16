@@ -308,9 +308,9 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
                 var billingPurchase = purchase.ToBillingPurchase(userId, orderId);
-                var userSubscription = await _billingPurchaseService.SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
+                var remainingTime = await _billingPurchaseService.SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 
-                await _userSubscriptionService.AddAsync(userSubscription).ConfigureAwait(false);
+                await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
 
                 Logger.Info($"Purchase billing for product '{productId}' was registered.");
             }

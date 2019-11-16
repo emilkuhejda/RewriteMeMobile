@@ -5,6 +5,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IBillingPurchaseService
     {
-        Task<UserSubscription> SendBillingPurchaseAsync(BillingPurchase billingPurchase);
+        Task<RemainingTime> SendBillingPurchaseAsync(BillingPurchase billingPurchase);
     }
 }

@@ -1,13 +1,9 @@
 ﻿using System;
 using System.Globalization;
-using System.Linq;
 using System.Threading.Tasks;
-using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
-using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.WebApi.Models;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
 
@@ -17,24 +13,15 @@ namespace RewriteMe.Business.Services
     {
         private readonly IInternalValueService _internalValueService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
-        private readonly IUserSubscriptionRepository _userSubscriptionRepository;
-        private readonly IFileItemRepository _fileItemRepository;
-        private readonly IDeletedFileItemRepository _deletedFileItemRepository;
         private readonly ILogger _logger;
 
         public UserSubscriptionService(
             IInternalValueService internalValueService,
             IRewriteMeWebService rewriteMeWebService,
-            IUserSubscriptionRepository userSubscriptionRepository,
-            IFileItemRepository fileItemRepository,
-            IDeletedFileItemRepository deletedFileItemRepository,
             ILoggerFactory loggerFactory)
         {
             _internalValueService = internalValueService;
             _rewriteMeWebService = rewriteMeWebService;
-            _userSubscriptionRepository = userSubscriptionRepository;
-            _fileItemRepository = fileItemRepository;
-            _deletedFileItemRepository = deletedFileItemRepository;
             _logger = loggerFactory.CreateLogger(typeof(UserSubscriptionService));
         }
 
@@ -49,10 +36,9 @@ namespace RewriteMe.Business.Services
                 var httpRequestResult = await _rewriteMeWebService.GetUserSubscriptionRemainingTimeAsync().ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    var userSubscriptions = httpRequestResult.Payload;
-                    _logger.Info($"Web server returned response for synchronization.");
+                    _logger.Info("Web server returned response for synchronization.");
 
-                    //await _userSubscriptionRepository.InsertOrReplaceAllAsync(userSubscriptions).ConfigureAwait(false);
+                    await UpdateRemainingTimeAsync(httpRequestResult.Payload.Time).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
@@ -69,25 +55,15 @@ namespace RewriteMe.Business.Services
             }
         }
 
-        public async Task AddAsync(UserSubscription userSubscription)
+        public async Task UpdateRemainingTimeAsync(TimeSpan remainingTime)
         {
-            await _userSubscriptionRepository.AddAsync(userSubscription).ConfigureAwait(false);
+            await _internalValueService.UpdateValueAsync(InternalValues.RemainingTimeTicks, remainingTime.Ticks).ConfigureAwait(false);
         }
 
         public async Task<TimeSpan> GetRemainingTimeAsync()
         {
-            var deletedFilesTotalTimeTicks = await _internalValueService.GetValueAsync(InternalValues.DeletedFileItemsTotalTime).ConfigureAwait(false);
-            var recognizedTimeTicks = await _internalValueService.GetValueAsync(InternalValues.RecognizedTimeTicks).ConfigureAwait(false);
-
-            var userSubscriptionsTime = await _userSubscriptionRepository.GetTotalTimeAsync().ConfigureAwait(false);
-            var processedFilesTotalTime = await _fileItemRepository.GetProcessedFilesTotalTimeAsync().ConfigureAwait(false);
-            var processedDeletedFilesTotalTime = await _deletedFileItemRepository.GetProcessedFilesTotalTimeAsync().ConfigureAwait(false);
-
-            processedFilesTotalTime = processedFilesTotalTime
-                .Add(processedDeletedFilesTotalTime)
-                .Add(TimeSpan.FromTicks(deletedFilesTotalTimeTicks))
-                .Add(TimeSpan.FromTicks(recognizedTimeTicks));
-            return userSubscriptionsTime.Subtract(processedFilesTotalTime);
+            var remainingTime = await _internalValueService.GetValueAsync(InternalValues.RemainingTimeTicks).ConfigureAwait(false);
+            return TimeSpan.FromTicks(remainingTime);
         }
     }
 }

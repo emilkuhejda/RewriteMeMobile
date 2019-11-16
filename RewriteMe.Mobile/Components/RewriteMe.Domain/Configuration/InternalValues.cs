@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace RewriteMe.Domain.Configuration
+﻿namespace RewriteMe.Domain.Configuration
 {
     public static class InternalValues
     {
@@ -21,5 +19,7 @@ namespace RewriteMe.Domain.Configuration
         public static InternalValue<long> DeletedFileItemsTotalTime { get; } = new InternalValue<long>("DeletedFileItemsTotalTime", 0);
 
         public static InternalValue<long> RecognizedTimeTicks { get; } = new InternalValue<long>("RecognizedTimeTicks", 0);
+
+        public static InternalValue<long> RemainingTimeTicks { get; } = new InternalValue<long>("RemainingTimeTicks", 0);
     }
 }

@@ -91,7 +91,7 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetUserSubscriptionRemainingTimeAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<UserSubscription>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase)
+        public async Task<HttpRequestResult<RemainingTime>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase)
         {
             var customHeaders = GetAuthHeaders();
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateUserSubscriptionAsync(ApplicationSettings.WebApiVersion, billingPurchase, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
