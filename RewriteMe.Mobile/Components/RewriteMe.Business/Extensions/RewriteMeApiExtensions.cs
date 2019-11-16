@@ -17,187 +17,187 @@ namespace RewriteMe.Business.Extensions
 {
     public static class RewriteMeApiExtensions
     {
-        public static async Task<LastUpdates> GetLastUpdatesAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        public static async Task<LastUpdates> GetLastUpdatesAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetLastUpdatesWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetLastUpdatesWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<LastUpdates>(result);
             }
         }
 
-        public static async Task<IEnumerable<FileItem>> GetFileItemsAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<IEnumerable<FileItem>> GetFileItemsAsync(this IVoicipherAPI operations, string version, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetFileItemsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetFileItemsWithHttpMessagesAsync(version, updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<FileItem>>(result);
             }
         }
 
-        public static async Task<IEnumerable<Guid>> GetDeletedFileItemIdsAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<IEnumerable<Guid>> GetDeletedFileItemIdsAsync(this IVoicipherAPI operations, string version, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetDeletedFileItemIdsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetDeletedFileItemIdsWithHttpMessagesAsync(version, updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<Guid?>>(result).Where(x => x.HasValue).Select(x => x.Value);
             }
         }
 
-        public static async Task<TimeSpanWrapper> GetDeletedFileItemsTotalTimeAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        public static async Task<TimeSpanWrapper> GetDeletedFileItemsTotalTimeAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<TimeSpanWrapper>(result);
             }
         }
 
-        public static async Task<TimeSpanWrapper> DeleteFileItemAsync(this IRewriteMeAPI operations, Guid fileItemId, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<TimeSpanWrapper> DeleteFileItemAsync(this IVoicipherAPI operations, string version, Guid fileItemId, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.DeleteFileItemWithHttpMessagesAsync(fileItemId, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.DeleteFileItemWithHttpMessagesAsync(version, fileItemId, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<TimeSpanWrapper>(result);
             }
         }
 
-        public static async Task<Ok> DeleteAllFileItemsAsync(this IRewriteMeAPI operations, IList<DeletedFileItem> fileItems, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> DeleteAllFileItemsAsync(this IVoicipherAPI operations, string version, IList<DeletedFileItem> fileItems, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             var deletedFileItemModels = fileItems.Select(x => x.ToDeletedFileItemModel()).ToList();
-            using (var result = await operations.DeleteAllFileItemsWithHttpMessagesAsync(deletedFileItemModels, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.DeleteAllFileItemsWithHttpMessagesAsync(version, deletedFileItemModels, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
             }
         }
 
-        public static async Task<IEnumerable<TranscribeItem>> GetTranscribeItemsAllAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<IEnumerable<TranscribeItem>> GetTranscribeItemsAllAsync(this IVoicipherAPI operations, string version, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(version, updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<TranscribeItem>>(result);
             }
         }
 
-        public static async Task<IEnumerable<UserSubscription>> GetUserSubscriptionsAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<IEnumerable<UserSubscription>> GetUserSubscriptionsAsync(this IVoicipherAPI operations, string version, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(version, updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<UserSubscription>>(result);
             }
         }
 
-        public static async Task<UserSubscription> CreateUserSubscriptionAsync(this IRewriteMeAPI operations, BillingPurchase billingPurchase, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<UserSubscription> CreateUserSubscriptionAsync(this IVoicipherAPI operations, string version, BillingPurchase billingPurchase, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(billingPurchase, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(version, billingPurchase, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<UserSubscription>(result);
             }
         }
 
-        public static async Task<SpeechConfiguration> GetSpeechConfigurationAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        public static async Task<SpeechConfiguration> GetSpeechConfigurationAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetSpeechConfigurationWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetSpeechConfigurationWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<SpeechConfiguration>(result);
             }
         }
 
-        public static async Task<FileItem> UploadFileItemAsync(this IRewriteMeAPI operations, MediaFile mediaFile, DateTime dateCreated, Guid applicationId, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
+        public static async Task<FileItem> UploadFileItemAsync(this IVoicipherAPI operations, string version, MediaFile mediaFile, DateTime dateCreated, Guid applicationId, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
         {
             using (var stream = new MemoryStream(mediaFile.Source))
-            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, dateCreated, applicationId, stream, customHeaders, cancellationToken).ConfigureAwait(false))
+            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, version, dateCreated, applicationId, stream, customHeaders, cancellationToken).ConfigureAwait(false))
             {
                 return ParseBody<FileItem>(result);
             }
         }
 
-        public static async Task<Ok> TranscribeFileItemAsync(this IRewriteMeAPI operations, Guid fileItemId, string language, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> TranscribeFileItemAsync(this IVoicipherAPI operations, string version, Guid fileItemId, string language, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.TranscribeFileItemWithHttpMessagesAsync(fileItemId, language, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.TranscribeFileItemWithHttpMessagesAsync(version, fileItemId, language, applicationId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
             }
         }
 
-        public static async Task<byte[]> GetTranscribeAudioSourceAsync(this IRewriteMeAPI operations, Guid transcribeItemId, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
+        public static async Task<byte[]> GetTranscribeAudioSourceAsync(this IVoicipherAPI operations, string version, Guid transcribeItemId, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
         {
-            using (var result = await operations.GetTranscribeAudioSourceWithHttpMessagesAsync(transcribeItemId, customHeaders, cancellationToken).ConfigureAwait(false))
+            using (var result = await operations.GetTranscribeAudioSourceWithHttpMessagesAsync(transcribeItemId, version, customHeaders, cancellationToken).ConfigureAwait(false))
             {
                 return ParseBody<byte[]>(result);
             }
         }
 
-        public static async Task<Ok> UpdateUserTranscriptAsync(this IRewriteMeAPI operations, Guid transcribeItemId, string transcript, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> UpdateUserTranscriptAsync(this IVoicipherAPI operations, string version, Guid transcribeItemId, string transcript, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(transcribeItemId, applicationId, transcript, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(version, transcribeItemId, applicationId, transcript, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
             }
         }
 
-        public static async Task<Ok> CreateSpeechResultAsync(this IRewriteMeAPI operations, Guid speechResultId, Guid recognizedAudioSampleId, string displayText, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> CreateSpeechResultAsync(this IVoicipherAPI operations, string version, Guid speechResultId, Guid recognizedAudioSampleId, string displayText, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.CreateSpeechResultWithHttpMessagesAsync(speechResultId, recognizedAudioSampleId, displayText, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.CreateSpeechResultWithHttpMessagesAsync(version, speechResultId, recognizedAudioSampleId, displayText, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
             }
         }
 
-        public static async Task<Ok> UpdateSpeechResultsAsync(this IRewriteMeAPI operations, IList<SpeechResultModel> speechResults, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> UpdateSpeechResultsAsync(this IVoicipherAPI operations, string version, IList<SpeechResultModel> speechResults, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.UpdateSpeechResultsWithHttpMessagesAsync(speechResults, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.UpdateSpeechResultsWithHttpMessagesAsync(version, speechResults, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
             }
         }
 
-        public static async Task<IEnumerable<InformationMessage>> GetInformationMessagesAsync(this IRewriteMeAPI operations, DateTime updatedAfter, Dictionary<string, List<string>> customHeaders)
+        public static async Task<IEnumerable<InformationMessage>> GetInformationMessagesAsync(this IVoicipherAPI operations, string version, DateTime updatedAfter, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetInformationMessagesWithHttpMessagesAsync(updatedAfter, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetInformationMessagesWithHttpMessagesAsync(version, updatedAfter, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<IEnumerable<InformationMessage>>(result);
             }
         }
 
-        public static async Task<InformationMessage> MarkMessageAsOpenedAsync(this IRewriteMeAPI operations, Guid informationMessageId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<InformationMessage> MarkMessageAsOpenedAsync(this IVoicipherAPI operations, string version, Guid informationMessageId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.MarkMessageAsOpenedWithHttpMessagesAsync(informationMessageId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.MarkMessageAsOpenedWithHttpMessagesAsync(version, informationMessageId, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<InformationMessage>(result);
             }
         }
 
-        public static async Task<Ok> MarkMessagesAsOpenedAsync(this IRewriteMeAPI operations, IEnumerable<Guid?> ids, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> MarkMessagesAsOpenedAsync(this IVoicipherAPI operations, string version, IEnumerable<Guid?> ids, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.MarkMessagesAsOpenedWithHttpMessagesAsync(ids.ToList(), customHeaders).ConfigureAwait(false))
+            using (var result = await operations.MarkMessagesAsOpenedWithHttpMessagesAsync(version, ids.ToList(), customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
             }
         }
 
-        public static async Task<RecognizedTime> GetRecognizedTimeAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        public static async Task<RecognizedTime> GetRecognizedTimeAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetRecognizedTimeWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetRecognizedTimeWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<RecognizedTime>(result);
             }
         }
 
-        public static async Task<string> RefreshTokenAsync(this IRewriteMeAPI operations, Dictionary<string, List<string>> customHeaders)
+        public static async Task<string> RefreshTokenAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.RefreshTokenWithHttpMessagesAsync(customHeaders).ConfigureAwait(false))
+            using (var result = await operations.RefreshTokenWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<string>(result);
             }
         }
 
-        public static async Task<UserRegistration> RegisterUserAsync(this IRewriteMeAPI operations, RegistrationUserModel registrationUserModel, Dictionary<string, List<string>> customHeaders)
+        public static async Task<UserRegistration> RegisterUserAsync(this IVoicipherAPI operations, string version, RegistrationUserModel registrationUserModel, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.RegisterUserWithHttpMessagesAsync(registrationUserModel, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.RegisterUserWithHttpMessagesAsync(version, registrationUserModel, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<UserRegistration>(result);
             }
         }
 
-        public static async Task<Identity> UpdateUserAsync(this IRewriteMeAPI operations, UpdateUserModel updateUserModel, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Identity> UpdateUserAsync(this IVoicipherAPI operations, string version, UpdateUserModel updateUserModel, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.UpdateUserWithHttpMessagesAsync(updateUserModel, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.UpdateUserWithHttpMessagesAsync(version, updateUserModel, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Identity>(result);
             }

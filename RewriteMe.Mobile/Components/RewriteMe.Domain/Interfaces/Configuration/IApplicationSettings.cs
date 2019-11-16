@@ -5,9 +5,11 @@ namespace RewriteMe.Domain.Interfaces.Configuration
 {
     public interface IApplicationSettings
     {
+        Guid ApplicationId { get; }
+
         Uri WebApiUri { get; }
 
-        Guid ApplicationId { get; }
+        string WebApiVersion { get; }
 
         string AppCenterKeys { get; }
 
