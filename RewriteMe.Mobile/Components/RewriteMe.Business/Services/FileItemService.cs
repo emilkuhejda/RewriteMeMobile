@@ -82,10 +82,7 @@ namespace RewriteMe.Business.Services
                 var deletedFileItem = new DeletedFileItem
                 {
                     Id = fileItem.Id,
-                    DeletedDate = DateTime.UtcNow,
-                    RecognitionState = fileItem.RecognitionState,
-                    TotalTime = fileItem.TotalTime,
-                    TranscribedTime = fileItem.TranscribedTime
+                    DeletedDate = DateTime.UtcNow
                 };
 
                 await _deletedFileItemService.InsertAsync(deletedFileItem).ConfigureAwait(false);
