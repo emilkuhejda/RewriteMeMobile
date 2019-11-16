@@ -19,7 +19,7 @@ namespace RewriteMe.Business.Services
         private readonly IDeletedFileItemService _deletedFileItemService;
         private readonly IFileItemService _fileItemService;
         private readonly ITranscribeItemService _transcribeItemService;
-        private readonly IUserSubscriptionService _userSubscriptionService;
+        private readonly IUserSubscriptionSynchronizationService _userSubscriptionSynchronizationService;
         private readonly IInformationMessageService _informationMessageService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IInternalValueService _internalValueService;
@@ -36,7 +36,7 @@ namespace RewriteMe.Business.Services
             IDeletedFileItemService deletedFileItemService,
             IFileItemService fileItemService,
             ITranscribeItemService transcribeItemService,
-            IUserSubscriptionService userSubscriptionService,
+            IUserSubscriptionSynchronizationService userSubscriptionSynchronizationService,
             IInformationMessageService informationMessageService,
             IRewriteMeWebService rewriteMeWebService,
             IInternalValueService internalValueService,
@@ -46,7 +46,7 @@ namespace RewriteMe.Business.Services
             _deletedFileItemService = deletedFileItemService;
             _fileItemService = fileItemService;
             _transcribeItemService = transcribeItemService;
-            _userSubscriptionService = userSubscriptionService;
+            _userSubscriptionSynchronizationService = userSubscriptionSynchronizationService;
             _informationMessageService = informationMessageService;
             _rewriteMeWebService = rewriteMeWebService;
             _internalValueService = internalValueService;
@@ -151,7 +151,7 @@ namespace RewriteMe.Business.Services
         {
             var applicationUserSubscriptionUpdateDate = _lastUpdatesService.GetUserSubscriptionLastUpdate();
 
-            await _userSubscriptionService.SynchronizationAsync(applicationUserSubscriptionUpdateDate).ConfigureAwait(false);
+            await _userSubscriptionSynchronizationService.SynchronizationAsync(applicationUserSubscriptionUpdateDate).ConfigureAwait(false);
         }
 
         private async Task UpdateInformationMessageAsync()
@@ -163,7 +163,7 @@ namespace RewriteMe.Business.Services
 
         private async Task UpdateRecognizedTimeAsync()
         {
-            await _userSubscriptionService.RecognizedTimeSynchronizationAsync().ConfigureAwait(false);
+            await _userSubscriptionSynchronizationService.RecognizedTimeSynchronizationAsync().ConfigureAwait(false);
         }
 
         private void OnSynchronizationCompleted()

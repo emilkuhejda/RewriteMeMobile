@@ -29,13 +29,13 @@ namespace RewriteMe.Business.Services
         private const string AccessTokenKey = "AccessToken";
 
         private readonly ILanguageService _languageService;
+        private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IRegistrationUserWebService _registrationUserWebService;
         private readonly ICleanUpService _cleanUpService;
         private readonly IAppCenterMetricsService _appCenterMetricsService;
         private readonly IPushNotificationsService _pushNotificationsService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
-        private readonly IInternalValueService _internalValueService;
         private readonly IApplicationVersionProvider _applicationVersionProvider;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IUserSessionRepository _userSessionRepository;
@@ -47,25 +47,25 @@ namespace RewriteMe.Business.Services
 
         public UserSessionService(
             ILanguageService languageService,
+            IUserSubscriptionService userSubscriptionService,
             IRegistrationUserWebService registrationUserWebService,
             ICleanUpService cleanUpService,
             IAppCenterMetricsService appCenterMetricsService,
             IPushNotificationsService pushNotificationsService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
-            IInternalValueService internalValueService,
             IApplicationVersionProvider applicationVersionProvider,
             IApplicationSettings applicationSettings,
             IUserSessionRepository userSessionRepository,
             ILoggerFactory loggerFactory)
         {
             _languageService = languageService;
+            _userSubscriptionService = userSubscriptionService;
             _registrationUserWebService = registrationUserWebService;
             _cleanUpService = cleanUpService;
             _appCenterMetricsService = appCenterMetricsService;
             _pushNotificationsService = pushNotificationsService;
             _identityUiParentProvider = identityUiParentProvider;
-            _internalValueService = internalValueService;
             _applicationVersionProvider = applicationVersionProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
@@ -392,7 +392,7 @@ namespace RewriteMe.Business.Services
 
             SetToken(httpRequestResult.Payload.Token);
 
-            await _internalValueService.UpdateValueAsync(InternalValues.RemainingTimeTicks, httpRequestResult.Payload.RemainingTime.TimeTicks).ConfigureAwait(false);
+            await _userSubscriptionService.UpdateRemainingTimeAsync(httpRequestResult.Payload.RemainingTime.Time).ConfigureAwait(false);
         }
 
         private async Task UpdateUserAsync(B2CAccessToken accessToken)
