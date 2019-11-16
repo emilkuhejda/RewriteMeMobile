@@ -74,11 +74,11 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<IEnumerable<UserSubscription>> GetUserSubscriptionsAsync(this IVoicipherAPI operations, string version, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<RemainingTime> GetUserSubscriptionRemainingTimeAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(version, updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetSubscriptionRemainingTimeWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<IEnumerable<UserSubscription>>(result);
+                return ParseBody<RemainingTime>(result);
             }
         }
 

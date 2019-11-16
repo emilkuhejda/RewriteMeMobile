@@ -42,17 +42,17 @@ namespace RewriteMe.Business.Services
         {
             var lastUserSubscriptionSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.UserSubscriptionSynchronizationTicks).ConfigureAwait(false);
             var lastUserSubscriptionSynchronization = new DateTime(lastUserSubscriptionSynchronizationTicks);
-            _logger.Debug($"Update user subscriptions with timestamp '{lastUserSubscriptionSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
+            _logger.Debug($"Update user subscription remaining time with timestamp '{lastUserSubscriptionSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
             if (applicationUpdateDate >= lastUserSubscriptionSynchronization)
             {
-                var httpRequestResult = await _rewriteMeWebService.GetUserSubscriptionsAsync(lastUserSubscriptionSynchronization).ConfigureAwait(false);
+                var httpRequestResult = await _rewriteMeWebService.GetUserSubscriptionRemainingTimeAsync().ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {
-                    var userSubscriptions = httpRequestResult.Payload.ToList();
-                    _logger.Info($"Web server returned {userSubscriptions.Count} items for synchronization.");
+                    var userSubscriptions = httpRequestResult.Payload;
+                    _logger.Info($"Web server returned response for synchronization.");
 
-                    await _userSubscriptionRepository.InsertOrReplaceAllAsync(userSubscriptions).ConfigureAwait(false);
+                    //await _userSubscriptionRepository.InsertOrReplaceAllAsync(userSubscriptions).ConfigureAwait(false);
                     await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }

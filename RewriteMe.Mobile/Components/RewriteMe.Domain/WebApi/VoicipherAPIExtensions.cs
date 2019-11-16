@@ -811,40 +811,6 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='version'>
             /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            public static object GetUserSubscriptions(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?))
-            {
-                return operations.GetUserSubscriptionsAsync(version, updatedAfter, applicationId).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetUserSubscriptionsAsync(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(version, updatedAfter, applicationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
             /// <param name='billingPurchase'>
             /// </param>
             /// <param name='applicationId'>
@@ -895,6 +861,32 @@ namespace RewriteMe.Domain.WebApi
             public static async Task<object> GetSpeechConfigurationAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetSpeechConfigurationWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='version'>
+            /// </param>
+            public static object GetSubscriptionRemainingTime(this IVoicipherAPI operations, string version)
+            {
+                return operations.GetSubscriptionRemainingTimeAsync(version).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='version'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSubscriptionRemainingTimeAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubscriptionRemainingTimeWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
