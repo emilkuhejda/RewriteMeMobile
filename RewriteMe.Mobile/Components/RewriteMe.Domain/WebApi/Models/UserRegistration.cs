@@ -23,7 +23,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the UserRegistration class.
         /// </summary>
-        public UserRegistration(string token, Identity identity = default(Identity), RemainingTime remainingTime = default(RemainingTime))
+        public UserRegistration(string token, Identity identity = default(Identity), TimeSpanWrapper remainingTime = default(TimeSpanWrapper))
         {
             Token = token;
             Identity = identity;
@@ -49,7 +49,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "remainingTime")]
-        public RemainingTime RemainingTime { get; set; }
+        public TimeSpanWrapper RemainingTime { get; set; }
 
         /// <summary>
         /// Validate the object.
