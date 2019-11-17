@@ -129,6 +129,13 @@ namespace RewriteMe.Mobile.ViewModels
 
                 Products = products;
             }
+            catch (Exception ex)
+            {
+                Logger.Error("Connection to App Store failed.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage)).ConfigureAwait(false);
+            }
             finally
             {
                 await CrossInAppBilling.Current.DisconnectAsync().ConfigureAwait(false);
