@@ -10,7 +10,6 @@ using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
@@ -34,7 +33,6 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IMediaService _mediaService;
         private readonly IScreenService _screenService;
         private readonly IUserSubscriptionService _userSubscriptionService;
-        private readonly IInternalValueService _internalValueService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IList<RecognizedAudioFile> _recognizedAudioFiles;
         private readonly TimeSpan _totalAudioDuration;
@@ -56,7 +54,6 @@ namespace RewriteMe.Mobile.ViewModels
             IMediaService mediaService,
             IScreenService screenService,
             IUserSubscriptionService userSubscriptionService,
-            IInternalValueService internalValueService,
             IRewriteMeWebService rewriteMeWebService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -68,7 +65,6 @@ namespace RewriteMe.Mobile.ViewModels
             _mediaService = mediaService;
             _screenService = screenService;
             _userSubscriptionService = userSubscriptionService;
-            _internalValueService = internalValueService;
             _rewriteMeWebService = rewriteMeWebService;
 
             _recognizedAudioFiles = new List<RecognizedAudioFile>();
@@ -412,13 +408,14 @@ namespace RewriteMe.Mobile.ViewModels
                     previousAudioFile = audioFile;
                 }
 
-                var recognizedTimeTicks = await _internalValueService.GetValueAsync(InternalValues.RecognizedTimeTicks).ConfigureAwait(false);
-                await _internalValueService
-                    .UpdateValueAsync(InternalValues.RecognizedTimeTicks, recognizedTimeTicks + audioRecordTotalTime.Ticks)
-                    .ConfigureAwait(false);
+                await _userSubscriptionService.SubtractTimeAsync(audioRecordTotalTime).ConfigureAwait(false);
 
                 var models = _recognizedAudioFiles.Select(x => new SpeechResultModel(x.RecordedAudioFile.Id, x.RecordedAudioFile.TotalTime.ToString())).ToList();
-                await _rewriteMeWebService.UpdateSpeechResultsAsync(models).ConfigureAwait(false);
+                var httpRequestResult = await _rewriteMeWebService.UpdateSpeechResultsAsync(models).ConfigureAwait(false);
+                if (httpRequestResult.State == HttpRequestState.Success)
+                {
+                    await _userSubscriptionService.UpdateRemainingTimeAsync(httpRequestResult.Payload.Time).ConfigureAwait(false);
+                }
 
                 ReloadText();
 

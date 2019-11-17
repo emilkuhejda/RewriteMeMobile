@@ -41,14 +41,6 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<TimeSpanWrapper> GetDeletedFileItemsTotalTimeAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
-        {
-            using (var result = await operations.GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
-            {
-                return ParseBody<TimeSpanWrapper>(result);
-            }
-        }
-
         public static async Task<TimeSpanWrapper> DeleteFileItemAsync(this IVoicipherAPI operations, string version, Guid fileItemId, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.DeleteFileItemWithHttpMessagesAsync(version, fileItemId, applicationId, customHeaders).ConfigureAwait(false))
@@ -74,19 +66,19 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<IEnumerable<UserSubscription>> GetUserSubscriptionsAsync(this IVoicipherAPI operations, string version, DateTime updatedAfter, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<TimeSpanWrapper> GetUserSubscriptionRemainingTimeAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(version, updatedAfter, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.GetSubscriptionRemainingTimeWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<IEnumerable<UserSubscription>>(result);
+                return ParseBody<TimeSpanWrapper>(result);
             }
         }
 
-        public static async Task<UserSubscription> CreateUserSubscriptionAsync(this IVoicipherAPI operations, string version, BillingPurchase billingPurchase, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<TimeSpanWrapper> CreateUserSubscriptionAsync(this IVoicipherAPI operations, string version, BillingPurchase billingPurchase, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(version, billingPurchase, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<UserSubscription>(result);
+                return ParseBody<TimeSpanWrapper>(result);
             }
         }
 
@@ -101,7 +93,7 @@ namespace RewriteMe.Business.Extensions
         public static async Task<FileItem> UploadFileItemAsync(this IVoicipherAPI operations, string version, MediaFile mediaFile, DateTime dateCreated, Guid applicationId, Dictionary<string, List<string>> customHeaders, CancellationToken cancellationToken)
         {
             using (var stream = new MemoryStream(mediaFile.Source))
-            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, version, dateCreated, applicationId, stream, customHeaders, cancellationToken).ConfigureAwait(false))
+            using (var result = await operations.UploadFileItemWithHttpMessagesAsync(version, mediaFile.Name, mediaFile.Language, mediaFile.FileName, dateCreated, applicationId, stream, customHeaders, cancellationToken).ConfigureAwait(false))
             {
                 return ParseBody<FileItem>(result);
             }
@@ -139,11 +131,11 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<Ok> UpdateSpeechResultsAsync(this IVoicipherAPI operations, string version, IList<SpeechResultModel> speechResults, Dictionary<string, List<string>> customHeaders)
+        public static async Task<TimeSpanWrapper> UpdateSpeechResultsAsync(this IVoicipherAPI operations, string version, IList<SpeechResultModel> speechResults, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.UpdateSpeechResultsWithHttpMessagesAsync(version, speechResults, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<Ok>(result);
+                return ParseBody<TimeSpanWrapper>(result);
             }
         }
 
@@ -168,14 +160,6 @@ namespace RewriteMe.Business.Extensions
             using (var result = await operations.MarkMessagesAsOpenedWithHttpMessagesAsync(version, ids.ToList(), customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
-            }
-        }
-
-        public static async Task<RecognizedTime> GetRecognizedTimeAsync(this IVoicipherAPI operations, string version, Dictionary<string, List<string>> customHeaders)
-        {
-            using (var result = await operations.GetRecognizedTimeWithHttpMessagesAsync(version, customHeaders).ConfigureAwait(false))
-            {
-                return ParseBody<RecognizedTime>(result);
             }
         }
 

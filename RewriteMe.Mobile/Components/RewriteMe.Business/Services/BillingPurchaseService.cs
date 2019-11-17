@@ -15,7 +15,7 @@ namespace RewriteMe.Business.Services
             _rewriteMeWebService = rewriteMeWebService;
         }
 
-        public async Task<UserSubscription> SendBillingPurchaseAsync(BillingPurchase billingPurchase)
+        public async Task<TimeSpanWrapper> SendBillingPurchaseAsync(BillingPurchase billingPurchase)
         {
             var httpRequestResult = await _rewriteMeWebService.CreateUserSubscriptionAsync(billingPurchase).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
