@@ -89,14 +89,6 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
-        public async Task<TimeSpan> GetProcessedFilesTotalTimeAsync()
-        {
-            var files = await _contextProvider.Context.FileItems.Where(x => x.RecognitionState > RecognitionState.Prepared).ToListAsync().ConfigureAwait(false);
-            var ticks = files.Select(x => x.TranscribedTime.Ticks).Sum();
-
-            return TimeSpan.FromTicks(ticks);
-        }
-
         public async Task ClearAsync()
         {
             await _contextProvider.Context.DeleteAllAsync<FileItemEntity>().ConfigureAwait(false);
