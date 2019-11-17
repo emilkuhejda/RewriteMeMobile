@@ -77,19 +77,12 @@ namespace RewriteMe.Business.Services
         public async Task DeleteAsync(FileItem fileItem)
         {
             var httpRequestResult = await _rewriteMeWebService.DeleteFileItemAsync(fileItem.Id).ConfigureAwait(false);
-            if (httpRequestResult.State == HttpRequestState.Success)
-            {
-                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemsTotalTime, httpRequestResult.Payload.Ticks).ConfigureAwait(false);
-            }
-            else
+            if (httpRequestResult.State != HttpRequestState.Success)
             {
                 var deletedFileItem = new DeletedFileItem
                 {
                     Id = fileItem.Id,
-                    DeletedDate = DateTime.UtcNow,
-                    RecognitionState = fileItem.RecognitionState,
-                    TotalTime = fileItem.TotalTime,
-                    TranscribedTime = fileItem.TranscribedTime
+                    DeletedDate = DateTime.UtcNow
                 };
 
                 await _deletedFileItemService.InsertAsync(deletedFileItem).ConfigureAwait(false);

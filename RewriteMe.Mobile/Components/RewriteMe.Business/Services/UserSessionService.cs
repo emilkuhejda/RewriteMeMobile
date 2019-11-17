@@ -29,6 +29,7 @@ namespace RewriteMe.Business.Services
         private const string AccessTokenKey = "AccessToken";
 
         private readonly ILanguageService _languageService;
+        private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IRegistrationUserWebService _registrationUserWebService;
         private readonly ICleanUpService _cleanUpService;
         private readonly IAppCenterMetricsService _appCenterMetricsService;
@@ -38,7 +39,6 @@ namespace RewriteMe.Business.Services
         private readonly IApplicationVersionProvider _applicationVersionProvider;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IUserSessionRepository _userSessionRepository;
-        private readonly IUserSubscriptionRepository _userSubscriptionRepository;
         private readonly ILogger _logger;
         private readonly object _lockObject = new object();
 
@@ -47,6 +47,7 @@ namespace RewriteMe.Business.Services
 
         public UserSessionService(
             ILanguageService languageService,
+            IUserSubscriptionService userSubscriptionService,
             IRegistrationUserWebService registrationUserWebService,
             ICleanUpService cleanUpService,
             IAppCenterMetricsService appCenterMetricsService,
@@ -56,10 +57,10 @@ namespace RewriteMe.Business.Services
             IApplicationVersionProvider applicationVersionProvider,
             IApplicationSettings applicationSettings,
             IUserSessionRepository userSessionRepository,
-            IUserSubscriptionRepository userSubscriptionRepository,
             ILoggerFactory loggerFactory)
         {
             _languageService = languageService;
+            _userSubscriptionService = userSubscriptionService;
             _registrationUserWebService = registrationUserWebService;
             _cleanUpService = cleanUpService;
             _appCenterMetricsService = appCenterMetricsService;
@@ -68,7 +69,6 @@ namespace RewriteMe.Business.Services
             _applicationVersionProvider = applicationVersionProvider;
             _applicationSettings = applicationSettings;
             _userSessionRepository = userSessionRepository;
-            _userSubscriptionRepository = userSubscriptionRepository;
             _logger = loggerFactory.CreateLogger(typeof(UserSessionService));
 
             _publicClientApplication = publicClientApplicationFactory.CreatePublicClientApplication(
@@ -392,7 +392,7 @@ namespace RewriteMe.Business.Services
 
             SetToken(httpRequestResult.Payload.Token);
 
-            await _userSubscriptionRepository.AddAsync(httpRequestResult.Payload.UserSubscription).ConfigureAwait(false);
+            await _userSubscriptionService.UpdateRemainingTimeAsync(httpRequestResult.Payload.RemainingTime.Time).ConfigureAwait(false);
         }
 
         private async Task UpdateUserAsync(B2CAccessToken accessToken)

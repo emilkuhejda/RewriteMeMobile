@@ -89,32 +89,6 @@ namespace RewriteMe.Domain.WebApi
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static object GetDeletedFileItemsTotalTime(this IVoicipherAPI operations, string version)
-            {
-                return operations.GetDeletedFileItemsTotalTimeAsync(version).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetDeletedFileItemsTotalTimeAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetDeletedFileItemsTotalTimeWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
             /// <param name='fileItemId'>
             /// </param>
             /// <param name='version'>
@@ -529,32 +503,6 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='version'>
             /// </param>
-            public static object GetRecognizedTime(this IVoicipherAPI operations, string version)
-            {
-                return operations.GetRecognizedTimeAsync(version).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetRecognizedTimeAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetRecognizedTimeWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
             /// <param name='updatedAfter'>
             /// </param>
             /// <param name='applicationId'>
@@ -811,40 +759,6 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='version'>
             /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            public static object GetUserSubscriptions(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?))
-            {
-                return operations.GetUserSubscriptionsAsync(version, updatedAfter, applicationId).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetUserSubscriptionsAsync(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetUserSubscriptionsWithHttpMessagesAsync(version, updatedAfter, applicationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
             /// <param name='billingPurchase'>
             /// </param>
             /// <param name='applicationId'>
@@ -905,6 +819,32 @@ namespace RewriteMe.Domain.WebApi
             /// </param>
             /// <param name='version'>
             /// </param>
+            public static object GetSubscriptionRemainingTime(this IVoicipherAPI operations, string version)
+            {
+                return operations.GetSubscriptionRemainingTimeAsync(version).GetAwaiter().GetResult();
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='version'>
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<object> GetSubscriptionRemainingTimeAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.GetSubscriptionRemainingTimeWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='version'>
+            /// </param>
             public static bool? IsAlive(this IVoicipherAPI operations, string version)
             {
                 return operations.IsAliveAsync(version).GetAwaiter().GetResult();
@@ -950,45 +890,6 @@ namespace RewriteMe.Domain.WebApi
                 {
                     return _result.Body;
                 }
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='username'>
-            /// </param>
-            /// <param name='password'>
-            /// </param>
-            /// <param name='userId'>
-            /// </param>
-            /// <param name='role'>
-            /// </param>
-            public static void CreateToken(this IVoicipherAPI operations, string version, string username, string password, System.Guid userId, int role)
-            {
-                operations.CreateTokenAsync(version, username, password, userId, role).GetAwaiter().GetResult();
-            }
-
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='username'>
-            /// </param>
-            /// <param name='password'>
-            /// </param>
-            /// <param name='userId'>
-            /// </param>
-            /// <param name='role'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task CreateTokenAsync(this IVoicipherAPI operations, string version, string username, string password, System.Guid userId, int role, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                (await operations.CreateTokenWithHttpMessagesAsync(version, username, password, userId, role, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
     }

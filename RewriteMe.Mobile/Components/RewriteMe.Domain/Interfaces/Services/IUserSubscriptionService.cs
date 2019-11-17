@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IUserSubscriptionService
     {
-        Task SynchronizationAsync(DateTime applicationUpdateDate);
+        Task SubtractTimeAsync(TimeSpan time);
 
-        Task RecognizedTimeSynchronizationAsync();
-
-        Task AddAsync(UserSubscription userSubscription);
+        Task UpdateRemainingTimeAsync(TimeSpan remainingTime);
 
         Task<TimeSpan> GetRemainingTimeAsync();
     }

@@ -61,12 +61,6 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetDeletedFileItemIdsAsync(ApplicationSettings.WebApiVersion, updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<TimeSpanWrapper>> GetDeletedFileItemsTotalTimeAsync()
-        {
-            var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetDeletedFileItemsTotalTimeAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
-        }
-
         public async Task<HttpRequestResult<TimeSpanWrapper>> DeleteFileItemAsync(Guid fileItemId)
         {
             var customHeaders = GetAuthHeaders();
@@ -85,13 +79,13 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetTranscribeItemsAllAsync(ApplicationSettings.WebApiVersion, updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<IEnumerable<UserSubscription>>> GetUserSubscriptionsAsync(DateTime updatedAfter)
+        public async Task<HttpRequestResult<TimeSpanWrapper>> GetUserSubscriptionRemainingTimeAsync()
         {
             var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetUserSubscriptionsAsync(ApplicationSettings.WebApiVersion, updatedAfter, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetUserSubscriptionRemainingTimeAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<UserSubscription>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase)
+        public async Task<HttpRequestResult<TimeSpanWrapper>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase)
         {
             var customHeaders = GetAuthHeaders();
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateUserSubscriptionAsync(ApplicationSettings.WebApiVersion, billingPurchase, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
@@ -133,7 +127,7 @@ namespace RewriteMe.Business.Services
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.CreateSpeechResultAsync(ApplicationSettings.WebApiVersion, speechResultId, recognizedAudioSampleId, displayText, customHeaders)).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<Ok>> UpdateSpeechResultsAsync(IList<SpeechResultModel> speechResults)
+        public async Task<HttpRequestResult<TimeSpanWrapper>> UpdateSpeechResultsAsync(IList<SpeechResultModel> speechResults)
         {
             var customHeaders = GetAuthHeaders();
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.UpdateSpeechResultsAsync(ApplicationSettings.WebApiVersion, speechResults, customHeaders)).ConfigureAwait(false);
@@ -155,12 +149,6 @@ namespace RewriteMe.Business.Services
         {
             var customHeaders = GetAuthHeaders();
             return await WebServiceErrorHandler.HandleResponseAsync(() => Client.MarkMessagesAsOpenedAsync(ApplicationSettings.WebApiVersion, ids, customHeaders)).ConfigureAwait(false);
-        }
-
-        public async Task<HttpRequestResult<RecognizedTime>> GetRecognizedTimeAsync()
-        {
-            var customHeaders = GetAuthHeaders();
-            return await WebServiceErrorHandler.HandleResponseAsync(() => Client.GetRecognizedTimeAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
         }
 
         public async Task RefreshTokenIfNeededAsync()
