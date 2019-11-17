@@ -411,7 +411,11 @@ namespace RewriteMe.Mobile.ViewModels
                 await _userSubscriptionService.SubtractTimeAsync(audioRecordTotalTime).ConfigureAwait(false);
 
                 var models = _recognizedAudioFiles.Select(x => new SpeechResultModel(x.RecordedAudioFile.Id, x.RecordedAudioFile.TotalTime.ToString())).ToList();
-                await _rewriteMeWebService.UpdateSpeechResultsAsync(models).ConfigureAwait(false);
+                var httpRequestResult = await _rewriteMeWebService.UpdateSpeechResultsAsync(models).ConfigureAwait(false);
+                if (httpRequestResult.State == HttpRequestState.Success)
+                {
+                    await _userSubscriptionService.UpdateRemainingTimeAsync(httpRequestResult.Payload.Time).ConfigureAwait(false);
+                }
 
                 ReloadText();
 

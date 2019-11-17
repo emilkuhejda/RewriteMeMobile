@@ -131,11 +131,11 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<Ok> UpdateSpeechResultsAsync(this IVoicipherAPI operations, string version, IList<SpeechResultModel> speechResults, Dictionary<string, List<string>> customHeaders)
+        public static async Task<TimeSpanWrapper> UpdateSpeechResultsAsync(this IVoicipherAPI operations, string version, IList<SpeechResultModel> speechResults, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.UpdateSpeechResultsWithHttpMessagesAsync(version, speechResults, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<Ok>(result);
+                return ParseBody<TimeSpanWrapper>(result);
             }
         }
 
