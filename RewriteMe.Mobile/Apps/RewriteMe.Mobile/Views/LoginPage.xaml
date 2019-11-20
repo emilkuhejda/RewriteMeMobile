@@ -3,7 +3,7 @@
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-                          xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
@@ -13,14 +13,13 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <forms:CachedImage Grid.Row="0"
-                           Margin="0,0,0,20"
-                           Aspect="AspectFit"
-                           HeightRequest="400"
-                           HorizontalOptions="Center"
-                           Source="resource://RewriteMe.Mobile.Resources.Images.RewriteMeLogo.png"
-                           VerticalOptions="End"
-                           WidthRequest="400" />
+        <forms:SvgCachedImage Grid.Row="0"
+                              Margin="0,0,0,20"
+                              Aspect="AspectFit"
+                              HeightRequest="300"
+                              HorizontalOptions="Center"
+                              Source="resource://RewriteMe.Mobile.Resources.Images.VoicipherLogo.svg"
+                              VerticalOptions="End" />
 
         <StackLayout Grid.Row="1"
                      HorizontalOptions="Center"
