@@ -150,7 +150,6 @@
     <BundleResource Include="Resources\Fonts\Quicksand-Medium.ttf" />
     <BundleResource Include="Resources\Fonts\Quicksand-Light.ttf" />
     <BundleResource Include="Resources\Fonts\Quicksand-Bold.ttf" />
-    <BundleResource Include="Resources\Fonts\DancingScript-Regular.ttf" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

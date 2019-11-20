@@ -213,7 +213,6 @@
     <AndroidAsset Include="Assets\Quicksand-Medium.ttf" />
     <AndroidAsset Include="Assets\Quicksand-Light.ttf" />
     <AndroidAsset Include="Assets\Quicksand-Bold.ttf" />
-    <AndroidAsset Include="Assets\DancingScript-Regular.ttf" />
     <GoogleServicesJson Include="google-services.json" />
     <None Include="..\..\Global\Voicipher.CodeAnalysis.ruleset">
       <Link>Properties\Voicipher.CodeAnalysis.ruleset</Link>
