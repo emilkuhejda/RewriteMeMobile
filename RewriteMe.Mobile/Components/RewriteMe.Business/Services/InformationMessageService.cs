@@ -59,7 +59,7 @@ namespace RewriteMe.Business.Services
 
         public async Task<IEnumerable<InformationMessage>> GetAllForLastWeekAsync()
         {
-            var minimumDateTime = DateTime.UtcNow.AddDays(DaysToDisplay);
+            var minimumDateTime = DateTime.UtcNow.AddDays(-DaysToDisplay);
             var informationMessages = await _informationMessageRepository.GetAllAsync(minimumDateTime).ConfigureAwait(false);
 
             await _informationMessageRepository.DeleteAllAsync(minimumDateTime).ConfigureAwait(false);
@@ -68,7 +68,7 @@ namespace RewriteMe.Business.Services
 
         public async Task<bool> HasUnopenedMessagesForLastWeekAsync()
         {
-            var minimumDateTime = DateTime.UtcNow.AddDays(DaysToDisplay);
+            var minimumDateTime = DateTime.UtcNow.AddDays(-DaysToDisplay);
             return await _informationMessageRepository.HasUnopenedMessagesAsync(minimumDateTime).ConfigureAwait(false);
         }
 

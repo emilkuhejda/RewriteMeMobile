@@ -67,10 +67,14 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override async Task RefreshList()
         {
-            if (FileItems == null || !FileItems.Any())
+            if (FileItems == null)
                 return;
 
-            if (IsCurrent)
+            if (IsLoading)
+            {
+                await InitializeFileItemsAsync().ConfigureAwait(false);
+            }
+            else
             {
                 var fileItems = (await _fileItemService.GetAllAsync().ConfigureAwait(false)).ToList();
                 foreach (var fileItem in fileItems)
@@ -87,16 +91,6 @@ namespace RewriteMe.Mobile.ViewModels
                         FileItems.Insert(index, new FileItemViewModel(fileItem, NavigationService));
                     }
                 }
-
-                var fileItemsToDelete = FileItems.Where(x => !fileItems.Select(file => file.Id).Contains(x.FileItem.Id)).ToList();
-                foreach (var fileItemToDelete in fileItemsToDelete)
-                {
-                    FileItems.Remove(fileItemToDelete);
-                }
-            }
-            else
-            {
-                await InitializeFileItemsAsync().ConfigureAwait(false);
             }
         }
 

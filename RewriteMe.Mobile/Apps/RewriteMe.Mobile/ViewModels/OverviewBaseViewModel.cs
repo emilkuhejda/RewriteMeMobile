@@ -40,17 +40,21 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _isRefreshing, value);
         }
 
+        protected bool IsLoading { get; private set; }
+
         public ICommand RefreshCommand { get; }
 
         private async Task ExecuteRefreshCommandAsync()
         {
             IsRefreshing = true;
+            IsLoading = true;
 
             await HandleWebServiceCallAsync(async () =>
             {
                 await SynchronizationService.StartAsync().ConfigureAwait(false);
             }).ConfigureAwait(false);
 
+            IsLoading = false;
             IsRefreshing = false;
         }
 
