@@ -70,7 +70,7 @@ namespace RewriteMe.Mobile.ViewModels
             if (FileItems == null)
                 return;
 
-            if (IsLoading)
+            if (IsRefreshing)
             {
                 await InitializeFileItemsAsync().ConfigureAwait(false);
             }
