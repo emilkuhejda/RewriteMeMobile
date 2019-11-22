@@ -374,7 +374,7 @@
                         <forms:SvgCachedImage Grid.Row="0"
                                               Grid.Column="1"
                                               Aspect="AspectFit"
-                                              HeightRequest="50"
+                                              HeightRequest="25"
                                               HorizontalOptions="Center"
                                               Source="resource://RewriteMe.Mobile.Resources.Images.VoicipherLogo.svg"
                                               VerticalOptions="Center" />
