@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Prism.Commands;
 using Prism.Navigation;
-using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Commands;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -28,7 +27,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             NavigationMenu = new RadialNavigationMenuViewModel(navigationService);
 
-            RefreshCommand = new DelegateCommand(ExecuteRefreshCommandAsync);
+            RefreshCommand = new AsyncCommand(ExecuteRefreshCommandAsync);
         }
 
         protected ISynchronizationService SynchronizationService { get; }
@@ -41,17 +40,21 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _isRefreshing, value);
         }
 
+        protected bool IsLoading { get; private set; }
+
         public ICommand RefreshCommand { get; }
 
-        private void ExecuteRefreshCommandAsync()
+        private async Task ExecuteRefreshCommandAsync()
         {
             IsRefreshing = true;
+            IsLoading = true;
 
-            AsyncHelper.RunSync(() => HandleWebServiceCallAsync(async () =>
+            await HandleWebServiceCallAsync(async () =>
             {
                 await SynchronizationService.StartAsync().ConfigureAwait(false);
-            }));
+            }).ConfigureAwait(false);
 
+            IsLoading = false;
             IsRefreshing = false;
         }
 
