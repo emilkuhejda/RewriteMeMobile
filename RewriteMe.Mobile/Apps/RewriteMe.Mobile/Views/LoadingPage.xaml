@@ -19,10 +19,10 @@
         <forms:SvgCachedImage Grid.Row="0"
                               Margin="0,0,0,20"
                               Aspect="AspectFit"
-                              HeightRequest="300"
                               HorizontalOptions="Center"
                               Source="resource://RewriteMe.Mobile.Resources.Images.VoicipherLogo.svg"
-                              VerticalOptions="End" />
+                              VerticalOptions="End"
+                              WidthRequest="250" />
 
         <controls:OfflineIndicator Grid.Row="1"
                                    Caption="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.OfflineMessageText}}"
