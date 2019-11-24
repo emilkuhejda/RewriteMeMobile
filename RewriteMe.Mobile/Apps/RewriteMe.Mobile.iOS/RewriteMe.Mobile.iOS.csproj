@@ -150,6 +150,7 @@
     <BundleResource Include="Resources\Fonts\Quicksand-Medium.ttf" />
     <BundleResource Include="Resources\Fonts\Quicksand-Light.ttf" />
     <BundleResource Include="Resources\Fonts\Quicksand-Bold.ttf" />
+    <BundleResource Include="Resources\512x121.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -262,12 +263,9 @@
       <Name>RewriteMe.Mobile</Name>
     </ProjectReference>
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <ITunesArtwork Include="iTunesArtwork" />
     <ITunesArtwork Include="iTunesArtwork%402x" />
-  </ItemGroup>
-  <ItemGroup />
-  <ItemGroup>
-    <BundleResource Include="Resources\1024x1024.png" />
   </ItemGroup>
 </Project>

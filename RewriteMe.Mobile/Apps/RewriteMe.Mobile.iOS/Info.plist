@@ -36,12 +36,10 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>XSLaunchImageAssets</key>
-	<string>Assets.xcassets/LaunchImage-1.launchimage</string>
 	<key>UIAppFonts</key>
 	<array>
-	  <string>Fonts/Quicksand-Light.ttf</string>
-	  <string>Fonts/Quicksand-Regular.ttf</string>
+		<string>Fonts/Quicksand-Light.ttf</string>
+		<string>Fonts/Quicksand-Regular.ttf</string>
 		<string>Fonts/Quicksand-Medium.ttf</string>
 		<string>Fonts/Quicksand-Bold.ttf</string>
 	</array>
