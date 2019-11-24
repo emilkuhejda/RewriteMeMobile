@@ -32,7 +32,6 @@
     <None Remove="Resources\Images\RecorderOverview.svg" />
     <None Remove="Resources\Images\Refresh.svg" />
     <None Remove="Resources\Images\Reload.svg" />
-    <None Remove="Resources\Images\RewriteMeLogo.png" />
     <None Remove="Resources\Images\Save-Disabled.svg" />
     <None Remove="Resources\Images\Save-Enabled.svg" />
     <None Remove="Resources\Images\SaveAndTranscribe-Disabled.svg" />
@@ -44,6 +43,7 @@
     <None Remove="Resources\Images\Stop-Enabled.svg" />
     <None Remove="Resources\Images\PauseRecording.svg" />
     <None Remove="Resources\Images\PlayRecording.svg" />
+    <None Remove="Resources\Images\VoicipherLogo.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -63,7 +63,6 @@
     <EmbeddedResource Include="Resources\Images\Record.svg" />
     <EmbeddedResource Include="Resources\Images\Refresh.svg" />
     <EmbeddedResource Include="Resources\Images\Reload.svg" />
-    <EmbeddedResource Include="Resources\Images\RewriteMeLogo.png" />
     <EmbeddedResource Include="Resources\Images\Save-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Save-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\SaveAndTranscribe-Disabled.svg" />
@@ -76,6 +75,7 @@
     <EmbeddedResource Include="Resources\Images\PlayRecording.svg" />
     <EmbeddedResource Include="Resources\Images\Overview.svg" />
     <EmbeddedResource Include="Resources\Images\RecorderOverview.svg" />
+    <EmbeddedResource Include="Resources\Images\VoicipherLogo.svg" />
   </ItemGroup>
   
   <ItemGroup>
