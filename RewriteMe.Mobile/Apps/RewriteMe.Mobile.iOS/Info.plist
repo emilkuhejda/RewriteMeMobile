@@ -36,11 +36,8 @@
 	<string>1.0</string>
 	<key>CFBundleVersion</key>
 	<string>1.0</string>
-	<key>XSLaunchImageAssets</key>
-	<string>Assets.xcassets/LaunchImage-1.launchimage</string>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Fonts/DancingScript-Regular.ttf</string>
 		<string>Fonts/Quicksand-Light.ttf</string>
 		<string>Fonts/Quicksand-Regular.ttf</string>
 		<string>Fonts/Quicksand-Medium.ttf</string>
@@ -68,5 +65,7 @@
 	<string>The Voicipher wants to use your microphone to record audio.</string>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>XSLaunchImageAssets</key>
+	<string>Assets.xcassets/LaunchImage-1.launchimage</string>
 </dict>
 </plist>

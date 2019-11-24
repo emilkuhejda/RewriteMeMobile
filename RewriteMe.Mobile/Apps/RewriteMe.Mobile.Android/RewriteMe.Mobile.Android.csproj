@@ -40,9 +40,6 @@
     <AndroidSigningKeyPass>4DGntEAqtW3C</AndroidSigningKeyPass>
     <AndroidEnableMultiDex>true</AndroidEnableMultiDex>
     <CodeAnalysisRuleSet />
-    <AotAssemblies>false</AotAssemblies>
-    <EnableLLVM>false</EnableLLVM>
-    <BundleAssemblies>false</BundleAssemblies>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -213,7 +210,6 @@
     <AndroidAsset Include="Assets\Quicksand-Medium.ttf" />
     <AndroidAsset Include="Assets\Quicksand-Light.ttf" />
     <AndroidAsset Include="Assets\Quicksand-Bold.ttf" />
-    <AndroidAsset Include="Assets\DancingScript-Regular.ttf" />
     <GoogleServicesJson Include="google-services.json" />
     <None Include="..\..\Global\Voicipher.CodeAnalysis.ruleset">
       <Link>Properties\Voicipher.CodeAnalysis.ruleset</Link>

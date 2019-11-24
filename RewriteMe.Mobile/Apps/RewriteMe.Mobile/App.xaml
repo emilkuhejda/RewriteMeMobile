@@ -28,11 +28,6 @@
                        Top="{StaticResource StandardSpacing}" />
 
             <!--  Fonts  -->
-            <OnPlatform x:Key="FontFamilyDancingScriptRegular"
-                        x:TypeArguments="x:String"
-                        Android="DancingScript-Regular.ttf#DancingScript-Regular"
-                        iOS="DancingScript-Regular" />
-
             <OnPlatform x:Key="FontFamilyQuicksandLight"
                         x:TypeArguments="x:String"
                         Android="Quicksand-Light.ttf#Quicksand-Light"
@@ -224,14 +219,6 @@
                 <Setter Property="HeightRequest" Value="32" />
             </Style>
 
-            <Style x:Key="MainTitleLabelSyle"
-                   BasedOn="{StaticResource TitleLabelSyle}"
-                   TargetType="Label">
-                <Setter Property="TextColor" Value="{StaticResource ApplicationTitleTextColor}" />
-                <Setter Property="FontSize" Value="{StaticResource BigSize}" />
-                <Setter Property="FontFamily" Value="{StaticResource FontFamilyDancingScriptRegular}" />
-            </Style>
-
             <Style x:Key="DropDownButtonStyle" TargetType="controls:DrillDownButton">
                 <Setter Property="RowHeight" Value="42" />
                 <Setter Property="BackgroundColor" Value="#F0F0F0" />
@@ -384,15 +371,13 @@
                             </Grid.GestureRecognizers>
                         </Grid>
 
-                        <Label Grid.Row="0"
-                               Grid.Column="1"
-                               HorizontalOptions="FillAndExpand"
-                               HorizontalTextAlignment="Center"
-                               Style="{StaticResource MainTitleLabelSyle}"
-                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ApplicationTitle}}"
-                               TextColor="{StaticResource ColorPrimary}"
-                               VerticalOptions="FillAndExpand"
-                               VerticalTextAlignment="Center" />
+                        <forms:SvgCachedImage Grid.Row="0"
+                                              Grid.Column="1"
+                                              Aspect="AspectFit"
+                                              HeightRequest="30"
+                                              HorizontalOptions="Center"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.VoicipherLogo.svg"
+                                              VerticalOptions="Center" />
 
                         <controls:StackedList Grid.Row="0"
                                               Grid.Column="2"
