@@ -41,11 +41,11 @@ namespace RewriteMe.Business.Extensions
             }
         }
 
-        public static async Task<TimeSpanWrapper> DeleteFileItemAsync(this IVoicipherAPI operations, string version, Guid fileItemId, Guid applicationId, Dictionary<string, List<string>> customHeaders)
+        public static async Task<Ok> DeleteFileItemAsync(this IVoicipherAPI operations, string version, Guid fileItemId, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             using (var result = await operations.DeleteFileItemWithHttpMessagesAsync(version, fileItemId, applicationId, customHeaders).ConfigureAwait(false))
             {
-                return ParseBody<TimeSpanWrapper>(result);
+                return ParseBody<Ok>(result);
             }
         }
 
