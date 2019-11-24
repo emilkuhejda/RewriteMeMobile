@@ -65,5 +65,7 @@
 	<string>The Voicipher wants to use your microphone to record audio.</string>
 	<key>LSSupportsOpeningDocumentsInPlace</key>
 	<true/>
+	<key>XSLaunchImageAssets</key>
+	<string>Assets.xcassets/LaunchImage-1.launchimage</string>
 </dict>
 </plist>
