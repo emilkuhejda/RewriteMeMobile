@@ -275,11 +275,11 @@
 
             <Style x:Key="InfoTileBackground" TargetType="Frame">
                 <Setter Property="BackgroundColor" Value="{StaticResource ColorPrimary}" />
-                <Setter Property="CornerRadius" Value="25" />
+                <Setter Property="CornerRadius" Value="10" />
                 <Setter Property="Padding" Value="10,2,10,2" />
                 <Setter Property="HeightRequest" Value="20" />
                 <Setter Property="HorizontalOptions" Value="Start" />
-                <Setter Property="VerticalOptions" Value="Center" />
+                <Setter Property="VerticalOptions" Value="Center" /> 
             </Style>
 
             <Style x:Key="SfButtonStyle" TargetType="buttons:SfButton">
