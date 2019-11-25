@@ -28,7 +28,7 @@ namespace RewriteMe.Business.Configuration
 
         public string AppCenterKeys { get; } = $"ios={OsxAppCenterKey};android={AndroidAppCenterKey}";
 
-        public string SyncfusionKey { get; } = "MTU4NTQ4QDMxMzcyZTMzMmUzMGNnOFhrcFZscmgwakhmdEtSU1BxTDdpYTdmcU9JRE9xZ1ZvWXkxaFNKZlk9";
+        public string SyncfusionKey { get; } = "MTc1MDQwQDMxMzcyZTMzMmUzMEViNUEzTHRzWGpMR2IvTzRBUnZ2RkFXaUJENkxYeWVnUmFsUnI2TlVFcnc9";
 
         public string SupportMailAddress => "support@rewrite-me.com";
 
