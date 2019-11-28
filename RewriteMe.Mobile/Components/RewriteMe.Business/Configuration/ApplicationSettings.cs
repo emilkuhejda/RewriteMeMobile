@@ -22,7 +22,7 @@ namespace RewriteMe.Business.Configuration
 
         public Guid ApplicationId { get; private set; }
 
-        public Uri WebApiUri { get; } = new Uri("https://www.rewrite-me.com/");
+        public Uri WebApiUri { get; } = new Uri("https://192.168.0.107:45455/");
 
         public string WebApiVersion { get; } = "1";
 
