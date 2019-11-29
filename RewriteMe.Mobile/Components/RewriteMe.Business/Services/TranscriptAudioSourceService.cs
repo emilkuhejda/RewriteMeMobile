@@ -29,7 +29,7 @@ namespace RewriteMe.Business.Services
         public async Task<bool> RefreshAsync(Guid audioSourceId, Guid transcribeItemId, CancellationToken cancellationToken)
         {
             var httpRequestResult = await _rewriteMeWebService.GetTranscribeAudioSourceAsync(transcribeItemId, cancellationToken).ConfigureAwait(false);
-            if (httpRequestResult.State == HttpRequestState.Offline)
+            if (httpRequestResult.State == HttpRequestState.Offline || httpRequestResult.State == HttpRequestState.Canceled)
                 return false;
 
             if (httpRequestResult.State == HttpRequestState.Error && httpRequestResult.StatusCode.HasValue && httpRequestResult.StatusCode != 404)
