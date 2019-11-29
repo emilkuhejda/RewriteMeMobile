@@ -274,11 +274,17 @@
   <data name="OneHour" xml:space="preserve">
     <value>1 Hour</value>
   </data>
+  <data name="FiveHours" xml:space="preserve">
+    <value>5 Hours</value>
+  </data>
   <data name="TenHours" xml:space="preserve">
     <value>10 Hours</value>
   </data>
+  <data name="DescriptionFiveHours" xml:space="preserve">
+    <value>Save ~5€</value>
+  </data>
   <data name="DescriptionTenHours" xml:space="preserve">
-    <value>Save 10€</value>
+    <value>Save ~10€</value>
   </data>
   <data name="PromptDeleteFileItemMessage" xml:space="preserve">
     <value>Do you really want to delete file '{0}'?</value>

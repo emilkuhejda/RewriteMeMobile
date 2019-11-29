@@ -19,7 +19,7 @@ namespace RewriteMe.Resources {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     public class Presentation {
@@ -160,7 +160,16 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Save 10€.
+        ///   Looks up a localized string similar to Save ~5€.
+        /// </summary>
+        public static string DescriptionFiveHours {
+            get {
+                return ResourceManager.GetString("DescriptionFiveHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save ~10€.
         /// </summary>
         public static string DescriptionTenHours {
             get {
@@ -219,6 +228,15 @@ namespace RewriteMe.Resources {
         public static string English {
             get {
                 return ResourceManager.GetString("English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 5 Hours.
+        /// </summary>
+        public static string FiveHours {
+            get {
+                return ResourceManager.GetString("FiveHours", resourceCulture);
             }
         }
         
