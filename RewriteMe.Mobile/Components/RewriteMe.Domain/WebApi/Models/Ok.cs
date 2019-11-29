@@ -36,7 +36,7 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "dateTimeUtc")]
-        public System.DateTime DateTimeUtc { get; private set; }
+        public System.DateTime DateTimeUtc { get; set; }
 
         /// <summary>
         /// Validate the object.

@@ -20,6 +20,7 @@ namespace RewriteMe.Business.Extensions
 
             apiClient.HttpClient.Timeout = timeout;
             apiClient.HttpHandler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+            apiClient.HttpHandler.ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true;
         }
     }
 }

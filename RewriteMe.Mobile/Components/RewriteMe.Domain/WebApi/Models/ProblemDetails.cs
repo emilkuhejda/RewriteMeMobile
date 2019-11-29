@@ -24,16 +24,14 @@ namespace RewriteMe.Domain.WebApi.Models
         /// <summary>
         /// Initializes a new instance of the ProblemDetails class.
         /// </summary>
-        /// <param name="additionalProperties">Unmatched properties from the
-        /// message are deserialized this collection</param>
-        public ProblemDetails(IDictionary<string, object> additionalProperties = default(IDictionary<string, object>), string type = default(string), string title = default(string), int? status = default(int?), string detail = default(string), string instance = default(string))
+        public ProblemDetails(string type = default(string), string title = default(string), int? status = default(int?), string detail = default(string), string instance = default(string), IDictionary<string, object> extensions = default(IDictionary<string, object>))
         {
-            AdditionalProperties = additionalProperties;
             Type = type;
             Title = title;
             Status = status;
             Detail = detail;
             Instance = instance;
+            Extensions = extensions;
             CustomInit();
         }
 
@@ -41,13 +39,6 @@ namespace RewriteMe.Domain.WebApi.Models
         /// An initialization method that performs custom operations like setting defaults
         /// </summary>
         partial void CustomInit();
-
-        /// <summary>
-        /// Gets or sets unmatched properties from the message are deserialized
-        /// this collection
-        /// </summary>
-        [JsonExtensionData]
-        public IDictionary<string, object> AdditionalProperties { get; set; }
 
         /// <summary>
         /// </summary>
@@ -73,6 +64,11 @@ namespace RewriteMe.Domain.WebApi.Models
         /// </summary>
         [JsonProperty(PropertyName = "instance")]
         public string Instance { get; set; }
+
+        /// <summary>
+        /// </summary>
+        [JsonProperty(PropertyName = "extensions")]
+        public IDictionary<string, object> Extensions { get; private set; }
 
     }
 }

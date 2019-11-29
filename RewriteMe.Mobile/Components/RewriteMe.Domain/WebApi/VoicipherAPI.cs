@@ -4,6 +4,8 @@
 // regenerated.
 // </auto-generated>
 
+using System.IO;
+
 namespace RewriteMe.Domain.WebApi
 {
     using Microsoft.Rest;
@@ -764,7 +766,7 @@ namespace RewriteMe.Domain.WebApi
                 // get filename from stream if it's a file otherwise, just use  'unknown'
                 var _fileStream = file as FileStream;
                 var _fileName = (_fileStream != null ? _fileStream.Name : null) ?? "unknown";
-                if(System.Linq.Enumerable.Any(_fileName, c => c > 127) )
+                if (System.Linq.Enumerable.Any(_fileName, c => c > 127))
                 {
                     // non ASCII chars detected, need UTF encoding:
                     _contentDispositionHeaderValue.FileNameStar = _fileName;
@@ -946,11 +948,15 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(string version, System.Guid fileItemId, string name, string language, System.Guid applicationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(string version, string fileItemId, string name, string language, string applicationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (version == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
+            if (fileItemId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "fileItemId");
             }
             if (name == null)
             {
@@ -959,6 +965,10 @@ namespace RewriteMe.Domain.WebApi
             if (language == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "language");
+            }
+            if (applicationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "applicationId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1004,7 +1014,7 @@ namespace RewriteMe.Domain.WebApi
             MultipartFormDataContent _multiPartContent = new MultipartFormDataContent();
             if (fileItemId != null)
             {
-                StringContent _fileItemId = new StringContent(SafeJsonConvert.SerializeObject(fileItemId, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
+                StringContent _fileItemId = new StringContent(fileItemId, System.Text.Encoding.UTF8);
                 _multiPartContent.Add(_fileItemId, "FileItemId");
             }
             if (name != null)
@@ -1019,7 +1029,7 @@ namespace RewriteMe.Domain.WebApi
             }
             if (applicationId != null)
             {
-                StringContent _applicationId = new StringContent(SafeJsonConvert.SerializeObject(applicationId, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
+                StringContent _applicationId = new StringContent(applicationId, System.Text.Encoding.UTF8);
                 _multiPartContent.Add(_applicationId, "ApplicationId");
             }
             _httpRequest.Content = _multiPartContent;
@@ -1294,9 +1304,9 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='version'>
         /// </param>
-        /// <param name='fileItems'>
-        /// </param>
         /// <param name='applicationId'>
+        /// </param>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1319,21 +1329,21 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> DeleteAllFileItemsWithHttpMessagesAsync(string version, IList<DeletedFileItemModel> fileItems = default(IList<DeletedFileItemModel>), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> DeleteAllFileItemsWithHttpMessagesAsync(string version, System.Guid? applicationId = default(System.Guid?), IList<DeletedFileItemModel> body = default(IList<DeletedFileItemModel>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (fileItems != null)
+            if (version == null)
             {
-                foreach (var element in fileItems)
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
+            if (body != null)
+            {
+                foreach (var element in body)
                 {
                     if (element != null)
                     {
                         element.Validate();
                     }
                 }
-            }
-            if (version == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -1342,9 +1352,9 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("fileItems", fileItems);
                 tracingParameters.Add("applicationId", applicationId);
                 tracingParameters.Add("version", version);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "DeleteAllFileItems", tracingParameters);
             }
@@ -1383,11 +1393,11 @@ namespace RewriteMe.Domain.WebApi
 
             // Serialize Request
             string _requestContent = null;
-            if(fileItems != null)
+            if(body != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(fileItems, SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(body, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Send Request
             if (_shouldTrace)
@@ -2043,7 +2053,7 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='version'>
         /// </param>
-        /// <param name='ids'>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2066,7 +2076,7 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> MarkMessagesAsOpenedWithHttpMessagesAsync(string version, IList<System.Guid?> ids = default(IList<System.Guid?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> MarkMessagesAsOpenedWithHttpMessagesAsync(string version, IList<System.Guid?> body = default(IList<System.Guid?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (version == null)
             {
@@ -2079,8 +2089,8 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("ids", ids);
                 tracingParameters.Add("version", version);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "MarkMessagesAsOpened", tracingParameters);
             }
@@ -2110,11 +2120,11 @@ namespace RewriteMe.Domain.WebApi
 
             // Serialize Request
             string _requestContent = null;
-            if(ids != null)
+            if(body != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(ids, SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(body, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Send Request
             if (_shouldTrace)
@@ -2377,11 +2387,19 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> CreateSpeechResultWithHttpMessagesAsync(string version, System.Guid speechResultId, System.Guid recognizedAudioSampleId, string displayText = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> CreateSpeechResultWithHttpMessagesAsync(string version, string speechResultId, string recognizedAudioSampleId, string displayText = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (version == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
+            if (speechResultId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "speechResultId");
+            }
+            if (recognizedAudioSampleId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "recognizedAudioSampleId");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2426,12 +2444,12 @@ namespace RewriteMe.Domain.WebApi
             MultipartFormDataContent _multiPartContent = new MultipartFormDataContent();
             if (speechResultId != null)
             {
-                StringContent _speechResultId = new StringContent(SafeJsonConvert.SerializeObject(speechResultId, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
+                StringContent _speechResultId = new StringContent(speechResultId, System.Text.Encoding.UTF8);
                 _multiPartContent.Add(_speechResultId, "SpeechResultId");
             }
             if (recognizedAudioSampleId != null)
             {
-                StringContent _recognizedAudioSampleId = new StringContent(SafeJsonConvert.SerializeObject(recognizedAudioSampleId, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
+                StringContent _recognizedAudioSampleId = new StringContent(recognizedAudioSampleId, System.Text.Encoding.UTF8);
                 _multiPartContent.Add(_recognizedAudioSampleId, "RecognizedAudioSampleId");
             }
             if (displayText != null)
@@ -2525,7 +2543,7 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='version'>
         /// </param>
-        /// <param name='speechResultModels'>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -2548,21 +2566,21 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateSpeechResultsWithHttpMessagesAsync(string version, IList<SpeechResultModel> speechResultModels = default(IList<SpeechResultModel>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UpdateSpeechResultsWithHttpMessagesAsync(string version, IList<SpeechResultModel> body = default(IList<SpeechResultModel>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (speechResultModels != null)
+            if (version == null)
             {
-                foreach (var element in speechResultModels)
+                throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
+            if (body != null)
+            {
+                foreach (var element in body)
                 {
                     if (element != null)
                     {
                         element.Validate();
                     }
                 }
-            }
-            if (version == null)
-            {
-                throw new ValidationException(ValidationRules.CannotBeNull, "version");
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -2571,8 +2589,8 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("speechResultModels", speechResultModels);
                 tracingParameters.Add("version", version);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateSpeechResults", tracingParameters);
             }
@@ -2602,11 +2620,11 @@ namespace RewriteMe.Domain.WebApi
 
             // Serialize Request
             string _requestContent = null;
-            if(speechResultModels != null)
+            if(body != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(speechResultModels, SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(body, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Send Request
             if (_shouldTrace)
@@ -3365,11 +3383,19 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateUserTranscriptWithHttpMessagesAsync(string version, System.Guid transcribeItemId, System.Guid applicationId, string transcript, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UpdateUserTranscriptWithHttpMessagesAsync(string version, string transcribeItemId, string applicationId, string transcript, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (version == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
+            if (transcribeItemId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "transcribeItemId");
+            }
+            if (applicationId == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "applicationId");
             }
             if (transcript == null)
             {
@@ -3418,12 +3444,12 @@ namespace RewriteMe.Domain.WebApi
             MultipartFormDataContent _multiPartContent = new MultipartFormDataContent();
             if (transcribeItemId != null)
             {
-                StringContent _transcribeItemId = new StringContent(SafeJsonConvert.SerializeObject(transcribeItemId, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
+                StringContent _transcribeItemId = new StringContent(transcribeItemId, System.Text.Encoding.UTF8);
                 _multiPartContent.Add(_transcribeItemId, "TranscribeItemId");
             }
             if (applicationId != null)
             {
-                StringContent _applicationId = new StringContent(SafeJsonConvert.SerializeObject(applicationId, SerializationSettings).Trim('"'), System.Text.Encoding.UTF8);
+                StringContent _applicationId = new StringContent(applicationId, System.Text.Encoding.UTF8);
                 _multiPartContent.Add(_applicationId, "ApplicationId");
             }
             if (transcript != null)
@@ -3517,7 +3543,7 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='version'>
         /// </param>
-        /// <param name='updateUserModel'>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3540,15 +3566,15 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> UpdateUserWithHttpMessagesAsync(string version, UpdateUserModel updateUserModel = default(UpdateUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> UpdateUserWithHttpMessagesAsync(string version, UpdateUserModel body = default(UpdateUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (updateUserModel != null)
-            {
-                updateUserModel.Validate();
-            }
             if (version == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
+            if (body != null)
+            {
+                body.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3557,8 +3583,8 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("updateUserModel", updateUserModel);
                 tracingParameters.Add("version", version);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "UpdateUser", tracingParameters);
             }
@@ -3588,11 +3614,11 @@ namespace RewriteMe.Domain.WebApi
 
             // Serialize Request
             string _requestContent = null;
-            if(updateUserModel != null)
+            if(body != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(updateUserModel, SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(body, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Send Request
             if (_shouldTrace)
@@ -3697,7 +3723,7 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='version'>
         /// </param>
-        /// <param name='registrationUserModel'>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -3720,15 +3746,15 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> RegisterUserWithHttpMessagesAsync(string version, RegistrationUserModel registrationUserModel = default(RegistrationUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> RegisterUserWithHttpMessagesAsync(string version, RegistrationUserModel body = default(RegistrationUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
-            if (registrationUserModel != null)
-            {
-                registrationUserModel.Validate();
-            }
             if (version == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "version");
+            }
+            if (body != null)
+            {
+                body.Validate();
             }
             // Tracing
             bool _shouldTrace = ServiceClientTracing.IsEnabled;
@@ -3737,8 +3763,8 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("registrationUserModel", registrationUserModel);
                 tracingParameters.Add("version", version);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "RegisterUser", tracingParameters);
             }
@@ -3768,11 +3794,11 @@ namespace RewriteMe.Domain.WebApi
 
             // Serialize Request
             string _requestContent = null;
-            if(registrationUserModel != null)
+            if(body != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(registrationUserModel, SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(body, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Send Request
             if (_shouldTrace)
@@ -3956,7 +3982,7 @@ namespace RewriteMe.Domain.WebApi
             HttpStatusCode _statusCode = _httpResponse.StatusCode;
             cancellationToken.ThrowIfCancellationRequested();
             string _responseContent = null;
-            if ((int)_statusCode != 200 && (int)_statusCode != 400 && (int)_statusCode != 401 && (int)_statusCode != 500)
+            if ((int)_statusCode != 200 && (int)_statusCode != 400 && (int)_statusCode != 401 && (int)_statusCode != 405 && (int)_statusCode != 500)
             {
                 var ex = new HttpOperationException(string.Format("Operation returned an invalid status code '{0}'", _statusCode));
                 if (_httpResponse.Content != null) {
@@ -4036,6 +4062,24 @@ namespace RewriteMe.Domain.WebApi
                     throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
                 }
             }
+            // Deserialize Response
+            if ((int)_statusCode == 405)
+            {
+                _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
+                try
+                {
+                    _result.Body = SafeJsonConvert.DeserializeObject<ProblemDetails>(_responseContent, DeserializationSettings);
+                }
+                catch (JsonException ex)
+                {
+                    _httpRequest.Dispose();
+                    if (_httpResponse != null)
+                    {
+                        _httpResponse.Dispose();
+                    }
+                    throw new SerializationException("Unable to deserialize the response.", _responseContent, ex);
+                }
+            }
             if (_shouldTrace)
             {
                 ServiceClientTracing.Exit(_invocationId, _result);
@@ -4045,9 +4089,9 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='version'>
         /// </param>
-        /// <param name='billingPurchase'>
-        /// </param>
         /// <param name='applicationId'>
+        /// </param>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -4070,7 +4114,7 @@ namespace RewriteMe.Domain.WebApi
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<HttpOperationResponse<object>> CreateUserSubscriptionWithHttpMessagesAsync(string version, BillingPurchase billingPurchase = default(BillingPurchase), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<HttpOperationResponse<object>> CreateUserSubscriptionWithHttpMessagesAsync(string version, System.Guid? applicationId = default(System.Guid?), BillingPurchase body = default(BillingPurchase), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (version == null)
             {
@@ -4083,9 +4127,9 @@ namespace RewriteMe.Domain.WebApi
             {
                 _invocationId = ServiceClientTracing.NextInvocationId.ToString();
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
-                tracingParameters.Add("billingPurchase", billingPurchase);
                 tracingParameters.Add("applicationId", applicationId);
                 tracingParameters.Add("version", version);
+                tracingParameters.Add("body", body);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateUserSubscription", tracingParameters);
             }
@@ -4124,11 +4168,11 @@ namespace RewriteMe.Domain.WebApi
 
             // Serialize Request
             string _requestContent = null;
-            if(billingPurchase != null)
+            if(body != null)
             {
-                _requestContent = SafeJsonConvert.SerializeObject(billingPurchase, SerializationSettings);
+                _requestContent = SafeJsonConvert.SerializeObject(body, SerializationSettings);
                 _httpRequest.Content = new StringContent(_requestContent, System.Text.Encoding.UTF8);
-                _httpRequest.Content.Headers.ContentType =MediaTypeHeaderValue.Parse("application/json-patch+json; charset=utf-8");
+                _httpRequest.Content.Headers.ContentType =System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json; charset=utf-8");
             }
             // Send Request
             if (_shouldTrace)

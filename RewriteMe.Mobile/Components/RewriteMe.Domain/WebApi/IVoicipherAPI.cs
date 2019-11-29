@@ -113,7 +113,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(string version, System.Guid fileItemId, string name, string language, System.Guid applicationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> UpdateFileItemWithHttpMessagesAsync(string version, string fileItemId, string name, string language, string applicationId, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='version'>
         /// </param>
@@ -131,9 +131,9 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='version'>
         /// </param>
-        /// <param name='fileItems'>
-        /// </param>
         /// <param name='applicationId'>
+        /// </param>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -141,7 +141,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> DeleteAllFileItemsWithHttpMessagesAsync(string version, IList<DeletedFileItemModel> fileItems = default(IList<DeletedFileItemModel>), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> DeleteAllFileItemsWithHttpMessagesAsync(string version, System.Guid? applicationId = default(System.Guid?), IList<DeletedFileItemModel> body = default(IList<DeletedFileItemModel>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='version'>
         /// </param>
@@ -185,7 +185,7 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='version'>
         /// </param>
-        /// <param name='ids'>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -193,7 +193,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> MarkMessagesAsOpenedWithHttpMessagesAsync(string version, IList<System.Guid?> ids = default(IList<System.Guid?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> MarkMessagesAsOpenedWithHttpMessagesAsync(string version, IList<System.Guid?> body = default(IList<System.Guid?>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='version'>
         /// </param>
@@ -219,11 +219,11 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> CreateSpeechResultWithHttpMessagesAsync(string version, System.Guid speechResultId, System.Guid recognizedAudioSampleId, string displayText = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> CreateSpeechResultWithHttpMessagesAsync(string version, string speechResultId, string recognizedAudioSampleId, string displayText = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='version'>
         /// </param>
-        /// <param name='speechResultModels'>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -231,7 +231,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> UpdateSpeechResultsWithHttpMessagesAsync(string version, IList<SpeechResultModel> speechResultModels = default(IList<SpeechResultModel>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> UpdateSpeechResultsWithHttpMessagesAsync(string version, IList<SpeechResultModel> body = default(IList<SpeechResultModel>), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='version'>
         /// </param>
@@ -297,11 +297,11 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> UpdateUserTranscriptWithHttpMessagesAsync(string version, System.Guid transcribeItemId, System.Guid applicationId, string transcript, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> UpdateUserTranscriptWithHttpMessagesAsync(string version, string transcribeItemId, string applicationId, string transcript, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='version'>
         /// </param>
-        /// <param name='updateUserModel'>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -309,11 +309,11 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> UpdateUserWithHttpMessagesAsync(string version, UpdateUserModel updateUserModel = default(UpdateUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> UpdateUserWithHttpMessagesAsync(string version, UpdateUserModel body = default(UpdateUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='version'>
         /// </param>
-        /// <param name='registrationUserModel'>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -321,7 +321,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> RegisterUserWithHttpMessagesAsync(string version, RegistrationUserModel registrationUserModel = default(RegistrationUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> RegisterUserWithHttpMessagesAsync(string version, RegistrationUserModel body = default(RegistrationUserModel), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='version'>
         /// </param>
@@ -339,9 +339,9 @@ namespace RewriteMe.Domain.WebApi
 
         /// <param name='version'>
         /// </param>
-        /// <param name='billingPurchase'>
-        /// </param>
         /// <param name='applicationId'>
+        /// </param>
+        /// <param name='body'>
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -349,7 +349,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<HttpOperationResponse<object>> CreateUserSubscriptionWithHttpMessagesAsync(string version, BillingPurchase billingPurchase = default(BillingPurchase), System.Guid? applicationId = default(System.Guid?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<HttpOperationResponse<object>> CreateUserSubscriptionWithHttpMessagesAsync(string version, System.Guid? applicationId = default(System.Guid?), BillingPurchase body = default(BillingPurchase), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
 
         /// <param name='version'>
         /// </param>

@@ -18,879 +18,879 @@ namespace RewriteMe.Domain.WebApi
     /// </summary>
     public static partial class VoicipherAPIExtensions
     {
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            public static object GetFileItems(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?))
-            {
-                return operations.GetFileItemsAsync(version, updatedAfter, applicationId).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='updatedAfter'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        public static object GetFileItems(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?))
+        {
+            return operations.GetFileItemsAsync(version, updatedAfter, applicationId).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetFileItemsAsync(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='updatedAfter'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetFileItemsAsync(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetFileItemsWithHttpMessagesAsync(version, updatedAfter, applicationId, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetFileItemsWithHttpMessagesAsync(version, updatedAfter, applicationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            public static object GetDeletedFileItemIds(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?))
-            {
-                return operations.GetDeletedFileItemIdsAsync(version, updatedAfter, applicationId).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='updatedAfter'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        public static object GetDeletedFileItemIds(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?))
+        {
+            return operations.GetDeletedFileItemIdsAsync(version, updatedAfter, applicationId).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetDeletedFileItemIdsAsync(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='updatedAfter'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetDeletedFileItemIdsAsync(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetDeletedFileItemIdsWithHttpMessagesAsync(version, updatedAfter, applicationId, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetDeletedFileItemIdsWithHttpMessagesAsync(version, updatedAfter, applicationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static object GetFileItem(this IVoicipherAPI operations, System.Guid fileItemId, string version)
-            {
-                return operations.GetFileItemAsync(fileItemId, version).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        public static object GetFileItem(this IVoicipherAPI operations, System.Guid fileItemId, string version)
+        {
+            return operations.GetFileItemAsync(fileItemId, version).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetFileItemAsync(this IVoicipherAPI operations, System.Guid fileItemId, string version, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetFileItemAsync(this IVoicipherAPI operations, System.Guid fileItemId, string version, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetFileItemWithHttpMessagesAsync(fileItemId, version, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetFileItemWithHttpMessagesAsync(fileItemId, version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='language'>
-            /// </param>
-            /// <param name='fileName'>
-            /// </param>
-            /// <param name='dateCreated'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='file'>
-            /// </param>
-            public static object UploadFileItem(this IVoicipherAPI operations, string version, string name = default(string), string language = default(string), string fileName = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream))
-            {
-                return operations.UploadFileItemAsync(version, name, language, fileName, dateCreated, applicationId, file).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
+        /// <param name='language'>
+        /// </param>
+        /// <param name='fileName'>
+        /// </param>
+        /// <param name='dateCreated'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='file'>
+        /// </param>
+        public static object UploadFileItem(this IVoicipherAPI operations, string version, string name = default(string), string language = default(string), string fileName = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream))
+        {
+            return operations.UploadFileItemAsync(version, name, language, fileName, dateCreated, applicationId, file).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='language'>
-            /// </param>
-            /// <param name='fileName'>
-            /// </param>
-            /// <param name='dateCreated'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='file'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> UploadFileItemAsync(this IVoicipherAPI operations, string version, string name = default(string), string language = default(string), string fileName = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
+        /// <param name='language'>
+        /// </param>
+        /// <param name='fileName'>
+        /// </param>
+        /// <param name='dateCreated'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='file'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> UploadFileItemAsync(this IVoicipherAPI operations, string version, string name = default(string), string language = default(string), string fileName = default(string), System.DateTime? dateCreated = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), Stream file = default(Stream), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.UploadFileItemWithHttpMessagesAsync(version, name, language, fileName, dateCreated, applicationId, file, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.UploadFileItemWithHttpMessagesAsync(version, name, language, fileName, dateCreated, applicationId, file, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='language'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            public static object UpdateFileItem(this IVoicipherAPI operations, string version, System.Guid fileItemId, string name, string language, System.Guid applicationId)
-            {
-                return operations.UpdateFileItemAsync(version, fileItemId, name, language, applicationId).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
+        /// <param name='language'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        public static object UpdateFileItem(this IVoicipherAPI operations, string version, string fileItemId, string name, string language, string applicationId)
+        {
+            return operations.UpdateFileItemAsync(version, fileItemId, name, language, applicationId).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='name'>
-            /// </param>
-            /// <param name='language'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> UpdateFileItemAsync(this IVoicipherAPI operations, string version, System.Guid fileItemId, string name, string language, System.Guid applicationId, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='name'>
+        /// </param>
+        /// <param name='language'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> UpdateFileItemAsync(this IVoicipherAPI operations, string version, string fileItemId, string name, string language, string applicationId, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.UpdateFileItemWithHttpMessagesAsync(version, fileItemId, name, language, applicationId, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.UpdateFileItemWithHttpMessagesAsync(version, fileItemId, name, language, applicationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            public static object DeleteFileItem(this IVoicipherAPI operations, string version, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?))
-            {
-                return operations.DeleteFileItemAsync(version, fileItemId, applicationId).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        public static object DeleteFileItem(this IVoicipherAPI operations, string version, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?))
+        {
+            return operations.DeleteFileItemAsync(version, fileItemId, applicationId).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> DeleteFileItemAsync(this IVoicipherAPI operations, string version, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> DeleteFileItemAsync(this IVoicipherAPI operations, string version, System.Guid? fileItemId = default(System.Guid?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.DeleteFileItemWithHttpMessagesAsync(version, fileItemId, applicationId, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.DeleteFileItemWithHttpMessagesAsync(version, fileItemId, applicationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='fileItems'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            public static object DeleteAllFileItems(this IVoicipherAPI operations, string version, IList<DeletedFileItemModel> fileItems = default(IList<DeletedFileItemModel>), System.Guid? applicationId = default(System.Guid?))
-            {
-                return operations.DeleteAllFileItemsAsync(version, fileItems, applicationId).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        public static object DeleteAllFileItems(this IVoicipherAPI operations, string version, System.Guid? applicationId = default(System.Guid?), IList<DeletedFileItemModel> body = default(IList<DeletedFileItemModel>))
+        {
+            return operations.DeleteAllFileItemsAsync(version, applicationId, body).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='fileItems'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> DeleteAllFileItemsAsync(this IVoicipherAPI operations, string version, IList<DeletedFileItemModel> fileItems = default(IList<DeletedFileItemModel>), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> DeleteAllFileItemsAsync(this IVoicipherAPI operations, string version, System.Guid? applicationId = default(System.Guid?), IList<DeletedFileItemModel> body = default(IList<DeletedFileItemModel>), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.DeleteAllFileItemsWithHttpMessagesAsync(version, applicationId, body, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.DeleteAllFileItemsWithHttpMessagesAsync(version, fileItems, applicationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='language'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            public static object TranscribeFileItem(this IVoicipherAPI operations, string version, System.Guid? fileItemId = default(System.Guid?), string language = default(string), System.Guid? applicationId = default(System.Guid?))
-            {
-                return operations.TranscribeFileItemAsync(version, fileItemId, language, applicationId).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='language'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        public static object TranscribeFileItem(this IVoicipherAPI operations, string version, System.Guid? fileItemId = default(System.Guid?), string language = default(string), System.Guid? applicationId = default(System.Guid?))
+        {
+            return operations.TranscribeFileItemAsync(version, fileItemId, language, applicationId).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='language'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> TranscribeFileItemAsync(this IVoicipherAPI operations, string version, System.Guid? fileItemId = default(System.Guid?), string language = default(string), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='language'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> TranscribeFileItemAsync(this IVoicipherAPI operations, string version, System.Guid? fileItemId = default(System.Guid?), string language = default(string), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.TranscribeFileItemWithHttpMessagesAsync(version, fileItemId, language, applicationId, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.TranscribeFileItemWithHttpMessagesAsync(version, fileItemId, language, applicationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            public static object GetInformationMessages(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?))
-            {
-                return operations.GetInformationMessagesAsync(version, updatedAfter).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='updatedAfter'>
+        /// </param>
+        public static object GetInformationMessages(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?))
+        {
+            return operations.GetInformationMessagesAsync(version, updatedAfter).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetInformationMessagesAsync(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='updatedAfter'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetInformationMessagesAsync(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetInformationMessagesWithHttpMessagesAsync(version, updatedAfter, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetInformationMessagesWithHttpMessagesAsync(version, updatedAfter, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='informationMessageId'>
-            /// </param>
-            public static object MarkMessageAsOpened(this IVoicipherAPI operations, string version, System.Guid? informationMessageId = default(System.Guid?))
-            {
-                return operations.MarkMessageAsOpenedAsync(version, informationMessageId).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='informationMessageId'>
+        /// </param>
+        public static object MarkMessageAsOpened(this IVoicipherAPI operations, string version, System.Guid? informationMessageId = default(System.Guid?))
+        {
+            return operations.MarkMessageAsOpenedAsync(version, informationMessageId).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='informationMessageId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> MarkMessageAsOpenedAsync(this IVoicipherAPI operations, string version, System.Guid? informationMessageId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='informationMessageId'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> MarkMessageAsOpenedAsync(this IVoicipherAPI operations, string version, System.Guid? informationMessageId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.MarkMessageAsOpenedWithHttpMessagesAsync(version, informationMessageId, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.MarkMessageAsOpenedWithHttpMessagesAsync(version, informationMessageId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='ids'>
-            /// </param>
-            public static object MarkMessagesAsOpened(this IVoicipherAPI operations, string version, IList<System.Guid?> ids = default(IList<System.Guid?>))
-            {
-                return operations.MarkMessagesAsOpenedAsync(version, ids).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        public static object MarkMessagesAsOpened(this IVoicipherAPI operations, string version, IList<System.Guid?> body = default(IList<System.Guid?>))
+        {
+            return operations.MarkMessagesAsOpenedAsync(version, body).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='ids'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> MarkMessagesAsOpenedAsync(this IVoicipherAPI operations, string version, IList<System.Guid?> ids = default(IList<System.Guid?>), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> MarkMessagesAsOpenedAsync(this IVoicipherAPI operations, string version, IList<System.Guid?> body = default(IList<System.Guid?>), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.MarkMessagesAsOpenedWithHttpMessagesAsync(version, body, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.MarkMessagesAsOpenedWithHttpMessagesAsync(version, ids, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static object GetLastUpdates(this IVoicipherAPI operations, string version)
-            {
-                return operations.GetLastUpdatesAsync(version).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        public static object GetLastUpdates(this IVoicipherAPI operations, string version)
+        {
+            return operations.GetLastUpdatesAsync(version).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetLastUpdatesAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetLastUpdatesAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetLastUpdatesWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetLastUpdatesWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='speechResultId'>
-            /// </param>
-            /// <param name='recognizedAudioSampleId'>
-            /// </param>
-            /// <param name='displayText'>
-            /// </param>
-            public static object CreateSpeechResult(this IVoicipherAPI operations, string version, System.Guid speechResultId, System.Guid recognizedAudioSampleId, string displayText = default(string))
-            {
-                return operations.CreateSpeechResultAsync(version, speechResultId, recognizedAudioSampleId, displayText).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='speechResultId'>
+        /// </param>
+        /// <param name='recognizedAudioSampleId'>
+        /// </param>
+        /// <param name='displayText'>
+        /// </param>
+        public static object CreateSpeechResult(this IVoicipherAPI operations, string version, string speechResultId, string recognizedAudioSampleId, string displayText = default(string))
+        {
+            return operations.CreateSpeechResultAsync(version, speechResultId, recognizedAudioSampleId, displayText).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='speechResultId'>
-            /// </param>
-            /// <param name='recognizedAudioSampleId'>
-            /// </param>
-            /// <param name='displayText'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> CreateSpeechResultAsync(this IVoicipherAPI operations, string version, System.Guid speechResultId, System.Guid recognizedAudioSampleId, string displayText = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='speechResultId'>
+        /// </param>
+        /// <param name='recognizedAudioSampleId'>
+        /// </param>
+        /// <param name='displayText'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> CreateSpeechResultAsync(this IVoicipherAPI operations, string version, string speechResultId, string recognizedAudioSampleId, string displayText = default(string), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.CreateSpeechResultWithHttpMessagesAsync(version, speechResultId, recognizedAudioSampleId, displayText, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.CreateSpeechResultWithHttpMessagesAsync(version, speechResultId, recognizedAudioSampleId, displayText, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='speechResultModels'>
-            /// </param>
-            public static object UpdateSpeechResults(this IVoicipherAPI operations, string version, IList<SpeechResultModel> speechResultModels = default(IList<SpeechResultModel>))
-            {
-                return operations.UpdateSpeechResultsAsync(version, speechResultModels).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        public static object UpdateSpeechResults(this IVoicipherAPI operations, string version, IList<SpeechResultModel> body = default(IList<SpeechResultModel>))
+        {
+            return operations.UpdateSpeechResultsAsync(version, body).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='speechResultModels'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> UpdateSpeechResultsAsync(this IVoicipherAPI operations, string version, IList<SpeechResultModel> speechResultModels = default(IList<SpeechResultModel>), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> UpdateSpeechResultsAsync(this IVoicipherAPI operations, string version, IList<SpeechResultModel> body = default(IList<SpeechResultModel>), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.UpdateSpeechResultsWithHttpMessagesAsync(version, body, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.UpdateSpeechResultsWithHttpMessagesAsync(version, speechResultModels, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            public static object GetTranscribeItemsAll(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?))
-            {
-                return operations.GetTranscribeItemsAllAsync(version, updatedAfter, applicationId).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='updatedAfter'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        public static object GetTranscribeItemsAll(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?))
+        {
+            return operations.GetTranscribeItemsAllAsync(version, updatedAfter, applicationId).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updatedAfter'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetTranscribeItemsAllAsync(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='updatedAfter'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetTranscribeItemsAllAsync(this IVoicipherAPI operations, string version, System.DateTime? updatedAfter = default(System.DateTime?), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(version, updatedAfter, applicationId, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetTranscribeItemsAllWithHttpMessagesAsync(version, updatedAfter, applicationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static object GetTranscribeItems(this IVoicipherAPI operations, System.Guid fileItemId, string version)
-            {
-                return operations.GetTranscribeItemsAsync(fileItemId, version).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        public static object GetTranscribeItems(this IVoicipherAPI operations, System.Guid fileItemId, string version)
+        {
+            return operations.GetTranscribeItemsAsync(fileItemId, version).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='fileItemId'>
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetTranscribeItemsAsync(this IVoicipherAPI operations, System.Guid fileItemId, string version, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='fileItemId'>
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetTranscribeItemsAsync(this IVoicipherAPI operations, System.Guid fileItemId, string version, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetTranscribeItemsWithHttpMessagesAsync(fileItemId, version, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetTranscribeItemsWithHttpMessagesAsync(fileItemId, version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='transcribeItemId'>
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static object GetTranscribeAudioSource(this IVoicipherAPI operations, System.Guid transcribeItemId, string version)
-            {
-                return operations.GetTranscribeAudioSourceAsync(transcribeItemId, version).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='transcribeItemId'>
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        public static object GetTranscribeAudioSource(this IVoicipherAPI operations, System.Guid transcribeItemId, string version)
+        {
+            return operations.GetTranscribeAudioSourceAsync(transcribeItemId, version).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='transcribeItemId'>
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetTranscribeAudioSourceAsync(this IVoicipherAPI operations, System.Guid transcribeItemId, string version, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='transcribeItemId'>
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetTranscribeAudioSourceAsync(this IVoicipherAPI operations, System.Guid transcribeItemId, string version, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetTranscribeAudioSourceWithHttpMessagesAsync(transcribeItemId, version, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetTranscribeAudioSourceWithHttpMessagesAsync(transcribeItemId, version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='transcribeItemId'>
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static ProblemDetails GetTranscribeAudioSourceStream(this IVoicipherAPI operations, System.Guid transcribeItemId, string version)
-            {
-                return operations.GetTranscribeAudioSourceStreamAsync(transcribeItemId, version).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='transcribeItemId'>
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        public static ProblemDetails GetTranscribeAudioSourceStream(this IVoicipherAPI operations, System.Guid transcribeItemId, string version)
+        {
+            return operations.GetTranscribeAudioSourceStreamAsync(transcribeItemId, version).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='transcribeItemId'>
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<ProblemDetails> GetTranscribeAudioSourceStreamAsync(this IVoicipherAPI operations, System.Guid transcribeItemId, string version, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='transcribeItemId'>
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<ProblemDetails> GetTranscribeAudioSourceStreamAsync(this IVoicipherAPI operations, System.Guid transcribeItemId, string version, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetTranscribeAudioSourceStreamWithHttpMessagesAsync(transcribeItemId, version, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetTranscribeAudioSourceStreamWithHttpMessagesAsync(transcribeItemId, version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='transcribeItemId'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='transcript'>
-            /// </param>
-            public static object UpdateUserTranscript(this IVoicipherAPI operations, string version, System.Guid transcribeItemId, System.Guid applicationId, string transcript)
-            {
-                return operations.UpdateUserTranscriptAsync(version, transcribeItemId, applicationId, transcript).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='transcribeItemId'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='transcript'>
+        /// </param>
+        public static object UpdateUserTranscript(this IVoicipherAPI operations, string version, string transcribeItemId, string applicationId, string transcript)
+        {
+            return operations.UpdateUserTranscriptAsync(version, transcribeItemId, applicationId, transcript).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='transcribeItemId'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='transcript'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> UpdateUserTranscriptAsync(this IVoicipherAPI operations, string version, System.Guid transcribeItemId, System.Guid applicationId, string transcript, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='transcribeItemId'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='transcript'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> UpdateUserTranscriptAsync(this IVoicipherAPI operations, string version, string transcribeItemId, string applicationId, string transcript, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(version, transcribeItemId, applicationId, transcript, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(version, transcribeItemId, applicationId, transcript, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updateUserModel'>
-            /// </param>
-            public static object UpdateUser(this IVoicipherAPI operations, string version, UpdateUserModel updateUserModel = default(UpdateUserModel))
-            {
-                return operations.UpdateUserAsync(version, updateUserModel).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        public static object UpdateUser(this IVoicipherAPI operations, string version, UpdateUserModel body = default(UpdateUserModel))
+        {
+            return operations.UpdateUserAsync(version, body).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='updateUserModel'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> UpdateUserAsync(this IVoicipherAPI operations, string version, UpdateUserModel updateUserModel = default(UpdateUserModel), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> UpdateUserAsync(this IVoicipherAPI operations, string version, UpdateUserModel body = default(UpdateUserModel), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.UpdateUserWithHttpMessagesAsync(version, body, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.UpdateUserWithHttpMessagesAsync(version, updateUserModel, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='registrationUserModel'>
-            /// </param>
-            public static object RegisterUser(this IVoicipherAPI operations, string version, RegistrationUserModel registrationUserModel = default(RegistrationUserModel))
-            {
-                return operations.RegisterUserAsync(version, registrationUserModel).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        public static object RegisterUser(this IVoicipherAPI operations, string version, RegistrationUserModel body = default(RegistrationUserModel))
+        {
+            return operations.RegisterUserAsync(version, body).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='registrationUserModel'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> RegisterUserAsync(this IVoicipherAPI operations, string version, RegistrationUserModel registrationUserModel = default(RegistrationUserModel), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> RegisterUserAsync(this IVoicipherAPI operations, string version, RegistrationUserModel body = default(RegistrationUserModel), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.RegisterUserWithHttpMessagesAsync(version, body, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.RegisterUserWithHttpMessagesAsync(version, registrationUserModel, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='installationId'>
-            /// </param>
-            /// <param name='language'>
-            /// </param>
-            public static object UpdateLanguage(this IVoicipherAPI operations, string version, System.Guid? installationId = default(System.Guid?), int? language = default(int?))
-            {
-                return operations.UpdateLanguageAsync(version, installationId, language).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='installationId'>
+        /// </param>
+        /// <param name='language'>
+        /// </param>
+        public static object UpdateLanguage(this IVoicipherAPI operations, string version, System.Guid? installationId = default(System.Guid?), int? language = default(int?))
+        {
+            return operations.UpdateLanguageAsync(version, installationId, language).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='installationId'>
-            /// </param>
-            /// <param name='language'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> UpdateLanguageAsync(this IVoicipherAPI operations, string version, System.Guid? installationId = default(System.Guid?), int? language = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='installationId'>
+        /// </param>
+        /// <param name='language'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> UpdateLanguageAsync(this IVoicipherAPI operations, string version, System.Guid? installationId = default(System.Guid?), int? language = default(int?), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.UpdateLanguageWithHttpMessagesAsync(version, installationId, language, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.UpdateLanguageWithHttpMessagesAsync(version, installationId, language, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='billingPurchase'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            public static object CreateUserSubscription(this IVoicipherAPI operations, string version, BillingPurchase billingPurchase = default(BillingPurchase), System.Guid? applicationId = default(System.Guid?))
-            {
-                return operations.CreateUserSubscriptionAsync(version, billingPurchase, applicationId).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        public static object CreateUserSubscription(this IVoicipherAPI operations, string version, System.Guid? applicationId = default(System.Guid?), BillingPurchase body = default(BillingPurchase))
+        {
+            return operations.CreateUserSubscriptionAsync(version, applicationId, body).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='billingPurchase'>
-            /// </param>
-            /// <param name='applicationId'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> CreateUserSubscriptionAsync(this IVoicipherAPI operations, string version, BillingPurchase billingPurchase = default(BillingPurchase), System.Guid? applicationId = default(System.Guid?), CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='applicationId'>
+        /// </param>
+        /// <param name='body'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> CreateUserSubscriptionAsync(this IVoicipherAPI operations, string version, System.Guid? applicationId = default(System.Guid?), BillingPurchase body = default(BillingPurchase), CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(version, applicationId, body, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(version, billingPurchase, applicationId, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static object GetSpeechConfiguration(this IVoicipherAPI operations, string version)
-            {
-                return operations.GetSpeechConfigurationAsync(version).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        public static object GetSpeechConfiguration(this IVoicipherAPI operations, string version)
+        {
+            return operations.GetSpeechConfigurationAsync(version).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetSpeechConfigurationAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetSpeechConfigurationAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetSpeechConfigurationWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetSpeechConfigurationWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static object GetSubscriptionRemainingTime(this IVoicipherAPI operations, string version)
-            {
-                return operations.GetSubscriptionRemainingTimeAsync(version).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        public static object GetSubscriptionRemainingTime(this IVoicipherAPI operations, string version)
+        {
+            return operations.GetSubscriptionRemainingTimeAsync(version).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetSubscriptionRemainingTimeAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> GetSubscriptionRemainingTimeAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.GetSubscriptionRemainingTimeWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.GetSubscriptionRemainingTimeWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static bool? IsAlive(this IVoicipherAPI operations, string version)
-            {
-                return operations.IsAliveAsync(version).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        public static bool? IsAlive(this IVoicipherAPI operations, string version)
+        {
+            return operations.IsAliveAsync(version).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<bool?> IsAliveAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<bool?> IsAliveAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.IsAliveWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.IsAliveWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            public static object RefreshToken(this IVoicipherAPI operations, string version)
-            {
-                return operations.RefreshTokenAsync(version).GetAwaiter().GetResult();
-            }
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        public static object RefreshToken(this IVoicipherAPI operations, string version)
+        {
+            return operations.RefreshTokenAsync(version).GetAwaiter().GetResult();
+        }
 
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='version'>
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> RefreshTokenAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+        /// <param name='operations'>
+        /// The operations group for this extension method.
+        /// </param>
+        /// <param name='version'>
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        public static async Task<object> RefreshTokenAsync(this IVoicipherAPI operations, string version, CancellationToken cancellationToken = default(CancellationToken))
+        {
+            using (var _result = await operations.RefreshTokenWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
             {
-                using (var _result = await operations.RefreshTokenWithHttpMessagesAsync(version, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
+                return _result.Body;
             }
+        }
 
     }
 }
