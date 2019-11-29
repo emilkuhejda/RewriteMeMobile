@@ -60,7 +60,9 @@
         public static string Info => "Info";
         public static string InProgressLabel => "InProgressLabel";
         public static string OneHour => "OneHour";
+        public static string FiveHours => "FiveHours";
         public static string TenHours => "TenHours";
+        public static string DescriptionFiveHours => "DescriptionFiveHours";
         public static string DescriptionTenHours => "DescriptionTenHours";
         public static string PromptDeleteFileItemMessage => "PromptDeleteFileItemMessage";
         public static string RecordingOnly => "RecordingOnly";
