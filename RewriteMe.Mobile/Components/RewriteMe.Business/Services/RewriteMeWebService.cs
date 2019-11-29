@@ -12,21 +12,26 @@ using RewriteMe.Domain.Interfaces.Utils;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Logging.Extensions;
+using RewriteMe.Logging.Interfaces;
 
 namespace RewriteMe.Business.Services
 {
     public class RewriteMeWebService : WebServiceBase, IRewriteMeWebService
     {
         private readonly IUserSessionService _userSessionService;
+        private readonly ILogger _logger;
 
         public RewriteMeWebService(
             IUserSessionService userSessionService,
+            ILoggerFactory loggerFactory,
             IRewriteMeApiClientFactory rewriteMeApiClientFactory,
             IWebServiceErrorHandler webServiceErrorHandler,
             IApplicationSettings applicationSettings)
             : base(rewriteMeApiClientFactory, webServiceErrorHandler, applicationSettings)
         {
             _userSessionService = userSessionService;
+            _logger = loggerFactory.CreateLogger(typeof(RewriteMeWebService));
         }
 
         public async Task<bool> IsAliveAsync()
@@ -40,8 +45,11 @@ namespace RewriteMe.Business.Services
                     var result = await client.IsAliveAsync(ApplicationSettings.WebApiVersion).ConfigureAwait(false);
                     return result.HasValue && result.Value;
                 }
-                catch (Exception)
+                catch (Exception exception)
                 {
+                    var message = "Exception during 'is-alive' web service request.";
+                    _logger.Warning($"{message} {exception}");
+
                     return false;
                 }
 
