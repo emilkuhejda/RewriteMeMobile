@@ -80,6 +80,7 @@ namespace RewriteMe.Business.Managers
 
         public async Task SynchronizationInternalAsync(CancellationToken cancellationToken)
         {
+            cancellationToken.ThrowIfCancellationRequested();
             var itemsToUpdate = await _transcribeItemRepository.GetAllForAudioSourceSynchronizationAsync().ConfigureAwait(false);
             var transcribeItemsToUpdate = itemsToUpdate.ToList();
             _totalResourceInitializationTasks = transcribeItemsToUpdate.Count;
@@ -87,6 +88,8 @@ namespace RewriteMe.Business.Managers
 
             if (!transcribeItemsToUpdate.Any())
                 return;
+
+            cancellationToken.ThrowIfCancellationRequested();
 
             var transcribeItems = transcribeItemsToUpdate.Select(x => x.Id).ToArray().Split(10);
             bool isSuccess = true;
@@ -96,6 +99,7 @@ namespace RewriteMe.Business.Managers
                 foreach (var transcribeItem in transcribeItemIds)
                 {
                     updateMethods.Add(() => _transcriptAudioSourceService.SynchronizeAsync(transcribeItem, cancellationToken));
+                    cancellationToken.ThrowIfCancellationRequested();
                 }
 
                 var tasks = updateMethods.WhenTaskDone(OnInitializationProgress).Select(x => x());

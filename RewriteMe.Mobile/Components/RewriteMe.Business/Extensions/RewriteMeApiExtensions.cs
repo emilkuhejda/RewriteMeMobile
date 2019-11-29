@@ -52,7 +52,7 @@ namespace RewriteMe.Business.Extensions
         public static async Task<Ok> DeleteAllFileItemsAsync(this IVoicipherAPI operations, string version, IList<DeletedFileItem> fileItems, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
             var deletedFileItemModels = fileItems.Select(x => x.ToDeletedFileItemModel()).ToList();
-            using (var result = await operations.DeleteAllFileItemsWithHttpMessagesAsync(version, deletedFileItemModels, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.DeleteAllFileItemsWithHttpMessagesAsync(version, applicationId, deletedFileItemModels, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
             }
@@ -76,7 +76,7 @@ namespace RewriteMe.Business.Extensions
 
         public static async Task<TimeSpanWrapper> CreateUserSubscriptionAsync(this IVoicipherAPI operations, string version, BillingPurchase billingPurchase, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(version, billingPurchase, applicationId, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.CreateUserSubscriptionWithHttpMessagesAsync(version, applicationId, billingPurchase, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<TimeSpanWrapper>(result);
             }
@@ -117,7 +117,7 @@ namespace RewriteMe.Business.Extensions
 
         public static async Task<Ok> UpdateUserTranscriptAsync(this IVoicipherAPI operations, string version, Guid transcribeItemId, string transcript, Guid applicationId, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(version, transcribeItemId, applicationId, transcript, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.UpdateUserTranscriptWithHttpMessagesAsync(version, transcribeItemId.ToString(), applicationId.ToString(), transcript, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
             }
@@ -125,7 +125,7 @@ namespace RewriteMe.Business.Extensions
 
         public static async Task<Ok> CreateSpeechResultAsync(this IVoicipherAPI operations, string version, Guid speechResultId, Guid recognizedAudioSampleId, string displayText, Dictionary<string, List<string>> customHeaders)
         {
-            using (var result = await operations.CreateSpeechResultWithHttpMessagesAsync(version, speechResultId, recognizedAudioSampleId, displayText, customHeaders).ConfigureAwait(false))
+            using (var result = await operations.CreateSpeechResultWithHttpMessagesAsync(version, speechResultId.ToString(), recognizedAudioSampleId.ToString(), displayText, customHeaders).ConfigureAwait(false))
             {
                 return ParseBody<Ok>(result);
             }

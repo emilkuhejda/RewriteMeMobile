@@ -88,6 +88,13 @@ namespace RewriteMe.Business.Utils
 
                 return new HttpRequestResult<T>(HttpRequestState.Offline);
             }
+            catch (OperationCanceledException exception)
+            {
+                var message = $"Operation canceled during '{targetTypeName}' web service request.";
+                _logger.Warning($"{message} {exception}");
+
+                return new HttpRequestResult<T>(HttpRequestState.Canceled);
+            }
         }
     }
 }
