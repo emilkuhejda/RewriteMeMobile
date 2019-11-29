@@ -22,7 +22,7 @@ namespace RewriteMe.Business.Configuration
 
         public Guid ApplicationId { get; private set; }
 
-        public Uri WebApiUri { get; } = new Uri("https://rewrite-me.com/");
+        public Uri WebApiUri { get; } = new Uri("https://voicipher.com/");
 
         public string WebApiVersion { get; } = "1";
 
@@ -30,7 +30,7 @@ namespace RewriteMe.Business.Configuration
 
         public string SyncfusionKey { get; } = "MTc1MDQwQDMxMzcyZTMzMmUzMEViNUEzTHRzWGpMR2IvTzRBUnZ2RkFXaUJENkxYeWVnUmFsUnI2TlVFcnc9";
 
-        public string SupportMailAddress => "support@rewrite-me.com";
+        public string SupportMailAddress => "support@voicipher.com";
 
         public string DefaultLanguage { get; } = "en";
 
