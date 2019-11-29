@@ -20,6 +20,8 @@ namespace RewriteMe.Mobile.Utils
             UnlockCommand = new DelegateCommand(ExecuteUnlockCommand, CanExecuteUnlockCommand);
         }
 
+        public bool IsEnabled { get; set; }
+
         public bool Unlocked
         {
             get => _unlocked;
@@ -34,7 +36,7 @@ namespace RewriteMe.Mobile.Utils
 
         private bool CanExecuteUnlockCommand()
         {
-            return !Unlocked;
+            return IsEnabled && !Unlocked;
         }
 
         private void ExecuteUnlockCommand()
