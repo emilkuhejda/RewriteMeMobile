@@ -10,6 +10,7 @@ using RewriteMe.Domain.Interfaces.Factories;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
 using RewriteMe.Domain.Transcription;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Domain.WebApi.Models;
 
 namespace RewriteMe.Business.Services
@@ -31,16 +32,20 @@ namespace RewriteMe.Business.Services
         public async Task<bool> IsAliveAsync()
         {
             var timeout = TimeSpan.FromSeconds(5);
-            var client = RewriteMeApiClientFactory.CreateSingleClient(ApplicationSettings.WebApiUri, timeout);
 
-            var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => client.IsAliveWithHttpMessagesAsync(ApplicationSettings.WebApiVersion)).ConfigureAwait(false);
-            if (httpRequestResult.State == HttpRequestState.Success)
+            using (var client = RewriteMeApiClientFactory.CreateSingleClient(ApplicationSettings.WebApiUri, timeout))
             {
-                var result = httpRequestResult.Payload?.Body;
-                return result.HasValue && result.Value;
-            }
+                try
+                {
+                    var result = await client.IsAliveAsync(ApplicationSettings.WebApiVersion).ConfigureAwait(false);
+                    return result.HasValue && result.Value;
+                }
+                catch (Exception)
+                {
+                    return false;
+                }
 
-            return false;
+            }
         }
 
         public async Task<HttpRequestResult<LastUpdates>> GetLastUpdatesAsync()
