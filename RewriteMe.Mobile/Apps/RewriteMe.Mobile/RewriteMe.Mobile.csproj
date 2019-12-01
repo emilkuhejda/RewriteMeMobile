@@ -44,6 +44,7 @@
     <None Remove="Resources\Images\PauseRecording.svg" />
     <None Remove="Resources\Images\PlayRecording.svg" />
     <None Remove="Resources\Images\VoicipherLogo.svg" />
+    <None Remove="Resources\Images\Success.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -76,6 +77,7 @@
     <EmbeddedResource Include="Resources\Images\Overview.svg" />
     <EmbeddedResource Include="Resources\Images\RecorderOverview.svg" />
     <EmbeddedResource Include="Resources\Images\VoicipherLogo.svg" />
+    <EmbeddedResource Include="Resources\Images\Success.svg" />
   </ItemGroup>
   
   <ItemGroup>

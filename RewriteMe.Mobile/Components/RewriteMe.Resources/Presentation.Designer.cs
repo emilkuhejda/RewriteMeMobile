@@ -263,6 +263,12 @@ namespace RewriteMe.Resources {
             }
         }
         
+        public static string PrivacyPolicy {
+            get {
+                return ResourceManager.GetString("PrivacyPolicy", resourceCulture);
+            }
+        }
+        
         public static string ContactUs {
             get {
                 return ResourceManager.GetString("ContactUs", resourceCulture);

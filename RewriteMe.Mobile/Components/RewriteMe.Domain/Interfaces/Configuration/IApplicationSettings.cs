@@ -9,6 +9,8 @@ namespace RewriteMe.Domain.Interfaces.Configuration
 
         Uri WebApiUri { get; }
 
+        Uri PrivacyPolicyUri { get; }
+
         string WebApiVersion { get; }
 
         string AppCenterKeys { get; }
