@@ -39,6 +39,7 @@
         public static string ResetPassword => "ResetPassword";
         public static string SignOut => "SignOut";
         public static string Version => "Version";
+        public static string PrivacyPolicy => "PrivacyPolicy";
         public static string ContactUs => "ContactUs";
         public static string Developer => "Developer";
         public static string Clear => "Clear";

@@ -39,6 +39,12 @@
             </controls:DrillDownButton>
             <controls:Divider />
 
+            <!--  Privacy policy  -->
+            <controls:DrillDownButton Command="{Binding NavigateToPrivacyPolicyCommand}"
+                                      ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
+                                      Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.PrivacyPolicy}}" />
+            <controls:Divider />
+
             <!--  Contact us  -->
             <controls:DrillDownButton Command="{Binding NavigateToEmailCommand}"
                                       ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
