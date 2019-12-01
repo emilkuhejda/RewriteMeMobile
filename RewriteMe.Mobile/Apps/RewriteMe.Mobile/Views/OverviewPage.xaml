@@ -4,6 +4,7 @@
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+                          xmlns:formsSvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
@@ -20,7 +21,7 @@
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="40" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
 
                 <svgForms:SvgCachedImage Grid.Column="0"
@@ -45,18 +46,14 @@
                            Text="{Binding DateCreated}" />
                 </StackLayout>
 
-                <progressBar:SfStepProgressBar Grid.Column="2"
-                                               IsVisible="{Binding IsCompleted}"
-                                               Orientation="Vertical"
-                                               VerticalOptions="Center">
-                    <progressBar:SfStepProgressBar.CompletedStepStyle>
-                        <progressBar:StepStyle x:TypeArguments="progressBar:CompletedStepState"
-                                               MarkerContentSize="15"
-                                               MarkerFillColor="{StaticResource ColorPrimary}"
-                                               MarkerSize="30" />
-                    </progressBar:SfStepProgressBar.CompletedStepStyle>
-                    <progressBar:StepView Status="Completed" />
-                </progressBar:SfStepProgressBar>
+                <formsSvg:SvgCachedImage Grid.Column="2"
+                                         Aspect="AspectFit"
+                                         IsVisible="{Binding IsCompleted}"
+                                         HeightRequest="30"
+                                         HorizontalOptions="Center"
+                                         Source="resource://RewriteMe.Mobile.Resources.Images.Success.svg"
+                                         VerticalOptions="Center"
+                                         WidthRequest="30" />
 
                 <xForms:SfBusyIndicator Grid.Column="2"
                                         AnimationType="Print"
