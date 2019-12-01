@@ -18,7 +18,9 @@ using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using NavigationMode = Prism.Navigation.NavigationMode;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -65,6 +67,7 @@ namespace RewriteMe.Mobile.ViewModels
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
             NavigateToUserSettingsCommand = new AsyncCommand(ExecuteNavigateToUserSettingsCommandAsync);
             NavigateToUserSubscriptions = new AsyncCommand(ExecuteNavigateToUserSubscriptionsCommandAsync);
+            NavigateToPrivacyPolicyCommand = new AsyncCommand(ExecuteNavigateToPrivacyPolicyCommandAsync);
             NavigateToEmailCommand = new DelegateCommand(ExecuteNavigateToEmailCommand);
             NavigateToDeveloperPageCommand = new AsyncCommand(ExecuteNavigateToDeveloperPageCommandAsync);
         }
@@ -100,6 +103,8 @@ namespace RewriteMe.Mobile.ViewModels
         public ICommand NavigateToUserSettingsCommand { get; }
 
         public ICommand NavigateToUserSubscriptions { get; }
+
+        public ICommand NavigateToPrivacyPolicyCommand { get; }
 
         public ICommand NavigateToEmailCommand { get; }
 
@@ -170,6 +175,11 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteNavigateToUserSubscriptionsCommandAsync()
         {
             await NavigationService.NavigateWithoutAnimationAsync(Pages.UserSubscriptions).ConfigureAwait(false);
+        }
+
+        private async Task ExecuteNavigateToPrivacyPolicyCommandAsync()
+        {
+            await Launcher.OpenAsync(_applicationSettings.PrivacyPolicyUri).ConfigureAwait(false);
         }
 
         private void ExecuteNavigateToEmailCommand()
