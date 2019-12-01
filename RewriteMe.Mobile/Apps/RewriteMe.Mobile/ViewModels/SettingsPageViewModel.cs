@@ -67,7 +67,7 @@ namespace RewriteMe.Mobile.ViewModels
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
             NavigateToUserSettingsCommand = new AsyncCommand(ExecuteNavigateToUserSettingsCommandAsync);
             NavigateToUserSubscriptions = new AsyncCommand(ExecuteNavigateToUserSubscriptionsCommandAsync);
-            NavigateToPrivacyPolicyCommand = new AsyncCommand(ExecuteNavigateToPrivacyPolicyCommandAsync);
+            NavigateToPrivacyPolicyCommand = new DelegateCommand(ExecuteNavigateToPrivacyPolicyCommand);
             NavigateToEmailCommand = new DelegateCommand(ExecuteNavigateToEmailCommand);
             NavigateToDeveloperPageCommand = new AsyncCommand(ExecuteNavigateToDeveloperPageCommandAsync);
         }
@@ -177,9 +177,12 @@ namespace RewriteMe.Mobile.ViewModels
             await NavigationService.NavigateWithoutAnimationAsync(Pages.UserSubscriptions).ConfigureAwait(false);
         }
 
-        private async Task ExecuteNavigateToPrivacyPolicyCommandAsync()
+        private void ExecuteNavigateToPrivacyPolicyCommand()
         {
-            await Launcher.OpenAsync(_applicationSettings.PrivacyPolicyUri).ConfigureAwait(false);
+            ThreadHelper.InvokeOnUiThread(() =>
+            {
+                Launcher.OpenAsync(_applicationSettings.PrivacyPolicyUri);
+            });
         }
 
         private void ExecuteNavigateToEmailCommand()
