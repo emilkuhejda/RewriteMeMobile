@@ -77,13 +77,17 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
-                    var remainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
-                    var sign = remainingTime.Ticks < 0 ? "-" : string.Empty;
-                    RemainingTime = $"{sign}{remainingTime:hh\\:mm\\:ss}";
-
+                    await InitializeRemainingTimeAsync().ConfigureAwait(false);
                     await InitializeProductsAsync().ConfigureAwait(false);
                 }
             }
+        }
+
+        private async Task InitializeRemainingTimeAsync()
+        {
+            var remainingTime = await _userSubscriptionService.GetRemainingTimeAsync().ConfigureAwait(false);
+            var sign = remainingTime.Ticks < 0 ? "-" : string.Empty;
+            RemainingTime = $"{sign}{remainingTime:hh\\:mm\\:ss}";
         }
 
         private async Task InitializeProductsAsync()
@@ -151,6 +155,7 @@ namespace RewriteMe.Mobile.ViewModels
             Logger.Info("Subscription was successfully purchased and registered.");
             await TrackEvent(productId).ConfigureAwait(false);
             await DialogService.AlertAsync(Loc.Text(TranslationKeys.SubscriptionWasSuccessfullyPurchased)).ConfigureAwait(false);
+            await InitializeRemainingTimeAsync().ConfigureAwait(false);
         }
 
         public async Task<bool> MakePurchaseAsync(string productId)
