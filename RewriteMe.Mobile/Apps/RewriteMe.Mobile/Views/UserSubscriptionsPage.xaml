@@ -41,6 +41,10 @@
                                TextColor="{StaticResource ColorGrey400}" />
                     </Grid>
                 </Frame>
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding BuyCommand}" />
+                </Grid.GestureRecognizers>
             </Grid>
         </DataTemplate>
     </views:BaseNavigationPage.Resources>
