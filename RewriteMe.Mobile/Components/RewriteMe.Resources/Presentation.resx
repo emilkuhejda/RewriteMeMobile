@@ -369,16 +369,16 @@
     <value>Subscription was successfully purchased.</value>
   </data>
   <data name="AppStoreUnavailableErrorMessage" xml:space="preserve">
-    <value>Currently the app store seems to be unavailble. Try again later.</value>
+    <value>Currently the app store seems to be unavailble. Please, try it later.</value>
   </data>
   <data name="BillingUnavailableErrorMessage" xml:space="preserve">
-    <value>Billing seems to be unavailable, please try again later.</value>
+    <value>Billing seems to be unavailable. Please, try again later.</value>
   </data>
   <data name="PaymentInvalidErrorMessage" xml:space="preserve">
-    <value>Payment seems to be invalid, please try again.</value>
+    <value>Payment seems to be invalid. Please, try again later.</value>
   </data>
   <data name="PaymentNotAllowedErrorMessage" xml:space="preserve">
-    <value>Payment does not seem to be enabled/allowed, please try again.</value>
+    <value>Payment does not seem to be enabled/allowed. Please try again later.</value>
   </data>
   <data name="RegistrationPurchaseBillingErrorMessage" xml:space="preserve">
     <value>Subscription was purchased but it was not successfully registered. Please, contact us.</value>
@@ -390,6 +390,6 @@
     <value>Purchase was processed incorrectly. Please, contact us.</value>
   </data>
   <data name="PurchaseWasNotProcessedErrorMessage" xml:space="preserve">
-    <value>Purchase was not processed. Please try again.</value>
+    <value>Purchase was not processed. Please, try again later.</value>
   </data>
 </root>
