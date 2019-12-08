@@ -2,20 +2,20 @@
 {
     public class SupportedLanguage
     {
-        public SupportedLanguage(string title, string culture, bool isAzureSupported)
-            : this(title, culture, isAzureSupported, false)
+        public SupportedLanguage(string key, string culture, bool isAzureSupported)
+            : this(key, culture, isAzureSupported, false)
         {
         }
 
-        public SupportedLanguage(string title, string culture, bool isAzureSupported, bool onlyInAzure)
+        public SupportedLanguage(string key, string culture, bool isAzureSupported, bool onlyInAzure)
         {
-            Title = title;
+            Key = key;
             Culture = culture;
             IsAzureSupported = isAzureSupported;
             OnlyInAzure = onlyInAzure;
         }
 
-        public string Title { get; }
+        public string Key { get; }
 
         public string Culture { get; }
 
