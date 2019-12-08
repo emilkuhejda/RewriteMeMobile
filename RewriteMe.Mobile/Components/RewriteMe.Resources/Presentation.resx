@@ -333,7 +333,7 @@
     <value>Audio file is invalid.</value>
   </data>
   <data name="ProfileEditErrorMessage" xml:space="preserve">
-    <value>Your data was not changed. Please, try it later.</value>
+    <value>Your data was not changed. Please, try again later.</value>
   </data>
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>
@@ -342,10 +342,10 @@
     <value>It seems you are offline. Please check your internet connection.</value>
   </data>
   <data name="UnreachableServerErrorMessage" xml:space="preserve">
-    <value>Server is unreachable. Please try it later.</value>
+    <value>Server is unreachable. Please try again later.</value>
   </data>
   <data name="UploadedFileNotFoundErrorMessage" xml:space="preserve">
-    <value>Uploaded file is not found. Please try it later.</value>
+    <value>Uploaded file is not found. Please try again later.</value>
   </data>
   <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
     <value>Uploaded file is not supported.</value>
@@ -357,19 +357,19 @@
     <value>Your subscription does not have enough free minutes.</value>
   </data>
   <data name="SynchronizationInProgressErrorMessage" xml:space="preserve">
-    <value>Synchronization is still in progress. Please, try it later.</value>
+    <value>Synchronization is still in progress. Please, try again later.</value>
   </data>
   <data name="TranscribeAudioSourceNotFoundErrorMessage" xml:space="preserve">
     <value>Transcribe audio source was not found. Please, contact us.</value>
   </data>
   <data name="SpeechClientNotInitializedErrorMessage" xml:space="preserve">
-    <value>Connection was not established. Please, try it later.</value>
+    <value>Connection was not established. Please, try again later.</value>
   </data>
   <data name="SubscriptionWasSuccessfullyPurchased" xml:space="preserve">
     <value>Subscription was successfully purchased.</value>
   </data>
   <data name="AppStoreUnavailableErrorMessage" xml:space="preserve">
-    <value>Currently the app store seems to be unavailble. Please, try it later.</value>
+    <value>Currently the app store seems to be unavailble. Please, try again later.</value>
   </data>
   <data name="BillingUnavailableErrorMessage" xml:space="preserve">
     <value>Billing seems to be unavailable. Please, try again later.</value>
