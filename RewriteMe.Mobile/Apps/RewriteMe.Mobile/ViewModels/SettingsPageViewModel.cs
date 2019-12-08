@@ -154,7 +154,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var languages = Languages.All.Select(x => new DropDownListViewModel
             {
-                Text = x.Title,
+                Text = Loc.Text(x.Key),
                 Value = x.GetCultureInfo(),
                 Type = nameof(SelectedLanguage),
                 IsSelected = x.Culture == SelectedLanguage.Culture

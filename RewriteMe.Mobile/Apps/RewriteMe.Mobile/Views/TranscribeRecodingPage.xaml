@@ -31,7 +31,7 @@
 
                     <textInputLayout:SfTextInputLayout ContainerType="Outlined">
                         <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
-                                ItemDisplayBinding="{Binding Title}"
+                                ItemDisplayBinding="{Binding Key, Converter={StaticResource KeyToLocalizedTextConverter}}"
                                 ItemsSource="{Binding AvailableLanguages}"
                                 SelectedItem="{Binding SelectedLanguage}"/>
                     </textInputLayout:SfTextInputLayout>

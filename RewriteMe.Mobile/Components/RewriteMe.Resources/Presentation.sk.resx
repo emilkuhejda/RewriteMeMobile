@@ -98,4 +98,298 @@
 	<resheader name="writer">
 		<value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.3500.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
 	</resheader>
+    
+  <data name="Language_EN_AU" xml:space="preserve">
+    <value>Angličtina (Austrália)</value>
+  </data>
+  <data name="Language_EN_GB" xml:space="preserve">
+    <value>Angličtina (Veľká Británia)</value>
+  </data>
+  <data name="Language_EN_US" xml:space="preserve">
+    <value>Angličtina (USA)</value>
+  </data>
+  <data name="Language_DE_DE" xml:space="preserve">
+    <value>Nemčina (Nemecko)</value>
+  </data>
+  <data name="Language_FR_FR" xml:space="preserve">
+    <value>Francúzština (Francúzsko)</value>
+  </data>
+  <data name="Language_ES_ES" xml:space="preserve">
+    <value>Španielčina (španielsko)</value>
+  </data>
+  <data name="Language_IT_IT" xml:space="preserve">
+    <value>Taliančina (Taliansko)</value>
+  </data>
+  <data name="Language_PT_PT" xml:space="preserve">
+    <value>Portugalčina (Portugalsko)</value>
+  </data>
+  <data name="Language_SK_SK" xml:space="preserve">
+    <value>Slovenčina (Slovensko)</value>
+  </data>
+  <data name="Language_CS_CZ" xml:space="preserve">
+    <value>Čeština (Česká republika)</value>
+  </data>
+  <data name="Language_PL_PL" xml:space="preserve">
+    <value>Poľština (Poľsko)</value>
+  </data>
+  <data name="Language_HU_HU" xml:space="preserve">
+    <value>Maďarčina (Maďarsko)</value>
+  </data>
+  <data name="Language_RU_RU" xml:space="preserve">
+    <value>Ruština (Rusko)</value>
+  </data>
+  <data name="Language_JA_JP" xml:space="preserve">
+    <value>Japončina (Japonsko)</value>
+  </data>
+  <data name="Language_ZH_CN" xml:space="preserve">
+    <value>Čínština (Mandarínština, zjednodušená)</value>
+  </data>
+  <data name="Language_ZH" xml:space="preserve">
+    <value>Čínština (Mandarínština, zjednodušená)</value>
+  </data>
+
+  <data name="ApplicationTitle" xml:space="preserve">
+    <value>Voicipher</value>
+  </data>
+  <data name="ActivityIndicatorCaptionText" xml:space="preserve">
+    <value>Načítavanie...</value>
+  </data>
+  <data name="LoadingData" xml:space="preserve">
+    <value>Načítanie dát....</value>
+  </data>
+  <data name="OfflineMessageText" xml:space="preserve">
+    <value>Nie ste pripojený k internetu. Prosín, opakujte operáciu neskôr.</value>
+  </data>
+  <data name="RegisterOrSignIn" xml:space="preserve">
+    <value>Registrovať alebo prihlásiť sa</value>
+  </data>
+  <data name="SignInSuccessful" xml:space="preserve">
+    <value>Prihlásenie bolo úspešné</value>
+  </data>
+  <data name="SignInFailed" xml:space="preserve">
+    <value>Prihlásenie zlyhalo</value>
+  </data>
+  <data name="UserRegistrationFailed" xml:space="preserve">
+    <value>Registrácia používateľa zlyhala</value>
+  </data>
+  <data name="RegisterToUseApplication" xml:space="preserve">
+    <value>Prosím, zaregistrujte sa do aplíkacie Voicipher</value>
+  </data>
+  <data name="UserRegistration" xml:space="preserve">
+    <value>Registrácia používateľa</value>
+  </data>
+  <data name="English" xml:space="preserve">
+    <value>Angličtina</value>
+  </data>
+  <data name="Slovak" xml:space="preserve">
+    <value>Slovenčina</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Nastavenia</value>
+  </data>
+  <data name="Languages" xml:space="preserve">
+    <value>Jazyky</value>
+  </data>
+  <data name="Language" xml:space="preserve">
+    <value>Jazyk</value>
+  </data>
+  <data name="UserProfile" xml:space="preserve">
+    <value>Používateľský profil</value>
+  </data>
+  <data name="EditProfile" xml:space="preserve">
+    <value>Upraviť profil</value>
+  </data>
+  <data name="ResetPassword" xml:space="preserve">
+    <value>Zmena hesla</value>
+  </data>
+  <data name="SignOut" xml:space="preserve">
+    <value>Odhlásiť sa</value>
+  </data>
+  <data name="Version" xml:space="preserve">
+    <value>Verzia</value>
+  </data>
+  <data name="PrivacyPolicy" xml:space="preserve">
+    <value>Podmienky súkromia</value>
+  </data>
+  <data name="ContactUs" xml:space="preserve">
+    <value>Kontaktovať nás</value>
+  </data>
+  <data name="Developer" xml:space="preserve">
+    <value>Developer</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Vymazať</value>
+  </data>
+  <data name="SendMail" xml:space="preserve">
+    <value>Poslať email</value>
+  </data>
+  <data name="Reload" xml:space="preserve">
+    <value>Znova načítať</value>
+  </data>
+  <data name="SendEmail" xml:space="preserve">
+    <value>Odoslať email</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Zrušiť</value>
+  </data>
+  <data name="Ok" xml:space="preserve">
+    <value>Ok</value>
+  </data>
+  <data name="DeveloperModeIsActivated" xml:space="preserve">
+    <value>Developerský mód je aktivovaný</value>
+  </data>
+  <data name="EmailIsNotSupported" xml:space="preserve">
+    <value>Funkcia Email nie je podporovaná zariadením</value>
+  </data>
+  <data name="ApplicationTitleLog" xml:space="preserve">
+    <value>Voicipher - Log</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Názov</value>
+  </data>
+  <data name="UploadFile" xml:space="preserve">
+    <value>Nahrať súbor</value>
+  </data>
+  <data name="Send" xml:space="preserve">
+    <value>Odoslať</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Uložiť</value>
+  </data>
+  <data name="SaveAndTranscribe" xml:space="preserve">
+    <value>Uložiť a prepísať</value>
+  </data>
+  <data name="Transcribe" xml:space="preserve">
+    <value>Prepísať</value>
+  </data>
+  <data name="AudioFiles" xml:space="preserve">
+    <value>Audio súbory</value>
+  </data>
+  <data name="Recordings" xml:space="preserve">
+    <value>Nahrávky</value>
+  </data>
+  <data name="Info" xml:space="preserve">
+    <value>Info</value>
+  </data>
+  <data name="InProgressLabel" xml:space="preserve">
+    <value>V progrese</value>
+  </data>
+  <data name="OneHour" xml:space="preserve">
+    <value>1 hodina</value>
+  </data>
+  <data name="FiveHours" xml:space="preserve">
+    <value>5 hodín</value>
+  </data>
+  <data name="TenHours" xml:space="preserve">
+    <value>10 hodín</value>
+  </data>
+  <data name="DescriptionFiveHours" xml:space="preserve">
+    <value>Ušetríš ~4€</value>
+  </data>
+  <data name="DescriptionTenHours" xml:space="preserve">
+    <value>Ušetríš ~10€</value>
+  </data>
+  <data name="PromptDeleteFileItemMessage" xml:space="preserve">
+    <value>Naozaj chcete vymazať súbor '{0}'?</value>
+  </data>
+  <data name="RecordingOnly" xml:space="preserve">
+    <value>Iba nahrávka</value>
+  </data>
+  <data name="FiveMinutesOnly" xml:space="preserve">
+    <value>5 minút maximum</value>
+  </data>
+  <data name="RemainingTime" xml:space="preserve">
+    <value>Zostávajúci čas</value>
+  </data>
+  <data name="BuyMoreTime" xml:space="preserve">
+    <value>Kúpiť viac času</value>
+  </data>
+  <data name="NoAvailableData" xml:space="preserve">
+    <value>Žiadne dostupné dáta</value>
+  </data>
+  <data name="NoAvailableMessages" xml:space="preserve">
+    <value>Žiadne dostupné správy</value>
+  </data>
+  <data name="UnableToLoadAudioFile" xml:space="preserve">
+    <value>Nie je možné nahrať audio súbor.</value>
+  </data>
+  <data name="Downloading" xml:space="preserve">
+    <value>Sťahovanie... {0}%</value>
+  </data>
+  <data name="Create" xml:space="preserve">
+    <value>Vytvoriť</value>
+  </data>
+  <data name="Record" xml:space="preserve">
+    <value>Nahrať</value>
+  </data>
+  <data name="NoFilesMessage" xml:space="preserve">
+    <value>Žiadne súbory ešte?</value>
+  </data>
+  <data name="NoRecordingsMessage" xml:space="preserve">
+    <value>Žiadne nahrávky ešte?</value>
+  </data>
+  
+  <data name="InvalidAudioFileErrorMessage" xml:space="preserve">
+    <value>Audio súbor nie je podporovaný.</value>
+  </data>
+  <data name="ProfileEditErrorMessage" xml:space="preserve">
+    <value>Vaše údaje neboli zmenené. Prosím, opakujte operáciu neskôr.</value>
+  </data>
+  <data name="UploadFileItemInfoMessage" xml:space="preserve">
+    <value>Nahrávanie môže trvať nejaký čas. Prosím, nevypínajte aplikáciu. Súbor nemusí byť nahraný.</value>
+  </data>
+  <data name="OfflineErrorMessage" xml:space="preserve">
+    <value>Zdá sa, že ste offline. Prosím, skontrolujte internetové pripojenie.</value>
+  </data>
+  <data name="UnreachableServerErrorMessage" xml:space="preserve">
+    <value>Server je nedostupný. Prosím, opakujte operáciu neskôr.</value>
+  </data>
+  <data name="UploadedFileNotFoundErrorMessage" xml:space="preserve">
+    <value>Nahrávaný súbor nebol nájdený. Prosím, opakujte operáciu neskôr.</value>
+  </data>
+  <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
+    <value>Nahrávaný súbor nie je podporovaný.</value>
+  </data>
+  <data name="LanguageNotSupportedErrorMessage" xml:space="preserve">
+    <value>Jazyk nie je podporovaný.</value>
+  </data>
+  <data name="NotEnoughFreeMinutesInSubscriptionErrorMessage" xml:space="preserve">
+    <value>Vaše predplatné nemá dostatok voľných minút.</value>
+  </data>
+  <data name="SynchronizationInProgressErrorMessage" xml:space="preserve">
+    <value>Práve prebieha synchronizácia. Prosím, opakujte operáciu neskôr.</value>
+  </data>
+  <data name="TranscribeAudioSourceNotFoundErrorMessage" xml:space="preserve">
+    <value>Audio súbor nebol nájdený. Prosím, kontaktujte nás.</value>
+  </data>
+  <data name="SpeechClientNotInitializedErrorMessage" xml:space="preserve">
+    <value>Pripojenie bolo neúspešné. Prosím, opakujte operáciu neskôr.</value>
+  </data>
+  <data name="SubscriptionWasSuccessfullyPurchased" xml:space="preserve">
+    <value>Predplatné nebolo úspešné zaplatené.</value>
+  </data>
+  <data name="AppStoreUnavailableErrorMessage" xml:space="preserve">
+    <value>App store je nedostupný. Prosím, opakujte operáciu neskôr.</value>
+  </data>
+  <data name="BillingUnavailableErrorMessage" xml:space="preserve">
+    <value>Fakturá zdá sa byť nedostupná. Prosím, opakujte operáciu neskôr.</value>
+  </data>
+  <data name="PaymentInvalidErrorMessage" xml:space="preserve">
+    <value>Platba nebola úspešná. Prosím, opakujte operáciu neskôr.</value>
+  </data>
+  <data name="PaymentNotAllowedErrorMessage" xml:space="preserve">
+    <value>Platba nie je povolená. Prosím, opakujte operáciu neskôr.</value>
+  </data>
+  <data name="RegistrationPurchaseBillingErrorMessage" xml:space="preserve">
+    <value>Predplatné bolo zaplatené, ale nepodarilo sa ho zaregistrovať. Prosím, kontaktujte nás.</value>
+  </data>
+  <data name="InAppBillingIsNotSupportedErrorMessage" xml:space="preserve">
+    <value>PLatobná metóda nie je podporovaná. Prosím, najprv ju nastavte.</value>
+  </data>
+  <data name="PurchaseProcessedIncorrectlyErrorMessage" xml:space="preserve">
+    <value>Platba bola nesprávne spracovaná. Prosím, kontaktujte nás.</value>
+  </data>
+  <data name="PurchaseWasNotProcessedErrorMessage" xml:space="preserve">
+    <value>Platba nebola vykonaná. Prosím, opakujte operáciu nesrkôr.</value>
+  </data>
 </root>

@@ -132,6 +132,7 @@
             <converters:NullToBoolConverter x:Key="NullToBoolConverter" />
             <converters:NullToTrueBoolConverter x:Key="NullToTrueBoolConverter" />
             <converters:BoolToBadgeIconVisibilityConverter x:Key="BoolToBadgeIconVisibilityConverter" />
+            <converters:KeyToLocalizedTextConverter x:Key="KeyToLocalizedTextConverter" />
 
             <!--  Styles  -->
             <Style TargetType="Editor">
