@@ -4,18 +4,15 @@ namespace RewriteMe.Domain.Localization
 {
     public class LanguageInfo
     {
-        public LanguageInfo(string title, string culture)
+        public LanguageInfo(string key, string culture)
         {
-            Title = title;
+            Key = key;
             Culture = culture;
-            FullName = string.Format(CultureInfo.InvariantCulture, "{0} ({1})", Title, Culture);
         }
 
-        public string Title { get; }
+        public string Key { get; }
 
         public string Culture { get; }
-
-        public string FullName { get; }
 
         public CultureInfo GetCultureInfo()
         {

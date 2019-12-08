@@ -13,7 +13,7 @@
             <controls:DrillDownButton Command="{Binding NavigateToLanguageCommand}"
                                       ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}">
-                <Label Style="{StaticResource DrillDownItemLabelStyle}" Text="{Binding SelectedLanguage.Title}" />
+                <Label Style="{StaticResource DrillDownItemLabelStyle}" Text="{Binding SelectedLanguage.Key, Converter={StaticResource KeyToLocalizedTextConverter}}" />
             </controls:DrillDownButton>
             <controls:Divider />
 
