@@ -32,7 +32,7 @@ namespace RewriteMe.Business.Configuration
 
         public string AppCenterKeys { get; } = $"ios={OsxAppCenterKey};android={AndroidAppCenterKey}";
 
-        public string SyncfusionKey { get; } = "MTc1MDQwQDMxMzcyZTMzMmUzMEViNUEzTHRzWGpMR2IvTzRBUnZ2RkFXaUJENkxYeWVnUmFsUnI2TlVFcnc9";
+        public string SyncfusionKey { get; } = "MTg1MDkxQDMxMzcyZTM0MmUzMEhmMEg5dXVHWjUvdXE2cDhIZ2lyMXZ6N3RkTVVmbHpJWEkzaS9ZbmtaaFk9";
 
         public string SupportMailAddress => "support@voicipher.com";
 
