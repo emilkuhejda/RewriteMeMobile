@@ -14,6 +14,7 @@ namespace RewriteMe.Business.Services
         private readonly IFileItemRepository _fileItemRepository;
         private readonly IDeletedFileItemRepository _deletedFileItemRepository;
         private readonly IInformationMessageRepository _informationMessageRepository;
+        private readonly IUploadedSourceRepository _uploadedSourceRepository;
 
         public CleanUpService(
             IInternalValueService internalValueService,
@@ -21,7 +22,8 @@ namespace RewriteMe.Business.Services
             IUserSessionRepository userSessionRepository,
             IFileItemRepository fileItemRepository,
             IDeletedFileItemRepository deletedFileItemRepository,
-            IInformationMessageRepository informationMessageRepository)
+            IInformationMessageRepository informationMessageRepository,
+            IUploadedSourceRepository uploadedSourceRepository)
         {
             _internalValueService = internalValueService;
             _applicationSettings = applicationSettings;
@@ -29,6 +31,7 @@ namespace RewriteMe.Business.Services
             _fileItemRepository = fileItemRepository;
             _deletedFileItemRepository = deletedFileItemRepository;
             _informationMessageRepository = informationMessageRepository;
+            _uploadedSourceRepository = uploadedSourceRepository;
         }
 
         public async Task CleanUp()
@@ -45,6 +48,7 @@ namespace RewriteMe.Business.Services
             await _deletedFileItemRepository.ClearAsync().ConfigureAwait(false);
             await _userSessionRepository.ClearAsync().ConfigureAwait(false);
             await _informationMessageRepository.ClearAsync().ConfigureAwait(false);
+            await _uploadedSourceRepository.ClearAsync().ConfigureAwait(false);
         }
     }
 }

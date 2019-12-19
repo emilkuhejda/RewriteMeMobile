@@ -35,6 +35,7 @@ namespace RewriteMe.DataAccess
                 typeof(RecordedItemEntity),
                 typeof(TranscribeItemEntity),
                 typeof(TranscriptAudioSourceEntity),
+                typeof(UploadedSourceEntity),
                 typeof(UserSessionEntity)
             };
 
