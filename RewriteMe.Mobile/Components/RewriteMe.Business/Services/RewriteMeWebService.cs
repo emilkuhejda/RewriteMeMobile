@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Extensions;
 using RewriteMe.Domain.Http;
@@ -115,13 +115,7 @@ namespace RewriteMe.Business.Services
         public async Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client =>
-                {
-                    using (var stream = new MemoryStream(mediaFile.Source))
-                    {
-                        return client.UploadFileItemAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, DateTime.Now, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, stream, cancellationToken);
-                    }
-                }, GetAuthHeaders())
+                () => MakeServiceCall(client => client.UploadFileItemAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, DateTime.Now, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, mediaFile.Source, cancellationToken), GetAuthHeaders())
                 ).ConfigureAwait(false);
         }
 
