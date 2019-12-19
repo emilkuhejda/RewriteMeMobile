@@ -223,10 +223,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter">
-      <Version>2.6.2</Version>
+      <Version>2.6.4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Push">
-      <Version>2.6.2</Version>
+      <Version>2.6.4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.CodeAnalysis.FxCopAnalyzers">
       <Version>2.9.8</Version>
@@ -245,22 +245,22 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>17.3.0.29</Version>
+      <Version>17.4.0.39</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>17.3.0.29</Version>
+      <Version>17.4.0.39</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView">
-      <Version>17.3.0.29</Version>
+      <Version>17.4.0.39</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
-      <Version>17.3.0.29</Version>
+      <Version>17.4.0.39</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfProgressBar">
-      <Version>17.3.0.29</Version>
+      <Version>17.4.0.39</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu">
-      <Version>17.3.0.29</Version>
+      <Version>17.4.0.39</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugin.LatestVersion">
       <Version>1.1.2</Version>
@@ -274,7 +274,7 @@
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms">
       <Version>2.4.11.982</Version>
     </PackageReference>
-    <PackageReference Include="Xamarin.Forms" Version="4.3.0.991211" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991265" />
     <PackageReference Include="Microsoft.Identity.Client">
       <Version>4.7.1</Version>
     </PackageReference>
