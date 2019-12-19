@@ -4,7 +4,6 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Configuration;
-using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
 using RewriteMe.Domain.WebApi;
 
@@ -13,22 +12,18 @@ namespace RewriteMe.Business.Services
     public abstract class WebServiceBase
     {
         protected WebServiceBase(
-            IUserSessionService userSessionService,
             IWebServiceErrorHandler webServiceErrorHandler,
             IApplicationSettings applicationSettings)
         {
-            UserSessionService = userSessionService;
             WebServiceErrorHandler = webServiceErrorHandler;
             ApplicationSettings = applicationSettings;
         }
-
-        protected IUserSessionService UserSessionService { get; }
 
         protected IWebServiceErrorHandler WebServiceErrorHandler { get; }
 
         protected IApplicationSettings ApplicationSettings { get; }
 
-        protected async Task<T> MakeServiceCall<T>(Func<RewriteMeClient, Task<T>> webServiceCall, int timeoutSeconds = 600)
+        protected async Task<T> MakeServiceCall<T>(Func<RewriteMeClient, Task<T>> webServiceCall, CustomHeadersDictionary customHeaders = null, int timeoutSeconds = 600)
         {
             var httpClientHandler = new HttpClientHandler
             {
@@ -41,7 +36,11 @@ namespace RewriteMe.Business.Services
             try
             {
                 var rewriteMeClient = new RewriteMeClient(ApplicationSettings.WebApiUrl, httpClient);
-                rewriteMeClient.AddCustomHeaders(GetAuthHeaders());
+
+                if (customHeaders != null)
+                {
+                    rewriteMeClient.AddCustomHeaders(customHeaders);
+                }
 
                 return await webServiceCall(rewriteMeClient).ConfigureAwait(false);
             }
@@ -50,12 +49,6 @@ namespace RewriteMe.Business.Services
                 httpClientHandler.Dispose();
                 httpClient.Dispose();
             }
-        }
-
-        private CustomHeadersDictionary GetAuthHeaders()
-        {
-            var accessToken = UserSessionService.GetToken();
-            return new CustomHeadersDictionary().AddBearerToken(accessToken);
         }
     }
 }

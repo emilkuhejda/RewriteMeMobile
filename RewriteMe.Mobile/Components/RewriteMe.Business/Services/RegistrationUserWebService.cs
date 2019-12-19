@@ -10,10 +10,9 @@ namespace RewriteMe.Business.Services
     public class RegistrationUserWebService : WebServiceBase, IRegistrationUserWebService
     {
         public RegistrationUserWebService(
-            IUserSessionService userSessionService,
             IWebServiceErrorHandler webServiceErrorHandler,
             IApplicationSettings applicationSettings)
-            : base(userSessionService, webServiceErrorHandler, applicationSettings)
+            : base(webServiceErrorHandler, applicationSettings)
         {
         }
 
@@ -21,7 +20,7 @@ namespace RewriteMe.Business.Services
         {
             var customHeaders = new CustomHeadersDictionary().AddBearerToken(b2CAccessToken);
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.RegisterUserAsync(ApplicationSettings.WebApiVersion, registrationUserModel))
+                () => MakeServiceCall(client => client.RegisterUserAsync(ApplicationSettings.WebApiVersion, registrationUserModel), customHeaders)
                 ).ConfigureAwait(false);
         }
 
@@ -29,7 +28,7 @@ namespace RewriteMe.Business.Services
         {
             var customHeaders = new CustomHeadersDictionary().AddBearerToken(accessToken);
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.UpdateUserAsync(ApplicationSettings.WebApiVersion, updateUserModel))
+                () => MakeServiceCall(client => client.UpdateUserAsync(ApplicationSettings.WebApiVersion, updateUserModel), customHeaders)
                 ).ConfigureAwait(false);
         }
     }
