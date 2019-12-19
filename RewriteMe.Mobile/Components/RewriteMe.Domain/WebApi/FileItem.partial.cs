@@ -2,7 +2,7 @@
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Transcription;
 
-namespace RewriteMe.Domain.WebApi.Models
+namespace RewriteMe.Domain.WebApi
 {
     public partial class FileItem
     {

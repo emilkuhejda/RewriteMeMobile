@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 using RewriteMe.DataAccess.Entities;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.DataAccess.DataAdapters
 {
@@ -27,7 +27,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = informationMessage.Id,
                 IsUserSpecific = informationMessage.IsUserSpecific,
                 WasOpened = informationMessage.WasOpened,
-                DateUpdatedUtc = informationMessage.DateUpdatedUtc,
+                DateUpdatedUtc = informationMessage.DateUpdatedUtc.GetValueOrDefault(),
                 DatePublishedUtc = informationMessage.DatePublishedUtc,
                 IsPendingSynchronization = informationMessage.IsPendingSynchronization,
                 LanguageVersions = informationMessage.LanguageVersions?.Select(x => x.ToLanguageVersionEntity()).ToArray()

@@ -1,4 +1,4 @@
-﻿namespace RewriteMe.Domain.WebApi.Models
+﻿namespace RewriteMe.Domain.WebApi
 {
     public partial class InformationMessage
     {

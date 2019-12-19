@@ -7,7 +7,7 @@ using RewriteMe.DataAccess.Entities;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Transcription;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.DataAccess.Repositories
 {

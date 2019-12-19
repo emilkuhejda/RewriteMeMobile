@@ -14,7 +14,7 @@ using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Transcription;
@@ -410,7 +410,11 @@ namespace RewriteMe.Mobile.ViewModels
 
                 await _userSubscriptionService.SubtractTimeAsync(audioRecordTotalTime).ConfigureAwait(false);
 
-                var models = _recognizedAudioFiles.Select(x => new SpeechResultModel(x.RecordedAudioFile.Id, x.RecordedAudioFile.TotalTime.ToString())).ToList();
+                var models = _recognizedAudioFiles.Select(x => new SpeechResultModel
+                {
+                    Id = x.RecordedAudioFile.Id,
+                    TotalTime = x.RecordedAudioFile.TotalTime.ToString()
+                }).ToList();
                 var httpRequestResult = await _rewriteMeWebService.UpdateSpeechResultsAsync(models).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
                 {

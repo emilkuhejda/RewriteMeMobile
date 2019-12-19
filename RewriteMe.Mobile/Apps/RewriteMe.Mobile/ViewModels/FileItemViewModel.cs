@@ -3,7 +3,7 @@ using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
 using RewriteMe.Domain.Transcription;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;

@@ -1,5 +1,5 @@
 ﻿using RewriteMe.Domain.Configuration;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.Domain.Extensions
 {

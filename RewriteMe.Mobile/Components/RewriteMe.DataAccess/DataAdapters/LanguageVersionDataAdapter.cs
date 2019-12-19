@@ -1,5 +1,5 @@
 ﻿using RewriteMe.DataAccess.Entities;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.DataAccess.DataAdapters
 {
