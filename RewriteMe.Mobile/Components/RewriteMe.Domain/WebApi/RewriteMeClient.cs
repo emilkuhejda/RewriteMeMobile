@@ -1422,7 +1422,7 @@ namespace RewriteMe.Domain.WebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Ok> CreateSpeechResultAsync(string version, System.IO.Stream body)
+        public System.Threading.Tasks.Task<Ok> CreateSpeechResultAsync(string version, CreateSpeechResultModel body)
         {
             return CreateSpeechResultAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -1430,7 +1430,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Ok> CreateSpeechResultAsync(string version, System.IO.Stream body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Ok> CreateSpeechResultAsync(string version, CreateSpeechResultModel body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -1444,8 +1444,8 @@ namespace RewriteMe.Domain.WebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var content_ = new System.Net.Http.StreamContent(body);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("multipart/form-data");
+                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -1948,7 +1948,7 @@ namespace RewriteMe.Domain.WebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Ok> UpdateUserTranscriptAsync(string version, System.IO.Stream body)
+        public System.Threading.Tasks.Task<Ok> UpdateUserTranscriptAsync(string version, UpdateTranscribeItemModel body)
         {
             return UpdateUserTranscriptAsync(version, body, System.Threading.CancellationToken.None);
         }
@@ -1956,7 +1956,7 @@ namespace RewriteMe.Domain.WebApi
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Ok> UpdateUserTranscriptAsync(string version, System.IO.Stream body, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Ok> UpdateUserTranscriptAsync(string version, UpdateTranscribeItemModel body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -1970,8 +1970,8 @@ namespace RewriteMe.Domain.WebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var content_ = new System.Net.Http.StreamContent(body);
-                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("multipart/form-data");
+                    var content_ = new System.Net.Http.StringContent(Newtonsoft.Json.JsonConvert.SerializeObject(body, _settings.Value));
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("application/json");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("PUT");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
@@ -2992,6 +2992,21 @@ namespace RewriteMe.Domain.WebApi
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.28.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class CreateSpeechResultModel
+    {
+        [Newtonsoft.Json.JsonProperty("speechResultId", Required = Newtonsoft.Json.Required.Always)]
+        public System.Guid SpeechResultId { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("recognizedAudioSampleId", Required = Newtonsoft.Json.Required.Always)]
+        public System.Guid RecognizedAudioSampleId { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("displayText", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public string DisplayText { get; set; }
+
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.28.0 (Newtonsoft.Json v12.0.0.0)")]
     public partial class SpeechResultModel
     {
         [Newtonsoft.Json.JsonProperty("id", Required = Newtonsoft.Json.Required.Always)]
@@ -3053,6 +3068,21 @@ namespace RewriteMe.Domain.WebApi
 
         [Newtonsoft.Json.JsonProperty("dateUpdatedUtc", Required = Newtonsoft.Json.Required.Always)]
         public System.DateTime DateUpdatedUtc { get; set; }
+
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.0.28.0 (Newtonsoft.Json v12.0.0.0)")]
+    public partial class UpdateTranscribeItemModel
+    {
+        [Newtonsoft.Json.JsonProperty("transcribeItemId", Required = Newtonsoft.Json.Required.Always)]
+        public System.Guid TranscribeItemId { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("applicationId", Required = Newtonsoft.Json.Required.Always)]
+        public System.Guid ApplicationId { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("transcript", Required = Newtonsoft.Json.Required.AllowNull)]
+        public string Transcript { get; set; }
 
 
     }

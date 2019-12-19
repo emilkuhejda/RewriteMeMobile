@@ -93,8 +93,9 @@ namespace RewriteMe.Business.Services
 
         public async Task<HttpRequestResult<TimeSpanWrapper>> GetUserSubscriptionRemainingTimeAsync()
         {
-            throw new NotImplementedException();
-            //return await WebServiceErrorHandler.HandleResponseAsync(client => client.GetUserSubscriptionRemainingTimeAsync(ApplicationSettings.WebApiVersion, customHeaders)).ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(
+                () => MakeServiceCall(client => client.GetSubscriptionRemainingTimeAsync(ApplicationSettings.WebApiVersion), GetAuthHeaders())
+                ).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<TimeSpanWrapper>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase)
@@ -140,14 +141,30 @@ namespace RewriteMe.Business.Services
 
         public async Task<HttpRequestResult<Ok>> UpdateUserTranscriptAsync(Guid transcribeItemId, string transcript)
         {
-            throw new NotImplementedException();
-            //return await WebServiceErrorHandler.HandleResponseAsync(client => client.UpdateUserTranscriptAsync(ApplicationSettings.WebApiVersion, transcribeItemId, transcript, ApplicationSettings.ApplicationId, customHeaders)).ConfigureAwait(false);
+            var model = new UpdateTranscribeItemModel
+            {
+                ApplicationId = ApplicationSettings.ApplicationId,
+                TranscribeItemId = transcribeItemId,
+                Transcript = transcript
+            };
+
+            return await WebServiceErrorHandler.HandleResponseAsync(
+                () => MakeServiceCall(client => client.UpdateUserTranscriptAsync(ApplicationSettings.WebApiVersion, model), GetAuthHeaders())
+                ).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<Ok>> CreateSpeechResultAsync(Guid speechResultId, Guid recognizedAudioSampleId, string displayText)
         {
-            throw new NotImplementedException();
-            //return await WebServiceErrorHandler.HandleResponseAsync(client => client.CreateSpeechResultAsync(ApplicationSettings.WebApiVersion, speechResultId, recognizedAudioSampleId, displayText, customHeaders)).ConfigureAwait(false);
+            var model = new CreateSpeechResultModel
+            {
+                SpeechResultId = speechResultId,
+                RecognizedAudioSampleId = recognizedAudioSampleId,
+                DisplayText = displayText
+            };
+
+            return await WebServiceErrorHandler.HandleResponseAsync(
+                () => MakeServiceCall(client => client.CreateSpeechResultAsync(ApplicationSettings.WebApiVersion, model), GetAuthHeaders())
+                ).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<TimeSpanWrapper>> UpdateSpeechResultsAsync(IList<SpeechResultModel> speechResults)
