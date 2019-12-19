@@ -95,8 +95,10 @@ namespace RewriteMe.Mobile.Droid
         {
             MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem), StartBackgroundService<TranscribeItemBackgroundService>);
             MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer), StartBackgroundService<SynchronizerBackgroundService>);
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.UploadFileItem), StartBackgroundService<FileItemUploaderBackgroundService>);
             MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem), StopBackgroundService<TranscribeItemBackgroundService>);
             MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer), StopBackgroundService<SynchronizerBackgroundService>);
+            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.UploadFileItem), StopBackgroundService<FileItemUploaderBackgroundService>);
         }
 
         private void StartBackgroundService<T>(StartBackgroundServiceMessage message)
