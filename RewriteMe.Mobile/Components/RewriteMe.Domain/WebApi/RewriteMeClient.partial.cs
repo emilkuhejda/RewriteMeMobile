@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Net.Http;
-using System.Text;
 
 namespace RewriteMe.Domain.WebApi
 {
@@ -16,22 +15,7 @@ namespace RewriteMe.Domain.WebApi
 #pragma warning disable CA1801
         partial void PrepareRequest(HttpClient client, HttpRequestMessage request, string url)
         {
-            if (CustomHeaders != null)
-            {
-                foreach (var header in CustomHeaders)
-                {
-                    if (request.Headers.Contains(header.Key))
-                    {
-                        request.Headers.Remove(header.Key);
-                    }
-                    request.Headers.TryAddWithoutValidation(header.Key, header.Value);
-                }
-            }
-        }
-
-        partial void PrepareRequest(HttpClient client, HttpRequestMessage request, StringBuilder urlBuilder)
-        {
-            if (request.Content.Headers.ContentType.MediaType == "multipart/form-data")
+            if (request.Content != null && request.Content.Headers.ContentType.MediaType == "multipart/form-data")
             {
                 var boundary = System.Guid.NewGuid().ToString();
                 var content = new MultipartFormDataContent(boundary);
@@ -42,6 +26,18 @@ namespace RewriteMe.Domain.WebApi
                 content.Add(contentFile, "file", "file");
 
                 request.Content = content;
+            }
+
+            if (CustomHeaders != null)
+            {
+                foreach (var header in CustomHeaders)
+                {
+                    if (request.Headers.Contains(header.Key))
+                    {
+                        request.Headers.Remove(header.Key);
+                    }
+                    request.Headers.TryAddWithoutValidation(header.Key, header.Value);
+                }
             }
         }
 #pragma warning restore CA1801
