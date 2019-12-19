@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.Business.Services
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using Plugin.InAppBilling.Abstractions;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Extensions

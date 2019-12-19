@@ -13,3 +13,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Design", "CA1030:Use events where appropriate", Justification = "By design", Scope = "member", Target = "~M:RewriteMe.Business.Extensions.TaskExtensions.FireAndForget(System.Threading.Tasks.Task)")]
 [assembly: SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "It is singleton", Scope = "type", Target = "~T:RewriteMe.Business.Managers.TranscribeItemManager")]
 [assembly: SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "It is singleton", Scope = "type", Target = "~T:RewriteMe.Business.Services.SynchronizerService")]
+[assembly: SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Business.Configuration.ApplicationSettings.WebApiUrl")]

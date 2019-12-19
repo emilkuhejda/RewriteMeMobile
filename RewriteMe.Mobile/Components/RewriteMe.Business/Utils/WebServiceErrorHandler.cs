@@ -9,6 +9,7 @@ using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
 
@@ -43,21 +44,13 @@ namespace RewriteMe.Business.Utils
                 _logger.Info($"Web service request for type '{targetTypeName}' finished.");
                 return new HttpRequestResult<T>(HttpRequestState.Success, (int)HttpStatusCode.OK, payload);
             }
-            catch (UnauthorizedCallException exception)
-            {
-                _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '401'.");
-                _logger.Error(ExceptionFormatter.FormatException(exception));
-                throw;
-            }
-            catch (InternalServerErrorException exception)
-            {
-                _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '500'.");
-                _logger.Error(ExceptionFormatter.FormatException(exception));
-                return new HttpRequestResult<T>(HttpRequestState.Error, (int)HttpStatusCode.InternalServerError);
-            }
-            catch (ProblemDetailsException exception)
+            catch (ApiException exception)
             {
                 _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '{exception.StatusCode}'.");
+                _logger.Error(ExceptionFormatter.FormatException(exception));
+                if (exception.StatusCode == (int)HttpStatusCode.Unauthorized)
+                    throw new UnauthorizedCallException();
+
                 return new HttpRequestResult<T>(HttpRequestState.Error, exception.StatusCode);
             }
             catch (HttpRequestException exception)

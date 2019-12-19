@@ -5,7 +5,7 @@ using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Domain.Extensions;
 using RewriteMe.Domain.Localization;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;

@@ -16,7 +16,7 @@ using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Messages;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
 using Xamarin.Forms;

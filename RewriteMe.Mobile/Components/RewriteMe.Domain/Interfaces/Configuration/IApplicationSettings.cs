@@ -7,7 +7,7 @@ namespace RewriteMe.Domain.Interfaces.Configuration
     {
         Guid ApplicationId { get; }
 
-        Uri WebApiUri { get; }
+        string WebApiUrl { get; }
 
         Uri PrivacyPolicyUri { get; }
 
