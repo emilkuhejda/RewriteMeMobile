@@ -4,7 +4,7 @@ using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Extensions;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
 using Xamarin.Forms;

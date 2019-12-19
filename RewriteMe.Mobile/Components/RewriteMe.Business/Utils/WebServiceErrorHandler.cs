@@ -7,8 +7,10 @@ using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
+using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
 
@@ -16,18 +18,26 @@ namespace RewriteMe.Business.Utils
 {
     public class WebServiceErrorHandler : IWebServiceErrorHandler
     {
+        private static TimeSpan Timeout { get; } = TimeSpan.FromMinutes(10);
+
+        private readonly IUserSessionService _userSessionService;
+        private readonly IApplicationSettings _applicationSettings;
         private readonly IConnectivityService _connectivityService;
         private readonly ILogger _logger;
 
         public WebServiceErrorHandler(
+            IUserSessionService userSessionService,
+            IApplicationSettings applicationSettings,
             IConnectivityService connectivityService,
             ILoggerFactory loggerFactory)
         {
+            _userSessionService = userSessionService;
+            _applicationSettings = applicationSettings;
             _connectivityService = connectivityService;
             _logger = loggerFactory.CreateLogger(typeof(IWebServiceErrorHandler));
         }
 
-        public async Task<HttpRequestResult<T>> HandleResponseAsync<T>(Func<Task<T>> webServiceCall) where T : class
+        public async Task<HttpRequestResult<T>> HandleResponseAsync<T>(Func<RewriteMeClient, Task<T>> webServiceCall) where T : class
         {
             if (webServiceCall == null)
                 throw new ArgumentNullException(nameof(webServiceCall));
@@ -35,29 +45,31 @@ namespace RewriteMe.Business.Utils
             if (!_connectivityService.IsConnected)
                 return new HttpRequestResult<T>(HttpRequestState.Offline);
 
+            var httpClientHandler = new HttpClientHandler();
+            httpClientHandler.AutomaticDecompression = DecompressionMethods.Deflate | DecompressionMethods.GZip;
+            httpClientHandler.ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true;
+
+            var httpClient = new HttpClient(httpClientHandler);
+            httpClient.Timeout = Timeout;
+
             var targetTypeName = typeof(T).GetFriendlyName();
             try
             {
+                var rewriteMeClient = new RewriteMeClient(_applicationSettings.WebApiUrl, httpClient);
+                rewriteMeClient.AddCustomHeaders(GetAuthHeaders());
+
                 _logger.Info($"Web service request for type '{targetTypeName}' started.");
-                var payload = await webServiceCall().ConfigureAwait(false);
+                var payload = await webServiceCall(rewriteMeClient).ConfigureAwait(false);
                 _logger.Info($"Web service request for type '{targetTypeName}' finished.");
                 return new HttpRequestResult<T>(HttpRequestState.Success, (int)HttpStatusCode.OK, payload);
             }
-            catch (UnauthorizedCallException exception)
-            {
-                _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '401'.");
-                _logger.Error(ExceptionFormatter.FormatException(exception));
-                throw;
-            }
-            catch (InternalServerErrorException exception)
-            {
-                _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '500'.");
-                _logger.Error(ExceptionFormatter.FormatException(exception));
-                return new HttpRequestResult<T>(HttpRequestState.Error, (int)HttpStatusCode.InternalServerError);
-            }
-            catch (ProblemDetailsException exception)
+            catch (ApiException exception)
             {
                 _logger.Warning($"Web service request for type '{targetTypeName}' finished with error status code: '{exception.StatusCode}'.");
+                _logger.Error(ExceptionFormatter.FormatException(exception));
+                if (exception.StatusCode == (int)HttpStatusCode.Unauthorized)
+                    throw new UnauthorizedCallException();
+
                 return new HttpRequestResult<T>(HttpRequestState.Error, exception.StatusCode);
             }
             catch (HttpRequestException exception)
@@ -95,6 +107,17 @@ namespace RewriteMe.Business.Utils
 
                 return new HttpRequestResult<T>(HttpRequestState.Canceled);
             }
+            finally
+            {
+                httpClientHandler.Dispose();
+                httpClient.Dispose();
+            }
+        }
+
+        private CustomHeadersDictionary GetAuthHeaders()
+        {
+            var accessToken = _userSessionService.GetToken();
+            return new CustomHeadersDictionary().AddBearerToken(accessToken);
         }
     }
 }

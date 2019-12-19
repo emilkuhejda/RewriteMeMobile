@@ -8,7 +8,7 @@ using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Resources.Localization;

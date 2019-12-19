@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Transcription;
-using RewriteMe.Domain.WebApi.Models;
+using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.Domain.Interfaces.Services
 {
