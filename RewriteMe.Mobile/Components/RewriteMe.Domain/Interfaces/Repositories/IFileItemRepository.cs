@@ -9,9 +9,9 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 {
     public interface IFileItemRepository
     {
-        Task<IEnumerable<FileItem>> GetAllAsync();
-
         Task<FileItem> GetAsync(Guid fileItemId);
+
+        Task<IEnumerable<FileItem>> GetAllAsync();
 
         Task<bool> AnyWaitingForSynchronizationAsync();
 
@@ -27,7 +27,7 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus);
 
-        Task SetUploadErrorCodeAsync(Guid fileItemId, int errorCode);
+        Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode);
 
         Task ClearAsync();
     }

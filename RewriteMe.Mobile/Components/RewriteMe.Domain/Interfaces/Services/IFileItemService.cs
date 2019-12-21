@@ -14,6 +14,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<bool> AnyWaitingForSynchronizationAsync();
 
+        Task<FileItem> GetAsync(Guid fileItemId);
+
         Task<IEnumerable<FileItem>> GetAllAsync();
 
         Task DeleteAsync(FileItem fileItem);
@@ -26,6 +28,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus);
 
-        Task SetUploadErrorCodeAsync(Guid fileItemId, int errorCode);
+        Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode);
     }
 }

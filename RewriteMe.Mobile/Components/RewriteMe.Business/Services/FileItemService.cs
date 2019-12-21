@@ -69,6 +69,11 @@ namespace RewriteMe.Business.Services
             return await _fileItemRepository.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
         }
 
+        public async Task<FileItem> GetAsync(Guid fileItemId)
+        {
+            return await _fileItemRepository.GetAsync(fileItemId).ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<FileItem>> GetAllAsync()
         {
             return await _fileItemRepository.GetAllAsync().ConfigureAwait(false);
@@ -143,7 +148,7 @@ namespace RewriteMe.Business.Services
             await _fileItemRepository.UpdateUploadStatusAsync(fileItemId, uploadStatus).ConfigureAwait(false);
         }
 
-        public async Task SetUploadErrorCodeAsync(Guid fileItemId, int errorCode)
+        public async Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode)
         {
             await _fileItemRepository.SetUploadErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
         }

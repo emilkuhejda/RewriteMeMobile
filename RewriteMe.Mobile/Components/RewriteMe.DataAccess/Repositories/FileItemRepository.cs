@@ -100,7 +100,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
-        public async Task SetUploadErrorCodeAsync(Guid fileItemId, int errorCode)
+        public async Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode)
         {
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
             if (entity == null)
