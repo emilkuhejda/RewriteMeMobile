@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using RewriteMe.DataAccess.DataAdapters;
 using RewriteMe.DataAccess.Entities;
 using RewriteMe.DataAccess.Providers;
@@ -16,9 +17,24 @@ namespace RewriteMe.DataAccess.Repositories
             _contextProvider = contextProvider;
         }
 
+        public async Task<UploadedSource> GetFirstAsync()
+        {
+            var entity = await _contextProvider.Context.UploadedSources
+                .OrderBy(x => x.DateCreated)
+                .FirstOrDefaultAsync()
+                .ConfigureAwait(false);
+
+            return entity?.ToUploadedSource();
+        }
+
         public async Task AddAsync(UploadedSource uploadedSource)
         {
             await _contextProvider.Context.InsertAsync(uploadedSource.ToUploadedSourceEntity()).ConfigureAwait(false);
+        }
+
+        public async Task DeleteAsync(Guid uploadedSourceId)
+        {
+            await _contextProvider.Context.DeleteAsync<UploadedSourceEntity>(uploadedSourceId).ConfigureAwait(false);
         }
 
         public async Task ClearAsync()
