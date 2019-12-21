@@ -4,9 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Exceptions;
-using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.Upload;
 
 namespace RewriteMe.Business.Managers
@@ -47,9 +47,9 @@ namespace RewriteMe.Business.Managers
             IsRunning = false;
         }
 
-        private async Task UploadInternalAsync(CancellationToken token)
+        private async Task UploadInternalAsync(CancellationToken cancellationToken)
         {
-            if (token.IsCancellationRequested)
+            if (cancellationToken.IsCancellationRequested)
                 return;
 
             var fileToUpload = await _uploadedSourceService.GetFirstAsync().ConfigureAwait(false);
@@ -58,67 +58,90 @@ namespace RewriteMe.Business.Managers
 
             try
             {
-                token.ThrowIfCancellationRequested();
-                await UpdateUploadStatusAsync(fileToUpload.FileItemId, UploadStatus.InProgress, null).ConfigureAwait(false);
-                var httpRequestResult = await _rewriteMeWebService.UploadSourceFileAsync(fileToUpload.FileItemId, fileToUpload.Source, token).ConfigureAwait(false);
-                if (httpRequestResult.State == HttpRequestState.Success)
-                {
-                    await UpdateUploadStatusAsync(fileToUpload.FileItemId, UploadStatus.Completed, null).ConfigureAwait(false);
+                await UploadAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
 
-                    if (fileToUpload.IsTranscript)
-                    {
-                        token.ThrowIfCancellationRequested();
-                        await TranscribeAsync(fileToUpload.FileItemId).ConfigureAwait(false);
-                    }
-                }
-                else
+                if (fileToUpload.IsTranscript)
                 {
-                    await UpdateUploadStatusAsync(fileToUpload.FileItemId, UploadStatus.Error, httpRequestResult.StatusCode).ConfigureAwait(false);
+                    await TranscribeAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
                 }
             }
             catch (OperationCanceledException)
             {
-                await UpdateUploadStatusAsync(fileToUpload.FileItemId, UploadStatus.Error, (int)HttpStatusCode.GatewayTimeout).ConfigureAwait(false);
-            }
-            catch (UnauthorizedCallException)
-            {
-                await UpdateUploadStatusAsync(fileToUpload.FileItemId, UploadStatus.Error, (int)HttpStatusCode.Unauthorized).ConfigureAwait(false);
-                CancellationTokenSource.Cancel();
-
-                OnUnauthorizedCallOccurred();
             }
             finally
             {
                 await _uploadedSourceService.DeleteAsync(fileToUpload.Id).ConfigureAwait(false);
             }
 
-            await UploadInternalAsync(token).ConfigureAwait(false);
+            await UploadInternalAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task Upload(UploadedSource uploadedSource)
+        private async Task UploadAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
         {
-        }
+            var mediaFile = new MediaFile
+            {
+                Name = uploadedSource.Name,
+                Language = uploadedSource.Language,
+                FileName = uploadedSource.FileName,
+                Source = uploadedSource.Source
+            };
 
-        private async Task TranscribeAsync(Guid fileItemId)
-        {
             try
             {
-                await _fileItemService.SetTranscribeErrorCodeAsync(fileItemId, null).ConfigureAwait(false);
+                cancellationToken.ThrowIfCancellationRequested();
 
-                var fileItem = await _fileItemService.GetAsync(fileItemId).ConfigureAwait(false);
-                await _fileItemService.TranscribeAsync(fileItem.Id, fileItem.Language).ConfigureAwait(false);
+                await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.InProgress, null).ConfigureAwait(false);
+                await _fileItemService.UploadAsync(mediaFile, cancellationToken).ConfigureAwait(false);
+                await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Completed, null).ConfigureAwait(false);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, (int)HttpStatusCode.Unauthorized).ConfigureAwait(false);
+                CancellationTokenSource.Cancel();
+
+                OnUnauthorizedCallOccurred();
             }
             catch (ErrorRequestException ex)
             {
-                await _fileItemService.SetTranscribeErrorCodeAsync(fileItemId, ex.StatusCode).ConfigureAwait(false);
+                await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, ex.StatusCode).ConfigureAwait(false);
             }
             catch (NoSubscritionFreeTimeException)
             {
-                await _fileItemService.SetTranscribeErrorCodeAsync(fileItemId, (int)HttpStatusCode.Conflict).ConfigureAwait(false);
+                await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, (int)HttpStatusCode.Conflict).ConfigureAwait(false);
             }
             catch (OfflineRequestException)
             {
-                await _fileItemService.SetTranscribeErrorCodeAsync(fileItemId, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
+                await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
+            }
+        }
+
+        private async Task TranscribeAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
+        {
+            try
+            {
+                cancellationToken.ThrowIfCancellationRequested();
+
+                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, null).ConfigureAwait(false);
+                await _fileItemService.TranscribeAsync(uploadedSource.FileItemId, uploadedSource.Language).ConfigureAwait(false);
+            }
+            catch (ErrorRequestException ex)
+            {
+                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, ex.StatusCode).ConfigureAwait(false);
+            }
+            catch (UnauthorizedAccessException)
+            {
+                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, (int)HttpStatusCode.Unauthorized).ConfigureAwait(false);
+                CancellationTokenSource.Cancel();
+
+                OnUnauthorizedCallOccurred();
+            }
+            catch (NoSubscritionFreeTimeException)
+            {
+                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, (int)HttpStatusCode.Conflict).ConfigureAwait(false);
+            }
+            catch (OfflineRequestException)
+            {
+                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
             }
         }
 
