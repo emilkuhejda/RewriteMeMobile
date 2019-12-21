@@ -152,5 +152,10 @@ namespace RewriteMe.Business.Services
         {
             await _fileItemRepository.SetUploadErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
         }
+
+        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode)
+        {
+            await _fileItemRepository.SetTranscribeErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
+        }
     }
 }

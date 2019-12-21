@@ -18,6 +18,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 TranscribedTimeTicks = entity.TranscribedTime.Ticks,
                 UploadStatus = entity.UploadStatus,
                 UploadErrorCode = entity.UploadErrorCode,
+                TranscribeErrorCode = entity.TranscribeErrorCode,
                 DateCreated = entity.DateCreated,
                 DateProcessedUtc = entity.DateProcessedUtc,
                 DateUpdatedUtc = entity.DateUpdatedUtc
@@ -37,6 +38,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 TranscribedTime = fileItem.TranscribedTime,
                 UploadStatus = fileItem.UploadStatus,
                 UploadErrorCode = fileItem.UploadErrorCode,
+                TranscribeErrorCode = fileItem.TranscribeErrorCode,
                 DateCreated = fileItem.DateCreated,
                 DateProcessedUtc = fileItem.DateProcessedUtc,
                 DateUpdatedUtc = fileItem.DateUpdatedUtc

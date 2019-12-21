@@ -98,18 +98,23 @@ namespace RewriteMe.Business.Managers
         {
             try
             {
+                await _fileItemService.SetTranscribeErrorCodeAsync(fileItemId, null).ConfigureAwait(false);
+
                 var fileItem = await _fileItemService.GetAsync(fileItemId).ConfigureAwait(false);
                 await _fileItemService.TranscribeAsync(fileItem.Id, fileItem.Language).ConfigureAwait(false);
             }
-            catch (ErrorRequestException)
+            catch (ErrorRequestException ex)
             {
+                await _fileItemService.SetTranscribeErrorCodeAsync(fileItemId, ex.StatusCode).ConfigureAwait(false);
             }
             catch (NoSubscritionFreeTimeException)
             {
-
+                await _fileItemService.SetTranscribeErrorCodeAsync(fileItemId, (int)HttpStatusCode.Conflict).ConfigureAwait(false);
             }
             catch (OfflineRequestException)
-            { }
+            {
+                await _fileItemService.SetTranscribeErrorCodeAsync(fileItemId, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
+            }
         }
 
         private async Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus, int? errorCode)

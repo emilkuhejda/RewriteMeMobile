@@ -32,6 +32,8 @@ namespace RewriteMe.DataAccess.Entities
 
         public int? UploadErrorCode { get; set; }
 
+        public int? TranscribeErrorCode { get; set; }
+
         public DateTime DateCreated { get; set; }
 
         public DateTime? DateProcessedUtc { get; set; }

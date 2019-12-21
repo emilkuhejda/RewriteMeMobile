@@ -29,5 +29,7 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus);
 
         Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode);
+
+        Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode);
     }
 }

@@ -16,5 +16,7 @@ namespace RewriteMe.Domain.WebApi
         public UploadStatus UploadStatus { get; set; }
 
         public int? UploadErrorCode { get; set; }
+
+        public int? TranscribeErrorCode { get; set; }
     }
 }

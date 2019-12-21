@@ -29,6 +29,8 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode);
 
+        Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode);
+
         Task ClearAsync();
     }
 }

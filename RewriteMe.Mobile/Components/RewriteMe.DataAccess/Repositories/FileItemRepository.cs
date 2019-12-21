@@ -110,6 +110,16 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
+        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode)
+        {
+            var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
+            if (entity == null)
+                return;
+
+            entity.TranscribeErrorCode = errorCode;
+            await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
+        }
+
         public async Task ClearAsync()
         {
             await _contextProvider.Context.DeleteAllAsync<FileItemEntity>().ConfigureAwait(false);
