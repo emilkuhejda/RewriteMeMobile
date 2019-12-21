@@ -16,6 +16,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 RecognitionStateString = entity.RecognitionState.ToString(),
                 TotalTimeTicks = entity.TotalTime.Ticks,
                 TranscribedTimeTicks = entity.TranscribedTime.Ticks,
+                UploadStatus = entity.UploadStatus,
+                UploadErrorCode = entity.UploadErrorCode,
                 DateCreated = entity.DateCreated,
                 DateProcessedUtc = entity.DateProcessedUtc,
                 DateUpdatedUtc = entity.DateUpdatedUtc
@@ -33,6 +35,8 @@ namespace RewriteMe.DataAccess.DataAdapters
                 RecognitionState = fileItem.RecognitionState,
                 TotalTime = fileItem.TotalTime,
                 TranscribedTime = fileItem.TranscribedTime,
+                UploadStatus = fileItem.UploadStatus,
+                UploadErrorCode = fileItem.UploadErrorCode,
                 DateCreated = fileItem.DateCreated,
                 DateProcessedUtc = fileItem.DateProcessedUtc,
                 DateUpdatedUtc = fileItem.DateUpdatedUtc

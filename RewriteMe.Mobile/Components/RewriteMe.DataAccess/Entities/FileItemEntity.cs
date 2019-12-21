@@ -1,4 +1,5 @@
 ﻿using System;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Transcription;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
@@ -26,6 +27,10 @@ namespace RewriteMe.DataAccess.Entities
         public TimeSpan TotalTime { get; set; }
 
         public TimeSpan TranscribedTime { get; set; }
+
+        public UploadStatus UploadStatus { get; set; }
+
+        public int? UploadErrorCode { get; set; }
 
         public DateTime DateCreated { get; set; }
 

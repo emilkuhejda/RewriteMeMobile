@@ -12,6 +12,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = entity.Id,
                 FileItemId = entity.FileItemId,
                 Source = entity.Source,
+                IsTranscript = entity.IsTranscript,
                 DateCreated = entity.DateCreated
             };
         }
@@ -23,6 +24,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = uploadedSource.Id,
                 FileItemId = uploadedSource.FileItemId,
                 Source = uploadedSource.Source,
+                IsTranscript = uploadedSource.IsTranscript,
                 DateCreated = uploadedSource.DateCreated
             };
         }

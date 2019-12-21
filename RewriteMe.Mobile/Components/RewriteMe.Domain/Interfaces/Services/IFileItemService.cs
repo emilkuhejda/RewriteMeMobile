@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 
@@ -22,5 +23,9 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<bool> CanTranscribeAsync();
 
         Task TranscribeAsync(Guid fileItemId, string language);
+
+        Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus);
+
+        Task SetUploadErrorCodeAsync(Guid fileItemId, int errorCode);
     }
 }

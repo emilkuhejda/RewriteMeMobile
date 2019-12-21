@@ -10,6 +10,8 @@ namespace RewriteMe.Domain.Upload
 
         public byte[] Source { get; set; }
 
+        public bool IsTranscript { get; set; }
+
         public DateTime DateCreated { get; set; }
     }
 }

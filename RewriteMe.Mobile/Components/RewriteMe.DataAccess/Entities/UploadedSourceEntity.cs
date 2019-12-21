@@ -13,6 +13,8 @@ namespace RewriteMe.DataAccess.Entities
 
         public byte[] Source { get; set; }
 
+        public bool IsTranscript { get; set; }
+
         public DateTime DateCreated { get; set; }
     }
 }

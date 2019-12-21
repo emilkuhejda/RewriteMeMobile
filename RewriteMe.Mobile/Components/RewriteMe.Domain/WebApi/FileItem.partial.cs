@@ -1,5 +1,6 @@
 ﻿using System;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Transcription;
 
 namespace RewriteMe.Domain.WebApi
@@ -11,5 +12,9 @@ namespace RewriteMe.Domain.WebApi
         public TimeSpan TotalTime => TimeSpan.FromTicks(TotalTimeTicks);
 
         public TimeSpan TranscribedTime => TimeSpan.FromTicks(TranscribedTimeTicks);
+
+        public UploadStatus UploadStatus { get; set; }
+
+        public int? UploadErrorCode { get; set; }
     }
 }

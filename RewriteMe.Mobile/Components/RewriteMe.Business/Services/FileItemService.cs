@@ -137,5 +137,15 @@ namespace RewriteMe.Business.Services
                 throw new OfflineRequestException();
             }
         }
+
+        public async Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus)
+        {
+            await _fileItemRepository.UpdateUploadStatusAsync(fileItemId, uploadStatus).ConfigureAwait(false);
+        }
+
+        public async Task SetUploadErrorCodeAsync(Guid fileItemId, int errorCode)
+        {
+            await _fileItemRepository.SetUploadErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
+        }
     }
 }
