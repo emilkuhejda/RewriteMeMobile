@@ -7,6 +7,7 @@ using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Upload;
 
 namespace RewriteMe.Business.Managers
 {
@@ -92,6 +93,10 @@ namespace RewriteMe.Business.Managers
             }
 
             await UploadInternalAsync(token).ConfigureAwait(false);
+        }
+
+        private async Task Upload(UploadedSource uploadedSource)
+        {
         }
 
         private async Task TranscribeAsync(Guid fileItemId)

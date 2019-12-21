@@ -11,6 +11,9 @@ namespace RewriteMe.DataAccess.DataAdapters
             {
                 Id = entity.Id,
                 FileItemId = entity.FileItemId,
+                Name = entity.Name,
+                FileName = entity.FileName,
+                Language = entity.Language,
                 Source = entity.Source,
                 IsTranscript = entity.IsTranscript,
                 DateCreated = entity.DateCreated
@@ -23,6 +26,9 @@ namespace RewriteMe.DataAccess.DataAdapters
             {
                 Id = uploadedSource.Id,
                 FileItemId = uploadedSource.FileItemId,
+                Name = uploadedSource.Name,
+                FileName = uploadedSource.FileName,
+                Language = uploadedSource.Language,
                 Source = uploadedSource.Source,
                 IsTranscript = uploadedSource.IsTranscript,
                 DateCreated = uploadedSource.DateCreated
