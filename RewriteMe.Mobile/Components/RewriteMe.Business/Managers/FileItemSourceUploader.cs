@@ -54,9 +54,9 @@ namespace RewriteMe.Business.Managers
 
             try
             {
-                var isSuccess = await UploadSourceFileAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
+                await UploadSourceFileAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
 
-                if (isSuccess && fileToUpload.IsTranscript)
+                if (fileToUpload.IsTranscript)
                 {
                     await TranscribeAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
                 }
@@ -104,6 +104,7 @@ namespace RewriteMe.Business.Managers
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
             }
 
+            CancellationTokenSource.Cancel();
             return false;
         }
 
