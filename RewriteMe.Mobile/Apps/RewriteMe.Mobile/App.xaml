@@ -178,6 +178,13 @@
                 <Setter Property="HeightRequest" Value="48" />
             </Style>
 
+            <Style x:Key="ErrorLabelStyle"
+                   BasedOn="{StaticResource LabelStyle}"
+                   TargetType="Label">
+                <Setter Property="TextColor" Value="DarkRed" />
+                <Setter Property="LineBreakMode" Value="WordWrap" />
+            </Style>
+
             <Style x:Key="NoItemsLabelStyle"
                    BasedOn="{StaticResource LabelStyle}"
                    TargetType="Label">

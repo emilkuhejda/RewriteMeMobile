@@ -503,6 +503,12 @@ namespace RewriteMe.Resources {
             }
         }
         
+        public static string UnauthorizedErrorMessage {
+            get {
+                return ResourceManager.GetString("UnauthorizedErrorMessage", resourceCulture);
+            }
+        }
+        
         public static string InvalidAudioFileErrorMessage {
             get {
                 return ResourceManager.GetString("InvalidAudioFileErrorMessage", resourceCulture);

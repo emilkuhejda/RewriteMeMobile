@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -35,6 +36,8 @@ namespace RewriteMe.Mobile.ViewModels
         private FileItem _fileItem;
         private bool _isEdit;
         private string _name;
+        private string _uploadErrorMessage;
+        private bool _isUploadErrorMessageVisible;
         private SupportedLanguage _selectedLanguage;
         private PickedFile _selectedFile;
         private bool _isUploadButtonVisible;
@@ -86,6 +89,18 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _name, value);
         }
 
+        public string UploadErrorMessage
+        {
+            get => _uploadErrorMessage;
+            set => SetProperty(ref _uploadErrorMessage, value);
+        }
+
+        public bool IsUploadErrorMessageVisible
+        {
+            get => _isUploadErrorMessageVisible;
+            set => SetProperty(ref _isUploadErrorMessageVisible, value);
+        }
+
         public IEnumerable<SupportedLanguage> AvailableLanguages { get; set; }
 
         public SupportedLanguage SelectedLanguage
@@ -107,6 +122,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _selectedFile, value))
                 {
+                    IsUploadErrorMessageVisible = false;
                     ReevaluateNavigationItemIconKeys();
                 }
             }
@@ -157,6 +173,13 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 FileItem = navigationParameters.GetValue<FileItem>();
+                if (IsEdit)
+                {
+                    Name = FileItem.Name;
+                    SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
+                    UploadErrorMessage = GetErrorMessage(FileItem.UploadErrorCode);
+                    IsUploadErrorMessageVisible = true;
+                }
             }
         }
 
@@ -259,7 +282,7 @@ namespace RewriteMe.Mobile.ViewModels
                     if (result)
                     {
                         var mediaFile = CreateMediaFile();
-                        var fileItem = await _fileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
+                        var fileItem = IsEdit ? FileItem : await _fileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
                         var uploadedSource = CreateUploadedSource(fileItem, mediaFile, isTranscript);
 
                         await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
@@ -306,27 +329,28 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task HandleErrorMessage(int? statusCode)
         {
-            string message;
-            switch (statusCode)
-            {
-                case 400:
-                    message = Loc.Text(TranslationKeys.UploadedFileNotFoundErrorMessage);
-                    break;
-                case 406:
-                    message = Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
-                    break;
-                case 409:
-                    message = Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
-                    break;
-                case 415:
-                    message = Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
-                    break;
-                default:
-                    message = Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
-                    break;
-            }
+            string message = GetErrorMessage(statusCode);
 
             await DialogService.AlertAsync(message).ConfigureAwait(false);
+        }
+
+        private string GetErrorMessage(int? statusCode)
+        {
+            switch (statusCode)
+            {
+                case (int)HttpStatusCode.BadRequest:
+                    return Loc.Text(TranslationKeys.UploadedFileNotFoundErrorMessage);
+                case (int)HttpStatusCode.Unauthorized:
+                    return Loc.Text(TranslationKeys.UnauthorizedErrorMessage);
+                case (int)HttpStatusCode.NotAcceptable:
+                    return Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
+                case (int)HttpStatusCode.Conflict:
+                    return Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
+                case (int)HttpStatusCode.UnsupportedMediaType:
+                    return Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
+                default:
+                    return Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
+            }
         }
 
         private MediaFile CreateMediaFile()

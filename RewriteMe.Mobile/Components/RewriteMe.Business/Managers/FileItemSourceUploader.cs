@@ -54,9 +54,9 @@ namespace RewriteMe.Business.Managers
 
             try
             {
-                await UploadSourceFileAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
+                var isSuccess = await UploadSourceFileAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
 
-                if (fileToUpload.IsTranscript)
+                if (isSuccess && fileToUpload.IsTranscript)
                 {
                     await TranscribeAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
                 }
@@ -72,7 +72,7 @@ namespace RewriteMe.Business.Managers
             await UploadInternalAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task UploadSourceFileAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
+        private async Task<bool> UploadSourceFileAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
         {
             try
             {
@@ -81,6 +81,8 @@ namespace RewriteMe.Business.Managers
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.InProgress, null).ConfigureAwait(false);
                 await _fileItemService.UploadSourceFileAsync(uploadedSource.FileItemId, uploadedSource.Source, cancellationToken).ConfigureAwait(false);
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Completed, null).ConfigureAwait(false);
+
+                return true;
             }
             catch (UnauthorizedAccessException)
             {
@@ -101,6 +103,8 @@ namespace RewriteMe.Business.Managers
             {
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
             }
+
+            return false;
         }
 
         private async Task TranscribeAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)

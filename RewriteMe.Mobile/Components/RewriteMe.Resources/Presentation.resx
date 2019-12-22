@@ -329,6 +329,9 @@
     <value>Any recordings yet?</value>
   </data>
   
+  <data name="UnauthorizedErrorMessage" xml:space="preserve">
+    <value>You don't have a permission to upload file. Please, try again later.</value>
+  </data>
   <data name="InvalidAudioFileErrorMessage" xml:space="preserve">
     <value>Audio file is invalid.</value>
   </data>

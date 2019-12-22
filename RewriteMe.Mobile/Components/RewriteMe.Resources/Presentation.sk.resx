@@ -329,6 +329,9 @@
     <value>Žiadne nahrávky ešte?</value>
   </data>
   
+  <data name="UnauthorizedErrorMessage" xml:space="preserve">
+    <value>Nemáte opravnenie nahrať súbor. Prosím, opakujte operáciu neskôr.</value>
+  </data>
   <data name="InvalidAudioFileErrorMessage" xml:space="preserve">
     <value>Audio súbor nie je podporovaný.</value>
   </data>
