@@ -96,14 +96,29 @@ namespace RewriteMe.Business.Services
             await _fileItemRepository.DeleteAsync(fileItem.Id).ConfigureAwait(false);
         }
 
-        public async Task<FileItem> UploadAsync(MediaFile mediaFile, CancellationToken cancellationToken)
+        public async Task<FileItem> CreateAsync(MediaFile mediaFile, CancellationToken cancellationToken)
         {
-            var httpRequestResult = await _rewriteMeWebService.UploadFileItemAsync(mediaFile, cancellationToken).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.CreateFileItemAsync(mediaFile, cancellationToken).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 var fileItem = httpRequestResult.Payload;
                 await _fileItemRepository.InsertOrReplaceAsync(fileItem).ConfigureAwait(false);
                 return fileItem;
+            }
+
+            if (httpRequestResult.State == HttpRequestState.Error)
+            {
+                throw new ErrorRequestException(httpRequestResult.StatusCode);
+            }
+
+            throw new OfflineRequestException();
+        }
+
+        public async Task UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken)
+        {
+            var httpRequestResult = await _rewriteMeWebService.UploadSourceFileAsync(fileItemId, source, cancellationToken).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            {
             }
 
             if (httpRequestResult.State == HttpRequestState.Error)

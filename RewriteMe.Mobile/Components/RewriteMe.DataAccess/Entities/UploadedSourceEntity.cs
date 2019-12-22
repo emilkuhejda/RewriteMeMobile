@@ -11,12 +11,6 @@ namespace RewriteMe.DataAccess.Entities
 
         public Guid FileItemId { get; set; }
 
-        [MaxLength(150)]
-        public string Name { get; set; }
-
-        [MaxLength(150)]
-        public string FileName { get; set; }
-
         [MaxLength(20)]
         public string Language { get; set; }
 

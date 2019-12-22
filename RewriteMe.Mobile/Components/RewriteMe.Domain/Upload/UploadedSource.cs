@@ -8,10 +8,6 @@ namespace RewriteMe.Domain.Upload
 
         public Guid FileItemId { get; set; }
 
-        public string Name { get; set; }
-
-        public string FileName { get; set; }
-
         public string Language { get; set; }
 
         public byte[] Source { get; set; }
