@@ -10,6 +10,7 @@ using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Messages;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.Upload;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Resources.Localization;
@@ -83,32 +84,42 @@ namespace RewriteMe.Mobile.ViewModels
                 okText: Loc.Text(TranslationKeys.Ok),
                 cancelText: Loc.Text(TranslationKeys.Cancel)).ConfigureAwait(false);
 
-            if (result)
+            if (!result)
+                return;
+
+            var mediaFile = CreateMediaFile();
+            var fileItem = await FileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
+            var uploadedSource = CreateUploadedSource(fileItem, mediaFile);
+
+            await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
+            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.UploadFileItem), nameof(BackgroundServiceType.UploadFileItem));
+
+            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+        }
+
+        private MediaFile CreateMediaFile()
+        {
+            var filePath = _recordedItemService.GetAudioPath(RecordedItem);
+            return new MediaFile
             {
-                var filePath = _recordedItemService.GetAudioPath(RecordedItem);
-                var mediaFile = new MediaFile
-                {
-                    Name = Name,
-                    Language = SelectedLanguage?.Culture,
-                    FileName = RecordedItem.AudioFileName,
-                    Source = File.ReadAllBytes(filePath)
-                };
+                Name = Name,
+                Language = SelectedLanguage?.Culture,
+                FileName = RecordedItem.AudioFileName,
+                Source = File.ReadAllBytes(filePath)
+            };
+        }
 
-                var fileItem = await FileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
-                var uploadedSource = new UploadedSource
-                {
-                    Id = Guid.NewGuid(),
-                    FileItemId = fileItem.Id,
-                    Language = fileItem.Language,
-                    Source = mediaFile.Source,
-                    IsTranscript = true,
-                    DateCreated = DateTime.UtcNow
-                };
-                await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
-                MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.UploadFileItem), nameof(BackgroundServiceType.UploadFileItem));
-
-                await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
-            }
+        private UploadedSource CreateUploadedSource(FileItem fileItem, MediaFile mediaFile)
+        {
+            return new UploadedSource
+            {
+                Id = Guid.NewGuid(),
+                FileItemId = fileItem.Id,
+                Language = fileItem.Language,
+                Source = mediaFile.Source,
+                IsTranscript = true,
+                DateCreated = DateTime.UtcNow
+            };
         }
 
         protected override async Task ExecuteDeleteInternalAsync()

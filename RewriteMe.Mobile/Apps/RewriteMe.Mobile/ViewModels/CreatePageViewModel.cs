@@ -14,6 +14,7 @@ using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Messages;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.Upload;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
@@ -239,16 +240,8 @@ namespace RewriteMe.Mobile.ViewModels
                     {
                         var mediaFile = CreateMediaFile();
                         var fileItem = await _fileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
+                        var uploadedSource = CreateUploadedSource(fileItem, mediaFile, isTranscript);
 
-                        var uploadedSource = new UploadedSource
-                        {
-                            Id = Guid.NewGuid(),
-                            FileItemId = fileItem.Id,
-                            Language = fileItem.Language,
-                            Source = mediaFile.Source,
-                            IsTranscript = isTranscript,
-                            DateCreated = DateTime.UtcNow
-                        };
                         await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
                         MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.UploadFileItem), nameof(BackgroundServiceType.UploadFileItem));
 
@@ -276,6 +269,19 @@ namespace RewriteMe.Mobile.ViewModels
             }
 
             ResetLoadingText();
+        }
+
+        private UploadedSource CreateUploadedSource(FileItem fileItem, MediaFile mediaFile, bool isTranscript)
+        {
+            return new UploadedSource
+            {
+                Id = Guid.NewGuid(),
+                FileItemId = fileItem.Id,
+                Language = fileItem.Language,
+                Source = mediaFile.Source,
+                IsTranscript = isTranscript,
+                DateCreated = DateTime.UtcNow
+            };
         }
 
         private async Task HandleErrorMessage(int? statusCode)
