@@ -119,13 +119,6 @@ namespace RewriteMe.Business.Services
                 ).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken)
-        {
-            return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.UploadFileItemAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, DateTime.Now, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, mediaFile.Source, cancellationToken), GetAuthHeaders())
-                ).ConfigureAwait(false);
-        }
-
         public async Task<HttpRequestResult<Ok>> UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
