@@ -18,14 +18,16 @@
         <controls:AlwaysScrollView Grid.Row="0" Padding="{StaticResource StandardPadding}">
             <StackLayout>
                 <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
-                    <Entry Text="{Binding Name}" />
+                    <Entry IsReadOnly="{Binding IsEdit}" Text="{Binding Name}" />
                 </textInputLayout:SfTextInputLayout>
 
                 <textInputLayout:SfTextInputLayout Margin="0,0,0,20" ContainerType="Outlined">
                     <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                            IsVisible="{Binding IsEdit, Converter={StaticResource InvertedBoolConverter}}"
                             ItemDisplayBinding="{Binding Key, Converter={StaticResource KeyToLocalizedTextConverter}}"
                             ItemsSource="{Binding AvailableLanguages}"
                             SelectedItem="{Binding SelectedLanguage}" />
+                    <Label IsVisible="{Binding IsEdit}" Text="{Binding SelectedLanguage}" />
                 </textInputLayout:SfTextInputLayout>
 
                 <Label Margin="0,0,0,20"

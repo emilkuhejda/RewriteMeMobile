@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Mobile.Commands;
@@ -63,7 +64,8 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (recognitionState == RecognitionState.None || recognitionState == RecognitionState.Converting || recognitionState == RecognitionState.Prepared)
             {
-                await _navigationService.NavigateWithoutAnimationAsync(Pages.Transcribe, navigationParameters).ConfigureAwait(false);
+                var page = FileItem.UploadStatus == UploadStatus.Completed ? Pages.Transcribe : Pages.Create;
+                await _navigationService.NavigateWithoutAnimationAsync(page, navigationParameters).ConfigureAwait(false);
             }
             else if (recognitionState == RecognitionState.Completed)
             {

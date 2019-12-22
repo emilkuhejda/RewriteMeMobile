@@ -11,6 +11,7 @@ using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
@@ -26,6 +27,8 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IFileItemService _fileItemService;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
+        private FileItem _fileItem;
+        private bool _isEdit;
         private string _name;
         private SupportedLanguage _selectedLanguage;
         private PickedFile _selectedFile;
@@ -52,6 +55,22 @@ namespace RewriteMe.Mobile.ViewModels
             ClearSelectedFileCommand = new DelegateCommand(ExecuteClearSelectedFileCommand);
 
             ResetLoadingText();
+        }
+
+        private FileItem FileItem
+        {
+            get => _fileItem;
+            set
+            {
+                _fileItem = value;
+                IsEdit = _fileItem != null;
+            }
+        }
+
+        public bool IsEdit
+        {
+            get => _isEdit;
+            set => SetProperty(ref _isEdit, value);
         }
 
         public string Name
@@ -129,6 +148,8 @@ namespace RewriteMe.Mobile.ViewModels
                     Name = SelectedFile.FileName;
                     IsUploadButtonVisible = false;
                 }
+
+                FileItem = navigationParameters.GetValue<FileItem>();
             }
         }
 
