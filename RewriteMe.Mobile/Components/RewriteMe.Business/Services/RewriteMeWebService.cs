@@ -112,10 +112,10 @@ namespace RewriteMe.Business.Services
                 ).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<FileItem>> CreateFileItemAsync(MediaFile mediaFile)
+        public async Task<HttpRequestResult<FileItem>> CreateFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.CreateFileItemAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, DateTime.Now, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion), GetAuthHeaders())
+                () => MakeServiceCall(client => client.CreateFileItemAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, DateTime.Now, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, cancellationToken), GetAuthHeaders())
                 ).ConfigureAwait(false);
         }
 

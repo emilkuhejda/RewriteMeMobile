@@ -1,24 +1,31 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Messages;
 using RewriteMe.Domain.Transcription;
+using RewriteMe.Domain.Upload;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Resources.Localization;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class TranscribeRecodingPageViewModel : TranscribeBaseViewModel
     {
         private readonly IRecordedItemService _recordedItemService;
+        private readonly IUploadedSourceService _uploadedSourceService;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
         public TranscribeRecodingPageViewModel(
             IRecordedItemService recordedItemService,
+            IUploadedSourceService uploadedSourceService,
             IUserSessionService userSessionService,
             IFileItemService fileItemService,
             IDialogService dialogService,
@@ -27,6 +34,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(fileItemService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
+            _uploadedSourceService = uploadedSourceService;
             _cancellationTokenSource = new CancellationTokenSource();
 
             PlayerViewModel = new PlayerViewModel();
@@ -86,8 +94,19 @@ namespace RewriteMe.Mobile.ViewModels
                     Source = File.ReadAllBytes(filePath)
                 };
 
-                var fileItem = await FileItemService.UploadAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
-                await FileItemService.TranscribeAsync(fileItem.Id, fileItem.Language).ConfigureAwait(false);
+                var fileItem = await FileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
+                var uploadedSource = new UploadedSource
+                {
+                    Id = Guid.NewGuid(),
+                    FileItemId = fileItem.Id,
+                    Language = fileItem.Language,
+                    Source = mediaFile.Source,
+                    IsTranscript = true,
+                    DateCreated = DateTime.UtcNow
+                };
+                await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
+                MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.UploadFileItem), nameof(BackgroundServiceType.UploadFileItem));
+
                 await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
             }
         }

@@ -20,7 +20,9 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task DeleteAsync(FileItem fileItem);
 
-        Task<FileItem> UploadAsync(MediaFile mediaFile, CancellationToken cancellationToken);
+        Task<FileItem> CreateAsync(MediaFile mediaFile, CancellationToken cancellationToken);
+
+        Task UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken);
 
         Task<bool> CanTranscribeAsync();
 

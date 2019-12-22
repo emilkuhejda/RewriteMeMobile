@@ -31,7 +31,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<SpeechConfiguration>> GetSpeechConfigurationAsync();
 
-        Task<HttpRequestResult<FileItem>> CreateFileItemAsync(MediaFile mediaFile);
+        Task<HttpRequestResult<FileItem>> CreateFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken);
 
         Task<HttpRequestResult<FileItem>> UploadFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken);
 

@@ -6,7 +6,6 @@ using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.Upload;
 
 namespace RewriteMe.Business.Managers
@@ -15,17 +14,14 @@ namespace RewriteMe.Business.Managers
     {
         private readonly IFileItemService _fileItemService;
         private readonly IUploadedSourceService _uploadedSourceService;
-        private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly object _lockObject = new object();
 
         public FileItemSourceUploader(
             IFileItemService fileItemService,
-            IUploadedSourceService uploadedSourceService,
-            IRewriteMeWebService rewriteMeWebService)
+            IUploadedSourceService uploadedSourceService)
         {
             _fileItemService = fileItemService;
             _uploadedSourceService = uploadedSourceService;
-            _rewriteMeWebService = rewriteMeWebService;
         }
 
         public async Task UploadAsync()
@@ -58,7 +54,7 @@ namespace RewriteMe.Business.Managers
 
             try
             {
-                await UploadAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
+                await UploadSourceFileAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
 
                 if (fileToUpload.IsTranscript)
                 {
@@ -76,22 +72,14 @@ namespace RewriteMe.Business.Managers
             await UploadInternalAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task UploadAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
+        private async Task UploadSourceFileAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
         {
-            var mediaFile = new MediaFile
-            {
-                Name = uploadedSource.Name,
-                Language = uploadedSource.Language,
-                FileName = uploadedSource.FileName,
-                Source = uploadedSource.Source
-            };
-
             try
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.InProgress, null).ConfigureAwait(false);
-                await _fileItemService.UploadAsync(mediaFile, cancellationToken).ConfigureAwait(false);
+                await _fileItemService.UploadSourceFileAsync(uploadedSource.FileItemId, uploadedSource.Source, cancellationToken).ConfigureAwait(false);
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Completed, null).ConfigureAwait(false);
             }
             catch (UnauthorizedAccessException)
