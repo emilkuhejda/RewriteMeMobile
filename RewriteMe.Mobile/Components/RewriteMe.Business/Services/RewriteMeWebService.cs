@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Business.Extensions;
@@ -22,6 +23,8 @@ namespace RewriteMe.Business.Services
         private readonly IUserSessionService _userSessionService;
         private readonly ILogger _logger;
 
+        private HttpClient _isAliveClient;
+
         public RewriteMeWebService(
             IUserSessionService userSessionService,
             ILoggerFactory loggerFactory,
@@ -33,11 +36,15 @@ namespace RewriteMe.Business.Services
             _logger = loggerFactory.CreateLogger(typeof(RewriteMeWebService));
         }
 
+        private HttpClient IsAliveClient => _isAliveClient ?? (_isAliveClient = CreateHttpClient(5));
+
         public async Task<bool> IsAliveAsync()
         {
             try
             {
-                return await MakeServiceCall(client => client.IsAliveAsync(ApplicationSettings.WebApiVersion), timeoutSeconds: 5).ConfigureAwait(false);
+                var rewriteMeClient = new RewriteMeClient(ApplicationSettings.WebApiUrl, IsAliveClient);
+
+                return await rewriteMeClient.IsAliveAsync(ApplicationSettings.WebApiVersion).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
