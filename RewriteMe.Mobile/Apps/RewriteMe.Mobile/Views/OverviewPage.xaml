@@ -65,7 +65,7 @@
                                          WidthRequest="30" />
 
                 <xForms:SfBusyIndicator Grid.Column="2"
-                                        AnimationType="ECG"
+                                        AnimationType="Ball"
                                         BackgroundColor="{StaticResource ColorWhite}"
                                         HeightRequest="40"
                                         IsVisible="{Binding IsUploading}"
@@ -76,7 +76,7 @@
                                         WidthRequest="40" />
 
                 <xForms:SfBusyIndicator Grid.Column="2"
-                                        AnimationType="Print"
+                                        AnimationType="SingleCircle"
                                         BackgroundColor="{StaticResource ColorWhite}"
                                         HeightRequest="40"
                                         IsVisible="{Binding IsInProgress}"

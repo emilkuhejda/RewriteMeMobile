@@ -80,6 +80,9 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (recognitionState == RecognitionState.None || recognitionState == RecognitionState.Converting || recognitionState == RecognitionState.Prepared)
             {
+                if (FileItem.IsUploading)
+                    return;
+
                 var page = FileItem.UploadStatus == UploadStatus.Completed ? Pages.Transcribe : Pages.Create;
                 await _navigationService.NavigateWithoutAnimationAsync(page, navigationParameters).ConfigureAwait(false);
             }
