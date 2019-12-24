@@ -119,6 +119,7 @@ namespace RewriteMe.Business.Services
             var httpRequestResult = await _rewriteMeWebService.UploadSourceFileAsync(fileItemId, source, cancellationToken).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
+                return;
             }
 
             if (httpRequestResult.State == HttpRequestState.Error)
