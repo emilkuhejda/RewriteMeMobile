@@ -1,10 +1,13 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Events;
+using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
@@ -18,11 +21,13 @@ namespace RewriteMe.Mobile.ViewModels
     public class OverviewPageViewModel : OverviewBaseViewModel
     {
         private readonly IFileItemService _fileItemService;
+        private readonly IFileItemSourceUploader _fileItemSourceUploader;
 
         private ObservableCollection<FileItemViewModel> _fileItems;
 
         public OverviewPageViewModel(
             IFileItemService fileItemService,
+            IFileItemSourceUploader fileItemSourceUploader,
             ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -31,6 +36,9 @@ namespace RewriteMe.Mobile.ViewModels
             : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
+            _fileItemSourceUploader = fileItemSourceUploader;
+
+            fileItemSourceUploader.StateChanged += HandleStateChanged;
 
             CreateCommand = new AsyncCommand(ExecuteCreateCommandAsync);
         }
@@ -119,6 +127,26 @@ namespace RewriteMe.Mobile.ViewModels
         private void OnInitializationProgress(object sender, ProgressEventArgs e)
         {
             IndicatorCaption = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
+        }
+
+        private async void HandleStateChanged(object sender, ManagerStateChangedEventArgs e)
+        {
+            var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
+            fileItems.ForEach(fileItem =>
+            {
+                var fileItemViewModel = FileItems.FirstOrDefault(x => x.FileItem.Id == fileItem.Id);
+                if (fileItemViewModel != null)
+                {
+                    fileItemViewModel.Update(fileItem);
+                }
+            });
+        }
+
+        protected override void DisposeInternal()
+        {
+            _fileItemSourceUploader.StateChanged -= HandleStateChanged;
+
+            base.DisposeInternal();
         }
     }
 }
