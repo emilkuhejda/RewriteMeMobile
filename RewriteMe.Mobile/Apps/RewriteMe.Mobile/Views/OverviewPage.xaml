@@ -55,6 +55,26 @@
                                          VerticalOptions="Center"
                                          WidthRequest="30" />
 
+                <formsSvg:SvgCachedImage Grid.Column="2"
+                                         Aspect="AspectFit"
+                                         IsVisible="{Binding HasError}"
+                                         HeightRequest="30"
+                                         HorizontalOptions="Center"
+                                         Source="resource://RewriteMe.Mobile.Resources.Images.Error.svg"
+                                         VerticalOptions="Center"
+                                         WidthRequest="30" />
+
+                <xForms:SfBusyIndicator Grid.Column="2"
+                                        AnimationType="ECG"
+                                        BackgroundColor="{StaticResource ColorWhite}"
+                                        HeightRequest="40"
+                                        IsVisible="{Binding IsUploading}"
+                                        TextColor="{StaticResource ColorPrimary}"
+                                        VerticalOptions="Center"
+                                        ViewBoxHeight="40"
+                                        ViewBoxWidth="40"
+                                        WidthRequest="40" />
+
                 <xForms:SfBusyIndicator Grid.Column="2"
                                         AnimationType="Print"
                                         BackgroundColor="{StaticResource ColorWhite}"
