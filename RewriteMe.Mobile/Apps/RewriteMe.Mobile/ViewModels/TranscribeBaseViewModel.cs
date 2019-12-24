@@ -9,6 +9,7 @@ using RewriteMe.Domain.Transcription;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Transcription;
+using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -153,26 +154,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task HandleErrorMessage(int? statusCode)
         {
-            string message;
-            switch (statusCode)
-            {
-                case 400:
-                    message = Loc.Text(TranslationKeys.UploadedFileNotFoundErrorMessage);
-                    break;
-                case 406:
-                    message = Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
-                    break;
-                case 409:
-                    message = Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
-                    break;
-                case 415:
-                    message = Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
-                    break;
-                default:
-                    message = Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
-                    break;
-            }
-
+            var message = UploadErrorHelper.GetErrorMessage(statusCode);
             await DialogService.AlertAsync(message).ConfigureAwait(false);
         }
     }

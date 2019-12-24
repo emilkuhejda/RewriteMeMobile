@@ -509,6 +509,12 @@ namespace RewriteMe.Resources {
             }
         }
         
+        public static string FileItemSourceDatabaseUpdateErrorMessage {
+            get {
+                return ResourceManager.GetString("FileItemSourceDatabaseUpdateErrorMessage", resourceCulture);
+            }
+        }
+        
         public static string InvalidAudioFileErrorMessage {
             get {
                 return ResourceManager.GetString("InvalidAudioFileErrorMessage", resourceCulture);

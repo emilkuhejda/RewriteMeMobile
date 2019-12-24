@@ -332,6 +332,9 @@
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>Nemáte opravnenie nahrať súbor. Prosím, opakujte operáciu neskôr.</value>
   </data>
+  <data name="FileItemSourceDatabaseUpdateErrorMessage" xml:space="preserve">
+    <value>Súbor nebol nahraný spravne. Prosím, opakujte operáciu neskôr.</value>
+  </data>
   <data name="InvalidAudioFileErrorMessage" xml:space="preserve">
     <value>Audio súbor nie je podporovaný.</value>
   </data>

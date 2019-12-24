@@ -80,6 +80,7 @@
         public static string NoRecordingsMessage => "NoRecordingsMessage";
 
         public static string UnauthorizedErrorMessage => "UnauthorizedErrorMessage";
+        public static string FileItemSourceDatabaseUpdateErrorMessage => "FileItemSourceDatabaseUpdateErrorMessage";
         public static string InvalidAudioFileErrorMessage => "InvalidAudioFileErrorMessage";
         public static string ProfileEditErrorMessage => "ProfileEditErrorMessage";
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
