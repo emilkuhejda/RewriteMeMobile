@@ -46,20 +46,20 @@
                            Text="{Binding DateCreated}" />
                 </StackLayout>
 
-                <formsSvg:SvgCachedImage Grid.Column="2"
+                <svgForms:SvgCachedImage Grid.Column="2"
                                          Aspect="AspectFit"
-                                         IsVisible="{Binding IsCompleted}"
                                          HeightRequest="30"
                                          HorizontalOptions="Center"
+                                         IsVisible="{Binding IsCompleted}"
                                          Source="resource://RewriteMe.Mobile.Resources.Images.Success.svg"
                                          VerticalOptions="Center"
                                          WidthRequest="30" />
 
-                <formsSvg:SvgCachedImage Grid.Column="2"
+                <svgForms:SvgCachedImage Grid.Column="2"
                                          Aspect="AspectFit"
-                                         IsVisible="{Binding HasError}"
                                          HeightRequest="30"
                                          HorizontalOptions="Center"
+                                         IsVisible="{Binding HasError}"
                                          Source="resource://RewriteMe.Mobile.Resources.Images.Error.svg"
                                          VerticalOptions="Center"
                                          WidthRequest="30" />
