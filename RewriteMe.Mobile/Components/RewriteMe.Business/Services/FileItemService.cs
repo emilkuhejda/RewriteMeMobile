@@ -172,5 +172,18 @@ namespace RewriteMe.Business.Services
         {
             await _fileItemRepository.SetTranscribeErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
         }
+
+        public async Task ResetUploadStatusesAsync()
+        {
+            var fileItemsInUploadingState = await _fileItemRepository.GetUploadingFilesAsync().ConfigureAwait(false);
+            if (fileItemsInUploadingState.Any())
+                return;
+
+            foreach (var fileItem in fileItemsInUploadingState)
+            {
+                await UpdateUploadStatusAsync(fileItem.Id, UploadStatus.None).ConfigureAwait(false);
+                await SetUploadErrorCodeAsync(fileItem.Id, null).ConfigureAwait(false);
+            }
+        }
     }
 }
