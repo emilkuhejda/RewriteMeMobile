@@ -69,6 +69,11 @@ namespace RewriteMe.Business.Services
             return await _fileItemRepository.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
         }
 
+        public async Task<FileItem> GetAsync(Guid fileItemId)
+        {
+            return await _fileItemRepository.GetAsync(fileItemId).ConfigureAwait(false);
+        }
+
         public async Task<IEnumerable<FileItem>> GetAllAsync()
         {
             return await _fileItemRepository.GetAllAsync().ConfigureAwait(false);
@@ -91,9 +96,9 @@ namespace RewriteMe.Business.Services
             await _fileItemRepository.DeleteAsync(fileItem.Id).ConfigureAwait(false);
         }
 
-        public async Task<FileItem> UploadAsync(MediaFile mediaFile, CancellationToken cancellationToken)
+        public async Task<FileItem> CreateAsync(MediaFile mediaFile, CancellationToken cancellationToken)
         {
-            var httpRequestResult = await _rewriteMeWebService.UploadFileItemAsync(mediaFile, cancellationToken).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.CreateFileItemAsync(mediaFile, cancellationToken).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 var fileItem = httpRequestResult.Payload;
@@ -107,6 +112,21 @@ namespace RewriteMe.Business.Services
             }
 
             throw new OfflineRequestException();
+        }
+
+        public async Task UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken)
+        {
+            var httpRequestResult = await _rewriteMeWebService.UploadSourceFileAsync(fileItemId, source, cancellationToken).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Error)
+            {
+                throw new ErrorRequestException(httpRequestResult.StatusCode);
+            }
+
+            if (httpRequestResult.State != HttpRequestState.Success)
+                throw new OfflineRequestException();
+
+            var fileItem = httpRequestResult.Payload;
+            await _fileItemRepository.UpdateAsync(fileItem).ConfigureAwait(false);
         }
 
         public async Task<bool> CanTranscribeAsync()
@@ -136,6 +156,21 @@ namespace RewriteMe.Business.Services
             {
                 throw new OfflineRequestException();
             }
+        }
+
+        public async Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus)
+        {
+            await _fileItemRepository.UpdateUploadStatusAsync(fileItemId, uploadStatus).ConfigureAwait(false);
+        }
+
+        public async Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode)
+        {
+            await _fileItemRepository.SetUploadErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
+        }
+
+        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode)
+        {
+            await _fileItemRepository.SetTranscribeErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
         }
     }
 }

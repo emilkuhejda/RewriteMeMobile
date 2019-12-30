@@ -5,5 +5,6 @@
         None,
         TranscribeItem,
         Synchronizer,
+        UploadFileItem
     }
 }

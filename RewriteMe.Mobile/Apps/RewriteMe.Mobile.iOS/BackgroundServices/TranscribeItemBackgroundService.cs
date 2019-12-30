@@ -13,13 +13,11 @@ namespace RewriteMe.Mobile.iOS.BackgroundServices
         {
             get
             {
-                if (_transcribeItemManager == null)
-                {
-                    var app = (App)Xamarin.Forms.Application.Current;
-                    _transcribeItemManager = app.Container.Resolve<ITranscribeItemManager>();
-                }
+                if (_transcribeItemManager != null)
+                    return _transcribeItemManager;
 
-                return _transcribeItemManager;
+                var app = (App)Xamarin.Forms.Application.Current;
+                return _transcribeItemManager = app.Container.Resolve<ITranscribeItemManager>();
             }
         }
 

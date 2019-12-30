@@ -12,20 +12,16 @@ using RewriteMe.Domain.Interfaces.Services;
 
 namespace RewriteMe.Business.Managers
 {
-    public class TranscribeItemManager : ITranscribeItemManager
+    public class TranscribeItemManager : SynchronizationManager, ITranscribeItemManager
     {
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemRepository _transcribeItemRepository;
         private readonly object _lockObject = new object();
 
-        private CancellationTokenSource _cancellationTokenSource;
         private int _totalResourceInitializationTasks;
         private int _resourceInitializationTasksDone;
-        private bool _isRunning;
 
         public event EventHandler<ProgressEventArgs> InitializationProgress;
-        public event EventHandler<ManagerStateChangedEventArgs> StateChanged;
-        public event EventHandler UnauthorizedCallOccurred;
 
         public TranscribeItemManager(
             ITranscriptAudioSourceService transcriptAudioSourceService,
@@ -33,16 +29,6 @@ namespace RewriteMe.Business.Managers
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _transcribeItemRepository = transcribeItemRepository;
-        }
-
-        public bool IsRunning
-        {
-            get => _isRunning;
-            private set
-            {
-                _isRunning = value;
-                OnStateChanged(value);
-            }
         }
 
         public async Task SynchronizationAsync()
@@ -55,20 +41,20 @@ namespace RewriteMe.Business.Managers
                 IsRunning = true;
             }
 
-            _cancellationTokenSource?.Cancel();
-            _cancellationTokenSource?.Dispose();
-            _cancellationTokenSource = new CancellationTokenSource();
+            CancellationTokenSource?.Cancel();
+            CancellationTokenSource?.Dispose();
+            CancellationTokenSource = new CancellationTokenSource();
 
             try
             {
-                await SynchronizationInternalAsync(_cancellationTokenSource.Token).ConfigureAwait(false);
+                await SynchronizationInternalAsync(CancellationTokenSource.Token).ConfigureAwait(false);
             }
             catch (OperationCanceledException)
             {
             }
             catch (UnauthorizedCallException)
             {
-                _cancellationTokenSource.Cancel();
+                CancellationTokenSource.Cancel();
 
                 OnUnauthorizedCallOccurred();
             }
@@ -114,17 +100,6 @@ namespace RewriteMe.Business.Managers
             await SynchronizationInternalAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        public void Cancel()
-        {
-            if (_cancellationTokenSource != null)
-            {
-                _cancellationTokenSource.Token.ThrowIfCancellationRequested();
-                _cancellationTokenSource.Cancel();
-                _cancellationTokenSource.Dispose();
-                _cancellationTokenSource = null;
-            }
-        }
-
         private void OnInitializationProgress()
         {
             var currentTask = Interlocked.Increment(ref _resourceInitializationTasksDone);
@@ -134,16 +109,6 @@ namespace RewriteMe.Business.Managers
         private void OnProgressEventArgs(int totalSteps, int stepsDone)
         {
             InitializationProgress?.Invoke(this, new ProgressEventArgs(totalSteps, stepsDone));
-        }
-
-        private void OnStateChanged(bool isRunning)
-        {
-            StateChanged?.Invoke(this, new ManagerStateChangedEventArgs(isRunning));
-        }
-
-        private void OnUnauthorizedCallOccurred()
-        {
-            UnauthorizedCallOccurred?.Invoke(this, EventArgs.Empty);
         }
     }
 }

@@ -178,6 +178,7 @@
     <Compile Include="..\..\Global\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="BackgroundServices\FileItemUploaderBackgroundService.cs" />
     <Compile Include="BackgroundServices\SynchronizerBackgroundService.cs" />
     <Compile Include="BackgroundServices\TranscribeItemBackgroundService.cs" />
     <Compile Include="Configuration\AndroidBootstrapper.cs" />
@@ -311,18 +312,6 @@
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\ic_launcher.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-mdpi\ic_notification.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-xhdpi\ic_notification.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\mipmap-xxhdpi\ic_notification.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable-hdpi\ic_notification.png" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

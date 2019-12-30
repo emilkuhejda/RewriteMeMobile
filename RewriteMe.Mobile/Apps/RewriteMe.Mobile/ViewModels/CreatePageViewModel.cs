@@ -8,9 +8,13 @@ using Plugin.FilePicker;
 using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Messages;
 using RewriteMe.Domain.Transcription;
+using RewriteMe.Domain.Upload;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
@@ -18,15 +22,21 @@ using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Mobile.Transcription;
 using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class CreatePageViewModel : ViewModelBase
     {
         private readonly IFileItemService _fileItemService;
+        private readonly IUploadedSourceService _uploadedSourceService;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
+        private FileItem _fileItem;
+        private bool _isEdit;
         private string _name;
+        private string _uploadErrorMessage;
+        private bool _isUploadErrorMessageVisible;
         private SupportedLanguage _selectedLanguage;
         private PickedFile _selectedFile;
         private bool _isUploadButtonVisible;
@@ -34,6 +44,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public CreatePageViewModel(
             IFileItemService fileItemService,
+            IUploadedSourceService uploadedSourceService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -41,6 +52,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
+            _uploadedSourceService = uploadedSourceService;
             _cancellationTokenSource = new CancellationTokenSource();
 
             CanGoBack = true;
@@ -54,10 +66,38 @@ namespace RewriteMe.Mobile.ViewModels
             ResetLoadingText();
         }
 
+        private FileItem FileItem
+        {
+            get => _fileItem;
+            set
+            {
+                _fileItem = value;
+                IsEdit = _fileItem != null;
+            }
+        }
+
+        public bool IsEdit
+        {
+            get => _isEdit;
+            set => SetProperty(ref _isEdit, value);
+        }
+
         public string Name
         {
             get => _name;
             set => SetProperty(ref _name, value);
+        }
+
+        public string UploadErrorMessage
+        {
+            get => _uploadErrorMessage;
+            set => SetProperty(ref _uploadErrorMessage, value);
+        }
+
+        public bool IsUploadErrorMessageVisible
+        {
+            get => _isUploadErrorMessageVisible;
+            set => SetProperty(ref _isUploadErrorMessageVisible, value);
         }
 
         public IEnumerable<SupportedLanguage> AvailableLanguages { get; set; }
@@ -81,6 +121,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _selectedFile, value))
                 {
+                    IsUploadErrorMessageVisible = false;
                     ReevaluateNavigationItemIconKeys();
                 }
             }
@@ -128,6 +169,15 @@ namespace RewriteMe.Mobile.ViewModels
 
                     Name = SelectedFile.FileName;
                     IsUploadButtonVisible = false;
+                }
+
+                FileItem = navigationParameters.GetValue<FileItem>();
+                if (IsEdit)
+                {
+                    Name = FileItem.Name;
+                    SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
+                    UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
+                    IsUploadErrorMessageVisible = true;
                 }
             }
         }
@@ -200,13 +250,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteSaveCommandAsync()
         {
-            var func = new Func<MediaFile, Task>(async mediaFile =>
-            {
-                await _fileItemService.UploadAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
-                await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
-            });
-
-            await ExecuteSendToServer(func).ConfigureAwait(false);
+            await ExecuteSendToServer(false).ConfigureAwait(false);
         }
 
         private bool CanExecuteSaveAndTranscribeCommand()
@@ -216,17 +260,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteSaveAndTranscribeCommandAsync()
         {
-            var func = new Func<MediaFile, Task>(async mediaFile =>
-            {
-                var fileItem = await _fileItemService.UploadAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
-                await _fileItemService.TranscribeAsync(fileItem.Id, fileItem.Language).ConfigureAwait(false);
-                await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
-            });
-
-            await ExecuteSendToServer(func).ConfigureAwait(false);
+            await ExecuteSendToServer(true).ConfigureAwait(false);
         }
 
-        private async Task ExecuteSendToServer(Func<MediaFile, Task> func)
+        private async Task ExecuteSendToServer(bool isTranscript)
         {
             IndicatorCaption = Loc.Text(TranslationKeys.UploadFileItemInfoMessage);
 
@@ -244,7 +281,13 @@ namespace RewriteMe.Mobile.ViewModels
                     if (result)
                     {
                         var mediaFile = CreateMediaFile();
-                        await func(mediaFile).ConfigureAwait(false);
+                        var fileItem = IsEdit ? FileItem : await _fileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
+                        var uploadedSource = CreateUploadedSource(fileItem, mediaFile, isTranscript);
+
+                        await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
+                        MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.UploadFileItem), nameof(BackgroundServiceType.UploadFileItem));
+
+                        await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                     }
                 }
                 catch (ErrorRequestException ex)
@@ -270,28 +313,22 @@ namespace RewriteMe.Mobile.ViewModels
             ResetLoadingText();
         }
 
+        private UploadedSource CreateUploadedSource(FileItem fileItem, MediaFile mediaFile, bool isTranscript)
+        {
+            return new UploadedSource
+            {
+                Id = Guid.NewGuid(),
+                FileItemId = fileItem.Id,
+                Language = fileItem.Language,
+                Source = mediaFile.Source,
+                IsTranscript = isTranscript,
+                DateCreated = DateTime.UtcNow
+            };
+        }
+
         private async Task HandleErrorMessage(int? statusCode)
         {
-            string message;
-            switch (statusCode)
-            {
-                case 400:
-                    message = Loc.Text(TranslationKeys.UploadedFileNotFoundErrorMessage);
-                    break;
-                case 406:
-                    message = Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
-                    break;
-                case 409:
-                    message = Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
-                    break;
-                case 415:
-                    message = Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
-                    break;
-                default:
-                    message = Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
-                    break;
-            }
-
+            var message = UploadErrorHelper.GetErrorMessage(statusCode);
             await DialogService.AlertAsync(message).ConfigureAwait(false);
         }
 

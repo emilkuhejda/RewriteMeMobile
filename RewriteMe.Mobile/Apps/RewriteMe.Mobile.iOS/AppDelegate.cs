@@ -27,6 +27,7 @@ namespace RewriteMe.Mobile.iOS
         private App _application;
         private TranscribeItemBackgroundService _transcribeItemBackgroundService;
         private SynchronizerBackgroundService _synchronizerBackgroundService;
+        private FileItemUploaderBackgroundService _fileItemUploaderBackgroundService;
 
         // This method is invoked when the application has loaded and is ready to run. In this 
         // method you should instantiate the window, load the UI into it and then make the window
@@ -79,8 +80,16 @@ namespace RewriteMe.Mobile.iOS
                     await _synchronizerBackgroundService.RunAsync().ConfigureAwait(false);
                 });
 
+            MessagingCenter.Subscribe<StartBackgroundServiceMessage>(this, nameof(BackgroundServiceType.UploadFileItem),
+                async message =>
+                {
+                    _fileItemUploaderBackgroundService = new FileItemUploaderBackgroundService();
+                    await _fileItemUploaderBackgroundService.RunAsync().ConfigureAwait(false);
+                });
+
             MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.TranscribeItem), message => { _transcribeItemBackgroundService.Stop(); });
             MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.Synchronizer), message => { _synchronizerBackgroundService.Stop(); });
+            MessagingCenter.Subscribe<StopBackgroundServiceMessage>(this, nameof(BackgroundServiceType.UploadFileItem), message => { _fileItemUploaderBackgroundService.Stop(); });
         }
 
         private void InitializeSyncfusionControls()

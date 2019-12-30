@@ -2,6 +2,7 @@
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Mobile.Commands;
@@ -17,6 +18,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool _isInProgress;
         private bool _isCompleted;
+        private bool _isUploading;
+        private bool _hasError;
 
         public FileItemViewModel(FileItem fileItem, INavigationService navigationService)
         {
@@ -45,6 +48,18 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _isCompleted, value);
         }
 
+        public bool IsUploading
+        {
+            get => _isUploading;
+            set => SetProperty(ref _isUploading, value);
+        }
+
+        public bool HasError
+        {
+            get => _hasError;
+            set => SetProperty(ref _hasError, value);
+        }
+
         public ICommand NavigateToDetailPageCommand { get; }
 
         public void Update(FileItem fileItem)
@@ -53,6 +68,8 @@ namespace RewriteMe.Mobile.ViewModels
 
             IsInProgress = fileItem.RecognitionState == RecognitionState.InProgress;
             IsCompleted = fileItem.RecognitionState == RecognitionState.Completed;
+            IsUploading = fileItem.UploadStatus == UploadStatus.InProgress;
+            HasError = fileItem.UploadErrorCode.HasValue || fileItem.TranscribeErrorCode.HasValue;
         }
 
         private async Task ExecuteNavigateToDetailPageCommandAsync()
@@ -63,7 +80,11 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (recognitionState == RecognitionState.None || recognitionState == RecognitionState.Converting || recognitionState == RecognitionState.Prepared)
             {
-                await _navigationService.NavigateWithoutAnimationAsync(Pages.Transcribe, navigationParameters).ConfigureAwait(false);
+                if (FileItem.IsUploading)
+                    return;
+
+                var page = FileItem.UploadStatus == UploadStatus.Completed ? Pages.Transcribe : Pages.Create;
+                await _navigationService.NavigateWithoutAnimationAsync(page, navigationParameters).ConfigureAwait(false);
             }
             else if (recognitionState == RecognitionState.Completed)
             {
