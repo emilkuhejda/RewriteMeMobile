@@ -126,7 +126,7 @@ namespace RewriteMe.Business.Services
                 ).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<Ok>> UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken)
+        public async Task<HttpRequestResult<FileItem>> UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
                 () => MakeServiceCall(client => client.UploadSourceFileAsync(fileItemId, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, source, cancellationToken), GetAuthHeaders())

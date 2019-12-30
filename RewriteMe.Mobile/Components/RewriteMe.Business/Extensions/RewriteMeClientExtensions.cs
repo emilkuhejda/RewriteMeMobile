@@ -8,7 +8,7 @@ namespace RewriteMe.Business.Extensions
 {
     public static class RewriteMeClientExtensions
     {
-        public static async Task<Ok> UploadSourceFileAsync(this RewriteMeClient rewriteMeClient, Guid fileItemId, Guid applicationId, string version, byte[] source, CancellationToken cancellationToken)
+        public static async Task<FileItem> UploadSourceFileAsync(this RewriteMeClient rewriteMeClient, Guid fileItemId, Guid applicationId, string version, byte[] source, CancellationToken cancellationToken)
         {
             using (var stream = new MemoryStream(source))
             {

@@ -117,17 +117,16 @@ namespace RewriteMe.Business.Services
         public async Task UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken)
         {
             var httpRequestResult = await _rewriteMeWebService.UploadSourceFileAsync(fileItemId, source, cancellationToken).ConfigureAwait(false);
-            if (httpRequestResult.State == HttpRequestState.Success)
-            {
-                return;
-            }
-
             if (httpRequestResult.State == HttpRequestState.Error)
             {
                 throw new ErrorRequestException(httpRequestResult.StatusCode);
             }
 
-            throw new OfflineRequestException();
+            if (httpRequestResult.State != HttpRequestState.Success)
+                throw new OfflineRequestException();
+
+            var fileItem = httpRequestResult.Payload;
+            await _fileItemRepository.UpdateAsync(fileItem).ConfigureAwait(false);
         }
 
         public async Task<bool> CanTranscribeAsync()
