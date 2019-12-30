@@ -8,8 +8,7 @@ namespace RewriteMe.Business.Configuration
 {
     public class ApplicationSettings : IApplicationSettings
     {
-        //private const string HostUrl = "https://voicipher.com/";
-        private const string HostUrl = "https://192.168.0.107:45455/";
+        private const string HostUrl = "https://voicipher.com/";
         private const string OsxAppCenterKey = "38ccf01c-fc36-4b94-a5c2-743c02852b23";
         private const string AndroidAppCenterKey = "a888ddaf-c5e2-4461-ae7e-0d896cf022df";
         private const string Tenant = "voicipher.onmicrosoft.com";
