@@ -37,9 +37,11 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<ICleanUpService, CleanUpService>();
             containerRegistry.RegisterSingleton<IConnectivityService, ConnectivityService>();
             containerRegistry.RegisterSingleton<IInformationMessageService, InformationMessageService>();
+            containerRegistry.RegisterSingleton<IUploadedSourceService, UploadedSourceService>();
 
             containerRegistry.RegisterSingleton<ISynchronizerService, SynchronizerService>();
             containerRegistry.RegisterSingleton<ITranscribeItemManager, TranscribeItemManager>();
+            containerRegistry.RegisterSingleton<IFileItemSourceUploader, FileItemSourceUploader>();
         }
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 
@@ -13,14 +14,24 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<bool> AnyWaitingForSynchronizationAsync();
 
+        Task<FileItem> GetAsync(Guid fileItemId);
+
         Task<IEnumerable<FileItem>> GetAllAsync();
 
         Task DeleteAsync(FileItem fileItem);
 
-        Task<FileItem> UploadAsync(MediaFile mediaFile, CancellationToken cancellationToken);
+        Task<FileItem> CreateAsync(MediaFile mediaFile, CancellationToken cancellationToken);
+
+        Task UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken);
 
         Task<bool> CanTranscribeAsync();
 
         Task TranscribeAsync(Guid fileItemId, string language);
+
+        Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus);
+
+        Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode);
+
+        Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode);
     }
 }

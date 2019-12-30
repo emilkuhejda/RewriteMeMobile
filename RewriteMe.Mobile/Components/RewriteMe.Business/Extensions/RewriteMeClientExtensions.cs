@@ -8,11 +8,11 @@ namespace RewriteMe.Business.Extensions
 {
     public static class RewriteMeClientExtensions
     {
-        public static async Task<FileItem> UploadFileItemAsync(this RewriteMeClient rewriteMeClient, string name, string language, string fileName, DateTime dateCreated, Guid applicationId, string version, byte[] file, CancellationToken cancellationToken)
+        public static async Task<FileItem> UploadSourceFileAsync(this RewriteMeClient rewriteMeClient, Guid fileItemId, Guid applicationId, string version, byte[] source, CancellationToken cancellationToken)
         {
-            using (var stream = new MemoryStream(file))
+            using (var stream = new MemoryStream(source))
             {
-                return await rewriteMeClient.UploadFileItemAsync(name, language, fileName, dateCreated, applicationId, version, stream, cancellationToken).ConfigureAwait(false);
+                return await rewriteMeClient.UploadSourceFileAsync(fileItemId, applicationId, version, stream, cancellationToken).ConfigureAwait(false);
             }
         }
     }

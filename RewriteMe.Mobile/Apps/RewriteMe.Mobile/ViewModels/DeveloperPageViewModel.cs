@@ -2,7 +2,6 @@
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Plugin.DeviceInfo;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Configuration;
@@ -10,6 +9,7 @@ using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Resources.Localization;
+using Xamarin.Essentials;
 using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -82,14 +82,13 @@ namespace RewriteMe.Mobile.ViewModels
 
             try
             {
-                var device = CrossDevice.Device;
                 var subject = $"{Loc.Text(TranslationKeys.ApplicationTitleLog)}";
                 var message = new StringBuilder()
                     .AppendLine()
                     .AppendLine()
                     .AppendLine("_______________________________________")
-                    .AppendLine($"Device hardware: {device.Manufacturer} {device.Model}")
-                    .AppendLine($"Operating system: {Device.RuntimePlatform} {device.OperatingSystem}")
+                    .AppendLine($"Device hardware: {DeviceInfo.Manufacturer} {DeviceInfo.Model}")
+                    .AppendLine($"Operating system: {Device.RuntimePlatform} {DeviceInfo.Version}")
                     .ToString();
 
                 var fileInfo = _logFileReader.GetLogFileInfo();

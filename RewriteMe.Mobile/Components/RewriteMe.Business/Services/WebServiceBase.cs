@@ -11,6 +11,8 @@ namespace RewriteMe.Business.Services
 {
     public abstract class WebServiceBase
     {
+        private HttpClient _client;
+
         protected WebServiceBase(
             IWebServiceErrorHandler webServiceErrorHandler,
             IApplicationSettings applicationSettings)
@@ -19,11 +21,25 @@ namespace RewriteMe.Business.Services
             ApplicationSettings = applicationSettings;
         }
 
+        private HttpClient Client => _client ?? (_client = CreateHttpClient());
+
         protected IWebServiceErrorHandler WebServiceErrorHandler { get; }
 
         protected IApplicationSettings ApplicationSettings { get; }
 
-        protected async Task<T> MakeServiceCall<T>(Func<RewriteMeClient, Task<T>> webServiceCall, CustomHeadersDictionary customHeaders = null, int timeoutSeconds = 600)
+        protected async Task<T> MakeServiceCall<T>(Func<RewriteMeClient, Task<T>> webServiceCall, CustomHeadersDictionary customHeaders = null)
+        {
+            var rewriteMeClient = new RewriteMeClient(ApplicationSettings.WebApiUrl, Client);
+
+            if (customHeaders != null)
+            {
+                rewriteMeClient.AddCustomHeaders(customHeaders);
+            }
+
+            return await webServiceCall(rewriteMeClient).ConfigureAwait(false);
+        }
+
+        protected HttpClient CreateHttpClient(int timeoutSeconds = 600)
         {
             var httpClientHandler = new HttpClientHandler
             {
@@ -31,24 +47,12 @@ namespace RewriteMe.Business.Services
                 ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true
             };
 
-            var httpClient = new HttpClient(httpClientHandler) { Timeout = TimeSpan.FromSeconds(timeoutSeconds) };
-
-            try
+            var httpClient = new HttpClient(httpClientHandler)
             {
-                var rewriteMeClient = new RewriteMeClient(ApplicationSettings.WebApiUrl, httpClient);
+                Timeout = TimeSpan.FromSeconds(timeoutSeconds)
+            };
 
-                if (customHeaders != null)
-                {
-                    rewriteMeClient.AddCustomHeaders(customHeaders);
-                }
-
-                return await webServiceCall(rewriteMeClient).ConfigureAwait(false);
-            }
-            finally
-            {
-                httpClientHandler.Dispose();
-                httpClient.Dispose();
-            }
+            return httpClient;
         }
     }
 }

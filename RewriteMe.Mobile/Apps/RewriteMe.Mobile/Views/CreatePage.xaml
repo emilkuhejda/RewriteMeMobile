@@ -18,15 +18,28 @@
         <controls:AlwaysScrollView Grid.Row="0" Padding="{StaticResource StandardPadding}">
             <StackLayout>
                 <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
-                    <Entry Text="{Binding Name}" />
+                    <Entry IsReadOnly="{Binding IsEdit}" Text="{Binding Name}" />
                 </textInputLayout:SfTextInputLayout>
 
-                <textInputLayout:SfTextInputLayout Margin="0,0,0,20" ContainerType="Outlined">
+                <textInputLayout:SfTextInputLayout Margin="0,0,0,20"
+                                                   ContainerType="Outlined"
+                                                   IsVisible="{Binding IsEdit, Converter={StaticResource InvertedBoolConverter}}">
                     <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
                             ItemDisplayBinding="{Binding Key, Converter={StaticResource KeyToLocalizedTextConverter}}"
                             ItemsSource="{Binding AvailableLanguages}"
                             SelectedItem="{Binding SelectedLanguage}" />
                 </textInputLayout:SfTextInputLayout>
+
+                <textInputLayout:SfTextInputLayout Margin="0,0,0,20"
+                                                   ContainerType="Outlined"
+                                                   IsVisible="{Binding IsEdit}">
+                    <Entry IsReadOnly="True" Text="{Binding SelectedLanguage.Key, Converter={StaticResource KeyToLocalizedTextConverter}}" />
+                </textInputLayout:SfTextInputLayout>
+
+                <Label Margin="0,0,0,20"
+                       IsVisible="{Binding IsUploadErrorMessageVisible}"
+                       Style="{StaticResource ErrorLabelStyle}"
+                       Text="{Binding UploadErrorMessage}" />
 
                 <Label Margin="0,0,0,20"
                        IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}"

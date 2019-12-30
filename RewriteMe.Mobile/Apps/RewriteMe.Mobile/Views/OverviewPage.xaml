@@ -46,17 +46,37 @@
                            Text="{Binding DateCreated}" />
                 </StackLayout>
 
-                <formsSvg:SvgCachedImage Grid.Column="2"
+                <svgForms:SvgCachedImage Grid.Column="2"
                                          Aspect="AspectFit"
-                                         IsVisible="{Binding IsCompleted}"
                                          HeightRequest="30"
                                          HorizontalOptions="Center"
+                                         IsVisible="{Binding IsCompleted}"
                                          Source="resource://RewriteMe.Mobile.Resources.Images.Success.svg"
                                          VerticalOptions="Center"
                                          WidthRequest="30" />
 
+                <svgForms:SvgCachedImage Grid.Column="2"
+                                         Aspect="AspectFit"
+                                         HeightRequest="30"
+                                         HorizontalOptions="Center"
+                                         IsVisible="{Binding HasError}"
+                                         Source="resource://RewriteMe.Mobile.Resources.Images.Error.svg"
+                                         VerticalOptions="Center"
+                                         WidthRequest="30" />
+
                 <xForms:SfBusyIndicator Grid.Column="2"
-                                        AnimationType="Print"
+                                        AnimationType="Ball"
+                                        BackgroundColor="{StaticResource ColorWhite}"
+                                        HeightRequest="40"
+                                        IsVisible="{Binding IsUploading}"
+                                        TextColor="{StaticResource ColorPrimary}"
+                                        VerticalOptions="Center"
+                                        ViewBoxHeight="40"
+                                        ViewBoxWidth="40"
+                                        WidthRequest="40" />
+
+                <xForms:SfBusyIndicator Grid.Column="2"
+                                        AnimationType="SingleCircle"
                                         BackgroundColor="{StaticResource ColorWhite}"
                                         HeightRequest="40"
                                         IsVisible="{Binding IsInProgress}"

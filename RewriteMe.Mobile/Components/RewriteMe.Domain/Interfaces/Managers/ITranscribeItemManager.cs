@@ -4,18 +4,10 @@ using RewriteMe.Domain.Events;
 
 namespace RewriteMe.Domain.Interfaces.Managers
 {
-    public interface ITranscribeItemManager
+    public interface ITranscribeItemManager : ISynchronizationManager
     {
         event EventHandler<ProgressEventArgs> InitializationProgress;
 
-        event EventHandler<ManagerStateChangedEventArgs> StateChanged;
-
-        event EventHandler UnauthorizedCallOccurred;
-
-        bool IsRunning { get; }
-
         Task SynchronizationAsync();
-
-        void Cancel();
     }
 }

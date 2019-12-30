@@ -39,6 +39,8 @@ namespace RewriteMe.DataAccess
 
         public AsyncTableQuery<InformationMessageEntity> InformationMessages => Database.Table<InformationMessageEntity>();
 
+        public AsyncTableQuery<UploadedSourceEntity> UploadedSources => Database.Table<UploadedSourceEntity>();
+
         public async Task RunInTransactionAsync(Action<SQLiteConnection> action)
         {
             await SemaphoreSlim.WaitAsync().ConfigureAwait(true);
