@@ -23,6 +23,8 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task DeleteAsync(Guid fileItemId);
 
+        Task UpdateAsync(FileItem fileItem);
+
         Task UpdateRecognitionStateAsync(Guid fileItemId, RecognitionState recognitionState);
 
         Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus);

@@ -80,6 +80,12 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.DeleteAsync<FileItemEntity>(fileItemId).ConfigureAwait(false);
         }
 
+        public async Task UpdateAsync(FileItem fileItem)
+        {
+            var entity = fileItem.ToFileItemEntity();
+            await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
+        }
+
         public async Task UpdateRecognitionStateAsync(Guid fileItemId, RecognitionState recognitionState)
         {
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
