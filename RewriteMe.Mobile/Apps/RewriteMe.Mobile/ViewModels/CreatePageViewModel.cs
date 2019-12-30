@@ -79,8 +79,16 @@ namespace RewriteMe.Mobile.ViewModels
         public bool IsEdit
         {
             get => _isEdit;
-            set => SetProperty(ref _isEdit, value);
+            set
+            {
+                if (SetProperty(ref _isEdit, value))
+                {
+                    RaisePropertyChanged(nameof(IsLanguageLabelVisible));
+                }
+            }
         }
+
+        public bool IsLanguageLabelVisible => IsEdit && SelectedLanguage != null;
 
         public string Name
         {
@@ -110,6 +118,7 @@ namespace RewriteMe.Mobile.ViewModels
                 if (SetProperty(ref _selectedLanguage, value))
                 {
                     ReevaluateNavigationItemIconKeys();
+                    RaisePropertyChanged(nameof(IsLanguageLabelVisible));
                 }
             }
         }

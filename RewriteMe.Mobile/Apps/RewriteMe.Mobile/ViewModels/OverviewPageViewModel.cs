@@ -59,6 +59,8 @@ namespace RewriteMe.Mobile.ViewModels
                 var isNavigationBack = navigationParameters.GetValue<bool>(NavigationConstants.NavigationBack);
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New && !isNavigationBack)
                 {
+                    await ResetUploadStatusesAsync().ConfigureAwait(false);
+
                     var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
                     if (importedFile != null)
                     {
@@ -98,6 +100,14 @@ namespace RewriteMe.Mobile.ViewModels
                         FileItems.Insert(index, new FileItemViewModel(fileItem, NavigationService));
                     }
                 }
+            }
+        }
+
+        private async Task ResetUploadStatusesAsync()
+        {
+            if (!_fileItemSourceUploader.IsRunning)
+            {
+                await _fileItemService.ResetUploadStatusesAsync().ConfigureAwait(false);
             }
         }
 
