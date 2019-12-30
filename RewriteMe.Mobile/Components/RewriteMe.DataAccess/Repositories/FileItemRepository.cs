@@ -34,6 +34,16 @@ namespace RewriteMe.DataAccess.Repositories
             return entity?.ToFileItem();
         }
 
+        public async Task<IEnumerable<FileItem>> GetUploadingFilesAsync()
+        {
+            var entities = await _contextProvider.Context.FileItems
+                .Where(x => x.UploadStatus == UploadStatus.InProgress)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            return entities.Select(x => x.ToFileItem());
+        }
+
         public async Task<bool> AnyWaitingForSynchronizationAsync()
         {
             var recognitionState = RecognitionState.InProgress;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
+using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
@@ -171,6 +172,19 @@ namespace RewriteMe.Business.Services
         public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode)
         {
             await _fileItemRepository.SetTranscribeErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
+        }
+
+        public async Task ResetUploadStatusesAsync()
+        {
+            var fileItemsInUploadingState = await _fileItemRepository.GetUploadingFilesAsync().ConfigureAwait(false);
+            if (fileItemsInUploadingState == null)
+                return;
+
+            foreach (var fileItem in fileItemsInUploadingState)
+            {
+                await UpdateUploadStatusAsync(fileItem.Id, UploadStatus.Error).ConfigureAwait(false);
+                await SetUploadErrorCodeAsync(fileItem.Id, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
+            }
         }
     }
 }
