@@ -15,8 +15,6 @@ namespace RewriteMe.Domain.WebApi
 
         public UploadStatus UploadStatus { get; set; }
 
-        public bool IsUploading => UploadStatus == UploadStatus.InProgress;
-
         public int? UploadErrorCode { get; set; }
 
         public int? TranscribeErrorCode { get; set; }
