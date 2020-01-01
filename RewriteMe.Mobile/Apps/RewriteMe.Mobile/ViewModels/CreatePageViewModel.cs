@@ -293,8 +293,7 @@ namespace RewriteMe.Mobile.ViewModels
                         var fileItem = IsEdit ? FileItem : await _fileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
                         var uploadedSource = CreateUploadedSource(fileItem, mediaFile, isTranscript);
 
-                        await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
-                        MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.UploadFileItem), nameof(BackgroundServiceType.UploadFileItem));
+                        UploadFileItemSource(uploadedSource);
 
                         await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                     }
@@ -320,6 +319,15 @@ namespace RewriteMe.Mobile.ViewModels
             }
 
             ResetLoadingText();
+        }
+
+        private void UploadFileItemSource(UploadedSource uploadedSource)
+        {
+            Task.Run(async () =>
+            {
+                await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
+                MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.UploadFileItem), nameof(BackgroundServiceType.UploadFileItem));
+            });
         }
 
         private UploadedSource CreateUploadedSource(FileItem fileItem, MediaFile mediaFile, bool isTranscript)
