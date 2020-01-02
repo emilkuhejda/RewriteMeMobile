@@ -4,7 +4,6 @@
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-                          xmlns:forms1="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
@@ -55,12 +54,12 @@
             <CollectionView ItemTemplate="{StaticResource RecordedItemsTemplate}" ItemsSource="{Binding RecordedItems}">
                 <CollectionView.EmptyView>
                     <StackLayout HorizontalOptions="Center" Orientation="Vertical">
-                        <forms1:CachedImage Margin="0,20,0,20"
-                                            Aspect="AspectFit"
-                                            HeightRequest="150"
-                                            HorizontalOptions="Center"
-                                            Source="resource://RewriteMe.Mobile.Resources.Images.EmptyList.png"
-                                            VerticalOptions="End" />
+                        <forms:SvgCachedImage Margin="0,20,0,20"
+                                              Aspect="AspectFit"
+                                              HeightRequest="150"
+                                              HorizontalOptions="Center"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.EmptyList.svg"
+                                              VerticalOptions="End" />
 
                         <Label Style="{StaticResource NoItemsLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoRecordingsMessage}}" />
 

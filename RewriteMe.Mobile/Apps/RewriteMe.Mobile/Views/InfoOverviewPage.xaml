@@ -3,7 +3,6 @@
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:converters="clr-namespace:RewriteMe.Mobile.Converters;assembly=RewriteMe.Mobile"
-                          xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:svgForms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
@@ -48,12 +47,12 @@
                 <CollectionView.EmptyView>
                     <Grid>
                         <StackLayout HorizontalOptions="Center" Orientation="Vertical">
-                            <forms:CachedImage Margin="0,20,0,20"
-                                               Aspect="AspectFit"
-                                               HeightRequest="150"
-                                               HorizontalOptions="Center"
-                                               Source="resource://RewriteMe.Mobile.Resources.Images.NoAvailableData.png"
-                                               VerticalOptions="End" />
+                            <svgForms:SvgCachedImage Margin="0,20,0,20"
+                                                     Aspect="AspectFit"
+                                                     HeightRequest="150"
+                                                     HorizontalOptions="Center"
+                                                     Source="resource://RewriteMe.Mobile.Resources.Images.NoAvailableData.svg"
+                                                     VerticalOptions="End" />
 
                             <Label Style="{StaticResource NoItemsLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableMessages}}" />
                         </StackLayout>
