@@ -2,11 +2,11 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Upload;
+using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.Business.Managers
 {
@@ -72,7 +72,7 @@ namespace RewriteMe.Business.Managers
             await UploadInternalAsync(cancellationToken).ConfigureAwait(false);
         }
 
-        private async Task<bool> UploadSourceFileAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
+        private async Task UploadSourceFileAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
         {
             try
             {
@@ -82,7 +82,7 @@ namespace RewriteMe.Business.Managers
                 await _fileItemService.UploadSourceFileAsync(uploadedSource.FileItemId, uploadedSource.Source, cancellationToken).ConfigureAwait(false);
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Completed, null).ConfigureAwait(false);
 
-                return true;
+                return;
             }
             catch (UnauthorizedAccessException)
             {
@@ -105,7 +105,6 @@ namespace RewriteMe.Business.Managers
             }
 
             CancellationTokenSource.Cancel();
-            return false;
         }
 
         private async Task TranscribeAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
