@@ -186,7 +186,7 @@ namespace RewriteMe.Mobile.ViewModels
                     Name = FileItem.Name;
                     SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
                     UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
-                    IsUploadErrorMessageVisible = true;
+                    IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
             }
         }
@@ -292,6 +292,8 @@ namespace RewriteMe.Mobile.ViewModels
                         var mediaFile = CreateMediaFile();
                         var fileItem = IsEdit ? FileItem : await _fileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
                         var uploadedSource = CreateUploadedSource(fileItem, mediaFile, isTranscript);
+
+                        await _fileItemService.UpdateUploadStatusAsync(fileItem.Id, UploadStatus.InProgress).ConfigureAwait(false);
 
                         UploadFileItemSource(uploadedSource);
 

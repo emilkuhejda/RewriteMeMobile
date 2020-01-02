@@ -82,6 +82,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 switch (FileItem.UploadStatus)
                 {
+                    case UploadStatus.None:
                     case UploadStatus.Error:
                         await _navigationService.NavigateWithoutAnimationAsync(Pages.Create, navigationParameters).ConfigureAwait(false);
                         break;
