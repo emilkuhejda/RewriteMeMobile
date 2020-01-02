@@ -3,10 +3,8 @@
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
-                          xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
                           xmlns:formsSvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
-                          xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:svgForms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
@@ -96,12 +94,12 @@
             <CollectionView ItemTemplate="{StaticResource FileItemsTemplate}" ItemsSource="{Binding FileItems}">
                 <CollectionView.EmptyView>
                     <StackLayout HorizontalOptions="Center" Orientation="Vertical">
-                        <forms:CachedImage Margin="0,20,0,20"
-                                           Aspect="AspectFit"
-                                           HeightRequest="150"
-                                           HorizontalOptions="Center"
-                                           Source="resource://RewriteMe.Mobile.Resources.Images.EmptyList.png"
-                                           VerticalOptions="End" />
+                        <formsSvg:SvgCachedImage Margin="0,20,0,20"
+                                                 Aspect="AspectFit"
+                                                 HeightRequest="150"
+                                                 HorizontalOptions="Center"
+                                                 Source="resource://RewriteMe.Mobile.Resources.Images.EmptyList.svg"
+                                                 VerticalOptions="End" />
 
                         <Label Style="{StaticResource NoItemsLabelStyle}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoFilesMessage}}" />
 
