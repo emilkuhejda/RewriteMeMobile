@@ -186,7 +186,7 @@ namespace RewriteMe.Mobile.ViewModels
                     Name = FileItem.Name;
                     SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
                     UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
-                    IsUploadErrorMessageVisible = true;
+                    IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
             }
         }
@@ -293,8 +293,9 @@ namespace RewriteMe.Mobile.ViewModels
                         var fileItem = IsEdit ? FileItem : await _fileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
                         var uploadedSource = CreateUploadedSource(fileItem, mediaFile, isTranscript);
 
-                        await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
-                        MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.UploadFileItem), nameof(BackgroundServiceType.UploadFileItem));
+                        await _fileItemService.UpdateUploadStatusAsync(fileItem.Id, UploadStatus.InProgress).ConfigureAwait(false);
+
+                        UploadFileItemSource(uploadedSource);
 
                         await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                     }
@@ -320,6 +321,15 @@ namespace RewriteMe.Mobile.ViewModels
             }
 
             ResetLoadingText();
+        }
+
+        private void UploadFileItemSource(UploadedSource uploadedSource)
+        {
+            Task.Run(async () =>
+            {
+                await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
+                MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.UploadFileItem), nameof(BackgroundServiceType.UploadFileItem));
+            });
         }
 
         private UploadedSource CreateUploadedSource(FileItem fileItem, MediaFile mediaFile, bool isTranscript)
