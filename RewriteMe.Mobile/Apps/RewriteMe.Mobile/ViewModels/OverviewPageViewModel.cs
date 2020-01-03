@@ -60,13 +60,6 @@ namespace RewriteMe.Mobile.ViewModels
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New && !isNavigationBack)
                 {
                     await ResetUploadStatusesAsync().ConfigureAwait(false);
-
-                    var importedFile = navigationParameters.GetValue<ImportedFileNavigationParameters>();
-                    if (importedFile != null)
-                    {
-                        await NavigationService.NavigateWithoutAnimationAsync(Pages.Create, navigationParameters).ConfigureAwait(false);
-                    }
-
                     await SynchronizationAsync().ConfigureAwait(false);
                 }
 
