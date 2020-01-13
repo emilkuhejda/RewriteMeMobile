@@ -111,7 +111,11 @@ namespace RewriteMe.Mobile
             var alreadySignedIn = AsyncHelper.RunSync(() => Container.Resolve<IUserSessionService>().IsSignedInAsync());
             if (alreadySignedIn)
             {
-                NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
+                var name = navigationParameters.ContainsKey(nameof(ImportedFileNavigationParameters))
+                    ? $"/{Pages.Navigation}/{Pages.Overview}/{Pages.Create}"
+                    : $"/{Pages.Navigation}/{Pages.Overview}";
+
+                NavigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
             }
             else
             {
