@@ -97,9 +97,13 @@ namespace RewriteMe.Business.Managers
             {
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, ex.StatusCode).ConfigureAwait(false);
             }
+            catch (FileChunkNotUploadedUploadException)
+            {
+                await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, (int)HttpStatusCode.BadRequest).ConfigureAwait(false);
+            }
             catch (NoSubscritionFreeTimeException)
             {
-                await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, (int)HttpStatusCode.Conflict).ConfigureAwait(false);
+                await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, (int)HttpStatusCode.MethodNotAllowed).ConfigureAwait(false);
             }
             catch (OfflineRequestException)
             {
