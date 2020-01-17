@@ -350,8 +350,8 @@
   <data name="UnreachableServerErrorMessage" xml:space="preserve">
     <value>Server je nedostupný. Prosím, opakujte operáciu neskôr.</value>
   </data>
-  <data name="UploadedFileNotFoundErrorMessage" xml:space="preserve">
-    <value>Nahrávaný súbor nebol nájdený. Prosím, opakujte operáciu neskôr.</value>
+  <data name="UploadedFileIsCorruptedErrorMessage" xml:space="preserve">
+    <value>Nahrávaný súbor je poškodený. Prosím, nahrajte ho opäť.</value>
   </data>
   <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
     <value>Nahrávaný súbor nie je podporovaný.</value>

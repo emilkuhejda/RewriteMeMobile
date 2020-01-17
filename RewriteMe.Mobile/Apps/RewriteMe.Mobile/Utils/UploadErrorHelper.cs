@@ -10,7 +10,7 @@ namespace RewriteMe.Mobile.Utils
             switch (statusCode)
             {
                 case (int)HttpStatusCode.BadRequest:
-                    return Loc.Text(TranslationKeys.UploadedFileNotFoundErrorMessage);
+                    return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
                 case (int)HttpStatusCode.Unauthorized:
                     return Loc.Text(TranslationKeys.UnauthorizedErrorMessage);
                 case (int)HttpStatusCode.MethodNotAllowed:

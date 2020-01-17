@@ -328,7 +328,7 @@
   <data name="NoRecordingsMessage" xml:space="preserve">
     <value>Any recordings yet?</value>
   </data>
-  
+
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>You don't have a permission to upload file. Please, try again later.</value>
   </data>
@@ -350,8 +350,8 @@
   <data name="UnreachableServerErrorMessage" xml:space="preserve">
     <value>Server is unreachable. Please try again later.</value>
   </data>
-  <data name="UploadedFileNotFoundErrorMessage" xml:space="preserve">
-    <value>Uploaded file is not found. Please try again later.</value>
+  <data name="UploadedFileIsCorruptedErrorMessage" xml:space="preserve">
+    <value>Uploaded file is corrupted. Please upload again.</value>
   </data>
   <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
     <value>Uploaded file is not supported.</value>
