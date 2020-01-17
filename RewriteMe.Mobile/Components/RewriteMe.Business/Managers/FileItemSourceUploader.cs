@@ -74,12 +74,14 @@ namespace RewriteMe.Business.Managers
 
         private async Task UploadSourceFileAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
         {
+            var isUploadSuccess = false;
             try
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.InProgress, null).ConfigureAwait(false);
-                await _fileItemService.UploadSourceFileAsync(uploadedSource.FileItemId, uploadedSource.Source, cancellationToken).ConfigureAwait(false);
+                await _fileItemService.DeleteChunksAsync(uploadedSource.FileItemId).ConfigureAwait(false);
+                isUploadSuccess = await _fileItemService.UploadSourceFileAsync(uploadedSource.FileItemId, uploadedSource.Source, cancellationToken).ConfigureAwait(false);
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Completed, null).ConfigureAwait(false);
 
                 return;
@@ -102,6 +104,13 @@ namespace RewriteMe.Business.Managers
             catch (OfflineRequestException)
             {
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
+            }
+            finally
+            {
+                if (!isUploadSuccess)
+                {
+                    await _fileItemService.DeleteChunksAsync(uploadedSource.FileItemId).ConfigureAwait(false);
+                }
             }
 
             CancellationTokenSource.Cancel();

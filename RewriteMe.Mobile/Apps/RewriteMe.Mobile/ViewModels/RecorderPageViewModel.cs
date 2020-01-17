@@ -413,7 +413,7 @@ namespace RewriteMe.Mobile.ViewModels
                 var models = _recognizedAudioFiles.Select(x => new SpeechResultModel
                 {
                     Id = x.RecordedAudioFile.Id,
-                    TotalTime = x.RecordedAudioFile.TotalTime.ToString()
+                    Ticks = x.RecordedAudioFile.TotalTime.Ticks
                 }).ToList();
                 var httpRequestResult = await _rewriteMeWebService.UpdateSpeechResultsAsync(models).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)

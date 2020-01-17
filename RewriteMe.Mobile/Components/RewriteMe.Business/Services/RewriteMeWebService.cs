@@ -126,11 +126,25 @@ namespace RewriteMe.Business.Services
                 ).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<FileItem>> UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken)
+        public async Task<HttpRequestResult<Ok>> UploadChunkFileAsync(Guid fileItemId, int order, byte[] source, CancellationToken cancellationToken)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.UploadSourceFileAsync(fileItemId, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, source, cancellationToken), GetAuthHeaders())
-                ).ConfigureAwait(false);
+                () => MakeServiceCall(client => client.UploadChunkFileAsync(fileItemId, order, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, source, cancellationToken), GetAuthHeaders())
+            ).ConfigureAwait(false);
+        }
+
+        public async Task<HttpRequestResult<FileItem>> SubmitChunksAsync(Guid fileItemId, int chunksCount, CancellationToken cancellationToken)
+        {
+            return await WebServiceErrorHandler.HandleResponseAsync(
+                () => MakeServiceCall(client => client.SubmitChunksAsync(fileItemId, chunksCount, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, cancellationToken), GetAuthHeaders())
+            ).ConfigureAwait(false);
+        }
+
+        public async Task<HttpRequestResult<Ok>> DeleteChunksAsync(Guid fileItemId)
+        {
+            return await WebServiceErrorHandler.HandleResponseAsync(
+                () => MakeServiceCall(client => client.DeleteChunksAsync(fileItemId, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion), GetAuthHeaders())
+            ).ConfigureAwait(false);
         }
 
         public async Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language)
