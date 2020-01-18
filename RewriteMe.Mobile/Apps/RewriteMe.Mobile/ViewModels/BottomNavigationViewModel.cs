@@ -97,7 +97,7 @@ namespace RewriteMe.Mobile.ViewModels
             await NavigateToAsync($"/{Pages.Navigation}/{Pages.Settings}", CurrentPage.Settings).ConfigureAwait(false);
         }
 
-        private async Task NavigateToAsync(string name, CurrentPage currentPage, NavigationParameters navigationParameters = null)
+        private async Task NavigateToAsync(string name, CurrentPage currentPage, INavigationParameters navigationParameters = null)
         {
             var navigationPage = Application.Current.MainPage as RewriteMeNavigationPage;
             navigationPage?.Pages.ForEach(x => ((ViewModelBase)x.BindingContext).Dispose());
