@@ -33,7 +33,11 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<FileItem>> CreateFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken);
 
-        Task<HttpRequestResult<FileItem>> UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken);
+        Task<HttpRequestResult<Ok>> UploadChunkFileAsync(Guid fileItemId, int order, byte[] source, CancellationToken cancellationToken);
+
+        Task<HttpRequestResult<FileItem>> SubmitChunksAsync(Guid fileItemId, int chunksCount, CancellationToken cancellationToken);
+
+        Task<HttpRequestResult<Ok>> DeleteChunksAsync(Guid fileItemId);
 
         Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language);
 

@@ -22,7 +22,9 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<FileItem> CreateAsync(MediaFile mediaFile, CancellationToken cancellationToken);
 
-        Task UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken);
+        Task<bool> UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken);
+
+        Task DeleteChunksAsync(Guid fileItemId);
 
         Task<bool> CanTranscribeAsync();
 
