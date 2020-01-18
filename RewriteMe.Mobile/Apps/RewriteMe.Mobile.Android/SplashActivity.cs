@@ -1,9 +1,12 @@
-﻿using Android.App;
+﻿using System;
+using System.IO;
+using Android.App;
 using Android.Content;
 using Android.Content.PM;
 using Android.OS;
 using Android.Support.V7.App;
-using RewriteMe.Mobile.Droid.Utils;
+using RewriteMe.Business.Configuration;
+using RewriteMe.Mobile.Droid.Extensions;
 
 namespace RewriteMe.Mobile.Droid
 {
@@ -30,8 +33,19 @@ namespace RewriteMe.Mobile.Droid
 
             if (Intent.Action == Intent.ActionSend)
             {
+                byte[] bytes;
                 var path = Intent.ClipData.GetItemAt(0);
-                intent.PutExtra(ExtraConstants.FileUri, path.Uri);
+                var stream = ContentResolver.OpenInputStream(path.Uri);
+                using (var memoryStream = new MemoryStream())
+                {
+                    stream.CopyTo(memoryStream);
+                    bytes = memoryStream.ToArray();
+                }
+
+                var filePath = path.Uri.GetPath(ContentResolver);
+                var fileName = Path.GetFileName(Uri.UnescapeDataString(filePath));
+                InitializationParameters.Current.ImportedFileName = fileName;
+                InitializationParameters.Current.ImportedFileSource = bytes;
             }
 
             StartActivity(intent);
