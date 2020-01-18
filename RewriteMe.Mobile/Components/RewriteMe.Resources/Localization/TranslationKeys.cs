@@ -86,7 +86,7 @@
         public static string UploadFileItemInfoMessage => "UploadFileItemInfoMessage";
         public static string OfflineErrorMessage => "OfflineErrorMessage";
         public static string UnreachableServerErrorMessage => "UnreachableServerErrorMessage";
-        public static string UploadedFileNotFoundErrorMessage => "UploadedFileNotFoundErrorMessage";
+        public static string UploadedFileIsCorruptedErrorMessage => "UploadedFileIsCorruptedErrorMessage";
         public static string UploadedFileNotSupportedErrorMessage => "UploadedFileNotSupportedErrorMessage";
         public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
         public static string NotEnoughFreeMinutesInSubscriptionErrorMessage => "NotEnoughFreeMinutesInSubscriptionErrorMessage";

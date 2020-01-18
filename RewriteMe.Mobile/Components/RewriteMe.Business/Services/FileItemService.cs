@@ -5,6 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Exceptions;
@@ -22,6 +23,8 @@ namespace RewriteMe.Business.Services
 {
     public class FileItemService : IFileItemService
     {
+        private const int UploadedChunkSize = 10 * 1024 * 1024;
+
         private readonly IDeletedFileItemService _deletedFileItemService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
@@ -115,19 +118,67 @@ namespace RewriteMe.Business.Services
             throw new OfflineRequestException();
         }
 
-        public async Task UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken)
+        public async Task<bool> UploadSourceFileAsync(Guid fileItemId, byte[] source, CancellationToken cancellationToken)
         {
-            var httpRequestResult = await _rewriteMeWebService.UploadSourceFileAsync(fileItemId, source, cancellationToken).ConfigureAwait(false);
-            if (httpRequestResult.State == HttpRequestState.Error)
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var sourceParts = source.Split(UploadedChunkSize);
+            var fileChunks = new List<FileChunk>();
+            var order = 1;
+            foreach (var sourcePart in sourceParts)
             {
-                throw new ErrorRequestException(httpRequestResult.StatusCode);
+                fileChunks.Add(new FileChunk(fileItemId, order++, sourcePart.ToArray()));
             }
+
+            cancellationToken.ThrowIfCancellationRequested();
+
+            var fileChunkRequests = fileChunks.ToArray().Split(10);
+            foreach (var requests in fileChunkRequests)
+            {
+                var updateMethods = new List<Func<Task<bool>>>();
+                foreach (var fileChunk in requests)
+                {
+                    updateMethods.Add(() => UploadChunkAsync(fileChunk, cancellationToken));
+                }
+
+                var tasks = updateMethods.Select(x => x());
+                var result = await Task.WhenAll(tasks).ConfigureAwait(false);
+
+                var isSuccess = result.All(x => x);
+                if (!isSuccess)
+                {
+                    throw new FileChunkNotUploadedUploadException();
+                }
+
+                cancellationToken.ThrowIfCancellationRequested();
+            }
+
+            var httpRequestResult = await _rewriteMeWebService.SubmitChunksAsync(fileItemId, fileChunks.Count, cancellationToken).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Error)
+                throw new ErrorRequestException(httpRequestResult.StatusCode);
 
             if (httpRequestResult.State != HttpRequestState.Success)
                 throw new OfflineRequestException();
 
+            cancellationToken.ThrowIfCancellationRequested();
+
             var fileItem = httpRequestResult.Payload;
             await _fileItemRepository.UpdateAsync(fileItem).ConfigureAwait(false);
+
+            return true;
+        }
+
+        public async Task DeleteChunksAsync(Guid fileItemId)
+        {
+            var httpRequestResult = await _rewriteMeWebService.DeleteChunksAsync(fileItemId).ConfigureAwait(false);
+            if (httpRequestResult.State != HttpRequestState.Success)
+                throw new OfflineRequestException();
+        }
+
+        private async Task<bool> UploadChunkAsync(FileChunk fileChunk, CancellationToken cancellationToken)
+        {
+            var httpRequestResult = await _rewriteMeWebService.UploadChunkFileAsync(fileChunk.FileItemId, fileChunk.Order, fileChunk.Source, cancellationToken).ConfigureAwait(false);
+            return httpRequestResult.State == HttpRequestState.Success;
         }
 
         public async Task<bool> CanTranscribeAsync()
@@ -185,6 +236,22 @@ namespace RewriteMe.Business.Services
                 await UpdateUploadStatusAsync(fileItem.Id, UploadStatus.Error).ConfigureAwait(false);
                 await SetUploadErrorCodeAsync(fileItem.Id, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
             }
+        }
+
+        private class FileChunk
+        {
+            public FileChunk(Guid fileItemId, int order, byte[] source)
+            {
+                FileItemId = fileItemId;
+                Order = order;
+                Source = source;
+            }
+
+            public Guid FileItemId { get; }
+
+            public int Order { get; }
+
+            public byte[] Source { get; }
         }
     }
 }

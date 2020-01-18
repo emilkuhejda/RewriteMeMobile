@@ -27,7 +27,7 @@ namespace RewriteMe.DataAccess.DataAdapters
                 Id = informationMessage.Id,
                 IsUserSpecific = informationMessage.IsUserSpecific,
                 WasOpened = informationMessage.WasOpened,
-                DateUpdatedUtc = informationMessage.DateUpdatedUtc.GetValueOrDefault(),
+                DateUpdatedUtc = informationMessage.DateUpdatedUtc,
                 DatePublishedUtc = informationMessage.DatePublishedUtc,
                 IsPendingSynchronization = informationMessage.IsPendingSynchronization,
                 LanguageVersions = informationMessage.LanguageVersions?.Select(x => x.ToLanguageVersionEntity()).ToArray()
