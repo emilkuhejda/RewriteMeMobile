@@ -11,6 +11,7 @@ using Prism.Ioc;
 using Prism.Navigation;
 using Prism.Unity;
 using RewriteMe.Business.Configuration;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
@@ -22,8 +23,11 @@ using RewriteMe.Mobile.Configuration;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
+using RewriteMe.Mobile.ViewModels;
+using RewriteMe.Mobile.Views;
 using Syncfusion.Licensing;
 using Unity;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -153,8 +157,17 @@ namespace RewriteMe.Mobile
 #endif
         }
 
-        protected override void OnResume()
+        protected override async void OnResume()
         {
+            var navigationParameters = InitializeNavigationParameters();
+            if (navigationParameters.ContainsKey(nameof(ImportedFileNavigationParameters)))
+            {
+                var navigationPage = Application.Current.MainPage as RewriteMeNavigationPage;
+                navigationPage?.Pages.ForEach(x => ((ViewModelBase)x.BindingContext).Dispose());
+
+                var name = $"{Pages.Overview}/{Pages.Create}";
+                await NavigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
+            }
         }
 
         protected override async void OnSleep()

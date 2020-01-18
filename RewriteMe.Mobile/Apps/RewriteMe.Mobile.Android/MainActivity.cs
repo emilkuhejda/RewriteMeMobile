@@ -1,5 +1,4 @@
-﻿using System.IO;
-using Acr.UserDialogs;
+﻿using Acr.UserDialogs;
 using Android;
 using Android.App;
 using Android.Content;
@@ -11,16 +10,13 @@ using FFImageLoading.Forms.Platform;
 using Microsoft.AppCenter.Push;
 using Microsoft.Identity.Client;
 using Plugin.InAppBilling;
-using RewriteMe.Business.Configuration;
 using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.Droid.BackgroundServices;
 using RewriteMe.Mobile.Droid.Configuration;
-using RewriteMe.Mobile.Droid.Extensions;
 using RewriteMe.Mobile.Droid.Utils;
 using Xamarin.Forms;
 using SystemUri = System.Uri;
-using Uri = Android.Net.Uri;
 
 namespace RewriteMe.Mobile.Droid
 {
@@ -43,8 +39,6 @@ namespace RewriteMe.Mobile.Droid
             CachedImageRenderer.Init(null);
             UserDialogs.Init(this);
 
-            InitializeSharedFile();
-
             StatusBarHelper.SetLightStatusBar();
 
             var bootstrapper = new AndroidBootstrapper();
@@ -57,25 +51,6 @@ namespace RewriteMe.Mobile.Droid
             }
 
             WireUpBackgroundServices();
-        }
-
-        private void InitializeSharedFile()
-        {
-            if (!(Intent.GetParcelableExtra(ExtraConstants.FileUri) is Uri uri))
-                return;
-
-            byte[] bytes;
-            var stream = ContentResolver.OpenInputStream(uri);
-            using (var memoryStream = new MemoryStream())
-            {
-                stream.CopyTo(memoryStream);
-                bytes = memoryStream.ToArray();
-            }
-
-            var filePath = uri.GetPath(ContentResolver);
-            var fileName = Path.GetFileName(SystemUri.UnescapeDataString(filePath));
-            InitializationParameters.Current.ImportedFileName = fileName;
-            InitializationParameters.Current.ImportedFileSource = bytes;
         }
 
         protected override void OnActivityResult(int requestCode, Result resultCode, Intent data)
