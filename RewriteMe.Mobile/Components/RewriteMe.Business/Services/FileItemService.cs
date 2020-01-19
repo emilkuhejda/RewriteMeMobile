@@ -23,7 +23,7 @@ namespace RewriteMe.Business.Services
 {
     public class FileItemService : IFileItemService
     {
-        private const int UploadedChunkSize = 10 * 1024 * 1024;
+        private const int UploadedChunkSize = 1024 * 1024;
 
         private readonly IDeletedFileItemService _deletedFileItemService;
         private readonly IUserSubscriptionService _userSubscriptionService;

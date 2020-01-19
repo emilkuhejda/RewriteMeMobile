@@ -162,9 +162,6 @@ namespace RewriteMe.Mobile
             var navigationParameters = InitializeNavigationParameters();
             if (navigationParameters.ContainsKey(nameof(ImportedFileNavigationParameters)))
             {
-                var navigationPage = Application.Current.MainPage as RewriteMeNavigationPage;
-                navigationPage?.Pages.ForEach(x => ((ViewModelBase)x.BindingContext).Dispose());
-
                 var name = $"{Pages.Overview}/{Pages.Create}";
                 await NavigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
             }
