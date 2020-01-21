@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using RewriteMe.Domain.Enums;
+using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 
@@ -10,6 +10,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface IFileItemService
     {
+        event EventHandler<UploadProgressEventArgs> UploadProgress;
+
         Task SynchronizationAsync(DateTime applicationUpdateDate);
 
         Task<bool> AnyWaitingForSynchronizationAsync();

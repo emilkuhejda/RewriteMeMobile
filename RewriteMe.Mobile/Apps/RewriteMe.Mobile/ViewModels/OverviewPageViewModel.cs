@@ -37,6 +37,7 @@ namespace RewriteMe.Mobile.ViewModels
             _fileItemService = fileItemService;
             _fileItemSourceUploader = fileItemSourceUploader;
 
+            fileItemService.UploadProgress += HandleUploadProgress;
             fileItemSourceUploader.StateChanged += HandleStateChanged;
 
             CreateCommand = new AsyncCommand(ExecuteCreateCommandAsync);
@@ -131,6 +132,15 @@ namespace RewriteMe.Mobile.ViewModels
             IndicatorCaption = $"{Loc.Text(TranslationKeys.LoadingData)} [{e.PercentageDone}%]";
         }
 
+        private void HandleUploadProgress(object sender, UploadProgressEventArgs e)
+        {
+            var fileItem = FileItems.SingleOrDefault(x => x.FileItem.Id == e.FileItemId);
+            if (fileItem == null)
+                return;
+
+            fileItem.Progress = e.PercentageDone;
+        }
+
         private async void HandleStateChanged(object sender, ManagerStateChangedEventArgs e)
         {
             var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
@@ -146,6 +156,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override void DisposeInternal()
         {
+            _fileItemService.UploadProgress -= HandleUploadProgress;
             _fileItemSourceUploader.StateChanged -= HandleStateChanged;
 
             base.DisposeInternal();
