@@ -137,6 +137,7 @@ namespace RewriteMe.Business.Services
             }
 
             _totalResourceInitializationTasks = fileChunks.Count;
+            _resourceInitializationTasksDone = 0;
 
             cancellationToken.ThrowIfCancellationRequested();
 
