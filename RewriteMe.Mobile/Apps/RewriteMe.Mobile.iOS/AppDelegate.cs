@@ -99,7 +99,7 @@ namespace RewriteMe.Mobile.iOS
             SfBadgeViewRenderer.Init();
             SfRadialMenuRenderer.Init();
             SfTextInputLayoutRenderer.Init();
-            SfLinearProgressBarRenderer.Init();
+            SfCircularProgressBarRenderer.Init();
 
             using (var busyIndicatorRenderer = new SfBusyIndicatorRenderer()) { }
         }

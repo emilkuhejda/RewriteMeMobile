@@ -5,6 +5,7 @@
                           xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:formsSvg="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+                          xmlns:progressBar="clr-namespace:Syncfusion.XForms.ProgressBar;assembly=Syncfusion.SfProgressBar.XForms"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:svgForms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
@@ -62,16 +63,13 @@
                                          VerticalOptions="Center"
                                          WidthRequest="30" />
 
-                <xForms:SfBusyIndicator Grid.Column="2"
-                                        AnimationType="Ball"
-                                        BackgroundColor="{StaticResource ColorWhite}"
-                                        HeightRequest="40"
-                                        IsVisible="{Binding IsUploading}"
-                                        TextColor="{StaticResource ColorPrimary}"
-                                        VerticalOptions="Center"
-                                        ViewBoxHeight="40"
-                                        ViewBoxWidth="40"
-                                        WidthRequest="40" />
+                <progressBar:SfCircularProgressBar Grid.Column="2"
+                                                   HeightRequest="40"
+                                                   IsVisible="{Binding IsUploading}"
+                                                   Progress="{Binding Progress}"
+                                                   ProgressColor="{StaticResource ColorPrimary}"
+                                                   ShowProgressValue="True"
+                                                   VerticalOptions="Center" />
 
                 <xForms:SfBusyIndicator Grid.Column="2"
                                         AnimationType="SingleCircle"
