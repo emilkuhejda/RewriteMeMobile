@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Enums;
+using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
@@ -31,6 +32,11 @@ namespace RewriteMe.Business.Services
         private readonly IFileItemRepository _fileItemRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly ILogger _logger;
+
+        private int _totalResourceInitializationTasks;
+        private int _resourceInitializationTasksDone;
+
+        public event EventHandler<UploadProgressEventArgs> UploadProgress;
 
         public FileItemService(
             IDeletedFileItemService deletedFileItemService,
@@ -130,6 +136,8 @@ namespace RewriteMe.Business.Services
                 fileChunks.Add(new FileChunk(fileItemId, order++, sourcePart.ToArray()));
             }
 
+            _totalResourceInitializationTasks = fileChunks.Count;
+
             cancellationToken.ThrowIfCancellationRequested();
 
             var fileChunkRequests = fileChunks.ToArray().Split(10);
@@ -141,7 +149,7 @@ namespace RewriteMe.Business.Services
                     updateMethods.Add(() => UploadChunkAsync(fileChunk, cancellationToken));
                 }
 
-                var tasks = updateMethods.Select(x => x());
+                var tasks = updateMethods.WhenTaskDone(() => UpdateUploadProgress(fileItemId)).Select(x => x());
                 var result = await Task.WhenAll(tasks).ConfigureAwait(false);
 
                 var isSuccess = result.All(x => x);
@@ -166,6 +174,12 @@ namespace RewriteMe.Business.Services
             await _fileItemRepository.UpdateAsync(fileItem).ConfigureAwait(false);
 
             return true;
+        }
+
+        private void UpdateUploadProgress(Guid fileItemId)
+        {
+            var currentTask = Interlocked.Increment(ref _resourceInitializationTasksDone);
+            OnUploadProgress(fileItemId, _totalResourceInitializationTasks, currentTask);
         }
 
         public async Task DeleteChunksAsync(Guid fileItemId)
@@ -236,6 +250,11 @@ namespace RewriteMe.Business.Services
                 await UpdateUploadStatusAsync(fileItem.Id, UploadStatus.Error).ConfigureAwait(false);
                 await SetUploadErrorCodeAsync(fileItem.Id, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
             }
+        }
+
+        private void OnUploadProgress(Guid fileItemId, int totalSteps, int stepsDone)
+        {
+            UploadProgress?.Invoke(this, new UploadProgressEventArgs(fileItemId, totalSteps, stepsDone));
         }
 
         private class FileChunk
