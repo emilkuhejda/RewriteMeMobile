@@ -2,7 +2,6 @@
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
-using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Mobile.Commands;
@@ -20,6 +19,7 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isCompleted;
         private bool _isUploading;
         private bool _hasError;
+        private int _progress;
 
         public FileItemViewModel(FileItem fileItem, INavigationService navigationService)
         {
@@ -58,6 +58,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get => _hasError;
             set => SetProperty(ref _hasError, value);
+        }
+
+        public int Progress
+        {
+            get => _progress;
+            set => SetProperty(ref _progress, value);
         }
 
         public ICommand NavigateToDetailPageCommand { get; }
