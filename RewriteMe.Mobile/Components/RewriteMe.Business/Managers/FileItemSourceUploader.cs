@@ -39,21 +39,19 @@ namespace RewriteMe.Business.Managers
                 IsRunning = true;
             }
 
-            CancellationTokenSource?.Cancel();
-            CancellationTokenSource?.Dispose();
-            CancellationTokenSource = new CancellationTokenSource();
             CurrentUploadedFile = null;
 
-            await UploadInternalAsync(CancellationTokenSource.Token).ConfigureAwait(false);
+            await UploadInternalAsync().ConfigureAwait(false);
 
             CurrentUploadedFile = null;
             IsRunning = false;
         }
 
-        private async Task UploadInternalAsync(CancellationToken cancellationToken)
+        private async Task UploadInternalAsync()
         {
-            if (cancellationToken.IsCancellationRequested)
-                return;
+            CancellationTokenSource?.Cancel();
+            CancellationTokenSource?.Dispose();
+            CancellationTokenSource = new CancellationTokenSource();
 
             var fileToUpload = await _uploadedSourceService.GetFirstAsync().ConfigureAwait(false);
             if (fileToUpload == null)
@@ -63,11 +61,11 @@ namespace RewriteMe.Business.Managers
 
             try
             {
-                await UploadSourceFileAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
+                await UploadSourceFileAsync(fileToUpload, CancellationTokenSource.Token).ConfigureAwait(false);
 
                 if (fileToUpload.IsTranscript)
                 {
-                    await TranscribeAsync(fileToUpload, cancellationToken).ConfigureAwait(false);
+                    await TranscribeAsync(fileToUpload, CancellationTokenSource.Token).ConfigureAwait(false);
                 }
             }
             catch (OperationCanceledException)
@@ -78,7 +76,7 @@ namespace RewriteMe.Business.Managers
                 await _uploadedSourceService.DeleteAsync(fileToUpload.Id).ConfigureAwait(false);
             }
 
-            await UploadInternalAsync(cancellationToken).ConfigureAwait(false);
+            await UploadInternalAsync().ConfigureAwait(false);
         }
 
         private async Task UploadSourceFileAsync(UploadedSource uploadedSource, CancellationToken cancellationToken)
