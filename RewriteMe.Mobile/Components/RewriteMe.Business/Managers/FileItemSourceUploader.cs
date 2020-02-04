@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
@@ -22,7 +23,11 @@ namespace RewriteMe.Business.Managers
         {
             _fileItemService = fileItemService;
             _uploadedSourceService = uploadedSourceService;
+
+            _fileItemService.UploadProgress += HandleUploadProgress;
         }
+
+        public UploadedFile CurrentUploadedFile { get; private set; }
 
         public async Task UploadAsync()
         {
@@ -37,9 +42,11 @@ namespace RewriteMe.Business.Managers
             CancellationTokenSource?.Cancel();
             CancellationTokenSource?.Dispose();
             CancellationTokenSource = new CancellationTokenSource();
+            CurrentUploadedFile = null;
 
             await UploadInternalAsync(CancellationTokenSource.Token).ConfigureAwait(false);
 
+            CurrentUploadedFile = null;
             IsRunning = false;
         }
 
@@ -51,6 +58,8 @@ namespace RewriteMe.Business.Managers
             var fileToUpload = await _uploadedSourceService.GetFirstAsync().ConfigureAwait(false);
             if (fileToUpload == null)
                 return;
+
+            CurrentUploadedFile = new UploadedFile(fileToUpload.FileItemId);
 
             try
             {
@@ -154,6 +163,17 @@ namespace RewriteMe.Business.Managers
         {
             await _fileItemService.UpdateUploadStatusAsync(fileItemId, uploadStatus).ConfigureAwait(false);
             await _fileItemService.SetUploadErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
+        }
+
+        private void HandleUploadProgress(object sender, UploadProgressEventArgs e)
+        {
+            if (CurrentUploadedFile == null)
+                return;
+
+            if (CurrentUploadedFile.FileItemId != e.FileItemId)
+                return;
+
+            CurrentUploadedFile.Progress = e.PercentageDone;
         }
     }
 }
