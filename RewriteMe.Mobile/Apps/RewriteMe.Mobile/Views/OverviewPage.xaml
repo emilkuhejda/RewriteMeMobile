@@ -64,15 +64,18 @@
                                          WidthRequest="30" />
 
                 <progressBar:SfCircularProgressBar Grid.Column="2"
-                                                   HeightRequest="55"
+                                                   HeightRequest="40"
                                                    HorizontalOptions="Center"
+                                                   IndicatorInnerRadius="0"
+                                                   IndicatorOuterRadius="0.7"
                                                    IsVisible="{Binding IsUploading}"
                                                    Maximum="100"
                                                    Minimum="0"
                                                    Progress="{Binding Progress}"
                                                    ProgressColor="{StaticResource ColorPrimary}"
+                                                   ShowProgressValue="False"
                                                    VerticalOptions="Center"
-                                                   WidthRequest="55" />
+                                                   WidthRequest="40" />
 
                 <xForms:SfBusyIndicator Grid.Column="2"
                                         AnimationType="SingleCircle"
