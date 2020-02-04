@@ -58,7 +58,7 @@
                                          Aspect="AspectFit"
                                          HeightRequest="30"
                                          HorizontalOptions="Center"
-                                         IsVisible="{Binding HasError}"
+                                         IsVisible="{Binding IsErrorIconVisible}"
                                          Source="resource://RewriteMe.Mobile.Resources.Images.Error.svg"
                                          VerticalOptions="Center"
                                          WidthRequest="30" />
@@ -67,9 +67,10 @@
                                                    HeightRequest="55"
                                                    HorizontalOptions="Center"
                                                    IsVisible="{Binding IsUploading}"
+                                                   Maximum="100"
+                                                   Minimum="0"
                                                    Progress="{Binding Progress}"
                                                    ProgressColor="{StaticResource ColorPrimary}"
-                                                   ShowProgressValue="True"
                                                    VerticalOptions="Center"
                                                    WidthRequest="55" />
 

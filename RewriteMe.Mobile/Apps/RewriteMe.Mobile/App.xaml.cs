@@ -58,6 +58,7 @@ namespace RewriteMe.Mobile
             InitializeComponent();
 
             InitializeServices();
+            ClearTemporaryData();
 
             var navigationParameters = InitializeNavigationParameters();
             NavigateToPage(navigationParameters);
@@ -93,6 +94,11 @@ namespace RewriteMe.Mobile
         private void InitializeServices()
         {
             AsyncHelper.RunSync(InitializeServicesAsync);
+        }
+
+        private void ClearTemporaryData()
+        {
+            AsyncHelper.RunSync(() => Container.Resolve<IUploadedSourceService>().ClearAsync());
         }
 
         private async Task InitializeServicesAsync()

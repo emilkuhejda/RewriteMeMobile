@@ -18,7 +18,7 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isInProgress;
         private bool _isCompleted;
         private bool _isUploading;
-        private bool _hasError;
+        private bool _isErrorIconVisible;
         private int _progress;
 
         public FileItemViewModel(FileItem fileItem, INavigationService navigationService)
@@ -54,10 +54,10 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _isUploading, value);
         }
 
-        public bool HasError
+        public bool IsErrorIconVisible
         {
-            get => _hasError;
-            set => SetProperty(ref _hasError, value);
+            get => _isErrorIconVisible;
+            set => SetProperty(ref _isErrorIconVisible, value);
         }
 
         public int Progress
@@ -75,7 +75,7 @@ namespace RewriteMe.Mobile.ViewModels
             IsInProgress = fileItem.RecognitionState == RecognitionState.InProgress;
             IsCompleted = fileItem.RecognitionState == RecognitionState.Completed;
             IsUploading = fileItem.UploadStatus == UploadStatus.InProgress;
-            HasError = fileItem.UploadErrorCode.HasValue || fileItem.TranscribeErrorCode.HasValue;
+            IsErrorIconVisible = !IsUploading && (fileItem.UploadErrorCode.HasValue || fileItem.TranscribeErrorCode.HasValue);
         }
 
         private async Task ExecuteNavigateToDetailPageCommandAsync()
