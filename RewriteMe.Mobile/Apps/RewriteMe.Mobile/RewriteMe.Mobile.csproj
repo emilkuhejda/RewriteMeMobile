@@ -99,12 +99,12 @@
     <PackageReference Include="Acr.UserDialogs" Version="7.0.35" />
     <PackageReference Include="NLog" Version="4.6.8" />
     <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1422" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="17.4.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="17.4.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="17.4.0.46" />
-    <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu" Version="17.4.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="17.4.0.47" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="17.4.0.47" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="17.4.0.47" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="17.4.0.47" />
+    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="17.4.0.47" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu" Version="17.4.0.47" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xam.Plugin.LatestVersion" Version="1.1.2" />
     <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.4.0" />
@@ -112,7 +112,7 @@
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="Xamarin.FFImageLoading.Svg.Forms" Version="2.4.11.982" />
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991537" />
+    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
     <PackageReference Include="Xamarin.Plugin.FilePicker" Version="2.1.34" />
   </ItemGroup>
   
