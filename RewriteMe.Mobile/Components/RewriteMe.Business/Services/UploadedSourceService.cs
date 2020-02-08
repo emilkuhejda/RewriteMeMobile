@@ -29,5 +29,10 @@ namespace RewriteMe.Business.Services
         {
             await _uploadedSourceRepository.DeleteAsync(uploadedSourceId).ConfigureAwait(false);
         }
+
+        public async Task ClearAsync()
+        {
+            await _uploadedSourceRepository.ClearAsync().ConfigureAwait(false);
+        }
     }
 }
