@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using System;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -120,6 +121,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             var fileItems = await _fileItemService.GetAllAsync().ConfigureAwait(false);
             FileItems = new ObservableCollection<FileItemViewModel>(fileItems.OrderByDescending(x => x.DateUpdatedUtc).Select(x => new FileItemViewModel(x, NavigationService)));
+
+            var currentUploadedFile = _fileItemSourceUploader.CurrentUploadedFile;
+            if (_fileItemSourceUploader.IsRunning && currentUploadedFile != null)
+            {
+                UpdateProgress(currentUploadedFile.FileItemId, currentUploadedFile.Progress);
+            }
         }
 
         private async Task ExecuteCreateCommandAsync()
@@ -134,11 +141,16 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void HandleUploadProgress(object sender, UploadProgressEventArgs e)
         {
-            var fileItem = FileItems.SingleOrDefault(x => x.FileItem.Id == e.FileItemId);
+            UpdateProgress(e.FileItemId, e.PercentageDone);
+        }
+
+        private void UpdateProgress(Guid fileItemId, int progress)
+        {
+            var fileItem = FileItems.SingleOrDefault(x => x.FileItem.Id == fileItemId);
             if (fileItem == null)
                 return;
 
-            fileItem.Progress = e.PercentageDone;
+            fileItem.Progress = progress;
         }
 
         private async void HandleStateChanged(object sender, ManagerStateChangedEventArgs e)
