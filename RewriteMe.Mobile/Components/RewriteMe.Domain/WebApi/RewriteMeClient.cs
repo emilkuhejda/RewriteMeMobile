@@ -3415,9 +3415,11 @@ namespace RewriteMe.Domain.WebApi
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.4.0 (Newtonsoft.Json v12.0.0.0)")]
     public enum StorageSetting
     {
-        _0 = 0,
+        [System.Runtime.Serialization.EnumMember(Value = @"Disk")]
+        Disk = 0,
 
-        _1 = 1,
+        [System.Runtime.Serialization.EnumMember(Value = @"Database")]
+        Database = 1,
 
     }
 
@@ -3425,6 +3427,7 @@ namespace RewriteMe.Domain.WebApi
     public partial class StorageConfiguration
     {
         [Newtonsoft.Json.JsonProperty("storageSetting", Required = Newtonsoft.Json.Required.DisallowNull, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        [Newtonsoft.Json.JsonConverter(typeof(Newtonsoft.Json.Converters.StringEnumConverter))]
         public StorageSetting StorageSetting { get; set; }
 
 
