@@ -126,17 +126,24 @@ namespace RewriteMe.Business.Services
                 ).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<Ok>> UploadChunkFileAsync(Guid fileItemId, int order, byte[] source, CancellationToken cancellationToken)
+        public async Task<HttpRequestResult<StorageConfiguration>> GetChunksStorageConfigurationAsync()
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.UploadChunkFileAsync(fileItemId, order, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, source, cancellationToken), GetAuthHeaders())
+                () => MakeServiceCall(client => client.GetChunksStorageConfigurationAsync(ApplicationSettings.WebApiVersion), GetAuthHeaders())
+                ).ConfigureAwait(false);
+        }
+
+        public async Task<HttpRequestResult<Ok>> UploadChunkFileAsync(Guid fileItemId, int order, StorageSetting storageSetting, byte[] source, CancellationToken cancellationToken)
+        {
+            return await WebServiceErrorHandler.HandleResponseAsync(
+                () => MakeServiceCall(client => client.UploadChunkFileAsync(fileItemId, order, storageSetting, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, source, cancellationToken), GetAuthHeaders())
             ).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<FileItem>> SubmitChunksAsync(Guid fileItemId, int chunksCount, CancellationToken cancellationToken)
+        public async Task<HttpRequestResult<FileItem>> SubmitChunksAsync(Guid fileItemId, int chunksCount, StorageSetting storageSetting, CancellationToken cancellationToken)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.SubmitChunksAsync(fileItemId, chunksCount, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, cancellationToken), GetAuthHeaders())
+                () => MakeServiceCall(client => client.SubmitChunksAsync(fileItemId, chunksCount, storageSetting, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, cancellationToken), GetAuthHeaders())
             ).ConfigureAwait(false);
         }
 
