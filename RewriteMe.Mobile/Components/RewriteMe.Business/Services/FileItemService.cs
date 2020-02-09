@@ -118,7 +118,7 @@ namespace RewriteMe.Business.Services
 
             if (httpRequestResult.State == HttpRequestState.Error)
             {
-                throw new ErrorRequestException(httpRequestResult.StatusCode);
+                throw new ErrorRequestException(httpRequestResult.StatusCode, httpRequestResult.ErrorCode);
             }
 
             throw new OfflineRequestException();
@@ -165,7 +165,7 @@ namespace RewriteMe.Business.Services
 
             var httpRequestResult = await _rewriteMeWebService.SubmitChunksAsync(fileItemId, fileChunks.Count, storageConfiguration.StorageSetting, cancellationToken).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Error)
-                throw new ErrorRequestException(httpRequestResult.StatusCode);
+                throw new ErrorRequestException(httpRequestResult.StatusCode, httpRequestResult.ErrorCode);
 
             if (httpRequestResult.State != HttpRequestState.Success)
                 throw new OfflineRequestException();
@@ -227,7 +227,7 @@ namespace RewriteMe.Business.Services
             }
             else if (httpRequestResult.State == HttpRequestState.Error)
             {
-                throw new ErrorRequestException(httpRequestResult.StatusCode);
+                throw new ErrorRequestException(httpRequestResult.StatusCode, httpRequestResult.ErrorCode);
             }
             else
             {

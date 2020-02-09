@@ -6,6 +6,7 @@ using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Transcription;
@@ -133,7 +134,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
                 catch (ErrorRequestException ex)
                 {
-                    await HandleErrorMessage(ex.StatusCode).ConfigureAwait(false);
+                    await HandleErrorMessage(ex.ErrorCode).ConfigureAwait(false);
                 }
                 catch (NoSubscritionFreeTimeException)
                 {
@@ -152,9 +153,9 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        private async Task HandleErrorMessage(int? statusCode)
+        private async Task HandleErrorMessage(ErrorCode errorCode)
         {
-            var message = UploadErrorHelper.GetErrorMessage(statusCode);
+            var message = UploadErrorHelper.GetErrorMessage(errorCode);
             await DialogService.AlertAsync(message).ConfigureAwait(false);
         }
     }

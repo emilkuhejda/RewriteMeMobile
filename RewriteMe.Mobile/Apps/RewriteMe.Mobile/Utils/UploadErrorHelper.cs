@@ -1,4 +1,5 @@
 ﻿using System.Net;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.Utils
@@ -21,6 +22,26 @@ namespace RewriteMe.Mobile.Utils
                     return Loc.Text(TranslationKeys.FileItemSourceDatabaseUpdateErrorMessage);
                 case (int)HttpStatusCode.UnsupportedMediaType:
                     return Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
+                default:
+                    return Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
+            }
+        }
+
+        public static string GetErrorMessage(ErrorCode errorCode)
+        {
+            switch (errorCode)
+            {
+                case ErrorCode.EC1:
+                case ErrorCode.EC2:
+                    return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
+                case ErrorCode.EC3:
+                    return Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
+                case ErrorCode.EC4:
+                    return Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
+                case ErrorCode.EC5:
+                    return Loc.Text(TranslationKeys.FileItemSourceDatabaseUpdateErrorMessage);
+                case ErrorCode.EC6:
+                    return Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
                 default:
                     return Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
             }
