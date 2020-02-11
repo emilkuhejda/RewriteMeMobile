@@ -240,12 +240,12 @@ namespace RewriteMe.Business.Services
             await _fileItemRepository.UpdateUploadStatusAsync(fileItemId, uploadStatus).ConfigureAwait(false);
         }
 
-        public async Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode)
+        public async Task SetUploadErrorCodeAsync(Guid fileItemId, ErrorCode errorCode)
         {
             await _fileItemRepository.SetUploadErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
         }
 
-        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode)
+        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, ErrorCode errorCode)
         {
             await _fileItemRepository.SetTranscribeErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
         }
@@ -259,7 +259,7 @@ namespace RewriteMe.Business.Services
             foreach (var fileItem in fileItemsInUploadingState)
             {
                 await UpdateUploadStatusAsync(fileItem.Id, UploadStatus.Error).ConfigureAwait(false);
-                await SetUploadErrorCodeAsync(fileItem.Id, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
+                //await SetUploadErrorCodeAsync(fileItem.Id, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
             }
         }
 

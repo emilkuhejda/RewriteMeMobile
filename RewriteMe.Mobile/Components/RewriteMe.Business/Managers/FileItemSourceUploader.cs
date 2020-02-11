@@ -133,34 +133,35 @@ namespace RewriteMe.Business.Managers
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
-                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, null).ConfigureAwait(false);
+                //await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, null).ConfigureAwait(false);
                 await _fileItemService.TranscribeAsync(uploadedSource.FileItemId, uploadedSource.Language).ConfigureAwait(false);
             }
             catch (ErrorRequestException ex)
             {
-                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, ex.StatusCode).ConfigureAwait(false);
+                //await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, ex.StatusCode).ConfigureAwait(false);
             }
             catch (UnauthorizedAccessException)
             {
-                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, (int)HttpStatusCode.Unauthorized).ConfigureAwait(false);
+                //await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, (int)HttpStatusCode.Unauthorized).ConfigureAwait(false);
                 CancellationTokenSource.Cancel();
 
                 OnUnauthorizedCallOccurred();
             }
             catch (NoSubscritionFreeTimeException)
             {
-                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, (int)HttpStatusCode.Conflict).ConfigureAwait(false);
+                //await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, (int)HttpStatusCode.Conflict).ConfigureAwait(false);
             }
             catch (OfflineRequestException)
             {
-                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
+                //await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
             }
         }
 
         private async Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus, int? errorCode)
         {
+            var error = errorCode;
             await _fileItemService.UpdateUploadStatusAsync(fileItemId, uploadStatus).ConfigureAwait(false);
-            await _fileItemService.SetUploadErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
+            //await _fileItemService.SetUploadErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
         }
 
         private void HandleUploadProgress(object sender, UploadProgressEventArgs e)

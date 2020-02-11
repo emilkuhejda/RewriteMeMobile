@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using RewriteMe.DataAccess.DataAdapters;
 using RewriteMe.DataAccess.Entities;
 using RewriteMe.DataAccess.Providers;
-using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
@@ -116,7 +115,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
-        public async Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode)
+        public async Task SetUploadErrorCodeAsync(Guid fileItemId, ErrorCode errorCode)
         {
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
             if (entity == null)
@@ -126,7 +125,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
-        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode)
+        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, ErrorCode errorCode)
         {
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
             if (entity == null)

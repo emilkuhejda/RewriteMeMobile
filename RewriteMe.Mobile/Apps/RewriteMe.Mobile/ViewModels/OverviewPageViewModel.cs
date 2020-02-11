@@ -61,6 +61,7 @@ namespace RewriteMe.Mobile.ViewModels
                 var isNavigationBack = navigationParameters.GetValue<bool>(NavigationConstants.NavigationBack);
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New && !isNavigationBack)
                 {
+                    // REMOVE METHOD
                     await ResetUploadStatusesAsync().ConfigureAwait(false);
                     await SynchronizationAsync().ConfigureAwait(false);
                 }

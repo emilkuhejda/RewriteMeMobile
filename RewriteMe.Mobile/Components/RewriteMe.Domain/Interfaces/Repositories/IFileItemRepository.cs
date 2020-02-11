@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 
@@ -31,9 +30,9 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus);
 
-        Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode);
+        Task SetUploadErrorCodeAsync(Guid fileItemId, ErrorCode errorCode);
 
-        Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode);
+        Task SetTranscribeErrorCodeAsync(Guid fileItemId, ErrorCode errorCode);
 
         Task ClearAsync();
     }
