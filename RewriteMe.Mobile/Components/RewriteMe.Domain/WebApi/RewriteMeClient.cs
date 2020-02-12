@@ -3202,21 +3202,26 @@ namespace RewriteMe.Domain.WebApi
         [System.Runtime.Serialization.EnumMember(Value = @"EC101")]
         EC101 = 2,
 
+        [System.Runtime.Serialization.EnumMember(Value = @"EC102")]
+        EC102 = 3,
+
         [System.Runtime.Serialization.EnumMember(Value = @"EC200")]
-        EC200 = 3,
+        EC200 = 4,
 
         [System.Runtime.Serialization.EnumMember(Value = @"EC201")]
-        EC201 = 4,
+        EC201 = 5,
 
         [System.Runtime.Serialization.EnumMember(Value = @"EC300")]
-        EC300 = 5,
+        EC300 = 6,
 
         [System.Runtime.Serialization.EnumMember(Value = @"EC400")]
-        EC400 = 6,
+        EC400 = 7,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC800")]
+        EC800 = 8,
 
         [System.Runtime.Serialization.EnumMember(Value = @"Unauthorized")]
-        Unauthorized = 7,
-
+        Unauthorized = 9,
     }
 
     [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.4.0 (Newtonsoft.Json v12.0.0.0)")]

@@ -15,6 +15,7 @@ namespace RewriteMe.Mobile.Utils
             {
                 case ErrorCode.EC100:
                 case ErrorCode.EC101:
+                case ErrorCode.EC102:
                     return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
                 case ErrorCode.EC200:
                     return Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
@@ -24,6 +25,8 @@ namespace RewriteMe.Mobile.Utils
                     return Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
                 case ErrorCode.EC400:
                     return Loc.Text(TranslationKeys.FileItemSourceDatabaseUpdateErrorMessage);
+                case ErrorCode.EC800:
+                    return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
                 case ErrorCode.Unauthorized:
                     return Loc.Text(TranslationKeys.UnauthorizedErrorMessage);
                 default:
