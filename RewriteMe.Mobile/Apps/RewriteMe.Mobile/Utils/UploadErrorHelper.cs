@@ -6,42 +6,26 @@ namespace RewriteMe.Mobile.Utils
 {
     public static class UploadErrorHelper
     {
-        public static string GetErrorMessage(int? statusCode)
+        public static string GetErrorMessage(ErrorCode? errorCode)
         {
-            switch (statusCode)
-            {
-                case (int)HttpStatusCode.BadRequest:
-                    return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
-                case (int)HttpStatusCode.Unauthorized:
-                    return Loc.Text(TranslationKeys.UnauthorizedErrorMessage);
-                case (int)HttpStatusCode.MethodNotAllowed:
-                    return Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
-                case (int)HttpStatusCode.NotAcceptable:
-                    return Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
-                case (int)HttpStatusCode.Conflict:
-                    return Loc.Text(TranslationKeys.FileItemSourceDatabaseUpdateErrorMessage);
-                case (int)HttpStatusCode.UnsupportedMediaType:
-                    return Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
-                default:
-                    return Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
-            }
-        }
+            if (!errorCode.HasValue)
+                return string.Empty;
 
-        public static string GetErrorMessage(ErrorCode errorCode)
-        {
             switch (errorCode)
             {
-                case ErrorCode.EC1:
-                case ErrorCode.EC2:
+                case ErrorCode.EC100:
+                case ErrorCode.EC101:
                     return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
-                case ErrorCode.EC3:
+                case ErrorCode.EC200:
                     return Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
-                case ErrorCode.EC4:
+                case ErrorCode.EC201:
                     return Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
-                case ErrorCode.EC5:
-                    return Loc.Text(TranslationKeys.FileItemSourceDatabaseUpdateErrorMessage);
-                case ErrorCode.EC6:
+                case ErrorCode.EC300:
                     return Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
+                case ErrorCode.EC400:
+                    return Loc.Text(TranslationKeys.FileItemSourceDatabaseUpdateErrorMessage);
+                case ErrorCode.Unauthorized:
+                    return Loc.Text(TranslationKeys.UnauthorizedErrorMessage);
                 default:
                     return Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
             }

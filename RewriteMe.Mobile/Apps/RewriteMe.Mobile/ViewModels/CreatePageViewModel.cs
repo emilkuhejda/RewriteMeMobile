@@ -185,7 +185,7 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     Name = FileItem.Name;
                     SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
-                    //UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
+                    UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
                     IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
             }

@@ -19,13 +19,10 @@ namespace RewriteMe.Domain.Exceptions
         {
         }
 
-        public ErrorRequestException(int? statusCode, ErrorCode errorCode)
+        public ErrorRequestException(ErrorCode errorCode)
         {
-            StatusCode = statusCode;
             ErrorCode = errorCode;
         }
-
-        public int? StatusCode { get; }
 
         public ErrorCode ErrorCode { get; }
     }

@@ -12,8 +12,6 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task<IEnumerable<FileItem>> GetAllAsync();
 
-        Task<IEnumerable<FileItem>> GetUploadingFilesAsync();
-
         Task<bool> AnyWaitingForSynchronizationAsync();
 
         Task InsertOrReplaceAsync(FileItem fileItem);
@@ -30,9 +28,9 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus);
 
-        Task SetUploadErrorCodeAsync(Guid fileItemId, ErrorCode errorCode);
+        Task SetUploadErrorCodeAsync(Guid fileItemId, ErrorCode? errorCode);
 
-        Task SetTranscribeErrorCodeAsync(Guid fileItemId, ErrorCode errorCode);
+        Task SetTranscribeErrorCodeAsync(Guid fileItemId, ErrorCode? errorCode);
 
         Task ClearAsync();
     }

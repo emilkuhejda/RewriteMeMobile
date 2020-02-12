@@ -3196,23 +3196,26 @@ namespace RewriteMe.Domain.WebApi
         [System.Runtime.Serialization.EnumMember(Value = @"None")]
         None = 0,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"EC1")]
-        EC1 = 1,
+        [System.Runtime.Serialization.EnumMember(Value = @"EC100")]
+        EC100 = 1,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"EC2")]
-        EC2 = 2,
+        [System.Runtime.Serialization.EnumMember(Value = @"EC101")]
+        EC101 = 2,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"EC3")]
-        EC3 = 3,
+        [System.Runtime.Serialization.EnumMember(Value = @"EC200")]
+        EC200 = 3,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"EC4")]
-        EC4 = 4,
+        [System.Runtime.Serialization.EnumMember(Value = @"EC201")]
+        EC201 = 4,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"EC5")]
-        EC5 = 5,
+        [System.Runtime.Serialization.EnumMember(Value = @"EC300")]
+        EC300 = 5,
 
-        [System.Runtime.Serialization.EnumMember(Value = @"EC6")]
-        EC6 = 6,
+        [System.Runtime.Serialization.EnumMember(Value = @"EC400")]
+        EC400 = 6,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Unauthorized")]
+        Unauthorized = 7,
 
     }
 

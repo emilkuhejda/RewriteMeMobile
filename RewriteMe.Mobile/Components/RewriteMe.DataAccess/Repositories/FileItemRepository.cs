@@ -33,16 +33,6 @@ namespace RewriteMe.DataAccess.Repositories
             return entity?.ToFileItem();
         }
 
-        public async Task<IEnumerable<FileItem>> GetUploadingFilesAsync()
-        {
-            var entities = await _contextProvider.Context.FileItems
-                .Where(x => x.UploadStatus == UploadStatus.InProgress)
-                .ToListAsync()
-                .ConfigureAwait(false);
-
-            return entities.Select(x => x.ToFileItem());
-        }
-
         public async Task<bool> AnyWaitingForSynchronizationAsync()
         {
             var recognitionState = RecognitionState.InProgress;
@@ -115,7 +105,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
-        public async Task SetUploadErrorCodeAsync(Guid fileItemId, ErrorCode errorCode)
+        public async Task SetUploadErrorCodeAsync(Guid fileItemId, ErrorCode? errorCode)
         {
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
             if (entity == null)
@@ -125,7 +115,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
-        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, ErrorCode errorCode)
+        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, ErrorCode? errorCode)
         {
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
             if (entity == null)
