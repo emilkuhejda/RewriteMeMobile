@@ -25,7 +25,7 @@ namespace RewriteMe.Business.Services
 
             if (httpRequestResult.State == HttpRequestState.Error)
             {
-                throw new ErrorRequestException(httpRequestResult.StatusCode);
+                throw new ErrorRequestException(httpRequestResult.ErrorCode);
             }
 
             throw new OfflineRequestException();

@@ -1,26 +1,34 @@
 ﻿using System.Net;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.Utils
 {
     public static class UploadErrorHelper
     {
-        public static string GetErrorMessage(int? statusCode)
+        public static string GetErrorMessage(ErrorCode? errorCode)
         {
-            switch (statusCode)
+            if (!errorCode.HasValue)
+                return string.Empty;
+
+            switch (errorCode)
             {
-                case (int)HttpStatusCode.BadRequest:
+                case ErrorCode.EC100:
+                case ErrorCode.EC101:
+                case ErrorCode.EC102:
                     return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
-                case (int)HttpStatusCode.Unauthorized:
-                    return Loc.Text(TranslationKeys.UnauthorizedErrorMessage);
-                case (int)HttpStatusCode.MethodNotAllowed:
-                    return Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
-                case (int)HttpStatusCode.NotAcceptable:
+                case ErrorCode.EC200:
                     return Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
-                case (int)HttpStatusCode.Conflict:
-                    return Loc.Text(TranslationKeys.FileItemSourceDatabaseUpdateErrorMessage);
-                case (int)HttpStatusCode.UnsupportedMediaType:
+                case ErrorCode.EC201:
                     return Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
+                case ErrorCode.EC300:
+                    return Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
+                case ErrorCode.EC400:
+                    return Loc.Text(TranslationKeys.FileItemSourceDatabaseUpdateErrorMessage);
+                case ErrorCode.EC800:
+                    return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
+                case ErrorCode.Unauthorized:
+                    return Loc.Text(TranslationKeys.UnauthorizedErrorMessage);
                 default:
                     return Loc.Text(TranslationKeys.UnreachableServerErrorMessage);
             }

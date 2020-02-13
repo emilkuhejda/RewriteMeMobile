@@ -12,8 +12,8 @@ namespace RewriteMe.Domain.WebApi
 
         public TimeSpan TranscribedTime => TimeSpan.FromTicks(TranscribedTimeTicks);
 
-        public int? UploadErrorCode { get; set; }
+        public ErrorCode? UploadErrorCode { get; set; }
 
-        public int? TranscribeErrorCode { get; set; }
+        public ErrorCode? TranscribeErrorCode { get; set; }
     }
 }

@@ -392,16 +392,16 @@ namespace RewriteMe.Domain.WebApi
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == "400")
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorCode>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<ErrorCode>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         if (status_ == "401")
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
                             throw new ApiException<ProblemDetails>("Unauthorized", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "406")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Not Acceptable", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "500")
@@ -507,32 +507,14 @@ namespace RewriteMe.Domain.WebApi
                         else
                         if (status_ == "400")
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorCode>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<ErrorCode>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "401")
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
                             throw new ApiException<ProblemDetails>("Unauthorized", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "406")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Not Acceptable", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "409")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Conflict", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "415")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Client Error", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "500")
@@ -615,16 +597,16 @@ namespace RewriteMe.Domain.WebApi
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == "400")
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorCode>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<ErrorCode>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         if (status_ == "401")
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
                             throw new ApiException<ProblemDetails>("Unauthorized", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "406")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Not Acceptable", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "500")
@@ -903,26 +885,14 @@ namespace RewriteMe.Domain.WebApi
                         else
                         if (status_ == "400")
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorCode>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<ErrorCode>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "401")
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
                             throw new ApiException<ProblemDetails>("Unauthorized", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "405")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Method Not Allowed", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "406")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Not Acceptable", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "500")
@@ -1096,16 +1066,16 @@ namespace RewriteMe.Domain.WebApi
                             return objectResponse_.Object;
                         }
                         else
-                        if (status_ == "401")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Unauthorized", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
                         if (status_ == "400")
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
                             throw new ApiException<ProblemDetails>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
+                        if (status_ == "401")
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<ProblemDetails>("Unauthorized", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "500")
@@ -2071,20 +2041,14 @@ namespace RewriteMe.Domain.WebApi
                         else
                         if (status_ == "400")
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorCode>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<ErrorCode>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "401")
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
                             throw new ApiException<ProblemDetails>("Unauthorized", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "404")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Not Found", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "500")
@@ -2184,8 +2148,8 @@ namespace RewriteMe.Domain.WebApi
                         else
                         if (status_ == "400")
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorCode>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<ErrorCode>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "401")
@@ -2194,28 +2158,10 @@ namespace RewriteMe.Domain.WebApi
                             throw new ApiException<ProblemDetails>("Unauthorized", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
-                        if (status_ == "404")
+                        if (status_ == "500")
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Not Found", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "405")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Method Not Allowed", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "409")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Conflict", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "415")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Client Error", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            string responseText_ = (response_.Content == null) ? string.Empty : await response_.Content.ReadAsStringAsync().ConfigureAwait(false);
+                            throw new ApiException("Server Error", (int)response_.StatusCode, responseText_, headers_, null);
                         }
                         else
                         if (status_ != "200" && status_ != "204")
@@ -2571,20 +2517,14 @@ namespace RewriteMe.Domain.WebApi
                         else
                         if (status_ == "400")
                         {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorCode>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<ErrorCode>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "401")
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
                             throw new ApiException<ProblemDetails>("Unauthorized", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "405")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Method Not Allowed", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "500")
@@ -2672,22 +2612,16 @@ namespace RewriteMe.Domain.WebApi
                             return objectResponse_.Object;
                         }
                         else
+                        if (status_ == "400")
+                        {
+                            var objectResponse_ = await ReadObjectResponseAsync<ErrorCode>(response_, headers_).ConfigureAwait(false);
+                            throw new ApiException<ErrorCode>("Bad Request", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
+                        }
+                        else
                         if (status_ == "401")
                         {
                             var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
                             throw new ApiException<ProblemDetails>("Unauthorized", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "406")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Not Acceptable", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
-                        }
-                        else
-                        if (status_ == "409")
-                        {
-                            var objectResponse_ = await ReadObjectResponseAsync<ProblemDetails>(response_, headers_).ConfigureAwait(false);
-                            throw new ApiException<ProblemDetails>("Conflict", (int)response_.StatusCode, objectResponse_.Text, headers_, objectResponse_.Object, null);
                         }
                         else
                         if (status_ == "500")
@@ -3217,6 +3151,251 @@ namespace RewriteMe.Domain.WebApi
             set { _additionalProperties = value; }
         }
 
+
+    }
+
+    [System.CodeDom.Compiler.GeneratedCode("NJsonSchema", "10.1.4.0 (Newtonsoft.Json v12.0.0.0)")]
+    public enum ErrorCode
+    {
+        [System.Runtime.Serialization.EnumMember(Value = @"None")]
+        None = 0,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC100")]
+        EC100 = 1,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC101")]
+        EC101 = 2,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC102")]
+        EC102 = 3,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC103")]
+        EC103 = 4,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC104")]
+        EC104 = 5,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC105")]
+        EC105 = 6,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC106")]
+        EC106 = 7,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC107")]
+        EC107 = 8,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC108")]
+        EC108 = 9,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC109")]
+        EC109 = 10,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC110")]
+        EC110 = 11,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC200")]
+        EC200 = 12,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC201")]
+        EC201 = 13,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC202")]
+        EC202 = 14,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC203")]
+        EC203 = 15,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC204")]
+        EC204 = 16,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC205")]
+        EC205 = 17,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC206")]
+        EC206 = 18,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC207")]
+        EC207 = 19,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC208")]
+        EC208 = 20,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC209")]
+        EC209 = 21,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC210")]
+        EC210 = 22,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC300")]
+        EC300 = 23,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC301")]
+        EC301 = 24,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC302")]
+        EC302 = 25,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC303")]
+        EC303 = 26,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC304")]
+        EC304 = 27,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC305")]
+        EC305 = 28,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC306")]
+        EC306 = 29,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC307")]
+        EC307 = 30,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC308")]
+        EC308 = 31,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC309")]
+        EC309 = 32,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC310")]
+        EC310 = 33,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC400")]
+        EC400 = 34,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC401")]
+        EC401 = 35,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC402")]
+        EC402 = 36,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC403")]
+        EC403 = 37,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC404")]
+        EC404 = 38,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC405")]
+        EC405 = 39,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC406")]
+        EC406 = 40,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC407")]
+        EC407 = 41,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC408")]
+        EC408 = 42,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC409")]
+        EC409 = 43,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC410")]
+        EC410 = 44,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC500")]
+        EC500 = 45,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC501")]
+        EC501 = 46,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC502")]
+        EC502 = 47,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC503")]
+        EC503 = 48,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC504")]
+        EC504 = 49,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC505")]
+        EC505 = 50,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC506")]
+        EC506 = 51,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC507")]
+        EC507 = 52,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC508")]
+        EC508 = 53,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC509")]
+        EC509 = 54,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC510")]
+        EC510 = 55,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC600")]
+        EC600 = 56,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC601")]
+        EC601 = 57,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC602")]
+        EC602 = 58,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC603")]
+        EC603 = 59,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC604")]
+        EC604 = 60,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC605")]
+        EC605 = 61,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC606")]
+        EC606 = 62,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC607")]
+        EC607 = 63,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC608")]
+        EC608 = 64,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC609")]
+        EC609 = 65,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC610")]
+        EC610 = 66,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC700")]
+        EC700 = 67,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC701")]
+        EC701 = 68,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC702")]
+        EC702 = 69,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC703")]
+        EC703 = 70,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC704")]
+        EC704 = 71,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC705")]
+        EC705 = 72,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC706")]
+        EC706 = 73,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC707")]
+        EC707 = 74,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC708")]
+        EC708 = 75,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC709")]
+        EC709 = 76,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC710")]
+        EC710 = 77,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC800")]
+        EC800 = 78,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"Unauthorized")]
+        Unauthorized = 79,
 
     }
 
