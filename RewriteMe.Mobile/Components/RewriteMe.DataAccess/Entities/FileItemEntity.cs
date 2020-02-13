@@ -30,9 +30,9 @@ namespace RewriteMe.DataAccess.Entities
 
         public UploadStatus UploadStatus { get; set; }
 
-        public int? UploadErrorCode { get; set; }
+        public ErrorCode? UploadErrorCode { get; set; }
 
-        public int? TranscribeErrorCode { get; set; }
+        public ErrorCode? TranscribeErrorCode { get; set; }
 
         public DateTime DateCreated { get; set; }
 

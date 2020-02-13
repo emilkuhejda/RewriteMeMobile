@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using RewriteMe.DataAccess.DataAdapters;
 using RewriteMe.DataAccess.Entities;
 using RewriteMe.DataAccess.Providers;
-using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
@@ -32,16 +31,6 @@ namespace RewriteMe.DataAccess.Repositories
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
 
             return entity?.ToFileItem();
-        }
-
-        public async Task<IEnumerable<FileItem>> GetUploadingFilesAsync()
-        {
-            var entities = await _contextProvider.Context.FileItems
-                .Where(x => x.UploadStatus == UploadStatus.InProgress)
-                .ToListAsync()
-                .ConfigureAwait(false);
-
-            return entities.Select(x => x.ToFileItem());
         }
 
         public async Task<bool> AnyWaitingForSynchronizationAsync()
@@ -116,7 +105,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
-        public async Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode)
+        public async Task SetUploadErrorCodeAsync(Guid fileItemId, ErrorCode? errorCode)
         {
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
             if (entity == null)
@@ -126,7 +115,7 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
-        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode)
+        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, ErrorCode? errorCode)
         {
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
             if (entity == null)
@@ -134,6 +123,25 @@ namespace RewriteMe.DataAccess.Repositories
 
             entity.TranscribeErrorCode = errorCode;
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
+        }
+
+        public async Task ResetUploadStatusesAsync()
+        {
+            var entities = await _contextProvider.Context.FileItems
+                .Where(x => x.UploadStatus == UploadStatus.InProgress)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            if (!entities.Any())
+                return;
+
+            foreach (var entity in entities)
+            {
+                entity.UploadStatus = UploadStatus.Error;
+                entity.UploadErrorCode = ErrorCode.None;
+
+                await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
+            }
         }
 
         public async Task ClearAsync()

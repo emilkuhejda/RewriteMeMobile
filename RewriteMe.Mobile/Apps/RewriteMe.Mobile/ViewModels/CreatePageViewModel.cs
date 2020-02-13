@@ -302,7 +302,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
                 catch (ErrorRequestException ex)
                 {
-                    await HandleErrorMessage(ex.StatusCode).ConfigureAwait(false);
+                    await HandleErrorMessage(ex.ErrorCode).ConfigureAwait(false);
                 }
                 catch (NoSubscritionFreeTimeException)
                 {
@@ -345,9 +345,9 @@ namespace RewriteMe.Mobile.ViewModels
             };
         }
 
-        private async Task HandleErrorMessage(int? statusCode)
+        private async Task HandleErrorMessage(ErrorCode errorCode)
         {
-            var message = UploadErrorHelper.GetErrorMessage(statusCode);
+            var message = UploadErrorHelper.GetErrorMessage(errorCode);
             await DialogService.AlertAsync(message).ConfigureAwait(false);
         }
 

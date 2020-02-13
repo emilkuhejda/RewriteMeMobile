@@ -11,7 +11,5 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task AddAsync(UploadedSource uploadedSource);
 
         Task DeleteAsync(Guid uploadedSourceId);
-
-        Task ClearAsync();
     }
 }

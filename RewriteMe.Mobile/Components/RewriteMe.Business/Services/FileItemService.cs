@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
-using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Business.Extensions;
@@ -30,6 +29,7 @@ namespace RewriteMe.Business.Services
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
         private readonly IFileItemRepository _fileItemRepository;
+        private readonly IUploadedSourceRepository _uploadedSourceRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly ILogger _logger;
 
@@ -43,6 +43,7 @@ namespace RewriteMe.Business.Services
             IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService,
             IFileItemRepository fileItemRepository,
+            IUploadedSourceRepository uploadedSourceRepository,
             IRewriteMeWebService rewriteMeWebService,
             ILoggerFactory loggerFactory)
         {
@@ -50,6 +51,7 @@ namespace RewriteMe.Business.Services
             _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
             _fileItemRepository = fileItemRepository;
+            _uploadedSourceRepository = uploadedSourceRepository;
             _rewriteMeWebService = rewriteMeWebService;
             _logger = loggerFactory.CreateLogger(typeof(FileItemService));
         }
@@ -118,7 +120,7 @@ namespace RewriteMe.Business.Services
 
             if (httpRequestResult.State == HttpRequestState.Error)
             {
-                throw new ErrorRequestException(httpRequestResult.StatusCode);
+                throw new ErrorRequestException(httpRequestResult.ErrorCode);
             }
 
             throw new OfflineRequestException();
@@ -165,7 +167,7 @@ namespace RewriteMe.Business.Services
 
             var httpRequestResult = await _rewriteMeWebService.SubmitChunksAsync(fileItemId, fileChunks.Count, storageConfiguration.StorageSetting, cancellationToken).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Error)
-                throw new ErrorRequestException(httpRequestResult.StatusCode);
+                throw new ErrorRequestException(httpRequestResult.ErrorCode);
 
             if (httpRequestResult.State != HttpRequestState.Success)
                 throw new OfflineRequestException();
@@ -227,7 +229,7 @@ namespace RewriteMe.Business.Services
             }
             else if (httpRequestResult.State == HttpRequestState.Error)
             {
-                throw new ErrorRequestException(httpRequestResult.StatusCode);
+                throw new ErrorRequestException(httpRequestResult.ErrorCode);
             }
             else
             {
@@ -240,27 +242,20 @@ namespace RewriteMe.Business.Services
             await _fileItemRepository.UpdateUploadStatusAsync(fileItemId, uploadStatus).ConfigureAwait(false);
         }
 
-        public async Task SetUploadErrorCodeAsync(Guid fileItemId, int? errorCode)
+        public async Task SetUploadErrorCodeAsync(Guid fileItemId, ErrorCode? errorCode)
         {
             await _fileItemRepository.SetUploadErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
         }
 
-        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, int? errorCode)
+        public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, ErrorCode? errorCode)
         {
             await _fileItemRepository.SetTranscribeErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
         }
 
         public async Task ResetUploadStatusesAsync()
         {
-            var fileItemsInUploadingState = await _fileItemRepository.GetUploadingFilesAsync().ConfigureAwait(false);
-            if (fileItemsInUploadingState == null)
-                return;
-
-            foreach (var fileItem in fileItemsInUploadingState)
-            {
-                await UpdateUploadStatusAsync(fileItem.Id, UploadStatus.Error).ConfigureAwait(false);
-                await SetUploadErrorCodeAsync(fileItem.Id, (int)HttpStatusCode.InternalServerError).ConfigureAwait(false);
-            }
+            await _fileItemRepository.ResetUploadStatusesAsync().ConfigureAwait(false);
+            await _uploadedSourceRepository.ClearAsync().ConfigureAwait(false);
         }
 
         private void OnUploadProgress(Guid fileItemId, int totalSteps, int stepsDone)

@@ -1,4 +1,5 @@
 ﻿using System;
+using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.Domain.Exceptions
 {
@@ -18,11 +19,11 @@ namespace RewriteMe.Domain.Exceptions
         {
         }
 
-        public ErrorRequestException(int? statusCode)
+        public ErrorRequestException(ErrorCode errorCode)
         {
-            StatusCode = statusCode;
+            ErrorCode = errorCode;
         }
 
-        public int? StatusCode { get; }
+        public ErrorCode ErrorCode { get; }
     }
 }

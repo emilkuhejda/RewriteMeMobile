@@ -51,7 +51,13 @@ namespace RewriteMe.Business.Utils
                 if (exception.StatusCode == (int)HttpStatusCode.Unauthorized)
                     throw new UnauthorizedCallException();
 
-                return new HttpRequestResult<T>(HttpRequestState.Error, exception.StatusCode);
+                var errorCode = ErrorCode.None;
+                if (exception is ApiException<ErrorCode> errorCodeException)
+                {
+                    errorCode = errorCodeException.Result;
+                }
+
+                return new HttpRequestResult<T>(HttpRequestState.Error, exception.StatusCode, errorCode);
             }
             catch (HttpRequestException exception)
             {
