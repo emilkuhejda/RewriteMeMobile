@@ -125,6 +125,25 @@ namespace RewriteMe.DataAccess.Repositories
             await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
         }
 
+        public async Task ResetUploadStatusesAsync()
+        {
+            var entities = await _contextProvider.Context.FileItems
+                .Where(x => x.UploadStatus == UploadStatus.InProgress)
+                .ToListAsync()
+                .ConfigureAwait(false);
+
+            if (!entities.Any())
+                return;
+
+            foreach (var entity in entities)
+            {
+                entity.UploadStatus = UploadStatus.Error;
+                entity.UploadErrorCode = ErrorCode.None;
+
+                await _contextProvider.Context.UpdateAsync(entity).ConfigureAwait(false);
+            }
+        }
+
         public async Task ClearAsync()
         {
             await _contextProvider.Context.DeleteAllAsync<FileItemEntity>().ConfigureAwait(false);

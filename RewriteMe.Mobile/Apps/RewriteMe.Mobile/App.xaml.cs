@@ -11,7 +11,6 @@ using Prism.Ioc;
 using Prism.Navigation;
 using Prism.Unity;
 using RewriteMe.Business.Configuration;
-using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
@@ -23,11 +22,8 @@ using RewriteMe.Mobile.Configuration;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
-using RewriteMe.Mobile.ViewModels;
-using RewriteMe.Mobile.Views;
 using Syncfusion.Licensing;
 using Unity;
-using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -58,7 +54,7 @@ namespace RewriteMe.Mobile
             InitializeComponent();
 
             InitializeServices();
-            ClearTemporaryData();
+            ResetFileItemUploadStatusesAsync();
 
             var navigationParameters = InitializeNavigationParameters();
             NavigateToPage(navigationParameters);
@@ -96,9 +92,9 @@ namespace RewriteMe.Mobile
             AsyncHelper.RunSync(InitializeServicesAsync);
         }
 
-        private void ClearTemporaryData()
+        private void ResetFileItemUploadStatusesAsync()
         {
-            AsyncHelper.RunSync(() => Container.Resolve<IUploadedSourceService>().ClearAsync());
+            AsyncHelper.RunSync(() => Container.Resolve<IFileItemService>().ResetUploadStatusesAsync());
         }
 
         private async Task InitializeServicesAsync()
@@ -157,7 +153,7 @@ namespace RewriteMe.Mobile
             }
 
 #if !DEBUG
-            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Analytics), typeof(Push));
+            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Analytics), typeof(Push));|
 #else
             AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Push));
 #endif

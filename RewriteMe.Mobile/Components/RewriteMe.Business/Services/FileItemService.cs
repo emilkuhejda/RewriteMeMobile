@@ -29,6 +29,7 @@ namespace RewriteMe.Business.Services
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IInternalValueService _internalValueService;
         private readonly IFileItemRepository _fileItemRepository;
+        private readonly IUploadedSourceRepository _uploadedSourceRepository;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly ILogger _logger;
 
@@ -42,6 +43,7 @@ namespace RewriteMe.Business.Services
             IUserSubscriptionService userSubscriptionService,
             IInternalValueService internalValueService,
             IFileItemRepository fileItemRepository,
+            IUploadedSourceRepository uploadedSourceRepository,
             IRewriteMeWebService rewriteMeWebService,
             ILoggerFactory loggerFactory)
         {
@@ -49,6 +51,7 @@ namespace RewriteMe.Business.Services
             _userSubscriptionService = userSubscriptionService;
             _internalValueService = internalValueService;
             _fileItemRepository = fileItemRepository;
+            _uploadedSourceRepository = uploadedSourceRepository;
             _rewriteMeWebService = rewriteMeWebService;
             _logger = loggerFactory.CreateLogger(typeof(FileItemService));
         }
@@ -247,6 +250,12 @@ namespace RewriteMe.Business.Services
         public async Task SetTranscribeErrorCodeAsync(Guid fileItemId, ErrorCode? errorCode)
         {
             await _fileItemRepository.SetTranscribeErrorCodeAsync(fileItemId, errorCode).ConfigureAwait(false);
+        }
+
+        public async Task ResetUploadStatusesAsync()
+        {
+            await _fileItemRepository.ResetUploadStatusesAsync().ConfigureAwait(false);
+            await _uploadedSourceRepository.ClearAsync().ConfigureAwait(false);
         }
 
         private void OnUploadProgress(Guid fileItemId, int totalSteps, int stepsDone)

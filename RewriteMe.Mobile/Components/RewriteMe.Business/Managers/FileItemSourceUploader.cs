@@ -92,7 +92,7 @@ namespace RewriteMe.Business.Managers
 
                 return;
             }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedCallException)
             {
                 await UpdateUploadStatusAsync(uploadedSource.FileItemId, UploadStatus.Error, ErrorCode.Unauthorized).ConfigureAwait(false);
                 CancellationTokenSource.Cancel();
@@ -135,16 +135,16 @@ namespace RewriteMe.Business.Managers
                 await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, null).ConfigureAwait(false);
                 await _fileItemService.TranscribeAsync(uploadedSource.FileItemId, uploadedSource.Language).ConfigureAwait(false);
             }
-            catch (ErrorRequestException ex)
-            {
-                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, ex.ErrorCode).ConfigureAwait(false);
-            }
-            catch (UnauthorizedAccessException)
+            catch (UnauthorizedCallException)
             {
                 await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, ErrorCode.Unauthorized).ConfigureAwait(false);
                 CancellationTokenSource.Cancel();
 
                 OnUnauthorizedCallOccurred();
+            }
+            catch (ErrorRequestException ex)
+            {
+                await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, ex.ErrorCode).ConfigureAwait(false);
             }
             catch (NoSubscritionFreeTimeException)
             {
