@@ -52,10 +52,10 @@ namespace RewriteMe.Mobile.Services
             return _applicationSettings.DefaultLanguage;
         }
 
-        public async Task ChangeUserLanguageAsync(CultureInfo language)
+        public async Task ChangeUserLanguageAsync(CultureInfo cultureInfo)
         {
-            await _internalValueService.UpdateValueAsync(InternalValues.LanguageSetting, language.TwoLetterISOLanguageName).ConfigureAwait(false);
-            _localizer.SetCultureInfo(language);
+            await _internalValueService.UpdateValueAsync(InternalValues.LanguageSetting, cultureInfo.TwoLetterISOLanguageName).ConfigureAwait(false);
+            _localizer.SetCultureInfo(cultureInfo);
         }
     }
 }

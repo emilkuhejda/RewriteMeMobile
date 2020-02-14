@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
@@ -56,6 +57,8 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task<HttpRequestResult<InformationMessage>> MarkMessageAsOpenedAsync(Guid informationMessageId);
 
         Task<HttpRequestResult<Ok>> MarkMessagesAsOpenedAsync(IEnumerable<Guid> ids);
+
+        Task<HttpRequestResult<Ok>> UpdateLanguageAsync(Language language);
 
         Task<bool> RefreshTokenIfNeededAsync();
     }
