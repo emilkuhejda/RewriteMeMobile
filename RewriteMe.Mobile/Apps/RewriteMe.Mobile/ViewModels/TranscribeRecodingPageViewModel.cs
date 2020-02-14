@@ -28,12 +28,12 @@ namespace RewriteMe.Mobile.ViewModels
             IRecordedItemService recordedItemService,
             IUploadedSourceService uploadedSourceService,
             IUserSessionService userSessionService,
-            IRewriteMeWebService rewriteMeWebService,
             IFileItemService fileItemService,
+            IRewriteMeWebService rewriteMeWebService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(rewriteMeWebService, fileItemService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(fileItemService, rewriteMeWebService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
             _uploadedSourceService = uploadedSourceService;
