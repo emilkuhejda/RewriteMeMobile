@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Commands;
 using Prism.Navigation;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Extensions;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
@@ -27,6 +29,7 @@ namespace RewriteMe.Mobile.ViewModels
     public class SettingsPageViewModel : ViewModelBase
     {
         private readonly IUserSubscriptionService _userSubscriptionService;
+        private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly ILanguageService _languageService;
         private readonly IEmailService _emailService;
         private readonly IApplicationSettings _applicationSettings;
@@ -39,6 +42,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public SettingsPageViewModel(
             IUserSubscriptionService userSubscriptionService,
+            IRewriteMeWebService rewriteMeWebService,
             ILanguageService languageService,
             IEmailService emailService,
             IApplicationSettings applicationSettings,
@@ -50,6 +54,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _userSubscriptionService = userSubscriptionService;
+            _rewriteMeWebService = rewriteMeWebService;
             _languageService = languageService;
             _emailService = emailService;
             _applicationSettings = applicationSettings;
@@ -142,12 +147,19 @@ namespace RewriteMe.Mobile.ViewModels
             switch (dropDownListViewModel.Type)
             {
                 case nameof(SelectedLanguage):
-                    var language = (CultureInfo)dropDownListViewModel.Value;
-                    await _languageService.ChangeUserLanguageAsync(language).ConfigureAwait(false);
+                    await HandleLanguageSelectionAsync(dropDownListViewModel).ConfigureAwait(false);
                     break;
                 default:
                     throw new NotSupportedException(nameof(SelectedLanguage));
             }
+        }
+
+        private async Task HandleLanguageSelectionAsync(DropDownListViewModel dropDownListViewModel)
+        {
+            var languageCultureInfo = (CultureInfo)dropDownListViewModel.Value;
+            var language = languageCultureInfo.ToLanguage();
+            await _languageService.ChangeUserLanguageAsync(languageCultureInfo).ConfigureAwait(false);
+            _rewriteMeWebService.UpdateLanguageAsync(language).FireAndForget();
         }
 
         private async Task ExecuteNavigateToLanguageCommandAsync()
