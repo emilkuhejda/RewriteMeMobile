@@ -30,6 +30,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IFileItemService _fileItemService;
         private readonly IUploadedSourceService _uploadedSourceService;
+        private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
         private FileItem _fileItem;
@@ -45,6 +46,7 @@ namespace RewriteMe.Mobile.ViewModels
         public CreatePageViewModel(
             IFileItemService fileItemService,
             IUploadedSourceService uploadedSourceService,
+            IRewriteMeWebService rewriteMeWebService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -53,6 +55,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _fileItemService = fileItemService;
             _uploadedSourceService = uploadedSourceService;
+            _rewriteMeWebService = rewriteMeWebService;
             _cancellationTokenSource = new CancellationTokenSource();
 
             CanGoBack = true;
@@ -183,6 +186,13 @@ namespace RewriteMe.Mobile.ViewModels
                 FileItem = navigationParameters.GetValue<FileItem>();
                 if (IsEdit)
                 {
+                    if (FileItem.UploadErrorCode == ErrorCode.Unauthorized)
+                    {
+                        var isSuccess = await _rewriteMeWebService.RefreshTokenIfNeededAsync().ConfigureAwait(false);
+                        if (!isSuccess)
+                            throw new UnauthorizedCallException();
+                    }
+
                     Name = FileItem.Name;
                     SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
                     UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);

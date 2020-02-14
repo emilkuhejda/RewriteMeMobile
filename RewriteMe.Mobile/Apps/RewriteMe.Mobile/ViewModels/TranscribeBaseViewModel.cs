@@ -24,6 +24,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected TranscribeBaseViewModel(
             IFileItemService fileItemService,
+            IRewriteMeWebService rewriteMeWebService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -31,6 +32,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             FileItemService = fileItemService;
+            RewriteMeWebService = rewriteMeWebService;
             CanGoBack = true;
 
             AvailableLanguages = SupportedLanguages.All.Where(x => !x.OnlyInAzure).ToList();
@@ -39,6 +41,8 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         protected IFileItemService FileItemService { get; }
+
+        protected IRewriteMeWebService RewriteMeWebService { get; }
 
         protected bool AudioFileIsInvalid { get; set; }
 
@@ -145,6 +149,18 @@ namespace RewriteMe.Mobile.ViewModels
                 catch (OfflineRequestException)
                 {
                     await DialogService.AlertAsync(Loc.Text(TranslationKeys.OfflineErrorMessage)).ConfigureAwait(false);
+                }
+                catch (UnauthorizedCallException)
+                {
+                    var isSuccess = await RewriteMeWebService.RefreshTokenIfNeededAsync().ConfigureAwait(false);
+                    if (isSuccess)
+                    {
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.UnauthorizedErrorMessage)).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await SignOutAsync().ConfigureAwait(false);
+                    }
                 }
                 finally
                 {
