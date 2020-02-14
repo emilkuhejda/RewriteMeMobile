@@ -3690,6 +3690,9 @@ namespace RewriteMe.Domain.WebApi
         [Newtonsoft.Json.JsonProperty("token", Required = Newtonsoft.Json.Required.Always)]
         public string Token { get; set; }
 
+        [Newtonsoft.Json.JsonProperty("refreshToken", Required = Newtonsoft.Json.Required.Always)]
+        public string RefreshToken { get; set; }
+
         [Newtonsoft.Json.JsonProperty("identity", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public Identity Identity { get; set; }
 

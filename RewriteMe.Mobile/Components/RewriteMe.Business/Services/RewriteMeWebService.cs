@@ -231,7 +231,8 @@ namespace RewriteMe.Business.Services
             if (daysToExpire > 30)
                 return true;
 
-            var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => MakeServiceCall(client => client.RefreshTokenAsync(ApplicationSettings.WebApiVersion), GetAuthHeaders())).ConfigureAwait(false);
+            var refreshToken = _userSessionService.GetRefreshToken();
+            var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => MakeServiceCall(client => client.RefreshTokenAsync(ApplicationSettings.WebApiVersion), GetAuthHeaders(refreshToken))).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 _userSessionService.SetToken(httpRequestResult.Payload);
@@ -240,6 +241,11 @@ namespace RewriteMe.Business.Services
             }
 
             return false;
+        }
+
+        private CustomHeadersDictionary GetAuthHeaders(string accessToken)
+        {
+            return new CustomHeadersDictionary().AddBearerToken(accessToken);
         }
 
         private CustomHeadersDictionary GetAuthHeaders()
