@@ -27,6 +27,7 @@ namespace RewriteMe.Business.Services
     public class UserSessionService : IUserSessionService
     {
         private const string AccessTokenKey = "AccessToken";
+        private const string RefreshTokenKey = "RefreshToken";
 
         private readonly ILanguageService _languageService;
         private readonly IUserSubscriptionService _userSubscriptionService;
@@ -41,6 +42,7 @@ namespace RewriteMe.Business.Services
         private readonly IUserSessionRepository _userSessionRepository;
         private readonly ILogger _logger;
         private readonly object _lockObject = new object();
+        private readonly object _refreshTokenLockObject = new object();
 
         private Guid _userId = Guid.Empty;
         private AccessToken _accessToken;
@@ -113,11 +115,27 @@ namespace RewriteMe.Business.Services
             }
         }
 
+        public string GetRefreshToken()
+        {
+            lock (_refreshTokenLockObject)
+            {
+                if (!CrossSecureStorage.Current.HasKey(RefreshTokenKey))
+                    return null;
+
+                return CrossSecureStorage.Current.GetValue(RefreshTokenKey);
+            }
+        }
+
         public void SetToken(string accessToken)
         {
             _accessToken = null;
 
             CrossSecureStorage.Current.SetValue(AccessTokenKey, accessToken);
+        }
+
+        public void SetRefreshToken(string accessToken)
+        {
+            CrossSecureStorage.Current.SetValue(RefreshTokenKey, accessToken);
         }
 
         public async Task<bool> IsSignedInAsync()
@@ -390,7 +408,9 @@ namespace RewriteMe.Business.Services
             if (httpRequestResult.State != HttpRequestState.Success)
                 throw new UserRegistrationFailedException();
 
-            SetToken(httpRequestResult.Payload.Token);
+            var userRegistration = httpRequestResult.Payload;
+            SetToken(userRegistration.Token);
+            SetRefreshToken(userRegistration.RefreshToken);
 
             await _userSubscriptionService.UpdateRemainingTimeAsync(httpRequestResult.Payload.RemainingTime.Time).ConfigureAwait(false);
         }
