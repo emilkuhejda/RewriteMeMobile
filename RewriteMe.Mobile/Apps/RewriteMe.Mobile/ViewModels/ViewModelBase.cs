@@ -119,9 +119,14 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (UnauthorizedCallException)
             {
-                await UserSessionService.SignOutAsync().ConfigureAwait(false);
-                await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Login}").ConfigureAwait(false);
+                await SignOutAsync().ConfigureAwait(false);
             }
+        }
+
+        protected async Task SignOutAsync()
+        {
+            await UserSessionService.SignOutAsync().ConfigureAwait(false);
+            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Login}").ConfigureAwait(false);
         }
 
         protected virtual async Task LoadDataAsync(INavigationParameters navigationParameters)

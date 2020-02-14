@@ -17,12 +17,15 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public abstract class TranscribeBaseViewModel : ViewModelBase
     {
+        private readonly IRewriteMeWebService _rewriteMeWebService;
+
         private string _name;
         private SupportedLanguage _selectedLanguage;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _canTranscribe;
 
         protected TranscribeBaseViewModel(
+            IRewriteMeWebService rewriteMeWebService,
             IFileItemService fileItemService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -30,6 +33,8 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
+            _rewriteMeWebService = rewriteMeWebService;
+
             FileItemService = fileItemService;
             CanGoBack = true;
 
@@ -145,6 +150,18 @@ namespace RewriteMe.Mobile.ViewModels
                 catch (OfflineRequestException)
                 {
                     await DialogService.AlertAsync(Loc.Text(TranslationKeys.OfflineErrorMessage)).ConfigureAwait(false);
+                }
+                catch (UnauthorizedCallException)
+                {
+                    var isSuccess = await _rewriteMeWebService.RefreshTokenIfNeededAsync().ConfigureAwait(false);
+                    if (isSuccess)
+                    {
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.UnauthorizedErrorMessage)).ConfigureAwait(false);
+                    }
+                    else
+                    {
+                        await SignOutAsync().ConfigureAwait(false);
+                    }
                 }
                 finally
                 {

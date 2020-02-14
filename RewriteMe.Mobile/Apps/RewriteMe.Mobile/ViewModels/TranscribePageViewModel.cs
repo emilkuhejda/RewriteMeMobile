@@ -14,12 +14,13 @@ namespace RewriteMe.Mobile.ViewModels
     public class TranscribePageViewModel : TranscribeBaseViewModel
     {
         public TranscribePageViewModel(
+            IRewriteMeWebService rewriteMeWebService,
             IFileItemService fileItemService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(fileItemService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(rewriteMeWebService, fileItemService, userSessionService, dialogService, navigationService, loggerFactory)
         {
         }
 

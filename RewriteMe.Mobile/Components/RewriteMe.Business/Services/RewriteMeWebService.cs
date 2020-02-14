@@ -224,18 +224,22 @@ namespace RewriteMe.Business.Services
                 ).ConfigureAwait(false);
         }
 
-        public async Task RefreshTokenIfNeededAsync()
+        public async Task<bool> RefreshTokenIfNeededAsync()
         {
             var accessToken = _userSessionService.AccessToken;
             var daysToExpire = accessToken.ExpirationDate.Subtract(DateTimeOffset.UtcNow).TotalDays;
             if (daysToExpire > 30)
-                return;
+                return true;
 
             var httpRequestResult = await WebServiceErrorHandler.HandleResponseAsync(() => MakeServiceCall(client => client.RefreshTokenAsync(ApplicationSettings.WebApiVersion), GetAuthHeaders())).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 _userSessionService.SetToken(httpRequestResult.Payload);
+
+                return true;
             }
+
+            return false;
         }
 
         private CustomHeadersDictionary GetAuthHeaders()

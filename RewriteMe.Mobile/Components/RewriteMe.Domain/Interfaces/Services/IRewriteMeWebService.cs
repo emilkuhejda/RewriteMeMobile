@@ -57,6 +57,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<Ok>> MarkMessagesAsOpenedAsync(IEnumerable<Guid> ids);
 
-        Task RefreshTokenIfNeededAsync();
+        Task<bool> RefreshTokenIfNeededAsync();
     }
 }
