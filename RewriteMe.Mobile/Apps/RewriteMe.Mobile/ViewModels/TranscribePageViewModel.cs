@@ -2,25 +2,49 @@
 using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Transcription;
+using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class TranscribePageViewModel : TranscribeBaseViewModel
     {
+        private string _errorMessage;
+        private bool _isErrorMessageVisible;
+
         public TranscribePageViewModel(
             IFileItemService fileItemService,
+            IRewriteMeWebService rewriteMeWebService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(fileItemService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(fileItemService, rewriteMeWebService, userSessionService, dialogService, navigationService, loggerFactory)
         {
+        }
+
+        public string ErrorMessage
+        {
+            get => _errorMessage;
+            set
+            {
+                if (SetProperty(ref _errorMessage, value) && !string.IsNullOrWhiteSpace(value))
+                {
+                    IsErrorMessageVisible = true;
+                }
+            }
+        }
+
+        public bool IsErrorMessageVisible
+        {
+            get => _isErrorMessageVisible;
+            set => SetProperty(ref _isErrorMessageVisible, value);
         }
 
         private FileItem FileItem { get; set; }
@@ -35,6 +59,15 @@ namespace RewriteMe.Mobile.ViewModels
                     return;
 
                 FileItem = navigationParameters.GetValue<FileItem>();
+                if (FileItem.TranscribeErrorCode.HasValue)
+                {
+                    var isSuccess = await RewriteMeWebService.RefreshTokenIfNeededAsync().ConfigureAwait(false);
+                    if (!isSuccess)
+                        throw new UnauthorizedCallException();
+
+                    ErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.TranscribeErrorCode);
+                }
+
                 Name = FileItem.Name;
                 SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
 
@@ -44,6 +77,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override async Task ExecuteTranscribeInternalAsync()
         {
+            IsErrorMessageVisible = false;
+
             await FileItemService.TranscribeAsync(FileItem.Id, SelectedLanguage.Culture).ConfigureAwait(false);
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
         }
