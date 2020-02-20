@@ -3,30 +3,28 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Mvvm;
 using Prism.Navigation;
-using RewriteMe.Business.Extensions;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Commands;
-using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
-using RewriteMe.Mobile.Views;
-using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public class BottomNavigationViewModel : BindableBase
     {
         private readonly IInformationMessageService _informationMessageService;
-        private readonly INavigationService _navigationService;
+        private readonly INavigator _navigator;
+
         private bool _hasUnopenedMessages;
 
         public BottomNavigationViewModel(
             ISynchronizationService synchronizationService,
             IInformationMessageService informationMessageService,
-            INavigationService navigationService)
+            INavigator navigator)
         {
             _informationMessageService = informationMessageService;
-            _navigationService = navigationService;
+            _navigator = navigator;
 
             informationMessageService.MessageOpened += HandleMessageOpened;
             synchronizationService.SynchronizationCompleted += HandleSynchronizationCompleted;
@@ -35,11 +33,7 @@ namespace RewriteMe.Mobile.ViewModels
             NavigateToRecorderOverviewCommand = new AsyncCommand(ExecuteNavigateToRecorderOverviewCommandAsync, CanExecuteNavigateToRecorderOverviewCommand);
             NavigateToInformationMessagesCommand = new AsyncCommand(ExecuteNavigateToInformationMessagesCommandAsync, CanExecuteNavigateToInformationMessagesCommand);
             NavigateToSettingsCommand = new AsyncCommand(ExecuteNavigateToSettingsCommandAsync, CanExecuteNavigateToSettingsCommand);
-
-            Page = CurrentPage.Overview;
         }
-
-        private CurrentPage Page { get; set; }
 
         public bool HasUnopenedMessages
         {
@@ -57,54 +51,44 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteNavigateToOverviewCommand()
         {
-            return Page != CurrentPage.Overview;
+            return _navigator.CurrentPage != RootPage.Overview;
         }
 
         private async Task ExecuteNavigateToOverviewCommandAsync()
         {
             var navigationParameters = new NavigationParameters();
             navigationParameters.Add(NavigationConstants.NavigationBack, true);
-            await NavigateToAsync($"/{Pages.Navigation}/{Pages.Overview}", CurrentPage.Overview, navigationParameters).ConfigureAwait(false);
+            await _navigator.NavigateToAsync($"/{Pages.Navigation}/{Pages.Overview}", RootPage.Overview, navigationParameters).ConfigureAwait(false);
         }
 
         private bool CanExecuteNavigateToRecorderOverviewCommand()
         {
-            return Page != CurrentPage.RecorderOverview;
+            return _navigator.CurrentPage != RootPage.RecorderOverview;
         }
 
         private async Task ExecuteNavigateToRecorderOverviewCommandAsync()
         {
-            await NavigateToAsync($"/{Pages.Navigation}/{Pages.RecorderOverview}", CurrentPage.RecorderOverview).ConfigureAwait(false);
+            await _navigator.NavigateToAsync($"/{Pages.Navigation}/{Pages.RecorderOverview}", RootPage.RecorderOverview).ConfigureAwait(false);
         }
 
         private bool CanExecuteNavigateToInformationMessagesCommand()
         {
-            return Page != CurrentPage.InformationMessages;
+            return _navigator.CurrentPage != RootPage.InformationMessages;
         }
 
         private async Task ExecuteNavigateToInformationMessagesCommandAsync()
         {
-            await NavigateToAsync($"/{Pages.Navigation}/{Pages.InfoOverview}", CurrentPage.InformationMessages).ConfigureAwait(false);
+            await _navigator.NavigateToAsync($"/{Pages.Navigation}/{Pages.InfoOverview}", RootPage.InformationMessages).ConfigureAwait(false);
         }
 
         private bool CanExecuteNavigateToSettingsCommand()
         {
-            return Page != CurrentPage.Settings;
+            return _navigator.CurrentPage != RootPage.Settings;
         }
 
         private async Task ExecuteNavigateToSettingsCommandAsync()
         {
-            await NavigateToAsync($"/{Pages.Navigation}/{Pages.Settings}", CurrentPage.Settings).ConfigureAwait(false);
-        }
-
-        private async Task NavigateToAsync(string name, CurrentPage currentPage, INavigationParameters navigationParameters = null)
-        {
-            var navigationPage = Application.Current.MainPage as RewriteMeNavigationPage;
-            navigationPage?.Pages.ForEach(x => ((ViewModelBase)x.BindingContext).Dispose());
-
-            Page = currentPage;
-
-            await _navigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
+            await _navigator.NavigateToAsync($"/{Pages.Navigation}/{Pages.Settings}", RootPage.Settings).ConfigureAwait(false);
         }
 
         private async void HandleMessageOpened(object sender, EventArgs e)
@@ -115,14 +99,6 @@ namespace RewriteMe.Mobile.ViewModels
         private async void HandleSynchronizationCompleted(object sender, EventArgs e)
         {
             HasUnopenedMessages = await _informationMessageService.HasUnopenedMessagesForLastWeekAsync().ConfigureAwait(false);
-        }
-
-        private enum CurrentPage
-        {
-            Overview = 0,
-            RecorderOverview,
-            InformationMessages,
-            Settings
         }
     }
 }

@@ -13,6 +13,8 @@ using RewriteMe.Domain.Upload;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Extensions;
+using RewriteMe.Mobile.Navigation;
+using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Resources.Localization;
 using Xamarin.Forms;
 
@@ -22,14 +24,16 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IRecordedItemService _recordedItemService;
         private readonly IUploadedSourceService _uploadedSourceService;
+        private readonly INavigator _navigator;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
         public TranscribeRecodingPageViewModel(
             IRecordedItemService recordedItemService,
             IUploadedSourceService uploadedSourceService,
-            IUserSessionService userSessionService,
+            INavigator navigator,
             IFileItemService fileItemService,
             IRewriteMeWebService rewriteMeWebService,
+            IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
@@ -37,6 +41,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _recordedItemService = recordedItemService;
             _uploadedSourceService = uploadedSourceService;
+            _navigator = navigator;
             _cancellationTokenSource = new CancellationTokenSource();
 
             PlayerViewModel = new PlayerViewModel();
@@ -95,7 +100,14 @@ namespace RewriteMe.Mobile.ViewModels
             await _uploadedSourceService.AddAsync(uploadedSource).ConfigureAwait(false);
             MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.UploadFileItem), nameof(BackgroundServiceType.UploadFileItem));
 
-            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+            await NavigateToOverviewPageAsync().ConfigureAwait(false);
+        }
+
+        private async Task NavigateToOverviewPageAsync()
+        {
+            var navigationParameters = new NavigationParameters();
+            navigationParameters.Add(NavigationConstants.NavigationBack, true);
+            await _navigator.NavigateToAsync($"/{Pages.Navigation}/{Pages.Overview}", RootPage.Overview, navigationParameters).ConfigureAwait(false);
         }
 
         private MediaFile CreateMediaFile()
