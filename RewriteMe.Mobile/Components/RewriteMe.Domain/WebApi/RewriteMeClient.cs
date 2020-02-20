@@ -3555,7 +3555,7 @@ namespace RewriteMe.Domain.WebApi
         [Newtonsoft.Json.JsonProperty("alternatives", Required = Newtonsoft.Json.Required.Always)]
         public System.Collections.Generic.IEnumerable<RecognitionAlternative> Alternatives { get; set; } = new System.Collections.ObjectModel.Collection<RecognitionAlternative>();
 
-        [Newtonsoft.Json.JsonProperty("userTranscript", Required = Newtonsoft.Json.Required.Always)]
+        [Newtonsoft.Json.JsonProperty("userTranscript", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
         public string UserTranscript { get; set; }
 
         [Newtonsoft.Json.JsonProperty("startTimeTicks", Required = Newtonsoft.Json.Required.Always)]
