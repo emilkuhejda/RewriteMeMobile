@@ -10,11 +10,11 @@ using RewriteMe.Mobile.Navigation;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class IntroPageViewModel : ViewModelBase
+    public class IntroTwoPageViewModel : ViewModelBase
     {
         private readonly IInternalValueService _internalValueService;
 
-        public IntroPageViewModel(
+        public IntroTwoPageViewModel(
             IInternalValueService internalValueService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -23,15 +23,13 @@ namespace RewriteMe.Mobile.ViewModels
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _internalValueService = internalValueService;
-            SkipCommand = new AsyncCommand(ExecuteSkipCommandAsync);
-            NextCommand = new AsyncCommand(ExecuteNextCommandAsync);
+
+            OkCommand = new AsyncCommand(ExecuteOkCommandAsync);
         }
 
         private INavigationParameters NavigationParameters { get; set; }
 
-        public ICommand SkipCommand { get; }
-
-        public ICommand NextCommand { get; }
+        public ICommand OkCommand { get; }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
@@ -40,15 +38,10 @@ namespace RewriteMe.Mobile.ViewModels
             await Task.CompletedTask.ConfigureAwait(false);
         }
 
-        private async Task ExecuteSkipCommandAsync()
+        private async Task ExecuteOkCommandAsync()
         {
             await _internalValueService.UpdateValueAsync(InternalValues.IsIntroSkipped, true).ConfigureAwait(false);
             await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", NavigationParameters).ConfigureAwait(false);
-        }
-
-        private async Task ExecuteNextCommandAsync()
-        {
-            await NavigationService.NavigateWithoutAnimationAsync(Pages.IntroTwo, NavigationParameters).ConfigureAwait(false);
         }
     }
 }

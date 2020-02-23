@@ -235,6 +235,12 @@
   <data name="Ok" xml:space="preserve">
     <value>Ok</value>
   </data>
+  <data name="Skip" xml:space="preserve">
+    <value>Preskočiť</value>
+  </data>
+  <data name="Next" xml:space="preserve">
+    <value>Ďalej</value>
+  </data>
   <data name="DeveloperModeIsActivated" xml:space="preserve">
     <value>Developerský mód je aktivovaný</value>
   </data>
