@@ -8,6 +8,8 @@
 
         public static string Loading { get; } = "Loading";
 
+        public static string Intro { get; } = "Intro";
+
         public static string Overview { get; } = "Overview";
 
         public static string RecorderOverview { get; } = "RecorderOverview";

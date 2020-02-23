@@ -49,6 +49,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterForNavigation<RewriteMeNavigationPage>(Pages.Navigation);
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>(Pages.Login);
             containerRegistry.RegisterForNavigation<LoadingPage, LoadingPageViewModel>(Pages.Loading);
+            containerRegistry.RegisterForNavigation<IntroPage, IntroPageViewModel>(Pages.Intro);
             containerRegistry.RegisterForNavigation<OverviewPage, OverviewPageViewModel>(Pages.Overview);
             containerRegistry.RegisterForNavigation<RecorderOverviewPage, RecorderOverviewPageViewModel>(Pages.RecorderOverview);
             containerRegistry.RegisterForNavigation<InfoOverviewPage, InfoOverviewPageViewModel>(Pages.InfoOverview);
