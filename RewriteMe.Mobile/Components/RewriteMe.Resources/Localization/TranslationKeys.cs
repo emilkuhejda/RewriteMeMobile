@@ -47,6 +47,8 @@
         public static string SendEmail => "SendEmail";
         public static string Cancel => "Cancel";
         public static string Ok => "Ok";
+        public static string Skip => "Skip";
+        public static string Next => "Next";
         public static string DeveloperModeIsActivated => "DeveloperModeIsActivated";
         public static string EmailIsNotSupported => "EmailIsNotSupported";
         public static string ApplicationTitleLog => "ApplicationTitleLog";
