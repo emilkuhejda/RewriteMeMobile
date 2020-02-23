@@ -153,7 +153,7 @@ namespace RewriteMe.Mobile
             }
 
 #if !DEBUG
-            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Analytics), typeof(Push));|
+            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Analytics), typeof(Push));
 #else
             AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Push));
 #endif
