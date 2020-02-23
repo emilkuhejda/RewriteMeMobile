@@ -14,6 +14,7 @@ using RewriteMe.Business.Configuration;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
@@ -117,11 +118,19 @@ namespace RewriteMe.Mobile
             var alreadySignedIn = AsyncHelper.RunSync(() => Container.Resolve<IUserSessionService>().IsSignedInAsync());
             if (alreadySignedIn)
             {
-                var name = navigationParameters.ContainsKey(nameof(ImportedFileNavigationParameters))
-                    ? $"/{Pages.Navigation}/{Pages.Overview}/{Pages.Create}"
-                    : $"/{Pages.Navigation}/{Pages.Overview}";
+                var isIntroSkipped = AsyncHelper.RunSync(() => Container.Resolve<IInternalValueService>().GetValueAsync(InternalValues.IsIntroSkipped));
+                if (isIntroSkipped)
+                {
+                    var name = navigationParameters.ContainsKey(nameof(ImportedFileNavigationParameters))
+                        ? $"/{Pages.Navigation}/{Pages.Overview}/{Pages.Create}"
+                        : $"/{Pages.Navigation}/{Pages.Overview}";
 
-                NavigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
+                    NavigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
+                }
+                else
+                {
+                    NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Intro}", navigationParameters).ConfigureAwait(false);
+                }
             }
             else
             {

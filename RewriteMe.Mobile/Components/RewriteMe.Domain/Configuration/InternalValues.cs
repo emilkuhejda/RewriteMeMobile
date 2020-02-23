@@ -17,5 +17,7 @@
         public static InternalValue<string> LanguageSetting { get; } = new InternalValue<string>("LanguageSetting", null);
 
         public static InternalValue<long> RemainingTimeTicks { get; } = new InternalValue<long>("RemainingTimeTicks", 0);
+
+        public static InternalValue<bool> IsIntroSkipped { get; } = new InternalValue<bool>("IsIntroSkipped", false);
     }
 }

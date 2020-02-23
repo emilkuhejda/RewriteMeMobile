@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.IntroPage"
+                          xmlns="http://xamarin.com/schemas/2014/forms"
+                          xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+                          xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+                          xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                          xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
+                          mc:Ignorable="d">
+    <Grid Padding="36,36,36,36"
+          BackgroundColor="{StaticResource WindowBackground}"
+          HorizontalOptions="Fill"
+          VerticalOptions="Fill">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <Label Grid.Row="1"
+               HorizontalOptions="End"
+               Style="{StaticResource IntroCommandLabelStyle}"
+               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Ok}}">
+            <Label.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding OkCommand}" />
+            </Label.GestureRecognizers>
+        </Label>
+    </Grid>
+</views:BaseNavigationPage>
