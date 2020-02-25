@@ -21,7 +21,6 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IConnectivityService _connectivityService;
         private readonly IPushNotificationsService _pushNotificationsService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
-        private readonly IInternalValueService _internalValueService;
 
         private string _progressText;
 
@@ -29,7 +28,6 @@ namespace RewriteMe.Mobile.ViewModels
             IConnectivityService connectivityService,
             IPushNotificationsService pushNotificationsService,
             IRewriteMeWebService rewriteMeWebService,
-            IInternalValueService internalValueService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -39,7 +37,6 @@ namespace RewriteMe.Mobile.ViewModels
             _connectivityService = connectivityService;
             _pushNotificationsService = pushNotificationsService;
             _rewriteMeWebService = rewriteMeWebService;
-            _internalValueService = internalValueService;
 
             IsSecurePage = false;
             HasTitleBar = false;
@@ -69,16 +66,7 @@ namespace RewriteMe.Mobile.ViewModels
                     var isSuccess = await RegisterUserAsync(accessToken).ConfigureAwait(false);
                     if (isSuccess)
                     {
-                        var isIntroSkipped = await _internalValueService.GetValueAsync(InternalValues.IsIntroSkipped).ConfigureAwait(false);
-                        if (isIntroSkipped)
-                        {
-                            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
-                        }
-                        else
-                        {
-                            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Intro}", navigationParameters).ConfigureAwait(false);
-                        }
-
+                        await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Overview}", navigationParameters).ConfigureAwait(false);
                         return;
                     }
                 }
