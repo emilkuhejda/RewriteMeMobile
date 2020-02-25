@@ -32,7 +32,7 @@
             <controls:Divider />
 
             <!--  Remaining time  -->
-            <controls:DrillDownButton Command="{Binding NavigateToUserSubscriptions}"
+            <controls:DrillDownButton Command="{Binding NavigateToUserSubscriptionsCommand}"
                                       ImageSource="resource://RewriteMe.Mobile.Resources.Images.Forward.svg"
                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.RemainingTime}}">
                 <Label Style="{StaticResource DrillDownItemLabelStyle}" Text="{Binding RemainingTime}" />

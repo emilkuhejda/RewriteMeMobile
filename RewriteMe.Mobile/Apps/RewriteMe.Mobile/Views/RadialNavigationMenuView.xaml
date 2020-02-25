@@ -10,7 +10,7 @@
                          LayoutType="Custom"
                          Point="50,50"
                          SelectionColor="{StaticResource RadialMenuSelectionColor}"
-                         VisibleSegmentsCount="4">
+                         VisibleSegmentsCount="6">
         <xForms:SfRadialMenu.CenterButtonView>
             <Grid>
                 <forms:SvgCachedImage Margin="0"
@@ -25,6 +25,25 @@
         </xForms:SfRadialMenu.CenterButtonView>
 
         <xForms:SfRadialMenu.Items>
+            <xForms:SfRadialMenuItem>
+                <xForms:SfRadialMenuItem.View>
+                    <Grid>
+                        <forms:SvgCachedImage Margin="0"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="40"
+                                              HorizontalOptions="CenterAndExpand"
+                                              InputTransparent="True"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.Subscription.svg"
+                                              VerticalOptions="CenterAndExpand" />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding NavigateToUserSubscriptionsCommand}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </xForms:SfRadialMenuItem.View>
+            </xForms:SfRadialMenuItem>
+
             <xForms:SfRadialMenuItem>
                 <xForms:SfRadialMenuItem.View>
                     <Grid>

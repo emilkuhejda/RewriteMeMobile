@@ -17,11 +17,14 @@ namespace RewriteMe.Mobile.ViewModels
 
             NavigateToCreatePageCommand = new AsyncCommand(ExecuteNavigateToCreatePageCommandAsync);
             NavigateToRecorderCommand = new AsyncCommand(ExecuteNavigateToRecorderCommandAsync);
+            NavigateToUserSubscriptionsCommand = new AsyncCommand(ExecuteNavigateToUserSubscriptionsCommandAsync);
         }
 
         public ICommand NavigateToCreatePageCommand { get; }
 
         public ICommand NavigateToRecorderCommand { get; }
+
+        public ICommand NavigateToUserSubscriptionsCommand { get; }
 
         private async Task ExecuteNavigateToCreatePageCommandAsync()
         {
@@ -31,6 +34,11 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteNavigateToRecorderCommandAsync()
         {
             await _navigationService.NavigateWithoutAnimationAsync(Pages.Recorder).ConfigureAwait(false);
+        }
+
+        private async Task ExecuteNavigateToUserSubscriptionsCommandAsync()
+        {
+            await _navigationService.NavigateWithoutAnimationAsync(Pages.UserSubscriptions).ConfigureAwait(false);
         }
     }
 }
