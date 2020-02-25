@@ -46,6 +46,7 @@
     <None Remove="Resources\Images\VoicipherLogo.svg" />
     <None Remove="Resources\Images\Success.svg" />
     <None Remove="Resources\Images\Error.svg" />
+    <None Remove="Resources\Images\Subscription.svg" />
   </ItemGroup>
 
   <ItemGroup>
@@ -80,6 +81,7 @@
     <EmbeddedResource Include="Resources\Images\VoicipherLogo.svg" />
     <EmbeddedResource Include="Resources\Images\Success.svg" />
     <EmbeddedResource Include="Resources\Images\Error.svg" />
+    <EmbeddedResource Include="Resources\Images\Subscription.svg" />
   </ItemGroup>
   
   <ItemGroup>
