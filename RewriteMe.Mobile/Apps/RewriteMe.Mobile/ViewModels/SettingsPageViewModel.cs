@@ -71,7 +71,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
             NavigateToUserSettingsCommand = new AsyncCommand(ExecuteNavigateToUserSettingsCommandAsync);
-            NavigateToUserSubscriptions = new AsyncCommand(ExecuteNavigateToUserSubscriptionsCommandAsync);
+            NavigateToUserSubscriptionsCommand = new AsyncCommand(ExecuteNavigateToUserSubscriptionsCommandAsync);
             NavigateToPrivacyPolicyCommand = new DelegateCommand(ExecuteNavigateToPrivacyPolicyCommand);
             NavigateToEmailCommand = new DelegateCommand(ExecuteNavigateToEmailCommand);
             NavigateToDeveloperPageCommand = new AsyncCommand(ExecuteNavigateToDeveloperPageCommandAsync);
@@ -107,7 +107,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand NavigateToUserSettingsCommand { get; }
 
-        public ICommand NavigateToUserSubscriptions { get; }
+        public ICommand NavigateToUserSubscriptionsCommand { get; }
 
         public ICommand NavigateToPrivacyPolicyCommand { get; }
 
