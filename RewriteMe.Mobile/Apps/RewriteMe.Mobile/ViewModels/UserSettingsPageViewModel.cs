@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
+using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
@@ -69,18 +70,20 @@ namespace RewriteMe.Mobile.ViewModels
                 return;
             }
 
-            var httpRequestResult = await _rewriteMeWebService.DeleteUserAsync().ConfigureAwait(false);
-            if (httpRequestResult.State != HttpRequestState.Success)
+            using (new OperationMonitor(OperationScope))
             {
-                await DialogService.AlertAsync(
-                    Loc.Text(TranslationKeys.UserAccountDeletionErrorMessage),
-                    Loc.Text(TranslationKeys.Warning),
-                    Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
-                return;
+                var httpRequestResult = await _rewriteMeWebService.DeleteUserAsync().ConfigureAwait(false);
+                if (httpRequestResult.State == HttpRequestState.Success)
+                {
+                    await ExecuteLogoutCommandAsync().ConfigureAwait(false);
+                    return;
+                }
             }
 
-            await UserSessionService.SignOutAsync().ConfigureAwait(false);
-            await NavigationService.NavigateWithoutAnimationAsync($"/{Pages.Navigation}/{Pages.Login}").ConfigureAwait(false);
+            await DialogService.AlertAsync(
+                Loc.Text(TranslationKeys.UserAccountDeletionErrorMessage),
+                Loc.Text(TranslationKeys.Warning),
+                Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
         }
 
         private async Task ExecuteLogoutCommandAsync()
