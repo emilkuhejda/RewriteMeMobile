@@ -236,6 +236,14 @@ namespace RewriteMe.Business.Services
                 ).ConfigureAwait(false);
         }
 
+        public async Task<HttpRequestResult<Ok>> DeleteUserAsync()
+        {
+            var userSession = await _userSessionService.GetUserSessionAsync().ConfigureAwait(false);
+            return await WebServiceErrorHandler.HandleResponseAsync(
+                () => MakeServiceCall(client => client.DeleteUserAsync(userSession.Email, ApplicationSettings.WebApiVersion), GetAuthHeaders())
+            ).ConfigureAwait(false);
+        }
+
         public async Task<bool> RefreshTokenIfNeededAsync()
         {
             var accessToken = _userSessionService.AccessToken;

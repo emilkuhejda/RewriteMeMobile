@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
+using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
@@ -12,20 +13,28 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class UserSettingsPageViewModel : ViewModelBase
     {
+        private readonly IRewriteMeWebService _rewriteMeWebService;
+
         public UserSettingsPageViewModel(
+            IRewriteMeWebService rewriteMeWebService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
+            _rewriteMeWebService = rewriteMeWebService;
+
             CanGoBack = true;
 
             ResetPasswordCommand = new AsyncCommand(ExecuteResetPasswordCommandAsync);
+            DeleteAccountCommand = new AsyncCommand(ExecuteDeleteAccountCommandAsync);
             LogoutCommand = new AsyncCommand(ExecuteLogoutCommandAsync);
         }
 
         public ICommand ResetPasswordCommand { get; }
+
+        public ICommand DeleteAccountCommand { get; }
 
         public ICommand LogoutCommand { get; }
 
@@ -36,6 +45,13 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 await DialogService.AlertAsync(Loc.Text(TranslationKeys.ProfileEditErrorMessage)).ConfigureAwait(false);
             }
+        }
+
+        private async Task ExecuteDeleteAccountCommandAsync()
+        {
+            var httpRequestResult = await _rewriteMeWebService.DeleteUserAsync().ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Success)
+            { }
         }
 
         private async Task ExecuteLogoutCommandAsync()

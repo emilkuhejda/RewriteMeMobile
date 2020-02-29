@@ -202,6 +202,9 @@
   <data name="ResetPassword" xml:space="preserve">
     <value>Zmena hesla</value>
   </data>
+  <data name="DeleteAccount" xml:space="preserve">
+    <value>Vymazať účet</value>
+  </data>
   <data name="SignOut" xml:space="preserve">
     <value>Odhlásiť sa</value>
   </data>

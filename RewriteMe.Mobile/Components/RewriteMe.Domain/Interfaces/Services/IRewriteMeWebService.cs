@@ -60,6 +60,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<Ok>> UpdateLanguageAsync(Language language);
 
+        Task<HttpRequestResult<Ok>> DeleteUserAsync();
+
         Task<bool> RefreshTokenIfNeededAsync();
     }
 }

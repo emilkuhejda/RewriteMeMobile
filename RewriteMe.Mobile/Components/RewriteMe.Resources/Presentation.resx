@@ -202,6 +202,9 @@
   <data name="ResetPassword" xml:space="preserve">
     <value>Reset password</value>
   </data>
+  <data name="DeleteAccount" xml:space="preserve">
+    <value>Delete account</value>
+  </data>
   <data name="SignOut" xml:space="preserve">
     <value>Sign out</value>
   </data>

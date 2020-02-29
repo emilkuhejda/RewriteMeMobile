@@ -12,6 +12,10 @@
             <controls:DrillDownButton Command="{Binding ResetPasswordCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ResetPassword}}" />
             <controls:Divider />
 
+            <!--  Delete account  -->
+            <controls:DrillDownButton Command="{Binding DeleteAccountCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.DeleteAccount}}" />
+            <controls:Divider />
+
             <!--  Log out  -->
             <controls:DrillDownButton Command="{Binding LogoutCommand}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SignOut}}" />
             <controls:Divider />
