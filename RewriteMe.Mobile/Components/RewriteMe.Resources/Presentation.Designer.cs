@@ -169,6 +169,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Warning! Deleting user account is irreversible. This will permanently delete your data. This action cannot be undone. If you want to continue, type &apos;{0} for confirmation.&apos;.
+        /// </summary>
+        public static string DeleteUserAccountMessage {
+            get {
+                return ResourceManager.GetString("DeleteUserAccountMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Save ~4€.
         /// </summary>
         public static string DescriptionFiveHours {
@@ -273,6 +282,15 @@ namespace RewriteMe.Resources {
         public static string InAppBillingIsNotSupportedErrorMessage {
             get {
                 return ResourceManager.GetString("InAppBillingIsNotSupportedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Incorrect data.
+        /// </summary>
+        public static string IncorrectUserInputErrorMessage {
+            get {
+                return ResourceManager.GetString("IncorrectUserInputErrorMessage", resourceCulture);
             }
         }
         
@@ -943,6 +961,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Your account was not correctly deleted. Please, try again later..
+        /// </summary>
+        public static string UserAccountDeletionErrorMessage {
+            get {
+                return ResourceManager.GetString("UserAccountDeletionErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User profile.
         /// </summary>
         public static string UserProfile {
@@ -975,6 +1002,15 @@ namespace RewriteMe.Resources {
         public static string Version {
             get {
                 return ResourceManager.GetString("Version", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Warning.
+        /// </summary>
+        public static string Warning {
+            get {
+                return ResourceManager.GetString("Warning", resourceCulture);
             }
         }
     }

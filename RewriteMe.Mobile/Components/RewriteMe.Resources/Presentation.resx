@@ -280,6 +280,9 @@
   <data name="Info" xml:space="preserve">
     <value>Info</value>
   </data>
+  <data name="Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="InProgressLabel" xml:space="preserve">
     <value>In progress</value>
   </data>
@@ -336,6 +339,9 @@
   </data>
   <data name="NoRecordingsMessage" xml:space="preserve">
     <value>Any recordings yet?</value>
+  </data>
+  <data name="DeleteUserAccountMessage" xml:space="preserve">
+    <value>Warning! Deleting user account is irreversible. This will permanently delete your data. This action cannot be undone. If you want to continue, type '{0} for confirmation.'</value>
   </data>
 
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
@@ -406,5 +412,11 @@
   </data>
   <data name="PurchaseWasNotProcessedErrorMessage" xml:space="preserve">
     <value>Purchase was not processed. Please, try again later.</value>
+  </data>
+  <data name="UserAccountDeletionErrorMessage" xml:space="preserve">
+    <value>Your account was not correctly deleted. Please, try again later.</value>
+  </data>
+  <data name="IncorrectUserInputErrorMessage" xml:space="preserve">
+    <value>Incorrect data</value>
   </data>
 </root>
