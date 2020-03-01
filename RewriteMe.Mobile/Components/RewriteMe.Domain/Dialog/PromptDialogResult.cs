@@ -1,8 +1,8 @@
 ﻿namespace RewriteMe.Domain.Dialog
 {
-    public class PromptResult
+    public class PromptDialogResult
     {
-        public PromptResult(bool ok, string text)
+        public PromptDialogResult(bool ok, string text)
         {
             Ok = ok;
             Text = text;

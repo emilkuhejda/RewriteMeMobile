@@ -37,6 +37,7 @@
         public static string UserProfile => "UserProfile";
         public static string EditProfile => "EditProfile";
         public static string ResetPassword => "ResetPassword";
+        public static string DeleteAccount => "DeleteAccount";
         public static string SignOut => "SignOut";
         public static string Version => "Version";
         public static string PrivacyPolicy => "PrivacyPolicy";
@@ -61,6 +62,7 @@
         public static string AudioFiles => "AudioFiles";
         public static string Recordings => "Recordings";
         public static string Info => "Info";
+        public static string Warning => "Warning";
         public static string InProgressLabel => "InProgressLabel";
         public static string OneHour => "OneHour";
         public static string FiveHours => "FiveHours";
@@ -80,6 +82,7 @@
         public static string Record => "Record";
         public static string NoFilesMessage => "NoFilesMessage";
         public static string NoRecordingsMessage => "NoRecordingsMessage";
+        public static string DeleteUserAccountMessage => "DeleteUserAccountMessage";
 
         public static string UnauthorizedErrorMessage => "UnauthorizedErrorMessage";
         public static string FileItemSourceDatabaseUpdateErrorMessage => "FileItemSourceDatabaseUpdateErrorMessage";
@@ -104,5 +107,7 @@
         public static string InAppBillingIsNotSupportedErrorMessage => "InAppBillingIsNotSupportedErrorMessage";
         public static string PurchaseProcessedIncorrectlyErrorMessage => "PurchaseProcessedIncorrectlyErrorMessage";
         public static string PurchaseWasNotProcessedErrorMessage => "PurchaseWasNotProcessedErrorMessage";
+        public static string UserAccountDeletionErrorMessage => "UserAccountDeletionErrorMessage";
+        public static string IncorrectUserInputErrorMessage => "IncorrectUserInputErrorMessage";
     }
 }
