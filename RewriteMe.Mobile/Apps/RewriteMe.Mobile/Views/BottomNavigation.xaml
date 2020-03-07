@@ -32,6 +32,17 @@
                                           HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
+                                          IsVisible="{Binding IsOverviewPageActive}"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Overview-Active.svg"
+                                          VerticalOptions="Center" />
+
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="25"
+                                          HorizontalOptions="Center"
+                                          InputTransparent="True"
+                                          IsVisible="{Binding IsOverviewPageActive, Converter={StaticResource InvertedBoolConverter}}"
                                           Source="resource://RewriteMe.Mobile.Resources.Images.Overview.svg"
                                           VerticalOptions="Center" />
 
@@ -53,6 +64,17 @@
                                           HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
+                                          IsVisible="{Binding IsRecorderOverviewPageActive}"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.RecorderOverview-Active.svg"
+                                          VerticalOptions="Center" />
+
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="25"
+                                          HorizontalOptions="Center"
+                                          InputTransparent="True"
+                                          IsVisible="{Binding IsRecorderOverviewPageActive, Converter={StaticResource InvertedBoolConverter}}"
                                           Source="resource://RewriteMe.Mobile.Resources.Images.RecorderOverview.svg"
                                           VerticalOptions="Center" />
 
@@ -74,6 +96,17 @@
                                           HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
+                                          IsVisible="{Binding IsInformationMessagesPageActive}"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Notifications-Active.svg"
+                                          VerticalOptions="Center" />
+
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="25"
+                                          HorizontalOptions="Center"
+                                          InputTransparent="True"
+                                          IsVisible="{Binding IsInformationMessagesPageActive, Converter={StaticResource InvertedBoolConverter}}"
                                           Source="resource://RewriteMe.Mobile.Resources.Images.Notifications.svg"
                                           VerticalOptions="Center" />
 
@@ -101,6 +134,17 @@
                                           HeightRequest="25"
                                           HorizontalOptions="Center"
                                           InputTransparent="True"
+                                          IsVisible="{Binding IsSettingsPageActive}"
+                                          Source="resource://RewriteMe.Mobile.Resources.Images.Settings-Active.svg"
+                                          VerticalOptions="Center" />
+
+                    <forms:SvgCachedImage Margin="0"
+                                          Aspect="AspectFit"
+                                          BackgroundColor="Transparent"
+                                          HeightRequest="25"
+                                          HorizontalOptions="Center"
+                                          InputTransparent="True"
+                                          IsVisible="{Binding IsSettingsPageActive, Converter={StaticResource InvertedBoolConverter}}"
                                           Source="resource://RewriteMe.Mobile.Resources.Images.Settings.svg"
                                           VerticalOptions="Center" />
 

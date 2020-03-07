@@ -10,7 +10,7 @@
                          LayoutType="Custom"
                          Point="50,50"
                          SelectionColor="{StaticResource RadialMenuSelectionColor}"
-                         VisibleSegmentsCount="6">
+                         VisibleSegmentsCount="7">
         <xForms:SfRadialMenu.CenterButtonView>
             <Grid>
                 <forms:SvgCachedImage Margin="0"
