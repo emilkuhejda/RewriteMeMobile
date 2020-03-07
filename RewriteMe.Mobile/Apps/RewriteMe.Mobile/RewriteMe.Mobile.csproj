@@ -23,12 +23,15 @@
     <None Remove="Resources\Images\Info.svg" />
     <None Remove="Resources\Images\Menu.svg" />
     <None Remove="Resources\Images\NoAvailableData.svg" />
+    <None Remove="Resources\Images\Notifications-Active.svg" />
     <None Remove="Resources\Images\Notifications.svg" />
+    <None Remove="Resources\Images\Overview-Active.svg" />
     <None Remove="Resources\Images\Overview.svg" />
     <None Remove="Resources\Images\Page.svg" />
     <None Remove="Resources\Images\Pause-Enabled.svg" />
     <None Remove="Resources\Images\Play-Enabled.svg" />
     <None Remove="Resources\Images\Record.svg" />
+    <None Remove="Resources\Images\RecorderOverview-Active.svg" />
     <None Remove="Resources\Images\RecorderOverview.svg" />
     <None Remove="Resources\Images\Refresh.svg" />
     <None Remove="Resources\Images\Reload.svg" />
@@ -38,6 +41,7 @@
     <None Remove="Resources\Images\SaveAndTranscribe-Enabled.svg" />
     <None Remove="Resources\Images\Send-Disabled.svg" />
     <None Remove="Resources\Images\Send-Enabled.svg" />
+    <None Remove="Resources\Images\Settings-Active.svg" />
     <None Remove="Resources\Images\Settings.svg" />
     <None Remove="Resources\Images\Start-Enabled.svg" />
     <None Remove="Resources\Images\Stop-Enabled.svg" />
@@ -59,11 +63,14 @@
     <EmbeddedResource Include="Resources\Images\Info.svg" />
     <EmbeddedResource Include="Resources\Images\Menu.svg" />
     <EmbeddedResource Include="Resources\Images\NoAvailableData.svg" />
+    <EmbeddedResource Include="Resources\Images\Notifications-Active.svg" />
     <EmbeddedResource Include="Resources\Images\Notifications.svg" />
+    <EmbeddedResource Include="Resources\Images\Overview-Active.svg" />
     <EmbeddedResource Include="Resources\Images\Page.svg" />
     <EmbeddedResource Include="Resources\Images\Pause-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Play-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Record.svg" />
+    <EmbeddedResource Include="Resources\Images\RecorderOverview-Active.svg" />
     <EmbeddedResource Include="Resources\Images\Refresh.svg" />
     <EmbeddedResource Include="Resources\Images\Reload.svg" />
     <EmbeddedResource Include="Resources\Images\Save-Disabled.svg" />
@@ -72,6 +79,7 @@
     <EmbeddedResource Include="Resources\Images\SaveAndTranscribe-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\Send-Disabled.svg" />
     <EmbeddedResource Include="Resources\Images\Send-Enabled.svg" />
+    <EmbeddedResource Include="Resources\Images\Settings-Active.svg" />
     <EmbeddedResource Include="Resources\Images\Settings.svg" />
     <EmbeddedResource Include="Resources\Images\Start-Enabled.svg" />
     <EmbeddedResource Include="Resources\Images\PauseRecording.svg" />
