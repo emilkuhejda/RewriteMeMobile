@@ -268,7 +268,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 5 minutes maximum.
+        ///   Looks up a localized string similar to 5 minutes max.
         /// </summary>
         public static string FiveMinutesOnly {
             get {
@@ -300,15 +300,6 @@ namespace RewriteMe.Resources {
         public static string Info {
             get {
                 return ResourceManager.GetString("Info", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to In progress.
-        /// </summary>
-        public static string InProgressLabel {
-            get {
-                return ResourceManager.GetString("InProgressLabel", resourceCulture);
             }
         }
         
@@ -529,7 +520,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No available messages.
+        ///   Looks up a localized string similar to No messages.
         /// </summary>
         public static string NoAvailableMessages {
             get {
@@ -538,7 +529,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Any files yet?.
+        ///   Looks up a localized string similar to No files yet.
         /// </summary>
         public static string NoFilesMessage {
             get {
@@ -547,7 +538,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Any recordings yet?.
+        ///   Looks up a localized string similar to No recordings yet.
         /// </summary>
         public static string NoRecordingsMessage {
             get {
@@ -894,6 +885,15 @@ namespace RewriteMe.Resources {
         public static string TranscribeAudioSourceNotFoundErrorMessage {
             get {
                 return ResourceManager.GetString("TranscribeAudioSourceNotFoundErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transcribed.
+        /// </summary>
+        public static string Transcribed {
+            get {
+                return ResourceManager.GetString("Transcribed", resourceCulture);
             }
         }
         

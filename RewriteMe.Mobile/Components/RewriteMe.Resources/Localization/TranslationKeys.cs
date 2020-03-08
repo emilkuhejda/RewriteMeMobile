@@ -63,7 +63,7 @@
         public static string Recordings => "Recordings";
         public static string Info => "Info";
         public static string Warning => "Warning";
-        public static string InProgressLabel => "InProgressLabel";
+        public static string Transcribed => "Transcribed";
         public static string OneHour => "OneHour";
         public static string FiveHours => "FiveHours";
         public static string TenHours => "TenHours";
