@@ -72,7 +72,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             FileItem = fileItem;
 
-            IsInProgress = fileItem.RecognitionState == RecognitionState.InProgress;
+            IsInProgress = fileItem.RecognitionState == RecognitionState.Converting || fileItem.RecognitionState == RecognitionState.Prepared || fileItem.RecognitionState == RecognitionState.InProgress;
             IsCompleted = fileItem.RecognitionState == RecognitionState.Completed;
             IsUploading = fileItem.UploadStatus == UploadStatus.InProgress;
             IsErrorIconVisible = !IsUploading && (fileItem.UploadStatus == UploadStatus.Error || fileItem.TranscribeErrorCode.HasValue);

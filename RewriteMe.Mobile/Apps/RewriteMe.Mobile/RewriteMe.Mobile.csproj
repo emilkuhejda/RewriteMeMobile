@@ -47,8 +47,8 @@
     <None Remove="Resources\Images\Stop-Enabled.svg" />
     <None Remove="Resources\Images\PauseRecording.svg" />
     <None Remove="Resources\Images\PlayRecording.svg" />
-    <None Remove="Resources\Images\VoicipherLogo.svg" />
     <None Remove="Resources\Images\Success.svg" />
+    <None Remove="Resources\Images\VoicipherLogo.svg" />
     <None Remove="Resources\Images\Error.svg" />
     <None Remove="Resources\Images\Subscription.svg" />
   </ItemGroup>
@@ -65,6 +65,7 @@
     <EmbeddedResource Include="Resources\Images\NoAvailableData.svg" />
     <EmbeddedResource Include="Resources\Images\Notifications-Active.svg" />
     <EmbeddedResource Include="Resources\Images\Notifications.svg" />
+    <EmbeddedResource Include="Resources\Images\Success.svg" />
     <EmbeddedResource Include="Resources\Images\Overview-Active.svg" />
     <EmbeddedResource Include="Resources\Images\Page.svg" />
     <EmbeddedResource Include="Resources\Images\Pause-Enabled.svg" />
@@ -87,7 +88,6 @@
     <EmbeddedResource Include="Resources\Images\Overview.svg" />
     <EmbeddedResource Include="Resources\Images\RecorderOverview.svg" />
     <EmbeddedResource Include="Resources\Images\VoicipherLogo.svg" />
-    <EmbeddedResource Include="Resources\Images\Success.svg" />
     <EmbeddedResource Include="Resources\Images\Error.svg" />
     <EmbeddedResource Include="Resources\Images\Subscription.svg" />
   </ItemGroup>
