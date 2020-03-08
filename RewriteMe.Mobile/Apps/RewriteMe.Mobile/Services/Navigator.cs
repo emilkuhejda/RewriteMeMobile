@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Enums;
@@ -21,6 +22,8 @@ namespace RewriteMe.Mobile.Services
             CurrentPage = RootPage.Overview;
         }
 
+        public event EventHandler CurrentPageChanged;
+
         public RootPage CurrentPage { get; private set; }
 
         public async Task NavigateToAsync(string name, RootPage rootPage, INavigationParameters navigationParameters = null)
@@ -31,6 +34,20 @@ namespace RewriteMe.Mobile.Services
             CurrentPage = rootPage;
 
             await _navigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
+
+            OnCurrentPageChanged();
+        }
+
+        public void ResetNavigation()
+        {
+            CurrentPage = RootPage.Overview;
+
+            OnCurrentPageChanged();
+        }
+
+        private void OnCurrentPageChanged()
+        {
+            CurrentPageChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

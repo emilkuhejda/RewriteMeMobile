@@ -169,7 +169,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Warning! Deleting user account is irreversible. This will permanently delete your data. This action cannot be undone. If you want to continue, type &apos;{0} for confirmation.&apos;.
+        ///   Looks up a localized string similar to Warning! Deleting user account is irreversible. This will permanently delete your data. This action cannot be undone. If you want to continue, type &apos;{0}&apos; for confirmation..
         /// </summary>
         public static string DeleteUserAccountMessage {
             get {
