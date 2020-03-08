@@ -22,12 +22,14 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IFileItemService _fileItemService;
         private readonly IFileItemSourceUploader _fileItemSourceUploader;
+        private readonly INavigator _navigator;
 
         private ObservableCollection<FileItemViewModel> _fileItems;
 
         public OverviewPageViewModel(
             IFileItemService fileItemService,
             IFileItemSourceUploader fileItemSourceUploader,
+            INavigator navigator,
             ISynchronizationService synchronizationService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -37,6 +39,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _fileItemService = fileItemService;
             _fileItemSourceUploader = fileItemSourceUploader;
+            _navigator = navigator;
 
             fileItemService.UploadProgress += HandleUploadProgress;
             fileItemSourceUploader.StateChanged += HandleStateChanged;
@@ -56,6 +59,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                _navigator.ResetNavigation();
+
                 IndicatorCaption = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
 
                 var isNavigationBack = navigationParameters.GetValue<bool>(NavigationConstants.NavigationBack);

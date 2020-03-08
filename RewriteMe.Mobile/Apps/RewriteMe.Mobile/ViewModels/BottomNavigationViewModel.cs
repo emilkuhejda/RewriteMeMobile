@@ -28,6 +28,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             informationMessageService.MessageOpened += HandleMessageOpened;
             synchronizationService.SynchronizationCompleted += HandleSynchronizationCompleted;
+            navigator.NavigationReset += HandleNavigationReset;
 
             NavigateToOverviewCommand = new AsyncCommand(ExecuteNavigateToOverviewCommandAsync, CanExecuteNavigateToOverviewCommand);
             NavigateToRecorderOverviewCommand = new AsyncCommand(ExecuteNavigateToRecorderOverviewCommandAsync, CanExecuteNavigateToRecorderOverviewCommand);
@@ -107,6 +108,11 @@ namespace RewriteMe.Mobile.ViewModels
         private async void HandleSynchronizationCompleted(object sender, EventArgs e)
         {
             HasUnopenedMessages = await _informationMessageService.HasUnopenedMessagesForLastWeekAsync().ConfigureAwait(false);
+        }
+
+        private void HandleNavigationReset(object sender, EventArgs e)
+        {
+            RaisePropertiesChanged();
         }
 
         private async Task NavigateToAsync(string name, RootPage rootPage, INavigationParameters navigationParameters = null)
