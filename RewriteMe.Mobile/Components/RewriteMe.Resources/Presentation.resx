@@ -341,7 +341,7 @@
     <value>Any recordings yet?</value>
   </data>
   <data name="DeleteUserAccountMessage" xml:space="preserve">
-    <value>Warning! Deleting user account is irreversible. This will permanently delete your data. This action cannot be undone. If you want to continue, type '{0} for confirmation.'</value>
+    <value>Warning! Deleting user account is irreversible. This will permanently delete your data. This action cannot be undone. If you want to continue, type '{0}' for confirmation.</value>
   </data>
 
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
