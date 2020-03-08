@@ -38,21 +38,31 @@
                            Style="{StaticResource LabelStyle}"
                            Text="{Binding FileName}" />
 
-                    <Label FontFamily="{StaticResource FontFamilyQuicksandLight}"
-                           FontSize="{StaticResource MidMediumSize}"
-                           HeightRequest="20"
-                           Style="{StaticResource LabelStyle}"
-                           Text="{Binding DateCreated}" />
-                </StackLayout>
+                    <StackLayout Orientation="Horizontal">
+                        <Label FontFamily="{StaticResource FontFamilyQuicksandLight}"
+                               FontSize="{StaticResource MidMediumSize}"
+                               HeightRequest="20"
+                               Style="{StaticResource LabelStyle}"
+                               Text="{Binding DateCreated}" />
 
-                <svgForms:SvgCachedImage Grid.Column="2"
-                                         Aspect="AspectFit"
-                                         HeightRequest="30"
-                                         HorizontalOptions="Center"
-                                         IsVisible="{Binding IsCompleted}"
-                                         Source="resource://RewriteMe.Mobile.Resources.Images.Success.svg"
-                                         VerticalOptions="Center"
-                                         WidthRequest="30" />
+                        <Frame IsVisible="{Binding IsCompleted}" Style="{StaticResource InfoTileBackground}">
+                            <StackLayout Orientation="Horizontal">
+                                <Label FontAttributes="Italic"
+                                       FontSize="{StaticResource MidMediumSize}"
+                                       Style="{StaticResource LabelStyle}"
+                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Transcribed}}"
+                                       TextColor="{StaticResource ColorWhite}" />
+
+                                <svgForms:SvgCachedImage Aspect="AspectFit"
+                                                         HeightRequest="15"
+                                                         HorizontalOptions="Center"
+                                                         Source="resource://RewriteMe.Mobile.Resources.Images.Success.svg"
+                                                         VerticalOptions="Center"
+                                                         WidthRequest="15" />
+                            </StackLayout>
+                        </Frame>
+                    </StackLayout>
+                </StackLayout>
 
                 <svgForms:SvgCachedImage Grid.Column="2"
                                          Aspect="AspectFit"

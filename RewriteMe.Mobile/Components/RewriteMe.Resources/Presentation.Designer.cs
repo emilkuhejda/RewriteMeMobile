@@ -304,15 +304,6 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to In progress.
-        /// </summary>
-        public static string InProgressLabel {
-            get {
-                return ResourceManager.GetString("InProgressLabel", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Audio file is invalid..
         /// </summary>
         public static string InvalidAudioFileErrorMessage {
@@ -894,6 +885,15 @@ namespace RewriteMe.Resources {
         public static string TranscribeAudioSourceNotFoundErrorMessage {
             get {
                 return ResourceManager.GetString("TranscribeAudioSourceNotFoundErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transcribed.
+        /// </summary>
+        public static string Transcribed {
+            get {
+                return ResourceManager.GetString("Transcribed", resourceCulture);
             }
         }
         
