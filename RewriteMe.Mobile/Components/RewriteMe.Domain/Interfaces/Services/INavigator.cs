@@ -7,7 +7,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 {
     public interface INavigator
     {
-        event EventHandler NavigationReset;
+        event EventHandler CurrentPageChanged;
 
         RootPage CurrentPage { get; }
 

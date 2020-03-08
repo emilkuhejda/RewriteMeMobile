@@ -22,7 +22,7 @@ namespace RewriteMe.Mobile.Services
             CurrentPage = RootPage.Overview;
         }
 
-        public event EventHandler NavigationReset;
+        public event EventHandler CurrentPageChanged;
 
         public RootPage CurrentPage { get; private set; }
 
@@ -34,18 +34,20 @@ namespace RewriteMe.Mobile.Services
             CurrentPage = rootPage;
 
             await _navigationService.NavigateWithoutAnimationAsync(name, navigationParameters).ConfigureAwait(false);
+
+            OnCurrentPageChanged();
         }
 
         public void ResetNavigation()
         {
             CurrentPage = RootPage.Overview;
 
-            OnNavigationReset();
+            OnCurrentPageChanged();
         }
 
-        private void OnNavigationReset()
+        private void OnCurrentPageChanged()
         {
-            NavigationReset?.Invoke(this, EventArgs.Empty);
+            CurrentPageChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
