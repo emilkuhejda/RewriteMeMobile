@@ -341,7 +341,7 @@
     <value>Žiadne nahrávky ešte?</value>
   </data>
   <data name="DeleteUserAccountMessage" xml:space="preserve">
-    <value>Upozornenie! Odstránenie používateľského účtu je nezvratné. Vaše údaje sa tým natrvalo odstránia. Túto akciu nie je možné vrátiť späť. Ak chcete pokračovať, zadajte '{0}' pre potvrdenie.'</value>
+    <value>Upozornenie! Odstránenie používateľského účtu je nezvratné. Vaše údaje sa tým natrvalo odstránia. Túto akciu nie je možné vrátiť späť. Ak chcete pokračovať, zadajte '{0}' pre potvrdenie.</value>
   </data>
 
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
