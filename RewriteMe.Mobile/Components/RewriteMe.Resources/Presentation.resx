@@ -308,7 +308,7 @@
     <value>Recording only</value>
   </data>
   <data name="FiveMinutesOnly" xml:space="preserve">
-    <value>5 minutes maximum</value>
+    <value>5 minutes max</value>
   </data>
   <data name="RemainingTime" xml:space="preserve">
     <value>Remaining time</value>
@@ -320,7 +320,7 @@
     <value>No available data</value>
   </data>
   <data name="NoAvailableMessages" xml:space="preserve">
-    <value>No available messages</value>
+    <value>No messages</value>
   </data>
   <data name="UnableToLoadAudioFile" xml:space="preserve">
     <value>Unable to load audio file.</value>
@@ -335,10 +335,10 @@
     <value>Record</value>
   </data>
   <data name="NoFilesMessage" xml:space="preserve">
-    <value>Any files yet?</value>
+    <value>No files yet</value>
   </data>
   <data name="NoRecordingsMessage" xml:space="preserve">
-    <value>Any recordings yet?</value>
+    <value>No recordings yet</value>
   </data>
   <data name="DeleteUserAccountMessage" xml:space="preserve">
     <value>Warning! Deleting user account is irreversible. This will permanently delete your data. This action cannot be undone. If you want to continue, type '{0}' for confirmation.</value>

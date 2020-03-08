@@ -215,7 +215,7 @@
     <value>Podmienky súkromia</value>
   </data>
   <data name="ContactUs" xml:space="preserve">
-    <value>Kontaktovať nás</value>
+    <value>Kontakt</value>
   </data>
   <data name="Developer" xml:space="preserve">
     <value>Developer</value>
@@ -308,7 +308,7 @@
     <value>Iba nahrávka</value>
   </data>
   <data name="FiveMinutesOnly" xml:space="preserve">
-    <value>5 minút maximum</value>
+    <value>5 minút max</value>
   </data>
   <data name="RemainingTime" xml:space="preserve">
     <value>Zostávajúci čas</value>
@@ -320,7 +320,7 @@
     <value>Žiadne dostupné dáta</value>
   </data>
   <data name="NoAvailableMessages" xml:space="preserve">
-    <value>Žiadne dostupné správy</value>
+    <value>Zatiaľ žiadne správy</value>
   </data>
   <data name="UnableToLoadAudioFile" xml:space="preserve">
     <value>Nie je možné nahrať audio súbor.</value>
@@ -335,10 +335,10 @@
     <value>Nahrať</value>
   </data>
   <data name="NoFilesMessage" xml:space="preserve">
-    <value>Žiadne súbory ešte?</value>
+    <value>Nemáš tu žiadne súbory</value>
   </data>
   <data name="NoRecordingsMessage" xml:space="preserve">
-    <value>Žiadne nahrávky ešte?</value>
+    <value>Nemáš tu žiadne nahrávky</value>
   </data>
   <data name="DeleteUserAccountMessage" xml:space="preserve">
     <value>Upozornenie! Odstránenie používateľského účtu je nezvratné. Vaše údaje sa tým natrvalo odstránia. Túto akciu nie je možné vrátiť späť. Ak chcete pokračovať, zadajte '{0}' pre potvrdenie.</value>
