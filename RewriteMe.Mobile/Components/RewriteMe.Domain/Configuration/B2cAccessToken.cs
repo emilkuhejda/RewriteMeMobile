@@ -10,14 +10,19 @@ namespace RewriteMe.Domain.Configuration
             var accessTokenObject = ParseAccessToken();
 
             ObjectId = accessTokenObject["oid"]?.ToString();
-            GivenName = accessTokenObject["given_name"]?.ToString();
-            FamilyName = accessTokenObject["family_name"]?.ToString();
+            GivenName = accessTokenObject["given_name"]?.ToString() ?? string.Empty;
+            FamilyName = accessTokenObject["family_name"]?.ToString() ?? string.Empty;
             NewUser = accessTokenObject["newUser"] != null && (bool)accessTokenObject["newUser"];
 
             var serializedEmails = accessTokenObject["emails"];
             if (serializedEmails != null)
             {
                 Email = JsonConvert.DeserializeObject<string[]>(serializedEmails.ToString())[0];
+            }
+
+            if (string.IsNullOrWhiteSpace(GivenName) && string.IsNullOrWhiteSpace(FamilyName))
+            {
+                FamilyName = Email.Split('@')[0];
             }
         }
 
