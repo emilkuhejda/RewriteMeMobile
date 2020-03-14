@@ -158,7 +158,7 @@
     <value>Loading data....</value>
   </data>
   <data name="OfflineMessageText" xml:space="preserve">
-    <value>You're not connected to the internet. Please try again.</value>
+    <value>You're not connected to the internet. Please check your internet connection.</value>
   </data>
   <data name="RegisterOrSignIn" xml:space="preserve">
     <value>Register or sign in</value>
@@ -224,7 +224,7 @@
     <value>Clear</value>
   </data>
   <data name="SendMail" xml:space="preserve">
-    <value>Send Mail</value>
+    <value>Send email</value>
   </data>
   <data name="Reload" xml:space="preserve">
     <value>Reload</value>
@@ -248,7 +248,7 @@
     <value>Developer mode is activated</value>
   </data>
   <data name="EmailIsNotSupported" xml:space="preserve">
-    <value>E-mail is not supported on this device</value>
+    <value>Email is not supported on this device</value>
   </data>
   <data name="ApplicationTitleLog" xml:space="preserve">
     <value>Voicipher - Log</value>
@@ -302,7 +302,7 @@
     <value>Save ~10€</value>
   </data>
   <data name="PromptDeleteFileItemMessage" xml:space="preserve">
-    <value>Do you really want to delete file '{0}'?</value>
+    <value>Do you really want to delete this file '{0}'?</value>
   </data>
   <data name="RecordingOnly" xml:space="preserve">
     <value>Recording only</value>
@@ -323,7 +323,7 @@
     <value>No messages</value>
   </data>
   <data name="UnableToLoadAudioFile" xml:space="preserve">
-    <value>Unable to load audio file.</value>
+    <value>Unable to load the audio file.</value>
   </data>
   <data name="Downloading" xml:space="preserve">
     <value>Downloading... {0}%</value>
@@ -345,19 +345,19 @@
   </data>
 
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
-    <value>You don't have a permission to upload file. Please, try again later.</value>
+    <value>You don't have a permission to upload a file. Please try again later.</value>
   </data>
   <data name="FileItemSourceDatabaseUpdateErrorMessage" xml:space="preserve">
-    <value>File was not correctly uploaded. Please, try again later.</value>
+    <value>File was not correctly uploaded. Please try again later.</value>
   </data>
   <data name="InvalidAudioFileErrorMessage" xml:space="preserve">
     <value>Audio file is invalid.</value>
   </data>
   <data name="ProfileEditErrorMessage" xml:space="preserve">
-    <value>Your data was not changed. Please, try again later.</value>
+    <value>Your data was not changed. Please try again later.</value>
   </data>
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
-    <value>Upload might take some time. Please do not turn off application. File might not be uploaded.</value>
+    <value>Upload might take some time. Please do not turn off the application, otherwise your file might not be uploaded.</value>
   </data>
   <data name="OfflineErrorMessage" xml:space="preserve">
     <value>It seems you are offline. Please check your internet connection.</value>
@@ -366,7 +366,7 @@
     <value>Server is unreachable. Please try again later.</value>
   </data>
   <data name="UploadedFileIsCorruptedErrorMessage" xml:space="preserve">
-    <value>Uploaded file is corrupted. Please upload again.</value>
+    <value>It seems like the uploaded file is corrupted. Please try to upload it again.</value>
   </data>
   <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
     <value>Uploaded file is not supported.</value>
@@ -375,46 +375,46 @@
     <value>Language is not supported.</value>
   </data>
   <data name="NotEnoughFreeMinutesInSubscriptionErrorMessage" xml:space="preserve">
-    <value>Your subscription does not have enough free minutes.</value>
+    <value>You do not have enough minutes left. Please buy more time.</value>
   </data>
   <data name="SynchronizationInProgressErrorMessage" xml:space="preserve">
-    <value>Synchronization is still in progress. Please, try again later.</value>
+    <value>Synchronization is still in progress. Please try again later.</value>
   </data>
   <data name="TranscribeAudioSourceNotFoundErrorMessage" xml:space="preserve">
-    <value>Transcribe audio source was not found. Please, contact us.</value>
+    <value>Transcribe audio source was not found. Please contact us.</value>
   </data>
   <data name="SpeechClientNotInitializedErrorMessage" xml:space="preserve">
-    <value>Connection was not established. Please, try again later.</value>
+    <value>Connection was not established. Please try again later.</value>
   </data>
   <data name="SubscriptionWasSuccessfullyPurchased" xml:space="preserve">
     <value>Subscription was successfully purchased.</value>
   </data>
   <data name="AppStoreUnavailableErrorMessage" xml:space="preserve">
-    <value>Currently the app store seems to be unavailble. Please, try again later.</value>
+    <value>App store seems to be unavailble. Please try again later.</value>
   </data>
   <data name="BillingUnavailableErrorMessage" xml:space="preserve">
-    <value>Billing seems to be unavailable. Please, try again later.</value>
+    <value>Billing seems to be unavailable. Please try again later.</value>
   </data>
   <data name="PaymentInvalidErrorMessage" xml:space="preserve">
-    <value>Payment seems to be invalid. Please, try again later.</value>
+    <value>Payment seems to be invalid. Please try again later.</value>
   </data>
   <data name="PaymentNotAllowedErrorMessage" xml:space="preserve">
-    <value>Payment does not seem to be enabled/allowed. Please try again later.</value>
+    <value>Payment does not seem to be allowed. Please try again later.</value>
   </data>
   <data name="RegistrationPurchaseBillingErrorMessage" xml:space="preserve">
-    <value>Subscription was purchased but it was not successfully registered. Please, contact us.</value>
+    <value>Subscription was purchased but it was not successfully registered. Please contact us.</value>
   </data>
   <data name="InAppBillingIsNotSupportedErrorMessage" xml:space="preserve">
-    <value>Payment method is not supported. Please, configure it first.</value>
+    <value>Payment method is not supported. Please configure it first.</value>
   </data>
   <data name="PurchaseProcessedIncorrectlyErrorMessage" xml:space="preserve">
-    <value>Purchase was processed incorrectly. Please, contact us.</value>
+    <value>Purchase was processed incorrectly. Please contact us.</value>
   </data>
   <data name="PurchaseWasNotProcessedErrorMessage" xml:space="preserve">
-    <value>Purchase was not processed. Please, try again later.</value>
+    <value>Purchase was not processed. Please try again later.</value>
   </data>
   <data name="UserAccountDeletionErrorMessage" xml:space="preserve">
-    <value>Your account was not correctly deleted. Please, try again later.</value>
+    <value>Your account was not correctly deleted. Please try again later.</value>
   </data>
   <data name="IncorrectUserInputErrorMessage" xml:space="preserve">
     <value>Incorrect data</value>
