@@ -158,7 +158,7 @@
     <value>Načítanie dát....</value>
   </data>
   <data name="OfflineMessageText" xml:space="preserve">
-    <value>Nie ste pripojený k internetu. Prosín, opakujte operáciu neskôr.</value>
+    <value>Nie ste pripojený k internetu. Prosím, skontrolujte svoje internetové pripojenie.</value>
   </data>
   <data name="RegisterOrSignIn" xml:space="preserve">
     <value>Registrovať alebo prihlásiť sa</value>
@@ -173,7 +173,7 @@
     <value>Registrácia používateľa zlyhala</value>
   </data>
   <data name="RegisterToUseApplication" xml:space="preserve">
-    <value>Prosím, zaregistrujte sa do aplíkacie Voicipher</value>
+    <value>Prosím, zaregistrujte sa do aplikácie Voicipher</value>
   </data>
   <data name="UserRegistration" xml:space="preserve">
     <value>Registrácia používateľa</value>
@@ -224,7 +224,7 @@
     <value>Vymazať</value>
   </data>
   <data name="SendMail" xml:space="preserve">
-    <value>Poslať email</value>
+    <value>Odoslať email</value>
   </data>
   <data name="Reload" xml:space="preserve">
     <value>Znova načítať</value>
@@ -345,16 +345,16 @@
   </data>
 
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
-    <value>Nemáte opravnenie nahrať súbor. Prosím, opakujte operáciu neskôr.</value>
+    <value>Nemáte oprávnenie nahrať súbor. Prosím, opakujte operáciu neskôr.</value>
   </data>
   <data name="FileItemSourceDatabaseUpdateErrorMessage" xml:space="preserve">
-    <value>Súbor nebol nahraný spravne. Prosím, opakujte operáciu neskôr.</value>
+    <value>Súbor nebol nahraný správne. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="InvalidAudioFileErrorMessage" xml:space="preserve">
     <value>Audio súbor nie je podporovaný.</value>
   </data>
   <data name="ProfileEditErrorMessage" xml:space="preserve">
-    <value>Vaše údaje neboli zmenené. Prosím, opakujte operáciu neskôr.</value>
+    <value>Vaše údaje neboli zmenené. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="UploadFileItemInfoMessage" xml:space="preserve">
     <value>Nahrávanie môže trvať nejaký čas. Prosím, nevypínajte aplikáciu. Súbor nemusí byť nahraný.</value>
@@ -363,10 +363,10 @@
     <value>Zdá sa, že ste offline. Prosím, skontrolujte internetové pripojenie.</value>
   </data>
   <data name="UnreachableServerErrorMessage" xml:space="preserve">
-    <value>Server je nedostupný. Prosím, opakujte operáciu neskôr.</value>
+    <value>Server je nedostupný. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="UploadedFileIsCorruptedErrorMessage" xml:space="preserve">
-    <value>Nahrávaný súbor je poškodený. Prosím, nahrajte ho opäť.</value>
+    <value>Nahrávaný súbor je zrejme poškodený. Prosím, skúste ho opäť nahrať.</value>
   </data>
   <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
     <value>Nahrávaný súbor nie je podporovaný.</value>
@@ -375,46 +375,46 @@
     <value>Jazyk nie je podporovaný.</value>
   </data>
   <data name="NotEnoughFreeMinutesInSubscriptionErrorMessage" xml:space="preserve">
-    <value>Vaše predplatné nemá dostatok voľných minút.</value>
+    <value>Nemáte dostatok voľných minút. Prosím, zakúpte si viac minút.</value>
   </data>
   <data name="SynchronizationInProgressErrorMessage" xml:space="preserve">
-    <value>Práve prebieha synchronizácia. Prosím, opakujte operáciu neskôr.</value>
+    <value>Práve prebieha synchronizácia. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="TranscribeAudioSourceNotFoundErrorMessage" xml:space="preserve">
     <value>Audio súbor nebol nájdený. Prosím, kontaktujte nás.</value>
   </data>
   <data name="SpeechClientNotInitializedErrorMessage" xml:space="preserve">
-    <value>Pripojenie bolo neúspešné. Prosím, opakujte operáciu neskôr.</value>
+    <value>Pripojenie bolo neúspešné. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="SubscriptionWasSuccessfullyPurchased" xml:space="preserve">
-    <value>Predplatné nebolo úspešné zaplatené.</value>
+    <value>Predplatné nebolo úspešne zaplatené.</value>
   </data>
   <data name="AppStoreUnavailableErrorMessage" xml:space="preserve">
-    <value>App store je nedostupný. Prosím, opakujte operáciu neskôr.</value>
+    <value>App store je nedostupný. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="BillingUnavailableErrorMessage" xml:space="preserve">
-    <value>Fakturá zdá sa byť nedostupná. Prosím, opakujte operáciu neskôr.</value>
+    <value>Fakturá je zrejme nedostupná. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="PaymentInvalidErrorMessage" xml:space="preserve">
-    <value>Platba nebola úspešná. Prosím, opakujte operáciu neskôr.</value>
+    <value>Platba nebola úspešná. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="PaymentNotAllowedErrorMessage" xml:space="preserve">
-    <value>Platba nie je povolená. Prosím, opakujte operáciu neskôr.</value>
+    <value>Platba nie je povolená. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="RegistrationPurchaseBillingErrorMessage" xml:space="preserve">
     <value>Predplatné bolo zaplatené, ale nepodarilo sa ho zaregistrovať. Prosím, kontaktujte nás.</value>
   </data>
   <data name="InAppBillingIsNotSupportedErrorMessage" xml:space="preserve">
-    <value>PLatobná metóda nie je podporovaná. Prosím, najprv ju nastavte.</value>
+    <value>Platobná metóda nie je podporovaná. Prosím, najprv ju nastavte.</value>
   </data>
   <data name="PurchaseProcessedIncorrectlyErrorMessage" xml:space="preserve">
     <value>Platba bola nesprávne spracovaná. Prosím, kontaktujte nás.</value>
   </data>
   <data name="PurchaseWasNotProcessedErrorMessage" xml:space="preserve">
-    <value>Platba nebola vykonaná. Prosím, opakujte operáciu nesrkôr.</value>
+    <value>Platba nebola vykonaná. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="UserAccountDeletionErrorMessage" xml:space="preserve">
-    <value>Váš účet nebol vymazaný. Prosím, opakujte operáciu nesrkôr.</value>
+    <value>Váš účet nebol vymazaný. Prosím, zopakujte operáciu neskôr.</value>
   </data>
   <data name="IncorrectUserInputErrorMessage" xml:space="preserve">
     <value>Nesprávne zadané údaje</value>
