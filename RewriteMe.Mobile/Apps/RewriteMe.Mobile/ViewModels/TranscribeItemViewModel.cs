@@ -40,7 +40,7 @@ namespace RewriteMe.Mobile.ViewModels
                 SetTranscript(alternative.Transcript);
             }
 
-            Time = $"{transcribeItem.StartTime:mm\\:ss} - {transcribeItem.EndTime:mm\\:ss}";
+            Time = transcribeItem.TimeRange;
         }
 
         protected override void OnTranscriptChanged(string transcript)
