@@ -25,7 +25,7 @@ namespace RewriteMe.Mobile.ViewModels
                 SetTranscript(recordedAudioFile.Transcript);
             }
 
-            Time = $"{recordedAudioFile.StartTime:mm\\:ss} - {recordedAudioFile.EndTime:mm\\:ss}";
+            Time = recordedAudioFile.TimeRange;
         }
 
         protected override void OnTranscriptChanged(string transcript)

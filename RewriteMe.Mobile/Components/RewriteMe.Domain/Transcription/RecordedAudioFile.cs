@@ -19,6 +19,19 @@ namespace RewriteMe.Domain.Transcription
 
         public TimeSpan TotalTime { get; set; }
 
+        public string TimeRange
+        {
+            get
+            {
+                if (StartTime.TotalHours >= 1)
+                {
+                    return $"{StartTime:hh\\:mm\\:ss} - {EndTime:hh\\:mm\\:ss}";
+                }
+
+                return $"{StartTime:mm\\:ss} - {EndTime:mm\\:ss}";
+            }
+        }
+
         public byte[] Source { get; set; }
 
         public RecognitionSpeechResult RecognitionSpeechResult { get; set; }
