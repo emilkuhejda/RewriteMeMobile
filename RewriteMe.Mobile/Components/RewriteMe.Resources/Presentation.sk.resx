@@ -368,6 +368,9 @@
   <data name="UploadedFileIsCorruptedErrorMessage" xml:space="preserve">
     <value>Nahrávaný súbor je zrejme poškodený. Prosím, skúste ho opäť nahrať.</value>
   </data>
+  <data name="FileIsAlreadyProcessingErrorMessage" xml:space="preserve">
+    <value>Súbor je spracovávaný. Prosím, kontaktujte nás.</value>
+  </data>
   <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
     <value>Nahrávaný súbor nie je podporovaný.</value>
   </data>

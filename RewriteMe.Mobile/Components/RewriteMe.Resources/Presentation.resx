@@ -368,6 +368,9 @@
   <data name="UploadedFileIsCorruptedErrorMessage" xml:space="preserve">
     <value>It seems like the uploaded file is corrupted. Please try to upload it again.</value>
   </data>
+  <data name="FileIsAlreadyProcessingErrorMessage" xml:space="preserve">
+    <value>File is already processing. Please contact us.</value>
+  </data>
   <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
     <value>Uploaded file is not supported.</value>
   </data>
