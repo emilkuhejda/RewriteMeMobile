@@ -94,8 +94,15 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 using (new OperationMonitor(OperationScope))
                 {
-                    await FileItemService.DeleteAsync(FileItem).ConfigureAwait(false);
-                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+                    try
+                    {
+                        await FileItemService.DeleteAsync(FileItem).ConfigureAwait(false);
+                        await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+                    }
+                    catch (FileNotUploadedException)
+                    {
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.FileIsNotUploadedErrorMessage)).ConfigureAwait(false);
+                    }
                 }
             }
         }
