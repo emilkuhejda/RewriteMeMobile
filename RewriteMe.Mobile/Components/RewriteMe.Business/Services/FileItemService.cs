@@ -86,6 +86,9 @@ namespace RewriteMe.Business.Services
         public async Task DeleteAsync(FileItem fileItem)
         {
             var httpRequestResult = await _rewriteMeWebService.DeleteFileItemAsync(fileItem.Id).ConfigureAwait(false);
+            if (httpRequestResult.State == HttpRequestState.Error && httpRequestResult.ErrorCode == ErrorCode.EC104)
+                throw new FileNotUploadedException();
+
             if (httpRequestResult.State != HttpRequestState.Success)
             {
                 var deletedFileItem = new DeletedFileItem
