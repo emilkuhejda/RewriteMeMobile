@@ -1,5 +1,4 @@
-﻿using System.Net;
-using RewriteMe.Domain.WebApi;
+﻿using RewriteMe.Domain.WebApi;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.Utils

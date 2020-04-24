@@ -1,5 +1,4 @@
 ﻿using System;
-using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 using SQLite;
 using SQLiteNetExtensions.Attributes;
