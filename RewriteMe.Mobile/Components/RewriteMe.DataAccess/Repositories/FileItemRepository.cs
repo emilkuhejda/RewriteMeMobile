@@ -32,17 +32,6 @@ namespace RewriteMe.DataAccess.Repositories
             return entity?.ToFileItem();
         }
 
-        public async Task<bool> AnyWaitingForSynchronizationAsync()
-        {
-            var recognitionState = RecognitionState.InProgress;
-            var count = await _contextProvider.Context.FileItems
-                .Where(x => x.RecognitionState == recognitionState)
-                .CountAsync()
-                .ConfigureAwait(false);
-
-            return count > 0;
-        }
-
         public async Task InsertOrReplaceAsync(FileItem fileItem)
         {
             await _contextProvider.Context.InsertOrReplaceAsync(fileItem.ToFileItemEntity()).ConfigureAwait(false);

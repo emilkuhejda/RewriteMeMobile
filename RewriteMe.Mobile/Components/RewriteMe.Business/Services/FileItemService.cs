@@ -6,18 +6,15 @@ using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Configuration;
-using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Http;
 using RewriteMe.Domain.Interfaces.Repositories;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Domain.Messages;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
-using Xamarin.Forms;
 
 namespace RewriteMe.Business.Services
 {
@@ -74,11 +71,6 @@ namespace RewriteMe.Business.Services
                     await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
                 }
             }
-        }
-
-        public async Task<bool> AnyWaitingForSynchronizationAsync()
-        {
-            return await _fileItemRepository.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
         }
 
         public async Task<FileItem> GetAsync(Guid fileItemId)
@@ -224,8 +216,6 @@ namespace RewriteMe.Business.Services
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 await _fileItemRepository.UpdateRecognitionStateAsync(fileItemId, RecognitionState.InProgress).ConfigureAwait(false);
-
-                MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
             }
             else if (httpRequestResult.State == HttpRequestState.Error)
             {
