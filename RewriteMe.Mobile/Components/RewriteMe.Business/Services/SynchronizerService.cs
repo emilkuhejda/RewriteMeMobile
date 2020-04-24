@@ -66,7 +66,7 @@ namespace RewriteMe.Business.Services
                     })
                     .Build();
 #else
-            _hubCollection = new HubConnectionBuilder().WithUrl(_applicationSettings.CacheHubUrl).Build();
+            _hubConnection = new HubConnectionBuilder().WithUrl(_applicationSettings.CacheHubUrl).Build();
 #endif
 
             try
