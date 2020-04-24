@@ -45,7 +45,7 @@ namespace RewriteMe.Business.Services
             var lastDeletedFileItemSynchronization = new DateTime(lastDeletedFileItemSynchronizationTicks);
             _logger.Debug($"Synchronization of deleted file items with timestamp '{lastFileItemSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
-            if (applicationUpdateDate >= lastDeletedFileItemSynchronization)
+            if (applicationUpdateDate > lastDeletedFileItemSynchronization)
             {
                 var httpRequestResult = await _rewriteMeWebService.GetDeletedFileItemIdsAsync(lastFileItemSynchronization).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
@@ -54,7 +54,7 @@ namespace RewriteMe.Business.Services
                     _logger.Info($"Web server returned {fileItemIds.Count} items for synchronization.");
 
                     await _fileItemRepository.DeleteAsync(fileItemIds).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
+                    await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemSynchronizationTicks, applicationUpdateDate.Ticks).ConfigureAwait(false);
                 }
             }
         }

@@ -124,6 +124,12 @@ namespace RewriteMe.Business.Services
         {
             var lastFileItemSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronizationTicks).ConfigureAwait(false);
             var lastFileItemSynchronization = new DateTime(lastFileItemSynchronizationTicks);
+            if (lastFileItemSynchronization == default)
+            {
+                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
+                return;
+            }
+
             var applicationDeletedFileItemUpdateDate = _lastUpdatesService.GetDeletedFileItemLastUpdate();
 
             await _deletedFileItemService.SynchronizationAsync(applicationDeletedFileItemUpdateDate, lastFileItemSynchronization).ConfigureAwait(false);

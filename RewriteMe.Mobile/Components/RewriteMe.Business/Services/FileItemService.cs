@@ -59,7 +59,7 @@ namespace RewriteMe.Business.Services
             var lastFileItemSynchronization = new DateTime(lastFileItemSynchronizationTicks);
             _logger.Debug($"Update file items with timestamp '{lastFileItemSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
-            if (applicationUpdateDate >= lastFileItemSynchronization)
+            if (applicationUpdateDate > lastFileItemSynchronization)
             {
                 var httpRequestResult = await _rewriteMeWebService.GetFileItemsAsync(lastFileItemSynchronization).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
@@ -68,7 +68,7 @@ namespace RewriteMe.Business.Services
                     _logger.Info($"Web server returned {fileItems.Count} items for synchronization.");
 
                     await _fileItemRepository.InsertOrReplaceAllAsync(fileItems).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
+                    await _internalValueService.UpdateValueAsync(InternalValues.FileItemSynchronizationTicks, applicationUpdateDate.Ticks).ConfigureAwait(false);
                 }
             }
         }

@@ -77,6 +77,8 @@ namespace RewriteMe.Business.Services
             }
             catch (Exception ex)
             {
+                IsRunning = false;
+
                 _appCenterMetricsService.TrackException(ex);
             }
         }
