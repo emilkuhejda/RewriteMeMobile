@@ -371,6 +371,9 @@
   <data name="FileIsAlreadyProcessingErrorMessage" xml:space="preserve">
     <value>Súbor je spracovávaný. Prosím, kontaktujte nás.</value>
   </data>
+  <data name="FileIsNotUploadedErrorMessage" xml:space="preserve">
+    <value>Súbor sa ešte nahráva. Prosím, zopakujte operáciu neskôr.</value>
+  </data>
   <data name="UploadedFileNotSupportedErrorMessage" xml:space="preserve">
     <value>Nahrávaný súbor nie je podporovaný.</value>
   </data>
