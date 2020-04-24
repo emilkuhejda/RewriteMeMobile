@@ -93,6 +93,7 @@
         public static string UnreachableServerErrorMessage => "UnreachableServerErrorMessage";
         public static string UploadedFileIsCorruptedErrorMessage => "UploadedFileIsCorruptedErrorMessage";
         public static string FileIsAlreadyProcessingErrorMessage => "FileIsAlreadyProcessingErrorMessage";
+        public static string FileIsNotUploadedErrorMessage => "FileIsNotUploadedErrorMessage";
         public static string UploadedFileNotSupportedErrorMessage => "UploadedFileNotSupportedErrorMessage";
         public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
         public static string NotEnoughFreeMinutesInSubscriptionErrorMessage => "NotEnoughFreeMinutesInSubscriptionErrorMessage";
