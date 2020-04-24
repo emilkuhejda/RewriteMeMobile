@@ -10,7 +10,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         event EventHandler SynchronizationCompleted;
 
-        Task StartAsync(bool notifyServices = true);
+        Task StartAsync();
 
         void NotifyBackgroundServices();
     }

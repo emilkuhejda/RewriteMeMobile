@@ -34,7 +34,7 @@ namespace RewriteMe.Business.Services
             var lastUserSubscriptionSynchronization = new DateTime(lastUserSubscriptionSynchronizationTicks);
             _logger.Debug($"Update user subscription remaining time with timestamp '{lastUserSubscriptionSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
-            if (applicationUpdateDate >= lastUserSubscriptionSynchronization)
+            if (applicationUpdateDate > lastUserSubscriptionSynchronization)
             {
                 var httpRequestResult = await _rewriteMeWebService.GetUserSubscriptionRemainingTimeAsync().ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
@@ -42,7 +42,7 @@ namespace RewriteMe.Business.Services
                     _logger.Info("Web server returned response for synchronization.");
 
                     await _userSubscriptionService.UpdateRemainingTimeAsync(httpRequestResult.Payload.Time).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
+                    await _internalValueService.UpdateValueAsync(InternalValues.UserSubscriptionSynchronizationTicks, applicationUpdateDate.Ticks).ConfigureAwait(false);
                 }
             }
         }

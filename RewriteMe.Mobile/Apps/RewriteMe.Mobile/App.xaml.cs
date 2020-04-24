@@ -14,16 +14,19 @@ using RewriteMe.Business.Configuration;
 using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
+using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.Configuration;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
 using Syncfusion.Licensing;
 using Unity;
+using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
@@ -152,6 +155,8 @@ namespace RewriteMe.Mobile
                 };
             }
 
+            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
+
 #if !DEBUG
             AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Analytics), typeof(Push));
 #else
@@ -161,6 +166,8 @@ namespace RewriteMe.Mobile
 
         protected override async void OnResume()
         {
+            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
+
             var navigationParameters = InitializeNavigationParameters();
             if (navigationParameters.ContainsKey(nameof(ImportedFileNavigationParameters)))
             {

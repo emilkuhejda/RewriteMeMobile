@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
 
 namespace RewriteMe.Domain.WebApi
 {
     public partial class TranscribeItem
     {
+        public string Transcript => Alternatives.Any() ? string.Join(string.Empty, Alternatives.Select(x => x.Transcript)) : null;
+
         public TimeSpan StartTime => TimeSpan.FromTicks(StartTimeTicks);
 
         public TimeSpan EndTime => TimeSpan.FromTicks(EndTimeTicks);

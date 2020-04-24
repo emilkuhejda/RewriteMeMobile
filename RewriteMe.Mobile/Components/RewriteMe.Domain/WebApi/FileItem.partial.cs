@@ -1,6 +1,5 @@
 ﻿using System;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Transcription;
 
 namespace RewriteMe.Domain.WebApi
 {
