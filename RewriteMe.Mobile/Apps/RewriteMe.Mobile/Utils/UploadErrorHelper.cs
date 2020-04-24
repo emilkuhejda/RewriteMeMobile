@@ -18,6 +18,8 @@ namespace RewriteMe.Mobile.Utils
                     return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
                 case ErrorCode.EC103:
                     return Loc.Text(TranslationKeys.FileIsAlreadyProcessingErrorMessage);
+                case ErrorCode.EC104:
+                    return Loc.Text(TranslationKeys.FileIsNotUploadedErrorMessage);
                 case ErrorCode.EC200:
                     return Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
                 case ErrorCode.EC201:

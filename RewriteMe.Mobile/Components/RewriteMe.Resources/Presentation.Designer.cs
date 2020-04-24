@@ -259,6 +259,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File is not completely uploaded. Please try again later..
+        /// </summary>
+        public static string FileIsNotUploadedErrorMessage {
+            get {
+                return ResourceManager.GetString("FileIsNotUploadedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to File was not correctly uploaded. Please try again later..
         /// </summary>
         public static string FileItemSourceDatabaseUpdateErrorMessage {
