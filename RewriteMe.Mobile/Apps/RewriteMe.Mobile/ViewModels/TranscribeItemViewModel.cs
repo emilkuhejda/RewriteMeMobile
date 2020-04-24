@@ -34,10 +34,9 @@ namespace RewriteMe.Mobile.ViewModels
                 SetTranscript(transcribeItem.UserTranscript);
                 IsReloadCommandVisible = CanExecuteReload();
             }
-            else if (transcribeItem.Alternatives != null && transcribeItem.Alternatives.Any())
+            else if (!string.IsNullOrWhiteSpace(transcribeItem.Transcript))
             {
-                var alternative = transcribeItem.Alternatives.First();
-                SetTranscript(alternative.Transcript);
+                SetTranscript(transcribeItem.Transcript);
             }
 
             Time = transcribeItem.TimeRange;
@@ -55,11 +54,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteReload()
         {
-            if (DetailItem.Alternatives == null || !DetailItem.Alternatives.Any())
+            if (string.IsNullOrWhiteSpace(DetailItem.Transcript))
                 return false;
 
-            var alternative = DetailItem.Alternatives.First();
-            return !alternative.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
+            return !DetailItem.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
         }
 
         protected override async Task ExecutePlayCommandAsync()
@@ -105,11 +103,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override void ExecuteReloadCommand()
         {
-            if (DetailItem == null || !DetailItem.Alternatives.Any())
-                return;
-
-            var alternative = DetailItem.Alternatives.First();
-            Transcript = alternative.Transcript;
+            Transcript = DetailItem.Transcript;
         }
     }
 }
