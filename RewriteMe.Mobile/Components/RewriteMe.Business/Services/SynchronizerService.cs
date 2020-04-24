@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
+using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
@@ -21,6 +22,8 @@ namespace RewriteMe.Business.Services
         private readonly ILogger _logger;
 
         private readonly object _lockObject = new object();
+
+        private HubConnection _hubConnection;
 
         public event EventHandler UnauthorizedCallOccurred;
 
@@ -53,7 +56,7 @@ namespace RewriteMe.Business.Services
             _logger.Info("Starting synchronizer service up.");
 
 #if DEBUG
-            var hubCollection = new HubConnectionBuilder()
+            _hubConnection = new HubConnectionBuilder()
                     .WithUrl(_applicationSettings.CacheHubUrl, options =>
                     {
                         options.HttpMessageHandlerFactory = handler =>
@@ -63,14 +66,14 @@ namespace RewriteMe.Business.Services
                     })
                     .Build();
 #else
-            var hubCollection = new HubConnectionBuilder().WithUrl(_applicationSettings.CacheHubUrl).Build();
+            _hubCollection = new HubConnectionBuilder().WithUrl(_applicationSettings.CacheHubUrl).Build();
 #endif
 
             try
             {
-                await hubCollection.StartAsync().ConfigureAwait(false);
+                await _hubConnection.StartAsync().ConfigureAwait(false);
                 var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
-                hubCollection.On<Guid, string>($"{RecognitionStateMethod}-{userId}", HandleRecognitionStateChangedMessage);
+                _hubConnection.On<Guid, string>($"{RecognitionStateMethod}-{userId}", HandleRecognitionStateChangedMessage);
             }
             catch (Exception ex)
             {
@@ -82,6 +85,8 @@ namespace RewriteMe.Business.Services
         {
             try
             {
+                _logger.Info("Receive recognition state change message.");
+
                 await _synchronizationService.StartAsync().ConfigureAwait(false);
             }
             catch (OperationCanceledException)
@@ -102,6 +107,8 @@ namespace RewriteMe.Business.Services
 
                 IsRunning = false;
             }
+
+            AsyncHelper.RunSync(() => _hubConnection.StopAsync());
 
             _logger.Info("Stopping synchronizer service.");
         }
