@@ -6,6 +6,7 @@ using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Events;
+using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi;
@@ -145,8 +146,15 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 using (new OperationMonitor(OperationScope))
                 {
-                    await _fileItemService.DeleteAsync(FileItem).ConfigureAwait(false);
-                    await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+                    try
+                    {
+                        await _fileItemService.DeleteAsync(FileItem).ConfigureAwait(false);
+                        await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+                    }
+                    catch (FileNotUploadedException)
+                    {
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.FileIsNotUploadedErrorMessage)).ConfigureAwait(false);
+                    }
                 }
             }
         }
