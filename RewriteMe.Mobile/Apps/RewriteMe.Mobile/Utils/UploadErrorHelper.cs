@@ -1,5 +1,4 @@
-﻿using System.Net;
-using RewriteMe.Domain.WebApi;
+﻿using RewriteMe.Domain.WebApi;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.Utils
@@ -17,6 +16,8 @@ namespace RewriteMe.Mobile.Utils
                 case ErrorCode.EC101:
                 case ErrorCode.EC102:
                     return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
+                case ErrorCode.EC103:
+                    return Loc.Text(TranslationKeys.FileIsAlreadyProcessingErrorMessage);
                 case ErrorCode.EC200:
                     return Loc.Text(TranslationKeys.LanguageNotSupportedErrorMessage);
                 case ErrorCode.EC201:

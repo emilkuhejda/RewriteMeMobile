@@ -27,11 +27,13 @@ namespace RewriteMe.Business.Configuration
 
         public Uri PrivacyPolicyUri { get; } = new Uri($"{HostUrl}home/privacy/");
 
+        public string CacheHubUrl { get; } = $"{HostUrl}api/cache-hub/";
+
         public string WebApiVersion { get; } = "1";
 
         public string AppCenterKeys { get; } = $"ios={OsxAppCenterKey};android={AndroidAppCenterKey}";
 
-        public string SyncfusionKey { get; } = "MTg1MDkxQDMxMzcyZTM0MmUzMEhmMEg5dXVHWjUvdXE2cDhIZ2lyMXZ6N3RkTVVmbHpJWEkzaS9ZbmtaaFk9";
+        public string SyncfusionKey { get; } = "MjQ2NDkwQDMxMzgyZTMxMmUzMGlRdnQ1Z1VVSTltakN0c2VBZmdEQ2RReFQ0SEdoVThEMzYxSDZIdnlYWWM9";
 
         public string SupportMailAddress => "support@voicipher.com";
 

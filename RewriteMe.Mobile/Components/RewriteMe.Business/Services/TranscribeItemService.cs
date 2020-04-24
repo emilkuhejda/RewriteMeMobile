@@ -39,7 +39,7 @@ namespace RewriteMe.Business.Services
             var lastTranscribeItemSynchronization = new DateTime(lastTranscribeItemSynchronizationTicks);
             _logger.Debug($"Update transcribe items with timestamp '{lastTranscribeItemSynchronization.ToString("d", CultureInfo.InvariantCulture)}'.");
 
-            if (applicationUpdateDate >= lastTranscribeItemSynchronization)
+            if (applicationUpdateDate > lastTranscribeItemSynchronization)
             {
                 var httpRequestResult = await _rewriteMeWebService.GetTranscribeItemsAllAsync(lastTranscribeItemSynchronization).ConfigureAwait(false);
                 if (httpRequestResult.State == HttpRequestState.Success)
@@ -48,7 +48,7 @@ namespace RewriteMe.Business.Services
                     _logger.Info($"Web server returned {transcribeItems.Count} items for synchronization.");
 
                     await _transcribeItemRepository.InsertOrReplaceAllAsync(transcribeItems).ConfigureAwait(false);
-                    await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
+                    await _internalValueService.UpdateValueAsync(InternalValues.TranscribeItemSynchronizationTicks, applicationUpdateDate.Ticks).ConfigureAwait(false);
                 }
             }
         }

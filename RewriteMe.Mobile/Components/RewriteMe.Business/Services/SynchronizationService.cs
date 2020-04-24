@@ -55,7 +55,7 @@ namespace RewriteMe.Business.Services
             _connectivityService.ConnectivityChanged += HandleConnectivityChanged;
         }
 
-        public async Task StartAsync(bool notifyServices = true)
+        public async Task StartAsync()
         {
             var isAlive = await _rewriteMeWebService.IsAliveAsync().ConfigureAwait(false);
             if (!isAlive)
@@ -86,16 +86,12 @@ namespace RewriteMe.Business.Services
 
             OnSynchronizationCompleted();
 
-            if (notifyServices)
-            {
-                NotifyBackgroundServices();
-            }
+            NotifyBackgroundServices();
         }
 
         public void NotifyBackgroundServices()
         {
             MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.TranscribeItem), nameof(BackgroundServiceType.TranscribeItem));
-            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
         }
 
         private void OnInitializationProgress()
@@ -128,6 +124,12 @@ namespace RewriteMe.Business.Services
         {
             var lastFileItemSynchronizationTicks = await _internalValueService.GetValueAsync(InternalValues.FileItemSynchronizationTicks).ConfigureAwait(false);
             var lastFileItemSynchronization = new DateTime(lastFileItemSynchronizationTicks);
+            if (lastFileItemSynchronization == default)
+            {
+                await _internalValueService.UpdateValueAsync(InternalValues.DeletedFileItemSynchronizationTicks, DateTime.UtcNow.Ticks).ConfigureAwait(false);
+                return;
+            }
+
             var applicationDeletedFileItemUpdateDate = _lastUpdatesService.GetDeletedFileItemLastUpdate();
 
             await _deletedFileItemService.SynchronizationAsync(applicationDeletedFileItemUpdateDate, lastFileItemSynchronization).ConfigureAwait(false);

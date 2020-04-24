@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.Domain.Interfaces.Repositories
@@ -11,8 +10,6 @@ namespace RewriteMe.Domain.Interfaces.Repositories
         Task<FileItem> GetAsync(Guid fileItemId);
 
         Task<IEnumerable<FileItem>> GetAllAsync();
-
-        Task<bool> AnyWaitingForSynchronizationAsync();
 
         Task InsertOrReplaceAsync(FileItem fileItem);
 

@@ -14,8 +14,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task SynchronizationAsync(DateTime applicationUpdateDate);
 
-        Task<bool> AnyWaitingForSynchronizationAsync();
-
         Task<FileItem> GetAsync(Guid fileItemId);
 
         Task<IEnumerable<FileItem>> GetAllAsync();

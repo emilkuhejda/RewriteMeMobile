@@ -1,31 +1,44 @@
 ﻿using System;
-using System.Threading;
+using System.Net.Http;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.SignalR.Client;
+using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
+using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Logging.Extensions;
+using RewriteMe.Logging.Interfaces;
 
 namespace RewriteMe.Business.Services
 {
     public class SynchronizerService : ISynchronizerService
     {
-        private const int TimeoutSeconds = 30;
+        private const string RecognitionStateMethod = "recognition-state";
 
-        private readonly IFileItemService _fileItemService;
+        private readonly IUserSessionService _userSessionService;
         private readonly ISynchronizationService _synchronizationService;
+        private readonly IAppCenterMetricsService _appCenterMetricsService;
+        private readonly IApplicationSettings _applicationSettings;
+        private readonly ILogger _logger;
+
         private readonly object _lockObject = new object();
 
-        private CancellationTokenSource _cancellationTokenSource;
+        private HubConnection _hubConnection;
 
         public event EventHandler UnauthorizedCallOccurred;
 
         public SynchronizerService(
-            IFileItemService fileItemService,
-            ISynchronizationService synchronizationService)
+            IUserSessionService userSessionService,
+            ISynchronizationService synchronizationService,
+            IAppCenterMetricsService appCenterMetricsService,
+            IApplicationSettings applicationSettings,
+            ILoggerFactory loggerFactory)
         {
-            _fileItemService = fileItemService;
+            _userSessionService = userSessionService;
             _synchronizationService = synchronizationService;
-
-            _cancellationTokenSource = new CancellationTokenSource();
+            _appCenterMetricsService = appCenterMetricsService;
+            _applicationSettings = applicationSettings;
+            _logger = loggerFactory.CreateLogger(typeof(SynchronizerService));
         }
 
         public bool IsRunning { get; private set; }
@@ -40,14 +53,50 @@ namespace RewriteMe.Business.Services
                 IsRunning = true;
             }
 
-            var anyWaitingForSynchronization = await _fileItemService.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
-            if (anyWaitingForSynchronization)
+            _logger.Info("Starting synchronizer service up.");
+
+#if DEBUG
+            _hubConnection = new HubConnectionBuilder()
+                    .WithUrl(_applicationSettings.CacheHubUrl, options =>
+                    {
+                        options.HttpMessageHandlerFactory = handler =>
+                        {
+                            return new HttpClientHandler { ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true };
+                        };
+                    })
+                    .Build();
+#else
+            _hubCollection = new HubConnectionBuilder().WithUrl(_applicationSettings.CacheHubUrl).Build();
+#endif
+
+            try
             {
-                await StartInternalAsync().ConfigureAwait(false);
+                await _hubConnection.StartAsync().ConfigureAwait(false);
+                var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
+                _hubConnection.On<Guid, string>($"{RecognitionStateMethod}-{userId}", HandleRecognitionStateChangedMessage);
             }
-            else
+            catch (Exception ex)
             {
                 IsRunning = false;
+
+                _appCenterMetricsService.TrackException(ex);
+            }
+        }
+
+        private async Task HandleRecognitionStateChangedMessage(Guid fileItemId, string recognitionState)
+        {
+            try
+            {
+                _logger.Info("Receive recognition state change message.");
+
+                await _synchronizationService.StartAsync().ConfigureAwait(false);
+            }
+            catch (OperationCanceledException)
+            {
+            }
+            catch (UnauthorizedCallException)
+            {
+                OnUnauthorizedCallOccurred();
             }
         }
 
@@ -58,54 +107,12 @@ namespace RewriteMe.Business.Services
                 if (!IsRunning)
                     return;
 
-                _cancellationTokenSource.Cancel();
-
                 IsRunning = false;
             }
-        }
 
-        private async Task StartInternalAsync()
-        {
-            _cancellationTokenSource.Cancel();
-            _cancellationTokenSource.Dispose();
-            _cancellationTokenSource = new CancellationTokenSource();
+            AsyncHelper.RunSync(() => _hubConnection.StopAsync());
 
-            try
-            {
-                var token = _cancellationTokenSource.Token;
-                await Task.Delay(TimeSpan.FromSeconds(TimeoutSeconds), token).ConfigureAwait(false);
-
-                token.ThrowIfCancellationRequested();
-                var anyWaitingForSynchronization = await _fileItemService.AnyWaitingForSynchronizationAsync().ConfigureAwait(false);
-                if (anyWaitingForSynchronization)
-                {
-                    token.ThrowIfCancellationRequested();
-                    await _synchronizationService.StartAsync(false).ConfigureAwait(false);
-
-                    token.ThrowIfCancellationRequested();
-                    IsRunning = false;
-                }
-            }
-            catch (OperationCanceledException)
-            {
-            }
-            catch (UnauthorizedCallException)
-            {
-                _cancellationTokenSource.Cancel();
-
-                OnUnauthorizedCallOccurred();
-            }
-            finally
-            {
-                if (!IsRunning && !_cancellationTokenSource.IsCancellationRequested)
-                {
-                    _synchronizationService.NotifyBackgroundServices();
-                }
-                else
-                {
-                    IsRunning = false;
-                }
-            }
+            _logger.Info("Stopping synchronizer service.");
         }
 
         private void OnUnauthorizedCallOccurred()

@@ -6,7 +6,6 @@ using RewriteMe.DataAccess.DataAdapters;
 using RewriteMe.DataAccess.Entities;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Interfaces.Repositories;
-using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 
 namespace RewriteMe.DataAccess.Repositories
@@ -31,17 +30,6 @@ namespace RewriteMe.DataAccess.Repositories
             var entity = await _contextProvider.Context.GetAsync<FileItemEntity>(x => x.Id == fileItemId).ConfigureAwait(false);
 
             return entity?.ToFileItem();
-        }
-
-        public async Task<bool> AnyWaitingForSynchronizationAsync()
-        {
-            var recognitionState = RecognitionState.InProgress;
-            var count = await _contextProvider.Context.FileItems
-                .Where(x => x.RecognitionState == recognitionState)
-                .CountAsync()
-                .ConfigureAwait(false);
-
-            return count > 0;
         }
 
         public async Task InsertOrReplaceAsync(FileItem fileItem)

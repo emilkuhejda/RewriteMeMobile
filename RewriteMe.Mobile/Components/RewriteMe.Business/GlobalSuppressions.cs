@@ -15,3 +15,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Design", "CA1001:Types that own disposable fields should be disposable", Justification = "It is singleton", Scope = "type", Target = "~T:RewriteMe.Business.Services.SynchronizerService")]
 [assembly: SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Business.Configuration.ApplicationSettings.WebApiUrl")]
 [assembly: SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "By design", Scope = "member", Target = "~M:RewriteMe.Business.Services.WebServiceBase.CreateHttpClient(System.Int32)~System.Net.Http.HttpClient")]
+[assembly: SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Business.Configuration.ApplicationSettings.CacheHubUrl")]
