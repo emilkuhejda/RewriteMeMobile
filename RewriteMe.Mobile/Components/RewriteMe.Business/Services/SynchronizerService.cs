@@ -75,7 +75,7 @@ namespace RewriteMe.Business.Services
                 await _hubConnection.StartAsync().ConfigureAwait(false);
                 var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
                 _hubConnection.On<Guid, string>($"{RecognitionStateChangedMethod}-{userId}", HandleRecognitionStateChangedMessageAsync);
-                _hubConnection.On<Guid>($"{FilesListChangedMethod}-{userId}", HandleFilesListChangedMessageAsync);
+                _hubConnection.On($"{FilesListChangedMethod}-{userId}", HandleFilesListChangedMessageAsync);
             }
             catch (Exception ex)
             {
@@ -92,7 +92,7 @@ namespace RewriteMe.Business.Services
             await StartSynchronizationAsync().ConfigureAwait(false);
         }
 
-        private async Task HandleFilesListChangedMessageAsync(Guid fileItemId)
+        private async Task HandleFilesListChangedMessageAsync()
         {
             _logger.Info("Receive file list changed message.");
 
