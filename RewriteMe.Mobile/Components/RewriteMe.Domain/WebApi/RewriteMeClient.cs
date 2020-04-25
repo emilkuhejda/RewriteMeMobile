@@ -3659,8 +3659,8 @@ namespace RewriteMe.Domain.WebApi
         [Newtonsoft.Json.JsonProperty("confidence", Required = Newtonsoft.Json.Required.Always)]
         public float Confidence { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("words", Required = Newtonsoft.Json.Required.Always)]
-        public System.Collections.Generic.IEnumerable<RecognitionWordInfo> Words { get; set; } = new System.Collections.ObjectModel.Collection<RecognitionWordInfo>();
+        [Newtonsoft.Json.JsonProperty("words", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IEnumerable<RecognitionWordInfo> Words { get; set; }
 
 
     }
