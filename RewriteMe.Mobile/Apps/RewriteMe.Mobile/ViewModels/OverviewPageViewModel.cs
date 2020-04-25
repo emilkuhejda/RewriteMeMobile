@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -11,6 +12,7 @@ using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Messages;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
@@ -102,6 +104,20 @@ namespace RewriteMe.Mobile.ViewModels
                         FileItems.Insert(index, new FileItemViewModel(fileItem, NavigationService));
                     }
                 }
+
+                RemoveObsoleteItems(fileItems);
+            }
+        }
+
+        private void RemoveObsoleteItems(IList<FileItem> fileItems)
+        {
+            var deletedFileItems = FileItems.Where(fileItemViewModel => !fileItems.Select(x => x.Id).Contains(fileItemViewModel.FileItem.Id)).ToList();
+            if (!deletedFileItems.Any())
+                return;
+
+            foreach (var deletedFileItem in deletedFileItems)
+            {
+                FileItems.Remove(deletedFileItem);
             }
         }
 
