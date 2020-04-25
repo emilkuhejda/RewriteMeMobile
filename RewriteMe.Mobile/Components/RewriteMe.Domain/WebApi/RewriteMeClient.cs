@@ -3495,8 +3495,38 @@ namespace RewriteMe.Domain.WebApi
         [System.Runtime.Serialization.EnumMember(Value = @"EC800")]
         EC800 = 78,
 
+        [System.Runtime.Serialization.EnumMember(Value = @"EC801")]
+        EC801 = 79,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC802")]
+        EC802 = 80,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC803")]
+        EC803 = 81,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC804")]
+        EC804 = 82,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC805")]
+        EC805 = 83,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC806")]
+        EC806 = 84,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC807")]
+        EC807 = 85,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC808")]
+        EC808 = 86,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC809")]
+        EC809 = 87,
+
+        [System.Runtime.Serialization.EnumMember(Value = @"EC810")]
+        EC810 = 88,
+
         [System.Runtime.Serialization.EnumMember(Value = @"Unauthorized")]
-        Unauthorized = 79,
+        Unauthorized = 89,
 
     }
 
@@ -3659,8 +3689,8 @@ namespace RewriteMe.Domain.WebApi
         [Newtonsoft.Json.JsonProperty("confidence", Required = Newtonsoft.Json.Required.Always)]
         public float Confidence { get; set; }
 
-        [Newtonsoft.Json.JsonProperty("words", Required = Newtonsoft.Json.Required.Always)]
-        public System.Collections.Generic.IEnumerable<RecognitionWordInfo> Words { get; set; } = new System.Collections.ObjectModel.Collection<RecognitionWordInfo>();
+        [Newtonsoft.Json.JsonProperty("words", Required = Newtonsoft.Json.Required.Default, NullValueHandling = Newtonsoft.Json.NullValueHandling.Ignore)]
+        public System.Collections.Generic.IEnumerable<RecognitionWordInfo> Words { get; set; }
 
 
     }
