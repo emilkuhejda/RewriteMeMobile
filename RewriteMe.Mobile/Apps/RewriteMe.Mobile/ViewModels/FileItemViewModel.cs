@@ -75,6 +75,8 @@ namespace RewriteMe.Mobile.ViewModels
             IsCompleted = fileItem.RecognitionState == RecognitionState.Completed;
             IsUploading = fileItem.UploadStatus == UploadStatus.InProgress;
             IsErrorIconVisible = !IsUploading && (fileItem.UploadStatus == UploadStatus.Error || fileItem.TranscribeErrorCode.HasValue);
+
+            RaisePropertyChanged(nameof(FileName));
         }
 
         private async Task ExecuteNavigateToDetailPageCommandAsync()

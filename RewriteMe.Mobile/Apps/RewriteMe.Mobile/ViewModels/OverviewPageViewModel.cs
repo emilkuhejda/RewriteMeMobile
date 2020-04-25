@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,15 +7,19 @@ using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Messages;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Navigation.Parameters;
 using RewriteMe.Resources.Localization;
+using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.ViewModels
 {
@@ -99,6 +104,20 @@ namespace RewriteMe.Mobile.ViewModels
                         FileItems.Insert(index, new FileItemViewModel(fileItem, NavigationService));
                     }
                 }
+
+                RemoveObsoleteItems(fileItems);
+            }
+        }
+
+        private void RemoveObsoleteItems(IList<FileItem> fileItems)
+        {
+            var deletedFileItems = FileItems.Where(fileItemViewModel => !fileItems.Select(x => x.Id).Contains(fileItemViewModel.FileItem.Id)).ToList();
+            if (!deletedFileItems.Any())
+                return;
+
+            foreach (var deletedFileItem in deletedFileItems)
+            {
+                FileItems.Remove(deletedFileItem);
             }
         }
 
@@ -109,6 +128,8 @@ namespace RewriteMe.Mobile.ViewModels
             SynchronizationService.InitializationProgress += OnInitializationProgress;
             await SynchronizationService.StartAsync().ConfigureAwait(false);
             SynchronizationService.InitializationProgress -= OnInitializationProgress;
+
+            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
 
             IndicatorCaption = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
         }
