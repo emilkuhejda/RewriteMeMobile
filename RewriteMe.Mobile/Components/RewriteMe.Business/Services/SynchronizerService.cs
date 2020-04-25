@@ -13,7 +13,8 @@ namespace RewriteMe.Business.Services
 {
     public class SynchronizerService : ISynchronizerService
     {
-        private const string RecognitionStateMethod = "recognition-state";
+        private const string RecognitionStateChangedMethod = "recognition-state";
+        private const string FilesListChangedMethod = "file-list";
 
         private readonly IUserSessionService _userSessionService;
         private readonly ISynchronizationService _synchronizationService;
@@ -73,7 +74,8 @@ namespace RewriteMe.Business.Services
             {
                 await _hubConnection.StartAsync().ConfigureAwait(false);
                 var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
-                _hubConnection.On<Guid, string>($"{RecognitionStateMethod}-{userId}", HandleRecognitionStateChangedMessage);
+                _hubConnection.On<Guid, string>($"{RecognitionStateChangedMethod}-{userId}", HandleRecognitionStateChangedMessageAsync);
+                _hubConnection.On<Guid>($"{FilesListChangedMethod}-{userId}", HandleFilesListChangedMessageAsync);
             }
             catch (Exception ex)
             {
@@ -83,12 +85,24 @@ namespace RewriteMe.Business.Services
             }
         }
 
-        private async Task HandleRecognitionStateChangedMessage(Guid fileItemId, string recognitionState)
+        private async Task HandleRecognitionStateChangedMessageAsync(Guid fileItemId, string recognitionState)
+        {
+            _logger.Info("Receive recognition state change message.");
+
+            await StartSynchronizationAsync().ConfigureAwait(false);
+        }
+
+        private async Task HandleFilesListChangedMessageAsync(Guid fileItemId)
+        {
+            _logger.Info("Receive file list changed message.");
+
+            await StartSynchronizationAsync().ConfigureAwait(false);
+        }
+
+        private async Task StartSynchronizationAsync()
         {
             try
             {
-                _logger.Info("Receive recognition state change message.");
-
                 await _synchronizationService.StartAsync().ConfigureAwait(false);
             }
             catch (OperationCanceledException)
