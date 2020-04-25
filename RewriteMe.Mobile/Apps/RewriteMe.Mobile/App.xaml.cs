@@ -155,8 +155,6 @@ namespace RewriteMe.Mobile
                 };
             }
 
-            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
-
 #if !DEBUG
             AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Analytics), typeof(Push));
 #else
