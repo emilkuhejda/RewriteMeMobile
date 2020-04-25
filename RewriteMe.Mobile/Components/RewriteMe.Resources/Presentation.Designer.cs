@@ -880,6 +880,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to System is under maintenance. Please try again later..
+        /// </summary>
+        public static string SystemIsUnderMaintenanceErrorMessage {
+            get {
+                return ResourceManager.GetString("SystemIsUnderMaintenanceErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to 10 Hours.
         /// </summary>
         public static string TenHours {

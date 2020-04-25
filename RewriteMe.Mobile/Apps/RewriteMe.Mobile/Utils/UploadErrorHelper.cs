@@ -28,6 +28,8 @@ namespace RewriteMe.Mobile.Utils
                     return Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
                 case ErrorCode.EC400:
                     return Loc.Text(TranslationKeys.FileItemSourceDatabaseUpdateErrorMessage);
+                case ErrorCode.EC500:
+                    return Loc.Text(TranslationKeys.SystemIsUnderMaintenanceErrorMessage);
                 case ErrorCode.EC800:
                     return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
                 case ErrorCode.Unauthorized:
