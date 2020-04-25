@@ -350,6 +350,9 @@
   <data name="FileItemSourceDatabaseUpdateErrorMessage" xml:space="preserve">
     <value>Súbor nebol nahraný správne. Prosím, zopakujte operáciu neskôr.</value>
   </data>
+  <data name="SystemIsUnderMaintenanceErrorMessage" xml:space="preserve">
+    <value>Sýstem prechádza údržbou. Prosím, zopakujte operáciu neskôr.</value>
+  </data>
   <data name="InvalidAudioFileErrorMessage" xml:space="preserve">
     <value>Audio súbor nie je podporovaný.</value>
   </data>
