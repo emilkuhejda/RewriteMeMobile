@@ -2,13 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
 using RewriteMe.Mobile.Commands;
-using RewriteMe.Mobile.Utils;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -77,7 +75,7 @@ namespace RewriteMe.Mobile.ViewModels
                 IsEnabled = CanExecuteSendCommand(),
                 IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Send-Enabled.svg",
                 IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Send-Disabled.svg",
-                SelectedCommand = new DelegateCommand(ExecuteSendCommand, CanExecuteSendCommand)
+                SelectedCommand = new AsyncCommand(ExecuteSendCommandAsync, CanExecuteSendCommand)
             };
 
             SaveTileItem = new ActionBarTileViewModel
@@ -94,15 +92,15 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSendCommand()
         {
-            return ThreadHelper.InvokeOnUiThread(() => EmailService.CanSendEmail && DetailItems.Any());
+            return DetailItems.Any();
         }
 
-        private void ExecuteSendCommand()
+        private async Task ExecuteSendCommandAsync()
         {
-            ThreadHelper.InvokeOnUiThread(SendEmailInternal);
+            await SendEmailInternal().ConfigureAwait(false);
         }
 
-        protected abstract void SendEmailInternal();
+        protected abstract Task SendEmailInternal();
 
         protected abstract bool CanExecuteSaveCommand();
 

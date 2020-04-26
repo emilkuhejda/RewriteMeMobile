@@ -73,7 +73,7 @@ namespace RewriteMe.Mobile.ViewModels
             NavigateToUserSettingsCommand = new AsyncCommand(ExecuteNavigateToUserSettingsCommandAsync);
             NavigateToUserSubscriptionsCommand = new AsyncCommand(ExecuteNavigateToUserSubscriptionsCommandAsync);
             NavigateToPrivacyPolicyCommand = new DelegateCommand(ExecuteNavigateToPrivacyPolicyCommand);
-            NavigateToEmailCommand = new DelegateCommand(ExecuteNavigateToEmailCommand);
+            NavigateToEmailCommand = new AsyncCommand(ExecuteNavigateToEmailCommandAsync);
             NavigateToDeveloperPageCommand = new AsyncCommand(ExecuteNavigateToDeveloperPageCommandAsync);
         }
 
@@ -197,39 +197,27 @@ namespace RewriteMe.Mobile.ViewModels
             });
         }
 
-        private void ExecuteNavigateToEmailCommand()
-        {
-            ThreadHelper.InvokeOnUiThread(CreateContactUsMailAsync);
-        }
-
-        private async Task CreateContactUsMailAsync()
+        private async Task ExecuteNavigateToEmailCommandAsync()
         {
             if (string.IsNullOrWhiteSpace(_applicationSettings.SupportMailAddress))
                 return;
 
-            if (_emailService.CanSendEmail)
-            {
-                var subject = $"{Loc.Text(TranslationKeys.ApplicationTitle)}";
-                var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz", CultureInfo.InvariantCulture);
-                var message = new StringBuilder()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine("_______________________________________")
-                    .AppendLine($"Application version: {_applicationVersionProvider.GetInstalledVersionNumber()} ({Device.RuntimePlatform})")
-                    .AppendLine($"Time stamp: {timestamp}")
-                    .ToString();
+            var subject = $"{Loc.Text(TranslationKeys.ApplicationTitle)}";
+            var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz", CultureInfo.InvariantCulture);
+            var message = new StringBuilder()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine("_______________________________________")
+                .AppendLine($"Application version: {_applicationVersionProvider.GetInstalledVersionNumber()} ({Device.RuntimePlatform})")
+                .AppendLine($"Time stamp: {timestamp}")
+                .ToString();
 
-                _emailService.Send(_applicationSettings.SupportMailAddress, subject, message);
-            }
-            else
-            {
-                await DialogService.AlertAsync(Loc.Text(TranslationKeys.EmailIsNotSupported)).ConfigureAwait(false);
-            }
+            await _emailService.SendAsync(_applicationSettings.SupportMailAddress, subject, message).ConfigureAwait(false);
         }
 
         private async Task ExecuteNavigateToDeveloperPageCommandAsync()
