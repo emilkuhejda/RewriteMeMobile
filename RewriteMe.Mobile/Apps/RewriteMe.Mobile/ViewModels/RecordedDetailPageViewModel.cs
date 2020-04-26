@@ -60,7 +60,7 @@ namespace RewriteMe.Mobile.ViewModels
             return viewModel;
         }
 
-        protected override void SendEmailInternal()
+        protected override async Task SendEmailInternal()
         {
             var message = new StringBuilder();
             foreach (var recordedAudioFile in DetailItems)
@@ -70,9 +70,7 @@ namespace RewriteMe.Mobile.ViewModels
                 message.AppendLine();
             }
 
-            EmailService.Send(
-                subject: RecordedItem.DateCreated.ToLocalTime().ToString(Constants.TimeFormat),
-                message: message.ToString());
+            await EmailService.SendAsync(string.Empty, RecordedItem.DateCreated.ToLocalTime().ToString(Constants.TimeFormat), message.ToString()).ConfigureAwait(false);
         }
 
         protected override bool CanExecuteSaveCommand()

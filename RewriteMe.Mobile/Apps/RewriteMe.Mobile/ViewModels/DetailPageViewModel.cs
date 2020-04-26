@@ -107,7 +107,7 @@ namespace RewriteMe.Mobile.ViewModels
             return viewModel;
         }
 
-        protected override void SendEmailInternal()
+        protected override async Task SendEmailInternal()
         {
             var message = new StringBuilder();
             foreach (var transcribeItem in DetailItems)
@@ -117,9 +117,7 @@ namespace RewriteMe.Mobile.ViewModels
                 message.AppendLine().AppendLine();
             }
 
-            EmailService.Send(
-                subject: FileItem.Name,
-                message: message.ToString());
+            await EmailService.SendAsync(string.Empty, FileItem.Name, message.ToString()).ConfigureAwait(false);
         }
 
         protected override bool CanExecuteSaveCommand()

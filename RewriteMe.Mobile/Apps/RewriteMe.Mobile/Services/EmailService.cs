@@ -4,76 +4,41 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Plugin.Messaging;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Utils;
 using Xamarin.Essentials;
 using Xamarin.Forms;
-using EmailAttachment = Xamarin.Essentials.EmailAttachment;
 
 namespace RewriteMe.Mobile.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly IEmailTask _emailTask;
-
-        public EmailService(IEmailTask emailTask)
-        {
-            _emailTask = emailTask;
-        }
-
-        public bool CanSendEmail => _emailTask.CanSendEmail;
-
         public async Task SendAsync(string recipient, string subject, string message, string attachmentFilePath)
         {
+            var emailMessage = new EmailMessage
+            {
+                To = new List<string> { recipient },
+                Subject = subject
+            };
+
             if (Device.RuntimePlatform == Device.iOS)
             {
-                if (_emailTask.CanSendEmailAttachments)
-                {
-                    SendWithAttachment(recipient, subject, message, attachmentFilePath);
-                }
-                else
-                {
-                    SendWithoutAttachment(recipient, subject, message, attachmentFilePath);
-                }
+                var content = ReadContentFromFile(attachmentFilePath);
+                emailMessage.Body = new StringBuilder(content).Append(message).ToString();
             }
             else
             {
-                var email = new EmailMessage
-                {
-                    To = new List<string> { recipient },
-                    Subject = subject,
-                    Body = message
-                };
-
-                if (File.Exists(attachmentFilePath))
-                {
-                    email.Attachments.Add(new EmailAttachment(attachmentFilePath));
-                }
-
-                await ThreadHelper.InvokeOnUiThread(async () =>
-                {
-                    await Email.ComposeAsync(email).ConfigureAwait(false);
-                }).ConfigureAwait(false);
+                emailMessage.Body = message;
+                emailMessage.Attachments.Add(new EmailAttachment(attachmentFilePath));
             }
-        }
 
-        private void SendWithAttachment(string recipient, string subject, string message, string attachmentFilePath)
-        {
-            var emailMessage = new EmailMessageBuilder()
-                .To(recipient)
-                .Subject(subject)
-                .Body(message)
-                .WithAttachment(attachmentFilePath, "text/plain")
-                .Build();
-
-            ThreadHelper.InvokeOnUiThread(() =>
+            await ThreadHelper.InvokeOnUiThread(async () =>
             {
-                _emailTask.SendEmail(emailMessage);
-            });
+                await Email.ComposeAsync(emailMessage).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
 
-        private void SendWithoutAttachment(string recipient, string subject, string message, string attachmentFilePath)
+        private string ReadContentFromFile(string attachmentFilePath)
         {
             var fileContent = string.Empty;
             if (File.Exists(attachmentFilePath))
@@ -82,26 +47,15 @@ namespace RewriteMe.Mobile.Services
                 fileContent = string.Join(Environment.NewLine, lines);
             }
 
-            var body = new StringBuilder(fileContent).Append(message).ToString();
-
-            var emailMessage = new EmailMessageBuilder()
-                .To(recipient)
-                .Subject(subject)
-                .Body(body)
-                .Build();
-
-            ThreadHelper.InvokeOnUiThread(() =>
-            {
-                _emailTask.SendEmail(emailMessage);
-            });
+            return fileContent;
         }
 
-        public void Send(string recipient = null, string subject = null, string message = null)
+        public async Task SendAsync(string recipient, string subject, string message)
         {
-            ThreadHelper.InvokeOnUiThread(() =>
+            await ThreadHelper.InvokeOnUiThread(async () =>
             {
-                _emailTask.SendEmail(recipient, subject, message);
-            });
+                await Email.ComposeAsync(subject, message, recipient).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
     }
 }

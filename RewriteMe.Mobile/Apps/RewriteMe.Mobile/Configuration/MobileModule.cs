@@ -1,6 +1,5 @@
 ﻿using Plugin.Connectivity;
 using Plugin.LatestVersion;
-using Plugin.Messaging;
 using Prism.Ioc;
 using Prism.Navigation;
 using RewriteMe.Common;
@@ -21,7 +20,6 @@ namespace RewriteMe.Mobile.Configuration
         public void RegisterServices(IContainerRegistry containerRegistry)
         {
             containerRegistry.RegisterInstance(CrossLatestVersion.Current);
-            containerRegistry.RegisterInstance(CrossMessaging.Current.EmailMessenger);
             containerRegistry.RegisterInstance(CrossConnectivity.Current);
             containerRegistry.RegisterInstance(MessagingCenter.Instance);
 
