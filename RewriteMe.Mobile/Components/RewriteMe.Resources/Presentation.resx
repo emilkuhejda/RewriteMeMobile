@@ -343,7 +343,10 @@
   <data name="DeleteUserAccountMessage" xml:space="preserve">
     <value>Warning! Deleting user account is irreversible. This will permanently delete your data. This action cannot be undone. If you want to continue, type '{0}' for confirmation.</value>
   </data>
-
+  <data name="Accuracy" xml:space="preserve">
+    <value>({0}% accuracy)</value>
+  </data>
+  
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>You don't have a permission to upload a file. Please try again later.</value>
   </data>
