@@ -8,6 +8,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task SendAsync(string recipient, string subject, string message, string attachmentFilePath);
 
-        void Send(string recipient = null, string subject = null, string message = null);
+        Task SendAsync(string recipient, string subject, string message);
     }
 }

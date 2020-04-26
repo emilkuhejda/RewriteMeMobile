@@ -96,12 +96,9 @@ namespace RewriteMe.Mobile.Services
             });
         }
 
-        public void Send(string recipient = null, string subject = null, string message = null)
+        public async Task SendAsync(string recipient, string subject, string message)
         {
-            ThreadHelper.InvokeOnUiThread(() =>
-            {
-                _emailTask.SendEmail(recipient, subject, message);
-            });
+            await Email.ComposeAsync(subject, message, recipient).ConfigureAwait(false);
         }
     }
 }

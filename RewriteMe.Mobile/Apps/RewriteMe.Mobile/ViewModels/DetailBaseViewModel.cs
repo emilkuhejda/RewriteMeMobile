@@ -102,7 +102,7 @@ namespace RewriteMe.Mobile.ViewModels
             ThreadHelper.InvokeOnUiThread(SendEmailInternal);
         }
 
-        protected abstract void SendEmailInternal();
+        protected abstract Task SendEmailInternal();
 
         protected abstract bool CanExecuteSaveCommand();
 

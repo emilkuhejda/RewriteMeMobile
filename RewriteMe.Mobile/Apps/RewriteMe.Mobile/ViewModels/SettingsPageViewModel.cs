@@ -224,7 +224,7 @@ namespace RewriteMe.Mobile.ViewModels
                     .AppendLine($"Time stamp: {timestamp}")
                     .ToString();
 
-                _emailService.Send(_applicationSettings.SupportMailAddress, subject, message);
+                await _emailService.SendAsync(_applicationSettings.SupportMailAddress, subject, message).ConfigureAwait(false);
             }
             else
             {
