@@ -73,7 +73,7 @@ namespace RewriteMe.Mobile.ViewModels
             NavigateToUserSettingsCommand = new AsyncCommand(ExecuteNavigateToUserSettingsCommandAsync);
             NavigateToUserSubscriptionsCommand = new AsyncCommand(ExecuteNavigateToUserSubscriptionsCommandAsync);
             NavigateToPrivacyPolicyCommand = new DelegateCommand(ExecuteNavigateToPrivacyPolicyCommand);
-            NavigateToEmailCommand = new DelegateCommand(ExecuteNavigateToEmailCommand);
+            NavigateToEmailCommand = new AsyncCommand(ExecuteNavigateToEmailCommandAsync);
             NavigateToDeveloperPageCommand = new AsyncCommand(ExecuteNavigateToDeveloperPageCommandAsync);
         }
 
@@ -197,12 +197,7 @@ namespace RewriteMe.Mobile.ViewModels
             });
         }
 
-        private void ExecuteNavigateToEmailCommand()
-        {
-            ThreadHelper.InvokeOnUiThread(CreateContactUsMailAsync);
-        }
-
-        private async Task CreateContactUsMailAsync()
+        private async Task ExecuteNavigateToEmailCommandAsync()
         {
             if (string.IsNullOrWhiteSpace(_applicationSettings.SupportMailAddress))
                 return;
