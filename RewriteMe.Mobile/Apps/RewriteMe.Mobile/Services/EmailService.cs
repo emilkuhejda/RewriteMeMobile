@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Plugin.Messaging;
 using RewriteMe.Domain.Interfaces.Services;
 using Xamarin.Essentials;
 using EmailAttachment = Xamarin.Essentials.EmailAttachment;
@@ -9,14 +8,7 @@ namespace RewriteMe.Mobile.Services
 {
     public class EmailService : IEmailService
     {
-        private readonly IEmailTask _emailTask;
-
-        public EmailService(IEmailTask emailTask)
-        {
-            _emailTask = emailTask;
-        }
-
-        public bool CanSendEmail => _emailTask.CanSendEmail;
+        public bool CanSendEmail => true;
 
         public async Task SendAsync(string recipient, string subject, string message, string attachmentFilePath)
         {
