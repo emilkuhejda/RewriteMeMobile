@@ -15,8 +15,8 @@ namespace RewriteMe.Mobile.Services
             var emailMessage = new EmailMessage
             {
                 To = new List<string> { recipient },
-                Subject = "Hello",
-                Body = "World",
+                Subject = subject,
+                Body = message
             };
 
             emailMessage.Attachments.Add(new EmailAttachment(attachmentFilePath));
