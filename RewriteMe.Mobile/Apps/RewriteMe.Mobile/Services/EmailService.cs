@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Interfaces.Services;
-using RewriteMe.Mobile.Utils;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -13,8 +12,6 @@ namespace RewriteMe.Mobile.Services
 {
     public class EmailService : IEmailService
     {
-        public bool CanSendEmail => true;
-
         public async Task SendAsync(string recipient, string subject, string message, string attachmentFilePath)
         {
             var emailMessage = new EmailMessage
@@ -34,10 +31,7 @@ namespace RewriteMe.Mobile.Services
                 emailMessage.Attachments.Add(new EmailAttachment(attachmentFilePath));
             }
 
-            await ThreadHelper.InvokeOnUiThread(async () =>
-            {
-                await Email.ComposeAsync(emailMessage).ConfigureAwait(false);
-            }).ConfigureAwait(false);
+            await Email.ComposeAsync(emailMessage).ConfigureAwait(false);
         }
 
         private string ReadContentFromFile(string attachmentFilePath)
@@ -54,10 +48,7 @@ namespace RewriteMe.Mobile.Services
 
         public async Task SendAsync(string recipient, string subject, string message)
         {
-            await ThreadHelper.InvokeOnUiThread(async () =>
-            {
-                await Email.ComposeAsync(subject, message, recipient).ConfigureAwait(false);
-            }).ConfigureAwait(false);
+            await Email.ComposeAsync(subject, message, recipient).ConfigureAwait(false);
         }
     }
 }

@@ -94,7 +94,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSendCommand()
         {
-            return ThreadHelper.InvokeOnUiThread(() => EmailService.CanSendEmail && DetailItems.Any());
+            return ThreadHelper.InvokeOnUiThread(() => DetailItems.Any());
         }
 
         private void ExecuteSendCommand()

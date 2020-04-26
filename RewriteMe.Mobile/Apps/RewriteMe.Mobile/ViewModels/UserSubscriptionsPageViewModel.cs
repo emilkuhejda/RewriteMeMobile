@@ -341,33 +341,26 @@ namespace RewriteMe.Mobile.ViewModels
             if (string.IsNullOrWhiteSpace(_applicationSettings.SupportMailAddress))
                 return;
 
-            if (_emailService.CanSendEmail)
-            {
-                var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
-                var subject = $"{Loc.Text(TranslationKeys.ApplicationTitle)} - Purchase problem";
-                var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz", CultureInfo.InvariantCulture);
-                var message = new StringBuilder()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine()
-                    .AppendLine("_______________________________________")
-                    .AppendLine($"Order Id: {purchaseId}")
-                    .AppendLine($"User subscription: {productId}")
-                    .AppendLine($"User identification: {userId}")
-                    .AppendLine($"Application version: {_applicationVersionProvider.GetInstalledVersionNumber()} ({Device.RuntimePlatform})")
-                    .AppendLine($"Time stamp: {timestamp}")
-                    .ToString();
+            var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
+            var subject = $"{Loc.Text(TranslationKeys.ApplicationTitle)} - Purchase problem";
+            var timestamp = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz", CultureInfo.InvariantCulture);
+            var message = new StringBuilder()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine()
+                .AppendLine("_______________________________________")
+                .AppendLine($"Order Id: {purchaseId}")
+                .AppendLine($"User subscription: {productId}")
+                .AppendLine($"User identification: {userId}")
+                .AppendLine($"Application version: {_applicationVersionProvider.GetInstalledVersionNumber()} ({Device.RuntimePlatform})")
+                .AppendLine($"Time stamp: {timestamp}")
+                .ToString();
 
-                await _emailService.SendAsync(_applicationSettings.SupportMailAddress, subject, message).ConfigureAwait(false);
-            }
-            else
-            {
-                await DialogService.AlertAsync(Loc.Text(TranslationKeys.EmailIsNotSupported)).ConfigureAwait(false);
-            }
+            await _emailService.SendAsync(_applicationSettings.SupportMailAddress, subject, message).ConfigureAwait(false);
         }
 
         private async Task TrackEvent(string productId)
