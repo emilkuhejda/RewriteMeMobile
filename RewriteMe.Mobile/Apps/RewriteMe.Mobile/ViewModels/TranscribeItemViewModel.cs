@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
@@ -40,6 +41,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
 
             Time = transcribeItem.TimeRange;
+            Accuracy = Loc.Text(TranslationKeys.Accuracy, transcribeItem.ToAverageConfidence());
         }
 
         protected override void OnTranscriptChanged(string transcript)

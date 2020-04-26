@@ -480,7 +480,8 @@
                 <StackLayout>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
@@ -533,9 +534,14 @@
                         </StackLayout>
 
                         <Label Grid.Column="1"
-                               HorizontalOptions="End"
+                               HorizontalOptions="StartAndExpand"
                                Style="{StaticResource LabelStyle}"
                                Text="{Binding Time}" />
+
+                        <Label Grid.Column="2"
+                               HorizontalOptions="End"
+                               Style="{StaticResource LabelStyle}"
+                               Text="{Binding Accuracy}" />
                     </Grid>
 
                     <Editor AutoSize="TextChanges"

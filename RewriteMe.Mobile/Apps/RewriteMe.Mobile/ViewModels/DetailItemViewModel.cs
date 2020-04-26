@@ -51,6 +51,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         public string Time { get; protected set; }
 
+        public string Accuracy { get; protected set; }
+
         public string Transcript
         {
             get => _transcript;
