@@ -1,5 +1,4 @@
-﻿using System;
-using Prism.Mvvm;
+﻿using Prism.Mvvm;
 
 namespace RewriteMe.Mobile.Controls
 {
@@ -9,7 +8,7 @@ namespace RewriteMe.Mobile.Controls
 
         public string Text { get; set; }
 
-        public TimeSpan StartTime { get; set; }
+        public double EndTime { get; set; }
 
         public bool IsHighlighted
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,6 +18,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemManager _transcribeItemManager;
         private readonly CancellationToken _cancellationToken;
+        private readonly object _lockObject = new object();
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
@@ -31,17 +33,15 @@ namespace RewriteMe.Mobile.ViewModels
             _transcribeItemManager = transcribeItemManager;
             _cancellationToken = cancellationToken;
 
-            PlayerViewModel.Tick += HandleTick;
-
             Words = transcribeItem.Alternatives
                 .SelectMany(x => x.Words)
                 .OrderBy(x => x.StartTimeTicks)
                 .Select(x => new WordComponent
                 {
                     Text = x.Word,
-                    StartTime = x.StartTime
+                    EndTime = x.EndTime.TotalSeconds
                 }).ToList();
-            TrySetIsHighlightEnabled(true);
+            List = new LinkedList<WordComponent>(Words);
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
@@ -57,7 +57,9 @@ namespace RewriteMe.Mobile.ViewModels
             Accuracy = Loc.Text(TranslationKeys.Accuracy, transcribeItem.ToAverageConfidence());
         }
 
-        private WordComponent CurrentComponent { get; set; }
+        private LinkedListNode<WordComponent> CurrentComponent { get; set; }
+
+        private LinkedList<WordComponent> List { get; }
 
         protected override void OnTranscriptChanged(string transcript)
         {
@@ -114,6 +116,15 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 PlayerViewModel.Load(transcriptAudioSource.Source);
+
+                TrySetIsHighlightEnabled(true);
+
+                PlayerViewModel.Tick -= HandleTick;
+                PlayerViewModel.Tick += HandleTick;
+                Words.ForEach(x => x.IsHighlighted = false);
+                CurrentComponent = List.First;
+                CurrentComponent.Value.IsHighlighted = true;
+
                 PlayerViewModel.Play();
             }
         }
@@ -125,19 +136,24 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void HandleTick(object sender, EventArgs e)
         {
-            var position = TimeSpan.FromSeconds(PlayerViewModel.CurrentPosition);
-            var item = Words.LastOrDefault(x => position >= x.StartTime);
-
-            if (item == null)
-                return;
-
-            if (CurrentComponent != null)
+            lock (_lockObject)
             {
-                CurrentComponent.IsHighlighted = false;
-            }
+                var current = CurrentComponent.Value;
+                var currentPosition = PlayerViewModel.CurrentPosition;
+                if (currentPosition <= current.EndTime)
+                    return;
 
-            item.IsHighlighted = true;
-            CurrentComponent = item;
+                while (currentPosition > current.EndTime)
+                {
+                    current.IsHighlighted = false;
+                    CurrentComponent = CurrentComponent.Next;
+                    if (CurrentComponent == null)
+                        break;
+
+                    current = CurrentComponent.Value;
+                    current.IsHighlighted = true;
+                }
+            }
         }
 
         protected override void DisposeInternal()

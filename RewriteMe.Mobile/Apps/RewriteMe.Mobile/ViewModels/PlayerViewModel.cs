@@ -106,11 +106,18 @@ namespace RewriteMe.Mobile.ViewModels
             if (_player == null)
                 throw new InvalidOperationException("Recorder is not loaded");
 
-            Device.StartTimer(TimeSpan.FromSeconds(0.5), UpdatePosition);
+            Device.StartTimer(TimeSpan.FromMilliseconds(500), UpdatePosition1);
 
             _player.Play();
 
             IsPlaying = _player.IsPlaying;
+        }
+
+        private bool UpdatePosition1()
+        {
+            OnTick();
+
+            return _player.IsPlaying;
         }
 
         public void Pause()
@@ -138,7 +145,7 @@ namespace RewriteMe.Mobile.ViewModels
             _audioCurrentProgress = _player.CurrentPosition;
             RaisePropertyChanged(nameof(AudioCurrentProgress));
 
-            OnTick();
+            //OnTick();
 
             return _player.IsPlaying;
         }

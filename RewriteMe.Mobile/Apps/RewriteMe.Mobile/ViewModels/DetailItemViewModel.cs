@@ -113,8 +113,10 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 IsHighlightEnabled = true;
             }
-
-            IsHighlightEnabled = false;
+            else
+            {
+                IsHighlightEnabled = false;
+            }
         }
 
         protected void SetTranscript(string transcript)
