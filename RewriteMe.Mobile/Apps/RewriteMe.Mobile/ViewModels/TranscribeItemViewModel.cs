@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -34,7 +33,6 @@ namespace RewriteMe.Mobile.ViewModels
 
             PlayerViewModel.Tick += HandleTick;
 
-            IsHighlightEnabled = true;
             Words = transcribeItem.Alternatives
                 .SelectMany(x => x.Words)
                 .OrderBy(x => x.StartTimeTicks)
@@ -43,6 +41,7 @@ namespace RewriteMe.Mobile.ViewModels
                     Text = x.Word,
                     StartTime = x.StartTime
                 }).ToList();
+            TrySetIsHighlightEnabled(true);
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
@@ -139,6 +138,13 @@ namespace RewriteMe.Mobile.ViewModels
 
             item.IsHighlighted = true;
             CurrentComponent = item;
+        }
+
+        protected override void DisposeInternal()
+        {
+            base.DisposeInternal();
+
+            PlayerViewModel.Tick -= HandleTick;
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Commands;
@@ -11,13 +12,14 @@ using RewriteMe.Mobile.Controls;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public abstract class DetailItemViewModel<T> : BindableBase
+    public abstract class DetailItemViewModel<T> : BindableBase, IDisposable
     {
         private IEnumerable<WordComponent> _words;
         private bool _isReloadCommandVisible;
         private string _transcript;
         private bool _isDirty;
         private bool _isHighlightEnabled;
+        private bool _disposed;
 
         public event EventHandler IsDirtyChanged;
 
@@ -50,7 +52,7 @@ namespace RewriteMe.Mobile.ViewModels
         public bool IsHighlightEnabled
         {
             get => _isHighlightEnabled;
-            set => SetProperty(ref _isHighlightEnabled, value);
+            private set => SetProperty(ref _isHighlightEnabled, value);
         }
 
         public IEnumerable<WordComponent> Words
@@ -105,6 +107,16 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected abstract void ExecuteReloadCommand();
 
+        protected void TrySetIsHighlightEnabled(bool isHighlightEnabled)
+        {
+            if (isHighlightEnabled && Words != null && Words.Any())
+            {
+                IsHighlightEnabled = true;
+            }
+
+            IsHighlightEnabled = false;
+        }
+
         protected void SetTranscript(string transcript)
         {
             _transcript = transcript;
@@ -114,5 +126,26 @@ namespace RewriteMe.Mobile.ViewModels
         {
             IsDirtyChanged?.Invoke(this, EventArgs.Empty);
         }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                DisposeInternal();
+            }
+
+            _disposed = true;
+        }
+
+        protected virtual void DisposeInternal() { }
     }
 }
