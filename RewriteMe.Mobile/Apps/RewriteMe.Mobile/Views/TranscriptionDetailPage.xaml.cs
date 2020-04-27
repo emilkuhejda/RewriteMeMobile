@@ -1,4 +1,6 @@
-﻿using Xamarin.Forms.Xaml;
+﻿using RewriteMe.Mobile.ViewModels;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace RewriteMe.Mobile.Views
 {
@@ -8,6 +10,15 @@ namespace RewriteMe.Mobile.Views
         public TranscriptionDetailPage()
         {
             InitializeComponent();
+        }
+
+        private void VisualElement_OnFocused(object sender, FocusEventArgs e)
+        {
+            var bindingContext = BindingContext as TranscriptionDetailPageViewModel;
+            if (bindingContext == null)
+                return;
+
+            bindingContext.TapCommand.Execute(this);
         }
     }
 }

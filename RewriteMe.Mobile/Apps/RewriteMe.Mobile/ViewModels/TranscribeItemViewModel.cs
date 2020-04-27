@@ -1,12 +1,17 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi;
+using RewriteMe.Mobile.Controls;
+using RewriteMe.Mobile.Extensions;
+using RewriteMe.Mobile.Navigation;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -15,20 +20,25 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemManager _transcribeItemManager;
+        private readonly INavigationService _navigationService;
         private readonly CancellationToken _cancellationToken;
+        private IEnumerable<LabelComponent> _words;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
             ITranscribeItemManager transcribeItemManager,
-            IDialogService dialogService,
             PlayerViewModel playerViewModel,
+            IDialogService dialogService,
             TranscribeItem transcribeItem,
             CancellationToken cancellationToken)
             : base(playerViewModel, dialogService, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _transcribeItemManager = transcribeItemManager;
+            _navigationService = navigationService;
             _cancellationToken = cancellationToken;
+
+            PlayerViewModel.Tick += HandleTick;
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
@@ -42,6 +52,20 @@ namespace RewriteMe.Mobile.ViewModels
 
             Time = transcribeItem.TimeRange;
             Accuracy = Loc.Text(TranslationKeys.Accuracy, transcribeItem.ToAverageConfidence());
+            Words = transcribeItem.Alternatives
+                .SelectMany(x => x.Words)
+                .OrderBy(x => x.StartTimeTicks)
+                .Select(x => new LabelComponent
+                {
+                    Text = x.Word,
+                    StartTime = x.StartTime
+                }).ToList();
+        }
+
+        public IEnumerable<LabelComponent> Words
+        {
+            get => _words;
+            set => SetProperty(ref _words, value);
         }
 
         protected override void OnTranscriptChanged(string transcript)
@@ -106,6 +130,33 @@ namespace RewriteMe.Mobile.ViewModels
         protected override void ExecuteReloadCommand()
         {
             Transcript = DetailItem.Transcript;
+        }
+
+        protected override async Task ExecuteNavigateToDetailCommandAsync()
+        {
+            var navigationParameters = new NavigationParameters();
+            navigationParameters.Add<TranscribeItem>(DetailItem);
+
+            await _navigationService.NavigateWithoutAnimationAsync(Pages.TranscriptionDetail, navigationParameters).ConfigureAwait(false);
+        }
+
+        private LabelComponent CurrentComponent { get; set; }
+
+        private void HandleTick(object sender, EventArgs e)
+        {
+            var position = TimeSpan.FromSeconds(PlayerViewModel.CurrentPosition);
+            var item = Words.LastOrDefault(x => position >= x.StartTime);
+
+            if (item == null)
+                return;
+
+            if (CurrentComponent != null)
+            {
+                CurrentComponent.IsHighlighted = false;
+            }
+
+            item.IsHighlighted = true;
+            CurrentComponent = item;
         }
     }
 }

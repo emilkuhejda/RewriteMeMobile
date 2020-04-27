@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Grid x:Class="RewriteMe.Mobile.Controls.HighlightedEditor"
+      xmlns="http://xamarin.com/schemas/2014/forms"
+      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+      xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+      xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      x:Name="HighlightedEditorControl"
+      mc:Ignorable="d">
+    <Grid.RowDefinitions>
+        <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Editor x:Name="Editor"
+            Grid.Row="0"
+            AutoSize="TextChanges"
+            Focused="OnFocused"
+            FontSize="{StaticResource MediumSize}"
+            Keyboard="Text"
+            Text="{Binding Text, Source={x:Reference HighlightedEditorControl}}"
+            Unfocused="OnUnfocused"
+            VerticalOptions="Fill" />
+
+    <controls:MultiComponentLabel Grid.Row="0"
+                                  Padding="4,10,4,10"
+                                  BackgroundColor="Transparent"
+                                  Components="{Binding Words, Source={x:Reference HighlightedEditorControl}}"
+                                  InputTransparent="True"
+                                  IsVisible="{Binding IsHighlightEnabled, Source={x:Reference HighlightedEditorControl}}" />
+</Grid>

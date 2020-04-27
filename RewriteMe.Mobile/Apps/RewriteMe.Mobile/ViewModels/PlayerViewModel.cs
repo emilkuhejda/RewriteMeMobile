@@ -20,6 +20,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool _disposed;
 
+        public event EventHandler Tick;
+
         public PlayerViewModel()
         {
             _player = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
@@ -74,6 +76,8 @@ namespace RewriteMe.Mobile.ViewModels
             get => _position;
             set => SetProperty(ref _position, value);
         }
+
+        public double CurrentPosition => _player.CurrentPosition;
 
         public void Load(byte[] data)
         {
@@ -134,6 +138,8 @@ namespace RewriteMe.Mobile.ViewModels
             _audioCurrentProgress = _player.CurrentPosition;
             RaisePropertyChanged(nameof(AudioCurrentProgress));
 
+            OnTick();
+
             return _player.IsPlaying;
         }
 
@@ -152,6 +158,11 @@ namespace RewriteMe.Mobile.ViewModels
         private void HandlePlaybackEnded(object sender, EventArgs e)
         {
             IsPlaying = _player.IsPlaying;
+        }
+
+        private void OnTick()
+        {
+            Tick?.Invoke(this, EventArgs.Empty);
         }
 
         public void Dispose()

@@ -76,6 +76,7 @@
             <Color x:Key="PlayerBackground">#F2F3F4</Color>
             <Color x:Key="DeleteBackground">#DC595F</Color>
             <Color x:Key="RadialMenuSelectionColor">#C7C4C7</Color>
+            <Color x:Key="HighlightedBackgroundColor">LightSkyBlue</Color>
 
             <!--  Font Sizes  -->
             <OnPlatform x:Key="LittleSize"
@@ -138,6 +139,13 @@
                 <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
                 <Setter Property="FontAttributes" Value="None" />
                 <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
+            </Style>
+
+            <Style TargetType="controls:HighlightedSpan">
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
+                <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
             </Style>
 
             <Style TargetType="Label">
@@ -513,6 +521,24 @@
                                 </Grid.GestureRecognizers>
                             </Grid>
 
+                            <Grid BackgroundColor="Transparent"
+                                  HeightRequest="39"
+                                  HorizontalOptions="Start"
+                                  IsVisible="{Binding IsNavigateToDetailCommandVisible}"
+                                  WidthRequest="39">
+                                <forms:SvgCachedImage Margin="0"
+                                                      Aspect="AspectFit"
+                                                      BackgroundColor="Transparent"
+                                                      HeightRequest="30"
+                                                      InputTransparent="True"
+                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Info.svg"
+                                                      VerticalOptions="CenterAndExpand" />
+
+                                <Grid.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
+                                </Grid.GestureRecognizers>
+                            </Grid>
+
                             <Grid Margin="0,0,0,0"
                                   BackgroundColor="Transparent"
                                   HeightRequest="39"
@@ -544,11 +570,16 @@
                                Text="{Binding Accuracy}" />
                     </Grid>
 
-                    <Editor AutoSize="TextChanges"
+                    <!--<Editor AutoSize="TextChanges"
                             FontSize="{StaticResource MediumSize}"
                             Keyboard="Text"
                             Text="{Binding Transcript}"
-                            VerticalOptions="Fill" />
+                            VerticalOptions="Fill" />-->
+
+                    <controls:HighlightedEditor IsHighlightEnabled="True"
+                                                Text="{Binding Transcript}"
+                                                VerticalOptions="Fill"
+                                                Words="{Binding Words}" />
                 </StackLayout>
             </DataTemplate>
 
