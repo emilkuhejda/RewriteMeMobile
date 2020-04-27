@@ -3,7 +3,7 @@ using Prism.Mvvm;
 
 namespace RewriteMe.Mobile.Controls
 {
-    public class LabelComponent : BindableBase
+    public class WordComponent : BindableBase
     {
         private bool _isHighlighted;
 

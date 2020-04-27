@@ -18,7 +18,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemManager _transcribeItemManager;
         private readonly CancellationToken _cancellationToken;
-        private IEnumerable<LabelComponent> _words;
+        private IEnumerable<WordComponent> _words;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
@@ -50,14 +50,14 @@ namespace RewriteMe.Mobile.ViewModels
             Words = transcribeItem.Alternatives
                 .SelectMany(x => x.Words)
                 .OrderBy(x => x.StartTimeTicks)
-                .Select(x => new LabelComponent
+                .Select(x => new WordComponent
                 {
                     Text = x.Word,
                     StartTime = x.StartTime
                 }).ToList();
         }
 
-        public IEnumerable<LabelComponent> Words
+        public IEnumerable<WordComponent> Words
         {
             get => _words;
             set => SetProperty(ref _words, value);
@@ -127,7 +127,7 @@ namespace RewriteMe.Mobile.ViewModels
             Transcript = DetailItem.Transcript;
         }
 
-        private LabelComponent CurrentComponent { get; set; }
+        private WordComponent CurrentComponent { get; set; }
 
         private void HandleTick(object sender, EventArgs e)
         {

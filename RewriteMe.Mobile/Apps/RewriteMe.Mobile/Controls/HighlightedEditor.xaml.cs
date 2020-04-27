@@ -24,7 +24,7 @@ namespace RewriteMe.Mobile.Controls
         public static readonly BindableProperty WordsProperty =
             BindableProperty.Create(
                 nameof(Words),
-                typeof(IEnumerable<LabelComponent>),
+                typeof(IEnumerable<WordComponent>),
                 typeof(HighlightedEditor));
 
         public static readonly BindableProperty IsHighlightEnabledProperty =
@@ -54,9 +54,9 @@ namespace RewriteMe.Mobile.Controls
             set => SetValue(TextProperty, value);
         }
 
-        public IEnumerable<LabelComponent> Words
+        public IEnumerable<WordComponent> Words
         {
-            get => (IEnumerable<LabelComponent>)GetValue(WordsProperty);
+            get => (IEnumerable<WordComponent>)GetValue(WordsProperty);
             set => SetValue(WordsProperty, value);
         }
 

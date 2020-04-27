@@ -8,13 +8,13 @@ namespace RewriteMe.Mobile.Controls
         public static readonly BindableProperty ComponentsProperty =
             BindableProperty.Create(
                 nameof(Components),
-                typeof(IEnumerable<LabelComponent>),
+                typeof(IEnumerable<WordComponent>),
                 typeof(MultiComponentLabel),
                 propertyChanged: OnWordsPropertyChanged);
 
-        public IEnumerable<LabelComponent> Components
+        public IEnumerable<WordComponent> Components
         {
-            get => (IEnumerable<LabelComponent>)GetValue(ComponentsProperty);
+            get => (IEnumerable<WordComponent>)GetValue(ComponentsProperty);
             set => SetValue(ComponentsProperty, value);
         }
 
@@ -33,7 +33,7 @@ namespace RewriteMe.Mobile.Controls
                     BindingContext = component
                 };
 
-                span.SetBinding(HighlightedSpan.IsHighlightedProperty, nameof(LabelComponent.IsHighlighted));
+                span.SetBinding(HighlightedSpan.IsHighlightedProperty, nameof(WordComponent.IsHighlighted));
 
                 formattedString.Spans.Add(span);
             }
