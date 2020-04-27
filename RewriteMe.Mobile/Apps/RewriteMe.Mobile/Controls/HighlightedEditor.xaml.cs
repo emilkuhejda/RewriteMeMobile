@@ -19,7 +19,9 @@ namespace RewriteMe.Mobile.Controls
             BindableProperty.Create(
                 nameof(Text),
                 typeof(string),
-                typeof(HighlightedEditor));
+                typeof(HighlightedEditor),
+                default(string),
+                BindingMode.TwoWay);
 
         public static readonly BindableProperty WordsProperty =
             BindableProperty.Create(
