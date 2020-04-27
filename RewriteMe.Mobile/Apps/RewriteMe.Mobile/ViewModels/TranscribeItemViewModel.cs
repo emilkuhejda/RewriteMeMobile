@@ -18,7 +18,6 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemManager _transcribeItemManager;
         private readonly CancellationToken _cancellationToken;
-        private IEnumerable<WordComponent> _words;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
@@ -35,6 +34,16 @@ namespace RewriteMe.Mobile.ViewModels
 
             PlayerViewModel.Tick += HandleTick;
 
+            IsHighlightEnabled = true;
+            Words = transcribeItem.Alternatives
+                .SelectMany(x => x.Words)
+                .OrderBy(x => x.StartTimeTicks)
+                .Select(x => new WordComponent
+                {
+                    Text = x.Word,
+                    StartTime = x.StartTime
+                }).ToList();
+
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
                 SetTranscript(transcribeItem.UserTranscript);
@@ -47,21 +56,9 @@ namespace RewriteMe.Mobile.ViewModels
 
             Time = transcribeItem.TimeRange;
             Accuracy = Loc.Text(TranslationKeys.Accuracy, transcribeItem.ToAverageConfidence());
-            Words = transcribeItem.Alternatives
-                .SelectMany(x => x.Words)
-                .OrderBy(x => x.StartTimeTicks)
-                .Select(x => new WordComponent
-                {
-                    Text = x.Word,
-                    StartTime = x.StartTime
-                }).ToList();
         }
 
-        public IEnumerable<WordComponent> Words
-        {
-            get => _words;
-            set => SetProperty(ref _words, value);
-        }
+        private WordComponent CurrentComponent { get; set; }
 
         protected override void OnTranscriptChanged(string transcript)
         {
@@ -126,8 +123,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             Transcript = DetailItem.Transcript;
         }
-
-        private WordComponent CurrentComponent { get; set; }
 
         private void HandleTick(object sender, EventArgs e)
         {

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Commands;
@@ -6,14 +7,17 @@ using Prism.Mvvm;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Mobile.Commands;
+using RewriteMe.Mobile.Controls;
 
 namespace RewriteMe.Mobile.ViewModels
 {
     public abstract class DetailItemViewModel<T> : BindableBase
     {
+        private IEnumerable<WordComponent> _words;
         private bool _isReloadCommandVisible;
         private string _transcript;
         private bool _isDirty;
+        private bool _isHighlightEnabled;
 
         public event EventHandler IsDirtyChanged;
 
@@ -26,6 +30,8 @@ namespace RewriteMe.Mobile.ViewModels
             DialogService = dialogService;
             DetailItem = detailItem;
             OperationScope = new AsyncOperationScope();
+
+            IsHighlightEnabled = false;
 
             PlayCommand = new AsyncCommand(ExecutePlayCommandAsync);
             ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
@@ -40,6 +46,18 @@ namespace RewriteMe.Mobile.ViewModels
         public ICommand PlayCommand { get; }
 
         public ICommand ReloadCommand { get; }
+
+        public bool IsHighlightEnabled
+        {
+            get => _isHighlightEnabled;
+            set => SetProperty(ref _isHighlightEnabled, value);
+        }
+
+        public IEnumerable<WordComponent> Words
+        {
+            get => _words;
+            set => SetProperty(ref _words, value);
+        }
 
         public bool IsReloadCommandVisible
         {

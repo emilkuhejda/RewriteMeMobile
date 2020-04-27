@@ -552,13 +552,7 @@
                                Text="{Binding Accuracy}" />
                     </Grid>
 
-                    <!--<Editor AutoSize="TextChanges"
-                            FontSize="{StaticResource MediumSize}"
-                            Keyboard="Text"
-                            Text="{Binding Transcript}"
-                            VerticalOptions="Fill" />-->
-
-                    <controls:HighlightedEditor IsHighlightEnabled="True"
+                    <controls:HighlightedEditor IsHighlightEnabled="{Binding IsHighlightEnabled}"
                                                 Text="{Binding Transcript}"
                                                 VerticalOptions="Fill"
                                                 Words="{Binding Words}" />
