@@ -521,24 +521,6 @@
                                 </Grid.GestureRecognizers>
                             </Grid>
 
-                            <Grid BackgroundColor="Transparent"
-                                  HeightRequest="39"
-                                  HorizontalOptions="Start"
-                                  IsVisible="{Binding IsNavigateToDetailCommandVisible}"
-                                  WidthRequest="39">
-                                <forms:SvgCachedImage Margin="0"
-                                                      Aspect="AspectFit"
-                                                      BackgroundColor="Transparent"
-                                                      HeightRequest="30"
-                                                      InputTransparent="True"
-                                                      Source="resource://RewriteMe.Mobile.Resources.Images.Info.svg"
-                                                      VerticalOptions="CenterAndExpand" />
-
-                                <Grid.GestureRecognizers>
-                                    <TapGestureRecognizer Command="{Binding NavigateToDetailCommand}" />
-                                </Grid.GestureRecognizers>
-                            </Grid>
-
                             <Grid Margin="0,0,0,0"
                                   BackgroundColor="Transparent"
                                   HeightRequest="39"

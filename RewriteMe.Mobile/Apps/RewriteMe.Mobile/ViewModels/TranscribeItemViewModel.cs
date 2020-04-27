@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Mobile.Controls;
-using RewriteMe.Mobile.Extensions;
-using RewriteMe.Mobile.Navigation;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
@@ -20,7 +17,6 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemManager _transcribeItemManager;
-        private readonly INavigationService _navigationService;
         private readonly CancellationToken _cancellationToken;
         private IEnumerable<LabelComponent> _words;
 
@@ -35,7 +31,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _transcribeItemManager = transcribeItemManager;
-            _navigationService = navigationService;
             _cancellationToken = cancellationToken;
 
             PlayerViewModel.Tick += HandleTick;
@@ -130,14 +125,6 @@ namespace RewriteMe.Mobile.ViewModels
         protected override void ExecuteReloadCommand()
         {
             Transcript = DetailItem.Transcript;
-        }
-
-        protected override async Task ExecuteNavigateToDetailCommandAsync()
-        {
-            var navigationParameters = new NavigationParameters();
-            navigationParameters.Add<TranscribeItem>(DetailItem);
-
-            await _navigationService.NavigateWithoutAnimationAsync(Pages.TranscriptionDetail, navigationParameters).ConfigureAwait(false);
         }
 
         private LabelComponent CurrentComponent { get; set; }

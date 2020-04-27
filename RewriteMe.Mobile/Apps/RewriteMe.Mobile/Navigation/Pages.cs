@@ -30,8 +30,6 @@
 
         public static string Detail { get; } = "Detail";
 
-        public static string TranscriptionDetail { get; } = "TranscriptionDetail";
-
         public static string RecordedDetail { get; } = "RecordedDetail";
 
         public static string Settings { get; } = "Settings";
