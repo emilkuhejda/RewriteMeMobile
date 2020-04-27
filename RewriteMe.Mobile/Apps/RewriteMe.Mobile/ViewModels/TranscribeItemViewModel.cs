@@ -33,16 +33,6 @@ namespace RewriteMe.Mobile.ViewModels
             _transcribeItemManager = transcribeItemManager;
             _cancellationToken = cancellationToken;
 
-            Words = transcribeItem.Alternatives
-                .SelectMany(x => x.Words)
-                .OrderBy(x => x.StartTimeTicks)
-                .Select(x => new WordComponent
-                {
-                    Text = x.Word,
-                    EndTime = x.EndTime.TotalSeconds
-                }).ToList();
-            List = new LinkedList<WordComponent>(Words);
-
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
                 SetTranscript(transcribeItem.UserTranscript);
@@ -55,11 +45,13 @@ namespace RewriteMe.Mobile.ViewModels
 
             Time = transcribeItem.TimeRange;
             Accuracy = Loc.Text(TranslationKeys.Accuracy, transcribeItem.ToAverageConfidence());
+
+            InitializeWords(transcribeItem);
         }
 
-        private LinkedListNode<WordComponent> CurrentComponent { get; set; }
+        private WordComponent CurrentComponent { get; set; }
 
-        private LinkedList<WordComponent> List { get; }
+        private bool IsTranscriptChanged => DetailItem.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
 
         protected override void OnTranscriptChanged(string transcript)
         {
@@ -73,10 +65,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteReload()
         {
-            if (string.IsNullOrWhiteSpace(DetailItem.Transcript))
-                return false;
-
-            return !DetailItem.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
+            return !IsTranscriptChanged;
         }
 
         protected override async Task ExecutePlayCommandAsync()
@@ -117,13 +106,18 @@ namespace RewriteMe.Mobile.ViewModels
 
                 PlayerViewModel.Load(transcriptAudioSource.Source);
 
-                TrySetIsHighlightEnabled(true);
+                if (CurrentComponent != null)
+                {
+                    CurrentComponent.IsHighlighted = false;
+                }
 
-                PlayerViewModel.Tick -= HandleTick;
-                PlayerViewModel.Tick += HandleTick;
-                Words.ForEach(x => x.IsHighlighted = false);
-                CurrentComponent = List.First;
-                CurrentComponent.Value.IsHighlighted = true;
+                if (!IsTranscriptChanged)
+                {
+                    TrySetIsHighlightEnabled(true);
+
+                    PlayerViewModel.Tick -= HandleTick;
+                    PlayerViewModel.Tick += HandleTick;
+                }
 
                 PlayerViewModel.Play();
             }
@@ -134,25 +128,47 @@ namespace RewriteMe.Mobile.ViewModels
             Transcript = DetailItem.Transcript;
         }
 
+        private void InitializeWords(TranscribeItem transcribeItem)
+        {
+            if (IsTranscriptChanged)
+                return;
+
+            var groups = transcribeItem.Alternatives
+                .SelectMany(x => x.Words)
+                .OrderBy(x => x.StartTimeTicks)
+                .ToArray()
+                .Split(3);
+
+            var words = new List<WordComponent>();
+            foreach (var enumerable in groups)
+            {
+                var group = enumerable.ToList();
+                words.Add(new WordComponent
+                {
+                    Text = string.Join(" ", group.Select(x => x.Word)),
+                    StartTime = group.First().StartTime.TotalSeconds
+                });
+            }
+
+            Words = words;
+        }
+
         private void HandleTick(object sender, EventArgs e)
         {
             lock (_lockObject)
             {
-                var current = CurrentComponent.Value;
                 var currentPosition = PlayerViewModel.CurrentPosition;
-                if (currentPosition <= current.EndTime)
+                var currentItem = Words.LastOrDefault(x => currentPosition >= x.StartTime);
+                if (currentItem == null)
                     return;
 
-                while (currentPosition > current.EndTime)
+                if (CurrentComponent != null)
                 {
-                    current.IsHighlighted = false;
-                    CurrentComponent = CurrentComponent.Next;
-                    if (CurrentComponent == null)
-                        break;
-
-                    current = CurrentComponent.Value;
-                    current.IsHighlighted = true;
+                    CurrentComponent.IsHighlighted = false;
                 }
+
+                CurrentComponent = currentItem;
+                CurrentComponent.IsHighlighted = true;
             }
         }
 

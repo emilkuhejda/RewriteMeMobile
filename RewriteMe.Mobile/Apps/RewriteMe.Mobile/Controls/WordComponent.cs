@@ -8,7 +8,7 @@ namespace RewriteMe.Mobile.Controls
 
         public string Text { get; set; }
 
-        public double EndTime { get; set; }
+        public double StartTime { get; set; }
 
         public bool IsHighlighted
         {
