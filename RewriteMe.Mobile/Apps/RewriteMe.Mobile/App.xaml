@@ -474,7 +474,7 @@
                         <xForms:SfBusyIndicator Title="{TemplateBinding BindingContext.IndicatorCaption}"
                                                 AnimationType="Gear"
                                                 BackgroundColor="{StaticResource ColorBlack}"
-                                                IsVisible="{TemplateBinding BindingContext.IsDefaultIndicatorVisible}"
+                                                IsBusy="{TemplateBinding BindingContext.IsDefaultIndicatorVisible}"
                                                 Opacity="0.6"
                                                 TextColor="{StaticResource ColorWhite}"
                                                 ViewBoxHeight="50"
