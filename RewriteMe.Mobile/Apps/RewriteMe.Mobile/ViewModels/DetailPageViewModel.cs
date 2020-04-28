@@ -2,6 +2,8 @@
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Prism.Commands;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
@@ -24,6 +26,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ITranscribeItemManager _transcribeItemManager;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
+        private bool _isPopupOpen;
         private double _progress;
         private string _progressText;
 
@@ -48,9 +51,19 @@ namespace RewriteMe.Mobile.ViewModels
             _transcribeItemManager.InitializationProgress += HandleInitializationProgress;
 
             _cancellationTokenSource = new CancellationTokenSource();
+
+            OpenSettingsCommand = new DelegateCommand(ExecuteOpenSettingsCommand);
         }
 
+        public ICommand OpenSettingsCommand { get; }
+
         private FileItem FileItem { get; set; }
+
+        public bool IsPopupOpen
+        {
+            get => _isPopupOpen;
+            set => SetProperty(ref _isPopupOpen, value);
+        }
 
         public double Progress
         {
@@ -118,6 +131,11 @@ namespace RewriteMe.Mobile.ViewModels
             }
 
             await EmailService.SendAsync(string.Empty, FileItem.Name, message.ToString()).ConfigureAwait(false);
+        }
+
+        private void ExecuteOpenSettingsCommand()
+        {
+            IsPopupOpen = !IsPopupOpen;
         }
 
         protected override bool CanExecuteSaveCommand()
