@@ -29,7 +29,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _playerViewModel = playerViewModel;
             _dialogService = dialogService;
-            DetailItem = recordedAudioFile;
+            RecordedFile = recordedAudioFile;
             OperationScope = new AsyncOperationScope();
 
             PlayCommand = new AsyncCommand(ExecutePlayCommandAsync);
@@ -52,7 +52,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand ReloadCommand { get; }
 
-        public RecordedAudioFile DetailItem { get; }
+        public RecordedAudioFile RecordedFile { get; }
 
         public AsyncOperationScope OperationScope { get; }
 
@@ -94,16 +94,16 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(DetailItem.Transcript) && string.IsNullOrWhiteSpace(Transcript))
+                if (string.IsNullOrWhiteSpace(RecordedFile.Transcript) && string.IsNullOrWhiteSpace(Transcript))
                     return false;
 
-                if (string.IsNullOrWhiteSpace(DetailItem.Transcript) && !string.IsNullOrWhiteSpace(Transcript))
+                if (string.IsNullOrWhiteSpace(RecordedFile.Transcript) && !string.IsNullOrWhiteSpace(Transcript))
                     return true;
 
                 if (string.IsNullOrWhiteSpace(Transcript))
                     return false;
 
-                return !DetailItem.Transcript.Equals(Transcript, StringComparison.Ordinal);
+                return !RecordedFile.Transcript.Equals(Transcript, StringComparison.Ordinal);
             }
         }
 
@@ -114,7 +114,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void OnTranscriptChanged(string transcript)
         {
-            DetailItem.UserTranscript = transcript;
+            RecordedFile.UserTranscript = transcript;
         }
 
         private bool CanExecuteReloadCommand()
@@ -131,20 +131,20 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                if (DetailItem.Source == null)
+                if (RecordedFile.Source == null)
                 {
                     await _dialogService.AlertAsync(Loc.Text(TranslationKeys.UnableToLoadAudioFile)).ConfigureAwait(false);
                     return;
                 }
 
-                _playerViewModel.Load(DetailItem.Source);
+                _playerViewModel.Load(RecordedFile.Source);
                 _playerViewModel.Play();
             }
         }
 
         private void ExecuteReloadCommand()
         {
-            Transcript = DetailItem.Transcript;
+            Transcript = RecordedFile.Transcript;
         }
 
         private void OnIsDirtyChanged()

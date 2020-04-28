@@ -128,7 +128,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteSaveCommandAsync()
         {
-            var recordedAudioFileToSave = RecordedFiles.Where(x => x.IsDirty).Select(x => x.DetailItem);
+            var recordedAudioFileToSave = RecordedFiles.Where(x => x.IsDirty).Select(x => x.RecordedFile);
 
             await _recordedItemService.UpdateAudioFilesAsync(recordedAudioFileToSave).ConfigureAwait(false);
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
