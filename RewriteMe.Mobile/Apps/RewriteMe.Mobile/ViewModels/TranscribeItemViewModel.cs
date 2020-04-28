@@ -16,6 +16,8 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class TranscribeItemViewModel : DetailItemViewModel<TranscribeItem>
     {
+        private const int MergeWordsCount = 3;
+
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemManager _transcribeItemManager;
         private readonly CancellationToken _cancellationToken;
@@ -156,7 +158,7 @@ namespace RewriteMe.Mobile.ViewModels
                 .SelectMany(x => x.Words)
                 .OrderBy(x => x.StartTimeTicks)
                 .ToArray()
-                .Split(3);
+                .Split(MergeWordsCount);
 
             var words = new List<WordComponent>();
             foreach (var enumerable in groups)
