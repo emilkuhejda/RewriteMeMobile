@@ -19,8 +19,8 @@
                                    DrawerFooterHeight="0"
                                    DrawerHeaderHeight="0"
                                    DrawerHeight="200"
-                                   EnableSwipeGesture="False"
-                                   IsOpen="{Binding IsPopupOpen}"
+                                   EnableSwipeGesture="True"
+                                   IsOpen="{Binding IsPopupOpen, Mode=TwoWay}"
                                    Position="Bottom"
                                    Transition="SlideOnTop"
                                    Duration="400">
