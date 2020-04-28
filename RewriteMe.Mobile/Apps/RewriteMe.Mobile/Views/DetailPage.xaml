@@ -25,6 +25,7 @@
                                                        BackgroundColor="{StaticResource ColorWhite}"
                                                        HeightRequest="30"
                                                        IsBusy="{Binding OperationScope.IsBusy}"
+                                                       IsVisible="{Binding OperationScope.IsBusy}"
                                                        TextColor="{StaticResource ColorPrimary}"
                                                        ViewBoxHeight="30"
                                                        ViewBoxWidth="30"
