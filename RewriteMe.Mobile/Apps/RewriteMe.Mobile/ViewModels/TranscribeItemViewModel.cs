@@ -105,20 +105,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 PlayerViewModel.Load(transcriptAudioSource.Source);
-
-                if (CurrentComponent != null)
-                {
-                    CurrentComponent.IsHighlighted = false;
-                }
-
-                if (!IsTranscriptChanged)
-                {
-                    TrySetIsHighlightEnabled(true);
-
-                    PlayerViewModel.Tick -= HandleTick;
-                    PlayerViewModel.Tick += HandleTick;
-                }
-
+                TryStartHighlighting();
                 PlayerViewModel.Play();
             }
         }
@@ -128,11 +115,26 @@ namespace RewriteMe.Mobile.ViewModels
             Transcript = DetailItem.Transcript;
         }
 
+        private void TryStartHighlighting()
+        {
+            if (CurrentComponent != null)
+            {
+                CurrentComponent.IsHighlighted = false;
+            }
+
+            if (!IsTranscriptChanged)
+            {
+                TrySetIsHighlightEnabled(true);
+
+                PlayerViewModel.ClearOnStopAction();
+                PlayerViewModel.SetOnStopAction(OnStopAction());
+                PlayerViewModel.Tick -= HandleTick;
+                PlayerViewModel.Tick += HandleTick;
+            }
+        }
+
         private void InitializeWords(TranscribeItem transcribeItem)
         {
-            if (IsTranscriptChanged)
-                return;
-
             var groups = transcribeItem.Alternatives
                 .SelectMany(x => x.Words)
                 .OrderBy(x => x.StartTimeTicks)
@@ -151,6 +153,14 @@ namespace RewriteMe.Mobile.ViewModels
             }
 
             Words = words;
+        }
+
+        private Action OnStopAction()
+        {
+            return () =>
+            {
+                PlayerViewModel.Tick -= HandleTick;
+            };
         }
 
         private void HandleTick(object sender, EventArgs e)
