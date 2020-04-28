@@ -24,7 +24,7 @@ namespace RewriteMe.Mobile.ViewModels
         public event EventHandler IsDirtyChanged;
 
         protected DetailItemViewModel(
-            DetailPageSettingsViewModel settingsViewModel,
+            SettingsViewModel settingsViewModel,
             PlayerViewModel playerViewModel,
             IDialogService dialogService,
             T detailItem)
@@ -42,7 +42,7 @@ namespace RewriteMe.Mobile.ViewModels
             EditorUnFocusedCommand = new DelegateCommand(ExecuteEditorUnFocusedCommand, CanExecuteEditorUnFocusedCommand);
         }
 
-        protected DetailPageSettingsViewModel SettingsViewModel { get; }
+        protected SettingsViewModel SettingsViewModel { get; }
 
         protected PlayerViewModel PlayerViewModel { get; }
 

@@ -10,7 +10,7 @@ namespace RewriteMe.Mobile.ViewModels
     public class RecordedAudioFileViewModel : DetailItemViewModel<RecordedAudioFile>
     {
         public RecordedAudioFileViewModel(
-            DetailPageSettingsViewModel settingsViewModel,
+            SettingsViewModel settingsViewModel,
             PlayerViewModel playerViewModel,
             IDialogService dialogService,
             RecordedAudioFile recordedAudioFile)

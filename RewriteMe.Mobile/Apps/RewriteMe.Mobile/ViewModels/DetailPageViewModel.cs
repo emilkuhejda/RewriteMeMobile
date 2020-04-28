@@ -53,7 +53,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             _cancellationTokenSource = new CancellationTokenSource();
 
-            SettingsViewModel = new DetailPageSettingsViewModel(internalValueService);
+            SettingsViewModel = new SettingsViewModel(internalValueService);
             OpenSettingsCommand = new DelegateCommand(ExecuteOpenSettingsCommand);
         }
 
@@ -61,7 +61,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private FileItem FileItem { get; set; }
 
-        public DetailPageSettingsViewModel SettingsViewModel { get; set; }
+        public SettingsViewModel SettingsViewModel { get; set; }
 
         public bool IsPopupOpen
         {

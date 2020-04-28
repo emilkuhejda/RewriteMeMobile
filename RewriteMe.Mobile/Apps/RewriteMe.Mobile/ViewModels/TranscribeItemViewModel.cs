@@ -26,7 +26,7 @@ namespace RewriteMe.Mobile.ViewModels
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
             ITranscribeItemManager transcribeItemManager,
-            DetailPageSettingsViewModel settingsViewModel,
+            SettingsViewModel settingsViewModel,
             PlayerViewModel playerViewModel,
             IDialogService dialogService,
             TranscribeItem transcribeItem,

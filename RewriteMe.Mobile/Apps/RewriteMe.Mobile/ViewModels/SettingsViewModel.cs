@@ -7,14 +7,14 @@ using RewriteMe.Domain.Interfaces.Services;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class DetailPageSettingsViewModel : BindableBase
+    public class SettingsViewModel : BindableBase
     {
         private readonly IInternalValueService _internalValueService;
         private bool _isHighlightingEnabled;
 
         public event EventHandler SettingsChanged;
 
-        public DetailPageSettingsViewModel(IInternalValueService internalValueService)
+        public SettingsViewModel(IInternalValueService internalValueService)
         {
             _internalValueService = internalValueService;
         }

@@ -29,10 +29,10 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _recordedItemService = recordedItemService;
 
-            SettingsViewModel = new DetailPageSettingsViewModel(internalValueService);
+            SettingsViewModel = new SettingsViewModel(internalValueService);
         }
 
-        public DetailPageSettingsViewModel SettingsViewModel { get; set; }
+        public SettingsViewModel SettingsViewModel { get; set; }
 
         private RecordedItem RecordedItem { get; set; }
 
