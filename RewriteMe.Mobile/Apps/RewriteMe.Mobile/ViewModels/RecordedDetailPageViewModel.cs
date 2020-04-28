@@ -145,7 +145,6 @@ namespace RewriteMe.Mobile.ViewModels
             var message = new StringBuilder();
             foreach (var recordedAudioFile in RecordedFiles)
             {
-                message.AppendLine(recordedAudioFile.Time);
                 message.AppendLine(recordedAudioFile.Transcript);
                 message.AppendLine();
             }

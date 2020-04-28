@@ -196,7 +196,6 @@ namespace RewriteMe.Mobile.ViewModels
             var message = new StringBuilder();
             foreach (var transcribeItem in TranscribeItems)
             {
-                message.AppendLine($"{transcribeItem.Time} {transcribeItem.Accuracy}");
                 message.AppendLine(transcribeItem.Transcript);
                 message.AppendLine().AppendLine();
             }
