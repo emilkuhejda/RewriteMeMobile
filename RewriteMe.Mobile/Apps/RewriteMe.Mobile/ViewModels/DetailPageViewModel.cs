@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,22 +15,27 @@ using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class DetailPageViewModel : DetailBaseViewModel<TranscribeItem>
+    public class DetailPageViewModel : ViewModelBase
     {
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly IFileItemService _fileItemService;
         private readonly ITranscribeItemManager _transcribeItemManager;
+        private readonly IEmailService _emailService;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
+        private IList<DetailItemViewModel<TranscribeItem>> _detailItems;
+        private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _isPopupOpen;
         private double _progress;
         private string _progressText;
+        private bool _notAvailableData;
 
         public DetailPageViewModel(
             ITranscribeItemService transcribeItemService,
@@ -41,27 +48,54 @@ namespace RewriteMe.Mobile.ViewModels
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(emailService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _transcribeItemService = transcribeItemService;
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _fileItemService = fileItemService;
             _transcribeItemManager = transcribeItemManager;
+            _emailService = emailService;
+
+            CanGoBack = true;
+            SettingsViewModel = new SettingsViewModel(internalValueService);
+            PlayerViewModel = new PlayerViewModel();
+
+            DeleteCommand = new AsyncCommand(ExecuteDeleteCommandAsync);
+            OpenSettingsCommand = new DelegateCommand(ExecuteOpenSettingsCommand);
 
             _transcribeItemManager.StateChanged += HandleStateChanged;
             _transcribeItemManager.InitializationProgress += HandleInitializationProgress;
 
             _cancellationTokenSource = new CancellationTokenSource();
-
-            SettingsViewModel = new SettingsViewModel(internalValueService);
-            OpenSettingsCommand = new DelegateCommand(ExecuteOpenSettingsCommand);
         }
+
+        public IAsyncCommand DeleteCommand { get; }
 
         public ICommand OpenSettingsCommand { get; }
 
         private FileItem FileItem { get; set; }
 
         public SettingsViewModel SettingsViewModel { get; set; }
+
+        public PlayerViewModel PlayerViewModel { get; }
+
+        private ActionBarTileViewModel SendTileItem { get; set; }
+
+        private ActionBarTileViewModel SaveTileItem { get; set; }
+
+        public bool IsProgressVisible => _transcribeItemManager.IsRunning;
+
+        public IList<DetailItemViewModel<TranscribeItem>> DetailItems
+        {
+            get => _detailItems;
+            private set => SetProperty(ref _detailItems, value);
+        }
+
+        public IEnumerable<ActionBarTileViewModel> NavigationItems
+        {
+            get => _navigationItems;
+            set => SetProperty(ref _navigationItems, value);
+        }
 
         public bool IsPopupOpen
         {
@@ -81,7 +115,11 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _progressText, value);
         }
 
-        public bool IsProgressVisible => _transcribeItemManager.IsRunning;
+        public bool NotAvailableData
+        {
+            get => _notAvailableData;
+            set => SetProperty(ref _notAvailableData, value);
+        }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
@@ -126,7 +164,35 @@ namespace RewriteMe.Mobile.ViewModels
             return viewModel;
         }
 
-        protected override async Task SendEmailInternal()
+        private IEnumerable<ActionBarTileViewModel> CreateNavigation()
+        {
+            SendTileItem = new ActionBarTileViewModel
+            {
+                Text = Loc.Text(TranslationKeys.Send),
+                IsEnabled = CanExecuteSendCommand(),
+                IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Send-Enabled.svg",
+                IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Send-Disabled.svg",
+                SelectedCommand = new AsyncCommand(ExecuteSendCommandAsync, CanExecuteSendCommand)
+            };
+
+            SaveTileItem = new ActionBarTileViewModel
+            {
+                Text = Loc.Text(TranslationKeys.Save),
+                IsEnabled = CanExecuteSaveCommand(),
+                IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Save-Enabled.svg",
+                IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Save-Disabled.svg",
+                SelectedCommand = new AsyncCommand(ExecuteSaveCommandAsync, CanExecuteSaveCommand)
+            };
+
+            return new[] { SendTileItem, SaveTileItem };
+        }
+
+        private bool CanExecuteSendCommand()
+        {
+            return DetailItems.Any();
+        }
+
+        private async Task ExecuteSendCommandAsync()
         {
             var message = new StringBuilder();
             foreach (var transcribeItem in DetailItems)
@@ -136,20 +202,15 @@ namespace RewriteMe.Mobile.ViewModels
                 message.AppendLine().AppendLine();
             }
 
-            await EmailService.SendAsync(string.Empty, FileItem.Name, message.ToString()).ConfigureAwait(false);
+            await _emailService.SendAsync(string.Empty, FileItem.Name, message.ToString()).ConfigureAwait(false);
         }
 
-        private void ExecuteOpenSettingsCommand()
-        {
-            IsPopupOpen = !IsPopupOpen;
-        }
-
-        protected override bool CanExecuteSaveCommand()
+        private bool CanExecuteSaveCommand()
         {
             return DetailItems.Any(x => x.IsDirty);
         }
 
-        protected override async Task ExecuteSaveCommandAsync()
+        private async Task ExecuteSaveCommandAsync()
         {
             var transcribeItemsToSave = DetailItems.Where(x => x.IsDirty).Select(x => x.DetailItem);
 
@@ -157,7 +218,7 @@ namespace RewriteMe.Mobile.ViewModels
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
         }
 
-        protected override async Task ExecuteDeleteCommandAsync()
+        private async Task ExecuteDeleteCommandAsync()
         {
             var result = await DialogService.ConfirmAsync(
                 Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, FileItem.Name),
@@ -181,6 +242,16 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        private void ExecuteOpenSettingsCommand()
+        {
+            IsPopupOpen = !IsPopupOpen;
+        }
+
+        private void HandleIsDirtyChanged(object sender, EventArgs e)
+        {
+            SaveTileItem.IsEnabled = CanExecuteSaveCommand();
+        }
+
         private void HandleStateChanged(object sender, ManagerStateChangedEventArgs e)
         {
             InitializeProgressLabel();
@@ -201,6 +272,14 @@ namespace RewriteMe.Mobile.ViewModels
             _transcribeItemManager.InitializationProgress -= HandleInitializationProgress;
             _cancellationTokenSource.Cancel();
             _cancellationTokenSource.Dispose();
+
+            DetailItems?.ForEach(x =>
+            {
+                x.IsDirtyChanged -= HandleIsDirtyChanged;
+                x.Dispose();
+            });
+
+            PlayerViewModel?.Dispose();
         }
     }
 }
