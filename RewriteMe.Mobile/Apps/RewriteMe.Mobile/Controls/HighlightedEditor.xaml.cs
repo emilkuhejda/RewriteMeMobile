@@ -35,6 +35,7 @@ namespace RewriteMe.Mobile.Controls
                 typeof(bool),
                 typeof(HighlightedEditor),
                 false,
+                BindingMode.TwoWay,
                 propertyChanged: OnIsHighlightEnabledPropertyChanged);
 
         public HighlightedEditor()

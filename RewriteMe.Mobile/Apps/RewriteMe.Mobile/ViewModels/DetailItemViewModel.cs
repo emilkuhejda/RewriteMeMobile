@@ -55,7 +55,7 @@ namespace RewriteMe.Mobile.ViewModels
         public bool IsHighlightEnabled
         {
             get => _isHighlightEnabled;
-            private set => SetProperty(ref _isHighlightEnabled, value);
+            set => SetProperty(ref _isHighlightEnabled, value);
         }
 
         public IEnumerable<WordComponent> Words

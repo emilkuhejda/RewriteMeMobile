@@ -112,6 +112,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override void ExecuteReloadCommand()
         {
+            TryStartHighlighting();
+
             Transcript = DetailItem.Transcript;
         }
 
