@@ -7,6 +7,7 @@ using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Mobile.Controls;
 using RewriteMe.Resources.Localization;
@@ -49,6 +50,8 @@ namespace RewriteMe.Mobile.ViewModels
             InitializeWords(transcribeItem);
         }
 
+        private TranscriptAudioSource TranscriptAudioSource { get; set; }
+
         private WordComponent CurrentComponent { get; set; }
 
         private bool IsTranscriptChanged => DetailItem.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
@@ -72,8 +75,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                var transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
-                if (transcriptAudioSource == null)
+                TranscriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
+                if (TranscriptAudioSource == null)
                 {
                     var errorMessage = _transcribeItemManager.IsRunning
                         ? Loc.Text(TranslationKeys.SynchronizationInProgressErrorMessage)
@@ -86,25 +89,25 @@ namespace RewriteMe.Mobile.ViewModels
                 if (_cancellationToken.IsCancellationRequested)
                     return;
 
-                if (transcriptAudioSource.Source == null || !transcriptAudioSource.Source.Any())
+                if (TranscriptAudioSource.Source == null || !TranscriptAudioSource.Source.Any())
                 {
-                    var isSuccess = await _transcriptAudioSourceService.RefreshAsync(transcriptAudioSource.Id, transcriptAudioSource.TranscribeItemId, _cancellationToken).ConfigureAwait(false);
+                    var isSuccess = await _transcriptAudioSourceService.RefreshAsync(TranscriptAudioSource.Id, TranscriptAudioSource.TranscribeItemId, _cancellationToken).ConfigureAwait(false);
                     if (isSuccess)
                     {
-                        transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
+                        TranscriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
                     }
                 }
 
                 if (_cancellationToken.IsCancellationRequested)
                     return;
 
-                if (transcriptAudioSource.Source == null || !transcriptAudioSource.Source.Any())
+                if (TranscriptAudioSource.Source == null || !TranscriptAudioSource.Source.Any())
                 {
                     await DialogService.AlertAsync(Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage)).ConfigureAwait(false);
                     return;
                 }
 
-                PlayerViewModel.Load(transcriptAudioSource.Source);
+                PlayerViewModel.Load(TranscriptAudioSource.Id, TranscriptAudioSource.Source);
                 TryStartHighlighting();
                 PlayerViewModel.Play();
             }
@@ -124,6 +127,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void TryStartHighlighting()
         {
+            if (TranscriptAudioSource == null || PlayerViewModel == null || TranscriptAudioSource.Id != PlayerViewModel.SourceIdentifier)
+                return;
+
             if (IsTranscriptChanged)
                 return;
 

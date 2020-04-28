@@ -28,10 +28,14 @@ namespace RewriteMe.Mobile.ViewModels
             _player = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
             _player.PlaybackEnded += HandlePlaybackEnded;
 
+            SourceIdentifier = Guid.Empty;
+
             StartPauseCommand = new DelegateCommand(ExecuteStartPauseCommand);
         }
 
         public ICommand StartPauseCommand { get; }
+
+        public Guid SourceIdentifier { get; private set; }
 
         public bool IsVisible
         {
@@ -88,6 +92,13 @@ namespace RewriteMe.Mobile.ViewModels
         public void ClearOnStopAction()
         {
             _onStopAction = null;
+        }
+
+        public void Load(Guid sourceIdentifier, byte[] data)
+        {
+            SourceIdentifier = sourceIdentifier;
+
+            Load(data);
         }
 
         public void Load(byte[] data)
