@@ -176,6 +176,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             return () =>
             {
+                TrySetIsHighlightEnabled(false);
                 PlayerViewModel.Tick -= HandleTick;
             };
         }
