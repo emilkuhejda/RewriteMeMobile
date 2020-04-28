@@ -35,6 +35,7 @@ namespace RewriteMe.Mobile.ViewModels
             ITranscriptAudioSourceService transcriptAudioSourceService,
             IFileItemService fileItemService,
             ITranscribeItemManager transcribeItemManager,
+            IInternalValueService internalValueService,
             IEmailService emailService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -52,12 +53,15 @@ namespace RewriteMe.Mobile.ViewModels
 
             _cancellationTokenSource = new CancellationTokenSource();
 
+            Settings = new DetailPageSettingsViewModel(internalValueService);
             OpenSettingsCommand = new DelegateCommand(ExecuteOpenSettingsCommand);
         }
 
         public ICommand OpenSettingsCommand { get; }
 
         private FileItem FileItem { get; set; }
+
+        public DetailPageSettingsViewModel Settings { get; set; }
 
         public bool IsPopupOpen
         {
@@ -83,6 +87,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                await Settings.InitializeAsync().ConfigureAwait(false);
                 InitializeProgressLabel();
 
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)

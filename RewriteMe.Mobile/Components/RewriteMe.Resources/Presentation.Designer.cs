@@ -304,6 +304,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Highlighting.
+        /// </summary>
+        public static string Highlighting {
+            get {
+                return ResourceManager.GetString("Highlighting", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment method is not supported. Please configure it first..
         /// </summary>
         public static string InAppBillingIsNotSupportedErrorMessage {

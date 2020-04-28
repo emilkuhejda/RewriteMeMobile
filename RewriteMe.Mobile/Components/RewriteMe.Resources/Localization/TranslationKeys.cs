@@ -84,6 +84,7 @@
         public static string NoRecordingsMessage => "NoRecordingsMessage";
         public static string DeleteUserAccountMessage => "DeleteUserAccountMessage";
         public static string Accuracy => "Accuracy";
+        public static string Highlighting => "Highlighting";
 
         public static string UnauthorizedErrorMessage => "UnauthorizedErrorMessage";
         public static string FileItemSourceDatabaseUpdateErrorMessage => "FileItemSourceDatabaseUpdateErrorMessage";

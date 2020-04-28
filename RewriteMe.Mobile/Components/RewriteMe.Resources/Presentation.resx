@@ -346,6 +346,9 @@
   <data name="Accuracy" xml:space="preserve">
     <value>({0}% accuracy)</value>
   </data>
+  <data name="Highlighting" xml:space="preserve">
+    <value>Highlighting</value>
+  </data>
   
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>You don't have a permission to upload a file. Please try again later.</value>

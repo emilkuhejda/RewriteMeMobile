@@ -2,6 +2,7 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.DetailPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
@@ -14,15 +15,35 @@
 
     <xForms:SfNavigationDrawer>
         <xForms:SfNavigationDrawer.SecondaryDrawerSettings>
-            <xForms:DrawerSettings ContentBackgroundColor="{StaticResource ColorGrey300}"
-                                   DrawerFooterHeight="40"
-                                   DrawerHeaderHeight="40"
-                                   DrawerHeight="300"
+            <xForms:DrawerSettings ContentBackgroundColor="{StaticResource ColorGrey200}"
+                                   DrawerFooterHeight="0"
+                                   DrawerHeaderHeight="0"
+                                   DrawerHeight="200"
                                    EnableSwipeGesture="False"
                                    IsOpen="{Binding IsPopupOpen}"
                                    Position="Bottom"
                                    Transition="SlideOnTop"
-                                   Duration="400" />
+                                   Duration="400">
+                <xForms:DrawerSettings.DrawerContentView>
+                    <Grid Padding="{StaticResource StandardPadding}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Highlighting}}" />
+                        <buttons:SfSwitch Grid.Row="0"
+                                          Grid.Column="1"
+                                          AllowIndeterminateState="False"
+                                          IsOn="{Binding Settings.IsHighlightingEnabled}" />
+                    </Grid>
+                </xForms:DrawerSettings.DrawerContentView>
+            </xForms:DrawerSettings>
         </xForms:SfNavigationDrawer.SecondaryDrawerSettings>
         <xForms:SfNavigationDrawer.ContentView>
             <Grid>
