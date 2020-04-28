@@ -53,7 +53,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _transcript, value))
                 {
-                    OnTranscriptChanged(value);
+                    RecordedFile.UserTranscript = value;
                     IsReloadCommandVisible = CanExecuteReloadCommand();
                     IsDirty = true;
                 }
@@ -99,33 +99,18 @@ namespace RewriteMe.Mobile.ViewModels
         {
             if (!string.IsNullOrWhiteSpace(RecordedFile.UserTranscript))
             {
-                SetTranscript(RecordedFile.UserTranscript);
-                IsReloadCommandVisible = CanExecuteReload();
+                _transcript = RecordedFile.UserTranscript;
+                IsReloadCommandVisible = CanExecuteReloadCommand();
             }
             else
             {
-                SetTranscript(RecordedFile.Transcript);
+                _transcript = RecordedFile.Transcript;
             }
 
             Time = RecordedFile.TimeRange;
         }
 
-        protected void SetTranscript(string transcript)
-        {
-            _transcript = transcript;
-        }
-
-        private void OnTranscriptChanged(string transcript)
-        {
-            RecordedFile.UserTranscript = transcript;
-        }
-
         private bool CanExecuteReloadCommand()
-        {
-            return CanExecuteReload();
-        }
-
-        private bool CanExecuteReload()
         {
             return IsTranscriptChanged;
         }

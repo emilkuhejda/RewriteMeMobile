@@ -211,7 +211,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task ExecuteSaveCommandAsync()
         {
-            var transcribeItemsToSave = TranscribeItems.Where(x => x.IsDirty).Select(x => x.DetailItem);
+            var transcribeItemsToSave = TranscribeItems.Where(x => x.IsDirty).Select(x => x.TranscribeItem);
 
             await _transcribeItemService.SaveAndSendAsync(transcribeItemsToSave).ConfigureAwait(false);
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);

@@ -58,7 +58,7 @@ namespace RewriteMe.Mobile.ViewModels
             _dialogService = dialogService;
             _cancellationToken = cancellationToken;
 
-            DetailItem = transcribeItem;
+            TranscribeItem = transcribeItem;
             OperationScope = new AsyncOperationScope();
             IsHighlightingEnabled = false;
 
@@ -77,7 +77,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand EditorUnFocusedCommand { get; }
 
-        public TranscribeItem DetailItem { get; }
+        public TranscribeItem TranscribeItem { get; }
 
         public string Time { get; protected set; }
 
@@ -108,7 +108,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _transcript, value))
                 {
-                    OnTranscriptChanged(value);
+                    TranscribeItem.UserTranscript = value;
                     IsReloadCommandVisible = CanExecuteReloadCommand();
                     IsDirty = true;
                 }
@@ -131,35 +131,35 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(DetailItem.Transcript) && string.IsNullOrWhiteSpace(DetailItem.UserTranscript))
+                if (string.IsNullOrWhiteSpace(TranscribeItem.Transcript) && string.IsNullOrWhiteSpace(TranscribeItem.UserTranscript))
                     return false;
 
-                if (string.IsNullOrWhiteSpace(DetailItem.Transcript) && !string.IsNullOrWhiteSpace(DetailItem.UserTranscript))
+                if (string.IsNullOrWhiteSpace(TranscribeItem.Transcript) && !string.IsNullOrWhiteSpace(TranscribeItem.UserTranscript))
                     return true;
 
-                if (string.IsNullOrWhiteSpace(DetailItem.UserTranscript))
+                if (string.IsNullOrWhiteSpace(TranscribeItem.UserTranscript))
                     return false;
 
-                return !DetailItem.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
+                return !TranscribeItem.Transcript.Equals(TranscribeItem.UserTranscript, StringComparison.Ordinal);
             }
         }
 
         public void Initialize()
         {
-            if (!string.IsNullOrWhiteSpace(DetailItem.UserTranscript))
+            if (!string.IsNullOrWhiteSpace(TranscribeItem.UserTranscript))
             {
-                SetTranscript(DetailItem.UserTranscript);
+                _transcript = TranscribeItem.UserTranscript;
                 IsReloadCommandVisible = CanExecuteReloadCommand();
             }
-            else if (!string.IsNullOrWhiteSpace(DetailItem.Transcript))
+            else if (!string.IsNullOrWhiteSpace(TranscribeItem.Transcript))
             {
-                SetTranscript(DetailItem.Transcript);
+                _transcript = TranscribeItem.Transcript;
             }
 
-            Time = DetailItem.TimeRange;
-            Accuracy = Loc.Text(TranslationKeys.Accuracy, DetailItem.ToAverageConfidence());
+            Time = TranscribeItem.TimeRange;
+            Accuracy = Loc.Text(TranslationKeys.Accuracy, TranscribeItem.ToAverageConfidence());
 
-            InitializeWords(DetailItem);
+            InitializeWords(TranscribeItem);
         }
 
         private void InitializeWords(TranscribeItem transcribeItem)
@@ -188,7 +188,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                _transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
+                _transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(TranscribeItem.Id).ConfigureAwait(false);
                 if (_transcriptAudioSource == null)
                 {
                     var errorMessage = _transcribeItemManager.IsRunning
@@ -207,7 +207,7 @@ namespace RewriteMe.Mobile.ViewModels
                     var isSuccess = await _transcriptAudioSourceService.RefreshAsync(_transcriptAudioSource.Id, _transcriptAudioSource.TranscribeItemId, _cancellationToken).ConfigureAwait(false);
                     if (isSuccess)
                     {
-                        _transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
+                        _transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(TranscribeItem.Id).ConfigureAwait(false);
                     }
                 }
 
@@ -233,7 +233,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void ExecuteReloadCommand()
         {
-            Transcript = DetailItem.Transcript;
+            Transcript = TranscribeItem.Transcript;
 
             TryStartHighlighting();
         }
@@ -246,11 +246,6 @@ namespace RewriteMe.Mobile.ViewModels
         private void ExecuteEditorUnFocusedCommand()
         {
             TryStartHighlighting();
-        }
-
-        private void OnTranscriptChanged(string transcript)
-        {
-            DetailItem.UserTranscript = transcript;
         }
 
         private void TryStartHighlighting()
@@ -267,11 +262,6 @@ namespace RewriteMe.Mobile.ViewModels
             _playerViewModel.SetOnStopAction(OnStopAction());
             _playerViewModel.Tick -= HandleTick;
             _playerViewModel.Tick += HandleTick;
-        }
-
-        private void SetTranscript(string transcript)
-        {
-            _transcript = transcript;
         }
 
         private Action OnStopAction()
