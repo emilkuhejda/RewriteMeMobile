@@ -106,11 +106,10 @@ namespace RewriteMe.Mobile.ViewModels
             if (_player == null)
                 return;
 
+            _onStopAction?.Invoke();
+
             if (_player.IsPlaying)
-            {
-                _onStopAction?.Invoke();
                 _player.Stop();
-            }
 
             if (data == null)
                 return;

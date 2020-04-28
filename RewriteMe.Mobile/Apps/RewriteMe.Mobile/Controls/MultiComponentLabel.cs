@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Controls
@@ -21,24 +22,31 @@ namespace RewriteMe.Mobile.Controls
         private static void OnWordsPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             var multiComponentLabel = bindable as MultiComponentLabel;
-            if (multiComponentLabel?.Components == null)
+            if (multiComponentLabel == null)
                 return;
 
-            var formattedString = new FormattedString();
-            foreach (var component in multiComponentLabel.Components)
+            if (multiComponentLabel.Components == null || !multiComponentLabel.Components.Any())
             {
-                var span = new HighlightedSpan
-                {
-                    Text = $"{component.Text} ",
-                    BindingContext = component
-                };
-
-                span.SetBinding(HighlightedSpan.IsHighlightedProperty, nameof(WordComponent.IsHighlighted));
-
-                formattedString.Spans.Add(span);
+                multiComponentLabel.FormattedText = default;
             }
+            else
+            {
+                var formattedString = new FormattedString();
+                foreach (var component in multiComponentLabel.Components)
+                {
+                    var span = new HighlightedSpan
+                    {
+                        Text = $"{component.Text} ",
+                        BindingContext = component
+                    };
 
-            multiComponentLabel.FormattedText = formattedString;
+                    span.SetBinding(HighlightedSpan.IsHighlightedProperty, nameof(WordComponent.IsHighlighted));
+
+                    formattedString.Spans.Add(span);
+                }
+
+                multiComponentLabel.FormattedText = formattedString;
+            }
         }
     }
 }
