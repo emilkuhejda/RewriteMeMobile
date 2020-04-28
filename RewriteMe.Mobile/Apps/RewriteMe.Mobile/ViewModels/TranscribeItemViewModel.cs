@@ -262,13 +262,13 @@ namespace RewriteMe.Mobile.ViewModels
 
             TrySetIsHighlightingEnabled(true);
 
-            _playerViewModel.ClearOnStopAction();
-            _playerViewModel.SetOnStopAction(OnStopAction());
+            _playerViewModel.ClearOnSourceLoadAction();
+            _playerViewModel.SetOnSourceLoadAction(OnSourceLoadAction());
             _playerViewModel.Tick -= HandleTick;
             _playerViewModel.Tick += HandleTick;
         }
 
-        private Action OnStopAction()
+        private Action OnSourceLoadAction()
         {
             return () =>
             {
