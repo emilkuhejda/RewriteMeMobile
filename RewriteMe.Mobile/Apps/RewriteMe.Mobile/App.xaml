@@ -76,6 +76,7 @@
             <Color x:Key="PlayerBackground">#F2F3F4</Color>
             <Color x:Key="DeleteBackground">#DC595F</Color>
             <Color x:Key="RadialMenuSelectionColor">#C7C4C7</Color>
+            <Color x:Key="HighlightedBackgroundColor">LightSkyBlue</Color>
 
             <!--  Font Sizes  -->
             <OnPlatform x:Key="LittleSize"
@@ -138,6 +139,13 @@
                 <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
                 <Setter Property="FontAttributes" Value="None" />
                 <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
+            </Style>
+
+            <Style TargetType="controls:HighlightedSpan">
+                <Setter Property="FontSize" Value="{StaticResource MediumSize}" />
+                <Setter Property="FontAttributes" Value="None" />
+                <Setter Property="FontFamily" Value="{StaticResource FontFamilyQuicksandRegular}" />
+                <Setter Property="TextColor" Value="{StaticResource PrimaryTextColor}" />
             </Style>
 
             <Style TargetType="Label">
@@ -544,11 +552,11 @@
                                Text="{Binding Accuracy}" />
                     </Grid>
 
-                    <Editor AutoSize="TextChanges"
-                            FontSize="{StaticResource MediumSize}"
-                            Keyboard="Text"
-                            Text="{Binding Transcript}"
-                            VerticalOptions="Fill" />
+                    <controls:HighlightedEditor EditorUnFocusedCommand="{Binding EditorUnFocusedCommand}"
+                                                IsHighlightingEnabled="{Binding IsHighlightingEnabled}"
+                                                Text="{Binding Transcript}"
+                                                VerticalOptions="Fill"
+                                                Words="{Binding Words}" />
                 </StackLayout>
             </DataTemplate>
 

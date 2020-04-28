@@ -17,3 +17,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Mobile.Transcription.PickedFile.Source")]
 [assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Mobile.Navigation.Parameters.ImportedFileNavigationParameters.Source")]
 [assembly: SuppressMessage("Reliability", "CA2000:Dispose objects before losing scope", Justification = "By design", Scope = "member", Target = "~M:RewriteMe.Mobile.App.CreateContainerExtension~Prism.Ioc.IContainerExtension")]
+[assembly: SuppressMessage("Design", "CA1063:Implement IDisposable Correctly", Justification = "By design", Scope = "member", Target = "~M:RewriteMe.Mobile.ViewModels.DetailItemViewModel`1.Dispose(System.Boolean)")]

@@ -98,8 +98,8 @@ namespace RewriteMe.Mobile.ViewModels
             var viewModel = new TranscribeItemViewModel(
                 _transcriptAudioSourceService,
                 _transcribeItemManager,
-                DialogService,
                 PlayerViewModel,
+                DialogService,
                 detailItem,
                 _cancellationTokenSource.Token);
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
