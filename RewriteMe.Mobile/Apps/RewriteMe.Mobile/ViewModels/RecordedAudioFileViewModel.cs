@@ -48,11 +48,14 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(Transcript))
-                    return !string.IsNullOrWhiteSpace(DetailItem.Transcript);
+                if (string.IsNullOrWhiteSpace(DetailItem.Transcript) && string.IsNullOrWhiteSpace(Transcript))
+                    return false;
 
-                if (string.IsNullOrWhiteSpace(DetailItem.Transcript))
-                    return !string.IsNullOrWhiteSpace(Transcript);
+                if (string.IsNullOrWhiteSpace(DetailItem.Transcript) && !string.IsNullOrWhiteSpace(Transcript))
+                    return true;
+
+                if (string.IsNullOrWhiteSpace(Transcript))
+                    return false;
 
                 return !DetailItem.Transcript.Equals(Transcript, StringComparison.Ordinal);
             }
