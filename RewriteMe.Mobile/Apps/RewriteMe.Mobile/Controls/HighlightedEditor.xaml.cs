@@ -12,7 +12,7 @@ namespace RewriteMe.Mobile.Controls
         public static readonly BindableProperty EditorUnFocusedCommandProperty =
             BindableProperty.Create(
                 nameof(EditorUnFocusedCommand),
-                typeof(string),
+                typeof(ICommand),
                 typeof(HighlightedEditor));
 
         public static readonly BindableProperty TextProperty =

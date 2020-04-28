@@ -37,6 +37,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             PlayCommand = new AsyncCommand(ExecutePlayCommandAsync);
             ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
+            EditorUnFocusedCommand = new DelegateCommand(ExecuteEditorUnFocusedCommand, CanExecuteEditorUnFocusedCommand);
         }
 
         protected PlayerViewModel PlayerViewModel { get; }
@@ -48,6 +49,8 @@ namespace RewriteMe.Mobile.ViewModels
         public ICommand PlayCommand { get; }
 
         public ICommand ReloadCommand { get; }
+
+        public ICommand EditorUnFocusedCommand { get; }
 
         public bool IsHighlightEnabled
         {
@@ -106,6 +109,13 @@ namespace RewriteMe.Mobile.ViewModels
         protected abstract Task ExecutePlayCommandAsync();
 
         protected abstract void ExecuteReloadCommand();
+
+        protected bool CanExecuteEditorUnFocusedCommand()
+        {
+            return IsHighlightEnabled;
+        }
+
+        protected abstract void ExecuteEditorUnFocusedCommand();
 
         protected void TrySetIsHighlightEnabled(bool isHighlightEnabled)
         {

@@ -115,22 +115,22 @@ namespace RewriteMe.Mobile.ViewModels
             Transcript = DetailItem.Transcript;
         }
 
+        protected override void ExecuteEditorUnFocusedCommand()
+        {
+            TryStartHighlighting();
+        }
+
         private void TryStartHighlighting()
         {
-            if (CurrentComponent != null)
-            {
-                CurrentComponent.IsHighlighted = false;
-            }
+            if (IsTranscriptChanged)
+                return;
 
-            if (!IsTranscriptChanged)
-            {
-                TrySetIsHighlightEnabled(true);
+            TrySetIsHighlightEnabled(true);
 
-                PlayerViewModel.ClearOnStopAction();
-                PlayerViewModel.SetOnStopAction(OnStopAction());
-                PlayerViewModel.Tick -= HandleTick;
-                PlayerViewModel.Tick += HandleTick;
-            }
+            PlayerViewModel.ClearOnStopAction();
+            PlayerViewModel.SetOnStopAction(OnStopAction());
+            PlayerViewModel.Tick -= HandleTick;
+            PlayerViewModel.Tick += HandleTick;
         }
 
         private void InitializeWords(TranscribeItem transcribeItem)

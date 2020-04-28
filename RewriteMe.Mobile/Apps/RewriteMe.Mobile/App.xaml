@@ -552,7 +552,8 @@
                                Text="{Binding Accuracy}" />
                     </Grid>
 
-                    <controls:HighlightedEditor IsHighlightEnabled="{Binding IsHighlightEnabled}"
+                    <controls:HighlightedEditor EditorUnFocusedCommand="{Binding EditorUnFocusedCommand}"
+                                                IsHighlightEnabled="{Binding IsHighlightEnabled}"
                                                 Text="{Binding Transcript}"
                                                 VerticalOptions="Fill"
                                                 Words="{Binding Words}" />

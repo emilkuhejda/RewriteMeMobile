@@ -56,13 +56,15 @@ namespace RewriteMe.Mobile.ViewModels
                 PlayerViewModel.Load(DetailItem.Source);
                 PlayerViewModel.Play();
             }
-
-            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         protected override void ExecuteReloadCommand()
         {
             Transcript = DetailItem.Transcript;
+        }
+
+        protected override void ExecuteEditorUnFocusedCommand()
+        {
         }
     }
 }
