@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,22 +15,31 @@ using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class DetailPageViewModel : DetailBaseViewModel<TranscribeItem>
+    public class DetailPageViewModel : ViewModelBase
     {
         private readonly ITranscribeItemService _transcribeItemService;
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly IFileItemService _fileItemService;
         private readonly ITranscribeItemManager _transcribeItemManager;
+        private readonly IEmailService _emailService;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
+        private FileItem _fileItem;
+        private ActionBarTileViewModel _sendTileItem;
+        private ActionBarTileViewModel _saveTileItem;
+
+        private IList<TranscribeItemViewModel> _transcribeItems;
+        private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _isPopupOpen;
         private double _progress;
         private string _progressText;
+        private bool _notAvailableData;
 
         public DetailPageViewModel(
             ITranscribeItemService transcribeItemService,
@@ -41,27 +52,48 @@ namespace RewriteMe.Mobile.ViewModels
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(emailService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _transcribeItemService = transcribeItemService;
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _fileItemService = fileItemService;
             _transcribeItemManager = transcribeItemManager;
+            _emailService = emailService;
+
+            CanGoBack = true;
+            SettingsViewModel = new SettingsViewModel(internalValueService);
+            PlayerViewModel = new PlayerViewModel();
+
+            DeleteCommand = new AsyncCommand(ExecuteDeleteCommandAsync);
+            OpenSettingsCommand = new DelegateCommand(ExecuteOpenSettingsCommand);
 
             _transcribeItemManager.StateChanged += HandleStateChanged;
             _transcribeItemManager.InitializationProgress += HandleInitializationProgress;
 
             _cancellationTokenSource = new CancellationTokenSource();
-
-            SettingsViewModel = new SettingsViewModel(internalValueService);
-            OpenSettingsCommand = new DelegateCommand(ExecuteOpenSettingsCommand);
         }
+
+        public IAsyncCommand DeleteCommand { get; }
 
         public ICommand OpenSettingsCommand { get; }
 
-        private FileItem FileItem { get; set; }
-
         public SettingsViewModel SettingsViewModel { get; set; }
+
+        public PlayerViewModel PlayerViewModel { get; }
+
+        public bool IsProgressVisible => _transcribeItemManager.IsRunning;
+
+        public IList<TranscribeItemViewModel> TranscribeItems
+        {
+            get => _transcribeItems;
+            private set => SetProperty(ref _transcribeItems, value);
+        }
+
+        public IEnumerable<ActionBarTileViewModel> NavigationItems
+        {
+            get => _navigationItems;
+            set => SetProperty(ref _navigationItems, value);
+        }
 
         public bool IsPopupOpen
         {
@@ -81,7 +113,11 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _progressText, value);
         }
 
-        public bool IsProgressVisible => _transcribeItemManager.IsRunning;
+        public bool NotAvailableData
+        {
+            get => _notAvailableData;
+            set => SetProperty(ref _notAvailableData, value);
+        }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
@@ -92,14 +128,14 @@ namespace RewriteMe.Mobile.ViewModels
 
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
-                    FileItem = navigationParameters.GetValue<FileItem>();
+                    _fileItem = navigationParameters.GetValue<FileItem>();
 
-                    var transcribeItems = await _transcribeItemService.GetAllAsync(FileItem.Id).ConfigureAwait(false);
+                    var transcribeItems = await _transcribeItemService.GetAllAsync(_fileItem.Id).ConfigureAwait(false);
 
-                    DetailItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
-                    DetailItems = transcribeItems.OrderBy(x => x.StartTime).Select(CreateDetailItemViewModel).ToList();
+                    TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
+                    TranscribeItems = transcribeItems.OrderBy(x => x.StartTime).Select(CreateTranscribeItemViewModel).ToList();
 
-                    NotAvailableData = !DetailItems.Any();
+                    NotAvailableData = !TranscribeItems.Any();
                 }
 
                 NavigationItems = CreateNavigation();
@@ -111,7 +147,7 @@ namespace RewriteMe.Mobile.ViewModels
             ProgressText = Loc.Text(TranslationKeys.Downloading, 0);
         }
 
-        private DetailItemViewModel<TranscribeItem> CreateDetailItemViewModel(TranscribeItem detailItem)
+        private TranscribeItemViewModel CreateTranscribeItemViewModel(TranscribeItem detailItem)
         {
             var viewModel = new TranscribeItemViewModel(
                 _transcriptAudioSourceService,
@@ -121,46 +157,70 @@ namespace RewriteMe.Mobile.ViewModels
                 DialogService,
                 detailItem,
                 _cancellationTokenSource.Token);
+            viewModel.Initialize();
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
             return viewModel;
         }
 
-        protected override async Task SendEmailInternal()
+        private IEnumerable<ActionBarTileViewModel> CreateNavigation()
+        {
+            _sendTileItem = new ActionBarTileViewModel
+            {
+                Text = Loc.Text(TranslationKeys.Send),
+                IsEnabled = CanExecuteSendCommand(),
+                IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Send-Enabled.svg",
+                IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Send-Disabled.svg",
+                SelectedCommand = new AsyncCommand(ExecuteSendCommandAsync, CanExecuteSendCommand)
+            };
+
+            _saveTileItem = new ActionBarTileViewModel
+            {
+                Text = Loc.Text(TranslationKeys.Save),
+                IsEnabled = CanExecuteSaveCommand(),
+                IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Save-Enabled.svg",
+                IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Save-Disabled.svg",
+                SelectedCommand = new AsyncCommand(ExecuteSaveCommandAsync, CanExecuteSaveCommand)
+            };
+
+            return new[] { _sendTileItem, _saveTileItem };
+        }
+
+        private bool CanExecuteSendCommand()
+        {
+            return TranscribeItems.Any();
+        }
+
+        private async Task ExecuteSendCommandAsync()
         {
             var message = new StringBuilder();
-            foreach (var transcribeItem in DetailItems)
+            foreach (var transcribeItem in TranscribeItems)
             {
                 message.AppendLine($"{transcribeItem.Time} {transcribeItem.Accuracy}");
                 message.AppendLine(transcribeItem.Transcript);
                 message.AppendLine().AppendLine();
             }
 
-            await EmailService.SendAsync(string.Empty, FileItem.Name, message.ToString()).ConfigureAwait(false);
+            await _emailService.SendAsync(string.Empty, _fileItem.Name, message.ToString()).ConfigureAwait(false);
         }
 
-        private void ExecuteOpenSettingsCommand()
+        private bool CanExecuteSaveCommand()
         {
-            IsPopupOpen = !IsPopupOpen;
+            return TranscribeItems.Any(x => x.IsDirty);
         }
 
-        protected override bool CanExecuteSaveCommand()
+        private async Task ExecuteSaveCommandAsync()
         {
-            return DetailItems.Any(x => x.IsDirty);
-        }
-
-        protected override async Task ExecuteSaveCommandAsync()
-        {
-            var transcribeItemsToSave = DetailItems.Where(x => x.IsDirty).Select(x => x.DetailItem);
+            var transcribeItemsToSave = TranscribeItems.Where(x => x.IsDirty).Select(x => x.TranscribeItem);
 
             await _transcribeItemService.SaveAndSendAsync(transcribeItemsToSave).ConfigureAwait(false);
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
         }
 
-        protected override async Task ExecuteDeleteCommandAsync()
+        private async Task ExecuteDeleteCommandAsync()
         {
             var result = await DialogService.ConfirmAsync(
-                Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, FileItem.Name),
+                Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, _fileItem.Name),
                 okText: Loc.Text(TranslationKeys.Ok),
                 cancelText: Loc.Text(TranslationKeys.Cancel)).ConfigureAwait(false);
 
@@ -170,7 +230,7 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     try
                     {
-                        await _fileItemService.DeleteAsync(FileItem).ConfigureAwait(false);
+                        await _fileItemService.DeleteAsync(_fileItem).ConfigureAwait(false);
                         await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                     }
                     catch (FileNotUploadedException)
@@ -179,6 +239,16 @@ namespace RewriteMe.Mobile.ViewModels
                     }
                 }
             }
+        }
+
+        private void ExecuteOpenSettingsCommand()
+        {
+            IsPopupOpen = !IsPopupOpen;
+        }
+
+        private void HandleIsDirtyChanged(object sender, EventArgs e)
+        {
+            _saveTileItem.IsEnabled = CanExecuteSaveCommand();
         }
 
         private void HandleStateChanged(object sender, ManagerStateChangedEventArgs e)
@@ -201,6 +271,14 @@ namespace RewriteMe.Mobile.ViewModels
             _transcribeItemManager.InitializationProgress -= HandleInitializationProgress;
             _cancellationTokenSource.Cancel();
             _cancellationTokenSource.Dispose();
+
+            TranscribeItems?.ForEach(x =>
+            {
+                x.IsDirtyChanged -= HandleIsDirtyChanged;
+                x.Dispose();
+            });
+
+            PlayerViewModel?.Dispose();
         }
     }
 }

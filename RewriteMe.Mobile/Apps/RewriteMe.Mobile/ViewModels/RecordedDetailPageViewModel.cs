@@ -1,4 +1,6 @@
-﻿using System.Linq;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Prism.Navigation;
@@ -7,50 +9,79 @@ using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Logging.Interfaces;
+using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Extensions;
 using RewriteMe.Resources.Localization;
 using RewriteMe.Resources.Utils;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class RecordedDetailPageViewModel : DetailBaseViewModel<RecordedAudioFile>
+    public class RecordedDetailPageViewModel : ViewModelBase
     {
         private readonly IRecordedItemService _recordedItemService;
+        private readonly IEmailService _emailService;
+
+        private RecordedItem _recordedItem;
+        private ActionBarTileViewModel _sendTileItem;
+        private ActionBarTileViewModel _saveTileItem;
+
+        private IList<RecordedAudioFileViewModel> _recordedFiles;
+        private IEnumerable<ActionBarTileViewModel> _navigationItems;
+        private bool _notAvailableData;
 
         public RecordedDetailPageViewModel(
             IRecordedItemService recordedItemService,
-            IInternalValueService internalValueService,
             IEmailService emailService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
             ILoggerFactory loggerFactory)
-            : base(emailService, userSessionService, dialogService, navigationService, loggerFactory)
+            : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
+            _emailService = emailService;
 
-            SettingsViewModel = new SettingsViewModel(internalValueService);
+            CanGoBack = true;
+            PlayerViewModel = new PlayerViewModel();
+
+            DeleteCommand = new AsyncCommand(ExecuteDeleteCommandAsync);
         }
 
-        public SettingsViewModel SettingsViewModel { get; set; }
+        public IAsyncCommand DeleteCommand { get; }
 
-        private RecordedItem RecordedItem { get; set; }
+        public PlayerViewModel PlayerViewModel { get; }
+
+        public IList<RecordedAudioFileViewModel> RecordedFiles
+        {
+            get => _recordedFiles;
+            private set => SetProperty(ref _recordedFiles, value);
+        }
+
+        public IEnumerable<ActionBarTileViewModel> NavigationItems
+        {
+            get => _navigationItems;
+            set => SetProperty(ref _navigationItems, value);
+        }
+
+        public bool NotAvailableData
+        {
+            get => _notAvailableData;
+            set => SetProperty(ref _notAvailableData, value);
+        }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
             using (new OperationMonitor(OperationScope))
             {
-                await SettingsViewModel.InitializeAsync().ConfigureAwait(false);
-
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     var recordedItem = navigationParameters.GetValue<RecordedItem>();
-                    RecordedItem = await _recordedItemService.GetAsync(recordedItem.Id).ConfigureAwait(false);
+                    _recordedItem = await _recordedItemService.GetAsync(recordedItem.Id).ConfigureAwait(false);
 
-                    DetailItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
-                    DetailItems = RecordedItem.AudioFiles.OrderBy(x => x.DateCreated).Select(CreateDetailItemViewModel).ToList();
+                    RecordedFiles?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
+                    RecordedFiles = _recordedItem.AudioFiles.OrderBy(x => x.DateCreated).Select(CreateRecordedAudioFileViewModel).ToList();
 
-                    NotAvailableData = !DetailItems.Any();
+                    NotAvailableData = !RecordedFiles.Any();
                 }
 
                 NavigationItems = CreateNavigation();
@@ -59,43 +90,72 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        private DetailItemViewModel<RecordedAudioFile> CreateDetailItemViewModel(RecordedAudioFile detailItem)
+        private RecordedAudioFileViewModel CreateRecordedAudioFileViewModel(RecordedAudioFile detailItem)
         {
-            var viewModel = new RecordedAudioFileViewModel(SettingsViewModel, PlayerViewModel, DialogService, detailItem);
+            var viewModel = new RecordedAudioFileViewModel(PlayerViewModel, DialogService, detailItem);
+            viewModel.Initialize();
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
             return viewModel;
         }
 
-        protected override async Task SendEmailInternal()
+        private IEnumerable<ActionBarTileViewModel> CreateNavigation()
+        {
+            _sendTileItem = new ActionBarTileViewModel
+            {
+                Text = Loc.Text(TranslationKeys.Send),
+                IsEnabled = CanExecuteSendCommand(),
+                IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Send-Enabled.svg",
+                IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Send-Disabled.svg",
+                SelectedCommand = new AsyncCommand(ExecuteSendCommandAsync, CanExecuteSendCommand)
+            };
+
+            _saveTileItem = new ActionBarTileViewModel
+            {
+                Text = Loc.Text(TranslationKeys.Save),
+                IsEnabled = CanExecuteSaveCommand(),
+                IconKeyEnabled = "resource://RewriteMe.Mobile.Resources.Images.Save-Enabled.svg",
+                IconKeyDisabled = "resource://RewriteMe.Mobile.Resources.Images.Save-Disabled.svg",
+                SelectedCommand = new AsyncCommand(ExecuteSaveCommandAsync, CanExecuteSaveCommand)
+            };
+
+            return new[] { _sendTileItem, _saveTileItem };
+        }
+
+        private bool CanExecuteSaveCommand()
+        {
+            return RecordedFiles.Any(x => x.IsDirty);
+        }
+
+        private async Task ExecuteSaveCommandAsync()
+        {
+            var recordedAudioFileToSave = RecordedFiles.Where(x => x.IsDirty).Select(x => x.RecordedFile);
+
+            await _recordedItemService.UpdateAudioFilesAsync(recordedAudioFileToSave).ConfigureAwait(false);
+            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
+        }
+
+        private bool CanExecuteSendCommand()
+        {
+            return RecordedFiles.Any();
+        }
+
+        private async Task ExecuteSendCommandAsync()
         {
             var message = new StringBuilder();
-            foreach (var recordedAudioFile in DetailItems)
+            foreach (var recordedAudioFile in RecordedFiles)
             {
                 message.AppendLine(recordedAudioFile.Time);
                 message.AppendLine(recordedAudioFile.Transcript);
                 message.AppendLine();
             }
 
-            await EmailService.SendAsync(string.Empty, RecordedItem.DateCreated.ToLocalTime().ToString(Constants.TimeFormat), message.ToString()).ConfigureAwait(false);
+            await _emailService.SendAsync(string.Empty, _recordedItem.DateCreated.ToLocalTime().ToString(Constants.TimeFormat), message.ToString()).ConfigureAwait(false);
         }
 
-        protected override bool CanExecuteSaveCommand()
+        private async Task ExecuteDeleteCommandAsync()
         {
-            return DetailItems.Any(x => x.IsDirty);
-        }
-
-        protected override async Task ExecuteSaveCommandAsync()
-        {
-            var recordedAudioFileToSave = DetailItems.Where(x => x.IsDirty).Select(x => x.DetailItem);
-
-            await _recordedItemService.UpdateAudioFilesAsync(recordedAudioFileToSave).ConfigureAwait(false);
-            await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
-        }
-
-        protected override async Task ExecuteDeleteCommandAsync()
-        {
-            var title = RecordedItem.FileName;
+            var title = _recordedItem.FileName;
             var result = await DialogService.ConfirmAsync(
                 Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, title),
                 okText: Loc.Text(TranslationKeys.Ok),
@@ -105,10 +165,25 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 using (new OperationMonitor(OperationScope))
                 {
-                    await _recordedItemService.DeleteRecordedItemAsync(RecordedItem).ConfigureAwait(false);
+                    await _recordedItemService.DeleteRecordedItemAsync(_recordedItem).ConfigureAwait(false);
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
             }
+        }
+
+        private void HandleIsDirtyChanged(object sender, EventArgs e)
+        {
+            _saveTileItem.IsEnabled = CanExecuteSaveCommand();
+        }
+
+        protected override void DisposeInternal()
+        {
+            RecordedFiles?.ForEach(x =>
+            {
+                x.IsDirtyChanged -= HandleIsDirtyChanged;
+            });
+
+            PlayerViewModel?.Dispose();
         }
     }
 }
