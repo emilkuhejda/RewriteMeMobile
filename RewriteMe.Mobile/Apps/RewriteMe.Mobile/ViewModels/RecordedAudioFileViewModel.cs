@@ -34,18 +34,6 @@ namespace RewriteMe.Mobile.ViewModels
 
             PlayCommand = new AsyncCommand(ExecutePlayCommandAsync);
             ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
-
-            if (!string.IsNullOrWhiteSpace(recordedAudioFile.UserTranscript))
-            {
-                SetTranscript(recordedAudioFile.UserTranscript);
-                IsReloadCommandVisible = CanExecuteReload();
-            }
-            else
-            {
-                SetTranscript(recordedAudioFile.Transcript);
-            }
-
-            Time = recordedAudioFile.TimeRange;
         }
 
         public ICommand PlayCommand { get; }
@@ -105,6 +93,21 @@ namespace RewriteMe.Mobile.ViewModels
 
                 return !RecordedFile.Transcript.Equals(Transcript, StringComparison.Ordinal);
             }
+        }
+
+        public void Initialize()
+        {
+            if (!string.IsNullOrWhiteSpace(RecordedFile.UserTranscript))
+            {
+                SetTranscript(RecordedFile.UserTranscript);
+                IsReloadCommandVisible = CanExecuteReload();
+            }
+            else
+            {
+                SetTranscript(RecordedFile.Transcript);
+            }
+
+            Time = RecordedFile.TimeRange;
         }
 
         protected void SetTranscript(string transcript)

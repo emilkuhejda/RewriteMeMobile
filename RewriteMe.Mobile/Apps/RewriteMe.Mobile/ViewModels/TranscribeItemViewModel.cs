@@ -24,14 +24,20 @@ namespace RewriteMe.Mobile.ViewModels
 
         private readonly ITranscriptAudioSourceService _transcriptAudioSourceService;
         private readonly ITranscribeItemManager _transcribeItemManager;
+        private readonly SettingsViewModel _settingsViewModel;
+        private readonly PlayerViewModel _playerViewModel;
+        private readonly IDialogService _dialogService;
         private readonly CancellationToken _cancellationToken;
         private readonly object _lockObject = new object();
 
+        private TranscriptAudioSource _transcriptAudioSource;
+        private WordComponent _currentComponent;
+
         private IEnumerable<WordComponent> _words;
+        private bool _isHighlightingEnabled;
         private bool _isReloadCommandVisible;
         private string _transcript;
         private bool _isDirty;
-        private bool _isHighlightingEnabled;
         private bool _disposed;
 
         public event EventHandler IsDirtyChanged;
@@ -47,45 +53,23 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _transcribeItemManager = transcribeItemManager;
+            _settingsViewModel = settingsViewModel;
+            _playerViewModel = playerViewModel;
+            _dialogService = dialogService;
             _cancellationToken = cancellationToken;
 
-            SettingsViewModel = settingsViewModel;
-            PlayerViewModel = playerViewModel;
-            DialogService = dialogService;
             DetailItem = transcribeItem;
             OperationScope = new AsyncOperationScope();
-
             IsHighlightingEnabled = false;
 
-            SettingsViewModel.SettingsChanged += HandleSettingsChanged;
-
-            if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
-            {
-                SetTranscript(transcribeItem.UserTranscript);
-                IsReloadCommandVisible = CanExecuteReload();
-            }
-            else if (!string.IsNullOrWhiteSpace(transcribeItem.Transcript))
-            {
-                SetTranscript(transcribeItem.Transcript);
-            }
-
-            Time = transcribeItem.TimeRange;
-            Accuracy = Loc.Text(TranslationKeys.Accuracy, transcribeItem.ToAverageConfidence());
-
-            InitializeWords(transcribeItem);
-            
             PlayCommand = new AsyncCommand(ExecutePlayCommandAsync);
             ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
             EditorUnFocusedCommand = new DelegateCommand(ExecuteEditorUnFocusedCommand, CanExecuteEditorUnFocusedCommand);
+
+            _settingsViewModel.SettingsChanged += HandleSettingsChanged;
         }
 
-        private SettingsViewModel SettingsViewModel { get; }
-
-        private PlayerViewModel PlayerViewModel { get; }
-
-        private IDialogService DialogService { get; }
-
-        public AsyncOperationScope OperationScope { get; }
+        public AsyncOperationScope OperationScope { get; set; }
 
         public ICommand PlayCommand { get; }
 
@@ -93,15 +77,11 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand EditorUnFocusedCommand { get; }
 
-        private TranscriptAudioSource TranscriptAudioSource { get; set; }
+        public TranscribeItem DetailItem { get; }
 
-        private WordComponent CurrentComponent { get; set; }
+        public string Time { get; protected set; }
 
-        public bool IsHighlightingEnabled
-        {
-            get => _isHighlightingEnabled;
-            set => SetProperty(ref _isHighlightingEnabled, value);
-        }
+        public string Accuracy { get; protected set; }
 
         public IEnumerable<WordComponent> Words
         {
@@ -109,17 +89,17 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _words, value);
         }
 
+        public bool IsHighlightingEnabled
+        {
+            get => _isHighlightingEnabled;
+            set => SetProperty(ref _isHighlightingEnabled, value);
+        }
+
         public bool IsReloadCommandVisible
         {
             get => _isReloadCommandVisible;
             set => SetProperty(ref _isReloadCommandVisible, value);
         }
-
-        public TranscribeItem DetailItem { get; }
-
-        public string Time { get; protected set; }
-
-        public string Accuracy { get; protected set; }
 
         public string Transcript
         {
@@ -164,94 +144,22 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        private void OnTranscriptChanged(string transcript)
+        public void Initialize()
         {
-            DetailItem.UserTranscript = transcript;
-        }
-
-        private bool CanExecuteReloadCommand()
-        {
-            return CanExecuteReload();
-        }
-
-        private bool CanExecuteReload()
-        {
-            return IsTranscriptChanged;
-        }
-
-        private async Task ExecutePlayCommandAsync()
-        {
-            using (new OperationMonitor(OperationScope))
+            if (!string.IsNullOrWhiteSpace(DetailItem.UserTranscript))
             {
-                TranscriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
-                if (TranscriptAudioSource == null)
-                {
-                    var errorMessage = _transcribeItemManager.IsRunning
-                        ? Loc.Text(TranslationKeys.SynchronizationInProgressErrorMessage)
-                        : Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage);
-
-                    await DialogService.AlertAsync(errorMessage).ConfigureAwait(false);
-                    return;
-                }
-
-                if (_cancellationToken.IsCancellationRequested)
-                    return;
-
-                if (TranscriptAudioSource.Source == null || !TranscriptAudioSource.Source.Any())
-                {
-                    var isSuccess = await _transcriptAudioSourceService.RefreshAsync(TranscriptAudioSource.Id, TranscriptAudioSource.TranscribeItemId, _cancellationToken).ConfigureAwait(false);
-                    if (isSuccess)
-                    {
-                        TranscriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
-                    }
-                }
-
-                if (_cancellationToken.IsCancellationRequested)
-                    return;
-
-                if (TranscriptAudioSource.Source == null || !TranscriptAudioSource.Source.Any())
-                {
-                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage)).ConfigureAwait(false);
-                    return;
-                }
-
-                PlayerViewModel.Load(TranscriptAudioSource.Id, TranscriptAudioSource.Source);
-                TryStartHighlighting();
-                PlayerViewModel.Play();
+                SetTranscript(DetailItem.UserTranscript);
+                IsReloadCommandVisible = CanExecuteReloadCommand();
             }
-        }
+            else if (!string.IsNullOrWhiteSpace(DetailItem.Transcript))
+            {
+                SetTranscript(DetailItem.Transcript);
+            }
 
-        private void ExecuteReloadCommand()
-        {
-            Transcript = DetailItem.Transcript;
+            Time = DetailItem.TimeRange;
+            Accuracy = Loc.Text(TranslationKeys.Accuracy, DetailItem.ToAverageConfidence());
 
-            TryStartHighlighting();
-        }
-
-        private bool CanExecuteEditorUnFocusedCommand()
-        {
-            return IsHighlightingEnabled;
-        }
-
-        private void ExecuteEditorUnFocusedCommand()
-        {
-            TryStartHighlighting();
-        }
-
-        private void TryStartHighlighting()
-        {
-            if (TranscriptAudioSource == null || PlayerViewModel == null || TranscriptAudioSource.Id != PlayerViewModel.SourceIdentifier)
-                return;
-
-            if (IsTranscriptChanged)
-                return;
-
-            TrySetIsHighlightingEnabled(true);
-
-            PlayerViewModel.ClearOnStopAction();
-            PlayerViewModel.SetOnStopAction(OnStopAction());
-            PlayerViewModel.Tick -= HandleTick;
-            PlayerViewModel.Tick += HandleTick;
+            InitializeWords(DetailItem);
         }
 
         private void InitializeWords(TranscribeItem transcribeItem)
@@ -276,12 +184,102 @@ namespace RewriteMe.Mobile.ViewModels
             Words = words;
         }
 
+        private async Task ExecutePlayCommandAsync()
+        {
+            using (new OperationMonitor(OperationScope))
+            {
+                _transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
+                if (_transcriptAudioSource == null)
+                {
+                    var errorMessage = _transcribeItemManager.IsRunning
+                        ? Loc.Text(TranslationKeys.SynchronizationInProgressErrorMessage)
+                        : Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage);
+
+                    await _dialogService.AlertAsync(errorMessage).ConfigureAwait(false);
+                    return;
+                }
+
+                if (_cancellationToken.IsCancellationRequested)
+                    return;
+
+                if (_transcriptAudioSource.Source == null || !_transcriptAudioSource.Source.Any())
+                {
+                    var isSuccess = await _transcriptAudioSourceService.RefreshAsync(_transcriptAudioSource.Id, _transcriptAudioSource.TranscribeItemId, _cancellationToken).ConfigureAwait(false);
+                    if (isSuccess)
+                    {
+                        _transcriptAudioSource = await _transcriptAudioSourceService.GetAsync(DetailItem.Id).ConfigureAwait(false);
+                    }
+                }
+
+                if (_cancellationToken.IsCancellationRequested)
+                    return;
+
+                if (_transcriptAudioSource.Source == null || !_transcriptAudioSource.Source.Any())
+                {
+                    await _dialogService.AlertAsync(Loc.Text(TranslationKeys.TranscribeAudioSourceNotFoundErrorMessage)).ConfigureAwait(false);
+                    return;
+                }
+
+                _playerViewModel.Load(_transcriptAudioSource.Id, _transcriptAudioSource.Source);
+                TryStartHighlighting();
+                _playerViewModel.Play();
+            }
+        }
+
+        private bool CanExecuteReloadCommand()
+        {
+            return IsTranscriptChanged;
+        }
+
+        private void ExecuteReloadCommand()
+        {
+            Transcript = DetailItem.Transcript;
+
+            TryStartHighlighting();
+        }
+
+        private bool CanExecuteEditorUnFocusedCommand()
+        {
+            return IsHighlightingEnabled;
+        }
+
+        private void ExecuteEditorUnFocusedCommand()
+        {
+            TryStartHighlighting();
+        }
+
+        private void OnTranscriptChanged(string transcript)
+        {
+            DetailItem.UserTranscript = transcript;
+        }
+
+        private void TryStartHighlighting()
+        {
+            if (_transcriptAudioSource == null || _playerViewModel == null || _transcriptAudioSource.Id != _playerViewModel.SourceIdentifier)
+                return;
+
+            if (IsTranscriptChanged)
+                return;
+
+            TrySetIsHighlightingEnabled(true);
+
+            _playerViewModel.ClearOnStopAction();
+            _playerViewModel.SetOnStopAction(OnStopAction());
+            _playerViewModel.Tick -= HandleTick;
+            _playerViewModel.Tick += HandleTick;
+        }
+
+        private void SetTranscript(string transcript)
+        {
+            _transcript = transcript;
+        }
+
         private Action OnStopAction()
         {
             return () =>
             {
                 TrySetIsHighlightingEnabled(false);
-                PlayerViewModel.Tick -= HandleTick;
+                _playerViewModel.Tick -= HandleTick;
             };
         }
 
@@ -289,24 +287,24 @@ namespace RewriteMe.Mobile.ViewModels
         {
             lock (_lockObject)
             {
-                var currentPosition = PlayerViewModel.CurrentPosition;
+                var currentPosition = _playerViewModel.CurrentPosition;
                 var currentItem = Words.LastOrDefault(x => currentPosition >= x.StartTime);
                 if (currentItem == null)
                     return;
 
-                if (CurrentComponent != null)
+                if (_currentComponent != null)
                 {
-                    CurrentComponent.IsHighlighted = false;
+                    _currentComponent.IsHighlighted = false;
                 }
 
-                CurrentComponent = currentItem;
-                CurrentComponent.IsHighlighted = true;
+                _currentComponent = currentItem;
+                _currentComponent.IsHighlighted = true;
             }
         }
 
         private void HandleSettingsChanged(object sender, EventArgs e)
         {
-            if (SettingsViewModel.IsHighlightingEnabled)
+            if (_settingsViewModel.IsHighlightingEnabled)
             {
                 TryStartHighlighting();
             }
@@ -318,7 +316,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void TrySetIsHighlightingEnabled(bool isHighlightingEnabled)
         {
-            if (SettingsViewModel.IsHighlightingEnabled && isHighlightingEnabled && Words != null && Words.Any())
+            if (_settingsViewModel.IsHighlightingEnabled && isHighlightingEnabled && Words != null && Words.Any())
             {
                 IsHighlightingEnabled = true;
             }
@@ -326,11 +324,6 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 IsHighlightingEnabled = false;
             }
-        }
-
-        private void SetTranscript(string transcript)
-        {
-            _transcript = transcript;
         }
 
         private void OnIsDirtyChanged()
@@ -351,8 +344,8 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (disposing)
             {
-                PlayerViewModel.Tick -= HandleTick;
-                SettingsViewModel.SettingsChanged -= HandleSettingsChanged;
+                _playerViewModel.Tick -= HandleTick;
+                _settingsViewModel.SettingsChanged -= HandleSettingsChanged;
             }
 
             _disposed = true;

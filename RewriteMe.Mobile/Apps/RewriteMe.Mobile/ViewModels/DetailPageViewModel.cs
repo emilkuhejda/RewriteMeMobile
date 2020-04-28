@@ -157,6 +157,7 @@ namespace RewriteMe.Mobile.ViewModels
                 DialogService,
                 detailItem,
                 _cancellationTokenSource.Token);
+            viewModel.Initialize();
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
             return viewModel;

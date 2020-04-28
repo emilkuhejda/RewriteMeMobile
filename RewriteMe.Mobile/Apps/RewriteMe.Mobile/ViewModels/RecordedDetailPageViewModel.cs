@@ -92,7 +92,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private RecordedAudioFileViewModel CreateRecordedAudioFileViewModel(RecordedAudioFile detailItem)
         {
-            RecordedAudioFileViewModel viewModel = new RecordedAudioFileViewModel(PlayerViewModel, DialogService, detailItem);
+            var viewModel = new RecordedAudioFileViewModel(PlayerViewModel, DialogService, detailItem);
+            viewModel.Initialize();
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
             return viewModel;
