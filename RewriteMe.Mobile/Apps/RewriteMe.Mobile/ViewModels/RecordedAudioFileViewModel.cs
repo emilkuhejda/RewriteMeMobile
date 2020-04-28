@@ -40,7 +40,21 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteReload()
         {
-            return !DetailItem.Transcript.Equals(Transcript, StringComparison.Ordinal);
+            return IsTranscriptChanged;
+        }
+
+        private bool IsTranscriptChanged
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Transcript))
+                    return !string.IsNullOrWhiteSpace(DetailItem.Transcript);
+
+                if (string.IsNullOrWhiteSpace(DetailItem.Transcript))
+                    return !string.IsNullOrWhiteSpace(Transcript);
+
+                return !DetailItem.Transcript.Equals(Transcript, StringComparison.Ordinal);
+            }
         }
 
         protected override async Task ExecutePlayCommandAsync()
@@ -56,13 +70,15 @@ namespace RewriteMe.Mobile.ViewModels
                 PlayerViewModel.Load(DetailItem.Source);
                 PlayerViewModel.Play();
             }
-
-            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         protected override void ExecuteReloadCommand()
         {
             Transcript = DetailItem.Transcript;
+        }
+
+        protected override void ExecuteEditorUnFocusedCommand()
+        {
         }
     }
 }

@@ -110,7 +110,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override void DisposeInternal()
         {
-            DetailItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
+            DetailItems?.ForEach(x =>
+            {
+                x.IsDirtyChanged -= HandleIsDirtyChanged;
+                x.Dispose();
+            });
+
             PlayerViewModel?.Dispose();
         }
     }

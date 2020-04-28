@@ -17,18 +17,25 @@ namespace RewriteMe.Mobile.ViewModels
         private TimeSpan _totalTime;
         private double _duration = 59;
         private string _position;
+        private Action _onStopAction;
 
         private bool _disposed;
+
+        public event EventHandler Tick;
 
         public PlayerViewModel()
         {
             _player = CrossSimpleAudioPlayer.CreateSimpleAudioPlayer();
             _player.PlaybackEnded += HandlePlaybackEnded;
 
+            SourceIdentifier = Guid.Empty;
+
             StartPauseCommand = new DelegateCommand(ExecuteStartPauseCommand);
         }
 
         public ICommand StartPauseCommand { get; }
+
+        public Guid SourceIdentifier { get; private set; }
 
         public bool IsVisible
         {
@@ -75,13 +82,35 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _position, value);
         }
 
+        public double CurrentPosition => _player.CurrentPosition;
+
+        public void SetOnStopAction(Action onStopAction)
+        {
+            _onStopAction = onStopAction;
+        }
+
+        public void ClearOnStopAction()
+        {
+            _onStopAction = null;
+        }
+
+        public void Load(Guid sourceIdentifier, byte[] data)
+        {
+            SourceIdentifier = sourceIdentifier;
+
+            Load(data);
+        }
+
         public void Load(byte[] data)
         {
             if (_player == null)
                 return;
 
             if (_player.IsPlaying)
+            {
+                _onStopAction?.Invoke();
                 _player.Stop();
+            }
 
             if (data == null)
                 return;
@@ -134,6 +163,8 @@ namespace RewriteMe.Mobile.ViewModels
             _audioCurrentProgress = _player.CurrentPosition;
             RaisePropertyChanged(nameof(AudioCurrentProgress));
 
+            OnTick();
+
             return _player.IsPlaying;
         }
 
@@ -154,6 +185,11 @@ namespace RewriteMe.Mobile.ViewModels
             IsPlaying = _player.IsPlaying;
         }
 
+        private void OnTick()
+        {
+            Tick?.Invoke(this, EventArgs.Empty);
+        }
+
         public void Dispose()
         {
             Dispose(true);
@@ -169,6 +205,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (_player != null)
                 {
+                    ClearOnStopAction();
                     _player.Stop();
                     _player.PlaybackEnded -= HandlePlaybackEnded;
                     _player.Dispose();
