@@ -29,14 +29,14 @@ namespace RewriteMe.Mobile.Controls
                 typeof(IEnumerable<WordComponent>),
                 typeof(HighlightedEditor));
 
-        public static readonly BindableProperty IsHighlightEnabledProperty =
+        public static readonly BindableProperty IsHighlightingEnabledProperty =
             BindableProperty.Create(
-                nameof(IsHighlightEnabled),
+                nameof(IsHighlightingEnabled),
                 typeof(bool),
                 typeof(HighlightedEditor),
                 false,
                 BindingMode.TwoWay,
-                propertyChanged: OnIsHighlightEnabledPropertyChanged);
+                propertyChanged: OnIsHighlightingEnabledPropertyChanged);
 
         public HighlightedEditor()
         {
@@ -63,15 +63,15 @@ namespace RewriteMe.Mobile.Controls
             set => SetValue(WordsProperty, value);
         }
 
-        public bool IsHighlightEnabled
+        public bool IsHighlightingEnabled
         {
-            get => (bool)GetValue(IsHighlightEnabledProperty);
-            set => SetValue(IsHighlightEnabledProperty, value);
+            get => (bool)GetValue(IsHighlightingEnabledProperty);
+            set => SetValue(IsHighlightingEnabledProperty, value);
         }
 
         public void SetEditorTextColor()
         {
-            if (IsHighlightEnabled)
+            if (IsHighlightingEnabled)
             {
                 Editor.TextColor = Color.Transparent;
             }
@@ -81,7 +81,7 @@ namespace RewriteMe.Mobile.Controls
             }
         }
 
-        private static void OnIsHighlightEnabledPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
+        private static void OnIsHighlightingEnabledPropertyChanged(BindableObject bindable, object oldvalue, object newvalue)
         {
             var highlightedEditor = bindable as HighlightedEditor;
 
@@ -90,7 +90,7 @@ namespace RewriteMe.Mobile.Controls
 
         private void OnFocused(object sender, FocusEventArgs e)
         {
-            IsHighlightEnabled = false;
+            IsHighlightingEnabled = false;
         }
 
         private void OnUnfocused(object sender, FocusEventArgs e)

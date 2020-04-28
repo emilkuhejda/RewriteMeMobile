@@ -142,7 +142,7 @@ namespace RewriteMe.Mobile.ViewModels
             if (IsTranscriptChanged)
                 return;
 
-            TrySetIsHighlightEnabled(true);
+            TrySetIsHighlightingEnabled(true);
 
             PlayerViewModel.ClearOnStopAction();
             PlayerViewModel.SetOnStopAction(OnStopAction());
@@ -176,7 +176,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             return () =>
             {
-                TrySetIsHighlightEnabled(false);
+                TrySetIsHighlightingEnabled(false);
                 PlayerViewModel.Tick -= HandleTick;
             };
         }

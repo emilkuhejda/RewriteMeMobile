@@ -553,7 +553,7 @@
                     </Grid>
 
                     <controls:HighlightedEditor EditorUnFocusedCommand="{Binding EditorUnFocusedCommand}"
-                                                IsHighlightEnabled="{Binding IsHighlightEnabled}"
+                                                IsHighlightingEnabled="{Binding IsHighlightingEnabled}"
                                                 Text="{Binding Transcript}"
                                                 VerticalOptions="Fill"
                                                 Words="{Binding Words}" />

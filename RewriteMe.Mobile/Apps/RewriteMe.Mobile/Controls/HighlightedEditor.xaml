@@ -26,5 +26,5 @@
                                   BackgroundColor="Transparent"
                                   Components="{Binding Words, Source={x:Reference HighlightedEditorControl}}"
                                   InputTransparent="True"
-                                  IsVisible="{Binding IsHighlightEnabled, Source={x:Reference HighlightedEditorControl}}" />
+                                  IsVisible="{Binding IsHighlightingEnabled, Source={x:Reference HighlightedEditorControl}}" />
 </Grid>

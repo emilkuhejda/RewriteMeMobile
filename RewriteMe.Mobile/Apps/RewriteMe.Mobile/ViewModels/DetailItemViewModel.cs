@@ -18,7 +18,7 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isReloadCommandVisible;
         private string _transcript;
         private bool _isDirty;
-        private bool _isHighlightEnabled;
+        private bool _isHighlightingEnabled;
         private bool _disposed;
 
         public event EventHandler IsDirtyChanged;
@@ -33,7 +33,7 @@ namespace RewriteMe.Mobile.ViewModels
             DetailItem = detailItem;
             OperationScope = new AsyncOperationScope();
 
-            IsHighlightEnabled = false;
+            IsHighlightingEnabled = false;
 
             PlayCommand = new AsyncCommand(ExecutePlayCommandAsync);
             ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
@@ -52,10 +52,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand EditorUnFocusedCommand { get; }
 
-        public bool IsHighlightEnabled
+        public bool IsHighlightingEnabled
         {
-            get => _isHighlightEnabled;
-            set => SetProperty(ref _isHighlightEnabled, value);
+            get => _isHighlightingEnabled;
+            set => SetProperty(ref _isHighlightingEnabled, value);
         }
 
         public IEnumerable<WordComponent> Words
@@ -112,20 +112,20 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected bool CanExecuteEditorUnFocusedCommand()
         {
-            return IsHighlightEnabled;
+            return IsHighlightingEnabled;
         }
 
         protected abstract void ExecuteEditorUnFocusedCommand();
 
-        protected void TrySetIsHighlightEnabled(bool isHighlightEnabled)
+        protected void TrySetIsHighlightingEnabled(bool isHighlightingEnabled)
         {
-            if (isHighlightEnabled && Words != null && Words.Any())
+            if (isHighlightingEnabled && Words != null && Words.Any())
             {
-                IsHighlightEnabled = true;
+                IsHighlightingEnabled = true;
             }
             else
             {
-                IsHighlightEnabled = false;
+                IsHighlightingEnabled = false;
             }
         }
 
