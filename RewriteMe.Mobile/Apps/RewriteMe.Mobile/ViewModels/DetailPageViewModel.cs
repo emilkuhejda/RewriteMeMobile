@@ -34,7 +34,7 @@ namespace RewriteMe.Mobile.ViewModels
         private ActionBarTileViewModel _sendTileItem;
         private ActionBarTileViewModel _saveTileItem;
 
-        private IList<DetailItemViewModel<TranscribeItem>> _transcribeItems;
+        private IList<TranscribeItemViewModel> _transcribeItems;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _isPopupOpen;
         private double _progress;
@@ -83,7 +83,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public bool IsProgressVisible => _transcribeItemManager.IsRunning;
 
-        public IList<DetailItemViewModel<TranscribeItem>> TranscribeItems
+        public IList<TranscribeItemViewModel> TranscribeItems
         {
             get => _transcribeItems;
             private set => SetProperty(ref _transcribeItems, value);
@@ -133,7 +133,7 @@ namespace RewriteMe.Mobile.ViewModels
                     var transcribeItems = await _transcribeItemService.GetAllAsync(_fileItem.Id).ConfigureAwait(false);
 
                     TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
-                    TranscribeItems = transcribeItems.OrderBy(x => x.StartTime).Select(CreateDetailItemViewModel).ToList();
+                    TranscribeItems = transcribeItems.OrderBy(x => x.StartTime).Select(CreateTranscribeItemViewModel).ToList();
 
                     NotAvailableData = !TranscribeItems.Any();
                 }
@@ -147,7 +147,7 @@ namespace RewriteMe.Mobile.ViewModels
             ProgressText = Loc.Text(TranslationKeys.Downloading, 0);
         }
 
-        private DetailItemViewModel<TranscribeItem> CreateDetailItemViewModel(TranscribeItem detailItem)
+        private TranscribeItemViewModel CreateTranscribeItemViewModel(TranscribeItem detailItem)
         {
             var viewModel = new TranscribeItemViewModel(
                 _transcriptAudioSourceService,

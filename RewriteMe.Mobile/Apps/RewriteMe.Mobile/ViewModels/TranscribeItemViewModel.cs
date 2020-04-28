@@ -3,18 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Input;
+using Prism.Commands;
+using Prism.Mvvm;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Managers;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
 using RewriteMe.Domain.WebApi;
+using RewriteMe.Mobile.Commands;
 using RewriteMe.Mobile.Controls;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.ViewModels
 {
-    public class TranscribeItemViewModel : DetailItemViewModel<TranscribeItem>
+    public class TranscribeItemViewModel : BindableBase, IDisposable
     {
         private const int MergeWordsCount = 3;
 
@@ -22,6 +26,15 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly ITranscribeItemManager _transcribeItemManager;
         private readonly CancellationToken _cancellationToken;
         private readonly object _lockObject = new object();
+
+        private IEnumerable<WordComponent> _words;
+        private bool _isReloadCommandVisible;
+        private string _transcript;
+        private bool _isDirty;
+        private bool _isHighlightingEnabled;
+        private bool _disposed;
+
+        public event EventHandler IsDirtyChanged;
 
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
@@ -31,11 +44,18 @@ namespace RewriteMe.Mobile.ViewModels
             IDialogService dialogService,
             TranscribeItem transcribeItem,
             CancellationToken cancellationToken)
-            : base(settingsViewModel, playerViewModel, dialogService, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _transcribeItemManager = transcribeItemManager;
             _cancellationToken = cancellationToken;
+
+            SettingsViewModel = settingsViewModel;
+            PlayerViewModel = playerViewModel;
+            DialogService = dialogService;
+            DetailItem = transcribeItem;
+            OperationScope = new AsyncOperationScope();
+
+            IsHighlightingEnabled = false;
 
             SettingsViewModel.SettingsChanged += HandleSettingsChanged;
 
@@ -53,11 +73,79 @@ namespace RewriteMe.Mobile.ViewModels
             Accuracy = Loc.Text(TranslationKeys.Accuracy, transcribeItem.ToAverageConfidence());
 
             InitializeWords(transcribeItem);
+            
+            PlayCommand = new AsyncCommand(ExecutePlayCommandAsync);
+            ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
+            EditorUnFocusedCommand = new DelegateCommand(ExecuteEditorUnFocusedCommand, CanExecuteEditorUnFocusedCommand);
         }
+
+        private SettingsViewModel SettingsViewModel { get; }
+
+        private PlayerViewModel PlayerViewModel { get; }
+
+        private IDialogService DialogService { get; }
+
+        public AsyncOperationScope OperationScope { get; }
+
+        public ICommand PlayCommand { get; }
+
+        public ICommand ReloadCommand { get; }
+
+        public ICommand EditorUnFocusedCommand { get; }
 
         private TranscriptAudioSource TranscriptAudioSource { get; set; }
 
         private WordComponent CurrentComponent { get; set; }
+
+        public bool IsHighlightingEnabled
+        {
+            get => _isHighlightingEnabled;
+            set => SetProperty(ref _isHighlightingEnabled, value);
+        }
+
+        public IEnumerable<WordComponent> Words
+        {
+            get => _words;
+            set => SetProperty(ref _words, value);
+        }
+
+        public bool IsReloadCommandVisible
+        {
+            get => _isReloadCommandVisible;
+            set => SetProperty(ref _isReloadCommandVisible, value);
+        }
+
+        public TranscribeItem DetailItem { get; }
+
+        public string Time { get; protected set; }
+
+        public string Accuracy { get; protected set; }
+
+        public string Transcript
+        {
+            get => _transcript;
+            set
+            {
+                if (SetProperty(ref _transcript, value))
+                {
+                    OnTranscriptChanged(value);
+                    IsReloadCommandVisible = CanExecuteReloadCommand();
+                    IsDirty = true;
+                }
+            }
+        }
+
+        public bool IsDirty
+        {
+            get => _isDirty;
+            private set
+            {
+                if (SetProperty(ref _isDirty, value))
+                {
+                    OnIsDirtyChanged();
+                }
+            }
+        }
 
         private bool IsTranscriptChanged
         {
@@ -76,12 +164,12 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        protected override void OnTranscriptChanged(string transcript)
+        private void OnTranscriptChanged(string transcript)
         {
             DetailItem.UserTranscript = transcript;
         }
 
-        protected override bool CanExecuteReloadCommand()
+        private bool CanExecuteReloadCommand()
         {
             return CanExecuteReload();
         }
@@ -91,7 +179,7 @@ namespace RewriteMe.Mobile.ViewModels
             return IsTranscriptChanged;
         }
 
-        protected override async Task ExecutePlayCommandAsync()
+        private async Task ExecutePlayCommandAsync()
         {
             using (new OperationMonitor(OperationScope))
             {
@@ -133,14 +221,19 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        protected override void ExecuteReloadCommand()
+        private void ExecuteReloadCommand()
         {
             Transcript = DetailItem.Transcript;
 
             TryStartHighlighting();
         }
 
-        protected override void ExecuteEditorUnFocusedCommand()
+        private bool CanExecuteEditorUnFocusedCommand()
+        {
+            return IsHighlightingEnabled;
+        }
+
+        private void ExecuteEditorUnFocusedCommand()
         {
             TryStartHighlighting();
         }
@@ -223,12 +316,46 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        protected override void DisposeInternal()
+        private void TrySetIsHighlightingEnabled(bool isHighlightingEnabled)
         {
-            base.DisposeInternal();
+            if (SettingsViewModel.IsHighlightingEnabled && isHighlightingEnabled && Words != null && Words.Any())
+            {
+                IsHighlightingEnabled = true;
+            }
+            else
+            {
+                IsHighlightingEnabled = false;
+            }
+        }
 
-            PlayerViewModel.Tick -= HandleTick;
-            SettingsViewModel.SettingsChanged -= HandleSettingsChanged;
+        private void SetTranscript(string transcript)
+        {
+            _transcript = transcript;
+        }
+
+        private void OnIsDirtyChanged()
+        {
+            IsDirtyChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool disposing)
+        {
+            if (_disposed)
+                return;
+
+            if (disposing)
+            {
+                PlayerViewModel.Tick -= HandleTick;
+                SettingsViewModel.SettingsChanged -= HandleSettingsChanged;
+            }
+
+            _disposed = true;
         }
     }
 }

@@ -79,7 +79,7 @@ namespace RewriteMe.Mobile.ViewModels
                     _recordedItem = await _recordedItemService.GetAsync(recordedItem.Id).ConfigureAwait(false);
 
                     RecordedFiles?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
-                    RecordedFiles = _recordedItem.AudioFiles.OrderBy(x => x.DateCreated).Select(CreateDetailItemViewModel).ToList();
+                    RecordedFiles = _recordedItem.AudioFiles.OrderBy(x => x.DateCreated).Select(CreateRecordedAudioFileViewModel).ToList();
 
                     NotAvailableData = !RecordedFiles.Any();
                 }
@@ -90,7 +90,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        private RecordedAudioFileViewModel CreateDetailItemViewModel(RecordedAudioFile detailItem)
+        private RecordedAudioFileViewModel CreateRecordedAudioFileViewModel(RecordedAudioFile detailItem)
         {
             RecordedAudioFileViewModel viewModel = new RecordedAudioFileViewModel(PlayerViewModel, DialogService, detailItem);
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
