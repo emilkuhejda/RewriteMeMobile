@@ -22,7 +22,7 @@
                         <xForms:SfBusyIndicator AnimationType="SingleCircle"
                                                 BackgroundColor="{StaticResource ColorWhite}"
                                                 HeightRequest="30"
-                                                IsVisible="{Binding OperationScope.IsBusy}"
+                                                IsBusy="{Binding OperationScope.IsBusy}"
                                                 TextColor="{StaticResource ColorPrimary}"
                                                 ViewBoxHeight="30"
                                                 ViewBoxWidth="30"

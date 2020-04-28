@@ -91,7 +91,7 @@
                                         AnimationType="SingleCircle"
                                         BackgroundColor="{StaticResource ColorWhite}"
                                         HeightRequest="40"
-                                        IsVisible="{Binding IsInProgress}"
+                                        IsBusy="{Binding IsInProgress}"
                                         TextColor="{StaticResource ColorPrimary}"
                                         VerticalOptions="Center"
                                         ViewBoxHeight="40"
