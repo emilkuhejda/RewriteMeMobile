@@ -7,7 +7,6 @@
                         xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                         xmlns:converters="clr-namespace:RewriteMe.Mobile.Converters;assembly=RewriteMe.Mobile"
                         xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
-                        xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                         xmlns:prism="clr-namespace:Prism.Unity;assembly=Prism.Autofac.Forms"
                         xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
                         xmlns:xForms="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms">
@@ -475,6 +474,7 @@
                                                 AnimationType="Gear"
                                                 BackgroundColor="{StaticResource ColorBlack}"
                                                 IsBusy="{TemplateBinding BindingContext.IsDefaultIndicatorVisible}"
+                                                IsVisible="{TemplateBinding BindingContext.IsDefaultIndicatorVisible}"
                                                 Opacity="0.6"
                                                 TextColor="{StaticResource ColorWhite}"
                                                 ViewBoxHeight="50"
