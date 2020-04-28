@@ -346,8 +346,8 @@
   <data name="Accuracy" xml:space="preserve">
     <value>({0}% presnosť)</value>
   </data>
-  <data name="Highlighting" xml:space="preserve">
-    <value>Zvýrazňovanie</value>
+  <data name="Highlighter" xml:space="preserve">
+    <value>Zvýrazňovač</value>
   </data>
   
   <data name="UnauthorizedErrorMessage" xml:space="preserve">

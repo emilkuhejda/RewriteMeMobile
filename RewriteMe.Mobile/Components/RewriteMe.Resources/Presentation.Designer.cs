@@ -304,11 +304,11 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Highlighting.
+        ///   Looks up a localized string similar to Highlighter.
         /// </summary>
-        public static string Highlighting {
+        public static string Highlighter {
             get {
-                return ResourceManager.GetString("Highlighting", resourceCulture);
+                return ResourceManager.GetString("Highlighter", resourceCulture);
             }
         }
         
