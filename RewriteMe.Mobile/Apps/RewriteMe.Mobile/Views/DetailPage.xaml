@@ -2,29 +2,109 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.DetailPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:busyIndicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
                           xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+                          xmlns:navigationDrawer="clr-namespace:Syncfusion.SfNavigationDrawer.XForms;assembly=Syncfusion.SfNavigationDrawer.XForms"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
-                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
-                          xmlns:xForms="clr-namespace:Syncfusion.SfNavigationDrawer.XForms;assembly=Syncfusion.SfNavigationDrawer.XForms">
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+    <views:BaseNavigationPage.Resources>
+        <DataTemplate x:Key="TranscribeItemsTemplate">
+            <StackLayout>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <StackLayout Grid.Column="0" Orientation="Horizontal">
+                        <busyIndicator:SfBusyIndicator AnimationType="SingleCircle"
+                                                       BackgroundColor="{StaticResource ColorWhite}"
+                                                       HeightRequest="30"
+                                                       IsVisible="{Binding OperationScope.IsBusy}"
+                                                       TextColor="{StaticResource ColorPrimary}"
+                                                       ViewBoxHeight="30"
+                                                       ViewBoxWidth="30"
+                                                       WidthRequest="30" />
+
+                        <Grid BackgroundColor="Transparent"
+                              HeightRequest="39"
+                              HorizontalOptions="Start"
+                              IsVisible="{Binding OperationScope.IsBusy, Converter={StaticResource InvertedBoolConverter}}"
+                              WidthRequest="39">
+                            <forms:SvgCachedImage Margin="0"
+                                                  Aspect="AspectFit"
+                                                  BackgroundColor="Transparent"
+                                                  HeightRequest="30"
+                                                  InputTransparent="True"
+                                                  Source="resource://RewriteMe.Mobile.Resources.Images.Play-Enabled.svg"
+                                                  VerticalOptions="CenterAndExpand" />
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding PlayCommand}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+
+                        <Grid Margin="0,0,0,0"
+                              BackgroundColor="Transparent"
+                              HeightRequest="39"
+                              HorizontalOptions="Start"
+                              IsVisible="{Binding IsReloadCommandVisible}"
+                              WidthRequest="39">
+                            <forms:SvgCachedImage Margin="0"
+                                                  Aspect="AspectFit"
+                                                  BackgroundColor="Transparent"
+                                                  HeightRequest="30"
+                                                  InputTransparent="True"
+                                                  Source="resource://RewriteMe.Mobile.Resources.Images.Reload.svg"
+                                                  VerticalOptions="CenterAndExpand" />
+
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding ReloadCommand}" />
+                            </Grid.GestureRecognizers>
+                        </Grid>
+                    </StackLayout>
+
+                    <Label Grid.Column="1"
+                           HorizontalOptions="StartAndExpand"
+                           Style="{StaticResource LabelStyle}"
+                           Text="{Binding Time}" />
+
+                    <Label Grid.Column="2"
+                           HorizontalOptions="End"
+                           Style="{StaticResource LabelStyle}"
+                           Text="{Binding Accuracy}" />
+                </Grid>
+
+                <controls:HighlightedEditor EditorUnFocusedCommand="{Binding EditorUnFocusedCommand}"
+                                            IsHighlightingEnabled="{Binding IsHighlightingEnabled}"
+                                            Text="{Binding Transcript}"
+                                            VerticalOptions="Fill"
+                                            Words="{Binding Words}" />
+            </StackLayout>
+        </DataTemplate>
+    </views:BaseNavigationPage.Resources>
+
     <views:BaseNavigationPage.RightNavigationToolbarItems>
         <controls:NavigationToolbarItem Command="{Binding OpenSettingsCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Settings.svg" />
         <controls:NavigationToolbarItem Command="{Binding DeleteCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
 
-    <xForms:SfNavigationDrawer>
-        <xForms:SfNavigationDrawer.SecondaryDrawerSettings>
-            <xForms:DrawerSettings ContentBackgroundColor="{StaticResource ColorGrey200}"
-                                   DrawerFooterHeight="0"
-                                   DrawerHeaderHeight="0"
-                                   DrawerHeight="200"
-                                   EnableSwipeGesture="True"
-                                   IsOpen="{Binding IsPopupOpen, Mode=TwoWay}"
-                                   Position="Bottom"
-                                   Transition="SlideOnTop"
-                                   Duration="400">
-                <xForms:DrawerSettings.DrawerContentView>
+    <navigationDrawer:SfNavigationDrawer>
+        <navigationDrawer:SfNavigationDrawer.SecondaryDrawerSettings>
+            <navigationDrawer:DrawerSettings ContentBackgroundColor="{StaticResource ColorGrey200}"
+                                             DrawerFooterHeight="0"
+                                             DrawerHeaderHeight="0"
+                                             DrawerHeight="200"
+                                             EnableSwipeGesture="True"
+                                             IsOpen="{Binding IsPopupOpen, Mode=TwoWay}"
+                                             Position="Bottom"
+                                             Transition="SlideOnTop"
+                                             Duration="400">
+                <navigationDrawer:DrawerSettings.DrawerContentView>
                     <Grid Padding="{StaticResource StandardPadding}">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -42,10 +122,10 @@
                                           AllowIndeterminateState="False"
                                           IsOn="{Binding SettingsViewModel.IsHighlightingEnabled}" />
                     </Grid>
-                </xForms:DrawerSettings.DrawerContentView>
-            </xForms:DrawerSettings>
-        </xForms:SfNavigationDrawer.SecondaryDrawerSettings>
-        <xForms:SfNavigationDrawer.ContentView>
+                </navigationDrawer:DrawerSettings.DrawerContentView>
+            </navigationDrawer:DrawerSettings>
+        </navigationDrawer:SfNavigationDrawer.SecondaryDrawerSettings>
+        <navigationDrawer:SfNavigationDrawer.ContentView>
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -73,11 +153,11 @@
                        VerticalOptions="Start" />
 
                 <Grid Grid.Row="3" Padding="{StaticResource StandardPadding}">
-                    <CollectionView ItemTemplate="{StaticResource DetailItemsTemplate}" ItemsSource="{Binding DetailItems}" />
+                    <CollectionView ItemTemplate="{StaticResource TranscribeItemsTemplate}" ItemsSource="{Binding TranscribeItems}" />
                 </Grid>
 
                 <controls:ContextActionBar Grid.Row="4" ItemsSource="{Binding NavigationItems}" />
             </Grid>
-        </xForms:SfNavigationDrawer.ContentView>
-    </xForms:SfNavigationDrawer>
+        </navigationDrawer:SfNavigationDrawer.ContentView>
+    </navigationDrawer:SfNavigationDrawer>
 </views:BaseNavigationPage>

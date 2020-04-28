@@ -30,7 +30,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IEmailService _emailService;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
-        private IList<DetailItemViewModel<TranscribeItem>> _detailItems;
+        private IList<DetailItemViewModel<TranscribeItem>> _transcribeItems;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _isPopupOpen;
         private double _progress;
@@ -85,10 +85,10 @@ namespace RewriteMe.Mobile.ViewModels
 
         public bool IsProgressVisible => _transcribeItemManager.IsRunning;
 
-        public IList<DetailItemViewModel<TranscribeItem>> DetailItems
+        public IList<DetailItemViewModel<TranscribeItem>> TranscribeItems
         {
-            get => _detailItems;
-            private set => SetProperty(ref _detailItems, value);
+            get => _transcribeItems;
+            private set => SetProperty(ref _transcribeItems, value);
         }
 
         public IEnumerable<ActionBarTileViewModel> NavigationItems
@@ -134,10 +134,10 @@ namespace RewriteMe.Mobile.ViewModels
 
                     var transcribeItems = await _transcribeItemService.GetAllAsync(FileItem.Id).ConfigureAwait(false);
 
-                    DetailItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
-                    DetailItems = transcribeItems.OrderBy(x => x.StartTime).Select(CreateDetailItemViewModel).ToList();
+                    TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
+                    TranscribeItems = transcribeItems.OrderBy(x => x.StartTime).Select(CreateDetailItemViewModel).ToList();
 
-                    NotAvailableData = !DetailItems.Any();
+                    NotAvailableData = !TranscribeItems.Any();
                 }
 
                 NavigationItems = CreateNavigation();
@@ -189,13 +189,13 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSendCommand()
         {
-            return DetailItems.Any();
+            return TranscribeItems.Any();
         }
 
         private async Task ExecuteSendCommandAsync()
         {
             var message = new StringBuilder();
-            foreach (var transcribeItem in DetailItems)
+            foreach (var transcribeItem in TranscribeItems)
             {
                 message.AppendLine($"{transcribeItem.Time} {transcribeItem.Accuracy}");
                 message.AppendLine(transcribeItem.Transcript);
@@ -207,12 +207,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveCommand()
         {
-            return DetailItems.Any(x => x.IsDirty);
+            return TranscribeItems.Any(x => x.IsDirty);
         }
 
         private async Task ExecuteSaveCommandAsync()
         {
-            var transcribeItemsToSave = DetailItems.Where(x => x.IsDirty).Select(x => x.DetailItem);
+            var transcribeItemsToSave = TranscribeItems.Where(x => x.IsDirty).Select(x => x.DetailItem);
 
             await _transcribeItemService.SaveAndSendAsync(transcribeItemsToSave).ConfigureAwait(false);
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
@@ -273,7 +273,7 @@ namespace RewriteMe.Mobile.ViewModels
             _cancellationTokenSource.Cancel();
             _cancellationTokenSource.Dispose();
 
-            DetailItems?.ForEach(x =>
+            TranscribeItems?.ForEach(x =>
             {
                 x.IsDirtyChanged -= HandleIsDirtyChanged;
                 x.Dispose();
