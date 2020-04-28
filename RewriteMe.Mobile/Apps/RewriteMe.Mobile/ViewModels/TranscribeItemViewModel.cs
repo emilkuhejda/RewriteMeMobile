@@ -54,7 +54,16 @@ namespace RewriteMe.Mobile.ViewModels
 
         private WordComponent CurrentComponent { get; set; }
 
-        private bool IsTranscriptChanged => DetailItem.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
+        private bool IsTranscriptChanged
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(DetailItem.UserTranscript))
+                    return string.IsNullOrEmpty(DetailItem.Transcript);
+
+                return !DetailItem.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
+            }
+        }
 
         protected override void OnTranscriptChanged(string transcript)
         {
@@ -68,7 +77,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteReload()
         {
-            return !IsTranscriptChanged;
+            return IsTranscriptChanged;
         }
 
         protected override async Task ExecutePlayCommandAsync()
@@ -115,9 +124,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected override void ExecuteReloadCommand()
         {
-            TryStartHighlighting();
-
             Transcript = DetailItem.Transcript;
+
+            TryStartHighlighting();
         }
 
         protected override void ExecuteEditorUnFocusedCommand()
