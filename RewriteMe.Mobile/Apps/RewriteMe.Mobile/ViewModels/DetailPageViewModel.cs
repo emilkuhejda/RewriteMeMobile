@@ -147,7 +147,7 @@ namespace RewriteMe.Mobile.ViewModels
             ProgressText = Loc.Text(TranslationKeys.Downloading, 0);
         }
 
-        private TranscribeItemViewModel CreateTranscribeItemViewModel(TranscribeItem detailItem)
+        private TranscribeItemViewModel CreateTranscribeItemViewModel(TranscribeItem transcribeItem)
         {
             var viewModel = new TranscribeItemViewModel(
                 _transcriptAudioSourceService,
@@ -155,7 +155,7 @@ namespace RewriteMe.Mobile.ViewModels
                 SettingsViewModel,
                 PlayerViewModel,
                 DialogService,
-                detailItem,
+                transcribeItem,
                 _cancellationTokenSource.Token);
             viewModel.Initialize();
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;

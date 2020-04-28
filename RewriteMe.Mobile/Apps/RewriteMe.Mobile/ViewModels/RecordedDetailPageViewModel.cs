@@ -90,9 +90,9 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        private RecordedAudioFileViewModel CreateRecordedAudioFileViewModel(RecordedAudioFile detailItem)
+        private RecordedAudioFileViewModel CreateRecordedAudioFileViewModel(RecordedAudioFile recordedAudioFile)
         {
-            var viewModel = new RecordedAudioFileViewModel(PlayerViewModel, DialogService, detailItem);
+            var viewModel = new RecordedAudioFileViewModel(PlayerViewModel, DialogService, recordedAudioFile);
             viewModel.Initialize();
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
