@@ -24,10 +24,12 @@ namespace RewriteMe.Mobile.ViewModels
         public event EventHandler IsDirtyChanged;
 
         protected DetailItemViewModel(
+            SettingsViewModel settingsViewModel,
             PlayerViewModel playerViewModel,
             IDialogService dialogService,
             T detailItem)
         {
+            SettingsViewModel = settingsViewModel;
             PlayerViewModel = playerViewModel;
             DialogService = dialogService;
             DetailItem = detailItem;
@@ -39,6 +41,8 @@ namespace RewriteMe.Mobile.ViewModels
             ReloadCommand = new DelegateCommand(ExecuteReloadCommand, CanExecuteReloadCommand);
             EditorUnFocusedCommand = new DelegateCommand(ExecuteEditorUnFocusedCommand, CanExecuteEditorUnFocusedCommand);
         }
+
+        protected SettingsViewModel SettingsViewModel { get; }
 
         protected PlayerViewModel PlayerViewModel { get; }
 
@@ -119,7 +123,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         protected void TrySetIsHighlightingEnabled(bool isHighlightingEnabled)
         {
-            if (isHighlightingEnabled && Words != null && Words.Any())
+            if (SettingsViewModel.IsHighlightingEnabled && isHighlightingEnabled && Words != null && Words.Any())
             {
                 IsHighlightingEnabled = true;
             }

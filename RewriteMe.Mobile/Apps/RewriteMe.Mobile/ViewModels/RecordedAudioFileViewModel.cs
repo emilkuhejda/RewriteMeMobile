@@ -10,10 +10,11 @@ namespace RewriteMe.Mobile.ViewModels
     public class RecordedAudioFileViewModel : DetailItemViewModel<RecordedAudioFile>
     {
         public RecordedAudioFileViewModel(
+            SettingsViewModel settingsViewModel,
             PlayerViewModel playerViewModel,
             IDialogService dialogService,
             RecordedAudioFile recordedAudioFile)
-            : base(playerViewModel, dialogService, recordedAudioFile)
+            : base(settingsViewModel, playerViewModel, dialogService, recordedAudioFile)
         {
             if (!string.IsNullOrWhiteSpace(recordedAudioFile.UserTranscript))
             {
@@ -47,11 +48,14 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(Transcript))
-                    return !string.IsNullOrWhiteSpace(DetailItem.Transcript);
+                if (string.IsNullOrWhiteSpace(DetailItem.Transcript) && string.IsNullOrWhiteSpace(Transcript))
+                    return false;
 
-                if (string.IsNullOrWhiteSpace(DetailItem.Transcript))
-                    return !string.IsNullOrWhiteSpace(Transcript);
+                if (string.IsNullOrWhiteSpace(DetailItem.Transcript) && !string.IsNullOrWhiteSpace(Transcript))
+                    return true;
+
+                if (string.IsNullOrWhiteSpace(Transcript))
+                    return false;
 
                 return !DetailItem.Transcript.Equals(Transcript, StringComparison.Ordinal);
             }
