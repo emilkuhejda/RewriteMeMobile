@@ -7,6 +7,7 @@ using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.iOS.BackgroundServices;
 using RewriteMe.Mobile.iOS.Configuration;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
+using Syncfusion.SfNavigationDrawer.XForms.iOS;
 using Syncfusion.SfRadialMenu.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
 using Syncfusion.XForms.iOS.Border;
@@ -100,6 +101,8 @@ namespace RewriteMe.Mobile.iOS
             SfRadialMenuRenderer.Init();
             SfTextInputLayoutRenderer.Init();
             SfCircularProgressBarRenderer.Init();
+
+            new SfNavigationDrawerRenderer();
 
             using (var busyIndicatorRenderer = new SfBusyIndicatorRenderer()) { }
         }
