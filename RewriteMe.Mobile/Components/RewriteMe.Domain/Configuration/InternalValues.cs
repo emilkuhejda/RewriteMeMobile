@@ -18,6 +18,8 @@
 
         public static InternalValue<long> RemainingTimeTicks { get; } = new InternalValue<long>("RemainingTimeTicks", 0);
 
+        public static InternalValue<bool> IsHighlightingEnabled { get; } = new InternalValue<bool>("IsHighlightingEnabled", false);
+
         public static InternalValue<bool> IsIntroSkipped { get; } = new InternalValue<bool>("IsIntroSkipped", false);
     }
 }

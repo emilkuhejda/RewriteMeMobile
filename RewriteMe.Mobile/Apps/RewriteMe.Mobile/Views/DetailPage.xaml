@@ -2,44 +2,82 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.DetailPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
-                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
+                          xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
+                          xmlns:xForms="clr-namespace:Syncfusion.SfNavigationDrawer.XForms;assembly=Syncfusion.SfNavigationDrawer.XForms">
     <views:BaseNavigationPage.RightNavigationToolbarItems>
+        <controls:NavigationToolbarItem Command="{Binding OpenSettingsCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Settings.svg" />
         <controls:NavigationToolbarItem Command="{Binding DeleteCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Delete.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
 
-    <Grid RowSpacing="0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
+    <xForms:SfNavigationDrawer>
+        <xForms:SfNavigationDrawer.SecondaryDrawerSettings>
+            <xForms:DrawerSettings ContentBackgroundColor="{StaticResource ColorGrey200}"
+                                   DrawerFooterHeight="0"
+                                   DrawerHeaderHeight="0"
+                                   DrawerHeight="200"
+                                   EnableSwipeGesture="True"
+                                   IsOpen="{Binding IsPopupOpen, Mode=TwoWay}"
+                                   Position="Bottom"
+                                   Transition="SlideOnTop"
+                                   Duration="400">
+                <xForms:DrawerSettings.DrawerContentView>
+                    <Grid Padding="{StaticResource StandardPadding}">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
 
-        <StackLayout Padding="16,16,16,0" IsVisible="{Binding IsProgressVisible}">
-            <ProgressBar Progress="{Binding Progress}" ProgressColor="{StaticResource ColorPrimary}" />
-            <Label HorizontalOptions="End"
-                   Style="{StaticResource LightBoldStyle}"
-                   Text="{Binding ProgressText}" />
-        </StackLayout>
+                        <Label Grid.Row="0"
+                               Grid.Column="0"
+                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Highlighter}}" />
+                        <buttons:SfSwitch Grid.Row="0"
+                                          Grid.Column="1"
+                                          AllowIndeterminateState="False"
+                                          IsOn="{Binding SettingsViewModel.IsHighlightingEnabled}" />
+                    </Grid>
+                </xForms:DrawerSettings.DrawerContentView>
+            </xForms:DrawerSettings>
+        </xForms:SfNavigationDrawer.SecondaryDrawerSettings>
+        <xForms:SfNavigationDrawer.ContentView>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
 
-        <views:PlayerView Grid.Row="1" BindingContext="{Binding PlayerViewModel}" />
+                <StackLayout Padding="16,16,16,0" IsVisible="{Binding IsProgressVisible}">
+                    <ProgressBar Progress="{Binding Progress}" ProgressColor="{StaticResource ColorPrimary}" />
+                    <Label HorizontalOptions="End"
+                           Style="{StaticResource LightBoldStyle}"
+                           Text="{Binding ProgressText}" />
+                </StackLayout>
 
-        <Label Grid.Row="2"
-               FontAttributes="Italic"
-               HorizontalOptions="Center"
-               IsVisible="{Binding NotAvailableData}"
-               Style="{StaticResource LabelStyle}"
-               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
-               VerticalOptions="Start" />
+                <views:PlayerView Grid.Row="1" BindingContext="{Binding PlayerViewModel}" />
 
-        <Grid Grid.Row="3" Padding="{StaticResource StandardPadding}">
-            <CollectionView ItemTemplate="{StaticResource DetailItemsTemplate}" ItemsSource="{Binding DetailItems}" />
-        </Grid>
+                <Label Grid.Row="2"
+                       FontAttributes="Italic"
+                       HorizontalOptions="Center"
+                       IsVisible="{Binding NotAvailableData}"
+                       Style="{StaticResource LabelStyle}"
+                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.NoAvailableData}}"
+                       VerticalOptions="Start" />
 
-        <controls:ContextActionBar Grid.Row="4" ItemsSource="{Binding NavigationItems}" />
-    </Grid>
+                <Grid Grid.Row="3" Padding="{StaticResource StandardPadding}">
+                    <CollectionView ItemTemplate="{StaticResource DetailItemsTemplate}" ItemsSource="{Binding DetailItems}" />
+                </Grid>
+
+                <controls:ContextActionBar Grid.Row="4" ItemsSource="{Binding NavigationItems}" />
+            </Grid>
+        </xForms:SfNavigationDrawer.ContentView>
+    </xForms:SfNavigationDrawer>
 </views:BaseNavigationPage>

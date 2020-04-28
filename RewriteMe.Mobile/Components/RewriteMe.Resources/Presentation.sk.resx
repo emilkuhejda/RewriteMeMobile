@@ -346,6 +346,9 @@
   <data name="Accuracy" xml:space="preserve">
     <value>({0}% presnosť)</value>
   </data>
+  <data name="Highlighter" xml:space="preserve">
+    <value>Zvýrazňovač</value>
+  </data>
   
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>Nemáte oprávnenie nahrať súbor. Prosím, opakujte operáciu neskôr.</value>

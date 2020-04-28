@@ -113,6 +113,7 @@
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.1.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="18.1.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.1.0.46" />
+    <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="18.1.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="18.1.0.46" />
     <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu" Version="18.1.0.46" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />

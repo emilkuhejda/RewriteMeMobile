@@ -19,6 +19,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public RecordedDetailPageViewModel(
             IRecordedItemService recordedItemService,
+            IInternalValueService internalValueService,
             IEmailService emailService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -27,7 +28,11 @@ namespace RewriteMe.Mobile.ViewModels
             : base(emailService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _recordedItemService = recordedItemService;
+
+            SettingsViewModel = new SettingsViewModel(internalValueService);
         }
+
+        public SettingsViewModel SettingsViewModel { get; set; }
 
         private RecordedItem RecordedItem { get; set; }
 
@@ -35,6 +40,8 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
+                await SettingsViewModel.InitializeAsync().ConfigureAwait(false);
+
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     var recordedItem = navigationParameters.GetValue<RecordedItem>();
@@ -54,7 +61,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private DetailItemViewModel<RecordedAudioFile> CreateDetailItemViewModel(RecordedAudioFile detailItem)
         {
-            var viewModel = new RecordedAudioFileViewModel(PlayerViewModel, DialogService, detailItem);
+            var viewModel = new RecordedAudioFileViewModel(SettingsViewModel, PlayerViewModel, DialogService, detailItem);
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
             return viewModel;

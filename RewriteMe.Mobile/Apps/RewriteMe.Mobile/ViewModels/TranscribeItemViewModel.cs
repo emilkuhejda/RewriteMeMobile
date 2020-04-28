@@ -26,15 +26,18 @@ namespace RewriteMe.Mobile.ViewModels
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
             ITranscribeItemManager transcribeItemManager,
+            SettingsViewModel settingsViewModel,
             PlayerViewModel playerViewModel,
             IDialogService dialogService,
             TranscribeItem transcribeItem,
             CancellationToken cancellationToken)
-            : base(playerViewModel, dialogService, transcribeItem)
+            : base(settingsViewModel, playerViewModel, dialogService, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _transcribeItemManager = transcribeItemManager;
             _cancellationToken = cancellationToken;
+
+            SettingsViewModel.SettingsChanged += HandleSettingsChanged;
 
             if (!string.IsNullOrWhiteSpace(transcribeItem.UserTranscript))
             {
@@ -60,11 +63,14 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get
             {
-                if (string.IsNullOrWhiteSpace(DetailItem.UserTranscript))
-                    return !string.IsNullOrWhiteSpace(DetailItem.Transcript);
+                if (string.IsNullOrWhiteSpace(DetailItem.Transcript) && string.IsNullOrWhiteSpace(DetailItem.UserTranscript))
+                    return false;
 
-                if (string.IsNullOrWhiteSpace(DetailItem.Transcript))
-                    return !string.IsNullOrWhiteSpace(DetailItem.UserTranscript);
+                if (string.IsNullOrWhiteSpace(DetailItem.Transcript) && !string.IsNullOrWhiteSpace(DetailItem.UserTranscript))
+                    return true;
+
+                if (string.IsNullOrWhiteSpace(DetailItem.UserTranscript))
+                    return false;
 
                 return !DetailItem.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
             }
@@ -205,11 +211,24 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        private void HandleSettingsChanged(object sender, EventArgs e)
+        {
+            if (SettingsViewModel.IsHighlightingEnabled)
+            {
+                TryStartHighlighting();
+            }
+            else
+            {
+                TrySetIsHighlightingEnabled(false);
+            }
+        }
+
         protected override void DisposeInternal()
         {
             base.DisposeInternal();
 
             PlayerViewModel.Tick -= HandleTick;
+            SettingsViewModel.SettingsChanged -= HandleSettingsChanged;
         }
     }
 }
