@@ -26,11 +26,12 @@ namespace RewriteMe.Mobile.ViewModels
         public TranscribeItemViewModel(
             ITranscriptAudioSourceService transcriptAudioSourceService,
             ITranscribeItemManager transcribeItemManager,
+            DetailPageSettingsViewModel settingsViewModel,
             PlayerViewModel playerViewModel,
             IDialogService dialogService,
             TranscribeItem transcribeItem,
             CancellationToken cancellationToken)
-            : base(playerViewModel, dialogService, transcribeItem)
+            : base(settingsViewModel, playerViewModel, dialogService, transcribeItem)
         {
             _transcriptAudioSourceService = transcriptAudioSourceService;
             _transcribeItemManager = transcribeItemManager;

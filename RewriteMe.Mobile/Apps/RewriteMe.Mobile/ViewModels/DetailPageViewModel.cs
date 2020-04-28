@@ -53,7 +53,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             _cancellationTokenSource = new CancellationTokenSource();
 
-            Settings = new DetailPageSettingsViewModel(internalValueService);
+            SettingsViewModel = new DetailPageSettingsViewModel(internalValueService);
             OpenSettingsCommand = new DelegateCommand(ExecuteOpenSettingsCommand);
         }
 
@@ -61,7 +61,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private FileItem FileItem { get; set; }
 
-        public DetailPageSettingsViewModel Settings { get; set; }
+        public DetailPageSettingsViewModel SettingsViewModel { get; set; }
 
         public bool IsPopupOpen
         {
@@ -87,7 +87,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                await Settings.InitializeAsync().ConfigureAwait(false);
+                await SettingsViewModel.InitializeAsync().ConfigureAwait(false);
                 InitializeProgressLabel();
 
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
@@ -116,6 +116,7 @@ namespace RewriteMe.Mobile.ViewModels
             var viewModel = new TranscribeItemViewModel(
                 _transcriptAudioSourceService,
                 _transcribeItemManager,
+                SettingsViewModel,
                 PlayerViewModel,
                 DialogService,
                 detailItem,

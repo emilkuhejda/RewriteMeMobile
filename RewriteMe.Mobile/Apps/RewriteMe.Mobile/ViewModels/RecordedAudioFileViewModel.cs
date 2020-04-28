@@ -10,10 +10,11 @@ namespace RewriteMe.Mobile.ViewModels
     public class RecordedAudioFileViewModel : DetailItemViewModel<RecordedAudioFile>
     {
         public RecordedAudioFileViewModel(
+            DetailPageSettingsViewModel settingsViewModel,
             PlayerViewModel playerViewModel,
             IDialogService dialogService,
             RecordedAudioFile recordedAudioFile)
-            : base(playerViewModel, dialogService, recordedAudioFile)
+            : base(settingsViewModel, playerViewModel, dialogService, recordedAudioFile)
         {
             if (!string.IsNullOrWhiteSpace(recordedAudioFile.UserTranscript))
             {

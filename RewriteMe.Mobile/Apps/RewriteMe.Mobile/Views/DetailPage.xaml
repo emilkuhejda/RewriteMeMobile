@@ -40,7 +40,7 @@
                         <buttons:SfSwitch Grid.Row="0"
                                           Grid.Column="1"
                                           AllowIndeterminateState="False"
-                                          IsOn="{Binding Settings.IsHighlightingEnabled}" />
+                                          IsOn="{Binding SettingsViewModel.IsHighlightingEnabled}" />
                     </Grid>
                 </xForms:DrawerSettings.DrawerContentView>
             </xForms:DrawerSettings>

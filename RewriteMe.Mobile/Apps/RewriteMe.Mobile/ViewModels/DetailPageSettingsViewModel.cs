@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Prism.Mvvm;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Configuration;
@@ -10,6 +11,8 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private readonly IInternalValueService _internalValueService;
         private bool _isHighlightingEnabled;
+
+        public event EventHandler SettingsChanged;
 
         public DetailPageSettingsViewModel(IInternalValueService internalValueService)
         {
@@ -31,8 +34,15 @@ namespace RewriteMe.Mobile.ViewModels
                 if (SetProperty(ref _isHighlightingEnabled, value))
                 {
                     AsyncHelper.RunSync(() => _internalValueService.UpdateValueAsync(InternalValues.IsHighlightingEnabled, value));
+
+                    OnSettingsChanged();
                 }
             }
+        }
+
+        private void OnSettingsChanged()
+        {
+            SettingsChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }
