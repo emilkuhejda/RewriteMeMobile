@@ -60,8 +60,11 @@ namespace RewriteMe.Mobile.ViewModels
         {
             get
             {
-                if (string.IsNullOrEmpty(DetailItem.UserTranscript))
-                    return string.IsNullOrEmpty(DetailItem.Transcript);
+                if (string.IsNullOrWhiteSpace(DetailItem.UserTranscript))
+                    return !string.IsNullOrWhiteSpace(DetailItem.Transcript);
+
+                if (string.IsNullOrWhiteSpace(DetailItem.Transcript))
+                    return !string.IsNullOrWhiteSpace(DetailItem.UserTranscript);
 
                 return !DetailItem.Transcript.Equals(DetailItem.UserTranscript, StringComparison.Ordinal);
             }
