@@ -92,6 +92,7 @@
                                         BackgroundColor="{StaticResource ColorWhite}"
                                         HeightRequest="40"
                                         IsBusy="{Binding IsInProgress}"
+                                        IsVisible="{Binding IsInProgress}"
                                         TextColor="{StaticResource ColorPrimary}"
                                         VerticalOptions="Center"
                                         ViewBoxHeight="40"
