@@ -158,30 +158,6 @@ namespace RewriteMe.Mobile.ViewModels
 
             Time = TranscribeItem.TimeRange;
             Accuracy = Loc.Text(TranslationKeys.Accuracy, TranscribeItem.ToAverageConfidence());
-
-            InitializeWords(TranscribeItem);
-        }
-
-        private void InitializeWords(TranscribeItem transcribeItem)
-        {
-            var groups = transcribeItem.Alternatives
-                .SelectMany(x => x.Words)
-                .OrderBy(x => x.StartTimeTicks)
-                .ToArray()
-                .Split(MergeWordsCount);
-
-            var words = new List<WordComponent>();
-            foreach (var enumerable in groups)
-            {
-                var group = enumerable.ToList();
-                words.Add(new WordComponent
-                {
-                    Text = string.Join(" ", group.Select(x => x.Word)),
-                    StartTime = group.First().StartTime.TotalSeconds
-                });
-            }
-
-            Words = words;
         }
 
         private async Task ExecutePlayCommandAsync()
@@ -221,7 +197,10 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 _playerViewModel.Load(_transcriptAudioSource.Id, _transcriptAudioSource.Source);
+
+                InitializeWords();
                 TryStartHighlighting();
+
                 _playerViewModel.Play();
             }
         }
@@ -248,6 +227,31 @@ namespace RewriteMe.Mobile.ViewModels
             TryStartHighlighting();
         }
 
+        private void InitializeWords()
+        {
+            if (Words != null)
+                return;
+
+            var groups = TranscribeItem.Alternatives
+                .SelectMany(x => x.Words)
+                .OrderBy(x => x.StartTimeTicks)
+                .ToArray()
+                .Split(MergeWordsCount);
+
+            var words = new List<WordComponent>();
+            foreach (var enumerable in groups)
+            {
+                var group = enumerable.ToList();
+                words.Add(new WordComponent
+                {
+                    Text = string.Join(" ", group.Select(x => x.Word)),
+                    StartTime = group.First().StartTime.TotalSeconds
+                });
+            }
+
+            Words = words;
+        }
+
         private void TryStartHighlighting()
         {
             if (_transcriptAudioSource == null || _playerViewModel == null || _transcriptAudioSource.Id != _playerViewModel.SourceIdentifier)
@@ -258,16 +262,17 @@ namespace RewriteMe.Mobile.ViewModels
 
             TrySetIsHighlightingEnabled(true);
 
-            _playerViewModel.ClearOnStopAction();
-            _playerViewModel.SetOnStopAction(OnStopAction());
+            _playerViewModel.ClearOnSourceLoadAction();
+            _playerViewModel.SetOnSourceLoadAction(OnSourceLoadAction());
             _playerViewModel.Tick -= HandleTick;
             _playerViewModel.Tick += HandleTick;
         }
 
-        private Action OnStopAction()
+        private Action OnSourceLoadAction()
         {
             return () =>
             {
+                Words = null;
                 TrySetIsHighlightingEnabled(false);
                 _playerViewModel.Tick -= HandleTick;
             };

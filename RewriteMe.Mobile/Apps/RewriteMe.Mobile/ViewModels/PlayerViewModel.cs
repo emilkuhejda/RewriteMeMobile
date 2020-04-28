@@ -17,7 +17,7 @@ namespace RewriteMe.Mobile.ViewModels
         private TimeSpan _totalTime;
         private double _duration = 59;
         private string _position;
-        private Action _onStopAction;
+        private Action _onSourceLoadAction;
 
         private bool _disposed;
 
@@ -84,14 +84,14 @@ namespace RewriteMe.Mobile.ViewModels
 
         public double CurrentPosition => _player.CurrentPosition;
 
-        public void SetOnStopAction(Action onStopAction)
+        public void SetOnSourceLoadAction(Action onSourceLoadAction)
         {
-            _onStopAction = onStopAction;
+            _onSourceLoadAction = onSourceLoadAction;
         }
 
-        public void ClearOnStopAction()
+        public void ClearOnSourceLoadAction()
         {
-            _onStopAction = null;
+            _onSourceLoadAction = null;
         }
 
         public void Load(Guid sourceIdentifier, byte[] data)
@@ -106,11 +106,10 @@ namespace RewriteMe.Mobile.ViewModels
             if (_player == null)
                 return;
 
+            _onSourceLoadAction?.Invoke();
+
             if (_player.IsPlaying)
-            {
-                _onStopAction?.Invoke();
                 _player.Stop();
-            }
 
             if (data == null)
                 return;
@@ -205,7 +204,8 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (_player != null)
                 {
-                    ClearOnStopAction();
+                    ClearOnSourceLoadAction();
+
                     _player.Stop();
                     _player.PlaybackEnded -= HandlePlaybackEnded;
                     _player.Dispose();
