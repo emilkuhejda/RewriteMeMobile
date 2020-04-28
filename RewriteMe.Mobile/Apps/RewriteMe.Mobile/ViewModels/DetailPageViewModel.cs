@@ -30,6 +30,10 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IEmailService _emailService;
         private readonly CancellationTokenSource _cancellationTokenSource;
 
+        private FileItem _fileItem;
+        private ActionBarTileViewModel _sendTileItem;
+        private ActionBarTileViewModel _saveTileItem;
+
         private IList<DetailItemViewModel<TranscribeItem>> _transcribeItems;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _isPopupOpen;
@@ -73,15 +77,9 @@ namespace RewriteMe.Mobile.ViewModels
 
         public ICommand OpenSettingsCommand { get; }
 
-        private FileItem FileItem { get; set; }
-
         public SettingsViewModel SettingsViewModel { get; set; }
 
         public PlayerViewModel PlayerViewModel { get; }
-
-        private ActionBarTileViewModel SendTileItem { get; set; }
-
-        private ActionBarTileViewModel SaveTileItem { get; set; }
 
         public bool IsProgressVisible => _transcribeItemManager.IsRunning;
 
@@ -130,9 +128,9 @@ namespace RewriteMe.Mobile.ViewModels
 
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
-                    FileItem = navigationParameters.GetValue<FileItem>();
+                    _fileItem = navigationParameters.GetValue<FileItem>();
 
-                    var transcribeItems = await _transcribeItemService.GetAllAsync(FileItem.Id).ConfigureAwait(false);
+                    var transcribeItems = await _transcribeItemService.GetAllAsync(_fileItem.Id).ConfigureAwait(false);
 
                     TranscribeItems?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
                     TranscribeItems = transcribeItems.OrderBy(x => x.StartTime).Select(CreateDetailItemViewModel).ToList();
@@ -166,7 +164,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private IEnumerable<ActionBarTileViewModel> CreateNavigation()
         {
-            SendTileItem = new ActionBarTileViewModel
+            _sendTileItem = new ActionBarTileViewModel
             {
                 Text = Loc.Text(TranslationKeys.Send),
                 IsEnabled = CanExecuteSendCommand(),
@@ -175,7 +173,7 @@ namespace RewriteMe.Mobile.ViewModels
                 SelectedCommand = new AsyncCommand(ExecuteSendCommandAsync, CanExecuteSendCommand)
             };
 
-            SaveTileItem = new ActionBarTileViewModel
+            _saveTileItem = new ActionBarTileViewModel
             {
                 Text = Loc.Text(TranslationKeys.Save),
                 IsEnabled = CanExecuteSaveCommand(),
@@ -184,7 +182,7 @@ namespace RewriteMe.Mobile.ViewModels
                 SelectedCommand = new AsyncCommand(ExecuteSaveCommandAsync, CanExecuteSaveCommand)
             };
 
-            return new[] { SendTileItem, SaveTileItem };
+            return new[] { _sendTileItem, _saveTileItem };
         }
 
         private bool CanExecuteSendCommand()
@@ -202,7 +200,7 @@ namespace RewriteMe.Mobile.ViewModels
                 message.AppendLine().AppendLine();
             }
 
-            await _emailService.SendAsync(string.Empty, FileItem.Name, message.ToString()).ConfigureAwait(false);
+            await _emailService.SendAsync(string.Empty, _fileItem.Name, message.ToString()).ConfigureAwait(false);
         }
 
         private bool CanExecuteSaveCommand()
@@ -221,7 +219,7 @@ namespace RewriteMe.Mobile.ViewModels
         private async Task ExecuteDeleteCommandAsync()
         {
             var result = await DialogService.ConfirmAsync(
-                Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, FileItem.Name),
+                Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, _fileItem.Name),
                 okText: Loc.Text(TranslationKeys.Ok),
                 cancelText: Loc.Text(TranslationKeys.Cancel)).ConfigureAwait(false);
 
@@ -231,7 +229,7 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     try
                     {
-                        await _fileItemService.DeleteAsync(FileItem).ConfigureAwait(false);
+                        await _fileItemService.DeleteAsync(_fileItem).ConfigureAwait(false);
                         await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                     }
                     catch (FileNotUploadedException)
@@ -249,7 +247,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void HandleIsDirtyChanged(object sender, EventArgs e)
         {
-            SaveTileItem.IsEnabled = CanExecuteSaveCommand();
+            _saveTileItem.IsEnabled = CanExecuteSaveCommand();
         }
 
         private void HandleStateChanged(object sender, ManagerStateChangedEventArgs e)

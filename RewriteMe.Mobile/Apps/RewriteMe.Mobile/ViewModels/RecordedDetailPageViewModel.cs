@@ -5,7 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
-using RewriteMe.Business.Services;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Transcription;
@@ -22,7 +21,11 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IRecordedItemService _recordedItemService;
         private readonly IEmailService _emailService;
 
-        private IList<DetailItemViewModel<RecordedAudioFile>> _recordedFiles;
+        private RecordedItem _recordedItem;
+        private ActionBarTileViewModel _sendTileItem;
+        private ActionBarTileViewModel _saveTileItem;
+
+        private IList<RecordedAudioFileViewModel> _recordedFiles;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _notAvailableData;
 
@@ -48,13 +51,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public PlayerViewModel PlayerViewModel { get; }
 
-        private RecordedItem RecordedItem { get; set; }
-
-        private ActionBarTileViewModel SendTileItem { get; set; }
-
-        private ActionBarTileViewModel SaveTileItem { get; set; }
-
-        public IList<DetailItemViewModel<RecordedAudioFile>> RecordedFiles
+        public IList<RecordedAudioFileViewModel> RecordedFiles
         {
             get => _recordedFiles;
             private set => SetProperty(ref _recordedFiles, value);
@@ -79,10 +76,10 @@ namespace RewriteMe.Mobile.ViewModels
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
                     var recordedItem = navigationParameters.GetValue<RecordedItem>();
-                    RecordedItem = await _recordedItemService.GetAsync(recordedItem.Id).ConfigureAwait(false);
+                    _recordedItem = await _recordedItemService.GetAsync(recordedItem.Id).ConfigureAwait(false);
 
                     RecordedFiles?.ForEach(x => x.IsDirtyChanged -= HandleIsDirtyChanged);
-                    RecordedFiles = RecordedItem.AudioFiles.OrderBy(x => x.DateCreated).Select(CreateDetailItemViewModel).ToList();
+                    RecordedFiles = _recordedItem.AudioFiles.OrderBy(x => x.DateCreated).Select(CreateDetailItemViewModel).ToList();
 
                     NotAvailableData = !RecordedFiles.Any();
                 }
@@ -93,9 +90,9 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
-        private DetailItemViewModel<RecordedAudioFile> CreateDetailItemViewModel(RecordedAudioFile detailItem)
+        private RecordedAudioFileViewModel CreateDetailItemViewModel(RecordedAudioFile detailItem)
         {
-            var viewModel = new RecordedAudioFileViewModel(new SettingsViewModel(new InternalValueService(null)), PlayerViewModel, DialogService, detailItem);
+            RecordedAudioFileViewModel viewModel = new RecordedAudioFileViewModel(PlayerViewModel, DialogService, detailItem);
             viewModel.IsDirtyChanged += HandleIsDirtyChanged;
 
             return viewModel;
@@ -103,7 +100,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private IEnumerable<ActionBarTileViewModel> CreateNavigation()
         {
-            SendTileItem = new ActionBarTileViewModel
+            _sendTileItem = new ActionBarTileViewModel
             {
                 Text = Loc.Text(TranslationKeys.Send),
                 IsEnabled = CanExecuteSendCommand(),
@@ -112,7 +109,7 @@ namespace RewriteMe.Mobile.ViewModels
                 SelectedCommand = new AsyncCommand(ExecuteSendCommandAsync, CanExecuteSendCommand)
             };
 
-            SaveTileItem = new ActionBarTileViewModel
+            _saveTileItem = new ActionBarTileViewModel
             {
                 Text = Loc.Text(TranslationKeys.Save),
                 IsEnabled = CanExecuteSaveCommand(),
@@ -121,7 +118,7 @@ namespace RewriteMe.Mobile.ViewModels
                 SelectedCommand = new AsyncCommand(ExecuteSaveCommandAsync, CanExecuteSaveCommand)
             };
 
-            return new[] { SendTileItem, SaveTileItem };
+            return new[] { _sendTileItem, _saveTileItem };
         }
 
         private bool CanExecuteSaveCommand()
@@ -152,12 +149,12 @@ namespace RewriteMe.Mobile.ViewModels
                 message.AppendLine();
             }
 
-            await _emailService.SendAsync(string.Empty, RecordedItem.DateCreated.ToLocalTime().ToString(Constants.TimeFormat), message.ToString()).ConfigureAwait(false);
+            await _emailService.SendAsync(string.Empty, _recordedItem.DateCreated.ToLocalTime().ToString(Constants.TimeFormat), message.ToString()).ConfigureAwait(false);
         }
 
         private async Task ExecuteDeleteCommandAsync()
         {
-            var title = RecordedItem.FileName;
+            var title = _recordedItem.FileName;
             var result = await DialogService.ConfirmAsync(
                 Loc.Text(TranslationKeys.PromptDeleteFileItemMessage, title),
                 okText: Loc.Text(TranslationKeys.Ok),
@@ -167,7 +164,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 using (new OperationMonitor(OperationScope))
                 {
-                    await _recordedItemService.DeleteRecordedItemAsync(RecordedItem).ConfigureAwait(false);
+                    await _recordedItemService.DeleteRecordedItemAsync(_recordedItem).ConfigureAwait(false);
                     await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
                 }
             }
@@ -175,7 +172,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private void HandleIsDirtyChanged(object sender, EventArgs e)
         {
-            SaveTileItem.IsEnabled = CanExecuteSaveCommand();
+            _saveTileItem.IsEnabled = CanExecuteSaveCommand();
         }
 
         protected override void DisposeInternal()
@@ -183,7 +180,6 @@ namespace RewriteMe.Mobile.ViewModels
             RecordedFiles?.ForEach(x =>
             {
                 x.IsDirtyChanged -= HandleIsDirtyChanged;
-                x.Dispose();
             });
 
             PlayerViewModel?.Dispose();
