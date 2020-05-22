@@ -33,7 +33,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterSingleton<IPushNotificationsService, PushNotificationsService>();
             containerRegistry.RegisterSingleton<INavigator, Navigator>();
             containerRegistry.RegisterSingleton<IExceptionHandlingStrategy, ExceptionHandlingStrategy>();
-            containerRegistry.RegisterSingleton<IMessageObserver, MessageObserver>();
+            containerRegistry.RegisterSingleton<ISynchronizerMessageObserver, SynchronizerMessageObserver>();
 
             RegisterViewModels(containerRegistry);
             RegisterPages(containerRegistry);

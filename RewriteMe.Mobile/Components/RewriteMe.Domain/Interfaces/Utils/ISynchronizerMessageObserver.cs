@@ -1,6 +1,6 @@
 ﻿namespace RewriteMe.Domain.Interfaces.Utils
 {
-    public interface IMessageObserver
+    public interface ISynchronizerMessageObserver
     {
         void Start();
     }

@@ -113,7 +113,7 @@ namespace RewriteMe.Mobile
             Task.WaitAll(tasks.Select(x => x()).ToArray());
 
             Container.Resolve<IAuthorizationObserver>().Initialize(NavigationService);
-            Container.Resolve<IMessageObserver>().Start();
+            Container.Resolve<ISynchronizerMessageObserver>().Start();
         }
 
         private void NavigateToPage(INavigationParameters navigationParameters)

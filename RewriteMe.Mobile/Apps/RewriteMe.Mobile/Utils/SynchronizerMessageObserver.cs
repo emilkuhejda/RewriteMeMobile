@@ -1,18 +1,17 @@
-﻿using System;
-using RewriteMe.Domain.Events;
+﻿using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.Utils
 {
-    public class MessageObserver : IMessageObserver
+    public class SynchronizerMessageObserver : ISynchronizerMessageObserver
     {
         private readonly ISynchronizerService _synchronizerService;
         private readonly IDialogService _dialogService;
         private bool _isStarted;
 
-        public MessageObserver(
+        public SynchronizerMessageObserver(
             ISynchronizerService synchronizerService,
             IDialogService dialogService)
         {
