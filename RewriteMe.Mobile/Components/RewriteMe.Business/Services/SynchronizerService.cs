@@ -3,6 +3,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR.Client;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
@@ -14,6 +15,7 @@ namespace RewriteMe.Business.Services
     public class SynchronizerService : ISynchronizerService
     {
         private const string RecognitionStateChangedMethod = "recognition-state";
+        private const string RecognitionErrorMethod = "recognition-error";
         private const string FilesListChangedMethod = "file-list";
 
         private readonly IUserSessionService _userSessionService;
@@ -26,6 +28,7 @@ namespace RewriteMe.Business.Services
 
         private HubConnection _hubConnection;
 
+        public event EventHandler<RecognitionErrorOccurredEventArgs> RecognitionErrorOccurred;
         public event EventHandler UnauthorizedCallOccurred;
 
         public SynchronizerService(
@@ -75,6 +78,7 @@ namespace RewriteMe.Business.Services
                 await _hubConnection.StartAsync().ConfigureAwait(false);
                 var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
                 _hubConnection.On<Guid, string>($"{RecognitionStateChangedMethod}-{userId}", HandleRecognitionStateChangedMessageAsync);
+                _hubConnection.On<string>($"{RecognitionErrorMethod}-{userId}", HandleRecognitionErrorMethodAsync);
                 _hubConnection.On($"{FilesListChangedMethod}-{userId}", HandleFilesListChangedMessageAsync);
             }
             catch (Exception ex)
@@ -90,6 +94,15 @@ namespace RewriteMe.Business.Services
             _logger.Info("Receive recognition state change message.");
 
             await StartSynchronizationAsync().ConfigureAwait(false);
+        }
+
+        private async Task HandleRecognitionErrorMethodAsync(string fileName)
+        {
+            _logger.Info("Receive transcription error message.");
+
+            OnRecognitionErrorOccurred(fileName);
+
+            await Task.CompletedTask.ConfigureAwait(false);
         }
 
         private async Task HandleFilesListChangedMessageAsync()
@@ -127,6 +140,11 @@ namespace RewriteMe.Business.Services
             AsyncHelper.RunSync(() => _hubConnection.StopAsync());
 
             _logger.Info("Stopping synchronizer service.");
+        }
+
+        private void OnRecognitionErrorOccurred(string fileName)
+        {
+            RecognitionErrorOccurred?.Invoke(this, new RecognitionErrorOccurredEventArgs(fileName));
         }
 
         private void OnUnauthorizedCallOccurred()

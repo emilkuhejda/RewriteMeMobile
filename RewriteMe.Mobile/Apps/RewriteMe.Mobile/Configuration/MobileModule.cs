@@ -9,6 +9,7 @@ using RewriteMe.Domain.Interfaces.Utils;
 using RewriteMe.Mobile.ExceptionHandling;
 using RewriteMe.Mobile.Navigation;
 using RewriteMe.Mobile.Services;
+using RewriteMe.Mobile.Utils;
 using RewriteMe.Mobile.ViewModels;
 using RewriteMe.Mobile.Views;
 using Xamarin.Forms;
@@ -32,6 +33,7 @@ namespace RewriteMe.Mobile.Configuration
             containerRegistry.RegisterSingleton<IPushNotificationsService, PushNotificationsService>();
             containerRegistry.RegisterSingleton<INavigator, Navigator>();
             containerRegistry.RegisterSingleton<IExceptionHandlingStrategy, ExceptionHandlingStrategy>();
+            containerRegistry.RegisterSingleton<IMessageObserver, MessageObserver>();
 
             RegisterViewModels(containerRegistry);
             RegisterPages(containerRegistry);
