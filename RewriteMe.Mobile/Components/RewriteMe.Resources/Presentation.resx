@@ -349,7 +349,7 @@
   <data name="Highlighter" xml:space="preserve">
     <value>Highlighter</value>
   </data>
-  
+
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>You don't have a permission to upload a file. Please try again later.</value>
   </data>
@@ -433,5 +433,8 @@
   </data>
   <data name="IncorrectUserInputErrorMessage" xml:space="preserve">
     <value>Incorrect data</value>
+  </data>
+  <data name="TranscriptionErrorMessage" xml:space="preserve">
+    <value>File '{0}' was not successfully transcribed. Please try it again or contact us.</value>
   </data>
 </root>

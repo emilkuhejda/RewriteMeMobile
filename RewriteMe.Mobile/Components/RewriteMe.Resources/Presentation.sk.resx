@@ -434,4 +434,7 @@
   <data name="IncorrectUserInputErrorMessage" xml:space="preserve">
     <value>Nesprávne zadané údaje</value>
   </data>
+  <data name="TranscriptionErrorMessage" xml:space="preserve">
+    <value>Súbor '{0}' nebol úspešne spracovaný. Prosím, zopakujte operáciu neskôr alebo kontaktujte nás.</value>
+  </data>
 </root>

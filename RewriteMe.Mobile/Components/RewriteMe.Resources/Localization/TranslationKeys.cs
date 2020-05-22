@@ -85,7 +85,7 @@
         public static string DeleteUserAccountMessage => "DeleteUserAccountMessage";
         public static string Accuracy => "Accuracy";
         public static string Highlighter => "Highlighter";
-        
+
         public static string UnauthorizedErrorMessage => "UnauthorizedErrorMessage";
         public static string FileItemSourceDatabaseUpdateErrorMessage => "FileItemSourceDatabaseUpdateErrorMessage";
         public static string SystemIsUnderMaintenanceErrorMessage => "SystemIsUnderMaintenanceErrorMessage";
@@ -114,5 +114,6 @@
         public static string PurchaseWasNotProcessedErrorMessage => "PurchaseWasNotProcessedErrorMessage";
         public static string UserAccountDeletionErrorMessage => "UserAccountDeletionErrorMessage";
         public static string IncorrectUserInputErrorMessage => "IncorrectUserInputErrorMessage";
+        public static string TranscriptionErrorMessage => "TranscriptionErrorMessage";
     }
 }
