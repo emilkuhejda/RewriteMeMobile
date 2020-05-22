@@ -943,6 +943,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to File &apos;{0}&apos; was not successfully transcribed. Please try it again or contact us..
+        /// </summary>
+        public static string TranscriptionErrorMessage {
+            get {
+                return ResourceManager.GetString("TranscriptionErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Unable to load the audio file..
         /// </summary>
         public static string UnableToLoadAudioFile {
