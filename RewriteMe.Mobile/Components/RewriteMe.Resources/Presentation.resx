@@ -392,6 +392,9 @@
   <data name="NotEnoughFreeMinutesInSubscriptionErrorMessage" xml:space="preserve">
     <value>You do not have enough minutes left. Please buy more time.</value>
   </data>
+  <data name="OneTranscriptionAtTimeErrorMessage" xml:space="preserve">
+    <value>It's only possible to transcribe one file at a time. Please wait till your transcription will be finished.</value>
+  </data>
   <data name="SynchronizationInProgressErrorMessage" xml:space="preserve">
     <value>Synchronization is still in progress. Please try again later.</value>
   </data>

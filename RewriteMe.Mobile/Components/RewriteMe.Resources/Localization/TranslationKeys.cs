@@ -100,6 +100,7 @@
         public static string UploadedFileNotSupportedErrorMessage => "UploadedFileNotSupportedErrorMessage";
         public static string LanguageNotSupportedErrorMessage => "LanguageNotSupportedErrorMessage";
         public static string NotEnoughFreeMinutesInSubscriptionErrorMessage => "NotEnoughFreeMinutesInSubscriptionErrorMessage";
+        public static string OneTranscriptionAtTimeErrorMessage => "OneTranscriptionAtTimeErrorMessage";
         public static string SynchronizationInProgressErrorMessage => "SynchronizationInProgressErrorMessage";
         public static string TranscribeAudioSourceNotFoundErrorMessage => "TranscribeAudioSourceNotFoundErrorMessage";
         public static string SpeechClientNotInitializedErrorMessage => "SpeechClientNotInitializedErrorMessage";
