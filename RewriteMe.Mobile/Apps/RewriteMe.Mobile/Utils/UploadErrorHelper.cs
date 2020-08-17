@@ -26,6 +26,8 @@ namespace RewriteMe.Mobile.Utils
                     return Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage);
                 case ErrorCode.EC300:
                     return Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage);
+                case ErrorCode.EC303:
+                    return Loc.Text(TranslationKeys.OneTranscriptionAtTimeErrorMessage);
                 case ErrorCode.EC400:
                     return Loc.Text(TranslationKeys.FileItemSourceDatabaseUpdateErrorMessage);
                 case ErrorCode.EC500:
