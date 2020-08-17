@@ -392,6 +392,9 @@
   <data name="NotEnoughFreeMinutesInSubscriptionErrorMessage" xml:space="preserve">
     <value>Nemáte dostatok voľných minút. Prosím, zakúpte si viac minút.</value>
   </data>
+  <data name="OneTranscriptionAtTimeErrorMessage" xml:space="preserve">
+    <value>Nie je možné prepísať dva súbory naraz. Prosím počkajte, kým prepis bude hotový.</value>
+  </data>
   <data name="SynchronizationInProgressErrorMessage" xml:space="preserve">
     <value>Práve prebieha synchronizácia. Prosím, zopakujte operáciu neskôr.</value>
   </data>

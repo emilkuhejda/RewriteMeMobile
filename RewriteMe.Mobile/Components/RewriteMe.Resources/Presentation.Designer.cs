@@ -628,6 +628,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to It&apos;s only possible to transcribe one file at a time. Please wait till your transcription will be finished..
+        /// </summary>
+        public static string OneTranscriptionAtTimeErrorMessage {
+            get {
+                return ResourceManager.GetString("OneTranscriptionAtTimeErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Payment seems to be invalid. Please try again later..
         /// </summary>
         public static string PaymentInvalidErrorMessage {
