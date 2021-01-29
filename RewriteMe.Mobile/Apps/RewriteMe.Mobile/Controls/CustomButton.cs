@@ -2,7 +2,7 @@
 
 namespace RewriteMe.Mobile.Controls
 {
-    public class CustomButton : Button
+    public sealed class CustomButton : Button
     {
         public static readonly BindableProperty BackgroundColorPressedProperty =
             BindableProperty.Create(

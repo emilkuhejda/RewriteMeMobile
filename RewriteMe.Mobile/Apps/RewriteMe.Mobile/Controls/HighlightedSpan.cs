@@ -3,7 +3,7 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Controls
 {
-    public class HighlightedSpan : Span
+    public sealed class HighlightedSpan : Span
     {
         public static readonly BindableProperty IsHighlightedProperty =
             BindableProperty.Create(
