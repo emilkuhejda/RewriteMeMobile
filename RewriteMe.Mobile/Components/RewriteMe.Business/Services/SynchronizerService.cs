@@ -59,6 +59,17 @@ namespace RewriteMe.Business.Services
 
             _logger.Info("Starting synchronizer service up.");
 
+            var reconnectDelays = new[]
+            {
+                TimeSpan.FromSeconds(30),
+                TimeSpan.FromMinutes(60),
+                TimeSpan.FromSeconds(90),
+                TimeSpan.FromSeconds(120),
+                TimeSpan.FromSeconds(150),
+                TimeSpan.FromSeconds(180),
+                TimeSpan.FromSeconds(360)
+            };
+
 #if DEBUG
             _hubConnection = new HubConnectionBuilder()
                     .WithUrl(_applicationSettings.CacheHubUrl, options =>
@@ -68,9 +79,11 @@ namespace RewriteMe.Business.Services
                             return new HttpClientHandler { ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true };
                         };
                     })
+                    .WithAutomaticReconnect(reconnectDelays)
                     .Build();
+
 #else
-            _hubConnection = new HubConnectionBuilder().WithUrl(_applicationSettings.CacheHubUrl).Build();
+            _hubConnection = new HubConnectionBuilder().WithUrl(_applicationSettings.CacheHubUrl).WithAutomaticReconnect(reconnectDelays).Build();
 #endif
 
             try
