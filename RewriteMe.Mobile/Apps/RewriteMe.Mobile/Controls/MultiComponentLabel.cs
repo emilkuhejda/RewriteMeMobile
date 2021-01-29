@@ -4,7 +4,7 @@ using Xamarin.Forms;
 
 namespace RewriteMe.Mobile.Controls
 {
-    public class MultiComponentLabel : Label
+    public sealed class MultiComponentLabel : Label
     {
         public static readonly BindableProperty ComponentsProperty =
             BindableProperty.Create(
