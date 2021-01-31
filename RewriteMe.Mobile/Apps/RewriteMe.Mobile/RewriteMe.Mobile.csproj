@@ -102,13 +102,13 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Plugin.InAppBilling" Version="2.0.0" />
+    <PackageReference Include="Prism.Unity.Forms" Version="7.2.0.1422" />
     <PackageReference Include="StyleCop.Analyzers" Version="1.1.118">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Acr.UserDialogs" Version="7.1.0.475" />
     <PackageReference Include="NLog" Version="4.7.7" />
-    <PackageReference Include="Prism.Unity.Forms" Version="8.0.0.1909" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.4.0.39" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.39" />
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="18.4.0.39" />
