@@ -292,6 +292,13 @@ namespace RewriteMe.Mobile.ViewModels
 
                 try
                 {
+                    var mimeType = MimeTypes.GetMimeType(SelectedFile.FileName);
+                    if (MediaContentTypes.IsUnsupported(mimeType))
+                    {
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage), okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+                        return;
+                    }
+
                     var result = await DialogService.ConfirmAsync(
                         Loc.Text(TranslationKeys.UploadFileItemInfoMessage),
                         okText: Loc.Text(TranslationKeys.Ok),
@@ -300,7 +307,9 @@ namespace RewriteMe.Mobile.ViewModels
                     if (result)
                     {
                         var mediaFile = CreateMediaFile();
-                        var fileItem = IsEdit ? FileItem : await _fileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
+                        var fileItem = IsEdit
+                            ? FileItem
+                            : await _fileItemService.CreateAsync(mediaFile, _cancellationTokenSource.Token).ConfigureAwait(false);
                         var uploadedSource = CreateUploadedSource(fileItem, mediaFile, isTranscript);
 
                         await _fileItemService.UpdateUploadStatusAsync(fileItem.Id, UploadStatus.InProgress).ConfigureAwait(false);
@@ -316,9 +325,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
                 catch (NoSubscritionFreeTimeException)
                 {
-                    await DialogService
-                        .AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage))
-                        .ConfigureAwait(false);
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.NotEnoughFreeMinutesInSubscriptionErrorMessage)).ConfigureAwait(false);
                 }
                 catch (OfflineRequestException)
                 {
@@ -327,10 +334,9 @@ namespace RewriteMe.Mobile.ViewModels
                 finally
                 {
                     CanGoBack = true;
+                    ResetLoadingText();
                 }
             }
-
-            ResetLoadingText();
         }
 
         private void UploadFileItemSource(UploadedSource uploadedSource)
