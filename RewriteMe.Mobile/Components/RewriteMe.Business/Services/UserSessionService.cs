@@ -189,17 +189,17 @@ namespace RewriteMe.Business.Services
             }
             catch (MsalException e)
             {
-                if (e.Message.Contains("AADB2C90118", StringComparison.InvariantCultureIgnoreCase))
+                if (e.Message.Contains("AADB2C90118", StringComparison.OrdinalIgnoreCase))
                 {
                     // Password reset requested
                     _logger.Info("The user has requested to reset the password.");
                     return await ResetPasswordAsync().ConfigureAwait(false);
                 }
-                else if (e.Message.Contains("AADB2C90091", StringComparison.InvariantCultureIgnoreCase))
+                else if (e.Message.Contains("AADB2C90091", StringComparison.OrdinalIgnoreCase))
                 {
                     _logger.Info("The user has canceled the sign-up.");
                 }
-                else if ("authentication_canceled".Equals(e.ErrorCode, StringComparison.Ordinal))
+                else if ("authentication_canceled".Equals(e.ErrorCode, StringComparison.OrdinalIgnoreCase))
                 {
                     _logger.Info("The user has canceled the sign-in.");
                 }
