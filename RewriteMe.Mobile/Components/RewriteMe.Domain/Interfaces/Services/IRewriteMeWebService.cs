@@ -28,7 +28,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<TimeSpanWrapper>> GetUserSubscriptionRemainingTimeAsync();
 
-        Task<HttpRequestResult<TimeSpanWrapper>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase);
+        Task<HttpRequestResult<TimeSpanWrapper>> CreateUserSubscriptionAsync(CreateUserSubscriptionInputModel createUserSubscriptionInputModel);
 
         Task<HttpRequestResult<SpeechConfiguration>> GetSpeechConfigurationAsync();
 
@@ -50,7 +50,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<Ok>> CreateSpeechResultAsync(Guid speechResultId, Guid recognizedAudioSampleId, string displayText);
 
-        Task<HttpRequestResult<TimeSpanWrapper>> UpdateSpeechResultsAsync(IList<SpeechResultModel> speechResults);
+        Task<HttpRequestResult<TimeSpanWrapper>> UpdateSpeechResultsAsync(IList<SpeechResultInputModel> speechResults);
 
         Task<HttpRequestResult<IEnumerable<InformationMessage>>> GetInformationMessagesAsync(DateTime updatedAfter);
 

@@ -410,7 +410,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 await _userSubscriptionService.SubtractTimeAsync(audioRecordTotalTime).ConfigureAwait(false);
 
-                var models = _recognizedAudioFiles.Select(x => new SpeechResultModel
+                var models = _recognizedAudioFiles.Select(x => new SpeechResultInputModel
                 {
                     Id = x.RecordedAudioFile.Id,
                     Ticks = x.RecordedAudioFile.TotalTime.Ticks

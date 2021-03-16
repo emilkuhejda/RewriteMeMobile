@@ -109,10 +109,10 @@ namespace RewriteMe.Business.Services
                 ).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<TimeSpanWrapper>> CreateUserSubscriptionAsync(BillingPurchase billingPurchase)
+        public async Task<HttpRequestResult<TimeSpanWrapper>> CreateUserSubscriptionAsync(CreateUserSubscriptionInputModel createUserSubscriptionInputModel)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.CreateUserSubscriptionAsync(ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, billingPurchase), GetAuthHeaders())
+                () => MakeServiceCall(client => client.CreateUserSubscriptionAsync(ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, createUserSubscriptionInputModel), GetAuthHeaders())
                 ).ConfigureAwait(false);
         }
 
@@ -126,7 +126,15 @@ namespace RewriteMe.Business.Services
         public async Task<HttpRequestResult<FileItem>> CreateFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.CreateFileItemAsync(mediaFile.Name, mediaFile.Language, mediaFile.FileName, DateTime.Now, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, cancellationToken), GetAuthHeaders())
+                () => MakeServiceCall(client => client.CreateFileItemAsync(
+                    mediaFile.Name,
+                    mediaFile.Language,
+                    mediaFile.FileName,
+                    false,
+                    DateTime.Now,
+                    ApplicationSettings.ApplicationId,
+                    ApplicationSettings.WebApiVersion,
+                    cancellationToken), GetAuthHeaders())
                 ).ConfigureAwait(false);
         }
 
@@ -137,17 +145,19 @@ namespace RewriteMe.Business.Services
                 ).ConfigureAwait(false);
         }
 
+        // TODO
         public async Task<HttpRequestResult<Ok>> UploadChunkFileAsync(Guid fileItemId, int order, StorageSetting storageSetting, byte[] source, CancellationToken cancellationToken)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.UploadChunkFileAsync(fileItemId, order, storageSetting, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, source, cancellationToken), GetAuthHeaders())
+                () => MakeServiceCall(client => client.UploadChunkFileAsync(fileItemId, order, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, source, cancellationToken), GetAuthHeaders())
             ).ConfigureAwait(false);
         }
 
+        // TODO
         public async Task<HttpRequestResult<FileItem>> SubmitChunksAsync(Guid fileItemId, int chunksCount, StorageSetting storageSetting, CancellationToken cancellationToken)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.SubmitChunksAsync(fileItemId, chunksCount, storageSetting, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, cancellationToken), GetAuthHeaders())
+                () => MakeServiceCall(client => client.SubmitChunksAsync(fileItemId, chunksCount, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion, cancellationToken), GetAuthHeaders())
             ).ConfigureAwait(false);
         }
 
@@ -158,10 +168,17 @@ namespace RewriteMe.Business.Services
             ).ConfigureAwait(false);
         }
 
+        // TODO
         public async Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.TranscribeFileItemAsync(fileItemId, language, ApplicationSettings.ApplicationId, ApplicationSettings.WebApiVersion), GetAuthHeaders())
+                () => MakeServiceCall(client => client.TranscribeFileItemAsync(
+                    fileItemId,
+                    language,
+                    0,
+                    0,
+                    ApplicationSettings.ApplicationId,
+                    ApplicationSettings.WebApiVersion), GetAuthHeaders())
                 ).ConfigureAwait(false);
         }
 
@@ -174,7 +191,7 @@ namespace RewriteMe.Business.Services
 
         public async Task<HttpRequestResult<Ok>> UpdateUserTranscriptAsync(Guid transcribeItemId, string transcript)
         {
-            var model = new UpdateTranscribeItemModel
+            var model = new UpdateUserTranscriptInputModel
             {
                 ApplicationId = ApplicationSettings.ApplicationId,
                 TranscribeItemId = transcribeItemId,
@@ -188,7 +205,7 @@ namespace RewriteMe.Business.Services
 
         public async Task<HttpRequestResult<Ok>> CreateSpeechResultAsync(Guid speechResultId, Guid recognizedAudioSampleId, string displayText)
         {
-            var model = new CreateSpeechResultModel
+            var model = new CreateSpeechResultInputModel
             {
                 SpeechResultId = speechResultId,
                 RecognizedAudioSampleId = recognizedAudioSampleId,
@@ -200,7 +217,7 @@ namespace RewriteMe.Business.Services
                 ).ConfigureAwait(false);
         }
 
-        public async Task<HttpRequestResult<TimeSpanWrapper>> UpdateSpeechResultsAsync(IList<SpeechResultModel> speechResults)
+        public async Task<HttpRequestResult<TimeSpanWrapper>> UpdateSpeechResultsAsync(IList<SpeechResultInputModel> speechResults)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
                 () => MakeServiceCall(client => client.UpdateSpeechResultsAsync(ApplicationSettings.WebApiVersion, speechResults), GetAuthHeaders())
