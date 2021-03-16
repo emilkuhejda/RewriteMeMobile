@@ -12,7 +12,7 @@ namespace RewriteMe.Business.Extensions
         {
             using (var stream = new MemoryStream(source))
             {
-                return await rewriteMeClient.UploadChunkFileAsync(fileItemId, order, applicationId, version, new FileParameter(stream), cancellationToken).ConfigureAwait(false);
+                return await rewriteMeClient.UploadChunkFileAsync(fileItemId, order, applicationId, version, stream, cancellationToken).ConfigureAwait(false);
             }
         }
     }

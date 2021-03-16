@@ -264,15 +264,15 @@ namespace RewriteMe.Domain.WebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Ok> UploadChunkFileAsync(System.Guid? fileItemId, int? order, System.Guid? applicationId, string version, FileParameter file)
+        public System.Threading.Tasks.Task<Ok> UploadChunkFileAsync(System.Guid? fileItemId, int? order, System.Guid? applicationId, string version, System.IO.Stream body)
         {
-            return UploadChunkFileAsync(fileItemId, order, applicationId, version, file, System.Threading.CancellationToken.None);
+            return UploadChunkFileAsync(fileItemId, order, applicationId, version, body, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Ok> UploadChunkFileAsync(System.Guid? fileItemId, int? order, System.Guid? applicationId, string version, FileParameter file, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Ok> UploadChunkFileAsync(System.Guid? fileItemId, int? order, System.Guid? applicationId, string version, System.IO.Stream body, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -300,19 +300,8 @@ namespace RewriteMe.Domain.WebApi
             {
                 using (var request_ = new System.Net.Http.HttpRequestMessage())
                 {
-                    var boundary_ = System.Guid.NewGuid().ToString();
-                    var content_ = new System.Net.Http.MultipartFormDataContent(boundary_);
-                    content_.Headers.Remove("Content-Type");
-                    content_.Headers.TryAddWithoutValidation("Content-Type", "multipart/form-data; boundary=" + boundary_);
-                    if (file == null)
-                        throw new System.ArgumentNullException("file");
-                    else
-                    {
-                        var content_file_ = new System.Net.Http.StreamContent(file.Data);
-                        if (!string.IsNullOrEmpty(file.ContentType))
-                            content_file_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse(file.ContentType);
-                        content_.Add(content_file_, "file", file.FileName ?? "file");
-                    }
+                    var content_ = new System.Net.Http.StreamContent(body);
+                    content_.Headers.ContentType = System.Net.Http.Headers.MediaTypeHeaderValue.Parse("multipart/form-data");
                     request_.Content = content_;
                     request_.Method = new System.Net.Http.HttpMethod("POST");
                     request_.Headers.Accept.Add(System.Net.Http.Headers.MediaTypeWithQualityHeaderValue.Parse("application/json"));
