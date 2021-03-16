@@ -76,8 +76,6 @@ namespace RewriteMe.Mobile.ViewModels
             using (new OperationMonitor(OperationScope))
             {
                 ApiUrl = await _internalValueService.GetValueAsync(InternalValues.ApiUrl).ConfigureAwait(false);
-
-                await _applicationSettings.InitializeAsync().ConfigureAwait(false);
             }
         }
 
@@ -89,7 +87,12 @@ namespace RewriteMe.Mobile.ViewModels
 
         public async Task ExecuteSaveCommandAsync()
         {
-            await _internalValueService.UpdateValueAsync(InternalValues.ApiUrl, ApiUrl).ConfigureAwait(false);
+            await RunInOperationScope(async () =>
+            {
+                await _internalValueService.UpdateValueAsync(InternalValues.ApiUrl, ApiUrl).ConfigureAwait(false);
+                await _applicationSettings.InitializeAsync().ConfigureAwait(false);
+                await DialogService.ConfirmAsync(Loc.Text(TranslationKeys.ApiUrlSaved), okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+            }).ConfigureAwait(false);
         }
 
         private async Task ExecuteClearLogFileCommandAsync()
