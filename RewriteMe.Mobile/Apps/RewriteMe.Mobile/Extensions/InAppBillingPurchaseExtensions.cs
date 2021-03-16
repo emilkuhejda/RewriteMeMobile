@@ -7,9 +7,9 @@ namespace RewriteMe.Mobile.Extensions
 {
     public static class InAppBillingPurchaseExtensions
     {
-        public static BillingPurchase ToBillingPurchase(this InAppBillingPurchase inAppBillingPurchase, Guid userId, string orderId)
+        public static CreateUserSubscriptionInputModel ToUserSubscriptionModel(this InAppBillingPurchase inAppBillingPurchase, Guid userId, string orderId)
         {
-            return new BillingPurchase
+            return new CreateUserSubscriptionInputModel
             {
                 Id = Guid.NewGuid(),
                 UserId = userId,
