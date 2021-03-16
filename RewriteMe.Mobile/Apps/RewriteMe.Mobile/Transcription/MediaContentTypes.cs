@@ -7,10 +7,6 @@ namespace RewriteMe.Mobile.Transcription
     {
         private static readonly HashSet<string> Mp3ContentTypes = new HashSet<string>(StringComparer.OrdinalIgnoreCase)
         {
-            "audio/mp3",
-            "audio/mpeg",
-            "audio/mpeg3",
-            "audio/x-mpeg-3",
             "video/mpeg",
             "video/x-mpeg"
         };
