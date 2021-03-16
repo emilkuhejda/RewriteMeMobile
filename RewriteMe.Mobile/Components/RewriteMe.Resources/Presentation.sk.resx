@@ -220,6 +220,9 @@
   <data name="Developer" xml:space="preserve">
     <value>Developer</value>
   </data>
+  <data name="ApiUrl" xml:space="preserve">
+    <value>API url</value>
+  </data>
   <data name="Clear" xml:space="preserve">
     <value>Vymazať</value>
   </data>

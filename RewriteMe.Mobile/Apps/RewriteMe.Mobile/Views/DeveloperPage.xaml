@@ -5,20 +5,31 @@
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
+                          xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile"
                           Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Developer}}">
+    <views:BaseNavigationPage.RightNavigationToolbarItems>
+        <controls:NavigationToolbarItem Command="{Binding SaveCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Save-Enabled.svg" />
+    </views:BaseNavigationPage.RightNavigationToolbarItems>
     <Grid Padding="{StaticResource SmallPadding}">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
-        <controls:RewriteMeWebView Grid.Row="0"
+        <StackLayout Grid.Row="0">
+            <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ApiUrl}}">
+                <Entry Text="{Binding ApiUrl}" />
+            </textInputLayout:SfTextInputLayout>
+        </StackLayout>
+
+        <controls:RewriteMeWebView Grid.Row="1"
                                    HorizontalOptions="FillAndExpand"
                                    Source="{Binding WebViewSource}"
                                    VerticalOptions="FillAndExpand" />
 
-        <Grid Grid.Row="1">
+        <Grid Grid.Row="2">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
                 <RowDefinition Height="Auto" />

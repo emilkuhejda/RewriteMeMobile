@@ -43,6 +43,7 @@
         public static string PrivacyPolicy => "PrivacyPolicy";
         public static string ContactUs => "ContactUs";
         public static string Developer => "Developer";
+        public static string ApiUrl => "ApiUrl";
         public static string Clear => "Clear";
         public static string Reload => "Reload";
         public static string SendEmail => "SendEmail";

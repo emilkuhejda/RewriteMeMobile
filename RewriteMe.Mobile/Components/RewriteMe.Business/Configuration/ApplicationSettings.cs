@@ -8,7 +8,6 @@ namespace RewriteMe.Business.Configuration
 {
     public class ApplicationSettings : IApplicationSettings
     {
-        private const string HostUrl = "https://voicipher.com/";
         private const string OsxAppCenterKey = "38ccf01c-fc36-4b94-a5c2-743c02852b23";
         private const string AndroidAppCenterKey = "a888ddaf-c5e2-4461-ae7e-0d896cf022df";
         private const string Tenant = "voicipher.onmicrosoft.com";
@@ -23,11 +22,11 @@ namespace RewriteMe.Business.Configuration
 
         public Guid ApplicationId { get; private set; }
 
-        public string WebApiUrl { get; } = HostUrl;
+        public string WebApiUrl { get; private set; } = string.Empty;
 
-        public Uri PrivacyPolicyUri { get; } = new Uri($"{HostUrl}home/privacy/");
+        public Uri PrivacyPolicyUri => new Uri($"{WebApiUrl}home/privacy/");
 
-        public string CacheHubUrl { get; } = $"{HostUrl}api/message-hub/";
+        public string CacheHubUrl => $"{WebApiUrl}api/message-hub/";
 
         public string WebApiVersion { get; } = "1";
 
@@ -72,6 +71,8 @@ namespace RewriteMe.Business.Configuration
             }
 
             ApplicationId = Guid.Parse(applicationId);
+
+            WebApiUrl = await _internalValueService.GetValueAsync(InternalValues.ApiUrl).ConfigureAwait(false);
         }
     }
 }

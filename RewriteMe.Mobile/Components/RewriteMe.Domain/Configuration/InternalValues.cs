@@ -2,6 +2,8 @@
 {
     public static class InternalValues
     {
+        public static InternalValue<string> ApiUrl { get; } = new InternalValue<string>("ApiUrl", "https://voicipher.com/");
+
         public static InternalValue<string> ApplicationId { get; } = new InternalValue<string>("ApplicationId", null);
 
         public static InternalValue<long> FileItemSynchronizationTicks { get; } = new InternalValue<long>("FileItemSynchronizationTicks", 0);

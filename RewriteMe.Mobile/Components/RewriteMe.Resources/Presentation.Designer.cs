@@ -79,6 +79,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API url.
+        /// </summary>
+        public static string ApiUrl {
+            get {
+                return ResourceManager.GetString("ApiUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voicipher.
         /// </summary>
         public static string ApplicationTitle {

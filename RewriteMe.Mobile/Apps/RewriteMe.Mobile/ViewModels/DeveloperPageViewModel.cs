@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Interfaces;
@@ -16,13 +17,16 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class DeveloperPageViewModel : ViewModelBase
     {
+        private readonly IInternalValueService _internalValueService;
         private readonly IEmailService _emailService;
         private readonly ILogFileReader _logFileReader;
         private readonly IApplicationSettings _applicationSettings;
 
+        private string _apiUrl;
         private HtmlWebViewSource _webViewSource;
 
         public DeveloperPageViewModel(
+            IInternalValueService internalValueService,
             IEmailService emailService,
             ILogFileReader logFileReader,
             IApplicationSettings applicationSettings,
@@ -32,15 +36,23 @@ namespace RewriteMe.Mobile.ViewModels
             ILoggerFactory loggerFactory)
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
+            _internalValueService = internalValueService;
             _emailService = emailService;
             _logFileReader = logFileReader;
             _applicationSettings = applicationSettings;
 
             CanGoBack = true;
 
+            SaveCommand = new AsyncCommand(ExecuteSaveCommandAsync);
             ClearLogFileCommand = new AsyncCommand(ExecuteClearLogFileCommandAsync);
             SendLogMailCommand = new AsyncCommand(ExecuteSendLogMailCommandAsync);
             ReloadLogCommand = new AsyncCommand(ExecuteReloadLogCommandAsync);
+        }
+
+        public string ApiUrl
+        {
+            get => _apiUrl;
+            set => SetProperty(ref _apiUrl, value);
         }
 
         public HtmlWebViewSource WebViewSource
@@ -48,6 +60,8 @@ namespace RewriteMe.Mobile.ViewModels
             get => _webViewSource;
             set => SetProperty(ref _webViewSource, value);
         }
+
+        public ICommand SaveCommand { get; }
 
         public ICommand ClearLogFileCommand { get; }
 
@@ -58,12 +72,24 @@ namespace RewriteMe.Mobile.ViewModels
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
         {
             await RunInOperationScope(LoadLogFileAsync).ConfigureAwait(false);
+
+            using (new OperationMonitor(OperationScope))
+            {
+                ApiUrl = await _internalValueService.GetValueAsync(InternalValues.ApiUrl).ConfigureAwait(false);
+
+                await _applicationSettings.InitializeAsync().ConfigureAwait(false);
+            }
         }
 
         private async Task LoadLogFileAsync()
         {
             var content = await _logFileReader.ReadLogFileAsync().ConfigureAwait(false);
             WebViewSource = new HtmlWebViewSource { Html = content };
+        }
+
+        public async Task ExecuteSaveCommandAsync()
+        {
+            await _internalValueService.UpdateValueAsync(InternalValues.ApiUrl, ApiUrl).ConfigureAwait(false);
         }
 
         private async Task ExecuteClearLogFileCommandAsync()
