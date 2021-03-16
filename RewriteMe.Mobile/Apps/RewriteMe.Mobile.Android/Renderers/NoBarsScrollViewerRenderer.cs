@@ -35,7 +35,7 @@ namespace RewriteMe.Mobile.Droid.Renderers
 
         private void OnElementPropertyChanged(object sender, PropertyChangedEventArgs e)
         {
-            if (string.Equals(e.PropertyName, "ContentSize", StringComparison.Ordinal) && ChildCount > 0)
+            if (string.Equals(e.PropertyName, "ContentSize", StringComparison.OrdinalIgnoreCase) && ChildCount > 0)
             {
                 var child = GetChildAt(0);
                 child.VerticalScrollBarEnabled = false;
