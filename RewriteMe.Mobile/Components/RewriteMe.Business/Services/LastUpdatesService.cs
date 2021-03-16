@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Http;
+using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.WebApi;
 
@@ -8,14 +10,21 @@ namespace RewriteMe.Business.Services
 {
     public class LastUpdatesService : ILastUpdatesService
     {
+        private readonly IInternalValueService _internalValueService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly IApplicationSettings _applicationSettings;
 
         private LastUpdates _lastUpdates;
         private bool _isInitialized;
 
-        public LastUpdatesService(IRewriteMeWebService rewriteMeWebService)
+        public LastUpdatesService(
+            IInternalValueService internalValueService,
+            IRewriteMeWebService rewriteMeWebService,
+            IApplicationSettings applicationSettings)
         {
+            _internalValueService = internalValueService;
             _rewriteMeWebService = rewriteMeWebService;
+            _applicationSettings = applicationSettings;
         }
 
         public bool IsConnectionSuccessful { get; private set; }
@@ -31,6 +40,29 @@ namespace RewriteMe.Business.Services
             }
 
             _isInitialized = true;
+        }
+
+        public async Task InitializeApplicationSettingsAsync()
+        {
+            if (!_isInitialized)
+                throw new InvalidOperationException("Service is not initialized");
+
+            var apiUrl = await _internalValueService.GetValueAsync(InternalValues.ApiUrl).ConfigureAwait(false);
+            if (!_lastUpdates.ApiUrl.Equals(apiUrl, StringComparison.OrdinalIgnoreCase))
+            {
+                await _internalValueService.UpdateValueAsync(InternalValues.ApiUrl, _lastUpdates.ApiUrl).ConfigureAwait(false);
+            }
+
+            var isApplicationOutOfDate = false;
+            if (int.TryParse(_applicationSettings.WebApiVersion, out var webApiVersion))
+            {
+                if (_lastUpdates.ApiVersion.Major > webApiVersion)
+                {
+                    isApplicationOutOfDate = true;
+                }
+            }
+
+            await _internalValueService.UpdateValueAsync(InternalValues.IsApplicationOutOfDate, isApplicationOutOfDate).ConfigureAwait(false);
         }
 
         public DateTime GetFileItemLastUpdate()

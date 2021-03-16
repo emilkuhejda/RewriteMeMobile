@@ -220,6 +220,12 @@
   <data name="Developer" xml:space="preserve">
     <value>Developer</value>
   </data>
+  <data name="ApiUrl" xml:space="preserve">
+    <value>API url</value>
+  </data>
+  <data name="ApiUrlSaved" xml:space="preserve">
+    <value>API url is saved</value>
+  </data>
   <data name="Clear" xml:space="preserve">
     <value>Clear</value>
   </data>
@@ -349,7 +355,10 @@
   <data name="Highlighter" xml:space="preserve">
     <value>Highlighter</value>
   </data>
-
+  
+  <data name="ApplicationIsOutOfDateMessage" xml:space="preserve">
+    <value>Your application is out of date and it might not working properly. Please update it.</value>
+  </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>You don't have a permission to upload a file. Please try again later.</value>
   </data>

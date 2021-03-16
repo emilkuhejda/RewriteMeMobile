@@ -79,6 +79,33 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to API url.
+        /// </summary>
+        public static string ApiUrl {
+            get {
+                return ResourceManager.GetString("ApiUrl", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to API url is saved.
+        /// </summary>
+        public static string ApiUrlSaved {
+            get {
+                return ResourceManager.GetString("ApiUrlSaved", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your application is out of date and it might not working properly. Please update it..
+        /// </summary>
+        public static string ApplicationIsOutOfDateMessage {
+            get {
+                return ResourceManager.GetString("ApplicationIsOutOfDateMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Voicipher.
         /// </summary>
         public static string ApplicationTitle {
