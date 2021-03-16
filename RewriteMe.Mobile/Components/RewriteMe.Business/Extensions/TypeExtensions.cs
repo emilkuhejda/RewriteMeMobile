@@ -10,7 +10,7 @@ namespace RewriteMe.Business.Extensions
             var friendlyName = type.Name;
             if (type.GenericTypeArguments.Any())
             {
-                var iBacktick = friendlyName.IndexOf('`', StringComparison.OrdinalIgnoreCase);
+                var iBacktick = friendlyName.IndexOf('`');
                 if (iBacktick > 0)
                 {
                     friendlyName = friendlyName.Remove(iBacktick);

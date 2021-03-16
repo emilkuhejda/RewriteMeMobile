@@ -7,6 +7,7 @@ using System.Windows.Input;
 using Prism.Navigation;
 using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
+using RewriteMe.Domain.Configuration;
 using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Events;
 using RewriteMe.Domain.Interfaces.Managers;
@@ -26,6 +27,7 @@ namespace RewriteMe.Mobile.ViewModels
     public class OverviewPageViewModel : OverviewBaseViewModel
     {
         private readonly IFileItemService _fileItemService;
+        private readonly IInternalValueService _internalValueService;
         private readonly IFileItemSourceUploader _fileItemSourceUploader;
         private readonly INavigator _navigator;
 
@@ -33,6 +35,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         public OverviewPageViewModel(
             IFileItemService fileItemService,
+            IInternalValueService internalValueService,
             IFileItemSourceUploader fileItemSourceUploader,
             INavigator navigator,
             ISynchronizationService synchronizationService,
@@ -43,6 +46,7 @@ namespace RewriteMe.Mobile.ViewModels
             : base(synchronizationService, userSessionService, dialogService, navigationService, loggerFactory)
         {
             _fileItemService = fileItemService;
+            _internalValueService = internalValueService;
             _fileItemSourceUploader = fileItemSourceUploader;
             _navigator = navigator;
 
@@ -67,6 +71,14 @@ namespace RewriteMe.Mobile.ViewModels
                 _navigator.ResetNavigation();
 
                 IndicatorCaption = Loc.Text(TranslationKeys.ActivityIndicatorCaptionText);
+
+                var isApplicationOutOfDate = await _internalValueService.GetValueAsync(InternalValues.IsApplicationOutOfDate).ConfigureAwait(false);
+                if (isApplicationOutOfDate)
+                {
+                    await DialogService.ConfirmAsync(
+                        Loc.Text(TranslationKeys.ApplicationIsOutOfDateMessage),
+                        okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+                }
 
                 var isNavigationBack = navigationParameters.GetValue<bool>(NavigationConstants.NavigationBack);
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New && !isNavigationBack)

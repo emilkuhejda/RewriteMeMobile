@@ -220,6 +220,12 @@
   <data name="Developer" xml:space="preserve">
     <value>Developer</value>
   </data>
+  <data name="ApiUrl" xml:space="preserve">
+    <value>API url</value>
+  </data>
+  <data name="ApiUrlSaved" xml:space="preserve">
+    <value>API url je uložená</value>
+  </data>
   <data name="Clear" xml:space="preserve">
     <value>Vymazať</value>
   </data>
@@ -350,6 +356,9 @@
     <value>Zvýrazňovač</value>
   </data>
   
+  <data name="ApplicationIsOutOfDateMessage" xml:space="preserve">
+    <value>Vaša aplikácia je zastaralá a nemusí pracovať správne. Prosím, aktualizujte ju.</value>
+  </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>Nemáte oprávnenie nahrať súbor. Prosím, opakujte operáciu neskôr.</value>
   </data>
