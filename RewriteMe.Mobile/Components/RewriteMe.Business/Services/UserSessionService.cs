@@ -375,7 +375,7 @@ namespace RewriteMe.Business.Services
 
             var installationId = await _pushNotificationsService.GetInstallIdAsync().ConfigureAwait(false) ?? Guid.Empty;
             var language = await _languageService.GetLanguageName().ConfigureAwait(false);
-            var registrationDeviceModel = new RegistrationDeviceModel
+            var registrationDeviceModel = new RegistrationDeviceInputModel
             {
                 InstallationId = installationId,
                 RuntimePlatform = FormsDevice.RuntimePlatform,
@@ -383,7 +383,7 @@ namespace RewriteMe.Business.Services
                 Language = language
             };
 
-            var registerUserModel = new RegistrationUserModel
+            var registerUserModel = new UserRegistrationInputModel
             {
                 Id = Guid.Parse(accessToken.ObjectId),
                 ApplicationId = _applicationSettings.ApplicationId,
@@ -409,7 +409,7 @@ namespace RewriteMe.Business.Services
             if (accessToken == null)
                 throw new ArgumentNullException(nameof(accessToken));
 
-            var updateUserModel = new UpdateUserModel
+            var updateUserModel = new UpdateUserInputModel
             {
                 GivenName = accessToken.GivenName,
                 FamilyName = accessToken.FamilyName

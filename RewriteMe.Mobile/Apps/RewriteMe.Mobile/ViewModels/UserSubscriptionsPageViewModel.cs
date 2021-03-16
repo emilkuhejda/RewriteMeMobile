@@ -319,7 +319,7 @@ namespace RewriteMe.Mobile.ViewModels
             try
             {
                 var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
-                var billingPurchase = purchase.ToBillingPurchase(userId, orderId);
+                var billingPurchase = purchase.ToUserSubscriptionModel(userId, orderId);
                 var remainingTime = await _billingPurchaseService.SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 
                 await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);

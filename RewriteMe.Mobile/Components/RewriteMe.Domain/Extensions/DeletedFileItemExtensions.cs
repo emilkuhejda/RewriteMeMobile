@@ -5,9 +5,9 @@ namespace RewriteMe.Domain.Extensions
 {
     public static class DeletedFileItemExtensions
     {
-        public static DeletedFileItemModel ToDeletedFileItemModel(this DeletedFileItem deletedFileItem)
+        public static DeletedAudioFileInputModel ToDeletedFileItemModel(this DeletedFileItem deletedFileItem)
         {
-            return new DeletedFileItemModel
+            return new DeletedAudioFileInputModel
             {
                 Id = deletedFileItem.Id,
                 DeletedDate = deletedFileItem.DeletedDate
