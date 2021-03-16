@@ -4,6 +4,8 @@
     {
         public static InternalValue<string> ApiUrl { get; } = new InternalValue<string>("ApiUrl", "https://voicipher.com/");
 
+        public static InternalValue<bool> IsApplicationOutOfDate { get; } = new InternalValue<bool>("IsApplicationOutOfDate", false);
+
         public static InternalValue<string> ApplicationId { get; } = new InternalValue<string>("ApplicationId", null);
 
         public static InternalValue<long> FileItemSynchronizationTicks { get; } = new InternalValue<long>("FileItemSynchronizationTicks", 0);

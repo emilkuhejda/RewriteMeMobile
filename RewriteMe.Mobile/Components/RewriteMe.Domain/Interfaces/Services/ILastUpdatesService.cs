@@ -9,6 +9,8 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task InitializeAsync();
 
+        Task InitializeApplicationSettingsAsync();
+
         DateTime GetFileItemLastUpdate();
 
         DateTime GetDeletedFileItemLastUpdate();

@@ -67,6 +67,7 @@ namespace RewriteMe.Business.Services
             if (!_lastUpdatesService.IsConnectionSuccessful)
                 return;
 
+            await _lastUpdatesService.InitializeApplicationSettingsAsync().ConfigureAwait(false);
             await SendPendingDataAsync().ConfigureAwait(false);
 
             var updateMethods = new List<Func<Task>>
