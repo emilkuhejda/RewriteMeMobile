@@ -262,6 +262,12 @@
   <data name="Name" xml:space="preserve">
     <value>Názov</value>
   </data>
+  <data name="BasicRecording" xml:space="preserve">
+    <value>Nahrávka</value>
+  </data>
+  <data name="PhoneVideoCall" xml:space="preserve">
+    <value>Telefónny / video rozhovor</value>
+  </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Nahrať súbor</value>
   </data>

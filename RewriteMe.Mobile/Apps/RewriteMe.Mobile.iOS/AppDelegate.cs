@@ -99,6 +99,7 @@ namespace RewriteMe.Mobile.iOS
             SfButtonRenderer.Init();
             SfBadgeViewRenderer.Init();
             SfRadialMenuRenderer.Init();
+            SfRadioButtonRenderer.Init();
             SfTextInputLayoutRenderer.Init();
             SfCircularProgressBarRenderer.Init();
 

@@ -262,6 +262,12 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="BasicRecording" xml:space="preserve">
+    <value>Basic recording</value>
+  </data>
+  <data name="PhoneVideoCall" xml:space="preserve">
+    <value>Phone / video call</value>
+  </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Upload file</value>
   </data>
@@ -355,7 +361,7 @@
   <data name="Highlighter" xml:space="preserve">
     <value>Highlighter</value>
   </data>
-  
+
   <data name="ApplicationIsOutOfDateMessage" xml:space="preserve">
     <value>Your application is out of date and it might not working properly. Please update it.</value>
   </data>

@@ -56,6 +56,8 @@
         public static string EmailIsNotSupported => "EmailIsNotSupported";
         public static string ApplicationTitleLog => "ApplicationTitleLog";
         public static string Name => "Name";
+        public static string BasicRecording => "BasicRecording";
+        public static string PhoneVideoCall => "PhoneVideoCall";
         public static string UploadFile => "UploadFile";
         public static string Send => "Send";
         public static string Save => "Save";

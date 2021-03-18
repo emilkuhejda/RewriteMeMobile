@@ -36,6 +36,8 @@ namespace RewriteMe.Mobile.ViewModels
         private FileItem _fileItem;
         private bool _isEdit;
         private string _name;
+        private bool _isPhoneCallModelSupported;
+        private bool _isPhoneCall;
         private string _uploadErrorMessage;
         private bool _isUploadErrorMessageVisible;
         private SupportedLanguage _selectedLanguage;
@@ -99,6 +101,18 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _name, value);
         }
 
+        public bool IsPhoneCallModelSupported
+        {
+            get => _isPhoneCallModelSupported;
+            set => SetProperty(ref _isPhoneCallModelSupported, value);
+        }
+
+        public bool IsPhoneCall
+        {
+            get => _isPhoneCall;
+            set => SetProperty(ref _isPhoneCall, value);
+        }
+
         public string UploadErrorMessage
         {
             get => _uploadErrorMessage;
@@ -121,6 +135,7 @@ namespace RewriteMe.Mobile.ViewModels
                 if (SetProperty(ref _selectedLanguage, value))
                 {
                     ReevaluateNavigationItemIconKeys();
+                    UpdatePhoneCallModelVisibility();
                     RaisePropertyChanged(nameof(IsLanguageLabelVisible));
                 }
             }
@@ -198,6 +213,8 @@ namespace RewriteMe.Mobile.ViewModels
                     UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
                     IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
+
+                UpdatePhoneCallModelVisibility();
             }
         }
 
@@ -222,6 +239,11 @@ namespace RewriteMe.Mobile.ViewModels
             };
 
             return new[] { SaveTileItem, SaveAndTranscribeTileItem };
+        }
+
+        private void UpdatePhoneCallModelVisibility()
+        {
+            IsPhoneCallModelSupported = SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
         }
 
         private void ReevaluateNavigationItemIconKeys()

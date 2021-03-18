@@ -142,6 +142,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Basic recording.
+        /// </summary>
+        public static string BasicRecording {
+            get {
+                return ResourceManager.GetString("BasicRecording", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Billing seems to be unavailable. Please try again later..
         /// </summary>
         public static string BillingUnavailableErrorMessage {
@@ -678,6 +687,15 @@ namespace RewriteMe.Resources {
         public static string PaymentNotAllowedErrorMessage {
             get {
                 return ResourceManager.GetString("PaymentNotAllowedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Phone / video call.
+        /// </summary>
+        public static string PhoneVideoCall {
+            get {
+                return ResourceManager.GetString("PhoneVideoCall", resourceCulture);
             }
         }
         
