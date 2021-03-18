@@ -20,7 +20,7 @@
 
         <controls:AlwaysScrollView Grid.Row="0" Padding="{StaticResource StandardPadding}">
             <StackLayout>
-                <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined">
                     <Entry IsReadOnly="True"
                            Text="{Binding Name}"
                            TextColor="{StaticResource ColorGrey500}" />
