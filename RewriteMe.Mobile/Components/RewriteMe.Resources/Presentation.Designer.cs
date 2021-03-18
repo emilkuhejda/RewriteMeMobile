@@ -97,7 +97,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your application is out of date and it might not working properly. Please update it..
+        ///   Looks up a localized string similar to Your application is out of date and it might not work properly. Please update it..
         /// </summary>
         public static string ApplicationIsOutOfDateMessage {
             get {
@@ -138,6 +138,15 @@ namespace RewriteMe.Resources {
         public static string AudioFiles {
             get {
                 return ResourceManager.GetString("AudioFiles", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Basic recording.
+        /// </summary>
+        public static string BasicRecording {
+            get {
+                return ResourceManager.GetString("BasicRecording", resourceCulture);
             }
         }
         
@@ -682,6 +691,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Phone / video call.
+        /// </summary>
+        public static string PhoneVideoCall {
+            get {
+                return ResourceManager.GetString("PhoneVideoCall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Privacy policy.
         /// </summary>
         public static string PrivacyPolicy {
@@ -822,6 +840,15 @@ namespace RewriteMe.Resources {
         public static string SaveAndTranscribe {
             get {
                 return ResourceManager.GetString("SaveAndTranscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select language.
+        /// </summary>
+        public static string SelectLanguage {
+            get {
+                return ResourceManager.GetString("SelectLanguage", resourceCulture);
             }
         }
         

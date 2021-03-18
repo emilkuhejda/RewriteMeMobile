@@ -130,7 +130,7 @@ namespace RewriteMe.Business.Services
                     mediaFile.Name,
                     mediaFile.Language,
                     mediaFile.FileName,
-                    false,
+                    mediaFile.IsPhoneCall,
                     DateTime.Now,
                     ApplicationSettings.ApplicationId,
                     ApplicationSettings.WebApiVersion,
@@ -169,12 +169,13 @@ namespace RewriteMe.Business.Services
         }
 
         // TODO
-        public async Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language)
+        public async Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language, bool isPhoneCall)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
                 () => MakeServiceCall(client => client.TranscribeFileItemAsync(
                     fileItemId,
                     language,
+                    isPhoneCall,
                     0,
                     0,
                     ApplicationSettings.ApplicationId,

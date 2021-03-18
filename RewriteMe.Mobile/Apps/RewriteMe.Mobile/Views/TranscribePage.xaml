@@ -2,6 +2,7 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.TranscribePage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
@@ -19,18 +20,27 @@
 
         <controls:AlwaysScrollView Grid.Row="0" Padding="{StaticResource StandardPadding}">
             <StackLayout>
-                <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                                   Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}"
+                                                   IsHintAlwaysFloated="True">
                     <Entry IsReadOnly="True"
                            Text="{Binding Name}"
                            TextColor="{StaticResource ColorGrey500}" />
                 </textInputLayout:SfTextInputLayout>
 
-                <textInputLayout:SfTextInputLayout ContainerType="Outlined">
-                    <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                                   Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                                                   IsHintAlwaysFloated="True">
+                    <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SelectLanguage}}"
                             ItemDisplayBinding="{Binding Key, Converter={StaticResource KeyToLocalizedTextConverter}}"
                             ItemsSource="{Binding AvailableLanguages}"
                             SelectedItem="{Binding SelectedLanguage}" />
                 </textInputLayout:SfTextInputLayout>
+
+                <buttons:SfRadioGroup IsVisible="{Binding IsRecordingTypeVisible}">
+                    <buttons:SfRadioButton IsChecked="{Binding IsBasicRecording}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.BasicRecording}}" />
+                    <buttons:SfRadioButton IsChecked="{Binding IsPhoneCall}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.PhoneVideoCall}}" />
+                </buttons:SfRadioGroup>
 
                 <Label Margin="0,0,0,20"
                        IsVisible="{Binding IsErrorMessageVisible}"

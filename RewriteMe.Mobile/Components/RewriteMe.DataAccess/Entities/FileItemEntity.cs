@@ -20,6 +20,8 @@ namespace RewriteMe.DataAccess.Entities
         [MaxLength(20)]
         public string Language { get; set; }
 
+        public bool IsPhoneCall { get; set; }
+
         [MaxLength(20)]
         public RecognitionState RecognitionState { get; set; }
 

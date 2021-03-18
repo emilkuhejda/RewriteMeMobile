@@ -19,6 +19,7 @@ namespace RewriteMe.Mobile.ViewModels
     {
         private string _name;
         private SupportedLanguage _selectedLanguage;
+        private bool _isPhoneCall;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _canTranscribe;
 
@@ -73,7 +74,25 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _selectedLanguage, value))
                 {
+                    IsPhoneCall = false;
                     ReevaluateNavigationItemIconKeys();
+                    RaisePropertyChanged(nameof(IsRecordingTypeVisible));
+                }
+            }
+        }
+
+        public bool IsRecordingTypeVisible => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
+
+        public bool IsBasicRecording => !IsPhoneCall;
+
+        public bool IsPhoneCall
+        {
+            get => _isPhoneCall;
+            set
+            {
+                if (SetProperty(ref _isPhoneCall, value))
+                {
+                    RaisePropertyChanged(nameof(IsBasicRecording));
                 }
             }
         }

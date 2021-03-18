@@ -8,6 +8,8 @@
 
         public string FileName { get; set; }
 
+        public bool IsPhoneCall { get; set; }
+
         public byte[] Source { get; set; }
     }
 }
