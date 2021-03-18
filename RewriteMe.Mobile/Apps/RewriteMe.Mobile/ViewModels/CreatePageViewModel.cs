@@ -36,7 +36,6 @@ namespace RewriteMe.Mobile.ViewModels
         private FileItem _fileItem;
         private bool _isEdit;
         private string _name;
-        private bool _isPhoneCallModelSupported;
         private bool _isPhoneCall;
         private string _uploadErrorMessage;
         private bool _isUploadErrorMessageVisible;
@@ -101,11 +100,7 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _name, value);
         }
 
-        public bool IsPhoneCallModelSupported
-        {
-            get => _isPhoneCallModelSupported;
-            set => SetProperty(ref _isPhoneCallModelSupported, value);
-        }
+        public bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
 
         public bool IsPhoneCall
         {
@@ -135,7 +130,7 @@ namespace RewriteMe.Mobile.ViewModels
                 if (SetProperty(ref _selectedLanguage, value))
                 {
                     ReevaluateNavigationItemIconKeys();
-                    UpdatePhoneCallModelVisibility();
+                    RaisePropertyChanged(nameof(IsPhoneCallModelSupported));
                     RaisePropertyChanged(nameof(IsLanguageLabelVisible));
                 }
             }
@@ -210,11 +205,12 @@ namespace RewriteMe.Mobile.ViewModels
 
                     Name = FileItem.Name;
                     SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
+                    IsPhoneCall = FileItem.IsPhoneCall;
                     UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
                     IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
 
-                UpdatePhoneCallModelVisibility();
+                RaisePropertyChanged(nameof(IsPhoneCallModelSupported));
             }
         }
 
@@ -239,11 +235,6 @@ namespace RewriteMe.Mobile.ViewModels
             };
 
             return new[] { SaveTileItem, SaveAndTranscribeTileItem };
-        }
-
-        private void UpdatePhoneCallModelVisibility()
-        {
-            IsPhoneCallModelSupported = SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
         }
 
         private void ReevaluateNavigationItemIconKeys()
@@ -377,6 +368,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Id = Guid.NewGuid(),
                 FileItemId = fileItem.Id,
                 Language = fileItem.Language,
+                IsPhoneCall = fileItem.IsPhoneCall,
                 Source = mediaFile.Source,
                 IsTranscript = isTranscript,
                 DateCreated = DateTime.UtcNow
@@ -397,6 +389,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = name,
                 Language = SelectedLanguage?.Culture,
                 FileName = SelectedFile.FileName,
+                IsPhoneCall = IsPhoneCallModelSupported ? IsPhoneCall : false,
                 Source = SelectedFile.Source
             };
         }

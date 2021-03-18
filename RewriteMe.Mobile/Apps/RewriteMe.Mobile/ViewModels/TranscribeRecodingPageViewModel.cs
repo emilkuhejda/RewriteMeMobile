@@ -60,7 +60,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = RecordedItem.FileName;
 
                 var filePath = _recordedItemService.GetAudioPath(RecordedItem);
-                var source = File.ReadAllBytes(filePath);
+                var source = await File.ReadAllBytesAsync(filePath).ConfigureAwait(false);
                 if (!File.Exists(filePath) || !source.Any())
                 {
                     AudioFileIsInvalid = true;
@@ -75,7 +75,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 PlayerViewModel.Load(source);
 
-                await Task.CompletedTask.ConfigureAwait(false);
+                RaisePropertyChanged(nameof(IsPhoneCallModelSupported));
             }
         }
 
@@ -118,6 +118,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = Name,
                 Language = SelectedLanguage?.Culture,
                 FileName = RecordedItem.AudioFileName,
+                IsPhoneCall = IsPhoneCall,
                 Source = File.ReadAllBytes(filePath)
             };
         }
@@ -129,6 +130,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Id = Guid.NewGuid(),
                 FileItemId = fileItem.Id,
                 Language = fileItem.Language,
+                IsPhoneCall = fileItem.IsPhoneCall,
                 Source = mediaFile.Source,
                 IsTranscript = true,
                 DateCreated = DateTime.UtcNow

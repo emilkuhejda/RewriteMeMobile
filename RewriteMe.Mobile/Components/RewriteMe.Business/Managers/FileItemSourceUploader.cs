@@ -133,7 +133,7 @@ namespace RewriteMe.Business.Managers
                 cancellationToken.ThrowIfCancellationRequested();
 
                 await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, null).ConfigureAwait(false);
-                await _fileItemService.TranscribeAsync(uploadedSource.FileItemId, uploadedSource.Language).ConfigureAwait(false);
+                await _fileItemService.TranscribeAsync(uploadedSource.FileItemId, uploadedSource.Language, uploadedSource.IsPhoneCall).ConfigureAwait(false);
             }
             catch (UnauthorizedCallException)
             {

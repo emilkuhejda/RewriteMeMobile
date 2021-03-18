@@ -28,7 +28,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<bool> CanTranscribeAsync();
 
-        Task TranscribeAsync(Guid fileItemId, string language);
+        Task TranscribeAsync(Guid fileItemId, string language, bool isPhoneCall);
 
         Task UpdateUploadStatusAsync(Guid fileItemId, UploadStatus uploadStatus);
 

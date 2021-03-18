@@ -37,8 +37,8 @@
                 </textInputLayout:SfTextInputLayout>
 
                 <buttons:SfRadioGroup IsVisible="{Binding IsPhoneCallModelSupported}">
-                    <buttons:SfRadioButton IsChecked="{Binding IsPhoneCall}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.BasicRecording}}" />
-                    <buttons:SfRadioButton Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.PhoneVideoCall}}" />
+                    <buttons:SfRadioButton Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.BasicRecording}}" />
+                    <buttons:SfRadioButton IsChecked="{Binding IsPhoneCall}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.PhoneVideoCall}}" />
                 </buttons:SfRadioGroup>
 
                 <Label Margin="0,0,0,20"

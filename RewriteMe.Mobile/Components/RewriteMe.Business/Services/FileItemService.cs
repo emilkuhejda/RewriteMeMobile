@@ -209,13 +209,13 @@ namespace RewriteMe.Business.Services
             return remainingSubscriptionTime.TotalSeconds >= 15;
         }
 
-        public async Task TranscribeAsync(Guid fileItemId, string language)
+        public async Task TranscribeAsync(Guid fileItemId, string language, bool isPhoneCall)
         {
             var canTranscribeFileItem = await CanTranscribeAsync().ConfigureAwait(false);
             if (!canTranscribeFileItem)
                 throw new NoSubscritionFreeTimeException();
 
-            var httpRequestResult = await _rewriteMeWebService.TranscribeFileItemAsync(fileItemId, language).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.TranscribeFileItemAsync(fileItemId, language, isPhoneCall).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 await _fileItemRepository.UpdateRecognitionStateAsync(fileItemId, RecognitionState.InProgress).ConfigureAwait(false);
