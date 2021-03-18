@@ -42,7 +42,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<HttpRequestResult<Ok>> DeleteChunksAsync(Guid fileItemId);
 
-        Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language);
+        Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language, bool isPhoneCall);
 
         Task<HttpRequestResult<byte[]>> GetTranscribeAudioSourceAsync(Guid transcribeItemId, CancellationToken cancellationToken);
 

@@ -70,8 +70,11 @@ namespace RewriteMe.Mobile.ViewModels
 
                 Name = FileItem.Name;
                 SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
+                IsPhoneCall = FileItem.IsPhoneCall;
 
                 CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
+
+                RaisePropertyChanged(nameof(IsRecordingTypeVisible));
             }
         }
 
@@ -79,7 +82,7 @@ namespace RewriteMe.Mobile.ViewModels
         {
             IsErrorMessageVisible = false;
 
-            await FileItemService.TranscribeAsync(FileItem.Id, SelectedLanguage.Culture).ConfigureAwait(false);
+            await FileItemService.TranscribeAsync(FileItem.Id, SelectedLanguage.Culture, IsPhoneCall).ConfigureAwait(false);
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
         }
 

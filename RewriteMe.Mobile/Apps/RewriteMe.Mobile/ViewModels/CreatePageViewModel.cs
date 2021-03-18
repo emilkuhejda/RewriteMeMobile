@@ -36,6 +36,7 @@ namespace RewriteMe.Mobile.ViewModels
         private FileItem _fileItem;
         private bool _isEdit;
         private string _name;
+        private bool _isPhoneCall;
         private string _uploadErrorMessage;
         private bool _isUploadErrorMessageVisible;
         private SupportedLanguage _selectedLanguage;
@@ -120,8 +121,26 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _selectedLanguage, value))
                 {
+                    IsPhoneCall = false;
                     ReevaluateNavigationItemIconKeys();
+                    RaisePropertyChanged(nameof(IsRecordingTypeVisible));
                     RaisePropertyChanged(nameof(IsLanguageLabelVisible));
+                }
+            }
+        }
+
+        public bool IsRecordingTypeVisible => SelectedLanguage != null && !IsEdit && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
+
+        public bool IsBasicRecording => !IsPhoneCall;
+
+        public bool IsPhoneCall
+        {
+            get => _isPhoneCall;
+            set
+            {
+                if (SetProperty(ref _isPhoneCall, value))
+                {
+                    RaisePropertyChanged(nameof(IsBasicRecording));
                 }
             }
         }
@@ -154,6 +173,8 @@ namespace RewriteMe.Mobile.ViewModels
         private ActionBarTileViewModel SaveTileItem { get; set; }
 
         private ActionBarTileViewModel SaveAndTranscribeTileItem { get; set; }
+
+        private bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
 
         public ICommand UploadFileCommand { get; }
 
@@ -195,9 +216,12 @@ namespace RewriteMe.Mobile.ViewModels
 
                     Name = FileItem.Name;
                     SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
+                    IsPhoneCall = FileItem.IsPhoneCall;
                     UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
                     IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
+
+                RaisePropertyChanged(nameof(IsRecordingTypeVisible));
             }
         }
 
@@ -355,6 +379,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Id = Guid.NewGuid(),
                 FileItemId = fileItem.Id,
                 Language = fileItem.Language,
+                IsPhoneCall = fileItem.IsPhoneCall,
                 Source = mediaFile.Source,
                 IsTranscript = isTranscript,
                 DateCreated = DateTime.UtcNow
@@ -375,6 +400,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = name,
                 Language = SelectedLanguage?.Culture,
                 FileName = SelectedFile.FileName,
+                IsPhoneCall = IsPhoneCallModelSupported ? IsPhoneCall : false,
                 Source = SelectedFile.Source
             };
         }

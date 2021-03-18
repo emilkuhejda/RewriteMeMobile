@@ -1357,15 +1357,15 @@ namespace RewriteMe.Domain.WebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<Ok> TranscribeFileItemAsync(System.Guid? fileItemId, string language, int? startTimeSeconds, int? endTimeSeconds, System.Guid? applicationId, string version)
+        public System.Threading.Tasks.Task<Ok> TranscribeFileItemAsync(System.Guid? fileItemId, string language, bool? isPhoneCall, int? startTimeSeconds, int? endTimeSeconds, System.Guid? applicationId, string version)
         {
-            return TranscribeFileItemAsync(fileItemId, language, startTimeSeconds, endTimeSeconds, applicationId, version, System.Threading.CancellationToken.None);
+            return TranscribeFileItemAsync(fileItemId, language, isPhoneCall, startTimeSeconds, endTimeSeconds, applicationId, version, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<Ok> TranscribeFileItemAsync(System.Guid? fileItemId, string language, int? startTimeSeconds, int? endTimeSeconds, System.Guid? applicationId, string version, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<Ok> TranscribeFileItemAsync(System.Guid? fileItemId, string language, bool? isPhoneCall, int? startTimeSeconds, int? endTimeSeconds, System.Guid? applicationId, string version, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -1380,6 +1380,10 @@ namespace RewriteMe.Domain.WebApi
             if (language != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("language") + "=").Append(System.Uri.EscapeDataString(ConvertToString(language, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (isPhoneCall != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("isPhoneCall") + "=").Append(System.Uri.EscapeDataString(ConvertToString(isPhoneCall, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (startTimeSeconds != null)
             {

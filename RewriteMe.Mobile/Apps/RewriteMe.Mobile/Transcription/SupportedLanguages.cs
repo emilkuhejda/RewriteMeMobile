@@ -1,8 +1,13 @@
-﻿using RewriteMe.Domain.Transcription;
+﻿using System.Collections.Generic;
+using System.Linq;
+using RewriteMe.Domain.Transcription;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.Transcription
 {
+    /// <summary>
+    /// https://cloud.google.com/speech-to-text/docs/languages
+    /// </summary>
     public static class SupportedLanguages
     {
         public static SupportedLanguage EnglishAu { get; } = new SupportedLanguage(TranslationKeys.LanguageEnAu, "en-AU", true);
@@ -55,6 +60,18 @@ namespace RewriteMe.Mobile.Transcription
             Japanese,
             ChineseCn,
             Chinese
+        };
+
+        public static bool IsPhoneCallModelSupported(SupportedLanguage supportedLanguage)
+        {
+            return PhoneCallModels.Select(x => x.Culture).Contains(supportedLanguage.Culture);
+        }
+
+        private static IList<SupportedLanguage> PhoneCallModels { get; } = new List<SupportedLanguage>
+        {
+            EnglishGb,
+            EnglishUs,
+            Russian
         };
     }
 }

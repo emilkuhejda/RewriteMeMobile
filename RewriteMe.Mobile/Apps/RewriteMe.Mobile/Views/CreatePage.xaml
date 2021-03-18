@@ -17,36 +17,45 @@
 
         <controls:AlwaysScrollView Grid.Row="0" Padding="{StaticResource StandardPadding}">
             <StackLayout>
-                <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
+                <Label IsVisible="{Binding IsUploadErrorMessageVisible}"
+                       Style="{StaticResource ErrorLabelStyle}"
+                       Text="{Binding UploadErrorMessage}" />
+
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                                   Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}"
+                                                   IsHintAlwaysFloated="True">
                     <Entry IsReadOnly="{Binding IsEdit}" Text="{Binding Name}" />
                 </textInputLayout:SfTextInputLayout>
 
-                <textInputLayout:SfTextInputLayout Margin="0,0,0,20"
-                                                   ContainerType="Outlined"
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                                   Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                                                   IsHintAlwaysFloated="True"
                                                    IsVisible="{Binding IsEdit, Converter={StaticResource InvertedBoolConverter}}">
-                    <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                    <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SelectLanguage}}"
                             ItemDisplayBinding="{Binding Key, Converter={StaticResource KeyToLocalizedTextConverter}}"
                             ItemsSource="{Binding AvailableLanguages}"
                             SelectedItem="{Binding SelectedLanguage}" />
                 </textInputLayout:SfTextInputLayout>
 
-                <textInputLayout:SfTextInputLayout Margin="0,0,0,20"
-                                                   ContainerType="Outlined"
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                                   Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                                                   IsHintAlwaysFloated="True"
                                                    IsVisible="{Binding IsLanguageLabelVisible}">
                     <Entry IsReadOnly="True" Text="{Binding SelectedLanguage.Key, Converter={StaticResource KeyToLocalizedTextConverter}}" />
                 </textInputLayout:SfTextInputLayout>
 
-                <Label Margin="0,0,0,20"
-                       IsVisible="{Binding IsUploadErrorMessageVisible}"
-                       Style="{StaticResource ErrorLabelStyle}"
-                       Text="{Binding UploadErrorMessage}" />
+                <buttons:SfRadioGroup IsVisible="{Binding IsRecordingTypeVisible}">
+                    <buttons:SfRadioButton IsChecked="{Binding IsBasicRecording}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.BasicRecording}}" />
+                    <buttons:SfRadioButton IsChecked="{Binding IsPhoneCall}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.PhoneVideoCall}}" />
+                </buttons:SfRadioGroup>
 
                 <Label Margin="0,0,0,20"
                        IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}"
                        Style="{StaticResource LabelStyle}"
                        Text="{Binding SelectedFile.FileName}" />
 
-                <buttons:SfButton Command="{Binding UploadFileCommand}"
+                <buttons:SfButton Margin="0,20,0,0"
+                                  Command="{Binding UploadFileCommand}"
                                   IsVisible="{Binding SelectedFile, Converter={StaticResource NullToTrueBoolConverter}}"
                                   Style="{StaticResource SfButtonStyle}"
                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}" />

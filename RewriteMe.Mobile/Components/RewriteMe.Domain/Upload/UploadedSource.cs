@@ -10,6 +10,8 @@ namespace RewriteMe.Domain.Upload
 
         public string Language { get; set; }
 
+        public bool IsPhoneCall { get; set; }
+
         public byte[] Source { get; set; }
 
         public bool IsTranscript { get; set; }
