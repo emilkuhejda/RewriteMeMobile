@@ -74,6 +74,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _selectedLanguage, value))
                 {
+                    IsPhoneCall = false;
                     ReevaluateNavigationItemIconKeys();
                     RaisePropertyChanged(nameof(IsPhoneCallModelSupported));
                 }
@@ -82,10 +83,18 @@ namespace RewriteMe.Mobile.ViewModels
 
         public bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
 
+        public bool IsBasicRecording => !IsPhoneCall;
+
         public bool IsPhoneCall
         {
             get => _isPhoneCall;
-            set => SetProperty(ref _isPhoneCall, value);
+            set
+            {
+                if (SetProperty(ref _isPhoneCall, value))
+                {
+                    RaisePropertyChanged(nameof(IsBasicRecording));
+                }
+            }
         }
 
         public IEnumerable<ActionBarTileViewModel> NavigationItems

@@ -100,14 +100,6 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _name, value);
         }
 
-        public bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
-
-        public bool IsPhoneCall
-        {
-            get => _isPhoneCall;
-            set => SetProperty(ref _isPhoneCall, value);
-        }
-
         public string UploadErrorMessage
         {
             get => _uploadErrorMessage;
@@ -129,9 +121,26 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _selectedLanguage, value))
                 {
+                    IsPhoneCall = false;
                     ReevaluateNavigationItemIconKeys();
                     RaisePropertyChanged(nameof(IsPhoneCallModelSupported));
                     RaisePropertyChanged(nameof(IsLanguageLabelVisible));
+                }
+            }
+        }
+
+        public bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
+
+        public bool IsBasicRecording => !IsPhoneCall;
+
+        public bool IsPhoneCall
+        {
+            get => _isPhoneCall;
+            set
+            {
+                if (SetProperty(ref _isPhoneCall, value))
+                {
+                    RaisePropertyChanged(nameof(IsBasicRecording));
                 }
             }
         }
