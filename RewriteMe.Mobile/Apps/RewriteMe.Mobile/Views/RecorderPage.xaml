@@ -44,11 +44,13 @@
             </textInputLayout:SfTextInputLayout>
 
             <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                               Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                                               IsHintAlwaysFloated="True"
                                                IsVisible="{Binding IsRecordingOnly, Converter={StaticResource InvertedBoolConverter}}">
-                <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SelectLanguage}}"
                         ItemDisplayBinding="{Binding Key, Converter={StaticResource KeyToLocalizedTextConverter}}"
                         ItemsSource="{Binding Languages}"
-                        SelectedItem="{Binding SelectedLanguage}"/>
+                        SelectedItem="{Binding SelectedLanguage}" />
             </textInputLayout:SfTextInputLayout>
 
             <Grid>

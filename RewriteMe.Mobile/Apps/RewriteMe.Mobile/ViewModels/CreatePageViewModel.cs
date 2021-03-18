@@ -123,13 +123,13 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     IsPhoneCall = false;
                     ReevaluateNavigationItemIconKeys();
-                    RaisePropertyChanged(nameof(IsPhoneCallModelSupported));
+                    RaisePropertyChanged(nameof(IsRecordingTypeVisible));
                     RaisePropertyChanged(nameof(IsLanguageLabelVisible));
                 }
             }
         }
 
-        public bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
+        public bool IsRecordingTypeVisible => SelectedLanguage != null && !IsEdit && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
 
         public bool IsBasicRecording => !IsPhoneCall;
 
@@ -173,6 +173,8 @@ namespace RewriteMe.Mobile.ViewModels
         private ActionBarTileViewModel SaveTileItem { get; set; }
 
         private ActionBarTileViewModel SaveAndTranscribeTileItem { get; set; }
+
+        private bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
 
         public ICommand UploadFileCommand { get; }
 
@@ -219,7 +221,7 @@ namespace RewriteMe.Mobile.ViewModels
                     IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
 
-                RaisePropertyChanged(nameof(IsPhoneCallModelSupported));
+                RaisePropertyChanged(nameof(IsRecordingTypeVisible));
             }
         }
 

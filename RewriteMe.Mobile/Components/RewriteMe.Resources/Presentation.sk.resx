@@ -262,6 +262,9 @@
   <data name="Name" xml:space="preserve">
     <value>Názov</value>
   </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Vyberte jazyk</value>
+  </data>
   <data name="BasicRecording" xml:space="preserve">
     <value>Nahrávka</value>
   </data>
@@ -361,7 +364,7 @@
   <data name="Highlighter" xml:space="preserve">
     <value>Zvýrazňovač</value>
   </data>
-  
+
   <data name="ApplicationIsOutOfDateMessage" xml:space="preserve">
     <value>Vaša aplikácia je zastaralá a nemusí pracovať správne. Prosím, aktualizujte ju.</value>
   </data>

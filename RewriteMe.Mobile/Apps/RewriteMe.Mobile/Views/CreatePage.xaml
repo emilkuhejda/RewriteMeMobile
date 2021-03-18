@@ -21,22 +21,30 @@
                        Style="{StaticResource ErrorLabelStyle}"
                        Text="{Binding UploadErrorMessage}" />
 
-                <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                                   Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}"
+                                                   IsHintAlwaysFloated="True">
                     <Entry IsReadOnly="{Binding IsEdit}" Text="{Binding Name}" />
                 </textInputLayout:SfTextInputLayout>
 
-                <textInputLayout:SfTextInputLayout ContainerType="Outlined" IsVisible="{Binding IsEdit, Converter={StaticResource InvertedBoolConverter}}">
-                    <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                                   Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                                                   IsHintAlwaysFloated="True"
+                                                   IsVisible="{Binding IsEdit, Converter={StaticResource InvertedBoolConverter}}">
+                    <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SelectLanguage}}"
                             ItemDisplayBinding="{Binding Key, Converter={StaticResource KeyToLocalizedTextConverter}}"
                             ItemsSource="{Binding AvailableLanguages}"
                             SelectedItem="{Binding SelectedLanguage}" />
                 </textInputLayout:SfTextInputLayout>
 
-                <textInputLayout:SfTextInputLayout ContainerType="Outlined" IsVisible="{Binding IsLanguageLabelVisible}">
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                                   Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                                                   IsHintAlwaysFloated="True"
+                                                   IsVisible="{Binding IsLanguageLabelVisible}">
                     <Entry IsReadOnly="True" Text="{Binding SelectedLanguage.Key, Converter={StaticResource KeyToLocalizedTextConverter}}" />
                 </textInputLayout:SfTextInputLayout>
 
-                <buttons:SfRadioGroup IsVisible="{Binding IsPhoneCallModelSupported}">
+                <buttons:SfRadioGroup IsVisible="{Binding IsRecordingTypeVisible}">
                     <buttons:SfRadioButton IsChecked="{Binding IsBasicRecording}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.BasicRecording}}" />
                     <buttons:SfRadioButton IsChecked="{Binding IsPhoneCall}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.PhoneVideoCall}}" />
                 </buttons:SfRadioGroup>

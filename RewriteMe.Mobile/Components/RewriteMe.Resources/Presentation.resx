@@ -262,6 +262,9 @@
   <data name="Name" xml:space="preserve">
     <value>Name</value>
   </data>
+  <data name="SelectLanguage" xml:space="preserve">
+    <value>Select language</value>
+  </data>
   <data name="BasicRecording" xml:space="preserve">
     <value>Basic recording</value>
   </data>
@@ -363,7 +366,7 @@
   </data>
 
   <data name="ApplicationIsOutOfDateMessage" xml:space="preserve">
-    <value>Your application is out of date and it might not working properly. Please update it.</value>
+    <value>Your application is out of date and it might not work properly. Please update it.</value>
   </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>You don't have a permission to upload a file. Please try again later.</value>

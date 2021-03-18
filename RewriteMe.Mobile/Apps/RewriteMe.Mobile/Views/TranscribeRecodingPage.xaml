@@ -26,18 +26,22 @@
                 </Grid.RowDefinitions>
 
                 <StackLayout Padding="{StaticResource StandardPadding}">
-                    <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}">
+                    <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                                       Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Name}}"
+                                                       IsHintAlwaysFloated="True">
                         <Entry Text="{Binding Name}" />
                     </textInputLayout:SfTextInputLayout>
 
-                    <textInputLayout:SfTextInputLayout ContainerType="Outlined">
-                        <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                    <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                                       Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Language}}"
+                                                       IsHintAlwaysFloated="True">
+                        <Picker Title="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SelectLanguage}}"
                                 ItemDisplayBinding="{Binding Key, Converter={StaticResource KeyToLocalizedTextConverter}}"
                                 ItemsSource="{Binding AvailableLanguages}"
                                 SelectedItem="{Binding SelectedLanguage}" />
                     </textInputLayout:SfTextInputLayout>
 
-                    <buttons:SfRadioGroup IsVisible="{Binding IsPhoneCallModelSupported}">
+                    <buttons:SfRadioGroup IsVisible="{Binding IsRecordingTypeVisible}">
                         <buttons:SfRadioButton IsChecked="{Binding IsBasicRecording}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.BasicRecording}}" />
                         <buttons:SfRadioButton IsChecked="{Binding IsPhoneCall}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.PhoneVideoCall}}" />
                     </buttons:SfRadioGroup>

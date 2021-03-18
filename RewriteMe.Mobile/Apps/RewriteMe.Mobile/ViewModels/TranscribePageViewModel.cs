@@ -74,7 +74,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
 
-                RaisePropertyChanged(nameof(IsPhoneCallModelSupported));
+                RaisePropertyChanged(nameof(IsRecordingTypeVisible));
             }
         }
 

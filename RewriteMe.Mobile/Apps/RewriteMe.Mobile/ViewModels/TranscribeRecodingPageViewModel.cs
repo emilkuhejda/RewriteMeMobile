@@ -75,7 +75,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 PlayerViewModel.Load(source);
 
-                RaisePropertyChanged(nameof(IsPhoneCallModelSupported));
+                RaisePropertyChanged(nameof(IsRecordingTypeVisible));
             }
         }
 

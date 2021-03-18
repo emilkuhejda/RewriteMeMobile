@@ -76,12 +76,12 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     IsPhoneCall = false;
                     ReevaluateNavigationItemIconKeys();
-                    RaisePropertyChanged(nameof(IsPhoneCallModelSupported));
+                    RaisePropertyChanged(nameof(IsRecordingTypeVisible));
                 }
             }
         }
 
-        public bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
+        public bool IsRecordingTypeVisible => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
 
         public bool IsBasicRecording => !IsPhoneCall;
 

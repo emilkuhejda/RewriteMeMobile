@@ -97,7 +97,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Your application is out of date and it might not working properly. Please update it..
+        ///   Looks up a localized string similar to Your application is out of date and it might not work properly. Please update it..
         /// </summary>
         public static string ApplicationIsOutOfDateMessage {
             get {
@@ -840,6 +840,15 @@ namespace RewriteMe.Resources {
         public static string SaveAndTranscribe {
             get {
                 return ResourceManager.GetString("SaveAndTranscribe", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Select language.
+        /// </summary>
+        public static string SelectLanguage {
+            get {
+                return ResourceManager.GetString("SelectLanguage", resourceCulture);
             }
         }
         
