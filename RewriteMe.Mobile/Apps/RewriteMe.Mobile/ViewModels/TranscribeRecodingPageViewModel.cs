@@ -74,6 +74,7 @@ namespace RewriteMe.Mobile.ViewModels
                 CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
 
                 PlayerViewModel.Load(source);
+                TotalTime = PlayerViewModel.TotalTime;
 
                 RaisePropertyChanged(nameof(IsRecordingTypeVisible));
             }
