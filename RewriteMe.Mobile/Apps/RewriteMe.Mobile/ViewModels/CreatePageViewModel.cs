@@ -197,6 +197,7 @@ namespace RewriteMe.Mobile.ViewModels
                 _totalTime = value;
                 _endTime = value;
                 RaisePropertyChanged(nameof(EndTime));
+                ReevaluateNavigationItemIconKeys();
             }
         }
 
@@ -412,7 +413,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveAndTranscribeCommand()
         {
-            return SelectedFile != null && SelectedFile.CanTranscribe && SelectedLanguage != null;
+            return SelectedFile != null && SelectedFile.CanTranscribe && SelectedLanguage != null && TotalTime != TimeSpan.Zero;
         }
 
         private async Task ExecuteSaveAndTranscribeCommandAsync()
