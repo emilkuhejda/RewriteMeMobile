@@ -979,15 +979,15 @@ namespace RewriteMe.Domain.WebApi
 
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public System.Threading.Tasks.Task<FileItem> CreateFileItemAsync(string name, string language, string fileName, bool? isPhoneCall, System.DateTime? dateCreated, System.Guid? applicationId, string version)
+        public System.Threading.Tasks.Task<FileItem> CreateFileItemAsync(string name, string language, string fileName, bool? isPhoneCall, int? startTimeSeconds, int? endTimeSeconds, System.DateTime? dateCreated, System.Guid? applicationId, string version)
         {
-            return CreateFileItemAsync(name, language, fileName, isPhoneCall, dateCreated, applicationId, version, System.Threading.CancellationToken.None);
+            return CreateFileItemAsync(name, language, fileName, isPhoneCall, startTimeSeconds, endTimeSeconds, dateCreated, applicationId, version, System.Threading.CancellationToken.None);
         }
 
         /// <param name="cancellationToken">A cancellation token that can be used by other objects or threads to receive notice of cancellation.</param>
         /// <returns>Success</returns>
         /// <exception cref="ApiException">A server side error occurred.</exception>
-        public async System.Threading.Tasks.Task<FileItem> CreateFileItemAsync(string name, string language, string fileName, bool? isPhoneCall, System.DateTime? dateCreated, System.Guid? applicationId, string version, System.Threading.CancellationToken cancellationToken)
+        public async System.Threading.Tasks.Task<FileItem> CreateFileItemAsync(string name, string language, string fileName, bool? isPhoneCall, int? startTimeSeconds, int? endTimeSeconds, System.DateTime? dateCreated, System.Guid? applicationId, string version, System.Threading.CancellationToken cancellationToken)
         {
             if (version == null)
                 throw new System.ArgumentNullException("version");
@@ -1010,6 +1010,14 @@ namespace RewriteMe.Domain.WebApi
             if (isPhoneCall != null)
             {
                 urlBuilder_.Append(System.Uri.EscapeDataString("isPhoneCall") + "=").Append(System.Uri.EscapeDataString(ConvertToString(isPhoneCall, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (startTimeSeconds != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("startTimeSeconds") + "=").Append(System.Uri.EscapeDataString(ConvertToString(startTimeSeconds, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
+            }
+            if (endTimeSeconds != null)
+            {
+                urlBuilder_.Append(System.Uri.EscapeDataString("endTimeSeconds") + "=").Append(System.Uri.EscapeDataString(ConvertToString(endTimeSeconds, System.Globalization.CultureInfo.InvariantCulture))).Append("&");
             }
             if (dateCreated != null)
             {
@@ -4536,6 +4544,12 @@ namespace RewriteMe.Domain.WebApi
 
         [Newtonsoft.Json.JsonProperty("totalTimeTicks", Required = Newtonsoft.Json.Required.Always)]
         public long TotalTimeTicks { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("transcriptionStartTimeTicks", Required = Newtonsoft.Json.Required.Always)]
+        public long TranscriptionStartTimeTicks { get; set; }
+
+        [Newtonsoft.Json.JsonProperty("transcriptionEndTimeTicks", Required = Newtonsoft.Json.Required.Always)]
+        public long TranscriptionEndTimeTicks { get; set; }
 
         [Newtonsoft.Json.JsonProperty("transcribedTimeTicks", Required = Newtonsoft.Json.Required.Always)]
         public long TranscribedTimeTicks { get; set; }

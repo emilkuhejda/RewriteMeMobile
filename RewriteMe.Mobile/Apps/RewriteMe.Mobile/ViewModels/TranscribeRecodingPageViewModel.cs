@@ -74,6 +74,7 @@ namespace RewriteMe.Mobile.ViewModels
                 CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
 
                 PlayerViewModel.Load(source);
+                TotalTime = PlayerViewModel.TotalTime;
 
                 RaisePropertyChanged(nameof(IsRecordingTypeVisible));
             }
@@ -119,6 +120,9 @@ namespace RewriteMe.Mobile.ViewModels
                 Language = SelectedLanguage?.Culture,
                 FileName = RecordedItem.AudioFileName,
                 IsPhoneCall = IsPhoneCall,
+                IsTimeFrame = IsTimeFrame,
+                TranscriptionStartTime = StartTime,
+                TranscriptionEndTime = EndTime,
                 Source = File.ReadAllBytes(filePath)
             };
         }
@@ -131,6 +135,9 @@ namespace RewriteMe.Mobile.ViewModels
                 FileItemId = fileItem.Id,
                 Language = fileItem.Language,
                 IsPhoneCall = fileItem.IsPhoneCall,
+                IsTimeFrame = fileItem.IsTimeFrame,
+                TranscriptionStartTime = fileItem.TranscriptionStartTime,
+                TranscriptionEndTime = fileItem.TranscriptionEndTime,
                 Source = mediaFile.Source,
                 IsTranscript = true,
                 DateCreated = DateTime.UtcNow

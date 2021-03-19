@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Prism.Navigation;
@@ -20,6 +21,11 @@ namespace RewriteMe.Mobile.ViewModels
         private string _name;
         private SupportedLanguage _selectedLanguage;
         private bool _isPhoneCall;
+        private bool _isTimeFrame;
+        private TimeSpan _startTime;
+        private TimeSpan _endTime;
+        private TimeSpan _totalTime;
+        private bool _isAdvancedSettingsExpanded;
         private IEnumerable<ActionBarTileViewModel> _navigationItems;
         private bool _canTranscribe;
 
@@ -97,6 +103,51 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        public bool IsTimeFrame
+        {
+            get => _isTimeFrame;
+            set
+            {
+                if (SetProperty(ref _isTimeFrame, value))
+                {
+                    if (value && EndTime != TimeSpan.Zero)
+                    {
+                        EndTime = TotalTime;
+                    }
+                }
+            }
+        }
+
+        public TimeSpan StartTime
+        {
+            get => _startTime;
+            set
+            {
+                if (SetProperty(ref _startTime, value))
+                {
+                    ValidateTimes();
+                }
+            }
+        }
+
+        public TimeSpan EndTime
+        {
+            get => _endTime;
+            set
+            {
+                if (SetProperty(ref _endTime, value))
+                {
+                    ValidateTimes();
+                }
+            }
+        }
+
+        public bool IsAdvancedSettingsExpanded
+        {
+            get => _isAdvancedSettingsExpanded;
+            set => SetProperty(ref _isAdvancedSettingsExpanded, value);
+        }
+
         public IEnumerable<ActionBarTileViewModel> NavigationItems
         {
             get => _navigationItems;
@@ -104,6 +155,17 @@ namespace RewriteMe.Mobile.ViewModels
         }
 
         private ActionBarTileViewModel TranscribeTileItem { get; set; }
+
+        protected TimeSpan TotalTime
+        {
+            get => _totalTime;
+            set
+            {
+                _totalTime = value;
+                _endTime = value;
+                RaisePropertyChanged(nameof(EndTime));
+            }
+        }
 
         public IAsyncCommand DeleteCommand { get; }
 
@@ -185,6 +247,35 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     CanGoBack = true;
                 }
+            }
+        }
+
+        private void ValidateTimes()
+        {
+            if (StartTime == TimeSpan.Zero && EndTime == TimeSpan.Zero)
+                return;
+
+            if (TotalTime == TimeSpan.Zero)
+            {
+                Task.Run(() =>
+                {
+                    ThreadHelper.InvokeOnUiThread(async () =>
+                        await DialogService.AlertAsync(
+                            Loc.Text(TranslationKeys.UploadAudioFileMessage),
+                            okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false));
+                });
+            }
+
+            if (EndTime > TotalTime)
+            {
+                _endTime = TotalTime;
+                RaisePropertyChanged(nameof(EndTime));
+            }
+
+            if (StartTime >= EndTime)
+            {
+                _startTime = EndTime == TimeSpan.Zero ? TimeSpan.Zero : TimeSpan.FromSeconds(EndTime.TotalSeconds - 1);
+                RaisePropertyChanged(nameof(StartTime));
             }
         }
 

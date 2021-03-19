@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Prism.Navigation;
 using RewriteMe.Common.Utils;
@@ -71,6 +72,11 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = FileItem.Name;
                 SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
                 IsPhoneCall = FileItem.IsPhoneCall;
+                IsTimeFrame = FileItem.IsTimeFrame;
+                TotalTime = FileItem.TotalTime;
+                EndTime = FileItem.TranscriptionEndTime;
+                StartTime = FileItem.TranscriptionStartTime;
+                IsAdvancedSettingsExpanded = IsTimeFrame;
 
                 CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
 
@@ -82,7 +88,15 @@ namespace RewriteMe.Mobile.ViewModels
         {
             IsErrorMessageVisible = false;
 
-            await FileItemService.TranscribeAsync(FileItem.Id, SelectedLanguage.Culture, IsPhoneCall).ConfigureAwait(false);
+            var transcriptionStartTime = IsTimeFrame ? StartTime : TimeSpan.Zero;
+            var transcriptionEndTime = IsTimeFrame ? EndTime : TimeSpan.Zero;
+
+            await FileItemService.TranscribeAsync(
+                FileItem.Id,
+                SelectedLanguage.Culture,
+                IsPhoneCall,
+                (int)transcriptionStartTime.TotalSeconds,
+                (int)transcriptionEndTime.TotalSeconds).ConfigureAwait(false);
             await NavigationService.GoBackWithoutAnimationAsync().ConfigureAwait(false);
         }
 

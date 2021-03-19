@@ -59,6 +59,10 @@
         public static string SelectLanguage => "SelectLanguage";
         public static string BasicRecording => "BasicRecording";
         public static string PhoneVideoCall => "PhoneVideoCall";
+        public static string AdvancedSettings => "AdvancedSettings";
+        public static string TranscribePartOfTheAudio => "TranscribePartOfTheAudio";
+        public static string StartTime => "StartTime";
+        public static string EndTime => "EndTime";
         public static string UploadFile => "UploadFile";
         public static string Send => "Send";
         public static string Save => "Save";
@@ -92,6 +96,7 @@
         public static string Highlighter => "Highlighter";
 
         public static string ApplicationIsOutOfDateMessage => "ApplicationIsOutOfDateMessage";
+        public static string UploadAudioFileMessage => "UploadAudioFileMessage";
         public static string UnauthorizedErrorMessage => "UnauthorizedErrorMessage";
         public static string FileItemSourceDatabaseUpdateErrorMessage => "FileItemSourceDatabaseUpdateErrorMessage";
         public static string SystemIsUnderMaintenanceErrorMessage => "SystemIsUnderMaintenanceErrorMessage";

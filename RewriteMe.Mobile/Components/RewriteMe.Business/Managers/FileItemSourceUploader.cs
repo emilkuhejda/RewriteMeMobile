@@ -132,8 +132,16 @@ namespace RewriteMe.Business.Managers
             {
                 cancellationToken.ThrowIfCancellationRequested();
 
+                var transcriptionStartTime = uploadedSource.IsTimeFrame ? uploadedSource.TranscriptionStartTime : TimeSpan.Zero;
+                var transcriptionEndTime = uploadedSource.IsTimeFrame ? uploadedSource.TranscriptionEndTime : TimeSpan.Zero;
+
                 await _fileItemService.SetTranscribeErrorCodeAsync(uploadedSource.FileItemId, null).ConfigureAwait(false);
-                await _fileItemService.TranscribeAsync(uploadedSource.FileItemId, uploadedSource.Language, uploadedSource.IsPhoneCall).ConfigureAwait(false);
+                await _fileItemService.TranscribeAsync(
+                    uploadedSource.FileItemId,
+                    uploadedSource.Language,
+                    uploadedSource.IsPhoneCall,
+                    (int)transcriptionStartTime.TotalSeconds,
+                    (int)transcriptionEndTime.TotalSeconds).ConfigureAwait(false);
             }
             catch (UnauthorizedCallException)
             {
