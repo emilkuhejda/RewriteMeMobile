@@ -380,6 +380,9 @@
   <data name="ApplicationIsOutOfDateMessage" xml:space="preserve">
     <value>Your application is out of date and it might not work properly. Please update it.</value>
   </data>
+  <data name="UploadAudioFileMessage" xml:space="preserve">
+    <value>Please upload audio file</value>
+  </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>You don't have a permission to upload a file. Please try again later.</value>
   </data>

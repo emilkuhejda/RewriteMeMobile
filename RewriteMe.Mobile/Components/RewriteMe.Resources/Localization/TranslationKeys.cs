@@ -96,6 +96,7 @@
         public static string Highlighter => "Highlighter";
 
         public static string ApplicationIsOutOfDateMessage => "ApplicationIsOutOfDateMessage";
+        public static string UploadAudioFileMessage => "UploadAudioFileMessage";
         public static string UnauthorizedErrorMessage => "UnauthorizedErrorMessage";
         public static string FileItemSourceDatabaseUpdateErrorMessage => "FileItemSourceDatabaseUpdateErrorMessage";
         public static string SystemIsUnderMaintenanceErrorMessage => "SystemIsUnderMaintenanceErrorMessage";

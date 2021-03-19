@@ -380,6 +380,9 @@
   <data name="ApplicationIsOutOfDateMessage" xml:space="preserve">
     <value>Vaša aplikácia je zastaralá a nemusí pracovať správne. Prosím, aktualizujte ju.</value>
   </data>
+  <data name="UploadAudioFileMessage" xml:space="preserve">
+    <value>Prosím, nahrajte zvukový súbor</value>
+  </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>Nemáte oprávnenie nahrať súbor. Prosím, opakujte operáciu neskôr.</value>
   </data>

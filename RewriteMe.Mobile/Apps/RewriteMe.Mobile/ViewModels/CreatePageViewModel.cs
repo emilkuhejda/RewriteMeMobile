@@ -209,6 +209,8 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
 
+        private TimeSpan TotalTime { get; set; }
+
         public ICommand UploadFileCommand { get; }
 
         public ICommand ClearSelectedFileCommand { get; }
@@ -295,12 +297,17 @@ namespace RewriteMe.Mobile.ViewModels
         private void ExecuteClearSelectedFileCommand()
         {
             SelectedFile = null;
+            TotalTime = TimeSpan.Zero;
+            ValidateTimes();
         }
 
         private async Task PickFileAsync()
         {
             using (var selectedFile = await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
             {
+                TotalTime = TimeSpan.Zero;
+                ValidateTimes();
+
                 if (selectedFile == null)
                     return;
 
@@ -316,6 +323,15 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     Name = SelectedFile.FileName;
                 }
+
+                try
+                {
+                    TotalTime = AudioFileHelper.GetDuration(selectedFile.DataArray);
+                }
+                catch
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage), okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+                }
             }
         }
 
@@ -323,6 +339,12 @@ namespace RewriteMe.Mobile.ViewModels
         {
             if (StartTime == TimeSpan.Zero && EndTime == TimeSpan.Zero)
                 return;
+
+            if (EndTime > TotalTime)
+            {
+                _endTime = TotalTime;
+                RaisePropertyChanged(nameof(EndTime));
+            }
 
             if (StartTime >= EndTime)
             {
@@ -333,7 +355,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveCommand()
         {
-            return SelectedFile != null;
+            return SelectedFile != null && TotalTime != TimeSpan.Zero;
         }
 
         private async Task ExecuteSaveCommandAsync()

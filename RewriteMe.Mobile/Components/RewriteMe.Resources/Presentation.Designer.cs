@@ -1078,6 +1078,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Please upload audio file.
+        /// </summary>
+        public static string UploadAudioFileMessage {
+            get {
+                return ResourceManager.GetString("UploadAudioFileMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to It seems like the uploaded file is corrupted. Please try to upload it again..
         /// </summary>
         public static string UploadedFileIsCorruptedErrorMessage {
