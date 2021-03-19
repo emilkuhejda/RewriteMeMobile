@@ -14,6 +14,7 @@ using Syncfusion.XForms.iOS.Border;
 using Syncfusion.XForms.iOS.Buttons;
 using Syncfusion.XForms.iOS.ProgressBar;
 using Syncfusion.XForms.iOS.TextInputLayout;
+using Syncfusion.XForms.Pickers.iOS;
 using UIKit;
 using Xamarin.Forms;
 
@@ -99,6 +100,7 @@ namespace RewriteMe.Mobile.iOS
             SfButtonRenderer.Init();
             SfBadgeViewRenderer.Init();
             SfRadialMenuRenderer.Init();
+            SfTimePickerRenderer.Init();
             SfRadioButtonRenderer.Init();
             SfTextInputLayoutRenderer.Init();
             SfCircularProgressBarRenderer.Init();
