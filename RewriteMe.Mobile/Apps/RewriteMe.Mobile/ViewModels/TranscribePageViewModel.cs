@@ -71,6 +71,11 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = FileItem.Name;
                 SelectedLanguage = SupportedLanguages.All.FirstOrDefault(x => x.Culture == FileItem.Language);
                 IsPhoneCall = FileItem.IsPhoneCall;
+                IsTimeFrame = FileItem.IsTimeFrame;
+                TotalTime = FileItem.TotalTime;
+                EndTime = FileItem.EndTime;
+                StartTime = FileItem.StartTime;
+                IsAdvancedSettingsExpanded = FileItem.IsTimeFrame;
 
                 CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
 

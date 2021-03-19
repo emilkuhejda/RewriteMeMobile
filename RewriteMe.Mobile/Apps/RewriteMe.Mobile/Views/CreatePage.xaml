@@ -51,7 +51,7 @@
                     <buttons:SfRadioButton IsChecked="{Binding IsPhoneCall}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.PhoneVideoCall}}" />
                 </buttons:SfRadioGroup>
 
-                <expander:SfExpander>
+                <expander:SfExpander IsExpanded="{Binding IsAdvancedSettingsExpanded}">
                     <expander:SfExpander.Header>
                         <Label Padding="10,12,10,12"
                                HeightRequest="50"

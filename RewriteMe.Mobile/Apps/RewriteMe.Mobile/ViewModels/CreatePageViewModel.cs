@@ -41,6 +41,7 @@ namespace RewriteMe.Mobile.ViewModels
         private TimeSpan _startTime;
         private TimeSpan _endTime;
         private TimeSpan _totalTime;
+        private bool _isAdvancedSettingsExpanded;
         private string _uploadErrorMessage;
         private bool _isUploadErrorMessageVisible;
         private SupportedLanguage _selectedLanguage;
@@ -188,6 +189,23 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        private TimeSpan TotalTime
+        {
+            get => _totalTime;
+            set
+            {
+                _totalTime = value;
+                _endTime = value;
+                RaisePropertyChanged(nameof(EndTime));
+            }
+        }
+
+        public bool IsAdvancedSettingsExpanded
+        {
+            get => _isAdvancedSettingsExpanded;
+            set => SetProperty(ref _isAdvancedSettingsExpanded, value);
+        }
+
         public PickedFile SelectedFile
         {
             get => _selectedFile;
@@ -218,17 +236,6 @@ namespace RewriteMe.Mobile.ViewModels
         private ActionBarTileViewModel SaveAndTranscribeTileItem { get; set; }
 
         private bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
-
-        private TimeSpan TotalTime
-        {
-            get => _totalTime;
-            set
-            {
-                _totalTime = value;
-                _endTime = value;
-                RaisePropertyChanged(nameof(EndTime));
-            }
-        }
 
         public ICommand UploadFileCommand { get; }
 
@@ -271,6 +278,7 @@ namespace RewriteMe.Mobile.ViewModels
                     Name = FileItem.Name;
                     SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
                     IsPhoneCall = FileItem.IsPhoneCall;
+                    IsAdvancedSettingsExpanded = FileItem.IsTimeFrame;
                     UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
                     IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
