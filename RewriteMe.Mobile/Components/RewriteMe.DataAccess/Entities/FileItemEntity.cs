@@ -25,13 +25,11 @@ namespace RewriteMe.DataAccess.Entities
         [MaxLength(20)]
         public RecognitionState RecognitionState { get; set; }
 
-        public bool IsTimeFrame { get; set; }
-
-        public TimeSpan StartTime { get; set; }
-
-        public TimeSpan EndTime { get; set; }
-
         public TimeSpan TotalTime { get; set; }
+
+        public TimeSpan TranscriptionStartTime { get; set; }
+
+        public TimeSpan TranscriptionEndTime { get; set; }
 
         public TimeSpan TranscribedTime { get; set; }
 

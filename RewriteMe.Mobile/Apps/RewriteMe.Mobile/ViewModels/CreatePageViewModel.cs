@@ -517,8 +517,8 @@ namespace RewriteMe.Mobile.ViewModels
                 FileName = SelectedFile.FileName,
                 IsPhoneCall = IsPhoneCallModelSupported ? IsPhoneCall : false,
                 IsTimeFrame = true,
-                StartTime = StartTime,
-                EndTime = EndTime,
+                TranscriptionStartTime = StartTime,
+                TranscriptionEndTime = EndTime,
                 Source = SelectedFile.Source
             };
         }

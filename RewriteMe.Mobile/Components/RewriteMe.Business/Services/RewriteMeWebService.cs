@@ -125,12 +125,17 @@ namespace RewriteMe.Business.Services
 
         public async Task<HttpRequestResult<FileItem>> CreateFileItemAsync(MediaFile mediaFile, CancellationToken cancellationToken)
         {
+            var transcriptionStartTime = mediaFile.IsTimeFrame ? mediaFile.TranscriptionStartTime : TimeSpan.Zero;
+            var transcriptionEndTime = mediaFile.IsTimeFrame ? mediaFile.TranscriptionEndTime : TimeSpan.Zero;
+
             return await WebServiceErrorHandler.HandleResponseAsync(
                 () => MakeServiceCall(client => client.CreateFileItemAsync(
                     mediaFile.Name,
                     mediaFile.Language,
                     mediaFile.FileName,
                     mediaFile.IsPhoneCall,
+                    (int)transcriptionStartTime.TotalSeconds,
+                    (int)transcriptionEndTime.TotalSeconds,
                     DateTime.Now,
                     ApplicationSettings.ApplicationId,
                     ApplicationSettings.WebApiVersion,

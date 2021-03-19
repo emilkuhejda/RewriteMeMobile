@@ -14,9 +14,9 @@ namespace RewriteMe.Domain.Transcription
 
         public bool IsTimeFrame { get; set; }
 
-        public TimeSpan StartTime { get; set; }
+        public TimeSpan TranscriptionStartTime { get; set; }
 
-        public TimeSpan EndTime { get; set; }
+        public TimeSpan TranscriptionEndTime { get; set; }
 
         public byte[] Source { get; set; }
     }

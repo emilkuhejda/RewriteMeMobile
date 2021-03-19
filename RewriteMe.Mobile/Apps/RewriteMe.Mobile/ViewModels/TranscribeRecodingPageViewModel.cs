@@ -120,8 +120,8 @@ namespace RewriteMe.Mobile.ViewModels
                 FileName = RecordedItem.AudioFileName,
                 IsPhoneCall = IsPhoneCall,
                 IsTimeFrame = IsTimeFrame,
-                StartTime = StartTime,
-                EndTime = EndTime,
+                TranscriptionStartTime = StartTime,
+                TranscriptionEndTime = EndTime,
                 Source = File.ReadAllBytes(filePath)
             };
         }

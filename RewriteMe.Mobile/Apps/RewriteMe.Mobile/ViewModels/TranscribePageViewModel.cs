@@ -73,9 +73,9 @@ namespace RewriteMe.Mobile.ViewModels
                 IsPhoneCall = FileItem.IsPhoneCall;
                 IsTimeFrame = FileItem.IsTimeFrame;
                 TotalTime = FileItem.TotalTime;
-                EndTime = FileItem.EndTime;
-                StartTime = FileItem.StartTime;
-                IsAdvancedSettingsExpanded = FileItem.IsTimeFrame;
+                EndTime = FileItem.TranscriptionEndTime;
+                StartTime = FileItem.TranscriptionStartTime;
+                IsAdvancedSettingsExpanded = IsTimeFrame;
 
                 CanTranscribe = await FileItemService.CanTranscribeAsync().ConfigureAwait(false);
 

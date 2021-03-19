@@ -7,13 +7,13 @@ namespace RewriteMe.Domain.WebApi
     {
         public RecognitionState RecognitionState => EnumHelper.Parse(RecognitionStateString, RecognitionState.None);
 
-        public bool IsTimeFrame { get; set; }
-
-        public TimeSpan StartTime { get; set; }
-
-        public TimeSpan EndTime { get; set; }
-
         public TimeSpan TotalTime => TimeSpan.FromTicks(TotalTimeTicks);
+
+        public bool IsTimeFrame => TranscriptionStartTime != TimeSpan.Zero || TranscriptionEndTime != TimeSpan.Zero;
+
+        public TimeSpan TranscriptionStartTime => TimeSpan.FromTicks(TranscriptionStartTimeTicks);
+
+        public TimeSpan TranscriptionEndTime => TimeSpan.FromTicks(TranscriptionEndTimeTicks);
 
         public TimeSpan TranscribedTime => TimeSpan.FromTicks(TranscribedTimeTicks);
 
