@@ -173,16 +173,15 @@ namespace RewriteMe.Business.Services
             ).ConfigureAwait(false);
         }
 
-        // TODO
-        public async Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language, bool isPhoneCall)
+        public async Task<HttpRequestResult<Ok>> TranscribeFileItemAsync(Guid fileItemId, string language, bool isPhoneCall, int transcriptionStartTimeSeconds, int transcriptionEndTimeSeconds)
         {
             return await WebServiceErrorHandler.HandleResponseAsync(
                 () => MakeServiceCall(client => client.TranscribeFileItemAsync(
                     fileItemId,
                     language,
                     isPhoneCall,
-                    0,
-                    0,
+                    transcriptionStartTimeSeconds,
+                    transcriptionEndTimeSeconds,
                     ApplicationSettings.ApplicationId,
                     ApplicationSettings.WebApiVersion), GetAuthHeaders())
                 ).ConfigureAwait(false);

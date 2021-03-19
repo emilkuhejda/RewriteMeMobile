@@ -16,6 +16,12 @@ namespace RewriteMe.DataAccess.Entities
 
         public bool IsPhoneCall { get; set; }
 
+        public bool IsTimeFrame { get; set; }
+
+        public TimeSpan TranscriptionStartTime { get; set; }
+
+        public TimeSpan TranscriptionEndTime { get; set; }
+
         public byte[] Source { get; set; }
 
         public bool IsTranscript { get; set; }

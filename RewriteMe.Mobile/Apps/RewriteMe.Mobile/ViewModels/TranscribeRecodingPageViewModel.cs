@@ -134,6 +134,9 @@ namespace RewriteMe.Mobile.ViewModels
                 FileItemId = fileItem.Id,
                 Language = fileItem.Language,
                 IsPhoneCall = fileItem.IsPhoneCall,
+                IsTimeFrame = fileItem.IsTimeFrame,
+                TranscriptionStartTime = fileItem.TranscriptionStartTime,
+                TranscriptionEndTime = fileItem.TranscriptionEndTime,
                 Source = mediaFile.Source,
                 IsTranscript = true,
                 DateCreated = DateTime.UtcNow
