@@ -271,7 +271,6 @@ namespace RewriteMe.Mobile.ViewModels
                     Name = FileItem.Name;
                     SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
                     IsPhoneCall = FileItem.IsPhoneCall;
-                    TotalTime = FileItem.TotalTime;
                     UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
                     IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
@@ -377,7 +376,7 @@ namespace RewriteMe.Mobile.ViewModels
 
             if (StartTime >= EndTime)
             {
-                _startTime = EndTime == TimeSpan.Zero ? TimeSpan.Zero : EndTime.Add(-TimeSpan.FromSeconds(1));
+                _startTime = EndTime == TimeSpan.Zero ? TimeSpan.Zero : TimeSpan.FromSeconds(EndTime.TotalSeconds - 1);
                 RaisePropertyChanged(nameof(StartTime));
             }
         }
@@ -386,10 +385,11 @@ namespace RewriteMe.Mobile.ViewModels
         {
             _startTime = TimeSpan.Zero;
             _endTime = TimeSpan.Zero;
-            TotalTime = TimeSpan.Zero;
+            _totalTime = TimeSpan.Zero;
 
             RaisePropertyChanged(nameof(StartTime));
             RaisePropertyChanged(nameof(EndTime));
+            RaisePropertyChanged(nameof(TotalTime));
         }
 
         private bool CanExecuteSaveCommand()
@@ -507,6 +507,9 @@ namespace RewriteMe.Mobile.ViewModels
                 Language = SelectedLanguage?.Culture,
                 FileName = SelectedFile.FileName,
                 IsPhoneCall = IsPhoneCallModelSupported ? IsPhoneCall : false,
+                IsTimeFrame = true,
+                StartTime = StartTime,
+                EndTime = EndTime,
                 Source = SelectedFile.Source
             };
         }

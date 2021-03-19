@@ -65,6 +65,7 @@
                             </StackLayout>
 
                             <pickers:SfTimePicker Margin="0,0,0,20"
+                                                  EnableLooping="True"
                                                   HeaderBackgroundColor="{StaticResource ColorPrimary}"
                                                   HeaderFontSize="{StaticResource MidMediumSize}"
                                                   HeaderHeight="30"
@@ -73,7 +74,8 @@
                                                   IsVisible="{Binding IsTimeFrame}"
                                                   Time="{Binding StartTime}" />
 
-                            <pickers:SfTimePicker HeaderBackgroundColor="{StaticResource ColorPrimary}"
+                            <pickers:SfTimePicker EnableLooping="True"
+                                                  HeaderBackgroundColor="{StaticResource ColorPrimary}"
                                                   HeaderFontSize="{StaticResource MidMediumSize}"
                                                   HeaderHeight="30"
                                                   HeaderText="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EndTime}}"
