@@ -304,6 +304,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to End time must be less than total time of the recording..
+        /// </summary>
+        public static string EndTimeGreaterThanTotalTimeErrorMessage {
+            get {
+                return ResourceManager.GetString("EndTimeGreaterThanTotalTimeErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to English.
         /// </summary>
         public static string English {
@@ -709,6 +718,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Recording type for chosen language is not supported..
+        /// </summary>
+        public static string PhoneCallModelNotSupportedErrorMessage {
+            get {
+                return ResourceManager.GetString("PhoneCallModelNotSupportedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Phone / video call.
         /// </summary>
         public static string PhoneVideoCall {
@@ -759,6 +777,15 @@ namespace RewriteMe.Resources {
         public static string PurchaseWasNotProcessedErrorMessage {
             get {
                 return ResourceManager.GetString("PurchaseWasNotProcessedErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Audio file not found. Please try again later..
+        /// </summary>
+        public static string RecognizedAudioFileNotFoundErrorMessage {
+            get {
+                return ResourceManager.GetString("RecognizedAudioFileNotFoundErrorMessage", resourceCulture);
             }
         }
         
@@ -952,6 +979,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Something went wrong. Please try again later..
+        /// </summary>
+        public static string SomethingWentWrongErrorMessage {
+            get {
+                return ResourceManager.GetString("SomethingWentWrongErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connection was not established. Please try again later..
         /// </summary>
         public static string SpeechClientNotInitializedErrorMessage {
@@ -966,6 +1002,15 @@ namespace RewriteMe.Resources {
         public static string StartTime {
             get {
                 return ResourceManager.GetString("StartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Start time must be less than end time..
+        /// </summary>
+        public static string StartTimeGreaterOrEqualThanEndTimeErrorMessage {
+            get {
+                return ResourceManager.GetString("StartTimeGreaterOrEqualThanEndTimeErrorMessage", resourceCulture);
             }
         }
         
@@ -1002,6 +1047,15 @@ namespace RewriteMe.Resources {
         public static string TenHours {
             get {
                 return ResourceManager.GetString("TenHours", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Too many attempts to start transcription. Please contact us..
+        /// </summary>
+        public static string TooManyAttemptsToRestartTranscriptionErrorMessage {
+            get {
+                return ResourceManager.GetString("TooManyAttemptsToRestartTranscriptionErrorMessage", resourceCulture);
             }
         }
         

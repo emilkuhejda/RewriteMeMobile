@@ -132,9 +132,6 @@
         public static string StartTimeGreaterOrEqualThanEndTimeErrorMessage => "StartTimeGreaterOrEqualThanEndTimeErrorMessage";
         public static string EndTimeGreaterThanTotalTimeErrorMessage => "EndTimeGreaterThanTotalTimeErrorMessage";
         public static string TooManyAttemptsToRestartTranscriptionErrorMessage => "TooManyAttemptsToRestartTranscriptionErrorMessage";
-        public static string InvalidInputDataErrorMessage => "InvalidInputDataErrorMessage";
-        public static string InvalidOutputDataErrorMessage => "InvalidOutputDataErrorMessage";
-        public static string OperationErrorMessage => "OperationErrorMessage";
-        public static string UnavailableBlobStorageErrorMessage => "UnavailableBlobStorageErrorMessage";
+        public static string SomethingWentWrongErrorMessage => "SomethingWentWrongErrorMessage";
     }
 }

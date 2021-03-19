@@ -43,14 +43,11 @@ namespace RewriteMe.Mobile.Utils
                 case ErrorCode.EC500:
                     return Loc.Text(TranslationKeys.SystemIsUnderMaintenanceErrorMessage);
                 case ErrorCode.EC600:
-                    return Loc.Text(TranslationKeys.InvalidInputDataErrorMessage);
                 case ErrorCode.EC601:
-                    return Loc.Text(TranslationKeys.InvalidOutputDataErrorMessage);
                 case ErrorCode.EC602:
                 case ErrorCode.EC603:
-                    return Loc.Text(TranslationKeys.OperationErrorMessage);
                 case ErrorCode.EC700:
-                    return Loc.Text(TranslationKeys.UnavailableBlobStorageErrorMessage);
+                    return Loc.Text(TranslationKeys.SomethingWentWrongErrorMessage);
                 case ErrorCode.EC800:
                     return Loc.Text(TranslationKeys.UploadedFileIsCorruptedErrorMessage);
                 case ErrorCode.Unauthorized:
