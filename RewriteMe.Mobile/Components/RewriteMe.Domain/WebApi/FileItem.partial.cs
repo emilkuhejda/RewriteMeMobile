@@ -1,6 +1,5 @@
 ﻿using System;
 using RewriteMe.Common.Utils;
-using RewriteMe.Domain.Transcription;
 
 namespace RewriteMe.Domain.WebApi
 {
@@ -21,12 +20,5 @@ namespace RewriteMe.Domain.WebApi
         public ErrorCode? UploadErrorCode { get; set; }
 
         public ErrorCode? TranscribeErrorCode { get; set; }
-
-        public void UpdateFromMediaFile(MediaFile mediaFile)
-        {
-            IsTimeFrame = mediaFile.IsTimeFrame;
-            StartTime = mediaFile.StartTime;
-            EndTime = mediaFile.EndTime;
-        }
     }
 }

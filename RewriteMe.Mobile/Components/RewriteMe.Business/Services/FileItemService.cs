@@ -109,7 +109,6 @@ namespace RewriteMe.Business.Services
             if (httpRequestResult.State == HttpRequestState.Success)
             {
                 var fileItem = httpRequestResult.Payload;
-                fileItem.UpdateFromMediaFile(mediaFile);
                 await _fileItemRepository.InsertOrReplaceAsync(fileItem).ConfigureAwait(false);
                 return fileItem;
             }

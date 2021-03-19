@@ -119,6 +119,9 @@ namespace RewriteMe.Mobile.ViewModels
                 Language = SelectedLanguage?.Culture,
                 FileName = RecordedItem.AudioFileName,
                 IsPhoneCall = IsPhoneCall,
+                IsTimeFrame = IsTimeFrame,
+                StartTime = StartTime,
+                EndTime = EndTime,
                 Source = File.ReadAllBytes(filePath)
             };
         }
