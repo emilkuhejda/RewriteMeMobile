@@ -261,7 +261,7 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     ThreadHelper.InvokeOnUiThread(async () =>
                         await DialogService.AlertAsync(
-                            Loc.Text(TranslationKeys.UploadAudioFileMessage),
+                            Loc.Text(TranslationKeys.UploadAudioFileErrorMessage),
                             okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false));
                 });
             }

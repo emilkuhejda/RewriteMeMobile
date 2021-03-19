@@ -96,7 +96,7 @@
         public static string Highlighter => "Highlighter";
 
         public static string ApplicationIsOutOfDateMessage => "ApplicationIsOutOfDateMessage";
-        public static string UploadAudioFileMessage => "UploadAudioFileMessage";
+        public static string UploadAudioFileErrorMessage => "UploadAudioFileErrorMessage";
         public static string UnauthorizedErrorMessage => "UnauthorizedErrorMessage";
         public static string FileItemSourceDatabaseUpdateErrorMessage => "FileItemSourceDatabaseUpdateErrorMessage";
         public static string SystemIsUnderMaintenanceErrorMessage => "SystemIsUnderMaintenanceErrorMessage";
@@ -127,5 +127,11 @@
         public static string UserAccountDeletionErrorMessage => "UserAccountDeletionErrorMessage";
         public static string IncorrectUserInputErrorMessage => "IncorrectUserInputErrorMessage";
         public static string TranscriptionErrorMessage => "TranscriptionErrorMessage";
+        public static string RecognizedAudioFileNotFoundErrorMessage => "RecognizedAudioFileNotFoundErrorMessage";
+        public static string PhoneCallModelNotSupportedErrorMessage => "PhoneCallModelNotSupportedErrorMessage";
+        public static string StartTimeGreaterOrEqualThanEndTimeErrorMessage => "StartTimeGreaterOrEqualThanEndTimeErrorMessage";
+        public static string EndTimeGreaterThanTotalTimeErrorMessage => "EndTimeGreaterThanTotalTimeErrorMessage";
+        public static string TooManyAttemptsToRestartTranscriptionErrorMessage => "TooManyAttemptsToRestartTranscriptionErrorMessage";
+        public static string SomethingWentWrongErrorMessage => "SomethingWentWrongErrorMessage";
     }
 }

@@ -23,6 +23,9 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class UserSubscriptionsPageViewModel : ViewModelBase
     {
+        private const string PurchaseSubscription = "Purchase subscription";
+        private const string StartPurchasingSubscription = "Start purchasing subscription";
+
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IBillingPurchaseService _billingPurchaseService;
         private readonly IConnectivityService _connectivityService;
@@ -135,6 +138,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             catch (Exception ex)
             {
+                TrackException(ex);
                 Logger.Error("Connection to App Store failed.");
                 Logger.Error(ExceptionFormatter.FormatException(ex));
 
@@ -153,7 +157,7 @@ namespace RewriteMe.Mobile.ViewModels
                 return;
 
             Logger.Info("Subscription was successfully purchased and registered.");
-            await TrackEvent(productId).ConfigureAwait(false);
+            await TrackEvent(PurchaseSubscription, productId).ConfigureAwait(false);
             await DialogService.AlertAsync(Loc.Text(TranslationKeys.SubscriptionWasSuccessfullyPurchased)).ConfigureAwait(false);
             await InitializeRemainingTimeAsync().ConfigureAwait(false);
         }
@@ -165,6 +169,7 @@ namespace RewriteMe.Mobile.ViewModels
                 if (!CrossInAppBilling.IsSupported)
                     throw new InAppBillingNotSupportedException();
 
+                await TrackEvent(StartPurchasingSubscription, productId).ConfigureAwait(false);
                 Logger.Info($"Start purchasing product '{productId}'.");
 
                 var payload = Guid.NewGuid().ToString();
@@ -363,7 +368,7 @@ namespace RewriteMe.Mobile.ViewModels
             await _emailService.SendAsync(_applicationSettings.SupportMailAddress, subject, message).ConfigureAwait(false);
         }
 
-        private async Task TrackEvent(string productId)
+        private async Task TrackEvent(string name, string productId)
         {
             var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
             var properties = new Dictionary<string, string> {
@@ -371,7 +376,7 @@ namespace RewriteMe.Mobile.ViewModels
                 { "Product ID", productId }
             };
 
-            _appCenterMetricsService.TrackEvent("Purchase subscription", properties);
+            _appCenterMetricsService.TrackEvent(name, properties);
         }
 
         private void TrackException(Exception ex)
