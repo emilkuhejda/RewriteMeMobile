@@ -380,7 +380,7 @@
   <data name="ApplicationIsOutOfDateMessage" xml:space="preserve">
     <value>Your application is out of date and it might not work properly. Please update it.</value>
   </data>
-  <data name="UploadAudioFileMessage" xml:space="preserve">
+  <data name="UploadAudioFileErrorMessage" xml:space="preserve">
     <value>Please upload an audio file first</value>
   </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
@@ -472,5 +472,23 @@
   </data>
   <data name="TranscriptionErrorMessage" xml:space="preserve">
     <value>File '{0}' was not successfully transcribed. Please try it again or contact us.</value>
+  </data>
+  <data name="RecognizedAudioFileNotFoundErrorMessage" xml:space="preserve">
+    <value>Audio file not found. Please try again later.</value>
+  </data>
+  <data name="PhoneCallModelNotSupportedErrorMessage" xml:space="preserve">
+    <value>Recording type for chosen language is not supported.</value>
+  </data>
+  <data name="StartTimeGreaterOrEqualThanEndTimeErrorMessage" xml:space="preserve">
+    <value>Start time must be less than end time.</value>
+  </data>
+  <data name="EndTimeGreaterThanTotalTimeErrorMessage" xml:space="preserve">
+    <value>End time must be less than total time of the recording.</value>
+  </data>
+  <data name="TooManyAttemptsToRestartTranscriptionErrorMessage" xml:space="preserve">
+    <value>Too many attempts to start transcription. Please contact us.</value>
+  </data>
+  <data name="SomethingWentWrongErrorMessage" xml:space="preserve">
+    <value>Something went wrong. Please try again later.</value>
   </data>
 </root>

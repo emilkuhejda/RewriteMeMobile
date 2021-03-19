@@ -380,7 +380,7 @@
   <data name="ApplicationIsOutOfDateMessage" xml:space="preserve">
     <value>Vaša aplikácia je zastaralá a nemusí pracovať správne. Prosím, aktualizujte ju.</value>
   </data>
-  <data name="UploadAudioFileMessage" xml:space="preserve">
+  <data name="UploadAudioFileErrorMessage" xml:space="preserve">
     <value>Prosím, nahrajte najprv zvukový súbor</value>
   </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
@@ -472,5 +472,23 @@
   </data>
   <data name="TranscriptionErrorMessage" xml:space="preserve">
     <value>Súbor '{0}' nebol úspešne spracovaný. Prosím, zopakujte operáciu neskôr alebo kontaktujte nás.</value>
+  </data>
+  <data name="RecognizedAudioFileNotFoundErrorMessage" xml:space="preserve">
+    <value>Audio súbor sa nepodarilo nájsť. Prosím, zopakujte operáciu neskôr.</value>
+  </data>
+  <data name="PhoneCallModelNotSupportedErrorMessage" xml:space="preserve">
+    <value>Typ nahrávky nie je podporovaný pre vybraný jazyk.</value>
+  </data>
+  <data name="StartTimeGreaterOrEqualThanEndTimeErrorMessage" xml:space="preserve">
+    <value>Začiatok musí byť menší ako koniec.</value>
+  </data>
+  <data name="EndTimeGreaterThanTotalTimeErrorMessage" xml:space="preserve">
+    <value>Koniec nahrávky musí byť menší ako celkový čas nahrávky.</value>
+  </data>
+  <data name="TooManyAttemptsToRestartTranscriptionErrorMessage" xml:space="preserve">
+    <value>Pre začatie prepisu bolo vykonaných príliš veľa pokusov. Prosím, kontaktujte nás.</value>
+  </data>
+  <data name="SomethingWentWrongErrorMessage" xml:space="preserve">
+    <value>Niečo sa pokazilo. Prosím, zopakujte operáciu neskôr.</value>
   </data>
 </root>
