@@ -271,6 +271,18 @@
   <data name="PhoneVideoCall" xml:space="preserve">
     <value>Telefónny / video rozhovor</value>
   </data>
+  <data name="AdvancedSettings" xml:space="preserve">
+    <value>Rozšírené možnosti</value>
+  </data>
+  <data name="TranscribePartOfTheAudio" xml:space="preserve">
+    <value>Preprísať časť audio nahrávky</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Začiatok</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>Koniec</value>
+  </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Nahrať súbor</value>
   </data>
@@ -367,6 +379,9 @@
 
   <data name="ApplicationIsOutOfDateMessage" xml:space="preserve">
     <value>Vaša aplikácia je zastaralá a nemusí pracovať správne. Prosím, aktualizujte ju.</value>
+  </data>
+  <data name="UploadAudioFileMessage" xml:space="preserve">
+    <value>Prosím, nahrajte najprv zvukový súbor</value>
   </data>
   <data name="UnauthorizedErrorMessage" xml:space="preserve">
     <value>Nemáte oprávnenie nahrať súbor. Prosím, opakujte operáciu neskôr.</value>

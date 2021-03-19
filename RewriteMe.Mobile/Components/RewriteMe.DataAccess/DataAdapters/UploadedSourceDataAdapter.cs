@@ -13,6 +13,9 @@ namespace RewriteMe.DataAccess.DataAdapters
                 FileItemId = entity.FileItemId,
                 Language = entity.Language,
                 IsPhoneCall = entity.IsPhoneCall,
+                IsTimeFrame = entity.IsTimeFrame,
+                TranscriptionStartTime = entity.TranscriptionStartTime,
+                TranscriptionEndTime = entity.TranscriptionEndTime,
                 Source = entity.Source,
                 IsTranscript = entity.IsTranscript,
                 DateCreated = entity.DateCreated
@@ -27,6 +30,9 @@ namespace RewriteMe.DataAccess.DataAdapters
                 FileItemId = uploadedSource.FileItemId,
                 Language = uploadedSource.Language,
                 IsPhoneCall = uploadedSource.IsPhoneCall,
+                IsTimeFrame = uploadedSource.IsTimeFrame,
+                TranscriptionStartTime = uploadedSource.TranscriptionStartTime,
+                TranscriptionEndTime = uploadedSource.TranscriptionEndTime,
                 Source = uploadedSource.Source,
                 IsTranscript = uploadedSource.IsTranscript,
                 DateCreated = uploadedSource.DateCreated

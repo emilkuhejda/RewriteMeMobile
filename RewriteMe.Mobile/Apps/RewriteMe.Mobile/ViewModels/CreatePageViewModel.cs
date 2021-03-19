@@ -37,6 +37,11 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isEdit;
         private string _name;
         private bool _isPhoneCall;
+        private bool _isTimeFrame;
+        private TimeSpan _startTime;
+        private TimeSpan _endTime;
+        private TimeSpan _totalTime;
+        private bool _isAdvancedSettingsExpanded;
         private string _uploadErrorMessage;
         private bool _isUploadErrorMessageVisible;
         private SupportedLanguage _selectedLanguage;
@@ -145,6 +150,63 @@ namespace RewriteMe.Mobile.ViewModels
             }
         }
 
+        public bool IsTimeFrame
+        {
+            get => _isTimeFrame;
+            set
+            {
+                if (SetProperty(ref _isTimeFrame, value))
+                {
+                    if (value && EndTime != TimeSpan.Zero)
+                    {
+                        EndTime = TotalTime;
+                    }
+                }
+            }
+        }
+
+        public TimeSpan StartTime
+        {
+            get => _startTime;
+            set
+            {
+                if (SetProperty(ref _startTime, value))
+                {
+                    ValidateTimes();
+                }
+            }
+        }
+
+        public TimeSpan EndTime
+        {
+            get => _endTime;
+            set
+            {
+                if (SetProperty(ref _endTime, value))
+                {
+                    ValidateTimes();
+                }
+            }
+        }
+
+        private TimeSpan TotalTime
+        {
+            get => _totalTime;
+            set
+            {
+                _totalTime = value;
+                _endTime = value;
+                RaisePropertyChanged(nameof(EndTime));
+                ReevaluateNavigationItemIconKeys();
+            }
+        }
+
+        public bool IsAdvancedSettingsExpanded
+        {
+            get => _isAdvancedSettingsExpanded;
+            set => SetProperty(ref _isAdvancedSettingsExpanded, value);
+        }
+
         public PickedFile SelectedFile
         {
             get => _selectedFile;
@@ -217,6 +279,7 @@ namespace RewriteMe.Mobile.ViewModels
                     Name = FileItem.Name;
                     SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
                     IsPhoneCall = FileItem.IsPhoneCall;
+                    IsAdvancedSettingsExpanded = FileItem.IsTimeFrame;
                     UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
                     IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
@@ -262,12 +325,15 @@ namespace RewriteMe.Mobile.ViewModels
         private void ExecuteClearSelectedFileCommand()
         {
             SelectedFile = null;
+            ClearTimers();
         }
 
         private async Task PickFileAsync()
         {
             using (var selectedFile = await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
             {
+                ClearTimers();
+
                 if (selectedFile == null)
                     return;
 
@@ -283,12 +349,61 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     Name = SelectedFile.FileName;
                 }
+
+                try
+                {
+                    TotalTime = AudioFileHelper.GetDuration(selectedFile.DataArray);
+                }
+                catch
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage), okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+                }
             }
+        }
+
+        private void ValidateTimes()
+        {
+            if (StartTime == TimeSpan.Zero && EndTime == TimeSpan.Zero)
+                return;
+
+            if (TotalTime == TimeSpan.Zero)
+            {
+                Task.Run(() =>
+                {
+                    ThreadHelper.InvokeOnUiThread(async () =>
+                        await DialogService.AlertAsync(
+                            Loc.Text(TranslationKeys.UploadAudioFileMessage),
+                            okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false));
+                });
+            }
+
+            if (EndTime > TotalTime)
+            {
+                _endTime = TotalTime;
+                RaisePropertyChanged(nameof(EndTime));
+            }
+
+            if (StartTime >= EndTime)
+            {
+                _startTime = EndTime == TimeSpan.Zero ? TimeSpan.Zero : TimeSpan.FromSeconds(EndTime.TotalSeconds - 1);
+                RaisePropertyChanged(nameof(StartTime));
+            }
+        }
+
+        private void ClearTimers()
+        {
+            _startTime = TimeSpan.Zero;
+            _endTime = TimeSpan.Zero;
+            _totalTime = TimeSpan.Zero;
+
+            RaisePropertyChanged(nameof(StartTime));
+            RaisePropertyChanged(nameof(EndTime));
+            RaisePropertyChanged(nameof(TotalTime));
         }
 
         private bool CanExecuteSaveCommand()
         {
-            return SelectedFile != null;
+            return SelectedFile != null && TotalTime != TimeSpan.Zero;
         }
 
         private async Task ExecuteSaveCommandAsync()
@@ -298,7 +413,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveAndTranscribeCommand()
         {
-            return SelectedFile != null && SelectedFile.CanTranscribe && SelectedLanguage != null;
+            return SelectedFile != null && SelectedFile.CanTranscribe && SelectedLanguage != null && TotalTime != TimeSpan.Zero;
         }
 
         private async Task ExecuteSaveAndTranscribeCommandAsync()
@@ -380,6 +495,9 @@ namespace RewriteMe.Mobile.ViewModels
                 FileItemId = fileItem.Id,
                 Language = fileItem.Language,
                 IsPhoneCall = fileItem.IsPhoneCall,
+                IsTimeFrame = fileItem.IsTimeFrame,
+                TranscriptionStartTime = fileItem.TranscriptionStartTime,
+                TranscriptionEndTime = fileItem.TranscriptionEndTime,
                 Source = mediaFile.Source,
                 IsTranscript = isTranscript,
                 DateCreated = DateTime.UtcNow
@@ -400,7 +518,10 @@ namespace RewriteMe.Mobile.ViewModels
                 Name = name,
                 Language = SelectedLanguage?.Culture,
                 FileName = SelectedFile.FileName,
-                IsPhoneCall = IsPhoneCallModelSupported ? IsPhoneCall : false,
+                IsPhoneCall = IsPhoneCallModelSupported && IsPhoneCall,
+                IsTimeFrame = true,
+                TranscriptionStartTime = StartTime,
+                TranscriptionEndTime = EndTime,
                 Source = SelectedFile.Source
             };
         }

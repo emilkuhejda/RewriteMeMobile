@@ -12,8 +12,10 @@ using Syncfusion.SfRadialMenu.XForms.iOS;
 using Syncfusion.XForms.iOS.BadgeView;
 using Syncfusion.XForms.iOS.Border;
 using Syncfusion.XForms.iOS.Buttons;
+using Syncfusion.XForms.iOS.Expander;
 using Syncfusion.XForms.iOS.ProgressBar;
 using Syncfusion.XForms.iOS.TextInputLayout;
+using Syncfusion.XForms.Pickers.iOS;
 using UIKit;
 using Xamarin.Forms;
 
@@ -97,8 +99,11 @@ namespace RewriteMe.Mobile.iOS
         {
             SfBorderRenderer.Init();
             SfButtonRenderer.Init();
+            SfExpanderRenderer.Init();
+            SfSwitchRenderer.Init();
             SfBadgeViewRenderer.Init();
             SfRadialMenuRenderer.Init();
+            SfTimePickerRenderer.Init();
             SfRadioButtonRenderer.Init();
             SfTextInputLayoutRenderer.Init();
             SfCircularProgressBarRenderer.Init();

@@ -4,8 +4,10 @@
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:expander="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
                           xmlns:forms="clr-namespace:FFImageLoading.Svg.Forms;assembly=FFImageLoading.Svg.Forms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+                          xmlns:pickers="clr-namespace:Syncfusion.XForms.Pickers;assembly=Syncfusion.SfPicker.XForms"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
@@ -49,10 +51,40 @@
                     <buttons:SfRadioButton IsChecked="{Binding IsPhoneCall}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.PhoneVideoCall}}" />
                 </buttons:SfRadioGroup>
 
-                <Label Margin="0,0,0,20"
-                       IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}"
-                       Style="{StaticResource LabelStyle}"
-                       Text="{Binding SelectedFile.FileName}" />
+                <expander:SfExpander IsExpanded="{Binding IsAdvancedSettingsExpanded}">
+                    <expander:SfExpander.Header>
+                        <Label Padding="10,12,10,12"
+                               HeightRequest="50"
+                               Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.AdvancedSettings}}" />
+                    </expander:SfExpander.Header>
+                    <expander:SfExpander.Content>
+                        <StackLayout Padding="5,5,5,5">
+                            <StackLayout HeightRequest="50" Orientation="Horizontal">
+                                <Label HorizontalTextAlignment="Start" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.TranscribePartOfTheAudio}}" />
+                                <buttons:SfSwitch HorizontalOptions="End" IsOn="{Binding IsTimeFrame}" />
+                            </StackLayout>
+
+                            <pickers:SfTimePicker Margin="0,0,0,20"
+                                                  EnableLooping="True"
+                                                  HeaderBackgroundColor="{StaticResource ColorPrimary}"
+                                                  HeaderFontSize="{StaticResource MidMediumSize}"
+                                                  HeaderHeight="30"
+                                                  HeaderText="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.StartTime}}"
+                                                  HeightRequest="100"
+                                                  IsVisible="{Binding IsTimeFrame}"
+                                                  Time="{Binding StartTime}" />
+
+                            <pickers:SfTimePicker EnableLooping="True"
+                                                  HeaderBackgroundColor="{StaticResource ColorPrimary}"
+                                                  HeaderFontSize="{StaticResource MidMediumSize}"
+                                                  HeaderHeight="30"
+                                                  HeaderText="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EndTime}}"
+                                                  HeightRequest="100"
+                                                  IsVisible="{Binding IsTimeFrame}"
+                                                  Time="{Binding EndTime}" />
+                        </StackLayout>
+                    </expander:SfExpander.Content>
+                </expander:SfExpander>
 
                 <buttons:SfButton Margin="0,20,0,0"
                                   Command="{Binding UploadFileCommand}"
@@ -60,21 +92,25 @@
                                   Style="{StaticResource SfButtonStyle}"
                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.UploadFile}}" />
 
-                <Grid>
-                    <forms:SvgCachedImage Margin="0"
-                                          Aspect="AspectFit"
-                                          BackgroundColor="Transparent"
-                                          HeightRequest="70"
-                                          HorizontalOptions="Center"
-                                          InputTransparent="True"
-                                          IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}"
-                                          Source="resource://RewriteMe.Mobile.Resources.Images.Clear.svg"
-                                          VerticalOptions="Center" />
+                <StackLayout IsVisible="{Binding SelectedFile, Converter={StaticResource NullToBoolConverter}}" Orientation="Horizontal">
+                    <Label HorizontalOptions="Start"
+                           Style="{StaticResource LabelStyle}"
+                           Text="{Binding SelectedFile.FileName}" />
 
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Command="{Binding ClearSelectedFileCommand}" />
-                    </Grid.GestureRecognizers>
-                </Grid>
+                    <Grid HorizontalOptions="EndAndExpand" WidthRequest="50">
+                        <forms:SvgCachedImage Margin="0"
+                                              Aspect="AspectFit"
+                                              BackgroundColor="Transparent"
+                                              HeightRequest="25"
+                                              InputTransparent="True"
+                                              Source="resource://RewriteMe.Mobile.Resources.Images.Clear.svg"
+                                              VerticalOptions="Center" />
+
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding ClearSelectedFileCommand}" />
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </StackLayout>
             </StackLayout>
         </controls:AlwaysScrollView>
 

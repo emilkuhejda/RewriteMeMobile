@@ -4,7 +4,9 @@
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
                           xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
+                          xmlns:expander="clr-namespace:Syncfusion.XForms.Expander;assembly=Syncfusion.Expander.XForms"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
+                          xmlns:pickers="clr-namespace:Syncfusion.XForms.Pickers;assembly=Syncfusion.SfPicker.XForms"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
                           xmlns:textInputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
                           xmlns:views="clr-namespace:RewriteMe.Mobile.Views;assembly=RewriteMe.Mobile">
@@ -45,6 +47,41 @@
                         <buttons:SfRadioButton IsChecked="{Binding IsBasicRecording}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.BasicRecording}}" />
                         <buttons:SfRadioButton IsChecked="{Binding IsPhoneCall}" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.PhoneVideoCall}}" />
                     </buttons:SfRadioGroup>
+
+                    <expander:SfExpander IsExpanded="{Binding IsAdvancedSettingsExpanded}">
+                        <expander:SfExpander.Header>
+                            <Label Padding="10,12,10,12"
+                                   HeightRequest="50"
+                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.AdvancedSettings}}" />
+                        </expander:SfExpander.Header>
+                        <expander:SfExpander.Content>
+                            <StackLayout Padding="5,5,5,5">
+                                <StackLayout HeightRequest="50" Orientation="Horizontal">
+                                    <Label HorizontalTextAlignment="Start" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.TranscribePartOfTheAudio}}" />
+                                    <buttons:SfSwitch HorizontalOptions="End" IsOn="{Binding IsTimeFrame}" />
+                                </StackLayout>
+
+                                <pickers:SfTimePicker Margin="0,0,0,20"
+                                                      EnableLooping="True"
+                                                      HeaderBackgroundColor="{StaticResource ColorPrimary}"
+                                                      HeaderFontSize="{StaticResource MidMediumSize}"
+                                                      HeaderHeight="30"
+                                                      HeaderText="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.StartTime}}"
+                                                      HeightRequest="100"
+                                                      IsVisible="{Binding IsTimeFrame}"
+                                                      Time="{Binding StartTime}" />
+
+                                <pickers:SfTimePicker EnableLooping="True"
+                                                      HeaderBackgroundColor="{StaticResource ColorPrimary}"
+                                                      HeaderFontSize="{StaticResource MidMediumSize}"
+                                                      HeaderHeight="30"
+                                                      HeaderText="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EndTime}}"
+                                                      HeightRequest="100"
+                                                      IsVisible="{Binding IsTimeFrame}"
+                                                      Time="{Binding EndTime}" />
+                            </StackLayout>
+                        </expander:SfExpander.Content>
+                    </expander:SfExpander>
                 </StackLayout>
 
                 <views:PlayerView Grid.Row="1" BindingContext="{Binding PlayerViewModel}" />

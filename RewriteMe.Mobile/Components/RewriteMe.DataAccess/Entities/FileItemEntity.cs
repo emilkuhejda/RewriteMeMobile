@@ -27,6 +27,10 @@ namespace RewriteMe.DataAccess.Entities
 
         public TimeSpan TotalTime { get; set; }
 
+        public TimeSpan TranscriptionStartTime { get; set; }
+
+        public TimeSpan TranscriptionEndTime { get; set; }
+
         public TimeSpan TranscribedTime { get; set; }
 
         public UploadStatus UploadStatus { get; set; }
