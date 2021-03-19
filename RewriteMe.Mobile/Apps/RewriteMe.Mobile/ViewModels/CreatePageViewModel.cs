@@ -40,6 +40,7 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isTimeFrame;
         private TimeSpan _startTime;
         private TimeSpan _endTime;
+        private TimeSpan _totalTime;
         private string _uploadErrorMessage;
         private bool _isUploadErrorMessageVisible;
         private SupportedLanguage _selectedLanguage;
@@ -151,7 +152,16 @@ namespace RewriteMe.Mobile.ViewModels
         public bool IsTimeFrame
         {
             get => _isTimeFrame;
-            set => SetProperty(ref _isTimeFrame, value);
+            set
+            {
+                if (SetProperty(ref _isTimeFrame, value))
+                {
+                    if (value && EndTime != TimeSpan.Zero)
+                    {
+                        EndTime = TotalTime;
+                    }
+                }
+            }
         }
 
         public TimeSpan StartTime
@@ -209,7 +219,16 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool IsPhoneCallModelSupported => SelectedLanguage != null && SupportedLanguages.IsPhoneCallModelSupported(SelectedLanguage);
 
-        private TimeSpan TotalTime { get; set; }
+        private TimeSpan TotalTime
+        {
+            get => _totalTime;
+            set
+            {
+                _totalTime = value;
+                _endTime = value;
+                RaisePropertyChanged(nameof(EndTime));
+            }
+        }
 
         public ICommand UploadFileCommand { get; }
 
@@ -252,6 +271,7 @@ namespace RewriteMe.Mobile.ViewModels
                     Name = FileItem.Name;
                     SelectedLanguage = AvailableLanguages.FirstOrDefault(x => x.Culture == FileItem.Language);
                     IsPhoneCall = FileItem.IsPhoneCall;
+                    TotalTime = FileItem.TotalTime;
                     UploadErrorMessage = UploadErrorHelper.GetErrorMessage(FileItem.UploadErrorCode);
                     IsUploadErrorMessageVisible = FileItem.UploadStatus == UploadStatus.Error;
                 }
@@ -297,16 +317,14 @@ namespace RewriteMe.Mobile.ViewModels
         private void ExecuteClearSelectedFileCommand()
         {
             SelectedFile = null;
-            TotalTime = TimeSpan.Zero;
-            ValidateTimes();
+            ClearTimers();
         }
 
         private async Task PickFileAsync()
         {
             using (var selectedFile = await CrossFilePicker.Current.PickFile().ConfigureAwait(false))
             {
-                TotalTime = TimeSpan.Zero;
-                ValidateTimes();
+                ClearTimers();
 
                 if (selectedFile == null)
                     return;
@@ -340,6 +358,17 @@ namespace RewriteMe.Mobile.ViewModels
             if (StartTime == TimeSpan.Zero && EndTime == TimeSpan.Zero)
                 return;
 
+            if (TotalTime == TimeSpan.Zero)
+            {
+                Task.Run(() =>
+                {
+                    ThreadHelper.InvokeOnUiThread(async () =>
+                        await DialogService.AlertAsync(
+                            Loc.Text(TranslationKeys.UploadAudioFileMessage),
+                            okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false));
+                });
+            }
+
             if (EndTime > TotalTime)
             {
                 _endTime = TotalTime;
@@ -351,6 +380,16 @@ namespace RewriteMe.Mobile.ViewModels
                 _startTime = EndTime == TimeSpan.Zero ? TimeSpan.Zero : EndTime.Add(-TimeSpan.FromSeconds(1));
                 RaisePropertyChanged(nameof(StartTime));
             }
+        }
+
+        private void ClearTimers()
+        {
+            _startTime = TimeSpan.Zero;
+            _endTime = TimeSpan.Zero;
+            TotalTime = TimeSpan.Zero;
+
+            RaisePropertyChanged(nameof(StartTime));
+            RaisePropertyChanged(nameof(EndTime));
         }
 
         private bool CanExecuteSaveCommand()

@@ -1078,7 +1078,7 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Please upload audio file.
+        ///   Looks up a localized string similar to Please upload an audio file first.
         /// </summary>
         public static string UploadAudioFileMessage {
             get {
