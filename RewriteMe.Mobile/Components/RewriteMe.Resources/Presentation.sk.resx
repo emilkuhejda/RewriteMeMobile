@@ -271,6 +271,18 @@
   <data name="PhoneVideoCall" xml:space="preserve">
     <value>Telefónny / video rozhovor</value>
   </data>
+  <data name="AdvancedSettings" xml:space="preserve">
+    <value>Rozšírené možnosti</value>
+  </data>
+  <data name="TranscribePartOfTheAudio" xml:space="preserve">
+    <value>Preprísať časť audio nahrávky</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Začiatok</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>Koniec</value>
+  </data>
   <data name="UploadFile" xml:space="preserve">
     <value>Nahrať súbor</value>
   </data>

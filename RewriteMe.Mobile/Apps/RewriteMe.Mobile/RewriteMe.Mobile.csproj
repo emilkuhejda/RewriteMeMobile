@@ -115,6 +115,7 @@
     <PackageReference Include="NLog" Version="4.7.7" />
     <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.4.0.39" />
     <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.39" />
+    <PackageReference Include="Syncfusion.Xamarin.Expander" Version="18.4.0.39" />
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="18.4.0.39" />
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.4.0.39" />
     <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="18.4.0.39" />

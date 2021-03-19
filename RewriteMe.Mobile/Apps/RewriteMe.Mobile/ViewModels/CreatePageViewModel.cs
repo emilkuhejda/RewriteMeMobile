@@ -37,6 +37,9 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isEdit;
         private string _name;
         private bool _isPhoneCall;
+        private bool _isTimeFrame;
+        private TimeSpan _startTime;
+        private TimeSpan _endTime;
         private string _uploadErrorMessage;
         private bool _isUploadErrorMessageVisible;
         private SupportedLanguage _selectedLanguage;
@@ -141,6 +144,36 @@ namespace RewriteMe.Mobile.ViewModels
                 if (SetProperty(ref _isPhoneCall, value))
                 {
                     RaisePropertyChanged(nameof(IsBasicRecording));
+                }
+            }
+        }
+
+        public bool IsTimeFrame
+        {
+            get => _isTimeFrame;
+            set => SetProperty(ref _isTimeFrame, value);
+        }
+
+        public TimeSpan StartTime
+        {
+            get => _startTime;
+            set
+            {
+                if (SetProperty(ref _startTime, value))
+                {
+                    ValidateTimes();
+                }
+            }
+        }
+
+        public TimeSpan EndTime
+        {
+            get => _endTime;
+            set
+            {
+                if (SetProperty(ref _endTime, value))
+                {
+                    ValidateTimes();
                 }
             }
         }
@@ -283,6 +316,18 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     Name = SelectedFile.FileName;
                 }
+            }
+        }
+
+        private void ValidateTimes()
+        {
+            if (StartTime == TimeSpan.Zero && EndTime == TimeSpan.Zero)
+                return;
+
+            if (StartTime >= EndTime)
+            {
+                _startTime = EndTime == TimeSpan.Zero ? TimeSpan.Zero : EndTime.Add(-TimeSpan.FromSeconds(1));
+                RaisePropertyChanged(nameof(StartTime));
             }
         }
 

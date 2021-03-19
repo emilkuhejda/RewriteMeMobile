@@ -59,6 +59,10 @@
         public static string SelectLanguage => "SelectLanguage";
         public static string BasicRecording => "BasicRecording";
         public static string PhoneVideoCall => "PhoneVideoCall";
+        public static string AdvancedSettings => "AdvancedSettings";
+        public static string TranscribePartOfTheAudio => "TranscribePartOfTheAudio";
+        public static string StartTime => "StartTime";
+        public static string EndTime => "EndTime";
         public static string UploadFile => "UploadFile";
         public static string Send => "Send";
         public static string Save => "Save";

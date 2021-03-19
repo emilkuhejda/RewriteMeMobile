@@ -79,6 +79,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Advanced settings.
+        /// </summary>
+        public static string AdvancedSettings {
+            get {
+                return ResourceManager.GetString("AdvancedSettings", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to API url.
         /// </summary>
         public static string ApiUrl {
@@ -282,6 +291,15 @@ namespace RewriteMe.Resources {
         public static string EmailIsNotSupported {
             get {
                 return ResourceManager.GetString("EmailIsNotSupported", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to End time.
+        /// </summary>
+        public static string EndTime {
+            get {
+                return ResourceManager.GetString("EndTime", resourceCulture);
             }
         }
         
@@ -943,6 +961,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Start time.
+        /// </summary>
+        public static string StartTime {
+            get {
+                return ResourceManager.GetString("StartTime", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Subscription was successfully purchased..
         /// </summary>
         public static string SubscriptionWasSuccessfullyPurchased {
@@ -1002,6 +1029,15 @@ namespace RewriteMe.Resources {
         public static string Transcribed {
             get {
                 return ResourceManager.GetString("Transcribed", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Transcribe a part of the audio.
+        /// </summary>
+        public static string TranscribePartOfTheAudio {
+            get {
+                return ResourceManager.GetString("TranscribePartOfTheAudio", resourceCulture);
             }
         }
         
