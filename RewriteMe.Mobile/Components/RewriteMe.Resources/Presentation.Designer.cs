@@ -1080,9 +1080,9 @@ namespace RewriteMe.Resources {
         /// <summary>
         ///   Looks up a localized string similar to Please upload an audio file first.
         /// </summary>
-        public static string UploadAudioFileMessage {
+        public static string UploadAudioFileErrorMessage {
             get {
-                return ResourceManager.GetString("UploadAudioFileMessage", resourceCulture);
+                return ResourceManager.GetString("UploadAudioFileErrorMessage", resourceCulture);
             }
         }
         
