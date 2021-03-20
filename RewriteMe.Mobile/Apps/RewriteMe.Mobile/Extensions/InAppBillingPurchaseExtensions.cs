@@ -1,5 +1,5 @@
 ﻿using System;
-using Plugin.InAppBilling.Abstractions;
+using Plugin.InAppBilling;
 using RewriteMe.Domain.WebApi;
 using Xamarin.Forms;
 

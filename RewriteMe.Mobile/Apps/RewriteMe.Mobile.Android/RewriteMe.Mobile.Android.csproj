@@ -89,7 +89,7 @@
       <Version>2.1.0.4</Version>
     </PackageReference>
     <PackageReference Include="Plugin.InAppBilling">
-      <Version>2.0.0</Version>
+      <Version>4.0.2</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity.Forms">
       <Version>7.2.0.1422</Version>
