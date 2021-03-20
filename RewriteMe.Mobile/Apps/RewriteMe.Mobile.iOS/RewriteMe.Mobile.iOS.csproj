@@ -246,31 +246,31 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Buttons">
-      <Version>18.4.0.39</Version>
+      <Version>18.4.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Core">
-      <Version>18.4.0.39</Version>
+      <Version>18.4.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.Expander">
-      <Version>18.4.0.39</Version>
+      <Version>18.4.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBadgeView">
-      <Version>18.4.0.39</Version>
+      <Version>18.4.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator">
-      <Version>18.4.0.39</Version>
+      <Version>18.4.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer">
       <Version>18.4.0.39</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
-      <Version>18.4.0.39</Version>
+      <Version>18.4.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfProgressBar">
-      <Version>18.4.0.39</Version>
+      <Version>18.4.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu">
-      <Version>18.4.0.39</Version>
+      <Version>18.4.0.48</Version>
     </PackageReference>
     <PackageReference Include="Xam.Plugin.LatestVersion">
       <Version>1.1.2</Version>

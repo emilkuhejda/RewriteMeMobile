@@ -110,17 +110,17 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.475" />
+    <PackageReference Include="Acr.UserDialogs" Version="7.1.0.481" />
     <PackageReference Include="NLog" Version="4.7.7" />
-    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.4.0.39" />
-    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.39" />
-    <PackageReference Include="Syncfusion.Xamarin.Expander" Version="18.4.0.39" />
-    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="18.4.0.39" />
-    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.4.0.39" />
+    <PackageReference Include="Syncfusion.Xamarin.Buttons" Version="18.4.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.Core" Version="18.4.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.Expander" Version="18.4.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBadgeView" Version="18.4.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfBusyIndicator" Version="18.4.0.48" />
     <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer" Version="18.4.0.39" />
-    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="18.4.0.39" />
-    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="18.4.0.39" />
-    <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu" Version="18.4.0.39" />
+    <PackageReference Include="Syncfusion.Xamarin.SfPicker" Version="18.4.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfProgressBar" Version="18.4.0.48" />
+    <PackageReference Include="Syncfusion.Xamarin.SfRadialMenu" Version="18.4.0.48" />
     <PackageReference Include="Xam.Plugin.Connectivity" Version="3.2.0" />
     <PackageReference Include="Xam.Plugin.LatestVersion" Version="1.1.2" />
     <PackageReference Include="Xam.Plugin.SimpleAudioPlayer" Version="1.4.0" />
