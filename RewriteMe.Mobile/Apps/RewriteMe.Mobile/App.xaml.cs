@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
-using Microsoft.AppCenter.Push;
 using Prism;
 using Prism.Ioc;
 using Prism.Navigation;
@@ -15,7 +14,6 @@ using RewriteMe.Common.Utils;
 using RewriteMe.DataAccess;
 using RewriteMe.DataAccess.Providers;
 using RewriteMe.Domain.Enums;
-using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Domain.Interfaces.Utils;
@@ -141,25 +139,10 @@ namespace RewriteMe.Mobile
         {
             base.OnStart();
 
-            if (!AppCenter.Configured)
-            {
-                Push.PushNotificationReceived += async (sender, e) =>
-                {
-                    try
-                    {
-                        await Container.Resolve<ISynchronizationService>().StartAsync().ConfigureAwait(false);
-                    }
-                    catch (UnauthorizedCallException)
-                    {
-                        await Container.Resolve<IAuthorizationObserver>().LogOutAsync().ConfigureAwait(false);
-                    }
-                };
-            }
-
 #if !DEBUG
-            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Analytics), typeof(Push));
+            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Crashes), typeof(Analytics));
 #else
-            AppCenter.Start(_applicationSettings.AppCenterKeys, typeof(Push));
+            AppCenter.Start(_applicationSettings.AppCenterKeys);
 #endif
         }
 
