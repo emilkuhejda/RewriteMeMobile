@@ -22,21 +22,18 @@ namespace RewriteMe.Business.Services
     public class RewriteMeWebService : WebServiceBase, IRewriteMeWebService
     {
         private readonly IUserSessionService _userSessionService;
-        private readonly IPushNotificationsService _pushNotificationsService;
         private readonly ILogger _logger;
 
         private HttpClient _isAliveClient;
 
         public RewriteMeWebService(
             IUserSessionService userSessionService,
-            IPushNotificationsService pushNotificationsService,
             ILoggerFactory loggerFactory,
             IWebServiceErrorHandler webServiceErrorHandler,
             IApplicationSettings applicationSettings)
             : base(webServiceErrorHandler, applicationSettings)
         {
             _userSessionService = userSessionService;
-            _pushNotificationsService = pushNotificationsService;
             _logger = loggerFactory.CreateLogger(typeof(RewriteMeWebService));
         }
 
@@ -243,9 +240,8 @@ namespace RewriteMe.Business.Services
 
         public async Task<HttpRequestResult<Ok>> UpdateLanguageAsync(Language language)
         {
-            var installationId = await _pushNotificationsService.GetInstallIdAsync().ConfigureAwait(false);
             return await WebServiceErrorHandler.HandleResponseAsync(
-                () => MakeServiceCall(client => client.UpdateLanguageAsync(installationId, (int)language, ApplicationSettings.WebApiVersion), GetAuthHeaders())
+                () => MakeServiceCall(client => client.UpdateLanguageAsync(ApplicationSettings.ApplicationId, (int)language, ApplicationSettings.WebApiVersion), GetAuthHeaders())
                 ).ConfigureAwait(false);
         }
 
