@@ -114,7 +114,7 @@
       <Version>18.4.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfNavigationDrawer">
-      <Version>18.4.0.39</Version>
+      <Version>18.4.0.48</Version>
     </PackageReference>
     <PackageReference Include="Syncfusion.Xamarin.SfPicker">
       <Version>18.4.0.48</Version>
