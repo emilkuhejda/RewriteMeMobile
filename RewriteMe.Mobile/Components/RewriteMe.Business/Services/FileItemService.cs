@@ -125,7 +125,6 @@ namespace RewriteMe.Business.Services
         {
             cancellationToken.ThrowIfCancellationRequested();
 
-            var storageConfiguration = await GetChunksStorageConfiguration().ConfigureAwait(false);
             var sourceParts = source.Split(UploadedChunkSize);
             var fileChunks = new List<FileChunk>();
             var order = 1;
@@ -145,7 +144,7 @@ namespace RewriteMe.Business.Services
                 var updateMethods = new List<Func<Task<bool>>>();
                 foreach (var fileChunk in requests)
                 {
-                    updateMethods.Add(() => UploadChunkAsync(fileChunk, storageConfiguration.StorageSetting, cancellationToken));
+                    updateMethods.Add(() => UploadChunkAsync(fileChunk, cancellationToken));
                 }
 
                 var tasks = updateMethods.WhenTaskDone(() => UpdateUploadProgress(fileItemId)).Select(x => x());
@@ -160,7 +159,7 @@ namespace RewriteMe.Business.Services
                 cancellationToken.ThrowIfCancellationRequested();
             }
 
-            var httpRequestResult = await _rewriteMeWebService.SubmitChunksAsync(fileItemId, fileChunks.Count, storageConfiguration.StorageSetting, cancellationToken).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.SubmitChunksAsync(fileItemId, fileChunks.Count, cancellationToken).ConfigureAwait(false);
             if (httpRequestResult.State == HttpRequestState.Error)
                 throw new ErrorRequestException(httpRequestResult.ErrorCode);
 
@@ -173,15 +172,6 @@ namespace RewriteMe.Business.Services
             await _fileItemRepository.UpdateAsync(fileItem).ConfigureAwait(false);
 
             return true;
-        }
-
-        private async Task<StorageConfiguration> GetChunksStorageConfiguration()
-        {
-            var httpRequestResult = await _rewriteMeWebService.GetChunksStorageConfigurationAsync().ConfigureAwait(false);
-            if (httpRequestResult.State == HttpRequestState.Success)
-                return httpRequestResult.Payload;
-
-            throw new OfflineRequestException();
         }
 
         private void UpdateUploadProgress(Guid fileItemId)
@@ -197,9 +187,9 @@ namespace RewriteMe.Business.Services
                 throw new OfflineRequestException();
         }
 
-        private async Task<bool> UploadChunkAsync(FileChunk fileChunk, StorageSetting storageSetting, CancellationToken cancellationToken)
+        private async Task<bool> UploadChunkAsync(FileChunk fileChunk, CancellationToken cancellationToken)
         {
-            var httpRequestResult = await _rewriteMeWebService.UploadChunkFileAsync(fileChunk.FileItemId, fileChunk.Order, storageSetting, fileChunk.Source, cancellationToken).ConfigureAwait(false);
+            var httpRequestResult = await _rewriteMeWebService.UploadChunkFileAsync(fileChunk.FileItemId, fileChunk.Order, fileChunk.Source, cancellationToken).ConfigureAwait(false);
             return httpRequestResult.State == HttpRequestState.Success;
         }
 
