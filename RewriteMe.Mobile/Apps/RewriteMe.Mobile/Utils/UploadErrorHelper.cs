@@ -1,10 +1,12 @@
-﻿using RewriteMe.Domain.WebApi;
+﻿using System.Diagnostics.CodeAnalysis;
+using RewriteMe.Domain.WebApi;
 using RewriteMe.Resources.Localization;
 
 namespace RewriteMe.Mobile.Utils
 {
     public static class UploadErrorHelper
     {
+        [SuppressMessage("Microsoft.Maintainability", "CA1502:AvoidExcessiveComplexity", Justification = "By design")]
         public static string GetErrorMessage(ErrorCode? errorCode)
         {
             if (!errorCode.HasValue)
