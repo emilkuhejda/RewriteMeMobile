@@ -19,14 +19,12 @@ namespace RewriteMe.Mobile.ViewModels
     public class LoadingPageViewModel : ViewModelBase
     {
         private readonly IConnectivityService _connectivityService;
-        private readonly IPushNotificationsService _pushNotificationsService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
 
         private string _progressText;
 
         public LoadingPageViewModel(
             IConnectivityService connectivityService,
-            IPushNotificationsService pushNotificationsService,
             IRewriteMeWebService rewriteMeWebService,
             IUserSessionService userSessionService,
             IDialogService dialogService,
@@ -35,7 +33,6 @@ namespace RewriteMe.Mobile.ViewModels
             : base(userSessionService, dialogService, navigationService, loggerFactory)
         {
             _connectivityService = connectivityService;
-            _pushNotificationsService = pushNotificationsService;
             _rewriteMeWebService = rewriteMeWebService;
 
             IsSecurePage = false;
@@ -51,10 +48,6 @@ namespace RewriteMe.Mobile.ViewModels
         {
             using (new OperationMonitor(OperationScope))
             {
-                var isPushEnabled = await _pushNotificationsService.IsEnabledAsync().ConfigureAwait(false);
-                if (!isPushEnabled)
-                    await _pushNotificationsService.SetEnabledAsync(true).ConfigureAwait(false);
-
                 ProgressText = Loc.Text(TranslationKeys.LoadingData);
 
                 if (!_connectivityService.IsConnected)

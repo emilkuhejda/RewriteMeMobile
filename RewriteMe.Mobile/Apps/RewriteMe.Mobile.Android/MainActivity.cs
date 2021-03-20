@@ -7,7 +7,6 @@ using Android.OS;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using FFImageLoading.Forms.Platform;
-using Microsoft.AppCenter.Push;
 using Microsoft.Identity.Client;
 using Plugin.InAppBilling;
 using RewriteMe.Domain.Enums;
@@ -58,12 +57,6 @@ namespace RewriteMe.Mobile.Droid
             base.OnActivityResult(requestCode, resultCode, data);
             AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
             InAppBillingImplementation.HandleActivityResult(requestCode, resultCode, data);
-        }
-
-        protected override void OnNewIntent(Intent intent)
-        {
-            base.OnNewIntent(intent);
-            Push.CheckLaunchedFromNotification(this, intent);
         }
 
         private void WireUpBackgroundServices()

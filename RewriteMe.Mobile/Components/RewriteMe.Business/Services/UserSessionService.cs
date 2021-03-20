@@ -31,7 +31,6 @@ namespace RewriteMe.Business.Services
         private readonly IRegistrationUserWebService _registrationUserWebService;
         private readonly ICleanUpService _cleanUpService;
         private readonly IAppCenterMetricsService _appCenterMetricsService;
-        private readonly IPushNotificationsService _pushNotificationsService;
         private readonly IPublicClientApplication _publicClientApplication;
         private readonly IIdentityUiParentProvider _identityUiParentProvider;
         private readonly IApplicationVersionProvider _applicationVersionProvider;
@@ -50,7 +49,6 @@ namespace RewriteMe.Business.Services
             IRegistrationUserWebService registrationUserWebService,
             ICleanUpService cleanUpService,
             IAppCenterMetricsService appCenterMetricsService,
-            IPushNotificationsService pushNotificationsService,
             IPublicClientApplicationFactory publicClientApplicationFactory,
             IIdentityUiParentProvider identityUiParentProvider,
             IApplicationVersionProvider applicationVersionProvider,
@@ -63,7 +61,6 @@ namespace RewriteMe.Business.Services
             _registrationUserWebService = registrationUserWebService;
             _cleanUpService = cleanUpService;
             _appCenterMetricsService = appCenterMetricsService;
-            _pushNotificationsService = pushNotificationsService;
             _identityUiParentProvider = identityUiParentProvider;
             _applicationVersionProvider = applicationVersionProvider;
             _applicationSettings = applicationSettings;
@@ -296,7 +293,6 @@ namespace RewriteMe.Business.Services
 
             await RemoveLocalAccountsAsync().ConfigureAwait(false);
             await _cleanUpService.CleanUp().ConfigureAwait(false);
-            await _pushNotificationsService.SetEnabledAsync(false).ConfigureAwait(false);
 
             CrossSecureStorage.Current.DeleteKey(AccessTokenKey);
         }
@@ -373,11 +369,10 @@ namespace RewriteMe.Business.Services
             if (accessToken == null)
                 throw new ArgumentNullException(nameof(accessToken));
 
-            var installationId = await _pushNotificationsService.GetInstallIdAsync().ConfigureAwait(false) ?? Guid.Empty;
             var language = await _languageService.GetLanguageName().ConfigureAwait(false);
             var registrationDeviceModel = new RegistrationDeviceInputModel
             {
-                InstallationId = installationId,
+                InstallationId = _applicationSettings.ApplicationId,
                 RuntimePlatform = FormsDevice.RuntimePlatform,
                 InstalledVersionNumber = _applicationVersionProvider.GetInstalledVersionNumber(),
                 Language = language
