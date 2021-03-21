@@ -171,47 +171,37 @@ namespace RewriteMe.Mobile.ViewModels
                 await TrackEvent(StartPurchasingSubscription, productId).ConfigureAwait(false);
                 Logger.Info($"Start purchasing product '{productId}'.");
 
-                var payload = Guid.NewGuid().ToString();
                 var billing = CrossInAppBilling.Current;
                 var connected = await billing.ConnectAsync().ConfigureAwait(false);
                 if (!connected)
                     throw new AppStoreNotConnectedException();
 
                 var purchase = await billing
-                    .PurchaseAsync(productId, ItemType.InAppPurchase, payload)
+                    .PurchaseAsync(productId, ItemType.InAppPurchase)
                     .ConfigureAwait(false);
 
                 using (new OperationMonitor(OperationScope))
                 {
-                    if (purchase != null && purchase.State == PurchaseState.Purchased)
+                    if (purchase == null)
+                        throw new PurchaseWasNotProcessedException();
+
+                    if (purchase.State == PurchaseState.PaymentPending)
+                    {
+                        // Store purchase locally
+                    }
+                    else if (purchase.State == PurchaseState.Purchased)
                     {
                         if (string.IsNullOrWhiteSpace(purchase.PurchaseToken))
                             throw new EmptyPurchaseTokenException(purchase.Id, purchase.ProductId);
 
                         var orderId = purchase.Id;
-                        InAppBillingPurchase billingPurchase = null;
-                        if (Device.RuntimePlatform == Device.iOS)
+                        var isConsumed = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
+                        if (!isConsumed)
                         {
                             Logger.Info($"Product '{productId}' was purchased.");
-
-                            billingPurchase = purchase;
-                        }
-                        else
-                        {
-                            var consumedItem = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
-                            if (consumedItem != null)
-                            {
-                                Logger.Info($"Product '{productId}' was purchased.");
-
-                                billingPurchase = consumedItem;
-                            }
                         }
 
-                        if (billingPurchase == null)
-                            throw new PurchaseWasNotProcessedException();
-
-                        await SendBillingPurchaseAsync(orderId, productId, billingPurchase).ConfigureAwait(false);
-
+                        await SendBillingPurchaseAsync(orderId, productId, purchase).ConfigureAwait(false);
                         return true;
                     }
 

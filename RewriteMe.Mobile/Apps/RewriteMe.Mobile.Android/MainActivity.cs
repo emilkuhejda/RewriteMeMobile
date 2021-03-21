@@ -8,14 +8,12 @@ using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using FFImageLoading.Forms.Platform;
 using Microsoft.Identity.Client;
-using Plugin.InAppBilling;
 using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Messages;
 using RewriteMe.Mobile.Droid.BackgroundServices;
 using RewriteMe.Mobile.Droid.Configuration;
 using RewriteMe.Mobile.Droid.Utils;
 using Xamarin.Forms;
-using SystemUri = System.Uri;
 
 namespace RewriteMe.Mobile.Droid
 {
@@ -56,7 +54,6 @@ namespace RewriteMe.Mobile.Droid
         {
             base.OnActivityResult(requestCode, resultCode, data);
             AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
-            InAppBillingImplementation.HandleActivityResult(requestCode, resultCode, data);
         }
 
         private void WireUpBackgroundServices()
