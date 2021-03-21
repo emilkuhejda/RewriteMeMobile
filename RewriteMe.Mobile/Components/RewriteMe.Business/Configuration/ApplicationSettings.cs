@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using RewriteMe.Domain.Configuration;
+using RewriteMe.Domain.Enums;
 using RewriteMe.Domain.Interfaces.Configuration;
 using RewriteMe.Domain.Interfaces.Services;
+using RewriteMe.Domain.Messages;
+using Xamarin.Forms;
 
 namespace RewriteMe.Business.Configuration
 {
@@ -73,6 +76,9 @@ namespace RewriteMe.Business.Configuration
             ApplicationId = Guid.Parse(applicationId);
 
             WebApiUrl = await _internalValueService.GetValueAsync(InternalValues.ApiUrl).ConfigureAwait(false);
+
+            MessagingCenter.Send(new StopBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
+            MessagingCenter.Send(new StartBackgroundServiceMessage(BackgroundServiceType.Synchronizer), nameof(BackgroundServiceType.Synchronizer));
         }
     }
 }

@@ -147,12 +147,20 @@ namespace RewriteMe.Business.Services
                 if (!IsRunning)
                     return;
 
+                AsyncHelper.RunSync(async () =>
+                {
+                    if (_hubConnection != null)
+                    {
+                        await _hubConnection.StopAsync().ConfigureAwait(false);
+                        await _hubConnection.DisposeAsync().ConfigureAwait(false);
+                        _hubConnection = null;
+                    }
+                });
+
+                _logger.Info("Stopping synchronizer service.");
+
                 IsRunning = false;
             }
-
-            AsyncHelper.RunSync(() => _hubConnection.StopAsync());
-
-            _logger.Info("Stopping synchronizer service.");
         }
 
         private void OnRecognitionErrorOccurred(string fileName)
