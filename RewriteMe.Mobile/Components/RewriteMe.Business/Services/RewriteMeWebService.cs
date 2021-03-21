@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using RewriteMe.Business.Extensions;
@@ -20,46 +21,31 @@ namespace RewriteMe.Business.Services
 {
     public class RewriteMeWebService : WebServiceBase, IRewriteMeWebService
     {
-        private readonly IInternalValueService _internalValueService;
         private readonly IUserSessionService _userSessionService;
         private readonly ILogger _logger;
 
+        private HttpClient _isAliveClient;
+
         public RewriteMeWebService(
-            IInternalValueService internalValueService,
             IUserSessionService userSessionService,
             ILoggerFactory loggerFactory,
             IWebServiceErrorHandler webServiceErrorHandler,
             IApplicationSettings applicationSettings)
             : base(webServiceErrorHandler, applicationSettings)
         {
-            _internalValueService = internalValueService;
             _userSessionService = userSessionService;
             _logger = loggerFactory.CreateLogger(typeof(RewriteMeWebService));
         }
+
+        private HttpClient IsAliveClient => _isAliveClient ?? (_isAliveClient = CreateHttpClient(5));
 
         public async Task<bool> IsAliveAsync()
         {
             try
             {
-                using (var cts = new CancellationTokenSource(TimeSpan.FromSeconds(5)))
-                {
-                    try
-                    {
-                        var rewriteMeClient = new RewriteMeClient(ApplicationSettings.WebApiUrl, Client);
-                        var isAlive = await rewriteMeClient.IsAliveAsync(ApplicationSettings.WebApiVersion, cts.Token).ConfigureAwait(false);
-                        if (isAlive)
-                        {
-                            await UpdateWebApiToDefaultAsync().ConfigureAwait(false);
-                        }
+                var rewriteMeClient = new RewriteMeClient(ApplicationSettings.WebApiUrl, IsAliveClient);
 
-                        return isAlive;
-                    }
-                    catch (Exception)
-                    {
-                        await UpdateWebApiToDefaultAsync().ConfigureAwait(false);
-                        return false;
-                    }
-                }
+                return await rewriteMeClient.IsAliveAsync(ApplicationSettings.WebApiVersion).ConfigureAwait(false);
             }
             catch (Exception exception)
             {
@@ -68,14 +54,6 @@ namespace RewriteMe.Business.Services
 
                 return false;
             }
-        }
-
-        private Task UpdateWebApiToDefaultAsync()
-        {
-            if (ApplicationSettings.WebApiUrl.Equals(InternalValues.ApiUrl.DefaultValue, StringComparison.OrdinalIgnoreCase))
-                return Task.CompletedTask;
-
-            return _internalValueService.UpdateValueAsync(InternalValues.ApiUrl, InternalValues.ApiUrl.DefaultValue);
         }
 
         public async Task<HttpRequestResult<LastUpdates>> GetLastUpdatesAsync()
