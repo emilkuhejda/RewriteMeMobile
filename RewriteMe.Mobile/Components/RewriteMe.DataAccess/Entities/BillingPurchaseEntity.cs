@@ -15,6 +15,8 @@ namespace RewriteMe.DataAccess.Entities
 
         public string PurchaseToken { get; set; }
 
+        public string Payload { get; set; }
+
         public PurchaseState State { get; set; }
 
         public ConsumptionState ConsumptionState { get; set; }
