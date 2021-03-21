@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plugin.InAppBilling;
 using RewriteMe.Domain.WebApi;
@@ -16,7 +15,7 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task UpdateAsync(InAppBillingPurchase billingPurchase);
 
-        Task DeleteAsync(Guid billingPurchaseId);
+        Task DeleteAsync(string billingPurchaseId);
 
         Task<TimeSpanWrapper> SendBillingPurchaseAsync(CreateUserSubscriptionInputModel createUserSubscriptionInputModel);
     }

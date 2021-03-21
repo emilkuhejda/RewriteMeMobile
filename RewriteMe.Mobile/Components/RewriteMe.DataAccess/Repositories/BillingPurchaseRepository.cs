@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Plugin.InAppBilling;
@@ -48,7 +47,7 @@ namespace RewriteMe.DataAccess.Repositories
             return _contextProvider.Context.UpdateAsync(billingPurchase.ToBillingPurchaseEntity());
         }
 
-        public Task DeleteAsync(Guid billingPurchaseId)
+        public Task DeleteAsync(string billingPurchaseId)
         {
             return _contextProvider.Context.DeleteAsync<BillingPurchaseEntity>(billingPurchaseId);
         }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plugin.InAppBilling;
 using RewriteMe.Domain.Exceptions;
@@ -43,7 +42,7 @@ namespace RewriteMe.Business.Services
             return _billingPurchaseRepository.UpdateAsync(billingPurchase);
         }
 
-        public Task DeleteAsync(Guid billingPurchaseId)
+        public Task DeleteAsync(string billingPurchaseId)
         {
             return _billingPurchaseRepository.DeleteAsync(billingPurchaseId);
         }

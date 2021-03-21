@@ -1,10 +1,12 @@
 ﻿using System;
 using Plugin.InAppBilling;
+using SQLite;
 
 namespace RewriteMe.DataAccess.Entities
 {
     public class BillingPurchaseEntity
     {
+        [PrimaryKey]
         public string Id { get; set; }
 
         public string ProductId { get; set; }

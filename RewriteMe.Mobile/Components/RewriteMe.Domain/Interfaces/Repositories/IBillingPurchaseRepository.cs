@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plugin.InAppBilling;
 
@@ -15,6 +14,6 @@ namespace RewriteMe.Domain.Interfaces.Repositories
 
         Task UpdateAsync(InAppBillingPurchase billingPurchase);
 
-        Task DeleteAsync(Guid billingPurchaseId);
+        Task DeleteAsync(string billingPurchaseId);
     }
 }
