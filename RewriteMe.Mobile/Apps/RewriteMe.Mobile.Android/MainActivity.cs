@@ -14,6 +14,7 @@ using RewriteMe.Mobile.Droid.BackgroundServices;
 using RewriteMe.Mobile.Droid.Configuration;
 using RewriteMe.Mobile.Droid.Utils;
 using Xamarin.Forms;
+using XPlatform = Xamarin.Essentials.Platform;
 
 namespace RewriteMe.Mobile.Droid
 {
@@ -32,6 +33,7 @@ namespace RewriteMe.Mobile.Droid
 
             base.OnCreate(savedInstanceState);
             Forms.Init(this, savedInstanceState);
+            XPlatform.Init(this, savedInstanceState);
 
             CachedImageRenderer.Init(null);
             UserDialogs.Init(this);
@@ -54,6 +56,13 @@ namespace RewriteMe.Mobile.Droid
         {
             base.OnActivityResult(requestCode, resultCode, data);
             AuthenticationContinuationHelper.SetAuthenticationContinuationEventArgs(requestCode, resultCode, data);
+        }
+
+        public override void OnRequestPermissionsResult(int requestCode, string[] permissions, Android.Content.PM.Permission[] grantResults)
+        {
+            XPlatform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+
+            base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
 
         private void WireUpBackgroundServices()
