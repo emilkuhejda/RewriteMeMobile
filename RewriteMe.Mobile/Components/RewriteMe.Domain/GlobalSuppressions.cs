@@ -13,4 +13,4 @@ using System.Diagnostics.CodeAnalysis;
 [assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "Array is OK", Scope = "member", Target = "~P:RewriteMe.Domain.Transcription.MediaFile.Source")]
 [assembly: SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Domain.Interfaces.Configuration.IApplicationSettings.WebApiUrl")]
 [assembly: SuppressMessage("Performance", "CA1819:Properties should not return arrays", Justification = "Array is OK", Scope = "member", Target = "~P:RewriteMe.Domain.Upload.UploadedSource.Source")]
-[assembly: SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Domain.Interfaces.Configuration.IApplicationSettings.CacheHubUrl")]
+[assembly: SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "By design", Scope = "member", Target = "~P:RewriteMe.Domain.Interfaces.Configuration.IApplicationSettings.HubUrl")]

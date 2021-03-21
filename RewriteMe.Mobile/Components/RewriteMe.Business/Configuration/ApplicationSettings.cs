@@ -26,7 +26,7 @@ namespace RewriteMe.Business.Configuration
 
         public Uri PrivacyPolicyUri => new Uri($"{WebApiUrl}home/privacy/");
 
-        public string CacheHubUrl => $"{WebApiUrl}api/message-hub/";
+        public string HubUrl => $"{WebApiUrl}api/message-hub/";
 
         public string WebApiVersion { get; } = "1";
 

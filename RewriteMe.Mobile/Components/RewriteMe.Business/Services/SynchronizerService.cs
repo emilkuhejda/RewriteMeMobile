@@ -72,7 +72,7 @@ namespace RewriteMe.Business.Services
 
 #if DEBUG
             _hubConnection = new HubConnectionBuilder()
-                    .WithUrl(_applicationSettings.CacheHubUrl, options =>
+                    .WithUrl(_applicationSettings.HubUrl, options =>
                     {
                         options.HttpMessageHandlerFactory = handler =>
                         {
@@ -83,7 +83,7 @@ namespace RewriteMe.Business.Services
                     .Build();
 
 #else
-            _hubConnection = new HubConnectionBuilder().WithUrl(_applicationSettings.CacheHubUrl).WithAutomaticReconnect(reconnectDelays).Build();
+            _hubConnection = new HubConnectionBuilder().WithUrl(_applicationSettings.HubUrl).WithAutomaticReconnect(reconnectDelays).Build();
 #endif
 
             try
