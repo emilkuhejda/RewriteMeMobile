@@ -21,7 +21,7 @@ namespace RewriteMe.Business.Services
             ApplicationSettings = applicationSettings;
         }
 
-        private HttpClient Client => _client ?? (_client = CreateHttpClient());
+        protected HttpClient Client => _client ?? (_client = CreateHttpClient());
 
         protected IWebServiceErrorHandler WebServiceErrorHandler { get; }
 
