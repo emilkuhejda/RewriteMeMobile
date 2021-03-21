@@ -11,7 +11,7 @@ namespace RewriteMe.Domain.Interfaces.Configuration
 
         Uri PrivacyPolicyUri { get; }
 
-        string CacheHubUrl { get; }
+        string HubUrl { get; }
 
         string WebApiVersion { get; }
 

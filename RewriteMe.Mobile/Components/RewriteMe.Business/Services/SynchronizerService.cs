@@ -72,7 +72,7 @@ namespace RewriteMe.Business.Services
 
 #if DEBUG
             _hubConnection = new HubConnectionBuilder()
-                    .WithUrl(_applicationSettings.CacheHubUrl, options =>
+                    .WithUrl(_applicationSettings.HubUrl, options =>
                     {
                         options.HttpMessageHandlerFactory = handler =>
                         {
@@ -83,7 +83,7 @@ namespace RewriteMe.Business.Services
                     .Build();
 
 #else
-            _hubConnection = new HubConnectionBuilder().WithUrl(_applicationSettings.CacheHubUrl).WithAutomaticReconnect(reconnectDelays).Build();
+            _hubConnection = new HubConnectionBuilder().WithUrl(_applicationSettings.HubUrl).WithAutomaticReconnect(reconnectDelays).Build();
 #endif
 
             try
@@ -147,12 +147,20 @@ namespace RewriteMe.Business.Services
                 if (!IsRunning)
                     return;
 
+                AsyncHelper.RunSync(async () =>
+                {
+                    if (_hubConnection != null)
+                    {
+                        await _hubConnection.StopAsync().ConfigureAwait(false);
+                        await _hubConnection.DisposeAsync().ConfigureAwait(false);
+                        _hubConnection = null;
+                    }
+                });
+
+                _logger.Info("Stopping synchronizer service.");
+
                 IsRunning = false;
             }
-
-            AsyncHelper.RunSync(() => _hubConnection.StopAsync());
-
-            _logger.Info("Stopping synchronizer service.");
         }
 
         private void OnRecognitionErrorOccurred(string fileName)
