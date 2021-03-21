@@ -172,6 +172,7 @@ namespace RewriteMe.Mobile.ViewModels
                 Logger.Info($"Start purchasing product '{productId}'.");
 
                 var billing = CrossInAppBilling.Current;
+                CrossInAppBilling.Current.InTestingMode = true;
                 var connected = await billing.ConnectAsync().ConfigureAwait(false);
                 if (!connected)
                     throw new AppStoreNotConnectedException();
@@ -185,16 +186,19 @@ namespace RewriteMe.Mobile.ViewModels
                     if (purchase == null)
                         throw new PurchaseWasNotProcessedException();
 
+                    var orderId = purchase.Id;
                     if (purchase.State == PurchaseState.PaymentPending)
                     {
                         // Store purchase locally
+
+                        // Send to server
+                        //await SendBillingPurchaseAsync(orderId, productId, purchase).ConfigureAwait(false);
                     }
                     else if (purchase.State == PurchaseState.Purchased)
                     {
                         if (string.IsNullOrWhiteSpace(purchase.PurchaseToken))
                             throw new EmptyPurchaseTokenException(purchase.Id, purchase.ProductId);
 
-                        var orderId = purchase.Id;
                         var isConsumed = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
                         if (!isConsumed)
                         {

@@ -2,11 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Plugin.InAppBilling;
-using RewriteMe.Domain.WebApi;
 
-namespace RewriteMe.Domain.Interfaces.Services
+namespace RewriteMe.Domain.Interfaces.Repositories
 {
-    public interface IBillingPurchaseService
+    public interface IBillingPurchaseRepository
     {
         Task<IEnumerable<InAppBillingPurchase>> GetAllAsync();
 
@@ -17,7 +16,5 @@ namespace RewriteMe.Domain.Interfaces.Services
         Task UpdateAsync(InAppBillingPurchase billingPurchase);
 
         Task DeleteAsync(Guid billingPurchaseId);
-
-        Task<TimeSpanWrapper> SendBillingPurchaseAsync(CreateUserSubscriptionInputModel createUserSubscriptionInputModel);
     }
 }
