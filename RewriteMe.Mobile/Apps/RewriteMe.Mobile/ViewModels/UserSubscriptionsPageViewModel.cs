@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Plugin.InAppBilling;
 using Prism.Navigation;
+using RewriteMe.Business.Extensions;
 using RewriteMe.Common.Utils;
 using RewriteMe.Domain.Exceptions;
 using RewriteMe.Domain.Interfaces.Configuration;
@@ -13,7 +14,6 @@ using RewriteMe.Domain.Interfaces.Required;
 using RewriteMe.Domain.Interfaces.Services;
 using RewriteMe.Logging.Extensions;
 using RewriteMe.Logging.Interfaces;
-using RewriteMe.Mobile.Extensions;
 using RewriteMe.Mobile.Transcription;
 using RewriteMe.Resources.Localization;
 using Xamarin.Forms;
@@ -79,9 +79,83 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (navigationParameters.GetNavigationMode() == NavigationMode.New)
                 {
+                    if (!CrossInAppBilling.IsSupported)
+                    {
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.InAppBillingIsNotSupportedErrorMessage)).ConfigureAwait(false);
+                    }
+
+                    await CheckPendingPurchasesAsync().ConfigureAwait(false);
                     await InitializeRemainingTimeAsync().ConfigureAwait(false);
                     await InitializeProductsAsync().ConfigureAwait(false);
                 }
+            }
+        }
+
+        private async Task CheckPendingPurchasesAsync()
+        {
+            try
+            {
+                await _billingPurchaseService.HandlePendingPurchases().ConfigureAwait(false);
+            }
+            catch (AppStoreNotConnectedException ex)
+            {
+                TrackException(ex);
+                Logger.Error("App store is not connected.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage)).ConfigureAwait(false);
+            }
+            catch (NoPurchasesInStoreException ex)
+            {
+                TrackException(ex);
+                Logger.Error("Purchases not found in the store.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.PurchaseNotFoundErrorMessage)).ConfigureAwait(false);
+            }
+            catch (PurchaseNotFoundException ex)
+            {
+                TrackException(ex);
+                Logger.Error($"Purchase {ex.PurchaseId} not found in the store.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+
+                var result = await DialogService.ConfirmAsync(
+                    Loc.Text(TranslationKeys.PurchaseNotFoundErrorMessage),
+                    okText: Loc.Text(TranslationKeys.SendEmail),
+                    cancelText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+
+                if (result)
+                {
+                    await CreateContactUsMailAsync(ex.PurchaseId, ex.ProductId).ConfigureAwait(false);
+                }
+            }
+            catch (RegistrationPurchaseBillingException ex)
+            {
+                TrackException(ex);
+                Logger.Error("Exception during registration of purchase billing.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+
+                var result = await DialogService.ConfirmAsync(
+                    Loc.Text(TranslationKeys.RegistrationPurchaseBillingErrorMessage),
+                    okText: Loc.Text(TranslationKeys.SendEmail),
+                    cancelText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+
+                if (result)
+                {
+                    await CreateContactUsMailAsync(ex.PurchaseId, ex.ProductId).ConfigureAwait(false);
+                }
+            }
+            catch (Exception ex)
+            {
+                TrackException(ex);
+                Logger.Error("Handling pending payments failed.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+            }
+
+            var anyPendingPurchases = await _billingPurchaseService.GetAllPaymentPendingAsync().ConfigureAwait(false);
+            if (anyPendingPurchases.Any())
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.PendingPaymentErrorMessage)).ConfigureAwait(false);
             }
         }
 
@@ -100,10 +174,7 @@ namespace RewriteMe.Mobile.ViewModels
             try
             {
                 if (!CrossInAppBilling.IsSupported)
-                {
-                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.InAppBillingIsNotSupportedErrorMessage)).ConfigureAwait(false);
                     return;
-                }
 
                 var billing = CrossInAppBilling.Current;
                 var connected = await billing.ConnectAsync().ConfigureAwait(false);
@@ -189,10 +260,22 @@ namespace RewriteMe.Mobile.ViewModels
                     var orderId = purchase.Id;
                     if (purchase.State == PurchaseState.PaymentPending)
                     {
-                        // Store purchase locally
+                        Logger.Info("Product was purchased but payment is pending.");
 
-                        // Send to server
-                        //await SendBillingPurchaseAsync(orderId, productId, purchase).ConfigureAwait(false);
+                        await _billingPurchaseService.AddAsync(purchase).ConfigureAwait(false);
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.PendingPaymentErrorMessage)).ConfigureAwait(false);
+
+                        try
+                        {
+                            await SendBillingPurchaseAsync(orderId, productId, purchase).ConfigureAwait(false);
+                        }
+                        catch (Exception ex)
+                        {
+                            Logger.Error("Exception during registration of purchase billing.");
+                            Logger.Error(ExceptionFormatter.FormatException(ex));
+                        }
+
+                        return false;
                     }
                     else if (purchase.State == PurchaseState.Purchased)
                     {

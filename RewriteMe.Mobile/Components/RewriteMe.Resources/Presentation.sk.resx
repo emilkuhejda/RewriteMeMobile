@@ -491,4 +491,10 @@
   <data name="SomethingWentWrongErrorMessage" xml:space="preserve">
     <value>Niečo sa pokazilo. Prosím, zopakujte operáciu neskôr.</value>
   </data>
+  <data name="PendingPaymentErrorMessage" xml:space="preserve">
+    <value>Platba sa spracováva. Váš časový kredit bude pripisaný po jej spracovaní.</value>
+  </data>
+  <data name="PurchaseNotFoundErrorMessage" xml:space="preserve">
+    <value>Vyskytol sa problém s Vašou platbou. Prosím, kontaktujte nás.</value>
+  </data>
 </root>

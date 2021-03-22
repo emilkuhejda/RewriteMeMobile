@@ -718,6 +718,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The payment is pending. Your time credit will be added after the payment is completed..
+        /// </summary>
+        public static string PendingPaymentErrorMessage {
+            get {
+                return ResourceManager.GetString("PendingPaymentErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Recording type for chosen language is not supported..
         /// </summary>
         public static string PhoneCallModelNotSupportedErrorMessage {
@@ -759,6 +768,15 @@ namespace RewriteMe.Resources {
         public static string PromptDeleteFileItemMessage {
             get {
                 return ResourceManager.GetString("PromptDeleteFileItemMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to There has been a problem with your payment. Please contact us..
+        /// </summary>
+        public static string PurchaseNotFoundErrorMessage {
+            get {
+                return ResourceManager.GetString("PurchaseNotFoundErrorMessage", resourceCulture);
             }
         }
         

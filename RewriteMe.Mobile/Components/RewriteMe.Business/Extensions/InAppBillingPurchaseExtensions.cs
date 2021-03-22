@@ -3,7 +3,7 @@ using Plugin.InAppBilling;
 using RewriteMe.Domain.WebApi;
 using Xamarin.Forms;
 
-namespace RewriteMe.Mobile.Extensions
+namespace RewriteMe.Business.Extensions
 {
     public static class InAppBillingPurchaseExtensions
     {
