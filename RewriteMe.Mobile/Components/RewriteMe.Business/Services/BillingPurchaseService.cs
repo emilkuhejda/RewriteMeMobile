@@ -104,7 +104,7 @@ namespace RewriteMe.Business.Services
                     if (purchase == null)
                     {
                         var isConsumed = await ConsumePurchaseAsync(billing, pendingPurchase, userId).ConfigureAwait(false);
-                        if (!isConsumed)
+                        if (isConsumed)
                             continue;
 
                         throw new PurchaseNotFoundException(pendingPurchase.Id, pendingPurchase.ProductId);
@@ -112,30 +112,7 @@ namespace RewriteMe.Business.Services
 
                     if (purchase.State == PurchaseState.Purchased || purchase.State == PurchaseState.PaymentPending)
                     {
-                        var isConsumed = await ConsumePurchaseAsync(billing, purchase, userId).ConfigureAwait(false);
-                        if (isConsumed)
-                        {
-                            try
-                            {
-                                var orderId = purchase.Id;
-                                purchase.ConsumptionState = ConsumptionState.Consumed;
-                                purchase.State = PurchaseState.Purchased;
-
-                                var billingPurchase = purchase.ToUserSubscriptionModel(userId, orderId);
-                                var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
-
-                                await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
-                                await _billingPurchaseRepository.UpdateAsync(purchase).ConfigureAwait(false);
-                            }
-                            catch (OfflineRequestException ex)
-                            {
-                                throw new RegistrationPurchaseBillingException(purchase.Id, purchase.ProductId, nameof(purchase), ex);
-                            }
-                            catch (ErrorRequestException ex)
-                            {
-                                throw new RegistrationPurchaseBillingException(purchase.Id, purchase.ProductId, nameof(purchase), ex);
-                            }
-                        }
+                        await ConsumePurchaseAsync(billing, purchase, userId).ConfigureAwait(false);
                     }
                 }
             }
@@ -147,15 +124,42 @@ namespace RewriteMe.Business.Services
 
         private async Task<bool> ConsumePurchaseAsync(IInAppBilling billing, InAppBillingPurchase pendingPurchase, Guid userId)
         {
+            var isConsumed = false;
             try
             {
-                return await billing.ConsumePurchaseAsync(pendingPurchase.ProductId, pendingPurchase.PurchaseToken).ConfigureAwait(false);
+                isConsumed = await billing.ConsumePurchaseAsync(pendingPurchase.ProductId, pendingPurchase.PurchaseToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
                 await CheckBillingPurchaseAsync(billing, pendingPurchase, userId).ConfigureAwait(false);
-                return false;
             }
+
+            if (isConsumed)
+            {
+                try
+                {
+                    var orderId = pendingPurchase.Id;
+                    pendingPurchase.ConsumptionState = ConsumptionState.Consumed;
+                    pendingPurchase.State = PurchaseState.Purchased;
+
+                    var billingPurchase = pendingPurchase.ToUserSubscriptionModel(userId, orderId);
+                    var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
+
+                    await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
+                    await _billingPurchaseRepository.UpdateAsync(pendingPurchase).ConfigureAwait(false);
+                    return true;
+                }
+                catch (OfflineRequestException ex)
+                {
+                    throw new RegistrationPurchaseBillingException(pendingPurchase.Id, pendingPurchase.ProductId, nameof(pendingPurchase), ex);
+                }
+                catch (ErrorRequestException ex)
+                {
+                    throw new RegistrationPurchaseBillingException(pendingPurchase.Id, pendingPurchase.ProductId, nameof(pendingPurchase), ex);
+                }
+            }
+
+            return false;
         }
 
         private async Task CheckBillingPurchaseAsync(IInAppBilling billing, InAppBillingPurchase pendingPurchase, Guid userId)
