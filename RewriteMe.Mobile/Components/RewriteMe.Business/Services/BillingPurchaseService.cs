@@ -14,8 +14,6 @@ namespace RewriteMe.Business.Services
 {
     public class BillingPurchaseService : IBillingPurchaseService
     {
-        private const int DeprecatedPurchaseInDays = 7;
-
         private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IConnectivityService _connectivityService;
@@ -86,9 +84,10 @@ namespace RewriteMe.Business.Services
                 var purchases = purchasesEnumerable?.ToList();
                 if (purchases == null || !purchases.Any())
                 {
-                    foreach (var deprecatedPurchase in pendingPurchases.Where(x => x.TransactionDateUtc < DateTime.UtcNow.AddDays(-DeprecatedPurchaseInDays)))
+                    foreach (var deprecatedPurchase in pendingPurchases)
                     {
-                        await _billingPurchaseRepository.DeleteAsync(deprecatedPurchase.Id).ConfigureAwait(false);
+                        deprecatedPurchase.State = PurchaseState.Failed;
+                        await _billingPurchaseRepository.UpdateAsync(deprecatedPurchase).ConfigureAwait(false);
                     }
 
                     throw new NoPurchasesInStoreException();
@@ -101,63 +100,77 @@ namespace RewriteMe.Business.Services
                     var purchase = purchases.FirstOrDefault(x => x.Id.Equals(pendingPurchase.Id, StringComparison.OrdinalIgnoreCase));
                     if (purchase == null)
                     {
-                        if (pendingPurchase.TransactionDateUtc < DateTime.UtcNow.AddDays(-DeprecatedPurchaseInDays))
-                        {
-                            await _billingPurchaseRepository.DeleteAsync(pendingPurchase.Id).ConfigureAwait(false);
-                        }
+                        pendingPurchase.State = PurchaseState.Failed;
+                        await _billingPurchaseRepository.UpdateAsync(pendingPurchase).ConfigureAwait(false);
 
                         throw new PurchaseNotFoundException(pendingPurchase.Id, pendingPurchase.ProductId);
                     }
 
-                    if (purchase.State == PurchaseState.Purchased)
+                    if (purchase.State == PurchaseState.Purchased || purchase.State == PurchaseState.PaymentPending)
                     {
+                        var isConsumed = false;
                         try
                         {
-                            var orderId = purchase.Id;
+                            isConsumed = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
+                        }
+                        catch (Exception)
+                        {
+                            await ReloadPurchase(billing, pendingPurchase, userId).ConfigureAwait(false);
+                        }
 
-                            var isConsumed = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
-                            if (isConsumed)
+                        if (isConsumed)
+                        {
+                            try
                             {
+                                var orderId = purchase.Id;
                                 purchase.ConsumptionState = ConsumptionState.Consumed;
+                                purchase.State = PurchaseState.Purchased;
+
                                 var billingPurchase = purchase.ToUserSubscriptionModel(userId, orderId);
                                 var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 
                                 await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
-                                await _billingPurchaseRepository.DeleteAsync(pendingPurchase.Id).ConfigureAwait(false);
+                                await _billingPurchaseRepository.UpdateAsync(pendingPurchase).ConfigureAwait(false);
+                            }
+                            catch (OfflineRequestException ex)
+                            {
+                                throw new RegistrationPurchaseBillingException(purchase.Id, purchase.ProductId, nameof(purchase), ex);
+                            }
+                            catch (ErrorRequestException ex)
+                            {
+                                throw new RegistrationPurchaseBillingException(purchase.Id, purchase.ProductId, nameof(purchase), ex);
                             }
                         }
-                        catch (OfflineRequestException ex)
-                        {
-                            throw new RegistrationPurchaseBillingException(purchase.Id, purchase.ProductId, nameof(purchase), ex);
-                        }
-                        catch (ErrorRequestException ex)
-                        {
-                            throw new RegistrationPurchaseBillingException(purchase.Id, purchase.ProductId, nameof(purchase), ex);
-                        }
-                    }
-                    else if (purchase.State != PurchaseState.Purchased && purchase.State != PurchaseState.PaymentPending)
-                    {
-                        try
-                        {
-                            var orderId = purchase.Id;
-                            var billingPurchase = purchase.ToUserSubscriptionModel(userId, orderId);
-                            var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
-
-                            await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
-                            await _billingPurchaseRepository.DeleteAsync(pendingPurchase.Id).ConfigureAwait(false);
-                        }
-                        catch (Exception)
-                        {
-                            // Ignored
-                        }
-
-                        throw new PurchaseWasNotProcessedException(purchase.Id, purchase.ProductId);
                     }
                 }
             }
             finally
             {
                 await CrossInAppBilling.Current.DisconnectAsync().ConfigureAwait(false);
+            }
+        }
+
+        private async Task ReloadPurchase(IInAppBilling billing, InAppBillingPurchase pendingPurchase, Guid userId)
+        {
+            try
+            {
+                var inAppBillingPurchases = await billing.GetPurchasesAsync(ItemType.InAppPurchase).ConfigureAwait(false);
+                var purchase = inAppBillingPurchases.SingleOrDefault(x => x.Id.Equals(pendingPurchase.Id, StringComparison.OrdinalIgnoreCase));
+                if (purchase == null)
+                {
+                    var orderId = pendingPurchase.Id;
+                    pendingPurchase.State = PurchaseState.Failed;
+
+                    var billingPurchase = pendingPurchase.ToUserSubscriptionModel(userId, orderId);
+                    var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
+
+                    await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
+                    await _billingPurchaseRepository.UpdateAsync(pendingPurchase).ConfigureAwait(false);
+                }
+            }
+            catch (Exception)
+            {
+                // Ignored
             }
         }
     }
