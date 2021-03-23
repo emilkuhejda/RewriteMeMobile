@@ -30,6 +30,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IConnectivityService _connectivityService;
         private readonly IAppCenterMetricsService _appCenterMetricsService;
         private readonly IEmailService _emailService;
+        private readonly IDeviceService _deviceService;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IApplicationVersionProvider _applicationVersionProvider;
         private readonly IInAppBilling _inAppBilling;
@@ -43,6 +44,7 @@ namespace RewriteMe.Mobile.ViewModels
             IConnectivityService connectivityService,
             IAppCenterMetricsService appCenterMetricsService,
             IEmailService emailService,
+            IDeviceService deviceService,
             IApplicationSettings applicationSettings,
             IApplicationVersionProvider applicationVersionProvider,
             IInAppBilling inAppBilling,
@@ -56,6 +58,7 @@ namespace RewriteMe.Mobile.ViewModels
             _billingPurchaseService = billingPurchaseService;
             _connectivityService = connectivityService;
             _appCenterMetricsService = appCenterMetricsService;
+            _deviceService = deviceService;
             _emailService = emailService;
             _applicationSettings = applicationSettings;
             _applicationVersionProvider = applicationVersionProvider;
@@ -420,7 +423,7 @@ namespace RewriteMe.Mobile.ViewModels
             try
             {
                 var userId = await UserSessionService.GetUserIdAsync().ConfigureAwait(false);
-                var billingPurchase = purchase.ToUserSubscriptionModel(userId, orderId);
+                var billingPurchase = purchase.ToUserSubscriptionModel(userId, orderId, _deviceService.RuntimePlatform);
                 var remainingTime = await _billingPurchaseService.SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 
                 await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);

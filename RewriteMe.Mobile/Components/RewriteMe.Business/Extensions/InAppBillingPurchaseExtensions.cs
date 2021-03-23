@@ -1,13 +1,12 @@
 ﻿using System;
 using Plugin.InAppBilling;
 using RewriteMe.Domain.WebApi;
-using Xamarin.Forms;
 
 namespace RewriteMe.Business.Extensions
 {
     public static class InAppBillingPurchaseExtensions
     {
-        public static CreateUserSubscriptionInputModel ToUserSubscriptionModel(this InAppBillingPurchase inAppBillingPurchase, Guid userId, string orderId)
+        public static CreateUserSubscriptionInputModel ToUserSubscriptionModel(this InAppBillingPurchase inAppBillingPurchase, Guid userId, string orderId, string runtimePlatform)
         {
             return new CreateUserSubscriptionInputModel
             {
@@ -19,7 +18,7 @@ namespace RewriteMe.Business.Extensions
                 PurchaseToken = inAppBillingPurchase.PurchaseToken,
                 PurchaseState = inAppBillingPurchase.State.ToString(),
                 ConsumptionState = inAppBillingPurchase.ConsumptionState.ToString(),
-                Platform = Device.RuntimePlatform,
+                Platform = runtimePlatform,
                 TransactionDateUtc = inAppBillingPurchase.TransactionDateUtc
             };
         }

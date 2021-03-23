@@ -17,6 +17,7 @@ namespace RewriteMe.Business.Services
         private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IConnectivityService _connectivityService;
+        private readonly IDeviceService _deviceService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
         private readonly IInAppBilling _inAppBilling;
         private readonly IBillingPurchaseRepository _billingPurchaseRepository;
@@ -25,6 +26,7 @@ namespace RewriteMe.Business.Services
             IUserSessionService userSessionService,
             IUserSubscriptionService userSubscriptionService,
             IConnectivityService connectivityService,
+            IDeviceService deviceService,
             IRewriteMeWebService rewriteMeWebService,
             IInAppBilling inAppBilling,
             IBillingPurchaseRepository billingPurchaseRepository)
@@ -32,6 +34,7 @@ namespace RewriteMe.Business.Services
             _userSessionService = userSessionService;
             _userSubscriptionService = userSubscriptionService;
             _connectivityService = connectivityService;
+            _deviceService = deviceService;
             _rewriteMeWebService = rewriteMeWebService;
             _inAppBilling = inAppBilling;
             _billingPurchaseRepository = billingPurchaseRepository;
@@ -141,7 +144,7 @@ namespace RewriteMe.Business.Services
                     pendingPurchase.ConsumptionState = ConsumptionState.Consumed;
                     pendingPurchase.State = PurchaseState.Purchased;
 
-                    var billingPurchase = pendingPurchase.ToUserSubscriptionModel(userId, orderId);
+                    var billingPurchase = pendingPurchase.ToUserSubscriptionModel(userId, orderId, _deviceService.RuntimePlatform);
                     var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 
                     await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
@@ -172,7 +175,7 @@ namespace RewriteMe.Business.Services
                     var orderId = pendingPurchase.Id;
                     pendingPurchase.State = PurchaseState.Failed;
 
-                    var billingPurchase = pendingPurchase.ToUserSubscriptionModel(userId, orderId);
+                    var billingPurchase = pendingPurchase.ToUserSubscriptionModel(userId, orderId, _deviceService.RuntimePlatform);
                     var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 
                     await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
