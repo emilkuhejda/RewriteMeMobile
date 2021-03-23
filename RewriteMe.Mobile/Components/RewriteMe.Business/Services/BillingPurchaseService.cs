@@ -80,44 +80,39 @@ namespace RewriteMe.Business.Services
                 if (!connected)
                     throw new AppStoreNotConnectedException();
 
+                var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
                 var purchasesEnumerable = await billing.GetPurchasesAsync(ItemType.InAppPurchase).ConfigureAwait(false);
                 var purchases = purchasesEnumerable?.ToList();
                 if (purchases == null || !purchases.Any())
                 {
+                    var isSuccessList = new List<bool>();
                     foreach (var deprecatedPurchase in pendingPurchases)
                     {
-                        deprecatedPurchase.State = PurchaseState.Failed;
-                        await _billingPurchaseRepository.UpdateAsync(deprecatedPurchase).ConfigureAwait(false);
+                        var isConsumed = await ConsumePurchaseAsync(billing, deprecatedPurchase, userId).ConfigureAwait(false);
+                        isSuccessList.Add(isConsumed);
                     }
+
+                    if (isSuccessList.All(x => x))
+                        return;
 
                     throw new NoPurchasesInStoreException();
                 }
-
-                var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
 
                 foreach (var pendingPurchase in pendingPurchases)
                 {
                     var purchase = purchases.FirstOrDefault(x => x.Id.Equals(pendingPurchase.Id, StringComparison.OrdinalIgnoreCase));
                     if (purchase == null)
                     {
-                        pendingPurchase.State = PurchaseState.Failed;
-                        await _billingPurchaseRepository.UpdateAsync(pendingPurchase).ConfigureAwait(false);
+                        var isConsumed = await ConsumePurchaseAsync(billing, pendingPurchase, userId).ConfigureAwait(false);
+                        if (!isConsumed)
+                            continue;
 
                         throw new PurchaseNotFoundException(pendingPurchase.Id, pendingPurchase.ProductId);
                     }
 
                     if (purchase.State == PurchaseState.Purchased || purchase.State == PurchaseState.PaymentPending)
                     {
-                        var isConsumed = false;
-                        try
-                        {
-                            isConsumed = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
-                        }
-                        catch (Exception)
-                        {
-                            await ReloadPurchase(billing, pendingPurchase, userId).ConfigureAwait(false);
-                        }
-
+                        var isConsumed = await ConsumePurchaseAsync(billing, purchase, userId).ConfigureAwait(false);
                         if (isConsumed)
                         {
                             try
@@ -130,7 +125,7 @@ namespace RewriteMe.Business.Services
                                 var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 
                                 await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
-                                await _billingPurchaseRepository.UpdateAsync(pendingPurchase).ConfigureAwait(false);
+                                await _billingPurchaseRepository.UpdateAsync(purchase).ConfigureAwait(false);
                             }
                             catch (OfflineRequestException ex)
                             {
@@ -150,7 +145,20 @@ namespace RewriteMe.Business.Services
             }
         }
 
-        private async Task ReloadPurchase(IInAppBilling billing, InAppBillingPurchase pendingPurchase, Guid userId)
+        private async Task<bool> ConsumePurchaseAsync(IInAppBilling billing, InAppBillingPurchase pendingPurchase, Guid userId)
+        {
+            try
+            {
+                return await billing.ConsumePurchaseAsync(pendingPurchase.ProductId, pendingPurchase.PurchaseToken).ConfigureAwait(false);
+            }
+            catch (Exception)
+            {
+                await CheckBillingPurchaseAsync(billing, pendingPurchase, userId).ConfigureAwait(false);
+                return false;
+            }
+        }
+
+        private async Task CheckBillingPurchaseAsync(IInAppBilling billing, InAppBillingPurchase pendingPurchase, Guid userId)
         {
             try
             {
