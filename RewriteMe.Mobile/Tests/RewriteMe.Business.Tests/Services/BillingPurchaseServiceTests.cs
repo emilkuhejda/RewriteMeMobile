@@ -26,6 +26,7 @@ namespace RewriteMe.Business.Tests.Services
             var billingPurchaseRepositoryMock = new Mock<IBillingPurchaseRepository>();
 
             var billingPurchase = CreateInAppBillingPurchase(PurchaseState.Pending);
+            billingPurchase.TransactionDateUtc = billingPurchase.TransactionDateUtc.AddMinutes(-6);
             var billingPurchaseInStore = CreateInAppBillingPurchase(PurchaseState.Purchased);
             var expectedRemainingTime = TimeSpan.FromMinutes(1);
 
