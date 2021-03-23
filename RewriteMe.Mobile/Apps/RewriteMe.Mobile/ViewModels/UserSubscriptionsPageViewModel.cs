@@ -32,6 +32,7 @@ namespace RewriteMe.Mobile.ViewModels
         private readonly IEmailService _emailService;
         private readonly IApplicationSettings _applicationSettings;
         private readonly IApplicationVersionProvider _applicationVersionProvider;
+        private readonly IInAppBilling _inAppBilling;
 
         private IList<SubscriptionProductViewModel> _products;
         private string _remainingTime;
@@ -44,6 +45,7 @@ namespace RewriteMe.Mobile.ViewModels
             IEmailService emailService,
             IApplicationSettings applicationSettings,
             IApplicationVersionProvider applicationVersionProvider,
+            IInAppBilling inAppBilling,
             IUserSessionService userSessionService,
             IDialogService dialogService,
             INavigationService navigationService,
@@ -57,6 +59,7 @@ namespace RewriteMe.Mobile.ViewModels
             _emailService = emailService;
             _applicationSettings = applicationSettings;
             _applicationVersionProvider = applicationVersionProvider;
+            _inAppBilling = inAppBilling;
 
             CanGoBack = true;
         }
@@ -192,15 +195,14 @@ namespace RewriteMe.Mobile.ViewModels
                 if (!CrossInAppBilling.IsSupported)
                     return;
 
-                var billing = CrossInAppBilling.Current;
-                var connected = await billing.ConnectAsync().ConfigureAwait(false);
+                var connected = await _inAppBilling.ConnectAsync().ConfigureAwait(false);
                 if (!connected)
                 {
                     await DialogService.AlertAsync(Loc.Text(TranslationKeys.AppStoreUnavailableErrorMessage)).ConfigureAwait(false);
                     return;
                 }
 
-                var inAppBillingProducts = await billing.GetProductInfoAsync(ItemType.InAppPurchase, SubscriptionProducts.All.Select(x => x.ProductId).ToArray()).ConfigureAwait(false);
+                var inAppBillingProducts = await _inAppBilling.GetProductInfoAsync(ItemType.InAppPurchase, SubscriptionProducts.All.Select(x => x.ProductId).ToArray()).ConfigureAwait(false);
                 var billingProducts = inAppBillingProducts.ToList();
 
                 var products = new List<SubscriptionProductViewModel>();
@@ -232,7 +234,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             finally
             {
-                await CrossInAppBilling.Current.DisconnectAsync().ConfigureAwait(false);
+                await _inAppBilling.DisconnectAsync().ConfigureAwait(false);
             }
         }
 
@@ -258,13 +260,11 @@ namespace RewriteMe.Mobile.ViewModels
                 await TrackEvent(StartPurchasingSubscription, productId).ConfigureAwait(false);
                 Logger.Info($"Start purchasing product '{productId}'.");
 
-                var billing = CrossInAppBilling.Current;
-                CrossInAppBilling.Current.InTestingMode = true;
-                var connected = await billing.ConnectAsync().ConfigureAwait(false);
+                var connected = await _inAppBilling.ConnectAsync().ConfigureAwait(false);
                 if (!connected)
                     throw new AppStoreNotConnectedException();
 
-                var purchase = await billing
+                var purchase = await _inAppBilling
                     .PurchaseAsync(productId, ItemType.InAppPurchase)
                     .ConfigureAwait(false);
 
@@ -298,7 +298,7 @@ namespace RewriteMe.Mobile.ViewModels
                         if (string.IsNullOrWhiteSpace(purchase.PurchaseToken))
                             throw new EmptyPurchaseTokenException(purchase.Id, purchase.ProductId);
 
-                        var isConsumed = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
+                        var isConsumed = await _inAppBilling.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
                         if (!isConsumed)
                         {
                             Logger.Info($"Product '{productId}' was purchased.");
@@ -409,7 +409,7 @@ namespace RewriteMe.Mobile.ViewModels
             }
             finally
             {
-                await CrossInAppBilling.Current.DisconnectAsync().ConfigureAwait(false);
+                await _inAppBilling.DisconnectAsync().ConfigureAwait(false);
             }
 
             return false;

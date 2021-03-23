@@ -18,6 +18,7 @@ namespace RewriteMe.Business.Services
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IConnectivityService _connectivityService;
         private readonly IRewriteMeWebService _rewriteMeWebService;
+        private readonly IInAppBilling _inAppBilling;
         private readonly IBillingPurchaseRepository _billingPurchaseRepository;
 
         public BillingPurchaseService(
@@ -25,12 +26,14 @@ namespace RewriteMe.Business.Services
             IUserSubscriptionService userSubscriptionService,
             IConnectivityService connectivityService,
             IRewriteMeWebService rewriteMeWebService,
+            IInAppBilling inAppBilling,
             IBillingPurchaseRepository billingPurchaseRepository)
         {
             _userSessionService = userSessionService;
             _userSubscriptionService = userSubscriptionService;
             _connectivityService = connectivityService;
             _rewriteMeWebService = rewriteMeWebService;
+            _inAppBilling = inAppBilling;
             _billingPurchaseRepository = billingPurchaseRepository;
         }
 
@@ -65,9 +68,6 @@ namespace RewriteMe.Business.Services
             if (!_connectivityService.IsConnected)
                 return;
 
-            if (!CrossInAppBilling.IsSupported)
-                return;
-
             var pendingPurchasesEnumerable = await _billingPurchaseRepository.GetAllPaymentPendingAsync().ConfigureAwait(false);
             var pendingPurchases = pendingPurchasesEnumerable.ToList();
             if (!pendingPurchases.Any())
@@ -75,20 +75,19 @@ namespace RewriteMe.Business.Services
 
             try
             {
-                var billing = CrossInAppBilling.Current;
-                var connected = await billing.ConnectAsync().ConfigureAwait(false);
+                var connected = await _inAppBilling.ConnectAsync().ConfigureAwait(false);
                 if (!connected)
                     throw new AppStoreNotConnectedException();
 
                 var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
-                var purchasesEnumerable = await billing.GetPurchasesAsync(ItemType.InAppPurchase).ConfigureAwait(false);
+                var purchasesEnumerable = await _inAppBilling.GetPurchasesAsync(ItemType.InAppPurchase).ConfigureAwait(false);
                 var purchases = purchasesEnumerable?.ToList();
                 if (purchases == null || !purchases.Any())
                 {
                     var isSuccessList = new List<bool>();
                     foreach (var deprecatedPurchase in pendingPurchases)
                     {
-                        var isConsumed = await ConsumePurchaseAsync(billing, deprecatedPurchase, userId).ConfigureAwait(false);
+                        var isConsumed = await ConsumePurchaseAsync(deprecatedPurchase, userId).ConfigureAwait(false);
                         isSuccessList.Add(isConsumed);
                     }
 
@@ -103,7 +102,7 @@ namespace RewriteMe.Business.Services
                     var purchase = purchases.FirstOrDefault(x => x.Id.Equals(pendingPurchase.Id, StringComparison.OrdinalIgnoreCase));
                     if (purchase == null)
                     {
-                        var isConsumed = await ConsumePurchaseAsync(billing, pendingPurchase, userId).ConfigureAwait(false);
+                        var isConsumed = await ConsumePurchaseAsync(pendingPurchase, userId).ConfigureAwait(false);
                         if (isConsumed)
                             continue;
 
@@ -112,26 +111,26 @@ namespace RewriteMe.Business.Services
 
                     if (purchase.State == PurchaseState.Purchased || purchase.State == PurchaseState.PaymentPending)
                     {
-                        await ConsumePurchaseAsync(billing, purchase, userId).ConfigureAwait(false);
+                        await ConsumePurchaseAsync(purchase, userId).ConfigureAwait(false);
                     }
                 }
             }
             finally
             {
-                await CrossInAppBilling.Current.DisconnectAsync().ConfigureAwait(false);
+                await _inAppBilling.DisconnectAsync().ConfigureAwait(false);
             }
         }
 
-        private async Task<bool> ConsumePurchaseAsync(IInAppBilling billing, InAppBillingPurchase pendingPurchase, Guid userId)
+        private async Task<bool> ConsumePurchaseAsync(InAppBillingPurchase pendingPurchase, Guid userId)
         {
             var isConsumed = false;
             try
             {
-                isConsumed = await billing.ConsumePurchaseAsync(pendingPurchase.ProductId, pendingPurchase.PurchaseToken).ConfigureAwait(false);
+                isConsumed = await _inAppBilling.ConsumePurchaseAsync(pendingPurchase.ProductId, pendingPurchase.PurchaseToken).ConfigureAwait(false);
             }
             catch (Exception)
             {
-                await CheckBillingPurchaseAsync(billing, pendingPurchase, userId).ConfigureAwait(false);
+                await CheckBillingPurchaseAsync(pendingPurchase, userId).ConfigureAwait(false);
             }
 
             if (isConsumed)
@@ -162,11 +161,11 @@ namespace RewriteMe.Business.Services
             return false;
         }
 
-        private async Task CheckBillingPurchaseAsync(IInAppBilling billing, InAppBillingPurchase pendingPurchase, Guid userId)
+        private async Task CheckBillingPurchaseAsync(InAppBillingPurchase pendingPurchase, Guid userId)
         {
             try
             {
-                var inAppBillingPurchases = await billing.GetPurchasesAsync(ItemType.InAppPurchase).ConfigureAwait(false);
+                var inAppBillingPurchases = await _inAppBilling.GetPurchasesAsync(ItemType.InAppPurchase).ConfigureAwait(false);
                 var purchase = inAppBillingPurchases.SingleOrDefault(x => x.Id.Equals(pendingPurchase.Id, StringComparison.OrdinalIgnoreCase));
                 if (purchase == null)
                 {

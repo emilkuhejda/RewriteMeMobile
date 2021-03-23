@@ -1,4 +1,5 @@
 ﻿using Plugin.Connectivity;
+using Plugin.InAppBilling;
 using Plugin.LatestVersion;
 using Prism.Ioc;
 using Prism.Navigation;
@@ -22,6 +23,7 @@ namespace RewriteMe.Mobile.Configuration
         {
             containerRegistry.RegisterInstance(CrossLatestVersion.Current);
             containerRegistry.RegisterInstance(CrossConnectivity.Current);
+            containerRegistry.RegisterInstance(CrossInAppBilling.Current);
             containerRegistry.RegisterInstance(MessagingCenter.Instance);
 
             containerRegistry.RegisterSingleton<INavigationService, PageNavigationService>();
