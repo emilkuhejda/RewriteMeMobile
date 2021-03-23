@@ -80,7 +80,7 @@ namespace RewriteMe.Business.Services
                 if (!connected)
                     throw new AppStoreNotConnectedException();
 
-                var purchasesEnumerable = await billing.GetPurchasesAsync(ItemType.InAppPurchase);
+                var purchasesEnumerable = await billing.GetPurchasesAsync(ItemType.InAppPurchase).ConfigureAwait(false);
                 var purchases = purchasesEnumerable?.ToList();
                 if (purchases == null || !purchases.Any())
                     throw new NoPurchasesInStoreException();
@@ -102,7 +102,7 @@ namespace RewriteMe.Business.Services
                             var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 
                             await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
-                            await _billingPurchaseRepository.DeleteAsync(pendingPurchase.Id);
+                            await _billingPurchaseRepository.DeleteAsync(pendingPurchase.Id).ConfigureAwait(false);
                         }
                         catch (OfflineRequestException ex)
                         {
@@ -112,6 +112,24 @@ namespace RewriteMe.Business.Services
                         {
                             throw new RegistrationPurchaseBillingException(purchase.Id, purchase.ProductId, nameof(purchase), ex);
                         }
+                    }
+                    else if (purchase.State != PurchaseState.Purchased && purchase.State != PurchaseState.PaymentPending)
+                    {
+                        try
+                        {
+                            var orderId = purchase.Id;
+                            var billingPurchase = purchase.ToUserSubscriptionModel(userId, orderId);
+                            var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
+
+                            await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
+                            await _billingPurchaseRepository.DeleteAsync(pendingPurchase.Id).ConfigureAwait(false);
+                        }
+                        catch (Exception)
+                        {
+                            // Ignored
+                        }
+
+                        throw new PurchaseWasNotProcessedException(purchase.Id, purchase.ProductId);
                     }
                 }
             }

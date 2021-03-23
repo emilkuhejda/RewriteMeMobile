@@ -145,6 +145,22 @@ namespace RewriteMe.Mobile.ViewModels
                     await CreateContactUsMailAsync(ex.PurchaseId, ex.ProductId).ConfigureAwait(false);
                 }
             }
+            catch (PurchaseWasNotProcessedException ex)
+            {
+                TrackException(ex);
+                Logger.Error("Product was not purchased.");
+                Logger.Error(ExceptionFormatter.FormatException(ex));
+
+                var result = await DialogService.ConfirmAsync(
+                    Loc.Text(TranslationKeys.PurchaseProcessedIncorrectlyErrorMessage),
+                    okText: Loc.Text(TranslationKeys.SendEmail),
+                    cancelText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+
+                if (result)
+                {
+                    await CreateContactUsMailAsync(ex.PurchaseId, ex.ProductId).ConfigureAwait(false);
+                }
+            }
             catch (Exception ex)
             {
                 TrackException(ex);
