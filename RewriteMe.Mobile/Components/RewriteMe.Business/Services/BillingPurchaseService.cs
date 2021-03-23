@@ -98,11 +98,16 @@ namespace RewriteMe.Business.Services
                         try
                         {
                             var orderId = purchase.Id;
-                            var billingPurchase = purchase.ToUserSubscriptionModel(userId, orderId);
-                            var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 
-                            await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
-                            await _billingPurchaseRepository.DeleteAsync(pendingPurchase.Id).ConfigureAwait(false);
+                            var isConsumed = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
+                            if (isConsumed)
+                            {
+                                var billingPurchase = purchase.ToUserSubscriptionModel(userId, orderId);
+                                var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
+
+                                await _userSubscriptionService.UpdateRemainingTimeAsync(remainingTime.Time).ConfigureAwait(false);
+                                await _billingPurchaseRepository.DeleteAsync(pendingPurchase.Id).ConfigureAwait(false);
+                            }
                         }
                         catch (OfflineRequestException ex)
                         {
