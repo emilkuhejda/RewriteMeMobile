@@ -14,6 +14,8 @@ namespace RewriteMe.Business.Services
 {
     public class BillingPurchaseService : IBillingPurchaseService
     {
+        private const int DeprecatedPurchaseInDays = 7;
+
         private readonly IUserSessionService _userSessionService;
         private readonly IUserSubscriptionService _userSubscriptionService;
         private readonly IConnectivityService _connectivityService;
@@ -83,7 +85,14 @@ namespace RewriteMe.Business.Services
                 var purchasesEnumerable = await billing.GetPurchasesAsync(ItemType.InAppPurchase).ConfigureAwait(false);
                 var purchases = purchasesEnumerable?.ToList();
                 if (purchases == null || !purchases.Any())
+                {
+                    foreach (var deprecatedPurchase in pendingPurchases.Where(x => x.TransactionDateUtc < DateTime.UtcNow.AddDays(-DeprecatedPurchaseInDays)))
+                    {
+                        await _billingPurchaseRepository.DeleteAsync(deprecatedPurchase.Id).ConfigureAwait(false);
+                    }
+
                     throw new NoPurchasesInStoreException();
+                }
 
                 var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
 
@@ -91,7 +100,14 @@ namespace RewriteMe.Business.Services
                 {
                     var purchase = purchases.FirstOrDefault(x => x.Id.Equals(pendingPurchase.Id, StringComparison.OrdinalIgnoreCase));
                     if (purchase == null)
+                    {
+                        if (pendingPurchase.TransactionDateUtc < DateTime.UtcNow.AddDays(-DeprecatedPurchaseInDays))
+                        {
+                            await _billingPurchaseRepository.DeleteAsync(pendingPurchase.Id).ConfigureAwait(false);
+                        }
+
                         throw new PurchaseNotFoundException(pendingPurchase.Id, pendingPurchase.ProductId);
+                    }
 
                     if (purchase.State == PurchaseState.Purchased)
                     {
