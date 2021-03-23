@@ -118,6 +118,7 @@ namespace RewriteMe.Business.Services
                             var isConsumed = await billing.ConsumePurchaseAsync(purchase.ProductId, purchase.PurchaseToken).ConfigureAwait(false);
                             if (isConsumed)
                             {
+                                purchase.ConsumptionState = ConsumptionState.Consumed;
                                 var billingPurchase = purchase.ToUserSubscriptionModel(userId, orderId);
                                 var remainingTime = await SendBillingPurchaseAsync(billingPurchase).ConfigureAwait(false);
 

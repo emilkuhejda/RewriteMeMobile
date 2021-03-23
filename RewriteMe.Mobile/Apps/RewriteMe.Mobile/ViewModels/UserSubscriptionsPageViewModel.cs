@@ -303,6 +303,10 @@ namespace RewriteMe.Mobile.ViewModels
                         {
                             Logger.Info($"Product '{productId}' was purchased.");
                         }
+                        else
+                        {
+                            purchase.ConsumptionState = ConsumptionState.Consumed;
+                        }
 
                         await SendBillingPurchaseAsync(orderId, productId, purchase).ConfigureAwait(false);
                         return true;
