@@ -201,7 +201,7 @@ namespace RewriteMe.Business.Tests.Services
 
             var billingPurchaseInStore = CreateInAppBillingPurchase(PurchaseState.Purchased);
             var billingPurchase = CreateInAppBillingPurchase(PurchaseState.Pending);
-            billingPurchase.TransactionDateUtc = billingPurchaseInStore.TransactionDateUtc.AddMinutes(-4.5);
+            billingPurchase.TransactionDateUtc = billingPurchaseInStore.TransactionDateUtc.AddMinutes(-1);
 
             var expectedRemainingTime = TimeSpan.FromMinutes(1);
 
@@ -235,9 +235,10 @@ namespace RewriteMe.Business.Tests.Services
                 billingPurchaseRepositoryMock.Object);
 
             // Act
-            await billingPurchaseService.HandlePendingPurchases();
+            var result = await billingPurchaseService.HandlePendingPurchases();
 
             // Assert
+            Assert.False(result);
             userSubscriptionServiceMock
                 .Verify(x => x.UpdateRemainingTimeAsync(It.Is<TimeSpan>(ts => ts == expectedRemainingTime)), Times.Never);
             billingPurchaseRepositoryMock
@@ -290,9 +291,10 @@ namespace RewriteMe.Business.Tests.Services
                 billingPurchaseRepositoryMock.Object);
 
             // Act
-            await billingPurchaseService.HandlePendingPurchases();
+            var result = await billingPurchaseService.HandlePendingPurchases();
 
             // Assert
+            Assert.False(result);
             userSubscriptionServiceMock
                 .Verify(x => x.UpdateRemainingTimeAsync(It.Is<TimeSpan>(ts => ts == expectedRemainingTime)), Times.Once);
             billingPurchaseRepositoryMock
@@ -463,9 +465,10 @@ namespace RewriteMe.Business.Tests.Services
                 billingPurchaseRepositoryMock.Object);
 
             // Act
-            await billingPurchaseService.HandlePendingPurchases();
+            var result = await billingPurchaseService.HandlePendingPurchases();
 
             // Assert
+            Assert.False(result);
             userSubscriptionServiceMock
                 .Verify(x => x.UpdateRemainingTimeAsync(It.Is<TimeSpan>(ts => ts == expectedRemainingTime)), Times.Once);
             billingPurchaseRepositoryMock

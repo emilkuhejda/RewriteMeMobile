@@ -107,7 +107,7 @@ namespace RewriteMe.Business.Services
 
                 foreach (var pendingPurchase in pendingPurchases)
                 {
-                    if (pendingPurchase.TransactionDateUtc.AddMinutes(5) > DateTime.UtcNow)
+                    if (pendingPurchase.TransactionDateUtc.AddMinutes(2) > DateTime.UtcNow)
                         continue;
 
                     var purchase = purchases.FirstOrDefault(x => x.Id.Equals(pendingPurchase.Id, StringComparison.OrdinalIgnoreCase));
