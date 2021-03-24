@@ -61,9 +61,10 @@ namespace RewriteMe.Business.Tests.Services
                 billingPurchaseRepositoryMock.Object);
 
             // Act
-            await billingPurchaseService.HandlePendingPurchases();
+            var result = await billingPurchaseService.HandlePendingPurchases();
 
             // Assert
+            Assert.True(result);
             userSubscriptionServiceMock
                 .Verify(x => x.UpdateRemainingTimeAsync(It.Is<TimeSpan>(ts => ts == expectedRemainingTime)), Times.Once);
             billingPurchaseRepositoryMock
@@ -119,9 +120,10 @@ namespace RewriteMe.Business.Tests.Services
                 billingPurchaseRepositoryMock.Object);
 
             // Act
-            await billingPurchaseService.HandlePendingPurchases();
+            var result = await billingPurchaseService.HandlePendingPurchases();
 
             // Assert
+            Assert.Null(result);
             userSubscriptionServiceMock
                 .Verify(x => x.UpdateRemainingTimeAsync(It.Is<TimeSpan>(ts => ts == expectedRemainingTime)), Times.Never);
             billingPurchaseRepositoryMock
@@ -175,9 +177,10 @@ namespace RewriteMe.Business.Tests.Services
                 billingPurchaseRepositoryMock.Object);
 
             // Act
-            await billingPurchaseService.HandlePendingPurchases();
+            var result = await billingPurchaseService.HandlePendingPurchases();
 
             // Assert
+            Assert.False(result);
             userSubscriptionServiceMock
                 .Verify(x => x.UpdateRemainingTimeAsync(It.Is<TimeSpan>(ts => ts == expectedRemainingTime)), Times.Never);
             billingPurchaseRepositoryMock

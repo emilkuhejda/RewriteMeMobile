@@ -13,6 +13,6 @@ namespace RewriteMe.Domain.Interfaces.Services
 
         Task<TimeSpanWrapper> SendBillingPurchaseAsync(CreateUserSubscriptionInputModel createUserSubscriptionInputModel);
 
-        Task HandlePendingPurchases();
+        Task<bool?> HandlePendingPurchases();
     }
 }

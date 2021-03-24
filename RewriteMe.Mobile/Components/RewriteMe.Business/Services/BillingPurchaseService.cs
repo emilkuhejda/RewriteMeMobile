@@ -66,15 +66,15 @@ namespace RewriteMe.Business.Services
             throw new OfflineRequestException();
         }
 
-        public async Task HandlePendingPurchases()
+        public async Task<bool?> HandlePendingPurchases()
         {
             if (!_connectivityService.IsConnected)
-                return;
+                return false;
 
             var pendingPurchasesEnumerable = await _billingPurchaseRepository.GetAllPaymentPendingAsync().ConfigureAwait(false);
             var pendingPurchases = pendingPurchasesEnumerable.ToList();
             if (!pendingPurchases.Any())
-                return;
+                return false;
 
             try
             {
@@ -100,7 +100,7 @@ namespace RewriteMe.Business.Services
                     }
 
                     if (isSuccessList.All(x => x))
-                        return;
+                        return false;
 
                     throw new NoPurchasesInStoreException();
                 }
@@ -127,7 +127,7 @@ namespace RewriteMe.Business.Services
 
                     if (purchase.State == PurchaseState.Purchased || purchase.State == PurchaseState.PaymentPending)
                     {
-                        await ConsumePurchaseAsync(purchase, userId).ConfigureAwait(false);
+                        return await ConsumePurchaseAsync(purchase, userId).ConfigureAwait(false);
                     }
                 }
             }
@@ -135,6 +135,8 @@ namespace RewriteMe.Business.Services
             {
                 await _inAppBilling.DisconnectAsync().ConfigureAwait(false);
             }
+
+            return false;
         }
 
         private async Task<bool?> ConsumePurchaseAsync(InAppBillingPurchase pendingPurchase, Guid userId)

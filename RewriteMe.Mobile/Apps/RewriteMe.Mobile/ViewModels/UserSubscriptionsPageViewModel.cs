@@ -23,6 +23,7 @@ namespace RewriteMe.Mobile.ViewModels
     public class UserSubscriptionsPageViewModel : ViewModelBase
     {
         private const string PurchaseSubscription = "Purchase subscription";
+        private const string PendingPurchaseSubscription = "Pending purchase subscription";
         private const string StartPurchasingSubscription = "Start purchasing subscription";
 
         private readonly IUserSubscriptionService _userSubscriptionService;
@@ -101,7 +102,20 @@ namespace RewriteMe.Mobile.ViewModels
         {
             try
             {
-                await _billingPurchaseService.HandlePendingPurchases().ConfigureAwait(false);
+                var result = await _billingPurchaseService.HandlePendingPurchases().ConfigureAwait(false);
+                if (result.HasValue && result.Value)
+                {
+                    await DialogService.AlertAsync(Loc.Text(TranslationKeys.SubscriptionWasSuccessfullyPurchased)).ConfigureAwait(false);
+                    await InitializeRemainingTimeAsync().ConfigureAwait(false);
+                }
+                else if (!result.HasValue)
+                {
+                    var pendingPurchases = await _billingPurchaseService.GetAllPaymentPendingAsync().ConfigureAwait(false);
+                    if (!pendingPurchases.Any())
+                    {
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.PurchaseNotFoundErrorMessage)).ConfigureAwait(false);
+                    }
+                }
             }
             catch (AppStoreNotConnectedException ex)
             {
@@ -281,6 +295,7 @@ namespace RewriteMe.Mobile.ViewModels
                     {
                         Logger.Info("Product was purchased but payment is pending.");
 
+                        await TrackEvent(PendingPurchaseSubscription, productId).ConfigureAwait(false);
                         await _billingPurchaseService.AddAsync(purchase).ConfigureAwait(false);
                         await DialogService.AlertAsync(Loc.Text(TranslationKeys.PendingPaymentErrorMessage)).ConfigureAwait(false);
 
