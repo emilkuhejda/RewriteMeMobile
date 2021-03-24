@@ -2,7 +2,7 @@
 
 namespace RewriteMe.Domain.Exceptions
 {
-    public class PurchaseWasNotProcessedException : Exception
+    public class PurchaseWasNotProcessedException : PurchaseBaseException
     {
         public PurchaseWasNotProcessedException()
         {
@@ -10,6 +10,11 @@ namespace RewriteMe.Domain.Exceptions
 
         public PurchaseWasNotProcessedException(string message)
             : base(message)
+        {
+        }
+
+        public PurchaseWasNotProcessedException(string purchaseId, string productId)
+            : base(purchaseId, productId)
         {
         }
 

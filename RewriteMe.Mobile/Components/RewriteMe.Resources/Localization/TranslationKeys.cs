@@ -133,5 +133,7 @@
         public static string EndTimeGreaterThanTotalTimeErrorMessage => "EndTimeGreaterThanTotalTimeErrorMessage";
         public static string TooManyAttemptsToRestartTranscriptionErrorMessage => "TooManyAttemptsToRestartTranscriptionErrorMessage";
         public static string SomethingWentWrongErrorMessage => "SomethingWentWrongErrorMessage";
+        public static string PendingPaymentErrorMessage => "PendingPaymentErrorMessage";
+        public static string PurchaseNotFoundErrorMessage => "PurchaseNotFoundErrorMessage";
     }
 }

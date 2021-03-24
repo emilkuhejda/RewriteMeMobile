@@ -30,6 +30,8 @@ namespace RewriteMe.DataAccess
 
         AsyncTableQuery<UploadedSourceEntity> UploadedSources { get; }
 
+        AsyncTableQuery<BillingPurchaseEntity> BillingPurchases { get; }
+
         Task RunInTransactionAsync(Action<SQLiteConnection> action);
 
         Task<int> GetVersionNumberAsync();
