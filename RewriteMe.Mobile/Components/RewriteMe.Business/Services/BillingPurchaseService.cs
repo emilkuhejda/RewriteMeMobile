@@ -91,7 +91,12 @@ namespace RewriteMe.Business.Services
                     foreach (var deprecatedPurchase in pendingPurchases)
                     {
                         var isConsumed = await ConsumePurchaseAsync(deprecatedPurchase, userId).ConfigureAwait(false);
-                        isSuccessList.Add(isConsumed);
+                        if (isConsumed.HasValue && !isConsumed.Value)
+                        {
+                            await CheckBillingPurchaseAsync(deprecatedPurchase, userId).ConfigureAwait(false);
+                        }
+
+                        isSuccessList.Add(isConsumed ?? false);
                     }
 
                     if (isSuccessList.All(x => x))
@@ -109,8 +114,13 @@ namespace RewriteMe.Business.Services
                     if (purchase == null)
                     {
                         var isConsumed = await ConsumePurchaseAsync(pendingPurchase, userId).ConfigureAwait(false);
-                        if (isConsumed)
+                        if (isConsumed.HasValue && isConsumed.Value)
                             continue;
+
+                        if (isConsumed.HasValue)
+                        {
+                            await CheckBillingPurchaseAsync(pendingPurchase, userId).ConfigureAwait(false);
+                        }
 
                         throw new PurchaseNotFoundException(pendingPurchase.Id, pendingPurchase.ProductId);
                     }
@@ -127,9 +137,9 @@ namespace RewriteMe.Business.Services
             }
         }
 
-        private async Task<bool> ConsumePurchaseAsync(InAppBillingPurchase pendingPurchase, Guid userId)
+        private async Task<bool?> ConsumePurchaseAsync(InAppBillingPurchase pendingPurchase, Guid userId)
         {
-            var isConsumed = false;
+            bool isConsumed;
             try
             {
                 isConsumed = await _inAppBilling.ConsumePurchaseAsync(pendingPurchase.ProductId, pendingPurchase.PurchaseToken).ConfigureAwait(false);
@@ -137,6 +147,7 @@ namespace RewriteMe.Business.Services
             catch (Exception)
             {
                 await CheckBillingPurchaseAsync(pendingPurchase, userId).ConfigureAwait(false);
+                return null;
             }
 
             if (isConsumed)
