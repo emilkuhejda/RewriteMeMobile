@@ -23,6 +23,7 @@ namespace RewriteMe.DataAccess
             containerRegistry.RegisterSingleton<IRecordedAudioFileRepository, RecordedAudioFileRepository>();
             containerRegistry.RegisterSingleton<IInformationMessageRepository, InformationMessageRepository>();
             containerRegistry.RegisterSingleton<IUploadedSourceRepository, UploadedSourceRepository>();
+            containerRegistry.RegisterSingleton<IBillingPurchaseRepository, BillingPurchaseRepository>();
         }
     }
 }

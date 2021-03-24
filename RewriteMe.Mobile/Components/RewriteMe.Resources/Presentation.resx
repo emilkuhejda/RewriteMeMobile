@@ -491,4 +491,10 @@
   <data name="SomethingWentWrongErrorMessage" xml:space="preserve">
     <value>Something went wrong. Please try again later.</value>
   </data>
+  <data name="PendingPaymentErrorMessage" xml:space="preserve">
+    <value>The payment is pending. Your time credit will be added after the payment is completed.</value>
+  </data>
+  <data name="PurchaseNotFoundErrorMessage" xml:space="preserve">
+    <value>There has been a problem with your payment. Please contact us.</value>
+  </data>
 </root>

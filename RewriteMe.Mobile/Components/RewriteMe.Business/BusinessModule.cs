@@ -42,6 +42,7 @@ namespace RewriteMe.Business
             containerRegistry.RegisterSingleton<ISynchronizerService, SynchronizerService>();
             containerRegistry.RegisterSingleton<ITranscribeItemManager, TranscribeItemManager>();
             containerRegistry.RegisterSingleton<IFileItemSourceUploader, FileItemSourceUploader>();
+            containerRegistry.RegisterSingleton<IDeviceService, DeviceService>();
         }
     }
 }

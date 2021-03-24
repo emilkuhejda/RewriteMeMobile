@@ -41,6 +41,8 @@ namespace RewriteMe.DataAccess
 
         public AsyncTableQuery<UploadedSourceEntity> UploadedSources => Database.Table<UploadedSourceEntity>();
 
+        public AsyncTableQuery<BillingPurchaseEntity> BillingPurchases => Database.Table<BillingPurchaseEntity>();
+
         public async Task RunInTransactionAsync(Action<SQLiteConnection> action)
         {
             await SemaphoreSlim.WaitAsync().ConfigureAwait(true);
