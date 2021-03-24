@@ -201,7 +201,7 @@ namespace RewriteMe.Business.Tests.Services
 
             var billingPurchaseInStore = CreateInAppBillingPurchase(PurchaseState.Purchased);
             var billingPurchase = CreateInAppBillingPurchase(PurchaseState.Pending);
-            billingPurchase.TransactionDateUtc = billingPurchaseInStore.TransactionDateUtc.AddMinutes(-1);
+            billingPurchase.TransactionDateUtc = billingPurchaseInStore.TransactionDateUtc.AddMinutes(-0.5);
 
             var expectedRemainingTime = TimeSpan.FromMinutes(1);
 
