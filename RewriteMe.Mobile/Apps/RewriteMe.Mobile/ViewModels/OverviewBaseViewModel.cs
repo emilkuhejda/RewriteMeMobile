@@ -10,6 +10,7 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public abstract class OverviewBaseViewModel : ViewModelBase
     {
+        private bool _isEmptyViewVisible;
         private bool _isRefreshing;
 
         protected OverviewBaseViewModel(
@@ -33,6 +34,12 @@ namespace RewriteMe.Mobile.ViewModels
         protected ISynchronizationService SynchronizationService { get; }
 
         public RadialNavigationMenuViewModel NavigationMenu { get; }
+
+        public bool IsEmptyViewVisible
+        {
+            get => _isEmptyViewVisible;
+            set => SetProperty(ref _isEmptyViewVisible, value);
+        }
 
         public bool IsRefreshing
         {

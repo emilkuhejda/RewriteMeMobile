@@ -37,7 +37,13 @@ namespace RewriteMe.Mobile.ViewModels
         public IEnumerable<RecordedItemViewModel> RecordedItems
         {
             get => _recordedItems;
-            set => SetProperty(ref _recordedItems, value);
+            set
+            {
+                if (SetProperty(ref _recordedItems, value))
+                {
+                    IsEmptyViewVisible = !value.Any();
+                }
+            }
         }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)

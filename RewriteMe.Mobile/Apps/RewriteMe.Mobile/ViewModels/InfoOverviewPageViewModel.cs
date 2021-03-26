@@ -32,7 +32,13 @@ namespace RewriteMe.Mobile.ViewModels
         public ObservableCollection<InformationMessageViewModel> InformationMessages
         {
             get => _informationMessages;
-            private set => SetProperty(ref _informationMessages, value);
+            private set
+            {
+                if (SetProperty(ref _informationMessages, value))
+                {
+                    IsEmptyViewVisible = !value.Any();
+                }
+            }
         }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
@@ -55,6 +61,8 @@ namespace RewriteMe.Mobile.ViewModels
                 {
                     InformationMessages.Insert(0, new InformationMessageViewModel(informationMessageToAdd, languageInfo, NavigationService));
                 }
+
+                IsEmptyViewVisible = !InformationMessages.Any();
             }
             else
             {

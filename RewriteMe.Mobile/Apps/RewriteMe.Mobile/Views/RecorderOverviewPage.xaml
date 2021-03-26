@@ -53,7 +53,9 @@
                      IsRefreshing="{Binding IsRefreshing}">
             <CollectionView ItemTemplate="{StaticResource RecordedItemsTemplate}" ItemsSource="{Binding RecordedItems}">
                 <CollectionView.EmptyView>
-                    <StackLayout HorizontalOptions="Center" Orientation="Vertical">
+                    <StackLayout HorizontalOptions="Center"
+                                 IsVisible="{Binding IsEmptyViewVisible}"
+                                 Orientation="Vertical">
                         <forms:SvgCachedImage Margin="0,20,0,20"
                                               Aspect="AspectFit"
                                               HeightRequest="150"
