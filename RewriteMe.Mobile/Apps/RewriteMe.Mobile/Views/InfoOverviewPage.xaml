@@ -45,7 +45,7 @@
                      IsRefreshing="{Binding IsRefreshing}">
             <CollectionView ItemTemplate="{StaticResource InformationMessagesTemplate}" ItemsSource="{Binding InformationMessages}">
                 <CollectionView.EmptyView>
-                    <Grid>
+                    <Grid IsVisible="{Binding IsEmptyViewVisible}">
                         <StackLayout HorizontalOptions="Center" Orientation="Vertical">
                             <svgForms:SvgCachedImage Margin="0,20,0,20"
                                                      Aspect="AspectFit"

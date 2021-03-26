@@ -61,7 +61,13 @@ namespace RewriteMe.Mobile.ViewModels
         public ObservableCollection<FileItemViewModel> FileItems
         {
             get => _fileItems;
-            set => SetProperty(ref _fileItems, value);
+            set
+            {
+                if (SetProperty(ref _fileItems, value))
+                {
+                    IsEmptyViewVisible = !value.Any();
+                }
+            }
         }
 
         protected override async Task LoadDataAsync(INavigationParameters navigationParameters)
@@ -118,6 +124,7 @@ namespace RewriteMe.Mobile.ViewModels
                 }
 
                 RemoveObsoleteItems(fileItems);
+                IsEmptyViewVisible = !FileItems.Any();
             }
         }
 
@@ -131,6 +138,8 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 FileItems.Remove(deletedFileItem);
             }
+
+            IsEmptyViewVisible = !FileItems.Any();
         }
 
         private async Task SynchronizationAsync()
