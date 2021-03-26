@@ -255,10 +255,20 @@ namespace RewriteMe.Mobile.ViewModels
                 if (importedFile?.Source != null && importedFile.Source.Any())
                 {
                     var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
+                    try
+                    {
+                        TotalTime = AudioFileHelper.GetDuration(importedFile.Source);
+                    }
+                    catch
+                    {
+                        await DialogService.AlertAsync(Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage), okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+                    }
+
                     SelectedFile = new PickedFile
                     {
                         FileName = importedFile.FileName,
                         CanTranscribe = canTranscribe,
+                        IsSupported = TotalTime != TimeSpan.Zero,
                         Source = importedFile.Source
                     };
 
@@ -337,19 +347,6 @@ namespace RewriteMe.Mobile.ViewModels
                 if (selectedFile == null)
                     return;
 
-                var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
-                SelectedFile = new PickedFile
-                {
-                    FileName = selectedFile.FileName,
-                    CanTranscribe = canTranscribe,
-                    Source = selectedFile.DataArray
-                };
-
-                if (string.IsNullOrWhiteSpace(Name))
-                {
-                    Name = SelectedFile.FileName;
-                }
-
                 try
                 {
                     TotalTime = AudioFileHelper.GetDuration(selectedFile.DataArray);
@@ -357,6 +354,21 @@ namespace RewriteMe.Mobile.ViewModels
                 catch
                 {
                     await DialogService.AlertAsync(Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage), okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
+                    return;
+                }
+
+                var canTranscribe = await _fileItemService.CanTranscribeAsync().ConfigureAwait(false);
+                SelectedFile = new PickedFile
+                {
+                    FileName = selectedFile.FileName,
+                    CanTranscribe = canTranscribe,
+                    IsSupported = true,
+                    Source = selectedFile.DataArray
+                };
+
+                if (string.IsNullOrWhiteSpace(Name))
+                {
+                    Name = SelectedFile.FileName;
                 }
             }
         }
@@ -403,7 +415,7 @@ namespace RewriteMe.Mobile.ViewModels
 
         private bool CanExecuteSaveCommand()
         {
-            return SelectedFile != null && TotalTime != TimeSpan.Zero;
+            return SelectedFile != null && SelectedLanguage != null && TotalTime != TimeSpan.Zero;
         }
 
         private async Task ExecuteSaveCommandAsync()
@@ -431,8 +443,7 @@ namespace RewriteMe.Mobile.ViewModels
 
                 try
                 {
-                    var mimeType = MimeTypes.GetMimeType(SelectedFile.FileName);
-                    if (MediaContentTypes.IsUnsupported(mimeType))
+                    if (!SelectedFile.IsSupported)
                     {
                         await DialogService.AlertAsync(Loc.Text(TranslationKeys.UploadedFileNotSupportedErrorMessage), okText: Loc.Text(TranslationKeys.Ok)).ConfigureAwait(false);
                         return;
