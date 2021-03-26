@@ -6,6 +6,8 @@
 
         public bool CanTranscribe { get; set; }
 
+        public bool IsSupported { get; set; }
+
         public byte[] Source { get; set; }
     }
 }
