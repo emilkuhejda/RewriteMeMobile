@@ -110,7 +110,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _isTimeFrame, value))
                 {
-                    if (value && EndTime != TimeSpan.Zero)
+                    if (value && EndTime == TimeSpan.Zero)
                     {
                         EndTime = TotalTime;
                     }

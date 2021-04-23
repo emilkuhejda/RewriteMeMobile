@@ -70,24 +70,24 @@ namespace RewriteMe.Business.Services
                 TimeSpan.FromSeconds(360)
             };
 
+            try
+            {
 #if DEBUG
-            _hubConnection = new HubConnectionBuilder()
-                    .WithUrl(_applicationSettings.HubUrl, options =>
-                    {
-                        options.HttpMessageHandlerFactory = handler =>
+                _hubConnection = new HubConnectionBuilder()
+                        .WithUrl(_applicationSettings.HubUrl, options =>
                         {
-                            return new HttpClientHandler { ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true };
-                        };
-                    })
-                    .WithAutomaticReconnect(reconnectDelays)
-                    .Build();
+                            options.HttpMessageHandlerFactory = handler =>
+                            {
+                                return new HttpClientHandler { ServerCertificateCustomValidationCallback = (message, certificate2, arg3, arg4) => true };
+                            };
+                        })
+                        .WithAutomaticReconnect(reconnectDelays)
+                        .Build();
 
 #else
             _hubConnection = new HubConnectionBuilder().WithUrl(_applicationSettings.HubUrl).WithAutomaticReconnect(reconnectDelays).Build();
 #endif
 
-            try
-            {
                 await _hubConnection.StartAsync().ConfigureAwait(false);
                 var userId = await _userSessionService.GetUserIdAsync().ConfigureAwait(false);
                 _hubConnection.On<Guid, string>($"{RecognitionStateChangedMethod}-{userId}", HandleRecognitionStateChangedMessageAsync);

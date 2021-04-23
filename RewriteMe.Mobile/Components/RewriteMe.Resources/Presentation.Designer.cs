@@ -61,6 +61,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Access code.
+        /// </summary>
+        public static string AccessCode {
+            get {
+                return ResourceManager.GetString("AccessCode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to ({0}% accuracy).
         /// </summary>
         public static string Accuracy {
@@ -399,6 +408,15 @@ namespace RewriteMe.Resources {
         public static string Info {
             get {
                 return ResourceManager.GetString("Info", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid access code.
+        /// </summary>
+        public static string InvalidAccessCodeErrorMessage {
+            get {
+                return ResourceManager.GetString("InvalidAccessCodeErrorMessage", resourceCulture);
             }
         }
         
@@ -1029,6 +1047,15 @@ namespace RewriteMe.Resources {
         public static string StartTimeGreaterOrEqualThanEndTimeErrorMessage {
             get {
                 return ResourceManager.GetString("StartTimeGreaterOrEqualThanEndTimeErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Submit.
+        /// </summary>
+        public static string Submit {
+            get {
+                return ResourceManager.GetString("Submit", resourceCulture);
             }
         }
         

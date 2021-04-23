@@ -43,6 +43,8 @@
         public static string PrivacyPolicy => "PrivacyPolicy";
         public static string ContactUs => "ContactUs";
         public static string Developer => "Developer";
+        public static string AccessCode => "AccessCode";
+        public static string Submit => "Submit";
         public static string ApiUrl => "ApiUrl";
         public static string ApiUrlSaved => "ApiUrlSaved";
         public static string Clear => "Clear";
@@ -135,5 +137,6 @@
         public static string SomethingWentWrongErrorMessage => "SomethingWentWrongErrorMessage";
         public static string PendingPaymentErrorMessage => "PendingPaymentErrorMessage";
         public static string PurchaseNotFoundErrorMessage => "PurchaseNotFoundErrorMessage";
+        public static string InvalidAccessCodeErrorMessage => "InvalidAccessCodeErrorMessage";
     }
 }
