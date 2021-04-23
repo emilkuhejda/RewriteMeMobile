@@ -478,8 +478,8 @@
                                                 Opacity="0.6"
                                                 TextColor="{StaticResource ColorWhite}"
                                                 TextSize="16"
-                                                ViewBoxHeight="50"
-                                                ViewBoxWidth="50" />
+                                                ViewBoxHeight="60"
+                                                ViewBoxWidth="60" />
                     </Grid>
                 </Grid>
             </ControlTemplate>
