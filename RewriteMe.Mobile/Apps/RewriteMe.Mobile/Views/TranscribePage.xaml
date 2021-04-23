@@ -51,7 +51,7 @@
                                Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.AdvancedSettings}}" />
                     </expander:SfExpander.Header>
                     <expander:SfExpander.Content>
-                        <StackLayout Padding="5,5,5,5" HeightRequest="310">
+                        <StackLayout Padding="5,5,5,5">
                             <StackLayout HeightRequest="50" Orientation="Horizontal">
                                 <Label HorizontalTextAlignment="Start" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.TranscribePartOfTheAudio}}" />
                                 <buttons:SfSwitch HorizontalOptions="End" IsOn="{Binding IsTimeFrame}" />
@@ -64,7 +64,7 @@
                                                   HeaderHeight="30"
                                                   HeaderText="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.StartTime}}"
                                                   HeightRequest="100"
-                                                  IsVisible="{Binding IsTimeFrame}"
+                                                  IsEnabled="{Binding IsTimeFrame}"
                                                   Time="{Binding StartTime}" />
 
                             <pickers:SfTimePicker EnableLooping="True"
@@ -73,7 +73,7 @@
                                                   HeaderHeight="30"
                                                   HeaderText="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EndTime}}"
                                                   HeightRequest="100"
-                                                  IsVisible="{Binding IsTimeFrame}"
+                                                  IsEnabled="{Binding IsTimeFrame}"
                                                   Time="{Binding EndTime}" />
                         </StackLayout>
                     </expander:SfExpander.Content>
