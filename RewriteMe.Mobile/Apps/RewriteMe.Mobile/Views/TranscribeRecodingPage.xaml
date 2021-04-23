@@ -55,7 +55,7 @@
                                    Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.AdvancedSettings}}" />
                         </expander:SfExpander.Header>
                         <expander:SfExpander.Content>
-                            <StackLayout Padding="5,5,5,5">
+                            <StackLayout Padding="5,5,5,5" HeightRequest="310">
                                 <StackLayout HeightRequest="50" Orientation="Horizontal">
                                     <Label HorizontalTextAlignment="Start" Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.TranscribePartOfTheAudio}}" />
                                     <buttons:SfSwitch HorizontalOptions="End" IsOn="{Binding IsTimeFrame}" />
