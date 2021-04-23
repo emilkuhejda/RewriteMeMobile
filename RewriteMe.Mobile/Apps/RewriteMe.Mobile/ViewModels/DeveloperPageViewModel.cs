@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
@@ -27,6 +28,7 @@ namespace RewriteMe.Mobile.ViewModels
         private bool _isPageUnlocked;
         private string _code;
         private string _apiUrl;
+        private bool _isLogFileLoaded;
         private HtmlWebViewSource _webViewSource;
 
         public DeveloperPageViewModel(
@@ -72,6 +74,12 @@ namespace RewriteMe.Mobile.ViewModels
             set => SetProperty(ref _apiUrl, value);
         }
 
+        public bool IsLogFileLoaded
+        {
+            get => _isLogFileLoaded;
+            set => SetProperty(ref _isLogFileLoaded, value);
+        }
+
         public HtmlWebViewSource WebViewSource
         {
             get => _webViewSource;
@@ -104,6 +112,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 var content = await _logFileReader.ReadLogFileAsync().ConfigureAwait(false);
                 WebViewSource = new HtmlWebViewSource { Html = content };
+                IsLogFileLoaded = true;
             }
             catch (Exception)
             {
@@ -164,6 +173,10 @@ namespace RewriteMe.Mobile.ViewModels
                 await _emailService
                     .SendAsync(_applicationSettings.SupportMailAddress, subject, message, fileInfo.FullName)
                     .ConfigureAwait(false);
+            }
+            catch (FileNotFoundException)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.CannotReadLogFileErrorMessage)).ConfigureAwait(false);
             }
             catch (Exception)
             {
