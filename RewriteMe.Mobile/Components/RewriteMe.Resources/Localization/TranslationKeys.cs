@@ -138,5 +138,6 @@
         public static string PendingPaymentErrorMessage => "PendingPaymentErrorMessage";
         public static string PurchaseNotFoundErrorMessage => "PurchaseNotFoundErrorMessage";
         public static string InvalidAccessCodeErrorMessage => "InvalidAccessCodeErrorMessage";
+        public static string CannotReadLogFileErrorMessage => "CannotReadLogFileErrorMessage";
     }
 }

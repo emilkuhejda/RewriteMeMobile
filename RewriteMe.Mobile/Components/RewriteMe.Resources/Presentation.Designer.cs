@@ -196,6 +196,15 @@ namespace RewriteMe.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Cannot read log file.
+        /// </summary>
+        public static string CannotReadLogFileErrorMessage {
+            get {
+                return ResourceManager.GetString("CannotReadLogFileErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Clear.
         /// </summary>
         public static string Clear {

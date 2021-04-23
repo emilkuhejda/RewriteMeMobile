@@ -506,4 +506,7 @@
   <data name="InvalidAccessCodeErrorMessage" xml:space="preserve">
     <value>Invalid access code</value>
   </data>
+  <data name="CannotReadLogFileErrorMessage" xml:space="preserve">
+    <value>Cannot read log file</value>
+  </data>
 </root>
