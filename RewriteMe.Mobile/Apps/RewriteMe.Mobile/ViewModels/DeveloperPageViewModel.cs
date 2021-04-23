@@ -100,8 +100,15 @@ namespace RewriteMe.Mobile.ViewModels
 
         private async Task LoadLogFileAsync()
         {
-            var content = await _logFileReader.ReadLogFileAsync().ConfigureAwait(false);
-            WebViewSource = new HtmlWebViewSource { Html = content };
+            try
+            {
+                var content = await _logFileReader.ReadLogFileAsync().ConfigureAwait(false);
+                WebViewSource = new HtmlWebViewSource { Html = content };
+            }
+            catch (Exception)
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.CannotReadLogFileErrorMessage)).ConfigureAwait(false);
+            }
         }
 
         public async Task ExecuteSubmitCommandAsync()
