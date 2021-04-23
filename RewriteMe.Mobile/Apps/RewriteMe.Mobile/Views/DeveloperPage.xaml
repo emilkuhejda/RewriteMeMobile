@@ -2,6 +2,7 @@
 <views:BaseNavigationPage x:Class="RewriteMe.Mobile.Views.DeveloperPage"
                           xmlns="http://xamarin.com/schemas/2014/forms"
                           xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                          xmlns:buttons="clr-namespace:Syncfusion.XForms.Buttons;assembly=Syncfusion.Buttons.XForms"
                           xmlns:controls="clr-namespace:RewriteMe.Mobile.Controls;assembly=RewriteMe.Mobile"
                           xmlns:localization="clr-namespace:RewriteMe.Mobile.Localization;assembly=RewriteMe.Mobile"
                           xmlns:resourceKeys="clr-namespace:RewriteMe.Resources.Localization;assembly=RewriteMe.Resources"
@@ -11,52 +12,69 @@
     <views:BaseNavigationPage.RightNavigationToolbarItems>
         <controls:NavigationToolbarItem Command="{Binding SaveCommand}" Source="resource://RewriteMe.Mobile.Resources.Images.Save-Enabled.svg" />
     </views:BaseNavigationPage.RightNavigationToolbarItems>
-    <Grid Padding="{StaticResource SmallPadding}">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-
-        <StackLayout Grid.Row="0">
-            <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ApiUrl}}">
-                <Entry Text="{Binding ApiUrl}" />
+    <StackLayout>
+        <StackLayout Padding="{StaticResource StandardSpacing}"
+                     IsVisible="{Binding IsPageUnlocked, Converter={StaticResource InvertedBoolConverter}}"
+                     VerticalOptions="CenterAndExpand">
+            <textInputLayout:SfTextInputLayout ContainerType="Outlined"
+                                               Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.AccessCode}}"
+                                               IsHintAlwaysFloated="True">
+                <Entry IsPassword="True"
+                       Keyboard="Numeric"
+                       Text="{Binding Code}" />
             </textInputLayout:SfTextInputLayout>
+            <buttons:SfButton Command="{Binding SubmitCommand}"
+                              Style="{StaticResource SfButtonStyle}"
+                              Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Submit}}" />
         </StackLayout>
 
-        <controls:RewriteMeWebView Grid.Row="1"
-                                   HorizontalOptions="FillAndExpand"
-                                   Source="{Binding WebViewSource}"
-                                   VerticalOptions="FillAndExpand" />
-
-        <Grid Grid.Row="2">
+        <Grid Padding="{StaticResource SmallPadding}" IsVisible="{Binding IsPageUnlocked}">
             <Grid.RowDefinitions>
                 <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
                 <RowDefinition Height="Auto" />
             </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
 
-            <controls:CustomButton Grid.Row="0"
-                                   Grid.Column="0"
-                                   Command="{Binding ClearLogFileCommand}"
-                                   Style="{StaticResource CustomButtonSecondaryStyle}"
-                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Clear}}" />
+            <StackLayout Grid.Row="0">
+                <textInputLayout:SfTextInputLayout ContainerType="Outlined" Hint="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.ApiUrl}}">
+                    <Entry Text="{Binding ApiUrl}" />
+                </textInputLayout:SfTextInputLayout>
+            </StackLayout>
 
-            <controls:CustomButton Grid.Row="1"
-                                   Grid.Column="0"
-                                   Command="{Binding SendLogMailCommand}"
-                                   Style="{StaticResource CustomButtonSecondaryStyle}"
-                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SendEmail}}" />
+            <controls:RewriteMeWebView Grid.Row="1"
+                                       HorizontalOptions="FillAndExpand"
+                                       Source="{Binding WebViewSource}"
+                                       VerticalOptions="FillAndExpand" />
 
-            <controls:CustomButton Grid.Row="0"
-                                   Grid.RowSpan="2"
-                                   Grid.Column="1"
-                                   Command="{Binding ReloadLogCommand}"
-                                   Style="{StaticResource CustomButtonPrimaryStyle}"
-                                   Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Reload}}" />
+            <Grid Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <controls:CustomButton Grid.Row="0"
+                                       Grid.Column="0"
+                                       Command="{Binding ClearLogFileCommand}"
+                                       Style="{StaticResource CustomButtonSecondaryStyle}"
+                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Clear}}" />
+
+                <controls:CustomButton Grid.Row="1"
+                                       Grid.Column="0"
+                                       Command="{Binding SendLogMailCommand}"
+                                       Style="{StaticResource CustomButtonSecondaryStyle}"
+                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.SendEmail}}" />
+
+                <controls:CustomButton Grid.Row="0"
+                                       Grid.RowSpan="2"
+                                       Grid.Column="1"
+                                       Command="{Binding ReloadLogCommand}"
+                                       Style="{StaticResource CustomButtonPrimaryStyle}"
+                                       Text="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.Reload}}" />
+            </Grid>
         </Grid>
-    </Grid>
+    </StackLayout>
 </views:BaseNavigationPage>

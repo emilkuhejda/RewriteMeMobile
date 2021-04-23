@@ -220,6 +220,12 @@
   <data name="Developer" xml:space="preserve">
     <value>Developer</value>
   </data>
+  <data name="AccessCode" xml:space="preserve">
+    <value>Prístupový kód</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Potvrdiť</value>
+  </data>
   <data name="ApiUrl" xml:space="preserve">
     <value>API url</value>
   </data>
@@ -496,5 +502,8 @@
   </data>
   <data name="PurchaseNotFoundErrorMessage" xml:space="preserve">
     <value>Vyskytol sa problém s Vašou platbou. Prosím, kontaktujte nás.</value>
+  </data>
+  <data name="InvalidAccessCodeErrorMessage" xml:space="preserve">
+    <value>Neplatný prístupový kód</value>
   </data>
 </root>

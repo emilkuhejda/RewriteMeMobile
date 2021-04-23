@@ -64,10 +64,8 @@ namespace RewriteMe.Mobile.ViewModels
             HasBottomNavigation = true;
 
             DeveloperMode = new DeveloperMode();
-            DeveloperMode.UnlockedEvent += OnUnlockedEvent;
-#if DEBUG
             DeveloperMode.IsEnabled = true;
-#endif
+            DeveloperMode.UnlockedEvent += OnUnlockedEvent;
 
             NavigateToLanguageCommand = new AsyncCommand(ExecuteNavigateToLanguageCommandAsync);
             NavigateToUserSettingsCommand = new AsyncCommand(ExecuteNavigateToUserSettingsCommandAsync);
