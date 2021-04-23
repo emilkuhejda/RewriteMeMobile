@@ -25,6 +25,7 @@
                                                 IsBusy="{Binding OperationScope.IsBusy}"
                                                 IsVisible="{Binding OperationScope.IsBusy}"
                                                 TextColor="{StaticResource ColorPrimary}"
+                                                TextSize="{StaticResource MidMediumSize}"
                                                 ViewBoxHeight="30"
                                                 ViewBoxWidth="30"
                                                 WidthRequest="30" />
