@@ -157,7 +157,7 @@ namespace RewriteMe.Mobile.ViewModels
             {
                 if (SetProperty(ref _isTimeFrame, value))
                 {
-                    if (value && EndTime != TimeSpan.Zero)
+                    if (value && EndTime == TimeSpan.Zero)
                     {
                         EndTime = TotalTime;
                     }
@@ -530,9 +530,9 @@ namespace RewriteMe.Mobile.ViewModels
                 Language = SelectedLanguage?.Culture,
                 FileName = SelectedFile.FileName,
                 IsPhoneCall = IsPhoneCallModelSupported && IsPhoneCall,
-                IsTimeFrame = true,
-                TranscriptionStartTime = StartTime,
-                TranscriptionEndTime = EndTime,
+                IsTimeFrame = IsTimeFrame,
+                TranscriptionStartTime = IsTimeFrame ? StartTime : TimeSpan.Zero,
+                TranscriptionEndTime = IsTimeFrame ? EndTime : TimeSpan.Zero,
                 Source = SelectedFile.Source
             };
         }
