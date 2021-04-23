@@ -477,7 +477,7 @@
                                                 IsVisible="{TemplateBinding BindingContext.IsDefaultIndicatorVisible}"
                                                 Opacity="0.6"
                                                 TextColor="{StaticResource ColorWhite}"
-                                                TextSize="{StaticResource MidMediumSize}"
+                                                TextSize="16"
                                                 ViewBoxHeight="50"
                                                 ViewBoxWidth="50" />
                     </Grid>

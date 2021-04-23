@@ -94,7 +94,7 @@
                                         IsBusy="{Binding IsInProgress}"
                                         IsVisible="{Binding IsInProgress}"
                                         TextColor="{StaticResource ColorPrimary}"
-                                        TextSize="{StaticResource MidMediumSize}"
+                                        TextSize="16"
                                         VerticalOptions="Center"
                                         ViewBoxHeight="40"
                                         ViewBoxWidth="40"

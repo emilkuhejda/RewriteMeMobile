@@ -37,7 +37,7 @@
                                     AnimationType="Gear"
                                     BackgroundColor="{StaticResource ColorWhite}"
                                     TextColor="{StaticResource ColorPrimary}"
-                                    TextSize="{StaticResource MidMediumSize}"
+                                    TextSize="16"
                                     ViewBoxHeight="80"
                                     ViewBoxWidth="80" />
         </Grid>
