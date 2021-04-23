@@ -46,7 +46,7 @@
                                        Source="{Binding WebViewSource}"
                                        VerticalOptions="FillAndExpand" />
 
-            <Grid Grid.Row="2">
+            <Grid Grid.Row="2" IsVisible="{Binding IsLogFileLoaded}">
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
                     <RowDefinition Height="Auto" />
