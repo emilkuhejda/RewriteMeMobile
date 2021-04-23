@@ -220,6 +220,12 @@
   <data name="Developer" xml:space="preserve">
     <value>Developer</value>
   </data>
+  <data name="AccessCode" xml:space="preserve">
+    <value>Access code</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Submit</value>
+  </data>
   <data name="ApiUrl" xml:space="preserve">
     <value>API url</value>
   </data>
@@ -496,5 +502,8 @@
   </data>
   <data name="PurchaseNotFoundErrorMessage" xml:space="preserve">
     <value>There has been a problem with your payment. Please contact us.</value>
+  </data>
+  <data name="InvalidAccessCodeErrorMessage" xml:space="preserve">
+    <value>Invalid access code</value>
   </data>
 </root>

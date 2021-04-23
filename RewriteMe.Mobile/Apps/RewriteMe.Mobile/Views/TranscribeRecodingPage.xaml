@@ -68,7 +68,7 @@
                                                       HeaderHeight="30"
                                                       HeaderText="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.StartTime}}"
                                                       HeightRequest="100"
-                                                      IsVisible="{Binding IsTimeFrame}"
+                                                      IsEnabled="{Binding IsTimeFrame}"
                                                       Time="{Binding StartTime}" />
 
                                 <pickers:SfTimePicker EnableLooping="True"
@@ -77,7 +77,7 @@
                                                       HeaderHeight="30"
                                                       HeaderText="{localization:Localization Text={x:Static resourceKeys:TranslationKeys.EndTime}}"
                                                       HeightRequest="100"
-                                                      IsVisible="{Binding IsTimeFrame}"
+                                                      IsEnabled="{Binding IsTimeFrame}"
                                                       Time="{Binding EndTime}" />
                             </StackLayout>
                         </expander:SfExpander.Content>

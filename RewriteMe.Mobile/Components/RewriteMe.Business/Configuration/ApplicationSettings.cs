@@ -14,7 +14,6 @@ namespace RewriteMe.Business.Configuration
         private const string OsxAppCenterKey = "38ccf01c-fc36-4b94-a5c2-743c02852b23";
         private const string AndroidAppCenterKey = "a888ddaf-c5e2-4461-ae7e-0d896cf022df";
         private const string Tenant = "voicipher.onmicrosoft.com";
-        private static readonly string AuthorityBase = $"https://login.microsoftonline.com/tfp/{Tenant}/";
 
         private readonly IInternalValueService _internalValueService;
 
@@ -62,6 +61,8 @@ namespace RewriteMe.Business.Configuration
         public string AuthorityEditProfile => $"{AuthorityBase}{PolicyEditProfile}";
 
         public string AuthorityPasswordReset => $"{AuthorityBase}{PolicyResetPassword}";
+
+        private string AuthorityBase { get; } = $"https://login.microsoftonline.com/tfp/{Tenant}/";
 
         public async Task InitializeAsync()
         {

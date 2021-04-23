@@ -17,11 +17,15 @@ namespace RewriteMe.Mobile.ViewModels
 {
     public class DeveloperPageViewModel : ViewModelBase
     {
+        private const string AccessCode = "24685";
+
         private readonly IInternalValueService _internalValueService;
         private readonly IEmailService _emailService;
         private readonly ILogFileReader _logFileReader;
         private readonly IApplicationSettings _applicationSettings;
 
+        private bool _isPageUnlocked;
+        private string _code;
         private string _apiUrl;
         private HtmlWebViewSource _webViewSource;
 
@@ -43,10 +47,23 @@ namespace RewriteMe.Mobile.ViewModels
 
             CanGoBack = true;
 
+            SubmitCommand = new AsyncCommand(ExecuteSubmitCommandAsync);
             SaveCommand = new AsyncCommand(ExecuteSaveCommandAsync);
             ClearLogFileCommand = new AsyncCommand(ExecuteClearLogFileCommandAsync);
             SendLogMailCommand = new AsyncCommand(ExecuteSendLogMailCommandAsync);
             ReloadLogCommand = new AsyncCommand(ExecuteReloadLogCommandAsync);
+        }
+
+        public bool IsPageUnlocked
+        {
+            get => _isPageUnlocked;
+            set => SetProperty(ref _isPageUnlocked, value);
+        }
+
+        public string Code
+        {
+            get => _code;
+            set => SetProperty(ref _code, value);
         }
 
         public string ApiUrl
@@ -60,6 +77,8 @@ namespace RewriteMe.Mobile.ViewModels
             get => _webViewSource;
             set => SetProperty(ref _webViewSource, value);
         }
+
+        public ICommand SubmitCommand { get; }
 
         public ICommand SaveCommand { get; }
 
@@ -85,8 +104,22 @@ namespace RewriteMe.Mobile.ViewModels
             WebViewSource = new HtmlWebViewSource { Html = content };
         }
 
+        public async Task ExecuteSubmitCommandAsync()
+        {
+            if (!Code.Equals(AccessCode, StringComparison.OrdinalIgnoreCase))
+            {
+                await DialogService.AlertAsync(Loc.Text(TranslationKeys.InvalidAccessCodeErrorMessage)).ConfigureAwait(false);
+                return;
+            }
+
+            IsPageUnlocked = true;
+        }
+
         public async Task ExecuteSaveCommandAsync()
         {
+            if (!IsPageUnlocked)
+                return;
+
             await RunInOperationScope(async () =>
             {
                 await _internalValueService.UpdateValueAsync(InternalValues.ApiUrl, ApiUrl).ConfigureAwait(false);
