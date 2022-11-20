@@ -215,3 +215,5 @@ RewriteMe.Mobile/Apps/RewriteMe.Mobile.iOS/Info.plist
 RewriteMe.Mobile/Apps/RewriteMe.Mobile.Android/Properties/AndroidManifest.xml
 
 RewriteMe.Mobile/Components/RewriteMe.Business/Configuration/ApplicationSettings.cs
+
+RewriteMe.Mobile/Apps/RewriteMe.Mobile.Android/google-services.json
