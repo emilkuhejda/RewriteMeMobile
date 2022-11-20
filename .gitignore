@@ -210,3 +210,8 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+RewriteMe.Mobile/Apps/RewriteMe.Mobile.iOS/Info.plist
+
+RewriteMe.Mobile/Apps/RewriteMe.Mobile.Android/Properties/AndroidManifest.xml
+
+RewriteMe.Mobile/Components/RewriteMe.Business/Configuration/ApplicationSettings.cs
